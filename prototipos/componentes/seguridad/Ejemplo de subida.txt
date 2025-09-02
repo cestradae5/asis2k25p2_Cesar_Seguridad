@@ -6,8 +6,9 @@ Diagrama clase (Ernesto)
 Diagram Caso de uso (Brandon)
 Diagrama secuencia (Aron)
 Diagrama de componentes(Marcos)
-Diseño base de dato (Cesar, Carlo)
+Diseño base de dato (todos)
+Diagrama de actividades(Cesar)
 Fase de análisis (Danilo)
 
 
-Prototipo no funcional (Ruben, Brandon)
+Prototipo no funcional (todos)
