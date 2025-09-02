@@ -1,0 +1,14 @@
+to va al cronograma en la nube 
+
+Bechmarking (Danilo)
+
+Diagrama clase (Ernesto)
+Diagram Caso de uso (Brandon)
+Diagrama secuencia (Aron)
+Diagrama de componentes(Marcos)
+Diseño base de dato (todos)
+Diagrama de actividades(Cesar)
+Fase de análisis (Danilo)
+
+
+Prototipo no funcional (todos)
