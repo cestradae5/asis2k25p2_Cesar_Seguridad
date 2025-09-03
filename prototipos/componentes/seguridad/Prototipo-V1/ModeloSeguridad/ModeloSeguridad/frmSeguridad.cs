@@ -7,35 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Runtime.InteropServices;
 
 namespace ModeloSeguridad
 {
-    public partial class frmPrincipal : Form
+    public partial class frmSeguridad : Form
     {
         private int childFormNumber = 0;
 
-        // Importar funciones de la API de Windows
-        [DllImport("user32.dll", EntryPoint = "ReleaseCapture")]
-        private extern static void ReleaseCapture();
-
-        [DllImport("user32.dll", EntryPoint = "SendMessage")]
-        private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
-
-        // Constantes para mover la ventana
-        private const int WM_NCLBUTTONDOWN = 0xA1;
-        private const int HTCAPTION = 0x2;
-
-        private void pnlPanelSuperior_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                ReleaseCapture();
-                SendMessage(this.Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
-            }
-        }
-
-        public frmPrincipal()
+        public frmSeguridad()
         {
             InitializeComponent();
         }
@@ -89,12 +68,12 @@ namespace ModeloSeguridad
 
         private void ToolBarToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            toolStrip.Visible = toolBarToolStripMenuItem.Checked;
+            
         }
 
         private void StatusBarToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            statusStrip.Visible = statusBarToolStripMenuItem.Checked;
+            
         }
 
         private void CascadeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -125,23 +104,18 @@ namespace ModeloSeguridad
             }
         }
 
-        private void btnCerrar_Click(object sender, EventArgs e)
+       
+
+        private void archivoToolStripMenuItem_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void cerrarSesiónToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmPrincipal ventanaPrincipal = new frmPrincipal();
+            ventanaPrincipal.Show();
             this.Close();
-        }
-
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            frmLogin ventana = new frmLogin();
-            ventana.Show();
-            this.Hide();
-        }
-
-        private void seguridadToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            frmSeguridad formSeguridad = new frmSeguridad();
-            formSeguridad.Show();
-            this.Hide(); 
         }
     }
 }

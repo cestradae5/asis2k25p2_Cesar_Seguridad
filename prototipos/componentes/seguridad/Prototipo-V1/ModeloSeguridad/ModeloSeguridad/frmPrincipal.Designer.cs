@@ -76,6 +76,7 @@ namespace ModeloSeguridad
             this.searchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.seguridadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.newToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.openToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -85,7 +86,6 @@ namespace ModeloSeguridad
             this.printPreviewToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.helpToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.seguridadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip.SuspendLayout();
             this.pnlPanelSuperior.SuspendLayout();
             this.menuStrip.SuspendLayout();
@@ -98,9 +98,10 @@ namespace ModeloSeguridad
             this.statusStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel});
-            this.statusStrip.Location = new System.Drawing.Point(0, 427);
+            this.statusStrip.Location = new System.Drawing.Point(0, 532);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(632, 26);
+            this.statusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
+            this.statusStrip.Size = new System.Drawing.Size(843, 26);
             this.statusStrip.TabIndex = 2;
             this.statusStrip.Text = "StatusStrip";
             // 
@@ -115,11 +116,11 @@ namespace ModeloSeguridad
             this.btnCerrar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(3)))), ((int)(((byte)(1)))));
             this.btnCerrar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCerrar.ForeColor = System.Drawing.Color.White;
-            this.btnCerrar.Location = new System.Drawing.Point(599, 11);
-            this.btnCerrar.Margin = new System.Windows.Forms.Padding(2);
+            this.btnCerrar.Location = new System.Drawing.Point(799, 14);
+            this.btnCerrar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnCerrar.Name = "btnCerrar";
             this.btnCerrar.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.btnCerrar.Size = new System.Drawing.Size(22, 24);
+            this.btnCerrar.Size = new System.Drawing.Size(29, 30);
             this.btnCerrar.TabIndex = 0;
             this.btnCerrar.Text = "X";
             this.btnCerrar.UseVisualStyleBackColor = false;
@@ -131,9 +132,9 @@ namespace ModeloSeguridad
             this.pnlPanelSuperior.Controls.Add(this.btnCerrar);
             this.pnlPanelSuperior.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlPanelSuperior.Location = new System.Drawing.Point(0, 0);
-            this.pnlPanelSuperior.Margin = new System.Windows.Forms.Padding(2);
+            this.pnlPanelSuperior.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pnlPanelSuperior.Name = "pnlPanelSuperior";
-            this.pnlPanelSuperior.Size = new System.Drawing.Size(632, 43);
+            this.pnlPanelSuperior.Size = new System.Drawing.Size(843, 53);
             this.pnlPanelSuperior.TabIndex = 23;
             this.pnlPanelSuperior.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlPanelSuperior_MouseDown);
             // 
@@ -149,10 +150,10 @@ namespace ModeloSeguridad
             this.windowsMenu,
             this.helpMenu,
             this.seguridadToolStripMenuItem});
-            this.menuStrip.Location = new System.Drawing.Point(0, 43);
+            this.menuStrip.Location = new System.Drawing.Point(0, 53);
             this.menuStrip.MdiWindowListItem = this.windowsMenu;
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(632, 28);
+            this.menuStrip.Size = new System.Drawing.Size(843, 28);
             this.menuStrip.TabIndex = 24;
             this.menuStrip.Text = "MenuStrip";
             // 
@@ -466,6 +467,13 @@ namespace ModeloSeguridad
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(218, 26);
             this.aboutToolStripMenuItem.Text = "&Acerca de... ...";
             // 
+            // seguridadToolStripMenuItem
+            // 
+            this.seguridadToolStripMenuItem.Name = "seguridadToolStripMenuItem";
+            this.seguridadToolStripMenuItem.Size = new System.Drawing.Size(91, 24);
+            this.seguridadToolStripMenuItem.Text = "Seguridad";
+            this.seguridadToolStripMenuItem.Click += new System.EventHandler(this.seguridadToolStripMenuItem_Click);
+            // 
             // toolStrip
             // 
             this.toolStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(175)))), ((int)(((byte)(187)))));
@@ -479,9 +487,9 @@ namespace ModeloSeguridad
             this.printPreviewToolStripButton,
             this.toolStripSeparator2,
             this.helpToolStripButton});
-            this.toolStrip.Location = new System.Drawing.Point(0, 71);
+            this.toolStrip.Location = new System.Drawing.Point(0, 81);
             this.toolStrip.Name = "toolStrip";
-            this.toolStrip.Size = new System.Drawing.Size(632, 27);
+            this.toolStrip.Size = new System.Drawing.Size(843, 27);
             this.toolStrip.TabIndex = 25;
             this.toolStrip.Text = "ToolStrip";
             // 
@@ -549,23 +557,18 @@ namespace ModeloSeguridad
             this.helpToolStripButton.Size = new System.Drawing.Size(29, 24);
             this.helpToolStripButton.Text = "Ayuda";
             // 
-            // seguridadToolStripMenuItem
-            // 
-            this.seguridadToolStripMenuItem.Name = "seguridadToolStripMenuItem";
-            this.seguridadToolStripMenuItem.Size = new System.Drawing.Size(91, 24);
-            this.seguridadToolStripMenuItem.Text = "Seguridad";
-            // 
             // frmPrincipal
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(632, 453);
+            this.ClientSize = new System.Drawing.Size(843, 558);
             this.Controls.Add(this.toolStrip);
             this.Controls.Add(this.menuStrip);
             this.Controls.Add(this.pnlPanelSuperior);
             this.Controls.Add(this.statusStrip);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.IsMdiContainer = true;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "frmPrincipal";
             this.Text = "frmPrincipal";
             this.statusStrip.ResumeLayout(false);

@@ -39,7 +39,9 @@ namespace ModeloSeguridad
             this.pnlPanelSuperior = new System.Windows.Forms.Panel();
             this.btnCerrar = new System.Windows.Forms.Button();
             this.chkMostrarContrasena = new System.Windows.Forms.CheckBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pnlPanelSuperior.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // lblModuloSeguridad
@@ -162,12 +164,23 @@ namespace ModeloSeguridad
             this.chkMostrarContrasena.UseVisualStyleBackColor = true;
             this.chkMostrarContrasena.CheckedChanged += new System.EventHandler(this.chkMostrarContrasena_CheckedChanged);
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::ModeloSeguridad.Properties.Resources.logo_login;
+            this.pictureBox1.Location = new System.Drawing.Point(536, 158);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(167, 173);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 24;
+            this.pictureBox1.TabStop = false;
+            // 
             // frmLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(175)))), ((int)(((byte)(187)))));
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.chkMostrarContrasena);
             this.Controls.Add(this.pnlPanelSuperior);
             this.Controls.Add(this.lblModuloSeguridad);
@@ -182,6 +195,7 @@ namespace ModeloSeguridad
             this.Name = "frmLogin";
             this.Text = "Form1";
             this.pnlPanelSuperior.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -199,6 +213,7 @@ namespace ModeloSeguridad
         private System.Windows.Forms.Panel pnlPanelSuperior;
         private System.Windows.Forms.Button btnCerrar;
         private System.Windows.Forms.CheckBox chkMostrarContrasena;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 
