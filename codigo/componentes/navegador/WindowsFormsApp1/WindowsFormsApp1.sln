@@ -5,6 +5,10 @@ VisualStudioVersion = 17.14.36414.22 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApp1", "WindowsFormsApp1\WindowsFormsApp1.csproj", "{C6628A05-1BEC-4276-9F58-210E2A33C380}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaControladorNavegador", "CapaControladorNavegador\CapaControladorNavegador.csproj", "{9CCB68D5-F388-46E4-9B59-97734D28BDC2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaModeloNavegador", "CapaModeloNavegador\CapaModeloNavegador.csproj", "{44573EC3-7012-4091-81F0-4A5B47C32285}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{C6628A05-1BEC-4276-9F58-210E2A33C380}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C6628A05-1BEC-4276-9F58-210E2A33C380}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C6628A05-1BEC-4276-9F58-210E2A33C380}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CCB68D5-F388-46E4-9B59-97734D28BDC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CCB68D5-F388-46E4-9B59-97734D28BDC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CCB68D5-F388-46E4-9B59-97734D28BDC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CCB68D5-F388-46E4-9B59-97734D28BDC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44573EC3-7012-4091-81F0-4A5B47C32285}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44573EC3-7012-4091-81F0-4A5B47C32285}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44573EC3-7012-4091-81F0-4A5B47C32285}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44573EC3-7012-4091-81F0-4A5B47C32285}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
