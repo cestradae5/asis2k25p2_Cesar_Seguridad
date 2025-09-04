@@ -57,5 +57,10 @@
       <DependentUpon>VistaDeReportes.cs</DependentUpon>
     </Compile>
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="VistaDeReportes.resx">
+      <DependentUpon>VistaDeReportes.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
