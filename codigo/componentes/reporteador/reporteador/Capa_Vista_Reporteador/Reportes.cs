@@ -16,5 +16,10 @@ namespace Capa_Vista_Reporteador
         {
             InitializeComponent();
         }
+
+        private void Btn_modificar_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
