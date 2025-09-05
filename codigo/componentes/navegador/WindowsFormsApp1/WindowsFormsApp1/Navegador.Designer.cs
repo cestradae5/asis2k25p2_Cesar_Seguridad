@@ -31,19 +31,19 @@ namespace WindowsFormsApp1
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Navegador));
             this.Btn_salir = new System.Windows.Forms.Button();
-            this.Btn_Ayuda = new System.Windows.Forms.Button();
+            this.Btn_ayuda = new System.Windows.Forms.Button();
             this.Btn_fin = new System.Windows.Forms.Button();
             this.Btn_sig = new System.Windows.Forms.Button();
             this.Btn_anterior = new System.Windows.Forms.Button();
             this.Btn_inicio = new System.Windows.Forms.Button();
             this.Btn_refrescar = new System.Windows.Forms.Button();
             this.Btn_imprimir = new System.Windows.Forms.Button();
-            this.Btn_Consultar = new System.Windows.Forms.Button();
-            this.Btn_Eliminar = new System.Windows.Forms.Button();
+            this.Btn_consultar = new System.Windows.Forms.Button();
+            this.Btn_eliminar = new System.Windows.Forms.Button();
             this.Btn_cancelar = new System.Windows.Forms.Button();
             this.Btn_guardar = new System.Windows.Forms.Button();
-            this.Btn_Modificar = new System.Windows.Forms.Button();
-            this.btn_ingresar = new System.Windows.Forms.Button();
+            this.Btn_modificar = new System.Windows.Forms.Button();
+            this.Btn_ingresar = new System.Windows.Forms.Button();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -59,16 +59,16 @@ namespace WindowsFormsApp1
             this.Btn_salir.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.Btn_salir.UseVisualStyleBackColor = true;
             // 
-            // Btn_Ayuda
+            // Btn_ayuda
             // 
-            this.Btn_Ayuda.Image = ((System.Drawing.Image)(resources.GetObject("Btn_Ayuda.Image")));
-            this.Btn_Ayuda.Location = new System.Drawing.Point(963, 3);
-            this.Btn_Ayuda.Name = "Btn_Ayuda";
-            this.Btn_Ayuda.Size = new System.Drawing.Size(74, 87);
-            this.Btn_Ayuda.TabIndex = 12;
-            this.Btn_Ayuda.Text = "Ayuda";
-            this.Btn_Ayuda.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.Btn_Ayuda.UseVisualStyleBackColor = true;
+            this.Btn_ayuda.Image = ((System.Drawing.Image)(resources.GetObject("Btn_ayuda.Image")));
+            this.Btn_ayuda.Location = new System.Drawing.Point(963, 3);
+            this.Btn_ayuda.Name = "Btn_ayuda";
+            this.Btn_ayuda.Size = new System.Drawing.Size(74, 87);
+            this.Btn_ayuda.TabIndex = 12;
+            this.Btn_ayuda.Text = "Ayuda";
+            this.Btn_ayuda.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.Btn_ayuda.UseVisualStyleBackColor = true;
             // 
             // Btn_fin
             // 
@@ -136,27 +136,27 @@ namespace WindowsFormsApp1
             this.Btn_imprimir.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.Btn_imprimir.UseVisualStyleBackColor = true;
             // 
-            // Btn_Consultar
+            // Btn_consultar
             // 
-            this.Btn_Consultar.Image = ((System.Drawing.Image)(resources.GetObject("Btn_Consultar.Image")));
-            this.Btn_Consultar.Location = new System.Drawing.Point(403, 3);
-            this.Btn_Consultar.Name = "Btn_Consultar";
-            this.Btn_Consultar.Size = new System.Drawing.Size(74, 87);
-            this.Btn_Consultar.TabIndex = 5;
-            this.Btn_Consultar.Text = "Consultar";
-            this.Btn_Consultar.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.Btn_Consultar.UseVisualStyleBackColor = true;
+            this.Btn_consultar.Image = ((System.Drawing.Image)(resources.GetObject("Btn_consultar.Image")));
+            this.Btn_consultar.Location = new System.Drawing.Point(403, 3);
+            this.Btn_consultar.Name = "Btn_consultar";
+            this.Btn_consultar.Size = new System.Drawing.Size(74, 87);
+            this.Btn_consultar.TabIndex = 5;
+            this.Btn_consultar.Text = "Consultar";
+            this.Btn_consultar.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.Btn_consultar.UseVisualStyleBackColor = true;
             // 
-            // Btn_Eliminar
+            // Btn_eliminar
             // 
-            this.Btn_Eliminar.Image = global::WindowsFormsApp1.Properties.Resources.delete_remove_trash_icon_177304;
-            this.Btn_Eliminar.Location = new System.Drawing.Point(323, 3);
-            this.Btn_Eliminar.Name = "Btn_Eliminar";
-            this.Btn_Eliminar.Size = new System.Drawing.Size(74, 87);
-            this.Btn_Eliminar.TabIndex = 4;
-            this.Btn_Eliminar.Text = "Eliminar";
-            this.Btn_Eliminar.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.Btn_Eliminar.UseVisualStyleBackColor = true;
+            this.Btn_eliminar.Image = global::WindowsFormsApp1.Properties.Resources.delete_remove_trash_icon_177304;
+            this.Btn_eliminar.Location = new System.Drawing.Point(323, 3);
+            this.Btn_eliminar.Name = "Btn_eliminar";
+            this.Btn_eliminar.Size = new System.Drawing.Size(74, 87);
+            this.Btn_eliminar.TabIndex = 4;
+            this.Btn_eliminar.Text = "Eliminar";
+            this.Btn_eliminar.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.Btn_eliminar.UseVisualStyleBackColor = true;
             // 
             // Btn_cancelar
             // 
@@ -168,6 +168,7 @@ namespace WindowsFormsApp1
             this.Btn_cancelar.Text = "Cancelar";
             this.Btn_cancelar.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.Btn_cancelar.UseVisualStyleBackColor = true;
+            this.Btn_cancelar.Click += new System.EventHandler(this.Btn_cancelar_Click);
             // 
             // Btn_guardar
             // 
@@ -181,44 +182,44 @@ namespace WindowsFormsApp1
             this.Btn_guardar.UseVisualStyleBackColor = true;
             this.Btn_guardar.Click += new System.EventHandler(this.Btn_guardar_Click);
             // 
-            // Btn_Modificar
+            // Btn_modificar
             // 
-            this.Btn_Modificar.Image = global::WindowsFormsApp1.Properties.Resources.compose_edit_modify_icon_177770;
-            this.Btn_Modificar.Location = new System.Drawing.Point(83, 3);
-            this.Btn_Modificar.Name = "Btn_Modificar";
-            this.Btn_Modificar.Size = new System.Drawing.Size(74, 87);
-            this.Btn_Modificar.TabIndex = 1;
-            this.Btn_Modificar.Text = "Modificar";
-            this.Btn_Modificar.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.Btn_Modificar.UseVisualStyleBackColor = true;
+            this.Btn_modificar.Image = global::WindowsFormsApp1.Properties.Resources.compose_edit_modify_icon_177770;
+            this.Btn_modificar.Location = new System.Drawing.Point(83, 3);
+            this.Btn_modificar.Name = "Btn_modificar";
+            this.Btn_modificar.Size = new System.Drawing.Size(74, 87);
+            this.Btn_modificar.TabIndex = 1;
+            this.Btn_modificar.Text = "Modificar";
+            this.Btn_modificar.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.Btn_modificar.UseVisualStyleBackColor = true;
             // 
-            // btn_ingresar
+            // Btn_ingresar
             // 
-            this.btn_ingresar.Image = global::WindowsFormsApp1.Properties.Resources.add_insert_new_plus_button_icon_142943;
-            this.btn_ingresar.Location = new System.Drawing.Point(3, 3);
-            this.btn_ingresar.Name = "btn_ingresar";
-            this.btn_ingresar.Size = new System.Drawing.Size(74, 87);
-            this.btn_ingresar.TabIndex = 0;
-            this.btn_ingresar.Text = "ingresar";
-            this.btn_ingresar.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btn_ingresar.UseVisualStyleBackColor = true;
-            this.btn_ingresar.Click += new System.EventHandler(this.btn_ingresar_Click);
+            this.Btn_ingresar.Image = global::WindowsFormsApp1.Properties.Resources.add_insert_new_plus_button_icon_142943;
+            this.Btn_ingresar.Location = new System.Drawing.Point(3, 3);
+            this.Btn_ingresar.Name = "Btn_ingresar";
+            this.Btn_ingresar.Size = new System.Drawing.Size(74, 87);
+            this.Btn_ingresar.TabIndex = 0;
+            this.Btn_ingresar.Text = "ingresar";
+            this.Btn_ingresar.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.Btn_ingresar.UseVisualStyleBackColor = true;
+            this.Btn_ingresar.Click += new System.EventHandler(this.Btn_ingresar_Click);
             // 
             // flowLayoutPanel1
             // 
-            this.flowLayoutPanel1.Controls.Add(this.btn_ingresar);
-            this.flowLayoutPanel1.Controls.Add(this.Btn_Modificar);
+            this.flowLayoutPanel1.Controls.Add(this.Btn_ingresar);
+            this.flowLayoutPanel1.Controls.Add(this.Btn_modificar);
             this.flowLayoutPanel1.Controls.Add(this.Btn_guardar);
             this.flowLayoutPanel1.Controls.Add(this.Btn_cancelar);
-            this.flowLayoutPanel1.Controls.Add(this.Btn_Eliminar);
-            this.flowLayoutPanel1.Controls.Add(this.Btn_Consultar);
+            this.flowLayoutPanel1.Controls.Add(this.Btn_eliminar);
+            this.flowLayoutPanel1.Controls.Add(this.Btn_consultar);
             this.flowLayoutPanel1.Controls.Add(this.Btn_imprimir);
             this.flowLayoutPanel1.Controls.Add(this.Btn_refrescar);
             this.flowLayoutPanel1.Controls.Add(this.Btn_inicio);
             this.flowLayoutPanel1.Controls.Add(this.Btn_anterior);
             this.flowLayoutPanel1.Controls.Add(this.Btn_sig);
             this.flowLayoutPanel1.Controls.Add(this.Btn_fin);
-            this.flowLayoutPanel1.Controls.Add(this.Btn_Ayuda);
+            this.flowLayoutPanel1.Controls.Add(this.Btn_ayuda);
             this.flowLayoutPanel1.Controls.Add(this.Btn_salir);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
@@ -241,19 +242,19 @@ namespace WindowsFormsApp1
         #endregion
 
         private System.Windows.Forms.Button Btn_salir;
-        private System.Windows.Forms.Button Btn_Ayuda;
+        private System.Windows.Forms.Button Btn_ayuda;
         private System.Windows.Forms.Button Btn_fin;
         private System.Windows.Forms.Button Btn_sig;
         private System.Windows.Forms.Button Btn_anterior;
         private System.Windows.Forms.Button Btn_inicio;
         private System.Windows.Forms.Button Btn_refrescar;
         private System.Windows.Forms.Button Btn_imprimir;
-        private System.Windows.Forms.Button Btn_Consultar;
-        private System.Windows.Forms.Button Btn_Eliminar;
+        private System.Windows.Forms.Button Btn_consultar;
+        private System.Windows.Forms.Button Btn_eliminar;
         private System.Windows.Forms.Button Btn_cancelar;
         private System.Windows.Forms.Button Btn_guardar;
-        private System.Windows.Forms.Button Btn_Modificar;
-        private System.Windows.Forms.Button btn_ingresar;
+        private System.Windows.Forms.Button Btn_modificar;
+        private System.Windows.Forms.Button Btn_ingresar;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
     }
 }
