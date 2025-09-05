@@ -10,11 +10,16 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApp1
 {
-    public partial class Navegador : UserControl
+    public partial class Form1 : Form
     {
-        public Navegador()
+        public Form1()
         {
             InitializeComponent();
+        }
+
+        private void navegador1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
