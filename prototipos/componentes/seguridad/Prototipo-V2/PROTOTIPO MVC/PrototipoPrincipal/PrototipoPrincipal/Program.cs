@@ -16,7 +16,7 @@ namespace PrototipoPrincipal
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new CapaVista.frmLogin());
+            Application.Run(new CapaVista.frmPruebaConexionBD());
         }
     }
 }
