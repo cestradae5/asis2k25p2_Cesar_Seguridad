@@ -24,7 +24,7 @@ namespace Capa_Vista_Componente_Consultas
 
         private void consultasToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //Esto es para movernos entre el formulario consultas
+            //Esto es para movernos entre formularios consultas
             Frm_Consultas consultas = new Frm_Consultas();
             consultas.Show();
             this.Hide();
