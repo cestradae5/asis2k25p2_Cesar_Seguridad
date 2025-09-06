@@ -70,5 +70,19 @@ namespace WindowsFormsApp1
             Btn_sig.Enabled = false;
             Btn_fin.Enabled = false;
         }
+        ControladorNavegador ctrl = new ControladorNavegador();
+        //ctrl.AsignarDataGridView();  Aquí se coloca el nombre del DataGridView
+
+        private void Btn_inicio_Click(object sender, EventArgs e)
+        {
+            
+            ctrl.MoverAlInicio();
+        }
+
+        private void Btn_fin_Click(object sender, EventArgs e)
+        {
+            
+            ctrl.MoverAlFin();
+        }
     }
 }

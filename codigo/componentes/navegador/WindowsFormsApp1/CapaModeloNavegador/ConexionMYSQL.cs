@@ -8,5 +8,6 @@ namespace CapaModeloNavegador
 {
     internal class ConexionMYSQL
     {
+
     }
 }

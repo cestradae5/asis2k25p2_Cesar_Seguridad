@@ -33,6 +33,35 @@ namespace CapaControladorNavegador
             }
 
         }
+    //-----------------------------------------------------------------------
+        private DataGridView dgv;
+
+        public void AsignarDataGridView(DataGridView grid)
+        {
+            dgv = grid;
+        }
+
+        public void MoverAlInicio()
+        {
+            if (dgv != null && dgv.Rows.Count > 0)
+            {
+                dgv.ClearSelection();
+                dgv.Rows[0].Selected = true;
+                dgv.CurrentCell = dgv.Rows[0].Cells[0];
+            }
+        }
+
+        public void MoverAlFin()
+        {
+            if (dgv != null && dgv.Rows.Count > 0)
+            {
+                int ultimaFila = dgv.Rows.Count - 1;
+                dgv.ClearSelection();
+                dgv.Rows[ultimaFila].Selected = true;
+                dgv.CurrentCell = dgv.Rows[ultimaFila].Cells[0];
+            }
+        }
+//---------------------------------------------------------------------------------------------------------
 
         public void Insertar_Datos()
         {
