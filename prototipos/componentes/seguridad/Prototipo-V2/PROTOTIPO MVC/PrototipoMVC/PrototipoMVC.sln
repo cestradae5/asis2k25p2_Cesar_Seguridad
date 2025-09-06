@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.36324.18
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaVista", "CapaVista\CapaVista.csproj", "{349D7BA8-A835-4401-B0B9-CA601B215E63}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6C9DDB46-4E24-4D18-B644-C350DADA2F05} = {6C9DDB46-4E24-4D18-B644-C350DADA2F05}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaControlador", "CapaControlador\CapaControlador.csproj", "{6C9DDB46-4E24-4D18-B644-C350DADA2F05}"
 EndProject
