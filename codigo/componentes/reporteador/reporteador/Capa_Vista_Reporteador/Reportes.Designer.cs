@@ -118,6 +118,7 @@ namespace Capa_Vista_Reporteador
             this.Btn_ver_reporte.TabIndex = 7;
             this.Btn_ver_reporte.Text = "Ver reporte";
             this.Btn_ver_reporte.UseVisualStyleBackColor = false;
+            this.Btn_ver_reporte.Click += new System.EventHandler(this.Btn_ver_reporte_Click);
             // 
             // Btn_ruta_reporte
             // 

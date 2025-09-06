@@ -21,5 +21,14 @@ namespace Capa_Vista_Reporteador
         {
 
         }
+
+        private void Btn_ver_reporte_Click(object sender, EventArgs e)
+        {
+            // Instancia para ver reportes
+            VistaDeReportes frm = new VistaDeReportes();
+
+            // Mostrarlo como ventana aparte
+            frm.Show();
+        }
     }
 }

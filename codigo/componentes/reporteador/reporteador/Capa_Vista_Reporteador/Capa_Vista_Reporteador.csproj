@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Capa_Controlador_Reporteador">
+      <HintPath>..\Capa_Controlador_Reporteador\bin\Debug\Capa_Controlador_Reporteador.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -57,13 +60,13 @@
       <DependentUpon>VistaDeReportes.cs</DependentUpon>
     </Compile>
   </ItemGroup>
-<ItemGroup>
-  <EmbeddedResource Include="VistaDeReportes.resx">
-    <DependentUpon>VistaDeReportes.cs</DependentUpon>
-  </EmbeddedResource>
-  <EmbeddedResource Include="Reportes.resx">
-    <DependentUpon>Reportes.cs</DependentUpon>
-  </EmbeddedResource>
-</ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="VistaDeReportes.resx">
+      <DependentUpon>VistaDeReportes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes.resx">
+      <DependentUpon>Reportes.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
