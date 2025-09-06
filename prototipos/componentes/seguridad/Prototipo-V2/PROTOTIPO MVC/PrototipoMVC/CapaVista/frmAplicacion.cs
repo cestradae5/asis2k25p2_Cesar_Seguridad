@@ -1,4 +1,5 @@
-﻿using System;
+﻿//Cesar Armando Estrtada Elias 0901-22-10153
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,7 +8,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-//referencias a modelo y controlador
 using CapaControlador;
 using CapaModelo;
 
