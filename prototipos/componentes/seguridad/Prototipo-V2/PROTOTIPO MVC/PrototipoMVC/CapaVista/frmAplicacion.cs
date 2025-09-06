@@ -8,7 +8,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-//referencias a modelo y controlador
 using CapaControlador;
 using CapaModelo;
 
