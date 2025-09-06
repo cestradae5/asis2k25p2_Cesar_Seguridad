@@ -1,5 +1,7 @@
-﻿using System;
+﻿using CapaModeloNavegador;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +11,7 @@ namespace CapaControladorNavegador
 {
     public class ControladorNavegador
     {
+        SentenciasMYSQL sentencias = new SentenciasMYSQL();
         public void AsignarAlias(string[] alias, Control contenedor, int startX, int startY)
         {
             int spacingY = 30; // Espacio vertical entre cada par Label/TextBox
@@ -66,6 +69,11 @@ namespace CapaControladorNavegador
         public void Insertar_Datos()
         {
 
+        }
+
+        public DataTable LlenarTabla(string tabla, string[] alias) 
+        {
+            return sentencias.LlenarTabla(tabla, alias);
         }
     }
 }

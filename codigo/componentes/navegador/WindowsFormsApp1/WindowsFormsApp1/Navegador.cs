@@ -71,18 +71,67 @@ namespace WindowsFormsApp1
             Btn_fin.Enabled = false;
         }
         ControladorNavegador ctrl = new ControladorNavegador();
-        //ctrl.AsignarDataGridView();  Aquí se coloca el nombre del DataGridView
 
         private void Btn_inicio_Click(object sender, EventArgs e)
         {
-            
+            paginaActual = 1; 
+            MostrarPagina(paginaActual);
             ctrl.MoverAlInicio();
         }
 
         private void Btn_fin_Click(object sender, EventArgs e)
         {
-            
+            paginaActual = totalPaginas; 
+            MostrarPagina(paginaActual);
             ctrl.MoverAlFin();
+        }
+
+
+        // parte del datagridview con la funcion del boton imprimir
+
+        private DataGridView Dgv_Datos; 
+        private int registrosPorPagina = 9; // aqui se cambia el numero de registros por pagina
+        private int paginaActual = 1;
+        private int totalPaginas = 0;
+        private DataTable dtCompleto;
+        private void Btn_imprimir_Click(object sender, EventArgs e)
+        {
+            if (Dgv_Datos == null) 
+            {
+                Dgv_Datos = new DataGridView();
+                Dgv_Datos.Name = "Dgv_Datos";
+                Dgv_Datos.ScrollBars = ScrollBars.None;
+                Dgv_Datos.BackgroundColor = Color.White;
+                Dgv_Datos.ColumnHeadersDefaultCellStyle.Font = new Font("Microsoft Sans Serif", 9, FontStyle.Bold);
+                Dgv_Datos.Location = new System.Drawing.Point(10, 250); // aqui se cambia la posicion (por si hay que agregar otra cosa)
+                Dgv_Datos.Size = new System.Drawing.Size(1100, 200); // aqui se cambia el tamaño (tambien por si acaso ajaj)
+                Dgv_Datos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill; 
+                this.Controls.Add(Dgv_Datos); 
+                ctrl.AsignarDataGridView(Dgv_Datos); 
+            } 
+
+
+
+            // Definir los alias de la tabla (dependiendo de la tabla que se use)
+            string[] alias = { "codigo_empleado", "nombre_completo", "puesto", "departamento" };
+
+            // aqui se llena la tabla y tambien se le pone el nombre (dependiendo de la tabla que se vaya a usar)
+            dtCompleto = ctrl.LlenarTabla("empleados", alias);
+            Dgv_Datos.DataSource = dtCompleto;
+
+            totalPaginas = (int)Math.Ceiling(dtCompleto.Rows.Count / (double)registrosPorPagina); 
+            paginaActual = 1; MostrarPagina(paginaActual); 
+        }
+        private void MostrarPagina(int pagina) 
+        { 
+            DataTable dtPagina = dtCompleto.Clone();
+            int inicio = (pagina - 1) * registrosPorPagina; 
+            int fin = Math.Min(inicio + registrosPorPagina, dtCompleto.Rows.Count);
+            for (int i = inicio; i < fin; i++) 
+            { 
+                dtPagina.ImportRow(dtCompleto.Rows[i]);
+            }
+            Dgv_Datos.DataSource = dtPagina; 
         }
     }
 }
