@@ -30,11 +30,11 @@ namespace Capa_Vista_Componente_Consultas
         private void InitializeComponent()
         {
             this.gpb_Listado = new System.Windows.Forms.GroupBox();
+            this.txt_Consulta = new System.Windows.Forms.TextBox();
+            this.lbl_Cadena_Generada = new System.Windows.Forms.Label();
+            this.lbl_Query = new System.Windows.Forms.Label();
             this.btnQuitarCampo = new System.Windows.Forms.Button();
             this.cbo_Query = new System.Windows.Forms.ComboBox();
-            this.lbl_Query = new System.Windows.Forms.Label();
-            this.lbl_Cadena_Generada = new System.Windows.Forms.Label();
-            this.txt_Consulta = new System.Windows.Forms.TextBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.Mstp_Consultas = new System.Windows.Forms.MenuStrip();
             this.creaciònToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -64,6 +64,36 @@ namespace Capa_Vista_Componente_Consultas
             this.gpb_Listado.TabStop = false;
             this.gpb_Listado.Text = "Listado";
             // 
+            // txt_Consulta
+            // 
+            this.txt_Consulta.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.txt_Consulta.Font = new System.Drawing.Font("Rockwell", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_Consulta.Location = new System.Drawing.Point(334, 81);
+            this.txt_Consulta.Name = "txt_Consulta";
+            this.txt_Consulta.ReadOnly = true;
+            this.txt_Consulta.Size = new System.Drawing.Size(439, 27);
+            this.txt_Consulta.TabIndex = 8;
+            // 
+            // lbl_Cadena_Generada
+            // 
+            this.lbl_Cadena_Generada.AutoSize = true;
+            this.lbl_Cadena_Generada.Font = new System.Drawing.Font("Rockwell", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_Cadena_Generada.Location = new System.Drawing.Point(330, 55);
+            this.lbl_Cadena_Generada.Name = "lbl_Cadena_Generada";
+            this.lbl_Cadena_Generada.Size = new System.Drawing.Size(171, 21);
+            this.lbl_Cadena_Generada.TabIndex = 7;
+            this.lbl_Cadena_Generada.Text = "Cadena Generada";
+            // 
+            // lbl_Query
+            // 
+            this.lbl_Query.AutoSize = true;
+            this.lbl_Query.Font = new System.Drawing.Font("Rockwell", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_Query.Location = new System.Drawing.Point(49, 55);
+            this.lbl_Query.Name = "lbl_Query";
+            this.lbl_Query.Size = new System.Drawing.Size(66, 21);
+            this.lbl_Query.TabIndex = 6;
+            this.lbl_Query.Text = "Query";
+            // 
             // btnQuitarCampo
             // 
             this.btnQuitarCampo.Font = new System.Drawing.Font("Rockwell", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -89,36 +119,6 @@ namespace Capa_Vista_Componente_Consultas
             this.cbo_Query.Name = "cbo_Query";
             this.cbo_Query.Size = new System.Drawing.Size(209, 28);
             this.cbo_Query.TabIndex = 0;
-            // 
-            // lbl_Query
-            // 
-            this.lbl_Query.AutoSize = true;
-            this.lbl_Query.Font = new System.Drawing.Font("Rockwell", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_Query.Location = new System.Drawing.Point(49, 55);
-            this.lbl_Query.Name = "lbl_Query";
-            this.lbl_Query.Size = new System.Drawing.Size(66, 21);
-            this.lbl_Query.TabIndex = 6;
-            this.lbl_Query.Text = "Query";
-            // 
-            // lbl_Cadena_Generada
-            // 
-            this.lbl_Cadena_Generada.AutoSize = true;
-            this.lbl_Cadena_Generada.Font = new System.Drawing.Font("Rockwell", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_Cadena_Generada.Location = new System.Drawing.Point(342, 55);
-            this.lbl_Cadena_Generada.Name = "lbl_Cadena_Generada";
-            this.lbl_Cadena_Generada.Size = new System.Drawing.Size(171, 21);
-            this.lbl_Cadena_Generada.TabIndex = 7;
-            this.lbl_Cadena_Generada.Text = "Cadena Generada";
-            // 
-            // txt_Consulta
-            // 
-            this.txt_Consulta.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.txt_Consulta.Font = new System.Drawing.Font("Rockwell", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_Consulta.Location = new System.Drawing.Point(346, 79);
-            this.txt_Consulta.Name = "txt_Consulta";
-            this.txt_Consulta.ReadOnly = true;
-            this.txt_Consulta.Size = new System.Drawing.Size(439, 27);
-            this.txt_Consulta.TabIndex = 8;
             // 
             // dataGridView1
             // 
