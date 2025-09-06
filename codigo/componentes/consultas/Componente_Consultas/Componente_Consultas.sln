@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.36324.18
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Capa_Vista_Componente_Consultas", "Capa_Vista_Componente_Consultas\Capa_Vista_Componente_Consultas.csproj", "{8578DF42-CA9D-4CD8-B278-B86CC9D40174}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Capa_Controlador_Componente_Consultas", "Capa_Controlador_Componente_Consultas\Capa_Controlador_Componente_Consultas.csproj", "{F8B55318-D5F5-4A1D-8E65-4674B51B277E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Capa_Controlador_Consultas", "Capa_Controlador_Componente_Consultas\Capa_Controlador_Consultas.csproj", "{F8B55318-D5F5-4A1D-8E65-4674B51B277E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Capa_Modelo_Componente_Consultas", "Capa_Modelo_Componente_Consultas\Capa_Modelo_Componente_Consultas.csproj", "{45813C07-56E9-4CD3-8CDA-3AFB057A7DB0}"
 EndProject
