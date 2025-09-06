@@ -36,10 +36,10 @@ namespace CapaVista
             this.lblNuevaContrasena = new System.Windows.Forms.Label();
             this.lblApellido = new System.Windows.Forms.Label();
             this.lblNombre = new System.Windows.Forms.Label();
-            this.txtConfirmarContrasena = new System.Windows.Forms.TextBox();
+            this.txtUsuario = new System.Windows.Forms.TextBox();
+            this.txtToken = new System.Windows.Forms.TextBox();
             this.txtNuevaContrasena = new System.Windows.Forms.TextBox();
-            this.txtApellido = new System.Windows.Forms.TextBox();
-            this.txtNombre = new System.Windows.Forms.TextBox();
+            this.txtConfirmarContrasena = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btnRegresar
@@ -49,10 +49,10 @@ namespace CapaVista
             this.btnRegresar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRegresar.Font = new System.Drawing.Font("Segoe UI Semibold", 7.8F);
             this.btnRegresar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.btnRegresar.Location = new System.Drawing.Point(347, 290);
-            this.btnRegresar.Margin = new System.Windows.Forms.Padding(2);
+            this.btnRegresar.Location = new System.Drawing.Point(463, 357);
+            this.btnRegresar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnRegresar.Name = "btnRegresar";
-            this.btnRegresar.Size = new System.Drawing.Size(106, 39);
+            this.btnRegresar.Size = new System.Drawing.Size(141, 48);
             this.btnRegresar.TabIndex = 46;
             this.btnRegresar.Text = "Regresar";
             this.btnRegresar.UseVisualStyleBackColor = false;
@@ -65,22 +65,22 @@ namespace CapaVista
             this.btnGuardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnGuardar.Font = new System.Drawing.Font("Segoe UI Semibold", 7.8F);
             this.btnGuardar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.btnGuardar.Location = new System.Drawing.Point(144, 290);
-            this.btnGuardar.Margin = new System.Windows.Forms.Padding(2);
+            this.btnGuardar.Location = new System.Drawing.Point(192, 357);
+            this.btnGuardar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnGuardar.Name = "btnGuardar";
-            this.btnGuardar.Size = new System.Drawing.Size(106, 39);
+            this.btnGuardar.Size = new System.Drawing.Size(141, 48);
             this.btnGuardar.TabIndex = 45;
             this.btnGuardar.Text = "Guardar";
             this.btnGuardar.UseVisualStyleBackColor = false;
+            this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 16F);
-            this.label1.Location = new System.Drawing.Point(179, 64);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.Location = new System.Drawing.Point(239, 79);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(226, 30);
+            this.label1.Size = new System.Drawing.Size(276, 37);
             this.label1.TabIndex = 44;
             this.label1.Text = "Recuperar Contraseña";
             // 
@@ -88,10 +88,9 @@ namespace CapaVista
             // 
             this.lblConfirmarContrasena.AutoSize = true;
             this.lblConfirmarContrasena.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.lblConfirmarContrasena.Location = new System.Drawing.Point(67, 230);
-            this.lblConfirmarContrasena.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblConfirmarContrasena.Location = new System.Drawing.Point(119, 279);
             this.lblConfirmarContrasena.Name = "lblConfirmarContrasena";
-            this.lblConfirmarContrasena.Size = new System.Drawing.Size(167, 21);
+            this.lblConfirmarContrasena.Size = new System.Drawing.Size(206, 28);
             this.lblConfirmarContrasena.TabIndex = 43;
             this.lblConfirmarContrasena.Text = "Confirmar Contraseña:";
             // 
@@ -99,10 +98,9 @@ namespace CapaVista
             // 
             this.lblNuevaContrasena.AutoSize = true;
             this.lblNuevaContrasena.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.lblNuevaContrasena.Location = new System.Drawing.Point(98, 194);
-            this.lblNuevaContrasena.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblNuevaContrasena.Location = new System.Drawing.Point(150, 242);
             this.lblNuevaContrasena.Name = "lblNuevaContrasena";
-            this.lblNuevaContrasena.Size = new System.Drawing.Size(141, 21);
+            this.lblNuevaContrasena.Size = new System.Drawing.Size(175, 28);
             this.lblNuevaContrasena.TabIndex = 42;
             this.lblNuevaContrasena.Text = "Nueva Contraseña:";
             // 
@@ -110,65 +108,59 @@ namespace CapaVista
             // 
             this.lblApellido.AutoSize = true;
             this.lblApellido.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.lblApellido.Location = new System.Drawing.Point(183, 162);
-            this.lblApellido.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblApellido.Location = new System.Drawing.Point(258, 197);
             this.lblApellido.Name = "lblApellido";
-            this.lblApellido.Size = new System.Drawing.Size(70, 21);
+            this.lblApellido.Size = new System.Drawing.Size(67, 28);
             this.lblApellido.TabIndex = 41;
-            this.lblApellido.Text = "Apellido:";
+            this.lblApellido.Text = "Token:";
             // 
             // lblNombre
             // 
             this.lblNombre.AutoSize = true;
             this.lblNombre.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.lblNombre.Location = new System.Drawing.Point(184, 127);
-            this.lblNombre.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblNombre.Location = new System.Drawing.Point(245, 156);
             this.lblNombre.Name = "lblNombre";
-            this.lblNombre.Size = new System.Drawing.Size(71, 21);
+            this.lblNombre.Size = new System.Drawing.Size(80, 28);
             this.lblNombre.TabIndex = 40;
-            this.lblNombre.Text = "Nombre:";
+            this.lblNombre.Text = "usuario:";
             // 
-            // txtConfirmarContrasena
+            // txtUsuario
             // 
-            this.txtConfirmarContrasena.Location = new System.Drawing.Point(267, 238);
-            this.txtConfirmarContrasena.Margin = new System.Windows.Forms.Padding(2);
-            this.txtConfirmarContrasena.Name = "txtConfirmarContrasena";
-            this.txtConfirmarContrasena.Size = new System.Drawing.Size(188, 20);
-            this.txtConfirmarContrasena.TabIndex = 39;
-            this.txtConfirmarContrasena.TextChanged += new System.EventHandler(this.txtConfirmarContrasena_TextChanged);
+            this.txtUsuario.Location = new System.Drawing.Point(366, 163);
+            this.txtUsuario.Name = "txtUsuario";
+            this.txtUsuario.Size = new System.Drawing.Size(211, 22);
+            this.txtUsuario.TabIndex = 47;
+            // 
+            // txtToken
+            // 
+            this.txtToken.Location = new System.Drawing.Point(366, 204);
+            this.txtToken.Name = "txtToken";
+            this.txtToken.Size = new System.Drawing.Size(211, 22);
+            this.txtToken.TabIndex = 48;
             // 
             // txtNuevaContrasena
             // 
-            this.txtNuevaContrasena.Location = new System.Drawing.Point(267, 202);
-            this.txtNuevaContrasena.Margin = new System.Windows.Forms.Padding(2);
+            this.txtNuevaContrasena.Location = new System.Drawing.Point(366, 248);
             this.txtNuevaContrasena.Name = "txtNuevaContrasena";
-            this.txtNuevaContrasena.Size = new System.Drawing.Size(188, 20);
-            this.txtNuevaContrasena.TabIndex = 38;
-            this.txtNuevaContrasena.TextChanged += new System.EventHandler(this.txtNuevaContrasena_TextChanged);
+            this.txtNuevaContrasena.Size = new System.Drawing.Size(211, 22);
+            this.txtNuevaContrasena.TabIndex = 49;
             // 
-            // txtApellido
+            // txtConfirmarContrasena
             // 
-            this.txtApellido.Location = new System.Drawing.Point(267, 167);
-            this.txtApellido.Margin = new System.Windows.Forms.Padding(2);
-            this.txtApellido.Name = "txtApellido";
-            this.txtApellido.Size = new System.Drawing.Size(188, 20);
-            this.txtApellido.TabIndex = 37;
-            this.txtApellido.TextChanged += new System.EventHandler(this.txtApellido_TextChanged);
-            // 
-            // txtNombre
-            // 
-            this.txtNombre.Location = new System.Drawing.Point(267, 132);
-            this.txtNombre.Margin = new System.Windows.Forms.Padding(2);
-            this.txtNombre.Name = "txtNombre";
-            this.txtNombre.Size = new System.Drawing.Size(188, 20);
-            this.txtNombre.TabIndex = 36;
-            this.txtNombre.TextChanged += new System.EventHandler(this.txtNombre_TextChanged);
+            this.txtConfirmarContrasena.Location = new System.Drawing.Point(366, 285);
+            this.txtConfirmarContrasena.Name = "txtConfirmarContrasena";
+            this.txtConfirmarContrasena.Size = new System.Drawing.Size(211, 22);
+            this.txtConfirmarContrasena.TabIndex = 50;
             // 
             // frmRecuperarContrasena
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(575, 373);
+            this.ClientSize = new System.Drawing.Size(767, 459);
+            this.Controls.Add(this.txtConfirmarContrasena);
+            this.Controls.Add(this.txtNuevaContrasena);
+            this.Controls.Add(this.txtToken);
+            this.Controls.Add(this.txtUsuario);
             this.Controls.Add(this.btnRegresar);
             this.Controls.Add(this.btnGuardar);
             this.Controls.Add(this.label1);
@@ -176,10 +168,7 @@ namespace CapaVista
             this.Controls.Add(this.lblNuevaContrasena);
             this.Controls.Add(this.lblApellido);
             this.Controls.Add(this.lblNombre);
-            this.Controls.Add(this.txtConfirmarContrasena);
-            this.Controls.Add(this.txtNuevaContrasena);
-            this.Controls.Add(this.txtApellido);
-            this.Controls.Add(this.txtNombre);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmRecuperarContrasena";
             this.Text = "frmRecuperarContrasena";
             this.ResumeLayout(false);
@@ -196,9 +185,9 @@ namespace CapaVista
         private System.Windows.Forms.Label lblNuevaContrasena;
         private System.Windows.Forms.Label lblApellido;
         private System.Windows.Forms.Label lblNombre;
-        private System.Windows.Forms.TextBox txtConfirmarContrasena;
+        private System.Windows.Forms.TextBox txtUsuario;
+        private System.Windows.Forms.TextBox txtToken;
         private System.Windows.Forms.TextBox txtNuevaContrasena;
-        private System.Windows.Forms.TextBox txtApellido;
-        private System.Windows.Forms.TextBox txtNombre;
+        private System.Windows.Forms.TextBox txtConfirmarContrasena;
     }
 }
