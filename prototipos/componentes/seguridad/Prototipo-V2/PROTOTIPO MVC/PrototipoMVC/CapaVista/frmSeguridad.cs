@@ -103,5 +103,11 @@ namespace CapaVista
             this.Close();
 
         }
+
+        private void btn_aplicacion_Click(object sender, EventArgs e)
+        {
+            FrmAplicacion formAplicacion = new FrmAplicacion();
+            formAplicacion.Show();
+        }
     }
 }
