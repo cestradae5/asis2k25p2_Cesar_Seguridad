@@ -51,7 +51,14 @@ namespace CapaVista
             this.mantenimientoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btn_aplicacion = new System.Windows.Forms.ToolStripMenuItem();
             this.empleadosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+
             this.perfilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+
+            this.asignacionesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.asignacionesDeAplicacionAUsuarioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.perfilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.asignacionDePerfilesAUsuarioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+
             this.statusStrip.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -87,7 +94,8 @@ namespace CapaVista
             this.toolsMenu,
             this.helpMenu,
             this.mantenimientoToolStripMenuItem,
-            this.empleadosToolStripMenuItem});
+            this.empleadosToolStripMenuItem,
+            this.asignacionesToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
@@ -211,13 +219,41 @@ namespace CapaVista
             this.empleadosToolStripMenuItem.Text = "Empleados";
             this.empleadosToolStripMenuItem.Click += new System.EventHandler(this.empleadosToolStripMenuItem_Click);
             // 
+
+
+            // asignacionesToolStripMenuItem
+            // 
+            this.asignacionesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.asignacionesDeAplicacionAUsuarioToolStripMenuItem,
+            this.asignacionDePerfilesAUsuarioToolStripMenuItem});
+            this.asignacionesToolStripMenuItem.Name = "asignacionesToolStripMenuItem";
+            this.asignacionesToolStripMenuItem.Size = new System.Drawing.Size(110, 24);
+            this.asignacionesToolStripMenuItem.Text = "Asignaciones";
+            // 
+            // asignacionesDeAplicacionAUsuarioToolStripMenuItem
+            // 
+            this.asignacionesDeAplicacionAUsuarioToolStripMenuItem.Name = "asignacionesDeAplicacionAUsuarioToolStripMenuItem";
+            this.asignacionesDeAplicacionAUsuarioToolStripMenuItem.Size = new System.Drawing.Size(342, 26);
+            this.asignacionesDeAplicacionAUsuarioToolStripMenuItem.Text = "Asignaciones De Aplicacion a Usuario";
+            this.asignacionesDeAplicacionAUsuarioToolStripMenuItem.Click += new System.EventHandler(this.asignacionesDeAplicacionAUsuarioToolStripMenuItem_Click);
+            // 
+
             // perfilesToolStripMenuItem
             // 
             this.perfilesToolStripMenuItem.Name = "perfilesToolStripMenuItem";
             this.perfilesToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.perfilesToolStripMenuItem.Text = "Perfiles";
             this.perfilesToolStripMenuItem.Click += new System.EventHandler(this.perfilesToolStripMenuItem_Click);
+
+
+            // asignacionDePerfilesAUsuarioToolStripMenuItem
             // 
+            this.asignacionDePerfilesAUsuarioToolStripMenuItem.Name = "asignacionDePerfilesAUsuarioToolStripMenuItem";
+            this.asignacionDePerfilesAUsuarioToolStripMenuItem.Size = new System.Drawing.Size(342, 26);
+            this.asignacionDePerfilesAUsuarioToolStripMenuItem.Text = "Asignacion De Perfiles a Usuario";
+            this.asignacionDePerfilesAUsuarioToolStripMenuItem.Click += new System.EventHandler(this.asignacionDePerfilesAUsuarioToolStripMenuItem_Click);
+            // 
+
             // frmSeguridad
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -258,7 +294,14 @@ namespace CapaVista
         private System.Windows.Forms.ToolStripMenuItem mantenimientoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem btn_aplicacion;
         private System.Windows.Forms.ToolStripMenuItem empleadosToolStripMenuItem;
+
         private System.Windows.Forms.ToolStripMenuItem perfilesToolStripMenuItem;
+
+        private System.Windows.Forms.ToolStripMenuItem asignacionesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem asignacionesDeAplicacionAUsuarioToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem perfilesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem asignacionDePerfilesAUsuarioToolStripMenuItem;
+
     }
 }
 
