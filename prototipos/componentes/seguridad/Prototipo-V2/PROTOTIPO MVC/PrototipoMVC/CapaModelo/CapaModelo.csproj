@@ -46,6 +46,7 @@
     <Compile Include="Cls_AsignacionModuloAplicacion.cs" />
     <Compile Include="Conexion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SentenciaLogin.cs" />
     <Compile Include="SentenciaPruebaBD.cs" />
     <Compile Include="SentenciaRecuperarContrasena.cs" />
   </ItemGroup>

@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cls_AplicacionControlador.cs" />
+    <Compile Include="ControladorLogin.cs" />
     <Compile Include="ControladorPruebaBD.cs" />
     <Compile Include="ControladorRecuperarContrasena.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
