@@ -31,7 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CapaModelo">
+    <Reference Include="CapaModelo, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\CapaModelo\bin\Debug\CapaModelo.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -48,6 +49,9 @@
   <ItemGroup>
     <Compile Include="ControladorAsignacionUsuarioAplicacion.cs" />
     <Compile Include="ControladorPerfiles.cs" />
+    <Compile Include="Cls_AplicacionControlador.cs" />
+    <Compile Include="ControladorLogin.cs" />
+    <Compile Include="Cls_EmpleadosControlador.cs" />
     <Compile Include="ControladorPruebaBD.cs" />
     <Compile Include="ControladorRecuperarContrasena.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

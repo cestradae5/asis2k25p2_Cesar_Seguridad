@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-namespace PrototipoPrincipal
+
+namespace Ejecucion
 {
     static class Program
     {
@@ -15,7 +16,7 @@ namespace PrototipoPrincipal
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new CapaVista.frmLogin());
+            Application.Run(new CapaVista.Consulta ());
         }
     }
 }

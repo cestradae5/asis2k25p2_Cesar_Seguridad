@@ -53,6 +53,9 @@ namespace CapaVista
             this.asignacionesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.asignacionDePerfilAUsuariosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.asignacionAplicacionAUsuarioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mantenimientoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btn_aplicacion = new System.Windows.Forms.ToolStripMenuItem();
+            this.empleadosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -60,12 +63,15 @@ namespace CapaVista
             // statusStrip
             // 
             this.statusStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.statusStrip.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel});
             this.statusStrip.Location = new System.Drawing.Point(0, 532);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
             this.statusStrip.Size = new System.Drawing.Size(843, 26);
+            this.statusStrip.Padding = new System.Windows.Forms.Padding(2, 0, 19, 0);
+            this.statusStrip.Size = new System.Drawing.Size(1155, 26);
             this.statusStrip.TabIndex = 2;
             this.statusStrip.Text = "StatusStrip";
             // 
@@ -93,6 +99,12 @@ namespace CapaVista
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
             this.menuStrip1.Size = new System.Drawing.Size(843, 28);
+            this.mantenimientoToolStripMenuItem,
+            this.empleadosToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(1155, 28);
             this.menuStrip1.TabIndex = 24;
             this.menuStrip1.Text = "MenuStrip";
             // 
@@ -227,6 +239,27 @@ namespace CapaVista
             this.asignacionAplicacionAUsuarioToolStripMenuItem.Size = new System.Drawing.Size(305, 26);
             this.asignacionAplicacionAUsuarioToolStripMenuItem.Text = "Asignacion Aplicacion a Usuario";
             this.asignacionAplicacionAUsuarioToolStripMenuItem.Click += new System.EventHandler(this.asignacionAplicacionAUsuarioToolStripMenuItem_Click);
+            // mantenimientoToolStripMenuItem
+            // 
+            this.mantenimientoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btn_aplicacion});
+            this.mantenimientoToolStripMenuItem.Name = "mantenimientoToolStripMenuItem";
+            this.mantenimientoToolStripMenuItem.Size = new System.Drawing.Size(124, 24);
+            this.mantenimientoToolStripMenuItem.Text = "Mantenimiento";
+            // 
+            // btn_aplicacion
+            // 
+            this.btn_aplicacion.Name = "btn_aplicacion";
+            this.btn_aplicacion.Size = new System.Drawing.Size(162, 26);
+            this.btn_aplicacion.Text = "Aplicacion";
+            this.btn_aplicacion.Click += new System.EventHandler(this.btn_aplicacion_Click);
+            // 
+            // empleadosToolStripMenuItem
+            // 
+            this.empleadosToolStripMenuItem.Name = "empleadosToolStripMenuItem";
+            this.empleadosToolStripMenuItem.Size = new System.Drawing.Size(97, 24);
+            this.empleadosToolStripMenuItem.Text = "Empleados";
+            this.empleadosToolStripMenuItem.Click += new System.EventHandler(this.empleadosToolStripMenuItem_Click);
             // 
             // frmSeguridad
             // 
@@ -237,6 +270,11 @@ namespace CapaVista
             this.Controls.Add(this.statusStrip);
             this.IsMdiContainer = true;
             this.Margin = new System.Windows.Forms.Padding(4);
+            this.ClientSize = new System.Drawing.Size(1155, 558);
+            this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.statusStrip);
+            this.IsMdiContainer = true;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "frmSeguridad";
             this.Text = "frmSeguridad";
             this.statusStrip.ResumeLayout(false);
@@ -270,6 +308,9 @@ namespace CapaVista
         private System.Windows.Forms.ToolStripMenuItem asignacionesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem asignacionDePerfilAUsuariosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem asignacionAplicacionAUsuarioToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mantenimientoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem btn_aplicacion;
+        private System.Windows.Forms.ToolStripMenuItem empleadosToolStripMenuItem;
     }
 }
 
