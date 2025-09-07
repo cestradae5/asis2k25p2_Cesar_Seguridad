@@ -1,4 +1,4 @@
-﻿// Ernesto David Samayoa Jocol - Generado en base a tbl_EMPLEADO
+﻿// Ernesto David Samayoa Jocol
 using System;
 using System.Collections.Generic;
 using System.Linq;

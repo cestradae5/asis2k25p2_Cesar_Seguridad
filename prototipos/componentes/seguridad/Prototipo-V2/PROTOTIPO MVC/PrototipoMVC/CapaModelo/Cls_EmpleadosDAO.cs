@@ -1,4 +1,4 @@
-﻿// Ernesto David Samayoa Jocol - DAO para tbl_EMPLEADO
+﻿// Ernesto David Samayoa Jocol
 using System;
 using System.Collections.Generic;
 using System.Data.Odbc;
