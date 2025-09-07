@@ -75,14 +75,14 @@ namespace WindowsFormsApp1
 
         private void Btn_inicio_Click(object sender, EventArgs e)
         {
-            paginaActual = 1; 
+            paginaActual = 1;
             MostrarPagina(paginaActual);
             ctrl.MoverAlInicio();
         }
 
         private void Btn_fin_Click(object sender, EventArgs e)
         {
-            paginaActual = totalPaginas; 
+            paginaActual = totalPaginas;
             MostrarPagina(paginaActual);
             ctrl.MoverAlFin();
         }
@@ -90,14 +90,14 @@ namespace WindowsFormsApp1
 
         // parte del datagridview con la funcion del boton imprimir
 
-        private DataGridView Dgv_Datos; 
+        private DataGridView Dgv_Datos;
         private int registrosPorPagina = 9; // aqui se cambia el numero de registros por pagina
         private int paginaActual = 1;
         private int totalPaginas = 0;
         private DataTable dtCompleto;
         private void Btn_imprimir_Click(object sender, EventArgs e)
         {
-            if (Dgv_Datos == null) 
+            if (Dgv_Datos == null)
             {
                 Dgv_Datos = new DataGridView();
                 Dgv_Datos.Name = "Dgv_Datos";
@@ -106,38 +106,63 @@ namespace WindowsFormsApp1
                 Dgv_Datos.ColumnHeadersDefaultCellStyle.Font = new Font("Microsoft Sans Serif", 9, FontStyle.Bold);
                 Dgv_Datos.Location = new System.Drawing.Point(10, 250); // aqui se cambia la posicion (por si hay que agregar otra cosa)
                 Dgv_Datos.Size = new System.Drawing.Size(1100, 200); // aqui se cambia el tamaño (tambien por si acaso ajaj)
-                Dgv_Datos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill; 
-                this.Controls.Add(Dgv_Datos); 
-                ctrl.AsignarDataGridView(Dgv_Datos); 
+                Dgv_Datos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                this.Controls.Add(Dgv_Datos);
+                ctrl.AsignarDataGridView(Dgv_Datos);
             }
 
 
 
             // Definir los alias de la tabla (dependiendo de la tabla que se use)
-            string[] alias = {"DPI", "Nombre", "Especialidad", "Edad" };
+            string[] alias = { "DPI", "Nombre", "Especialidad", "Edad" };
 
             // aqui se llena la tabla y tambien se le pone el nombre (dependiendo de la tabla que se vaya a usar)
             dtCompleto = ctrl.LlenarTabla("medico", alias);
             Dgv_Datos.DataSource = dtCompleto;
 
-            totalPaginas = (int)Math.Ceiling(dtCompleto.Rows.Count / (double)registrosPorPagina); 
-            paginaActual = 1; MostrarPagina(paginaActual); 
+            totalPaginas = (int)Math.Ceiling(dtCompleto.Rows.Count / (double)registrosPorPagina);
+            paginaActual = 1; MostrarPagina(paginaActual);
         }
-        private void MostrarPagina(int pagina) 
-        { 
+        private void MostrarPagina(int pagina)
+        {
             DataTable dtPagina = dtCompleto.Clone();
-            int inicio = (pagina - 1) * registrosPorPagina; 
+            int inicio = (pagina - 1) * registrosPorPagina;
             int fin = Math.Min(inicio + registrosPorPagina, dtCompleto.Rows.Count);
-            for (int i = inicio; i < fin; i++) 
-            { 
+            for (int i = inicio; i < fin; i++)
+            {
                 dtPagina.ImportRow(dtCompleto.Rows[i]);
             }
-            Dgv_Datos.DataSource = dtPagina; 
+            Dgv_Datos.DataSource = dtPagina;
         }
 
         private void Btn_salir_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void Btn_anterior_Click(object sender, EventArgs e){
+            if (paginaActual == 1){
+                return;
+            }
+            paginaActual -= 1;
+            MostrarPagina(paginaActual);
+            ActualizarBotonesSegunPaginasDisponibles();
+        }
+
+        private void Btn_siguiente_Click(object sender, EventArgs e){
+            if (paginaActual == totalPaginas){
+                return;
+            }
+            paginaActual += 1;
+            MostrarPagina(paginaActual);
+            ActualizarBotonesSegunPaginasDisponibles();
+        }
+
+        private void ActualizarBotonesSegunPaginasDisponibles() {
+            Btn_inicio.Enabled = paginaActual > 1;
+            Btn_anterior.Enabled = paginaActual > 1;
+            Btn_sig.Enabled = paginaActual < totalPaginas;
+            Btn_fin.Enabled = paginaActual < totalPaginas;
         }
     }
 }

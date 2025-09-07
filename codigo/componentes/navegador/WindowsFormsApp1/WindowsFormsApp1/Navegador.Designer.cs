@@ -51,10 +51,9 @@ namespace WindowsFormsApp1
             // Btn_salir
             // 
             this.Btn_salir.Image = ((System.Drawing.Image)(resources.GetObject("Btn_salir.Image")));
-            this.Btn_salir.Location = new System.Drawing.Point(1395, 4);
-            this.Btn_salir.Margin = new System.Windows.Forms.Padding(4);
+            this.Btn_salir.Location = new System.Drawing.Point(1043, 3);
             this.Btn_salir.Name = "Btn_salir";
-            this.Btn_salir.Size = new System.Drawing.Size(99, 107);
+            this.Btn_salir.Size = new System.Drawing.Size(74, 87);
             this.Btn_salir.TabIndex = 13;
             this.Btn_salir.Text = "Salir";
             this.Btn_salir.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -64,10 +63,9 @@ namespace WindowsFormsApp1
             // Btn_ayuda
             // 
             this.Btn_ayuda.Image = ((System.Drawing.Image)(resources.GetObject("Btn_ayuda.Image")));
-            this.Btn_ayuda.Location = new System.Drawing.Point(1288, 4);
-            this.Btn_ayuda.Margin = new System.Windows.Forms.Padding(4);
+            this.Btn_ayuda.Location = new System.Drawing.Point(963, 3);
             this.Btn_ayuda.Name = "Btn_ayuda";
-            this.Btn_ayuda.Size = new System.Drawing.Size(99, 107);
+            this.Btn_ayuda.Size = new System.Drawing.Size(74, 87);
             this.Btn_ayuda.TabIndex = 12;
             this.Btn_ayuda.Text = "Ayuda";
             this.Btn_ayuda.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -76,10 +74,9 @@ namespace WindowsFormsApp1
             // Btn_fin
             // 
             this.Btn_fin.Image = ((System.Drawing.Image)(resources.GetObject("Btn_fin.Image")));
-            this.Btn_fin.Location = new System.Drawing.Point(1181, 4);
-            this.Btn_fin.Margin = new System.Windows.Forms.Padding(4);
+            this.Btn_fin.Location = new System.Drawing.Point(883, 3);
             this.Btn_fin.Name = "Btn_fin";
-            this.Btn_fin.Size = new System.Drawing.Size(99, 107);
+            this.Btn_fin.Size = new System.Drawing.Size(74, 87);
             this.Btn_fin.TabIndex = 11;
             this.Btn_fin.Text = "Fin";
             this.Btn_fin.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -89,34 +86,33 @@ namespace WindowsFormsApp1
             // Btn_sig
             // 
             this.Btn_sig.Image = ((System.Drawing.Image)(resources.GetObject("Btn_sig.Image")));
-            this.Btn_sig.Location = new System.Drawing.Point(1074, 4);
-            this.Btn_sig.Margin = new System.Windows.Forms.Padding(4);
+            this.Btn_sig.Location = new System.Drawing.Point(803, 3);
             this.Btn_sig.Name = "Btn_sig";
-            this.Btn_sig.Size = new System.Drawing.Size(99, 107);
+            this.Btn_sig.Size = new System.Drawing.Size(74, 87);
             this.Btn_sig.TabIndex = 10;
             this.Btn_sig.Text = "Siguiente";
             this.Btn_sig.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.Btn_sig.UseVisualStyleBackColor = true;
+            this.Btn_sig.Click += new System.EventHandler(this.Btn_siguiente_Click);
             // 
             // Btn_anterior
             // 
             this.Btn_anterior.Image = ((System.Drawing.Image)(resources.GetObject("Btn_anterior.Image")));
-            this.Btn_anterior.Location = new System.Drawing.Point(967, 4);
-            this.Btn_anterior.Margin = new System.Windows.Forms.Padding(4);
+            this.Btn_anterior.Location = new System.Drawing.Point(723, 3);
             this.Btn_anterior.Name = "Btn_anterior";
-            this.Btn_anterior.Size = new System.Drawing.Size(99, 107);
+            this.Btn_anterior.Size = new System.Drawing.Size(74, 87);
             this.Btn_anterior.TabIndex = 9;
             this.Btn_anterior.Text = "Anterior";
             this.Btn_anterior.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.Btn_anterior.UseVisualStyleBackColor = true;
+            this.Btn_anterior.Click += new System.EventHandler(this.Btn_anterior_Click);
             // 
             // Btn_inicio
             // 
             this.Btn_inicio.Image = ((System.Drawing.Image)(resources.GetObject("Btn_inicio.Image")));
-            this.Btn_inicio.Location = new System.Drawing.Point(860, 4);
-            this.Btn_inicio.Margin = new System.Windows.Forms.Padding(4);
+            this.Btn_inicio.Location = new System.Drawing.Point(643, 3);
             this.Btn_inicio.Name = "Btn_inicio";
-            this.Btn_inicio.Size = new System.Drawing.Size(99, 107);
+            this.Btn_inicio.Size = new System.Drawing.Size(74, 87);
             this.Btn_inicio.TabIndex = 8;
             this.Btn_inicio.Text = "Inicio";
             this.Btn_inicio.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -126,10 +122,9 @@ namespace WindowsFormsApp1
             // Btn_refrescar
             // 
             this.Btn_refrescar.Image = ((System.Drawing.Image)(resources.GetObject("Btn_refrescar.Image")));
-            this.Btn_refrescar.Location = new System.Drawing.Point(753, 4);
-            this.Btn_refrescar.Margin = new System.Windows.Forms.Padding(4);
+            this.Btn_refrescar.Location = new System.Drawing.Point(563, 3);
             this.Btn_refrescar.Name = "Btn_refrescar";
-            this.Btn_refrescar.Size = new System.Drawing.Size(99, 107);
+            this.Btn_refrescar.Size = new System.Drawing.Size(74, 87);
             this.Btn_refrescar.TabIndex = 7;
             this.Btn_refrescar.Text = "Refrescar";
             this.Btn_refrescar.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -138,10 +133,9 @@ namespace WindowsFormsApp1
             // Btn_imprimir
             // 
             this.Btn_imprimir.Image = ((System.Drawing.Image)(resources.GetObject("Btn_imprimir.Image")));
-            this.Btn_imprimir.Location = new System.Drawing.Point(646, 4);
-            this.Btn_imprimir.Margin = new System.Windows.Forms.Padding(4);
+            this.Btn_imprimir.Location = new System.Drawing.Point(483, 3);
             this.Btn_imprimir.Name = "Btn_imprimir";
-            this.Btn_imprimir.Size = new System.Drawing.Size(99, 107);
+            this.Btn_imprimir.Size = new System.Drawing.Size(74, 87);
             this.Btn_imprimir.TabIndex = 6;
             this.Btn_imprimir.Text = "Imprimir";
             this.Btn_imprimir.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -151,10 +145,9 @@ namespace WindowsFormsApp1
             // Btn_consultar
             // 
             this.Btn_consultar.Image = ((System.Drawing.Image)(resources.GetObject("Btn_consultar.Image")));
-            this.Btn_consultar.Location = new System.Drawing.Point(539, 4);
-            this.Btn_consultar.Margin = new System.Windows.Forms.Padding(4);
+            this.Btn_consultar.Location = new System.Drawing.Point(403, 3);
             this.Btn_consultar.Name = "Btn_consultar";
-            this.Btn_consultar.Size = new System.Drawing.Size(99, 107);
+            this.Btn_consultar.Size = new System.Drawing.Size(74, 87);
             this.Btn_consultar.TabIndex = 5;
             this.Btn_consultar.Text = "Consultar";
             this.Btn_consultar.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -163,10 +156,9 @@ namespace WindowsFormsApp1
             // Btn_eliminar
             // 
             this.Btn_eliminar.Image = global::WindowsFormsApp1.Properties.Resources.delete_remove_trash_icon_177304;
-            this.Btn_eliminar.Location = new System.Drawing.Point(432, 4);
-            this.Btn_eliminar.Margin = new System.Windows.Forms.Padding(4);
+            this.Btn_eliminar.Location = new System.Drawing.Point(323, 3);
             this.Btn_eliminar.Name = "Btn_eliminar";
-            this.Btn_eliminar.Size = new System.Drawing.Size(99, 107);
+            this.Btn_eliminar.Size = new System.Drawing.Size(74, 87);
             this.Btn_eliminar.TabIndex = 4;
             this.Btn_eliminar.Text = "Eliminar";
             this.Btn_eliminar.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -175,10 +167,9 @@ namespace WindowsFormsApp1
             // Btn_cancelar
             // 
             this.Btn_cancelar.Image = ((System.Drawing.Image)(resources.GetObject("Btn_cancelar.Image")));
-            this.Btn_cancelar.Location = new System.Drawing.Point(325, 4);
-            this.Btn_cancelar.Margin = new System.Windows.Forms.Padding(4);
+            this.Btn_cancelar.Location = new System.Drawing.Point(243, 3);
             this.Btn_cancelar.Name = "Btn_cancelar";
-            this.Btn_cancelar.Size = new System.Drawing.Size(99, 107);
+            this.Btn_cancelar.Size = new System.Drawing.Size(74, 87);
             this.Btn_cancelar.TabIndex = 3;
             this.Btn_cancelar.Text = "Cancelar";
             this.Btn_cancelar.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -188,10 +179,9 @@ namespace WindowsFormsApp1
             // Btn_guardar
             // 
             this.Btn_guardar.Image = global::WindowsFormsApp1.Properties.Resources.savetheapplication_guardar_2958;
-            this.Btn_guardar.Location = new System.Drawing.Point(218, 4);
-            this.Btn_guardar.Margin = new System.Windows.Forms.Padding(4);
+            this.Btn_guardar.Location = new System.Drawing.Point(163, 3);
             this.Btn_guardar.Name = "Btn_guardar";
-            this.Btn_guardar.Size = new System.Drawing.Size(99, 107);
+            this.Btn_guardar.Size = new System.Drawing.Size(74, 87);
             this.Btn_guardar.TabIndex = 2;
             this.Btn_guardar.Text = "Guardar";
             this.Btn_guardar.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -201,10 +191,9 @@ namespace WindowsFormsApp1
             // Btn_modificar
             // 
             this.Btn_modificar.Image = global::WindowsFormsApp1.Properties.Resources.compose_edit_modify_icon_177770;
-            this.Btn_modificar.Location = new System.Drawing.Point(111, 4);
-            this.Btn_modificar.Margin = new System.Windows.Forms.Padding(4);
+            this.Btn_modificar.Location = new System.Drawing.Point(83, 3);
             this.Btn_modificar.Name = "Btn_modificar";
-            this.Btn_modificar.Size = new System.Drawing.Size(99, 107);
+            this.Btn_modificar.Size = new System.Drawing.Size(74, 87);
             this.Btn_modificar.TabIndex = 1;
             this.Btn_modificar.Text = "Modificar";
             this.Btn_modificar.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -213,10 +202,9 @@ namespace WindowsFormsApp1
             // Btn_ingresar
             // 
             this.Btn_ingresar.Image = global::WindowsFormsApp1.Properties.Resources.add_insert_new_plus_button_icon_142943;
-            this.Btn_ingresar.Location = new System.Drawing.Point(4, 4);
-            this.Btn_ingresar.Margin = new System.Windows.Forms.Padding(4);
+            this.Btn_ingresar.Location = new System.Drawing.Point(3, 3);
             this.Btn_ingresar.Name = "Btn_ingresar";
-            this.Btn_ingresar.Size = new System.Drawing.Size(99, 107);
+            this.Btn_ingresar.Size = new System.Drawing.Size(74, 87);
             this.Btn_ingresar.TabIndex = 0;
             this.Btn_ingresar.Text = "ingresar";
             this.Btn_ingresar.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -241,19 +229,17 @@ namespace WindowsFormsApp1
             this.flowLayoutPanel1.Controls.Add(this.Btn_salir);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(1625, 116);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1219, 94);
             this.flowLayoutPanel1.TabIndex = 3;
             // 
             // Navegador
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.flowLayoutPanel1);
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Navegador";
-            this.Size = new System.Drawing.Size(1625, 570);
+            this.Size = new System.Drawing.Size(1219, 463);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
