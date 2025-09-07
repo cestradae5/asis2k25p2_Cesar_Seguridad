@@ -11,7 +11,7 @@ namespace CapaModeloNavegador
     {
         public OdbcConnection conexion()
         {
-            OdbcConnection conn = new OdbcConnection("Dsn=Prueba1"); // nombre del dsn, esto se cambia dependiendo del nombre del dsn
+            OdbcConnection conn = new OdbcConnection("Dsn=pruebaCapacitacion"); // nombre del dsn, esto se cambia dependiendo del nombre del dsn
             try
             {
                 conn.Open();

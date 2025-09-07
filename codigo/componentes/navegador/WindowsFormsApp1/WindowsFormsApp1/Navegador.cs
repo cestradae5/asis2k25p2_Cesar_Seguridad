@@ -32,7 +32,8 @@ namespace WindowsFormsApp1
         private void Btn_ingresar_Click(object sender, EventArgs e)
         {
             //string[] alias = { "Clave_empleado", "Nombre", "Apellidos", "Clave_Depto" };
-            string[] alias = { "Clave_Depto", "Nombre", "Presupuesto", "Otra Area" };
+            string[] alias = { "medico", "DPI", "Nombre", "Especialidad", "Edad" };
+
             ControladorNavegador ctrl = new ControladorNavegador(); //crea instancia controlador
             ctrl.AsignarAlias(alias, this, 10, 100); //llama al metodo
 
@@ -53,7 +54,7 @@ namespace WindowsFormsApp1
         private void Btn_guardar_Click(object sender, EventArgs e)
         {
             ControladorNavegador ctrl = new ControladorNavegador(); //crea instancia controlador
-            ctrl.Insertar_Datos();
+            ctrl.Insertar_Datos(this);
         }
 
         private void Btn_cancelar_Click(object sender, EventArgs e)
@@ -108,15 +109,15 @@ namespace WindowsFormsApp1
                 Dgv_Datos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill; 
                 this.Controls.Add(Dgv_Datos); 
                 ctrl.AsignarDataGridView(Dgv_Datos); 
-            } 
+            }
 
 
 
             // Definir los alias de la tabla (dependiendo de la tabla que se use)
-            string[] alias = { "codigo_empleado", "nombre_completo", "puesto", "departamento" };
+            string[] alias = {"DPI", "Nombre", "Especialidad", "Edad" };
 
             // aqui se llena la tabla y tambien se le pone el nombre (dependiendo de la tabla que se vaya a usar)
-            dtCompleto = ctrl.LlenarTabla("empleados", alias);
+            dtCompleto = ctrl.LlenarTabla("medico", alias);
             Dgv_Datos.DataSource = dtCompleto;
 
             totalPaginas = (int)Math.Ceiling(dtCompleto.Rows.Count / (double)registrosPorPagina); 
@@ -132,6 +133,11 @@ namespace WindowsFormsApp1
                 dtPagina.ImportRow(dtCompleto.Rows[i]);
             }
             Dgv_Datos.DataSource = dtPagina; 
+        }
+
+        private void Btn_salir_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

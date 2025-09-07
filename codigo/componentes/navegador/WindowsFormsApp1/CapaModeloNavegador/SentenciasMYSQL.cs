@@ -31,5 +31,45 @@ namespace CapaModeloNavegador
             }
             return dt;
         }
+
+        // aqui se insertarán las instrucciones SQL genericas
+        public string Insertar(string[] alias)
+        {
+            string tabla = alias[0]; //posicion tabla
+            string[] campos = alias.Skip(2).ToArray(); // ignora tabla y pk
+            string columnas = string.Join(",", campos);
+            string parametros = string.Join(",", campos.Select(c => "?"));
+
+            return $"INSERT INTO {tabla} ({columnas}) VALUES ({parametros})";
+        }
+
+        // aqui se consultarán los registros con select segun la tabla que le enviemos
+        public string Consultar(string[] alias)
+        {
+            string tabla = alias[0];
+            return $"SELECT * FROM {tabla}";
+        }
+        
+        //seccion de actualizar datos 
+        public string Actualizar(string[] alias)
+        {
+            string tabla = alias[0];
+            string pkCampo = alias[1];  // posición pk (llave primaria)
+            string[] campos = alias.Skip(2).ToArray(); //los atributos y campos a actualizar
+
+            string set = string.Join(",", campos.Select(c => $"{c}=?")); // genera el set para el update
+
+            return $"UPDATE {tabla} SET {set} WHERE {pkCampo}=?"; // retorna la sentencia sql de update
+        }
+
+        // aqui se elimina el registro usando la pk para localizar el dato
+        public string Eliminar(string[] alias)
+        {
+            string tabla = alias[0];
+            string pkCampo = alias[1];
+
+            return $"DELETE FROM {tabla} WHERE {pkCampo}=?"; // retorna la sentencia sql de delete
+        }
+
     }
 }
