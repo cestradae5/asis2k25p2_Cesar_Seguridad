@@ -1,4 +1,4 @@
-﻿// Ernesto David Samayoa Jocol 
+﻿// Ernesto David Samayoa Jocol - Controlador para tbl_EMPLEADO
 using System;
 using System.Collections.Generic;
 using CapaModelo;
