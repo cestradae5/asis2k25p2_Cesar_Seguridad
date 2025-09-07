@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConexionMYSQL.cs" />
+    <Compile Include="DAOGenerico.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SentenciasMYSQL.cs" />
   </ItemGroup>

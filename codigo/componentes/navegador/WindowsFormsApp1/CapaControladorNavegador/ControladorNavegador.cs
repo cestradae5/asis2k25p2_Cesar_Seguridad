@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.AxHost;
 
 namespace CapaControladorNavegador
 {
@@ -16,7 +17,7 @@ namespace CapaControladorNavegador
         {
             int spacingY = 30; // Espacio vertical entre cada par Label/TextBox
 
-            for (int i = 0; i < alias.Length; i++)
+            for (int i = 1; i < alias.Length; i++)
             {
                 // Crear Label
                 Label lbl = new Label();
@@ -66,9 +67,37 @@ namespace CapaControladorNavegador
         }
 //---------------------------------------------------------------------------------------------------------
 
-        public void Insertar_Datos()
+        public void Insertar_Datos(Control contenedor)
         {
+            // Ejemplo de alias y valores, en la práctica estos vendrían de los TextBox generados dinámicamente
+            string[] alias = { "medico", "DPI", "Nombre", "Especialidad", "Edad"};
+            string[] valores = { }; //{ 1, "Juan Perez", 50000.00m, "Recursos Humanos" }; // Asegúrate de que los tipos coincidan
+            DAOGenerico dao = new DAOGenerico();
+            try
+            {
+                for (int i = 1; i < alias.Length; i++)
+                {
+                    // Buscar el TextBox que tenga el nombre generado
+                    TextBox txt = contenedor.Controls.OfType<TextBox>().FirstOrDefault(t => t.Name == "txt_" + alias[i]);
 
+                    if (txt != null)
+                    {
+                        valores[i - 1] = txt.Text; // Guardar el texto en la posición correspondiente
+                    }
+                    else
+                    {
+                        valores[i - 1] = null; // Si no existe el textbox, poner null
+                    }
+                }
+
+                dao.InsertarDatos(alias, valores);
+
+                MessageBox.Show("Datos insertados correctamente.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al insertar datos: " + ex.Message);
+            }
         }
 
         public DataTable LlenarTabla(string tabla, string[] alias) 
