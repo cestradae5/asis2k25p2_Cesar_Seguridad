@@ -116,5 +116,11 @@ namespace CapaVista
             formEmpleado.Show();
 
         }
+
+        private void perfilesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmPerfiles perfiles = new frmPerfiles();
+            perfiles.Show();
+        }
     }
 }
