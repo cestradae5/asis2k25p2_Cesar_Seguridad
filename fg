@@ -1,0 +1,36 @@
+[33mcommit 10e81e38de713ddbd65b27d5fc565bd0a608bf34[m[33m ([m[1;31morigin/0901_22_3415_Ernesto_Samayoa_frm_empleados_edit[m[33m)[m
+Author: ErnestoSamayoa2401 <esamayoaj1@miumg.edu.gt>
+Date:   Sat Sep 6 23:59:40 2025 -0600
+
+    Subido segunda vez
+
+[1mdiff --git a/prototipos/componentes/seguridad/Prototipo-V2/PROTOTIPO MVC/PrototipoMVC/CapaControlador/Cls_EmpleadosControlador.cs b/prototipos/componentes/seguridad/Prototipo-V2/PROTOTIPO MVC/PrototipoMVC/CapaControlador/Cls_EmpleadosControlador.cs[m
+[1mindex 03621ea..9e68127 100644[m
+[1m--- a/prototipos/componentes/seguridad/Prototipo-V2/PROTOTIPO MVC/PrototipoMVC/CapaControlador/Cls_EmpleadosControlador.cs[m	
+[1m+++ b/prototipos/componentes/seguridad/Prototipo-V2/PROTOTIPO MVC/PrototipoMVC/CapaControlador/Cls_EmpleadosControlador.cs[m	
+[36m@@ -1,4 +1,4 @@[m
+[31m-﻿// Ernesto David Samayoa Jocol - Controlador para tbl_EMPLEADO[m
+[32m+[m[32m﻿// Ernesto David Samayoa Jocol[m[41m [m
+ using System;[m
+ using System.Collections.Generic;[m
+ using CapaModelo;[m
+[1mdiff --git a/prototipos/componentes/seguridad/Prototipo-V2/PROTOTIPO MVC/PrototipoMVC/CapaModelo/Cls_Empleados.cs b/prototipos/componentes/seguridad/Prototipo-V2/PROTOTIPO MVC/PrototipoMVC/CapaModelo/Cls_Empleados.cs[m
+[1mindex 04ce7b6..ce6a675 100644[m
+[1m--- a/prototipos/componentes/seguridad/Prototipo-V2/PROTOTIPO MVC/PrototipoMVC/CapaModelo/Cls_Empleados.cs[m	
+[1m+++ b/prototipos/componentes/seguridad/Prototipo-V2/PROTOTIPO MVC/PrototipoMVC/CapaModelo/Cls_Empleados.cs[m	
+[36m@@ -1,4 +1,4 @@[m
+[31m-﻿// Ernesto David Samayoa Jocol - Generado en base a tbl_EMPLEADO[m
+[32m+[m[32m﻿// Ernesto David Samayoa Jocol[m
+ using System;[m
+ using System.Collections.Generic;[m
+ using System.Linq;[m
+[1mdiff --git a/prototipos/componentes/seguridad/Prototipo-V2/PROTOTIPO MVC/PrototipoMVC/CapaModelo/Cls_EmpleadosDAO.cs b/prototipos/componentes/seguridad/Prototipo-V2/PROTOTIPO MVC/PrototipoMVC/CapaModelo/Cls_EmpleadosDAO.cs[m
+[1mindex 799c0e1..b1db60d 100644[m
+[1m--- a/prototipos/componentes/seguridad/Prototipo-V2/PROTOTIPO MVC/PrototipoMVC/CapaModelo/Cls_EmpleadosDAO.cs[m	
+[1m+++ b/prototipos/componentes/seguridad/Prototipo-V2/PROTOTIPO MVC/PrototipoMVC/CapaModelo/Cls_EmpleadosDAO.cs[m	
+[36m@@ -1,4 +1,4 @@[m
+[31m-﻿// Ernesto David Samayoa Jocol - DAO para tbl_EMPLEADO[m
+[32m+[m[32m﻿// Ernesto David Samayoa Jocol[m
+ using System;[m
+ using System.Collections.Generic;[m
+ using System.Data.Odbc;[m
