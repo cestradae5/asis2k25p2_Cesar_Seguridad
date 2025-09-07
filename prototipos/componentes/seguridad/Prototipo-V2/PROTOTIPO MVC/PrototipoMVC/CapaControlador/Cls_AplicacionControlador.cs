@@ -1,11 +1,10 @@
-﻿//Cesar Armando Estrtada Elias 0901-22-10153
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CapaModelo;
-
+//Cesar Armando Estrada Elias 0901-22-10153
 namespace CapaControlador
 {
     public class Cls_AplicacionControlador
