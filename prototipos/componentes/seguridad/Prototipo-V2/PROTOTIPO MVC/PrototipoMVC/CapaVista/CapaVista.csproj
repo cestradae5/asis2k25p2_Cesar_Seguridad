@@ -36,13 +36,8 @@
 
   <!-- Referencias a otros proyectos y ensamblados -->
   <ItemGroup>
-    <Reference Include="CapaControlador, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="CapaControlador">
       <HintPath>..\CapaControlador\bin\Debug\CapaControlador.dll</HintPath>
-    </Reference>
-    <Reference Include="CapaModelo, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\CapaModelo\bin\Debug\CapaModelo.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -112,12 +107,6 @@
     <Compile Include="frmRecuperarContrasena.Designer.cs">
       <DependentUpon>frmRecuperarContrasena.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmSalarioEmpleados.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmSalarioEmpleados.Designer.cs">
-      <DependentUpon>frmSalarioEmpleados.cs</DependentUpon>
-    </Compile>
     <Compile Include="frmSeguridad.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -155,9 +144,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmRecuperarContrasena.resx">
       <DependentUpon>frmRecuperarContrasena.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmSalarioEmpleados.resx">
-      <DependentUpon>frmSalarioEmpleados.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmSeguridad.resx">
       <DependentUpon>frmSeguridad.cs</DependentUpon>
