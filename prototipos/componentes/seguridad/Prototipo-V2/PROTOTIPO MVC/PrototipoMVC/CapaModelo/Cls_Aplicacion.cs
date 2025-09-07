@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 namespace CapaModelo
 {
+    //clase aplicacion
     public class Cls_Aplicacion
     {
         public int PkIdAplicacion { get; set; }
