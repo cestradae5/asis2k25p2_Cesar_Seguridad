@@ -103,5 +103,29 @@ namespace CapaVista
             this.Close();
 
         }
+
+        private void mantenimientosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void perfilToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmPerfiles perfiles = new frmPerfiles();
+            perfiles.Show();
+            
+
+        }
+
+        private void asignacionDePerfilAUsuariosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmasignacion_aplicacion_usuario asiginaciones_perfil_usuario = new frmasignacion_aplicacion_usuario();
+            asiginaciones_perfil_usuario.Show();
+        }
+
+        private void asignacionAplicacionAUsuarioToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
