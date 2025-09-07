@@ -16,7 +16,7 @@ namespace CapaModelo
         public OdbcDataAdapter llenarTbl(string tabla)// metodo  que obtinene el contenio de una tabla
         {
             //string para almacenar los campos de OBTENERCAMPOS y utilizar el 1ro
-            string sql = "SELECT * FROM tbl_USUARIO;" + "  ;";
+            string sql = "SELECT * FROM " + tabla + "  ;";
             OdbcDataAdapter dataTable = new OdbcDataAdapter(sql, conexion.conexion());
             return dataTable;
         }
