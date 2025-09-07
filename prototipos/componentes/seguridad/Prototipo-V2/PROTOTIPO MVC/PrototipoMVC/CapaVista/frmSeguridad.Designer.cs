@@ -48,24 +48,26 @@ namespace CapaVista
             this.searchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mantenimientosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.perfilToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mantenimientoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btn_aplicacion = new System.Windows.Forms.ToolStripMenuItem();
+            this.empleadosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.asignacionesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.asignacionDePerfilAUsuariosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.asignacionAplicacionAUsuarioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.asignacionesDeAplicacionAUsuarioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.perfilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.asignacionDePerfilesAUsuarioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip
             // 
-            this.statusStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.statusStrip.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel});
             this.statusStrip.Location = new System.Drawing.Point(0, 532);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
-            this.statusStrip.Size = new System.Drawing.Size(843, 26);
+            this.statusStrip.Padding = new System.Windows.Forms.Padding(2, 0, 19, 0);
+            this.statusStrip.Size = new System.Drawing.Size(1155, 26);
             this.statusStrip.TabIndex = 2;
             this.statusStrip.Text = "StatusStrip";
             // 
@@ -87,12 +89,13 @@ namespace CapaVista
             this.reportesToolStripMenuItem,
             this.toolsMenu,
             this.helpMenu,
-            this.mantenimientosToolStripMenuItem,
+            this.mantenimientoToolStripMenuItem,
+            this.empleadosToolStripMenuItem,
             this.asignacionesToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(843, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(1155, 28);
             this.menuStrip1.TabIndex = 24;
             this.menuStrip1.Text = "MenuStrip";
             // 
@@ -189,50 +192,64 @@ namespace CapaVista
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(218, 26);
             this.aboutToolStripMenuItem.Text = "&Acerca de... ...";
             // 
-            // mantenimientosToolStripMenuItem
+            // mantenimientoToolStripMenuItem
             // 
-            this.mantenimientosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.perfilToolStripMenuItem});
-            this.mantenimientosToolStripMenuItem.Name = "mantenimientosToolStripMenuItem";
-            this.mantenimientosToolStripMenuItem.Size = new System.Drawing.Size(130, 24);
-            this.mantenimientosToolStripMenuItem.Text = "Mantenimientos";
-            this.mantenimientosToolStripMenuItem.Click += new System.EventHandler(this.mantenimientosToolStripMenuItem_Click);
+            this.mantenimientoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btn_aplicacion,
+            this.perfilesToolStripMenuItem});
+            this.mantenimientoToolStripMenuItem.Name = "mantenimientoToolStripMenuItem";
+            this.mantenimientoToolStripMenuItem.Size = new System.Drawing.Size(124, 24);
+            this.mantenimientoToolStripMenuItem.Text = "Mantenimiento";
             // 
-            // perfilToolStripMenuItem
+            // btn_aplicacion
             // 
-            this.perfilToolStripMenuItem.Name = "perfilToolStripMenuItem";
-            this.perfilToolStripMenuItem.Size = new System.Drawing.Size(125, 26);
-            this.perfilToolStripMenuItem.Text = "Perfil";
-            this.perfilToolStripMenuItem.Click += new System.EventHandler(this.perfilToolStripMenuItem_Click);
+            this.btn_aplicacion.Name = "btn_aplicacion";
+            this.btn_aplicacion.Size = new System.Drawing.Size(224, 26);
+            this.btn_aplicacion.Text = "Aplicacion";
+            this.btn_aplicacion.Click += new System.EventHandler(this.btn_aplicacion_Click);
+            // 
+            // empleadosToolStripMenuItem
+            // 
+            this.empleadosToolStripMenuItem.Name = "empleadosToolStripMenuItem";
+            this.empleadosToolStripMenuItem.Size = new System.Drawing.Size(97, 24);
+            this.empleadosToolStripMenuItem.Text = "Empleados";
+            this.empleadosToolStripMenuItem.Click += new System.EventHandler(this.empleadosToolStripMenuItem_Click);
             // 
             // asignacionesToolStripMenuItem
             // 
             this.asignacionesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.asignacionDePerfilAUsuariosToolStripMenuItem,
-            this.asignacionAplicacionAUsuarioToolStripMenuItem});
+            this.asignacionesDeAplicacionAUsuarioToolStripMenuItem,
+            this.asignacionDePerfilesAUsuarioToolStripMenuItem});
             this.asignacionesToolStripMenuItem.Name = "asignacionesToolStripMenuItem";
             this.asignacionesToolStripMenuItem.Size = new System.Drawing.Size(110, 24);
             this.asignacionesToolStripMenuItem.Text = "Asignaciones";
             // 
-            // asignacionDePerfilAUsuariosToolStripMenuItem
+            // asignacionesDeAplicacionAUsuarioToolStripMenuItem
             // 
-            this.asignacionDePerfilAUsuariosToolStripMenuItem.Name = "asignacionDePerfilAUsuariosToolStripMenuItem";
-            this.asignacionDePerfilAUsuariosToolStripMenuItem.Size = new System.Drawing.Size(305, 26);
-            this.asignacionDePerfilAUsuariosToolStripMenuItem.Text = "Asignacion de Perfil a Usuarios";
-            this.asignacionDePerfilAUsuariosToolStripMenuItem.Click += new System.EventHandler(this.asignacionDePerfilAUsuariosToolStripMenuItem_Click);
+            this.asignacionesDeAplicacionAUsuarioToolStripMenuItem.Name = "asignacionesDeAplicacionAUsuarioToolStripMenuItem";
+            this.asignacionesDeAplicacionAUsuarioToolStripMenuItem.Size = new System.Drawing.Size(342, 26);
+            this.asignacionesDeAplicacionAUsuarioToolStripMenuItem.Text = "Asignaciones De Aplicacion a Usuario";
+            this.asignacionesDeAplicacionAUsuarioToolStripMenuItem.Click += new System.EventHandler(this.asignacionesDeAplicacionAUsuarioToolStripMenuItem_Click);
             // 
-            // asignacionAplicacionAUsuarioToolStripMenuItem
+            // perfilesToolStripMenuItem
             // 
-            this.asignacionAplicacionAUsuarioToolStripMenuItem.Name = "asignacionAplicacionAUsuarioToolStripMenuItem";
-            this.asignacionAplicacionAUsuarioToolStripMenuItem.Size = new System.Drawing.Size(305, 26);
-            this.asignacionAplicacionAUsuarioToolStripMenuItem.Text = "Asignacion Aplicacion a Usuario";
-            this.asignacionAplicacionAUsuarioToolStripMenuItem.Click += new System.EventHandler(this.asignacionAplicacionAUsuarioToolStripMenuItem_Click);
+            this.perfilesToolStripMenuItem.Name = "perfilesToolStripMenuItem";
+            this.perfilesToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.perfilesToolStripMenuItem.Text = "Perfiles";
+            this.perfilesToolStripMenuItem.Click += new System.EventHandler(this.perfilesToolStripMenuItem_Click);
+            // 
+            // asignacionDePerfilesAUsuarioToolStripMenuItem
+            // 
+            this.asignacionDePerfilesAUsuarioToolStripMenuItem.Name = "asignacionDePerfilesAUsuarioToolStripMenuItem";
+            this.asignacionDePerfilesAUsuarioToolStripMenuItem.Size = new System.Drawing.Size(342, 26);
+            this.asignacionDePerfilesAUsuarioToolStripMenuItem.Text = "Asignacion De Perfiles a Usuario";
+            this.asignacionDePerfilesAUsuarioToolStripMenuItem.Click += new System.EventHandler(this.asignacionDePerfilesAUsuarioToolStripMenuItem_Click);
             // 
             // frmSeguridad
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(843, 558);
+            this.ClientSize = new System.Drawing.Size(1155, 558);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.statusStrip);
             this.IsMdiContainer = true;
@@ -265,11 +282,13 @@ namespace CapaVista
         private System.Windows.Forms.ToolStripMenuItem searchToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem mantenimientosToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem perfilToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mantenimientoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem btn_aplicacion;
+        private System.Windows.Forms.ToolStripMenuItem empleadosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem asignacionesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem asignacionDePerfilAUsuariosToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem asignacionAplicacionAUsuarioToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem asignacionesDeAplicacionAUsuarioToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem perfilesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem asignacionDePerfilesAUsuarioToolStripMenuItem;
     }
 }
 

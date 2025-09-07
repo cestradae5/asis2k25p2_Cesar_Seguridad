@@ -104,28 +104,35 @@ namespace CapaVista
 
         }
 
-        private void mantenimientosToolStripMenuItem_Click(object sender, EventArgs e)
+        private void btn_aplicacion_Click(object sender, EventArgs e)
         {
+            FrmAplicacion formAplicacion = new FrmAplicacion();
+            formAplicacion.Show();
+        }
+
+        private void empleadosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmEmpleados formEmpleado = new FrmEmpleados();
+            formEmpleado.Show();
 
         }
 
-        private void perfilToolStripMenuItem_Click(object sender, EventArgs e)
+        private void asignacionesDeAplicacionAUsuarioToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmasignacion_aplicacion_usuario asignaciones_aplicacion_usuario = new frmasignacion_aplicacion_usuario();
+            asignaciones_aplicacion_usuario.Show();
+        }
+
+        private void perfilesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmPerfiles perfiles = new frmPerfiles();
             perfiles.Show();
-            
-
         }
 
-        private void asignacionDePerfilAUsuariosToolStripMenuItem_Click(object sender, EventArgs e)
+        private void asignacionDePerfilesAUsuarioToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmasignacion_aplicacion_usuario asiginaciones_perfil_usuario = new frmasignacion_aplicacion_usuario();
-            asiginaciones_perfil_usuario.Show();
-        }
-
-        private void asignacionAplicacionAUsuarioToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
+            frmasignacion_perfil_usuario asignacion_perfil_usuario = new frmasignacion_perfil_usuario();
+            asignacion_perfil_usuario.Show();
         }
     }
 }
