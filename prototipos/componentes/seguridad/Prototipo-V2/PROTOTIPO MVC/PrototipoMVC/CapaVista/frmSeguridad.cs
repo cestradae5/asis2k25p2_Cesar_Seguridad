@@ -134,5 +134,30 @@ namespace CapaVista
             frmasignacion_perfil_usuario asig_perfil = new frmasignacion_perfil_usuario();
             asig_perfil.Show();
         }
+
+
+        private void salirToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void consultarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmBitacora bitacora = new frmBitacora();
+            bitacora.Show();
+        }
+
+        private void exportarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmBitacora bitacora = new frmBitacora();
+            bitacora.ExportarCSV();
+
+        }
+
+        private void imprimirToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmBitacora bitacora = new frmBitacora();
+            bitacora.Imprimir();
+        }
     }
 }
