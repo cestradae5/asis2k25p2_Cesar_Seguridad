@@ -8,9 +8,13 @@ namespace CapaVista
     public partial class frmasignacion_aplicacion_usuario : Form
     {
         ControladorAsignacionUsuarioAplicacion controlador = new ControladorAsignacionUsuarioAplicacion();
+<<<<<<< HEAD
         /* Brandon Alexander Hernandez Salguero
  * 0901-22-9663
  * */
+=======
+
+>>>>>>> 88b506a167543fb0c8409ac4719becb70d454d3b
         public frmasignacion_aplicacion_usuario()
         {
             InitializeComponent();
@@ -87,10 +91,13 @@ namespace CapaVista
         {
             this.Close();
         }
+<<<<<<< HEAD
 
         private void Btn_agregar_Click_1(object sender, EventArgs e)
         {
 
         }
+=======
+>>>>>>> 88b506a167543fb0c8409ac4719becb70d454d3b
     }
 }

@@ -117,12 +117,23 @@ namespace CapaVista
 
         }
 
+<<<<<<< HEAD
+=======
+        private void asignacionesDeAplicacionAUsuarioToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmasignacion_aplicacion_usuario asignaciones_aplicacion_usuario = new frmasignacion_aplicacion_usuario();
+            asignaciones_aplicacion_usuario.Show();
+        }
+
+
+>>>>>>> 88b506a167543fb0c8409ac4719becb70d454d3b
         private void perfilesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmPerfiles perfiles = new frmPerfiles();
             perfiles.Show();
         }
 
+<<<<<<< HEAD
         private void asignacionDeAplicacionAUsuarioToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmasignacion_aplicacion_usuario asig_app_user = new frmasignacion_aplicacion_usuario();
@@ -134,5 +145,15 @@ namespace CapaVista
             frmasignacion_perfil_usuario asig_perfil = new frmasignacion_perfil_usuario();
             asig_perfil.Show();
         }
+=======
+
+
+        private void asignacionDePerfilesAUsuarioToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmasignacion_perfil_usuario asignacion_perfil_usuario = new frmasignacion_perfil_usuario();
+            asignacion_perfil_usuario.Show();
+        }
+
+>>>>>>> 88b506a167543fb0c8409ac4719becb70d454d3b
     }
 }
