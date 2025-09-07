@@ -4,9 +4,11 @@ using System.Data.Odbc;
 
 namespace CapaModelo
 {
+
     /* Brandon Alexander Hernandez Salguero
  * 0901-22-9663
  * */
+
     public class SentenciaAsignacionUsuarioAplicacion
     {
         Conexion conexion = new Conexion();

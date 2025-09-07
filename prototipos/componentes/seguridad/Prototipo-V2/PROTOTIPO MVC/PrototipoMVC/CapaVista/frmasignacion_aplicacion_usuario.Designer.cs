@@ -1,4 +1,4 @@
-﻿
+
 namespace CapaVista
 {
     partial class frmasignacion_aplicacion_usuario

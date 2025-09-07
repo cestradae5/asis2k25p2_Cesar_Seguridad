@@ -1,4 +1,4 @@
-﻿
+
 namespace CapaVista
 {
     partial class frmSeguridad
@@ -291,6 +291,9 @@ namespace CapaVista
         private System.Windows.Forms.ToolStripMenuItem asignacionPerfilesToolStripMenuItem;
     }
 }
+
+
+
 
 
 
