@@ -1,4 +1,4 @@
-﻿
+
 namespace CapaVista
 {
     partial class frmasignacion_aplicacion_usuario
@@ -84,10 +84,7 @@ namespace CapaVista
             this.Btn_agregar.TabIndex = 5;
             this.Btn_agregar.Text = "Agregar";
             this.Btn_agregar.UseVisualStyleBackColor = false;
-<<<<<<< HEAD
             this.Btn_agregar.Click += new System.EventHandler(this.Btn_agregar_Click_1);
-=======
->>>>>>> 88b506a167543fb0c8409ac4719becb70d454d3b
             // 
             // Cbo_Aplicaciones
             // 
@@ -96,10 +93,6 @@ namespace CapaVista
             this.Cbo_Aplicaciones.Name = "Cbo_Aplicaciones";
             this.Cbo_Aplicaciones.Size = new System.Drawing.Size(172, 24);
             this.Cbo_Aplicaciones.TabIndex = 4;
-<<<<<<< HEAD
-=======
-
->>>>>>> 88b506a167543fb0c8409ac4719becb70d454d3b
             // 
             // Cbo_Modulos
             // 
