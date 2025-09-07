@@ -31,13 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CapaControlador, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="CapaControlador">
       <HintPath>..\CapaControlador\bin\Debug\CapaControlador.dll</HintPath>
-    </Reference>
-    <Reference Include="CapaModelo, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\CapaModelo\bin\Debug\CapaModelo.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -62,17 +57,6 @@
     </Compile>
     <Compile Include="frmasignacion_perfil_usuario.Designer.cs">
       <DependentUpon>frmasignacion_perfil_usuario.cs</DependentUpon>
-    <Compile Include="frmAplicacion.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmAplicacion.Designer.cs">
-      <DependentUpon>frmAplicacion.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FrmEmpleados.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmEmpleados.Designer.cs">
-      <DependentUpon>FrmEmpleados.cs</DependentUpon>
     </Compile>
     <Compile Include="frmLogin.cs">
       <SubType>Form</SubType>
@@ -104,12 +88,6 @@
     <Compile Include="frmRecuperarContrasena.Designer.cs">
       <DependentUpon>frmRecuperarContrasena.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmSalarioEmpleados.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmSalarioEmpleados.Designer.cs">
-      <DependentUpon>frmSalarioEmpleados.cs</DependentUpon>
-    </Compile>
     <Compile Include="frmSeguridad.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -124,11 +102,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmasignacion_perfil_usuario.resx">
       <DependentUpon>frmasignacion_perfil_usuario.cs</DependentUpon>
-    <EmbeddedResource Include="frmAplicacion.resx">
-      <DependentUpon>frmAplicacion.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FrmEmpleados.resx">
-      <DependentUpon>FrmEmpleados.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmLogin.resx">
       <DependentUpon>frmLogin.cs</DependentUpon>
@@ -144,9 +117,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmRecuperarContrasena.resx">
       <DependentUpon>frmRecuperarContrasena.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmSalarioEmpleados.resx">
-      <DependentUpon>frmSalarioEmpleados.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmSeguridad.resx">
       <DependentUpon>frmSeguridad.cs</DependentUpon>

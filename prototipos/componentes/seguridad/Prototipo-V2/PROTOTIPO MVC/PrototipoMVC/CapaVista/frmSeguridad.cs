@@ -125,16 +125,6 @@ namespace CapaVista
 
         private void asignacionAplicacionAUsuarioToolStripMenuItem_Click(object sender, EventArgs e)
         {
-        private void btn_aplicacion_Click(object sender, EventArgs e)
-        {
-            FrmAplicacion formAplicacion = new FrmAplicacion();
-            formAplicacion.Show();
-        }
-
-        private void empleadosToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            FrmEmpleados formEmpleado = new FrmEmpleados();
-            formEmpleado.Show();
 
         }
     }
