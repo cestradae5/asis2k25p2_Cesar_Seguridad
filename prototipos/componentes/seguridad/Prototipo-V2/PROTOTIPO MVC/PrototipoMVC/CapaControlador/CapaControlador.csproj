@@ -31,13 +31,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CapaModelo">
+    <Reference Include="CapaModelo, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\CapaModelo\bin\Debug\CapaModelo.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,17 +45,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-
     <Compile Include="Cls_AplicacionControlador.cs" />
     <Compile Include="ControladorAsignacionUsuarioAplicacion.cs" />
     <Compile Include="ControladorLogin.cs" />
     <Compile Include="Cls_EmpleadosControlador.cs" />
-<<<<<<< HEAD
-=======
-
-    <Compile Include="ControladorAsignacionUsuarioAplicacion.cs" />
-
->>>>>>> 88b506a167543fb0c8409ac4719becb70d454d3b
     <Compile Include="ControladorPerfiles.cs" />
     <Compile Include="ControladorPruebaBD.cs" />
     <Compile Include="ControladorRecuperarContrasena.cs" />

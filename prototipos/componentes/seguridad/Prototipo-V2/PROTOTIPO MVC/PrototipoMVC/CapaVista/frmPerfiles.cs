@@ -4,10 +4,9 @@ using CapaControlador;
 
 namespace CapaVista
 {
- /* Brandon Alexander Hernandez Salguero
+    /* Brandon Alexander Hernandez Salguero
  * 0901-22-9663
  * */
-
     public partial class frmPerfiles : Form
     {
         ControladorPerfiles controlador = new ControladorPerfiles();

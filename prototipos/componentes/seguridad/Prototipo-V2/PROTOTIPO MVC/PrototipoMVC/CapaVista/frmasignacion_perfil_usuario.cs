@@ -9,11 +9,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CapaVista
-
     /* Brandon Alexander Hernandez Salguero
      * 0901-22-9663
      * */
-
 {
     public partial class frmasignacion_perfil_usuario : Form
     {
