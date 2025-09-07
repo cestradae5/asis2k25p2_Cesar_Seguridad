@@ -4,6 +4,9 @@ using CapaModelo;
 
 namespace CapaControlador
 {
+    /* Brandon Alexander Hernandez Salguero
+ * 0901-22-9663
+ * */
     public class ControladorPerfiles
     {
         SentenciasPerfiles snp = new SentenciasPerfiles();

@@ -84,6 +84,7 @@ namespace CapaVista
             this.Btn_agregar.TabIndex = 5;
             this.Btn_agregar.Text = "Agregar";
             this.Btn_agregar.UseVisualStyleBackColor = false;
+            this.Btn_agregar.Click += new System.EventHandler(this.Btn_agregar_Click_1);
             // 
             // Cbo_Aplicaciones
             // 
@@ -92,7 +93,6 @@ namespace CapaVista
             this.Cbo_Aplicaciones.Name = "Cbo_Aplicaciones";
             this.Cbo_Aplicaciones.Size = new System.Drawing.Size(172, 24);
             this.Cbo_Aplicaciones.TabIndex = 4;
-
             // 
             // Cbo_Modulos
             // 
