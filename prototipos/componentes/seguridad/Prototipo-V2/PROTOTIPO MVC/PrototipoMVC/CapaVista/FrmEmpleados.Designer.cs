@@ -32,6 +32,8 @@ namespace CapaVista
             this.lbl_empleados = new System.Windows.Forms.Label();
             this.lbl_id_empleado = new System.Windows.Forms.Label();
             this.Gpb_datos_empleados = new System.Windows.Forms.GroupBox();
+            this.Txt_correo_empleado = new System.Windows.Forms.TextBox();
+            this.lbl_correo_empleado = new System.Windows.Forms.Label();
             this.Txt_fechaContra_empleado = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.Txt_fechaNac_empleado = new System.Windows.Forms.TextBox();
@@ -42,15 +44,16 @@ namespace CapaVista
             this.lbl_nit_empleados = new System.Windows.Forms.Label();
             this.Txt_dpi_empleados = new System.Windows.Forms.TextBox();
             this.lbl_dpi_empleado = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.Txt_apellido_empleado = new System.Windows.Forms.TextBox();
             this.lbl_apellido_empleado = new System.Windows.Forms.Label();
             this.Txt_nombre_empleado = new System.Windows.Forms.TextBox();
             this.lbl_nombre_empleados = new System.Windows.Forms.Label();
-            this.Txt_nombre_empleados = new System.Windows.Forms.TextBox();
+            this.Txt_id_empleado = new System.Windows.Forms.TextBox();
             this.Gpb_genero_empleados = new System.Windows.Forms.GroupBox();
             this.Rdb_femenino_empleado = new System.Windows.Forms.RadioButton();
             this.Rdb_masculino_empleado = new System.Windows.Forms.RadioButton();
             this.Gpb_opciones_empleados = new System.Windows.Forms.GroupBox();
+            this.Btn_guardar_empleado = new System.Windows.Forms.Button();
             this.Btn_eliminar_empleado = new System.Windows.Forms.Button();
             this.Btn_modificar_empleado = new System.Windows.Forms.Button();
             this.Btn_nuevo_empleado = new System.Windows.Forms.Button();
@@ -86,6 +89,8 @@ namespace CapaVista
             // 
             // Gpb_datos_empleados
             // 
+            this.Gpb_datos_empleados.Controls.Add(this.Txt_correo_empleado);
+            this.Gpb_datos_empleados.Controls.Add(this.lbl_correo_empleado);
             this.Gpb_datos_empleados.Controls.Add(this.Txt_fechaContra_empleado);
             this.Gpb_datos_empleados.Controls.Add(this.label1);
             this.Gpb_datos_empleados.Controls.Add(this.Txt_fechaNac_empleado);
@@ -96,11 +101,11 @@ namespace CapaVista
             this.Gpb_datos_empleados.Controls.Add(this.lbl_nit_empleados);
             this.Gpb_datos_empleados.Controls.Add(this.Txt_dpi_empleados);
             this.Gpb_datos_empleados.Controls.Add(this.lbl_dpi_empleado);
-            this.Gpb_datos_empleados.Controls.Add(this.textBox1);
+            this.Gpb_datos_empleados.Controls.Add(this.Txt_apellido_empleado);
             this.Gpb_datos_empleados.Controls.Add(this.lbl_apellido_empleado);
             this.Gpb_datos_empleados.Controls.Add(this.Txt_nombre_empleado);
             this.Gpb_datos_empleados.Controls.Add(this.lbl_nombre_empleados);
-            this.Gpb_datos_empleados.Controls.Add(this.Txt_nombre_empleados);
+            this.Gpb_datos_empleados.Controls.Add(this.Txt_id_empleado);
             this.Gpb_datos_empleados.Controls.Add(this.lbl_id_empleado);
             this.Gpb_datos_empleados.Font = new System.Drawing.Font("Rockwell", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Gpb_datos_empleados.Location = new System.Drawing.Point(17, 94);
@@ -110,18 +115,37 @@ namespace CapaVista
             this.Gpb_datos_empleados.TabStop = false;
             this.Gpb_datos_empleados.Text = "Datos";
             // 
+            // Txt_correo_empleado
+            // 
+            this.Txt_correo_empleado.Location = new System.Drawing.Point(433, 167);
+            this.Txt_correo_empleado.Name = "Txt_correo_empleado";
+            this.Txt_correo_empleado.Size = new System.Drawing.Size(267, 29);
+            this.Txt_correo_empleado.TabIndex = 16;
+            this.Txt_correo_empleado.TextChanged += new System.EventHandler(this.Txt_correo_empleado_TextChanged);
+            // 
+            // lbl_correo_empleado
+            // 
+            this.lbl_correo_empleado.AutoSize = true;
+            this.lbl_correo_empleado.Font = new System.Drawing.Font("Rockwell", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_correo_empleado.Location = new System.Drawing.Point(346, 167);
+            this.lbl_correo_empleado.Name = "lbl_correo_empleado";
+            this.lbl_correo_empleado.Size = new System.Drawing.Size(71, 20);
+            this.lbl_correo_empleado.TabIndex = 15;
+            this.lbl_correo_empleado.Text = "Correo:";
+            // 
             // Txt_fechaContra_empleado
             // 
-            this.Txt_fechaContra_empleado.Location = new System.Drawing.Point(519, 167);
+            this.Txt_fechaContra_empleado.Location = new System.Drawing.Point(556, 215);
             this.Txt_fechaContra_empleado.Name = "Txt_fechaContra_empleado";
             this.Txt_fechaContra_empleado.Size = new System.Drawing.Size(205, 29);
             this.Txt_fechaContra_empleado.TabIndex = 14;
+            this.Txt_fechaContra_empleado.TextChanged += new System.EventHandler(this.Txt_fechaContra_empleado_TextChanged);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Rockwell", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(346, 173);
+            this.label1.Location = new System.Drawing.Point(383, 221);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(167, 20);
             this.label1.TabIndex = 13;
@@ -133,6 +157,7 @@ namespace CapaVista
             this.Txt_fechaNac_empleado.Name = "Txt_fechaNac_empleado";
             this.Txt_fechaNac_empleado.Size = new System.Drawing.Size(205, 29);
             this.Txt_fechaNac_empleado.TabIndex = 12;
+            this.Txt_fechaNac_empleado.TextChanged += new System.EventHandler(this.Txt_fechaNac_empleado_TextChanged);
             // 
             // lbl_fechaNac_empleado
             // 
@@ -155,8 +180,9 @@ namespace CapaVista
             // 
             this.Txt_nit_empleados.Location = new System.Drawing.Point(433, 126);
             this.Txt_nit_empleados.Name = "Txt_nit_empleados";
-            this.Txt_nit_empleados.Size = new System.Drawing.Size(205, 29);
+            this.Txt_nit_empleados.Size = new System.Drawing.Size(267, 29);
             this.Txt_nit_empleados.TabIndex = 10;
+            this.Txt_nit_empleados.TextChanged += new System.EventHandler(this.Txt_nit_empleados_TextChanged);
             // 
             // lbl_telefono_empl
             // 
@@ -184,6 +210,7 @@ namespace CapaVista
             this.Txt_dpi_empleados.Name = "Txt_dpi_empleados";
             this.Txt_dpi_empleados.Size = new System.Drawing.Size(205, 29);
             this.Txt_dpi_empleados.TabIndex = 8;
+            this.Txt_dpi_empleados.TextChanged += new System.EventHandler(this.Txt_dpi_empleados_TextChanged);
             // 
             // lbl_dpi_empleado
             // 
@@ -195,12 +222,13 @@ namespace CapaVista
             this.lbl_dpi_empleado.TabIndex = 7;
             this.lbl_dpi_empleado.Text = "DPI:";
             // 
-            // textBox1
+            // Txt_apellido_empleado
             // 
-            this.textBox1.Location = new System.Drawing.Point(433, 73);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(205, 29);
-            this.textBox1.TabIndex = 6;
+            this.Txt_apellido_empleado.Location = new System.Drawing.Point(433, 73);
+            this.Txt_apellido_empleado.Name = "Txt_apellido_empleado";
+            this.Txt_apellido_empleado.Size = new System.Drawing.Size(267, 29);
+            this.Txt_apellido_empleado.TabIndex = 6;
+            this.Txt_apellido_empleado.TextChanged += new System.EventHandler(this.Txt_apellido_empleado_TextChanged);
             // 
             // lbl_apellido_empleado
             // 
@@ -218,6 +246,7 @@ namespace CapaVista
             this.Txt_nombre_empleado.Name = "Txt_nombre_empleado";
             this.Txt_nombre_empleado.Size = new System.Drawing.Size(205, 29);
             this.Txt_nombre_empleado.TabIndex = 4;
+            this.Txt_nombre_empleado.TextChanged += new System.EventHandler(this.Txt_nombre_empleado_TextChanged);
             // 
             // lbl_nombre_empleados
             // 
@@ -229,12 +258,13 @@ namespace CapaVista
             this.lbl_nombre_empleados.TabIndex = 3;
             this.lbl_nombre_empleados.Text = "Nombre:";
             // 
-            // Txt_nombre_empleados
+            // Txt_id_empleado
             // 
-            this.Txt_nombre_empleados.Location = new System.Drawing.Point(127, 28);
-            this.Txt_nombre_empleados.Name = "Txt_nombre_empleados";
-            this.Txt_nombre_empleados.Size = new System.Drawing.Size(205, 29);
-            this.Txt_nombre_empleados.TabIndex = 2;
+            this.Txt_id_empleado.Location = new System.Drawing.Point(127, 28);
+            this.Txt_id_empleado.Name = "Txt_id_empleado";
+            this.Txt_id_empleado.Size = new System.Drawing.Size(205, 29);
+            this.Txt_id_empleado.TabIndex = 2;
+            this.Txt_id_empleado.TextChanged += new System.EventHandler(this.Txt_id_empleado_TextChanged);
             // 
             // Gpb_genero_empleados
             // 
@@ -258,6 +288,7 @@ namespace CapaVista
             this.Rdb_femenino_empleado.TabStop = true;
             this.Rdb_femenino_empleado.Text = "Femenino";
             this.Rdb_femenino_empleado.UseVisualStyleBackColor = true;
+            this.Rdb_femenino_empleado.CheckedChanged += new System.EventHandler(this.Rdb_femenino_empleado_CheckedChanged);
             // 
             // Rdb_masculino_empleado
             // 
@@ -269,37 +300,51 @@ namespace CapaVista
             this.Rdb_masculino_empleado.TabStop = true;
             this.Rdb_masculino_empleado.Text = "Masculino";
             this.Rdb_masculino_empleado.UseVisualStyleBackColor = true;
+            this.Rdb_masculino_empleado.CheckedChanged += new System.EventHandler(this.Rdb_masculino_empleado_CheckedChanged);
             // 
             // Gpb_opciones_empleados
             // 
+            this.Gpb_opciones_empleados.Controls.Add(this.Btn_guardar_empleado);
             this.Gpb_opciones_empleados.Controls.Add(this.Btn_eliminar_empleado);
             this.Gpb_opciones_empleados.Controls.Add(this.Btn_modificar_empleado);
             this.Gpb_opciones_empleados.Controls.Add(this.Btn_nuevo_empleado);
             this.Gpb_opciones_empleados.Font = new System.Drawing.Font("Rockwell", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Gpb_opciones_empleados.Location = new System.Drawing.Point(804, 94);
             this.Gpb_opciones_empleados.Name = "Gpb_opciones_empleados";
-            this.Gpb_opciones_empleados.Size = new System.Drawing.Size(151, 251);
+            this.Gpb_opciones_empleados.Size = new System.Drawing.Size(151, 294);
             this.Gpb_opciones_empleados.TabIndex = 5;
             this.Gpb_opciones_empleados.TabStop = false;
             this.Gpb_opciones_empleados.Text = "Opciones";
             // 
+            // Btn_guardar_empleado
+            // 
+            this.Btn_guardar_empleado.Location = new System.Drawing.Point(22, 116);
+            this.Btn_guardar_empleado.Name = "Btn_guardar_empleado";
+            this.Btn_guardar_empleado.Size = new System.Drawing.Size(114, 30);
+            this.Btn_guardar_empleado.TabIndex = 9;
+            this.Btn_guardar_empleado.Text = "Guardar";
+            this.Btn_guardar_empleado.UseVisualStyleBackColor = true;
+            this.Btn_guardar_empleado.Click += new System.EventHandler(this.Btn_guardar_empleado_Click);
+            // 
             // Btn_eliminar_empleado
             // 
-            this.Btn_eliminar_empleado.Location = new System.Drawing.Point(22, 182);
+            this.Btn_eliminar_empleado.Location = new System.Drawing.Point(22, 226);
             this.Btn_eliminar_empleado.Name = "Btn_eliminar_empleado";
             this.Btn_eliminar_empleado.Size = new System.Drawing.Size(114, 30);
             this.Btn_eliminar_empleado.TabIndex = 8;
             this.Btn_eliminar_empleado.Text = "Eliminar";
             this.Btn_eliminar_empleado.UseVisualStyleBackColor = true;
+            this.Btn_eliminar_empleado.Click += new System.EventHandler(this.Btn_eliminar_empleado_Click);
             // 
             // Btn_modificar_empleado
             // 
-            this.Btn_modificar_empleado.Location = new System.Drawing.Point(22, 116);
+            this.Btn_modificar_empleado.Location = new System.Drawing.Point(22, 173);
             this.Btn_modificar_empleado.Name = "Btn_modificar_empleado";
             this.Btn_modificar_empleado.Size = new System.Drawing.Size(114, 30);
             this.Btn_modificar_empleado.TabIndex = 7;
             this.Btn_modificar_empleado.Text = "Modificar";
             this.Btn_modificar_empleado.UseVisualStyleBackColor = true;
+            this.Btn_modificar_empleado.Click += new System.EventHandler(this.Btn_modificar_empleado_Click);
             // 
             // Btn_nuevo_empleado
             // 
@@ -309,6 +354,7 @@ namespace CapaVista
             this.Btn_nuevo_empleado.TabIndex = 6;
             this.Btn_nuevo_empleado.Text = "Nuevo";
             this.Btn_nuevo_empleado.UseVisualStyleBackColor = true;
+            this.Btn_nuevo_empleado.Click += new System.EventHandler(this.Btn_nuevo_empleado_Click);
             // 
             // Btn_salir_empleado
             // 
@@ -319,6 +365,7 @@ namespace CapaVista
             this.Btn_salir_empleado.TabIndex = 9;
             this.Btn_salir_empleado.Text = "Salir";
             this.Btn_salir_empleado.UseVisualStyleBackColor = true;
+            this.Btn_salir_empleado.Click += new System.EventHandler(this.Btn_salir_empleado_Click);
             // 
             // Gpb_mostrar_empleados
             // 
@@ -338,8 +385,9 @@ namespace CapaVista
             this.Btn_buscar_empleado.Name = "Btn_buscar_empleado";
             this.Btn_buscar_empleado.Size = new System.Drawing.Size(114, 30);
             this.Btn_buscar_empleado.TabIndex = 9;
-            this.Btn_buscar_empleado.Text = "Eliminar";
+            this.Btn_buscar_empleado.Text = "Buscar";
             this.Btn_buscar_empleado.UseVisualStyleBackColor = true;
+            this.Btn_buscar_empleado.Click += new System.EventHandler(this.Btn_buscar_empleado_Click);
             // 
             // Cbo_mostrar_empleado
             // 
@@ -348,6 +396,7 @@ namespace CapaVista
             this.Cbo_mostrar_empleado.Name = "Cbo_mostrar_empleado";
             this.Cbo_mostrar_empleado.Size = new System.Drawing.Size(213, 28);
             this.Cbo_mostrar_empleado.TabIndex = 15;
+            this.Cbo_mostrar_empleado.SelectedIndexChanged += new System.EventHandler(this.Cbo_mostrar_empleado_SelectedIndexChanged);
             // 
             // FrmEmpleados
             // 
@@ -378,13 +427,13 @@ namespace CapaVista
         private System.Windows.Forms.Label lbl_empleados;
         private System.Windows.Forms.Label lbl_id_empleado;
         private System.Windows.Forms.GroupBox Gpb_datos_empleados;
-        private System.Windows.Forms.TextBox Txt_nombre_empleados;
+        private System.Windows.Forms.TextBox Txt_id_empleado;
         private System.Windows.Forms.Label lbl_nombre_empleados;
         private System.Windows.Forms.TextBox Txt_nit_empleados;
         private System.Windows.Forms.Label lbl_nit_empleados;
         private System.Windows.Forms.TextBox Txt_dpi_empleados;
         private System.Windows.Forms.Label lbl_dpi_empleado;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox Txt_apellido_empleado;
         private System.Windows.Forms.Label lbl_apellido_empleado;
         private System.Windows.Forms.TextBox Txt_nombre_empleado;
         private System.Windows.Forms.TextBox Txt_fechaContra_empleado;
@@ -404,5 +453,8 @@ namespace CapaVista
         private System.Windows.Forms.GroupBox Gpb_mostrar_empleados;
         private System.Windows.Forms.Button Btn_buscar_empleado;
         private System.Windows.Forms.ComboBox Cbo_mostrar_empleado;
+        private System.Windows.Forms.Button Btn_guardar_empleado;
+        private System.Windows.Forms.TextBox Txt_correo_empleado;
+        private System.Windows.Forms.Label lbl_correo_empleado;
     }
 }
