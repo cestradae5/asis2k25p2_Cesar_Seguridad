@@ -9,29 +9,20 @@ namespace CapaModeloNavegador
 {
     public class ConexionMYSQL
     {
+        private readonly string ConexionODBC = "Dsn=pruebaCapacitacion"; // DSN de odbc
+
+        //retorna conexion cerrada para que el DAO la abra y cierre cuando sea necesario
         public OdbcConnection conexion()
         {
-            OdbcConnection conn = new OdbcConnection("Dsn=pruebaCapacitacion"); // nombre del dsn, esto se cambia dependiendo del nombre del dsn
-            try
-            {
-                conn.Open();
-            }
-            catch (OdbcException)
-            {
-                Console.WriteLine("No Conectó");
-            }
-            return conn;
+            return new OdbcConnection(ConexionODBC); // crea una nueva conexión
         }
 
+        // Cierra la conexión si está abierta
         public void desconexion(OdbcConnection conn)
         {
-            try
+            if (conn != null && conn.State == System.Data.ConnectionState.Open)
             {
                 conn.Close();
-            }
-            catch (OdbcException)
-            {
-                Console.WriteLine("No Conectó");
             }
         }
     }
