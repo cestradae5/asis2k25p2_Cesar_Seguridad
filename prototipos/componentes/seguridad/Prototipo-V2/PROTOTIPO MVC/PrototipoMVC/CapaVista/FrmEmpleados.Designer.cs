@@ -1,7 +1,7 @@
 ﻿
 namespace CapaVista
 {
-    partial class FrmEmpleados
+    partial class frmEmpleados
     {
         /// <summary>
         /// Required designer variable.
@@ -61,6 +61,7 @@ namespace CapaVista
             this.Gpb_mostrar_empleados = new System.Windows.Forms.GroupBox();
             this.Btn_buscar_empleado = new System.Windows.Forms.Button();
             this.Cbo_mostrar_empleado = new System.Windows.Forms.ComboBox();
+            this.Btn_salario_empleados = new System.Windows.Forms.Button();
             this.Gpb_datos_empleados.SuspendLayout();
             this.Gpb_genero_empleados.SuspendLayout();
             this.Gpb_opciones_empleados.SuspendLayout();
@@ -398,18 +399,30 @@ namespace CapaVista
             this.Cbo_mostrar_empleado.TabIndex = 15;
             this.Cbo_mostrar_empleado.SelectedIndexChanged += new System.EventHandler(this.Cbo_mostrar_empleado_SelectedIndexChanged);
             // 
-            // FrmEmpleados
+            // Btn_salario_empleados
+            // 
+            this.Btn_salario_empleados.Font = new System.Drawing.Font("Rockwell", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Btn_salario_empleados.Location = new System.Drawing.Point(826, 36);
+            this.Btn_salario_empleados.Name = "Btn_salario_empleados";
+            this.Btn_salario_empleados.Size = new System.Drawing.Size(114, 30);
+            this.Btn_salario_empleados.TabIndex = 11;
+            this.Btn_salario_empleados.Text = "Salario";
+            this.Btn_salario_empleados.UseVisualStyleBackColor = true;
+            this.Btn_salario_empleados.Click += new System.EventHandler(this.Btn_salario_empleados_Click);
+            // 
+            // frmEmpleados
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(967, 481);
+            this.Controls.Add(this.Btn_salario_empleados);
             this.Controls.Add(this.Gpb_mostrar_empleados);
             this.Controls.Add(this.Btn_salir_empleado);
             this.Controls.Add(this.Gpb_opciones_empleados);
             this.Controls.Add(this.Gpb_genero_empleados);
             this.Controls.Add(this.Gpb_datos_empleados);
             this.Controls.Add(this.lbl_empleados);
-            this.Name = "FrmEmpleados";
+            this.Name = "frmEmpleados";
             this.Text = "FrmEmpleados";
             this.Gpb_datos_empleados.ResumeLayout(false);
             this.Gpb_datos_empleados.PerformLayout();
@@ -456,5 +469,6 @@ namespace CapaVista
         private System.Windows.Forms.Button Btn_guardar_empleado;
         private System.Windows.Forms.TextBox Txt_correo_empleado;
         private System.Windows.Forms.Label lbl_correo_empleado;
+        private System.Windows.Forms.Button Btn_salario_empleados;
     }
 }

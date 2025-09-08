@@ -9,6 +9,7 @@ namespace CapaModelo
     {
         private Conexion conexion = new Conexion();
 
+        // Consultas SQL
         private static readonly string SQL_SELECT = @"
             SELECT pk_id_empleado, nombres_empleado, apellidos_empleado,
                    dpi_empleado, nit_empleado, correo_empleado,
@@ -47,7 +48,9 @@ namespace CapaModelo
             FROM tbl_EMPLEADO
             WHERE pk_id_empleado = ?";
 
+        // --------------------------
         // Obtener todos los empleados
+        // --------------------------
         public List<Cls_Empleado> ObtenerEmpleados()
         {
             List<Cls_Empleado> lista = new List<Cls_Empleado>();
@@ -77,7 +80,9 @@ namespace CapaModelo
             return lista;
         }
 
+        // --------------------------
         // Insertar un nuevo empleado
+        // --------------------------
         public int InsertarEmpleado(Cls_Empleado emp)
         {
             using (OdbcConnection conn = conexion.conexion())
@@ -99,7 +104,9 @@ namespace CapaModelo
             }
         }
 
-        // Actualizar empleado
+        // --------------------------
+        // Actualizar empleado existente
+        // --------------------------
         public int ActualizarEmpleado(Cls_Empleado emp)
         {
             using (OdbcConnection conn = conexion.conexion())
@@ -121,7 +128,9 @@ namespace CapaModelo
             }
         }
 
-        // Borrar empleado
+        // --------------------------
+        // Borrar un empleado por ID
+        // --------------------------
         public int BorrarEmpleado(int idEmpleado)
         {
             using (OdbcConnection conn = conexion.conexion())
@@ -132,7 +141,9 @@ namespace CapaModelo
             }
         }
 
-        // Buscar empleado por ID
+        // --------------------------
+        // Buscar un empleado por ID
+        // --------------------------
         public Cls_Empleado Query(int idEmpleado)
         {
             Cls_Empleado emp = null;
@@ -163,4 +174,3 @@ namespace CapaModelo
         }
     }
 }
-
