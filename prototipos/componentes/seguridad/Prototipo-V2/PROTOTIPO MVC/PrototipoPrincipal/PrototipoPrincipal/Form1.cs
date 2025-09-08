@@ -15,6 +15,7 @@ namespace PrototipoPrincipal
         public Form1()
         {
             InitializeComponent();
+
         }
     }
 }

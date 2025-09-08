@@ -12,8 +12,6 @@ using CapaControlador;
 using CapaModelo;
 
 
-
-
 namespace CapaVista
 {
     public partial class FrmAplicacion : Form

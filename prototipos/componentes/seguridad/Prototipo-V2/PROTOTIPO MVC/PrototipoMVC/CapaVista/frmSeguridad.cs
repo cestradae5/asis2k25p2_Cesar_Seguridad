@@ -112,7 +112,7 @@ namespace CapaVista
 
         private void empleadosToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FrmEmpleados formEmpleado = new FrmEmpleados();
+            frmEmpleados formEmpleado = new frmEmpleados();
             formEmpleado.Show();
 
         }
