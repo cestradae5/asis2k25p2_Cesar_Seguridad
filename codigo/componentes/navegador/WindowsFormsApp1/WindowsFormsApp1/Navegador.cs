@@ -32,7 +32,7 @@ namespace WindowsFormsApp1
         private void Btn_ingresar_Click(object sender, EventArgs e)
         {
             //string[] alias = { "Clave_empleado", "Nombre", "Apellidos", "Clave_Depto" };
-            string[] alias = { "medico", "DPI", "Nombre", "Especialidad", "Edad" };
+            string[] alias = { "pacientes", "id_paciente", "nombre", "apellido" };
 
             ControladorNavegador ctrl = new ControladorNavegador(); //crea instancia controlador
             ctrl.AsignarAlias(alias, this, 10, 100); //llama al metodo
