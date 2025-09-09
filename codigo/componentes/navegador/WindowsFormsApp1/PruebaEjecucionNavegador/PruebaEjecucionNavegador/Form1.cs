@@ -8,13 +8,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace WindowsFormsApp1
+namespace PruebaEjecucionNavegador
 {
-    public partial class Form2 : Form
+    public partial class Form1 : Form
     {
-        public Form2()
+        public Form1()
         {
             InitializeComponent();
+            navegador1.alias = new string[] { "pacientes", "id_paciente", "nombre", "apellido" };
+            navegador1.mostrarDatos();
         }
     }
 }
