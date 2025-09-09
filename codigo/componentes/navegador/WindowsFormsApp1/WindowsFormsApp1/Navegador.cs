@@ -15,6 +15,7 @@ namespace WindowsFormsApp1
         public Navegador()
         {
             InitializeComponent();
+            mostrarDatos();
             // deshabilitar botones
             Btn_modificar.Enabled = false;
             Btn_guardar.Enabled = false;
@@ -97,31 +98,7 @@ namespace WindowsFormsApp1
         private DataTable dtCompleto;
         private void Btn_imprimir_Click(object sender, EventArgs e)
         {
-            if (Dgv_Datos == null)
-            {
-                Dgv_Datos = new DataGridView();
-                Dgv_Datos.Name = "Dgv_Datos";
-                Dgv_Datos.ScrollBars = ScrollBars.None;
-                Dgv_Datos.BackgroundColor = Color.White;
-                Dgv_Datos.ColumnHeadersDefaultCellStyle.Font = new Font("Microsoft Sans Serif", 9, FontStyle.Bold);
-                Dgv_Datos.Location = new System.Drawing.Point(10, 250); // aqui se cambia la posicion (por si hay que agregar otra cosa)
-                Dgv_Datos.Size = new System.Drawing.Size(1100, 200); // aqui se cambia el tamaño (tambien por si acaso ajaj)
-                Dgv_Datos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-                this.Controls.Add(Dgv_Datos);
-                ctrl.AsignarDataGridView(Dgv_Datos);
-            }
-
-
-
-            // Definir los alias de la tabla (dependiendo de la tabla que se use)
-            string[] alias = { "DPI", "Nombre", "Especialidad", "Edad" };
-
-            // aqui se llena la tabla y tambien se le pone el nombre (dependiendo de la tabla que se vaya a usar)
-            dtCompleto = ctrl.LlenarTabla("medico", alias);
-            Dgv_Datos.DataSource = dtCompleto;
-
-            totalPaginas = (int)Math.Ceiling(dtCompleto.Rows.Count / (double)registrosPorPagina);
-            paginaActual = 1; MostrarPagina(paginaActual);
+            
         }
         private void MostrarPagina(int pagina)
         {
@@ -163,6 +140,33 @@ namespace WindowsFormsApp1
             Btn_anterior.Enabled = paginaActual > 1;
             Btn_sig.Enabled = paginaActual < totalPaginas;
             Btn_fin.Enabled = paginaActual < totalPaginas;
+        }
+
+        public void mostrarDatos()
+        {
+            if (Dgv_Datos == null)
+            {
+                Dgv_Datos = new DataGridView();
+                Dgv_Datos.Name = "Dgv_Datos";
+                Dgv_Datos.ScrollBars = ScrollBars.None;
+                Dgv_Datos.BackgroundColor = Color.White;
+                Dgv_Datos.ColumnHeadersDefaultCellStyle.Font = new Font("Microsoft Sans Serif", 9, FontStyle.Bold);
+                Dgv_Datos.Location = new System.Drawing.Point(10, 250); // aqui se cambia la posicion (por si hay que agregar otra cosa)
+                Dgv_Datos.Size = new System.Drawing.Size(1100, 200); // aqui se cambia el tamaño (tambien por si acaso ajaj)
+                Dgv_Datos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                this.Controls.Add(Dgv_Datos);
+                ctrl.AsignarDataGridView(Dgv_Datos);
+            }
+
+            // Definir los alias de la tabla (dependiendo de la tabla que se use)
+            string[] alias = { "id_paciente", "nombre", "apellido"};
+
+            // aqui se llena la tabla y tambien se le pone el nombre (dependiendo de la tabla que se vaya a usar)
+            dtCompleto = ctrl.LlenarTabla("pacientes", alias);
+            Dgv_Datos.DataSource = dtCompleto;
+
+            totalPaginas = (int)Math.Ceiling(dtCompleto.Rows.Count / (double)registrosPorPagina);
+            paginaActual = 1; MostrarPagina(paginaActual);
         }
     }
 }

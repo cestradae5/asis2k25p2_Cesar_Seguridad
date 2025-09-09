@@ -17,7 +17,7 @@ namespace CapaControladorNavegador
         {
             int spacingY = 30; // Espacio vertical entre cada par Label/TextBox
 
-            for (int i = 2; i < alias.Length; i++)
+            for (int i = 1; i < alias.Length; i++)
             {
                 // Crear Label
                 Label lbl = new Label();
