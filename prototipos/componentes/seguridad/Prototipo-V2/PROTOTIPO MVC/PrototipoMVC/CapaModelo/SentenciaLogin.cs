@@ -14,7 +14,7 @@ namespace CapaModelo
             {
                 OdbcConnection con = conexion.conexion();
                 string sql = "SELECT pk_id_usuario, nombre_usuario, contrasena_usuario, contador_intentos_fallidos_usuario, estado_usuario " +
-                             "FROM tbl_usuario WHERE nombre_usuario = ?;";
+                             "FROM tbl_USUARIO WHERE nombre_usuario = ?;";
 
                 OdbcCommand cmd = new OdbcCommand(sql, con);
                 cmd.Parameters.AddWithValue("@usuario", usuario);
@@ -44,7 +44,7 @@ namespace CapaModelo
             {
                 using (OdbcConnection con = conexion.conexion())
                 {
-                    string sql = "UPDATE tbl_usuario SET contador_intentos_fallidos_usuario = ? WHERE pk_id_usuario = ?;";
+                    string sql = "UPDATE tbl_USUARIO SET contador_intentos_fallidos_usuario = ? WHERE pk_id_usuario = ?;";
                     OdbcCommand cmd = new OdbcCommand(sql, con);
                     cmd.Parameters.AddWithValue("@intentos", intentos);
                     cmd.Parameters.AddWithValue("@idUsuario", idUsuario);
@@ -65,7 +65,7 @@ namespace CapaModelo
                 using (OdbcConnection con = conexion.conexion())
                 {
              
-                    string sql = "UPDATE tbl_usuario SET estado_usuario = 'Bloqueado' WHERE pk_id_usuario = ?;";
+                    string sql = "UPDATE tbl_USUARIO SET estado_usuario = 'Bloqueado' WHERE pk_id_usuario = ?;";
                     OdbcCommand cmd = new OdbcCommand(sql, con);
                     cmd.Parameters.AddWithValue("@idUsuario", idUsuario);
                     cmd.ExecuteNonQuery();
