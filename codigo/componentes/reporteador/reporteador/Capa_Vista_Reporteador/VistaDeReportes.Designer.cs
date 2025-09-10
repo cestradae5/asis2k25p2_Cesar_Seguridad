@@ -29,64 +29,84 @@ namespace Capa_Vista_Reporteador
         /// </summary>
         private void InitializeComponent()
         {
-            this.titulo = new System.Windows.Forms.Label();
+            this.titulo_vista_reportes = new System.Windows.Forms.Label();
             this.panelViewSetting = new System.Windows.Forms.Panel();
-            this.panelView = new System.Windows.Forms.Panel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pv_reporte = new System.Windows.Forms.Panel();
+            this.PicB_vista_reportes = new System.Windows.Forms.PictureBox();
             this.panelViewSetting.SuspendLayout();
-            this.panelView.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.pv_reporte.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PicB_vista_reportes)).BeginInit();
             this.SuspendLayout();
             // 
-            // titulo
+            // titulo_vista_reportes
             // 
-            this.titulo.AutoSize = true;
-            this.titulo.Font = new System.Drawing.Font("Rockwell Nova Cond", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.titulo.Location = new System.Drawing.Point(344, 7);
-            this.titulo.Name = "titulo";
-            this.titulo.Size = new System.Drawing.Size(135, 41);
-            this.titulo.TabIndex = 0;
-            this.titulo.Text = "REPORTE";
+            this.titulo_vista_reportes.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.titulo_vista_reportes.AutoSize = true;
+            this.titulo_vista_reportes.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.titulo_vista_reportes.Location = new System.Drawing.Point(258, 6);
+            this.titulo_vista_reportes.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.titulo_vista_reportes.Name = "titulo_vista_reportes";
+            this.titulo_vista_reportes.Size = new System.Drawing.Size(166, 36);
+            this.titulo_vista_reportes.TabIndex = 0;
+            this.titulo_vista_reportes.Text = "REPORTE";
             // 
             // panelViewSetting
             // 
-            this.panelViewSetting.Controls.Add(this.panelView);
-            this.panelViewSetting.Location = new System.Drawing.Point(20, 51);
+            this.panelViewSetting.Controls.Add(this.pv_reporte);
+            this.panelViewSetting.Location = new System.Drawing.Point(15, 41);
+            this.panelViewSetting.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panelViewSetting.Name = "panelViewSetting";
-            this.panelViewSetting.Size = new System.Drawing.Size(767, 371);
+            this.panelViewSetting.Size = new System.Drawing.Size(575, 301);
             this.panelViewSetting.TabIndex = 1;
             // 
-            // panelView
+            // pv_reporte
             // 
-            this.panelView.AutoScroll = true;
-            this.panelView.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.panelView.Controls.Add(this.pictureBox1);
-            this.panelView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelView.Location = new System.Drawing.Point(0, 0);
-            this.panelView.Name = "panelView";
-            this.panelView.Size = new System.Drawing.Size(767, 371);
-            this.panelView.TabIndex = 0;
+            this.pv_reporte.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pv_reporte.AutoScroll = true;
+            this.pv_reporte.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.pv_reporte.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pv_reporte.Controls.Add(this.PicB_vista_reportes);
+            this.pv_reporte.Location = new System.Drawing.Point(0, 0);
+            this.pv_reporte.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pv_reporte.Name = "pv_reporte";
+            this.pv_reporte.Size = new System.Drawing.Size(576, 302);
+            this.pv_reporte.TabIndex = 0;
+            this.pv_reporte.Paint += new System.Windows.Forms.PaintEventHandler(this.pv_reporte_Paint);
             // 
-            // pictureBox1
+            // PicB_vista_reportes
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(14, 19);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(96, 44);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
+            this.PicB_vista_reportes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.PicB_vista_reportes.Location = new System.Drawing.Point(14, 15);
+            this.PicB_vista_reportes.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.PicB_vista_reportes.Name = "PicB_vista_reportes";
+            this.PicB_vista_reportes.Size = new System.Drawing.Size(96, 44);
+            this.PicB_vista_reportes.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.PicB_vista_reportes.TabIndex = 0;
+            this.PicB_vista_reportes.TabStop = false;
+            this.PicB_vista_reportes.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // VistaDeReportes
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.AutoSize = true;
+            this.ClientSize = new System.Drawing.Size(600, 366);
             this.Controls.Add(this.panelViewSetting);
-            this.Controls.Add(this.titulo);
+            this.Controls.Add(this.titulo_vista_reportes);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "VistaDeReportes";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "VistaDeReportes";
+            this.Load += new System.EventHandler(this.VistaDeReportes_Load);
             this.panelViewSetting.ResumeLayout(false);
-            this.panelView.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.pv_reporte.ResumeLayout(false);
+            this.pv_reporte.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PicB_vista_reportes)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -94,9 +114,9 @@ namespace Capa_Vista_Reporteador
 
         #endregion
 
-        private System.Windows.Forms.Label titulo;
+        private System.Windows.Forms.Label titulo_vista_reportes;
         private System.Windows.Forms.Panel panelViewSetting;
-        private System.Windows.Forms.Panel panelView;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Panel pv_reporte;
+        private System.Windows.Forms.PictureBox PicB_vista_reportes;
     }
 }
