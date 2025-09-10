@@ -67,10 +67,8 @@ namespace CapaControladorNavegador
         }
 //---------------------------------------------------------------------------------------------------------
 
-        public void Insertar_Datos(Control contenedor)
+        public void Insertar_Datos(Control contenedor, string[] alias)
         {
-            // prueba de alias y valores, en la práctica estos vendrían de los TextBox generados dinámicamente
-            string[] alias = { "pacientes", "id_paciente", "nombre", "apellido" };
             string[] valores = new string[alias.Length - 1]; // crea el arreglo con tamaño necesario para evitar errores
 
             DAOGenerico dao = new DAOGenerico();
