@@ -24,11 +24,21 @@ namespace Capa_Vista_Reporteador
 
         private void Btn_ver_reporte_Click(object sender, EventArgs e)
         {
-            // Instancia para ver reportes
+            // Instancia para ver reportes //Paula Leonardo 
             VistaDeReportes frm = new VistaDeReportes();
 
-            // Mostrarlo como ventana aparte
+            // Mostrarlo como ventana aparte //Paula Leonardo
             frm.Show();
+        }
+
+        private void Dgv_reportes_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void Reportes_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

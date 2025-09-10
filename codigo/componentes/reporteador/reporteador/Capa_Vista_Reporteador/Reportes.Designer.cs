@@ -42,6 +42,7 @@ namespace Capa_Vista_Reporteador
             // 
             // Txt_reportes
             // 
+            this.Txt_reportes.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.Txt_reportes.AutoSize = true;
             this.Txt_reportes.Font = new System.Drawing.Font("Rockwell", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Txt_reportes.Location = new System.Drawing.Point(400, 36);
@@ -52,6 +53,9 @@ namespace Capa_Vista_Reporteador
             // 
             // Dgv_reportes
             // 
+            this.Dgv_reportes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.Dgv_reportes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.Dgv_reportes.Location = new System.Drawing.Point(25, 255);
             this.Dgv_reportes.Name = "Dgv_reportes";
@@ -59,9 +63,12 @@ namespace Capa_Vista_Reporteador
             this.Dgv_reportes.RowTemplate.Height = 24;
             this.Dgv_reportes.Size = new System.Drawing.Size(880, 195);
             this.Dgv_reportes.TabIndex = 2;
+            this.Dgv_reportes.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dgv_reportes_CellContentClick);
             // 
             // Txt_reportes_ruta
             // 
+            this.Txt_reportes_ruta.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.Txt_reportes_ruta.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Txt_reportes_ruta.Location = new System.Drawing.Point(25, 129);
             this.Txt_reportes_ruta.Name = "Txt_reportes_ruta";
@@ -70,6 +77,8 @@ namespace Capa_Vista_Reporteador
             // 
             // Btn_guardar
             // 
+            this.Btn_guardar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.Btn_guardar.BackColor = System.Drawing.Color.MediumSeaGreen;
             this.Btn_guardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Btn_guardar.Font = new System.Drawing.Font("Rockwell", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -83,6 +92,7 @@ namespace Capa_Vista_Reporteador
             // 
             // Btn_eliminar
             // 
+            this.Btn_eliminar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Btn_eliminar.BackColor = System.Drawing.Color.IndianRed;
             this.Btn_eliminar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Btn_eliminar.Font = new System.Drawing.Font("Rockwell", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -95,6 +105,7 @@ namespace Capa_Vista_Reporteador
             // 
             // Btn_modificar
             // 
+            this.Btn_modificar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Btn_modificar.BackColor = System.Drawing.Color.Khaki;
             this.Btn_modificar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Btn_modificar.Font = new System.Drawing.Font("Rockwell", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -108,6 +119,7 @@ namespace Capa_Vista_Reporteador
             // 
             // Btn_ver_reporte
             // 
+            this.Btn_ver_reporte.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Btn_ver_reporte.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.Btn_ver_reporte.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Btn_ver_reporte.Font = new System.Drawing.Font("Rockwell", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -122,6 +134,7 @@ namespace Capa_Vista_Reporteador
             // 
             // Btn_ruta_reporte
             // 
+            this.Btn_ruta_reporte.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Btn_ruta_reporte.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.Btn_ruta_reporte.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Btn_ruta_reporte.Font = new System.Drawing.Font("Rockwell", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -147,8 +160,11 @@ namespace Capa_Vista_Reporteador
             this.Controls.Add(this.Txt_reportes_ruta);
             this.Controls.Add(this.Dgv_reportes);
             this.Controls.Add(this.Txt_reportes);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Reportes";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Reportes";
+            this.Load += new System.EventHandler(this.Reportes_Load);
             ((System.ComponentModel.ISupportInitialize)(this.Dgv_reportes)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

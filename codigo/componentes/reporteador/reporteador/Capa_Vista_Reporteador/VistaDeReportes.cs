@@ -16,5 +16,20 @@ namespace Capa_Vista_Reporteador
         {
             InitializeComponent();
         }
+
+        private void pv_reporte_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void VistaDeReportes_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
