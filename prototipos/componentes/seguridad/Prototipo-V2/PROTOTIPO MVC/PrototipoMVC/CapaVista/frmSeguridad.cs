@@ -135,6 +135,7 @@ namespace CapaVista
             asig_perfil.Show();
         }
 
+    
 
         private void salirToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -158,6 +159,17 @@ namespace CapaVista
         {
             frmBitacora bitacora = new frmBitacora();
             bitacora.Imprimir();
+        }
+
+        private void frmSeguridad_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void modulosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmModulo modulo = new frmModulo();
+            modulo.Show();
         }
     }
 }
