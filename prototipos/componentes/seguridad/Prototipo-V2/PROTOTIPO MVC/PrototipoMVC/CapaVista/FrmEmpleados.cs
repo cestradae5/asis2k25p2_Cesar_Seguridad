@@ -156,10 +156,7 @@ namespace CapaVista
             }
         }
 
-        private void Cbo_mostrar_empleado_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
+   
 
         private void Btn_nuevo_empleado_Click(object sender, EventArgs e)
         {

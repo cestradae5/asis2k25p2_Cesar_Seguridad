@@ -397,7 +397,7 @@ namespace CapaVista
             this.Cbo_mostrar_empleado.Name = "Cbo_mostrar_empleado";
             this.Cbo_mostrar_empleado.Size = new System.Drawing.Size(213, 28);
             this.Cbo_mostrar_empleado.TabIndex = 15;
-            this.Cbo_mostrar_empleado.SelectedIndexChanged += new System.EventHandler(this.Cbo_mostrar_empleado_SelectedIndexChanged);
+
             // 
             // Btn_salario_empleados
             // 

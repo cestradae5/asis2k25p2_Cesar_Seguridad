@@ -119,8 +119,7 @@ namespace CapaVista
 
         private void perfilesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmPerfiles perfiles = new frmPerfiles();
-            perfiles.Show();
+
         }
 
         private void asignacionDeAplicacionAUsuarioToolStripMenuItem_Click(object sender, EventArgs e)
@@ -158,6 +157,12 @@ namespace CapaVista
         {
             frmBitacora bitacora = new frmBitacora();
             bitacora.Imprimir();
+        }
+
+        private void perfilesToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            frmPerfiles perfiles = new frmPerfiles();
+            perfiles.Show();
         }
     }
 }

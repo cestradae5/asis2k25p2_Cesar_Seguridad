@@ -33,6 +33,7 @@ namespace CapaVista
             this.Btn_buscar = new System.Windows.Forms.Button();
             this.Cbo_perfiles = new System.Windows.Forms.ComboBox();
             this.Gpb_datosperfil = new System.Windows.Forms.GroupBox();
+            this.Cbo_tipoperfil = new System.Windows.Forms.ComboBox();
             this.Txt_descripcion = new System.Windows.Forms.TextBox();
             this.Lbl_descripcion = new System.Windows.Forms.Label();
             this.Gbp_estado = new System.Windows.Forms.GroupBox();
@@ -44,12 +45,12 @@ namespace CapaVista
             this.Txt_idperfil = new System.Windows.Forms.TextBox();
             this.Lbl_idpuesto = new System.Windows.Forms.Label();
             this.Gbp_opc = new System.Windows.Forms.GroupBox();
+            this.Btn_Eliminar = new System.Windows.Forms.Button();
             this.Btn_salir = new System.Windows.Forms.Button();
             this.Btn_cancelar = new System.Windows.Forms.Button();
             this.Btn_modificar = new System.Windows.Forms.Button();
             this.Btn_nuevo = new System.Windows.Forms.Button();
             this.Btn_guardar = new System.Windows.Forms.Button();
-            this.Cbo_tipoperfil = new System.Windows.Forms.ComboBox();
             this.Gpb_buscarperfiles.SuspendLayout();
             this.Gpb_datosperfil.SuspendLayout();
             this.Gbp_estado.SuspendLayout();
@@ -79,6 +80,7 @@ namespace CapaVista
             this.Btn_buscar.TabIndex = 1;
             this.Btn_buscar.Text = "Buscar";
             this.Btn_buscar.UseVisualStyleBackColor = false;
+            this.Btn_buscar.Click += new System.EventHandler(this.Btn_buscar_Click);
             // 
             // Cbo_perfiles
             // 
@@ -102,14 +104,22 @@ namespace CapaVista
             this.Gpb_datosperfil.Font = new System.Drawing.Font("Rockwell", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Gpb_datosperfil.Location = new System.Drawing.Point(12, 165);
             this.Gpb_datosperfil.Name = "Gpb_datosperfil";
-            this.Gpb_datosperfil.Size = new System.Drawing.Size(733, 417);
+            this.Gpb_datosperfil.Size = new System.Drawing.Size(733, 488);
             this.Gpb_datosperfil.TabIndex = 2;
             this.Gpb_datosperfil.TabStop = false;
             this.Gpb_datosperfil.Text = "Datos";
             // 
+            // Cbo_tipoperfil
+            // 
+            this.Cbo_tipoperfil.FormattingEnabled = true;
+            this.Cbo_tipoperfil.Location = new System.Drawing.Point(125, 213);
+            this.Cbo_tipoperfil.Name = "Cbo_tipoperfil";
+            this.Cbo_tipoperfil.Size = new System.Drawing.Size(525, 28);
+            this.Cbo_tipoperfil.TabIndex = 2;
+            // 
             // Txt_descripcion
             // 
-            this.Txt_descripcion.Location = new System.Drawing.Point(125, 142);
+            this.Txt_descripcion.Location = new System.Drawing.Point(125, 157);
             this.Txt_descripcion.Name = "Txt_descripcion";
             this.Txt_descripcion.Size = new System.Drawing.Size(525, 27);
             this.Txt_descripcion.TabIndex = 8;
@@ -117,7 +127,7 @@ namespace CapaVista
             // Lbl_descripcion
             // 
             this.Lbl_descripcion.AutoSize = true;
-            this.Lbl_descripcion.Location = new System.Drawing.Point(6, 148);
+            this.Lbl_descripcion.Location = new System.Drawing.Point(6, 164);
             this.Lbl_descripcion.Name = "Lbl_descripcion";
             this.Lbl_descripcion.Size = new System.Drawing.Size(104, 20);
             this.Lbl_descripcion.TabIndex = 7;
@@ -127,7 +137,7 @@ namespace CapaVista
             // 
             this.Gbp_estado.Controls.Add(this.Rdb_inhabilitado);
             this.Gbp_estado.Controls.Add(this.Rdb_Habilitado);
-            this.Gbp_estado.Location = new System.Drawing.Point(10, 249);
+            this.Gbp_estado.Location = new System.Drawing.Point(26, 288);
             this.Gbp_estado.Name = "Gbp_estado";
             this.Gbp_estado.Size = new System.Drawing.Size(595, 120);
             this.Gbp_estado.TabIndex = 6;
@@ -159,7 +169,7 @@ namespace CapaVista
             // Lbl_tipoperfil
             // 
             this.Lbl_tipoperfil.AutoSize = true;
-            this.Lbl_tipoperfil.Location = new System.Drawing.Point(28, 195);
+            this.Lbl_tipoperfil.Location = new System.Drawing.Point(28, 221);
             this.Lbl_tipoperfil.Name = "Lbl_tipoperfil";
             this.Lbl_tipoperfil.Size = new System.Drawing.Size(44, 20);
             this.Lbl_tipoperfil.TabIndex = 5;
@@ -167,7 +177,7 @@ namespace CapaVista
             // 
             // Txt_puesto
             // 
-            this.Txt_puesto.Location = new System.Drawing.Point(125, 91);
+            this.Txt_puesto.Location = new System.Drawing.Point(125, 95);
             this.Txt_puesto.Name = "Txt_puesto";
             this.Txt_puesto.Size = new System.Drawing.Size(525, 27);
             this.Txt_puesto.TabIndex = 3;
@@ -175,7 +185,7 @@ namespace CapaVista
             // Lbl_puesto
             // 
             this.Lbl_puesto.AutoSize = true;
-            this.Lbl_puesto.Location = new System.Drawing.Point(22, 94);
+            this.Lbl_puesto.Location = new System.Drawing.Point(22, 98);
             this.Lbl_puesto.Name = "Lbl_puesto";
             this.Lbl_puesto.Size = new System.Drawing.Size(62, 20);
             this.Lbl_puesto.TabIndex = 2;
@@ -199,6 +209,7 @@ namespace CapaVista
             // 
             // Gbp_opc
             // 
+            this.Gbp_opc.Controls.Add(this.Btn_Eliminar);
             this.Gbp_opc.Controls.Add(this.Btn_salir);
             this.Gbp_opc.Controls.Add(this.Btn_cancelar);
             this.Gbp_opc.Controls.Add(this.Btn_modificar);
@@ -207,17 +218,30 @@ namespace CapaVista
             this.Gbp_opc.Font = new System.Drawing.Font("Rockwell", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Gbp_opc.Location = new System.Drawing.Point(751, 181);
             this.Gbp_opc.Name = "Gbp_opc";
-            this.Gbp_opc.Size = new System.Drawing.Size(225, 401);
+            this.Gbp_opc.Size = new System.Drawing.Size(227, 472);
             this.Gbp_opc.TabIndex = 3;
             this.Gbp_opc.TabStop = false;
             this.Gbp_opc.Text = "Opciones";
+            // 
+            // Btn_Eliminar
+            // 
+            this.Btn_Eliminar.BackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.Btn_Eliminar.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonShadow;
+            this.Btn_Eliminar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Btn_Eliminar.Location = new System.Drawing.Point(54, 242);
+            this.Btn_Eliminar.Name = "Btn_Eliminar";
+            this.Btn_Eliminar.Size = new System.Drawing.Size(138, 54);
+            this.Btn_Eliminar.TabIndex = 5;
+            this.Btn_Eliminar.Text = "Eliminar";
+            this.Btn_Eliminar.UseVisualStyleBackColor = false;
+            this.Btn_Eliminar.Click += new System.EventHandler(this.Btn_Eliminar_Click);
             // 
             // Btn_salir
             // 
             this.Btn_salir.BackColor = System.Drawing.SystemColors.ButtonShadow;
             this.Btn_salir.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonShadow;
             this.Btn_salir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Btn_salir.Location = new System.Drawing.Point(54, 317);
+            this.Btn_salir.Location = new System.Drawing.Point(54, 384);
             this.Btn_salir.Name = "Btn_salir";
             this.Btn_salir.Size = new System.Drawing.Size(138, 54);
             this.Btn_salir.TabIndex = 4;
@@ -230,7 +254,7 @@ namespace CapaVista
             this.Btn_cancelar.BackColor = System.Drawing.SystemColors.ButtonShadow;
             this.Btn_cancelar.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonShadow;
             this.Btn_cancelar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Btn_cancelar.Location = new System.Drawing.Point(54, 244);
+            this.Btn_cancelar.Location = new System.Drawing.Point(54, 311);
             this.Btn_cancelar.Name = "Btn_cancelar";
             this.Btn_cancelar.Size = new System.Drawing.Size(138, 54);
             this.Btn_cancelar.TabIndex = 3;
@@ -278,23 +302,16 @@ namespace CapaVista
             this.Btn_guardar.UseVisualStyleBackColor = false;
             this.Btn_guardar.Click += new System.EventHandler(this.Btn_guardar_Click);
             // 
-            // Cbo_tipoperfil
-            // 
-            this.Cbo_tipoperfil.FormattingEnabled = true;
-            this.Cbo_tipoperfil.Location = new System.Drawing.Point(125, 195);
-            this.Cbo_tipoperfil.Name = "Cbo_tipoperfil";
-            this.Cbo_tipoperfil.Size = new System.Drawing.Size(525, 28);
-            this.Cbo_tipoperfil.TabIndex = 2;
-            // 
             // frmPerfiles
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(990, 609);
+            this.ClientSize = new System.Drawing.Size(1028, 665);
             this.Controls.Add(this.Gbp_opc);
             this.Controls.Add(this.Gpb_datosperfil);
             this.Controls.Add(this.Gpb_buscarperfiles);
+            this.MinimizeBox = false;
             this.Name = "frmPerfiles";
             this.Text = "Perfiles";
             this.Gpb_buscarperfiles.ResumeLayout(false);
@@ -330,5 +347,6 @@ namespace CapaVista
         private System.Windows.Forms.Button Btn_nuevo;
         private System.Windows.Forms.Button Btn_guardar;
         private System.Windows.Forms.ComboBox Cbo_tipoperfil;
+        private System.Windows.Forms.Button Btn_Eliminar;
     }
 }

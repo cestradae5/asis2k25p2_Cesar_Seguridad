@@ -1,183 +1,164 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using CapaControlador;
+using CapaModelo;
 
+//Brandon Alexander Hernandez Salguero 0901-22-9663
 namespace CapaVista
 {
-    /* Brandon Alexander Hernandez Salguero
- * 0901-22-9663
- * */
     public partial class frmPerfiles : Form
     {
-        ControladorPerfiles controlador = new ControladorPerfiles();
+        private Cls_PerfilesControlador controlador = new Cls_PerfilesControlador();
+        private List<Cls_Perfiles> listaPerfiles = new List<Cls_Perfiles>();
 
         public frmPerfiles()
         {
             InitializeComponent();
+            fun_CargarPerfiles();
+            fun_ConfigurarComboBoxPerfiles();
+            fun_ConfigurarComboBoxTipoPerfil();
+            fun_Configuracioninicial();
+            
+            
+            
+
         }
 
-        private void frmPerfiles_Load(object sender, EventArgs e)
+        private void fun_Configuracioninicial()
         {
-            LlenarCombos();
             Btn_guardar.Enabled = false;
+            Txt_idperfil.Enabled = false;
+            Btn_Eliminar.Enabled = false;
+            Btn_nuevo.Enabled = true;
+            Btn_cancelar.Enabled = true;
             Btn_modificar.Enabled = false;
         }
-
-        private void LlenarCombos()
+        private void fun_CargarPerfiles()
         {
-            // Llenar ComboBox de Perfiles como string[]
+            listaPerfiles = controlador.listObtenerTodosLosPerfiles();
+        }
+
+        private void fun_ConfigurarComboBoxPerfiles()
+        {
             Cbo_perfiles.Items.Clear();
-            string[] perfiles = controlador.ItemsPerfiles();
-            foreach (var item in perfiles)
-            {
-                if (!string.IsNullOrEmpty(item))
-                    Cbo_perfiles.Items.Add(item);
-            }
-            Cbo_perfiles.SelectedIndex = Cbo_perfiles.Items.Count > 0 ? 0 : -1;
-
-            // Llenar ComboBox de Tipos de Perfil como string[]
-            Cbo_tipoperfil.Items.Clear();
-            string[] tipos = controlador.ItemsTipos();
-            foreach (var item in tipos)
-            {
-                if (!string.IsNullOrEmpty(item))
-                    Cbo_tipoperfil.Items.Add(item);
-            }
-            Cbo_tipoperfil.SelectedIndex = Cbo_tipoperfil.Items.Count > 0 ? 0 : -1;
-
-            // Opcional: Autocompletado
-            var autoColeccion = new AutoCompleteStringCollection();
-            autoColeccion.AddRange(perfiles);
-            Cbo_perfiles.AutoCompleteCustomSource = autoColeccion;
             Cbo_perfiles.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             Cbo_perfiles.AutoCompleteSource = AutoCompleteSource.CustomSource;
+
+            // Fuente de autocompletado
+            AutoCompleteStringCollection autoComplete = new AutoCompleteStringCollection();
+            autoComplete.AddRange(listaPerfiles.Select(p => p.pk_id_perfil.ToString()).ToArray());
+            autoComplete.AddRange(listaPerfiles.Select(p => p.puesto_perfil).ToArray());
+            Cbo_perfiles.AutoCompleteCustomSource = autoComplete;
+
+            // Display y Value
+            Cbo_perfiles.DisplayMember = "Display";
+            Cbo_perfiles.ValueMember = "Id";
+            foreach (var perfil in listaPerfiles)
+            {
+                Cbo_perfiles.Items.Add(new
+                {
+                    Display = $"{perfil.pk_id_perfil} - {perfil.puesto_perfil}",
+                    Id = perfil.pk_id_perfil
+                });
+            }
         }
+
+        private void fun_ConfigurarComboBoxTipoPerfil()
+        {
+            Cbo_tipoperfil.Items.Clear();
+            Cbo_tipoperfil.Items.Add("0");
+            Cbo_tipoperfil.Items.Add("1");
+            Cbo_tipoperfil.SelectedIndex = -1;
+        }
+
+        private void fun_MostrarPerfil(Cls_Perfiles perfil)
+        {
+            Txt_idperfil.Text = perfil.pk_id_perfil.ToString();
+            Txt_puesto.Text = perfil.puesto_perfil;
+            Txt_descripcion.Text = perfil.descripcion_perfil;
+            Cbo_tipoperfil.Text = perfil.tipo_perfil.ToString();
+            Rdb_Habilitado.Checked = perfil.estado_perfil;
+            Rdb_inhabilitado.Checked = !perfil.estado_perfil;
+        }
+
+
+            
 
         private void Btn_nuevo_Click(object sender, EventArgs e)
         {
-            LimpiarCampos();
-            Btn_nuevo.Enabled = false;
+            fun_LimpiarCampos();
+              Btn_nuevo.Enabled = false;
             Btn_guardar.Enabled = true;
             Btn_modificar.Enabled = false;
-            Txt_idperfil.Enabled = true;
+            Txt_idperfil.Enabled = false;
         }
 
         private void Btn_guardar_Click(object sender, EventArgs e)
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(Txt_idperfil.Text) ||
-                    string.IsNullOrWhiteSpace(Txt_puesto.Text) ||
+                if (string.IsNullOrWhiteSpace(Txt_puesto.Text) ||
                     string.IsNullOrWhiteSpace(Txt_descripcion.Text) ||
                     string.IsNullOrWhiteSpace(Cbo_tipoperfil.Text))
                 {
-                    MessageBox.Show("Por favor, complete todos los campos antes de guardar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Complete todos los campos antes de guardar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                if (!Rdb_Habilitado.Checked && !Rdb_inhabilitado.Checked)
-                {
-                    MessageBox.Show("Por favor, seleccione un estado (Habilitado o Inhabilitado).", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                int id = int.Parse(Txt_idperfil.Text);
-                string puesto = Txt_puesto.Text;
-                string descripcion = Txt_descripcion.Text;
-                bool habilitado = Rdb_Habilitado.Checked;
-                bool inhabilitado = Rdb_inhabilitado.Checked;
-
-                // Validación de tipo de perfil 0 o 1
+                bool estado = Rdb_Habilitado.Checked;
                 int tipo;
                 if (!int.TryParse(Cbo_tipoperfil.Text, out tipo) || (tipo != 0 && tipo != 1))
                 {
-                    MessageBox.Show("El tipo de perfil es inválido. Debe ser 0 o 1.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    Cbo_tipoperfil.Focus();
+                    MessageBox.Show("Tipo de perfil inválido. Debe ser 0 o 1.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-
-                if (controlador.InsertarPerfil(id, puesto, descripcion, habilitado, inhabilitado, tipo))
-                {
-                    MessageBox.Show("¡Datos guardados exitosamente!");
-                    LlenarCombos();
-                    LimpiarCampos();
-                }
-                else
-                {
-                    MessageBox.Show("No se pudo guardar el perfil. Verifique que el ID no exista ya.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
-                Btn_nuevo.Enabled = true;
-                Btn_guardar.Enabled = false;
-                Btn_modificar.Enabled = false;
-                Txt_idperfil.Enabled = false;
+                bool exito = controlador.bInsertarPerfil(Txt_puesto.Text, Txt_descripcion.Text, estado, tipo);
+                MessageBox.Show(exito ? "Perfil guardado correctamente" : "Error al guardar perfil");
+                fun_CargarPerfiles();
+                fun_ConfigurarComboBoxPerfiles();
+                fun_LimpiarCampos();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Ocurrió un error al guardar los datos: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error al guardar perfil: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            fun_Configuracioninicial();
         }
 
         private void Btn_modificar_Click(object sender, EventArgs e)
         {
-            try
+            if (!int.TryParse(Txt_idperfil.Text, out int id))
             {
-                if (string.IsNullOrWhiteSpace(Txt_idperfil.Text) ||
-                    string.IsNullOrWhiteSpace(Txt_puesto.Text) ||
-                    string.IsNullOrWhiteSpace(Txt_descripcion.Text))
-                {
-                    MessageBox.Show("Por favor, complete todos los campos antes de modificar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                if (!Rdb_Habilitado.Checked && !Rdb_inhabilitado.Checked)
-                {
-                    MessageBox.Show("Por favor, seleccione un estado (Habilitado o Inhabilitado).", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                int id = int.Parse(Txt_idperfil.Text);
-                string puesto = Txt_puesto.Text;
-                string descripcion = Txt_descripcion.Text;
-                bool habilitado = Rdb_Habilitado.Checked;
-                bool inhabilitado = Rdb_inhabilitado.Checked;
-
-                // Validación de tipo de perfil 0 o 1
-                int tipo;
-                if (!int.TryParse(Cbo_tipoperfil.Text, out tipo) || (tipo != 0 && tipo != 1))
-                {
-                    MessageBox.Show("El tipo de perfil es inválido. Debe ser 0 o 1.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    Cbo_tipoperfil.Focus();
-                    return;
-                }
-
-                if (controlador.ModificarPerfil(id, puesto, descripcion, habilitado, inhabilitado, tipo))
-                {
-                    MessageBox.Show("¡Datos modificados exitosamente!");
-                    LlenarCombos();
-                    LimpiarCampos();
-                }
-                else
-                {
-                    MessageBox.Show("No se pudo modificar el perfil.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
-                Btn_nuevo.Enabled = true;
-                Btn_guardar.Enabled = false;
-                Btn_modificar.Enabled = false;
-                Txt_idperfil.Enabled = false;
+                MessageBox.Show("Ingrese un ID válido para modificar.");
+                return;
             }
-            catch (Exception ex)
+            if (string.IsNullOrWhiteSpace(Txt_puesto.Text) ||
+                string.IsNullOrWhiteSpace(Txt_descripcion.Text) ||
+                Cbo_tipoperfil.SelectedIndex == -1)
             {
-                MessageBox.Show("Ocurrió un error al modificar los datos: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Complete todos los campos antes de modificar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
+            bool estado = Rdb_Habilitado.Checked;
+            int tipo;
+            if (!int.TryParse(Cbo_tipoperfil.Text, out tipo) || (tipo != 0 && tipo != 1))
+            {
+                MessageBox.Show("Tipo de perfil inválido. Debe ser 0 o 1.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            bool exito = controlador.bActualizarPerfil(id, Txt_puesto.Text, Txt_descripcion.Text, estado, tipo);
+            MessageBox.Show(exito ? "Perfil modificado correctamente" : "Error al modificar perfil");
+            fun_CargarPerfiles();
+            fun_ConfigurarComboBoxPerfiles();
+            fun_LimpiarCampos();
         }
+
 
         private void Btn_cancelar_Click(object sender, EventArgs e)
         {
-            LimpiarCampos();
-            Btn_nuevo.Enabled = true;
-            Btn_guardar.Enabled = false;
-            Btn_modificar.Enabled = false;
-            Txt_idperfil.Enabled = false;
+            fun_LimpiarCampos();
+            fun_Configuracioninicial();
         }
 
         private void Btn_salir_Click(object sender, EventArgs e)
@@ -185,46 +166,76 @@ namespace CapaVista
             this.Close();
         }
 
-        private void Btn_buscar_Click(object sender, EventArgs e)
+
+        private void fun_LimpiarCampos()
         {
-            if (Cbo_perfiles.SelectedValue != null)
-            {
-                int idPerfil = Convert.ToInt32(Cbo_perfiles.SelectedValue);
-                var row = controlador.BuscarPerfil(idPerfil);
-                if (row != null)
-                {
-                    Txt_idperfil.Text = row["pk_id_perfil"].ToString();
-                    Txt_puesto.Text = row["puesto_perfil"].ToString();
-                    Txt_descripcion.Text = row["descripcion_perfil"].ToString();
-
-                    if (row["tipo_perfil"] != DBNull.Value)
-                        Cbo_tipoperfil.SelectedIndex = ((bool)row["tipo_perfil"]) ? 0 : 1;
-                    else
-                        Cbo_tipoperfil.SelectedIndex = -1;
-
-                    Rdb_Habilitado.Checked = (bool)row["habilitado_perfil"];
-                    Rdb_inhabilitado.Checked = (bool)row["inabilitado_perfil"];
-
-                    Btn_nuevo.Enabled = false;
-                    Btn_guardar.Enabled = false;
-                    Btn_modificar.Enabled = true;
-                    Txt_idperfil.Enabled = false;
-                }
-                else
-                {
-                    MessageBox.Show("No se encontró el perfil seleccionado.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-            }
-        }
-
-        private void LimpiarCampos()
-        {
-            Txt_idperfil.Text = "";
-            Txt_puesto.Text = "";
-            Txt_descripcion.Text = "";
+            Txt_idperfil.Clear();
+            Txt_puesto.Clear();
+            Txt_descripcion.Clear();
             Cbo_tipoperfil.SelectedIndex = -1;
             Rdb_Habilitado.Checked = false;
             Rdb_inhabilitado.Checked = false;
+            
+        }
+
+
+
+        private void Btn_buscar_Click(object sender, EventArgs e)
+        {
+            string busqueda = Cbo_perfiles.Text.Trim();
+            if (string.IsNullOrEmpty(busqueda))
+            {
+                MessageBox.Show("Ingrese un ID o nombre de perfil para buscar");
+                return;
+            }
+
+            Cls_Perfiles perfilEncontrado = null;
+
+            // Buscar por ID si es numérico
+            if (int.TryParse(busqueda.Split('-')[0].Trim(), out int id))
+            {
+                perfilEncontrado = listaPerfiles.FirstOrDefault(p => p.pk_id_perfil == id);
+            }
+            // Si no encontró por ID, buscar por nombre
+            if (perfilEncontrado == null)
+            {
+                perfilEncontrado = listaPerfiles.FirstOrDefault(p =>
+                    p.puesto_perfil.Equals(busqueda, StringComparison.OrdinalIgnoreCase));
+            }
+            if (perfilEncontrado != null)
+            {
+                fun_MostrarPerfil(perfilEncontrado);
+                Btn_nuevo.Enabled = false;
+                Btn_guardar.Enabled = false;
+                Btn_modificar.Enabled = true;
+                Txt_idperfil.Enabled = false;
+                Txt_idperfil.Enabled = false;
+                Btn_Eliminar.Enabled = true;
+
+            }
+            else
+            {
+                MessageBox.Show("Perfil no encontrado");
+                fun_LimpiarCampos();
+            }
+        
+    }
+
+        private void Btn_Eliminar_Click(object sender, EventArgs e)
+        {
+            if (!int.TryParse(Txt_idperfil.Text, out int id))
+            {
+                MessageBox.Show("Ingrese un ID válido para eliminar.");
+                return;
+            }
+            bool exito = controlador.bBorrarPerfil(id);
+            MessageBox.Show(exito ? "Perfil eliminado" : "Error al eliminar perfil");
+            fun_CargarPerfiles();
+            Cbo_perfiles.Items.Clear();
+            fun_ConfigurarComboBoxPerfiles();
+            
+            fun_LimpiarCampos();
+            fun_Configuracioninicial();
         }
     }
 }
