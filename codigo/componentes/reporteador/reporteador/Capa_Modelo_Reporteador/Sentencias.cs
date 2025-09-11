@@ -11,5 +11,7 @@ namespace Capa_Modelo_Reporteador
     //Clase Publica
     public class Sentencias
     {
+        //Bárbara Saldaña 
+        //InsertarReporte -> Método para poder insertar reportes
     }
 }
