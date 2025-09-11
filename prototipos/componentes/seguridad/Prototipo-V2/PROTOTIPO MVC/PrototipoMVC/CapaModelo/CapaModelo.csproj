@@ -55,6 +55,7 @@
     <Compile Include="SentenciaPruebaBD.cs" />
     <Compile Include="SentenciaRecuperarContrasena.cs" />
     <Compile Include="Cls_Perfiles.cs" />
+    <Compile Include="SentenciasModulos.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
