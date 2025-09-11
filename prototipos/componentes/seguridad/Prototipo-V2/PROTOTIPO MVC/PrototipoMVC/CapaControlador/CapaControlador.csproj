@@ -53,6 +53,7 @@
     <Compile Include="ControladorAsignacionUsuarioAplicacion.cs" />
     <Compile Include="ControladorLogin.cs" />
     <Compile Include="Cls_EmpleadosControlador.cs" />
+    <Compile Include="ControladorModulos.cs" />
     <Compile Include="ControladorPruebaBD.cs" />
     <Compile Include="ControladorRecuperarContrasena.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

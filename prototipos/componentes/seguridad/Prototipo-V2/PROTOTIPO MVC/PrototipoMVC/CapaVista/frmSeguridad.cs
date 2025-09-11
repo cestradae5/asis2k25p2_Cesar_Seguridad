@@ -164,5 +164,12 @@ namespace CapaVista
             frmPerfiles perfiles = new frmPerfiles();
             perfiles.Show();
         }
+
+        private void modulosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmModulo formModulo = new frmModulo();
+            formModulo.Show();
+
+        }
     }
 }
