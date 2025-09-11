@@ -13,9 +13,19 @@ namespace Capa_Modelo_Reporteador
     {
         //Bárbara Saldaña 
         //InsertarReporte -> Método para poder insertar reportes
-
-
-
+    public void InsertarReporte(string titulo, string ruta, DateTime fecha)
+            {
+                using (OdbcConnection con = Conexion.ObtenerConexion())
+                {
+                    string sql = "INSERT INTO tbl_reportes (titulo_reportes, ruta_reportes, fecha_reportes) VALUES (?,?,?)";
+                    OdbcCommand cmd = new OdbcCommand(sql, con);
+                    cmd.Parameters.AddWithValue("titulo", titulo);
+                    cmd.Parameters.AddWithValue("ruta", ruta);
+                    cmd.Parameters.AddWithValue("fecha", fecha);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+    }
 
         // Inicio de código de: María Morales con carné: 0901-22-1226 en la fecha de: 11/09/2025
         public void Modificar_Ruta(int id, string nuevaRuta)
