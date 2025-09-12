@@ -129,6 +129,12 @@
     <Compile Include="frmSeguridad.Designer.cs">
       <DependentUpon>frmSeguridad.cs</DependentUpon>
     </Compile>
+    <Compile Include="Frm_Consultar_Asignacion_Modulo_Aplicacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Consultar_Asignacion_Modulo_Aplicacion.Designer.cs">
+      <DependentUpon>Frm_Consultar_Asignacion_Modulo_Aplicacion.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -170,6 +176,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmSeguridad.resx">
       <DependentUpon>frmSeguridad.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Consultar_Asignacion_Modulo_Aplicacion.resx">
+      <DependentUpon>Frm_Consultar_Asignacion_Modulo_Aplicacion.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

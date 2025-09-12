@@ -12,19 +12,20 @@ namespace CapaModelo
         public int? FkIdReporte { get; set; }
         public string NombreAplicacion { get; set; }
         public string DescripcionAplicacion { get; set; }
-        public bool HabilitadoAplicacion { get; set; }
-        public bool DeshabilitadoAplicacion { get; set; }
-        public Cls_Aplicacion() { }
-            public Cls_Aplicacion(int pkIdAplicacion, int? fkIdReporte, string nombreAplicacion, string descripcionAplicacion, bool habilitadoAplicacion, bool deshabilitadoAplicacion)
-            {
-                PkIdAplicacion = pkIdAplicacion;
-                FkIdReporte = fkIdReporte;
-                NombreAplicacion = nombreAplicacion;
-                DescripcionAplicacion = descripcionAplicacion;
-                HabilitadoAplicacion = habilitadoAplicacion;
-                DeshabilitadoAplicacion = deshabilitadoAplicacion;
-            }
 
+        // Solo un campo de estado en la BD
+        public bool EstadoAplicacion { get; set; } // true = habilitado, false = deshabilitado
+
+        public Cls_Aplicacion() { }
+
+        public Cls_Aplicacion(int pkIdAplicacion, int? fkIdReporte, string nombreAplicacion, string descripcionAplicacion, bool estadoAplicacion)
+        {
+            PkIdAplicacion = pkIdAplicacion;
+            FkIdReporte = fkIdReporte;
+            NombreAplicacion = nombreAplicacion;
+            DescripcionAplicacion = descripcionAplicacion;
+            EstadoAplicacion = estadoAplicacion;
         }
     }
+}
 

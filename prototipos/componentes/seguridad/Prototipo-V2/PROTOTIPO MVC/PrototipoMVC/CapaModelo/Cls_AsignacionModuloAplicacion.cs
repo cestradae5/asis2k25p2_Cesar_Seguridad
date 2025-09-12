@@ -11,13 +11,11 @@ namespace CapaModelo
     {
         public int FkIdModulo { get; set; }
         public int FkIdAplicacion { get; set; }
-
+        public AsignacionModuloAplicacion() { }
         public AsignacionModuloAplicacion(int fkIdModulo, int fkIdAplicacion)
         {
             FkIdModulo = fkIdModulo;
             FkIdAplicacion = fkIdAplicacion;
         }
-
-        public AsignacionModuloAplicacion() { }
     }
 }

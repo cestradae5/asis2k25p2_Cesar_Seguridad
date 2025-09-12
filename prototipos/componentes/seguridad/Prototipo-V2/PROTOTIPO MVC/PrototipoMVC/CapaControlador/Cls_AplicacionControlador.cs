@@ -12,40 +12,34 @@ namespace CapaControlador
     {
         private Cls_AplicacionDAO daoAplicacion = new Cls_AplicacionDAO();
 
-        // Obtener todas las aplicaciones
         public List<Cls_Aplicacion> ObtenerTodasLasAplicaciones()
         {
             return daoAplicacion.ObtenerAplicaciones();
         }
 
-        // Insertar una nueva aplicación
-        public int InsertarAplicacion(int idAplicacion, string nombre, string descripcion, bool habilitado, bool deshabilitado, int? idReporte = null)
+        public int InsertarAplicacion(int idAplicacion, string nombre, string descripcion, bool estado, int? idReporte = null)
         {
             Cls_Aplicacion nuevaApp = new Cls_Aplicacion
             {
                 PkIdAplicacion = idAplicacion,
                 NombreAplicacion = nombre,
                 DescripcionAplicacion = descripcion,
-                HabilitadoAplicacion = habilitado,
-                DeshabilitadoAplicacion = deshabilitado,
+                EstadoAplicacion = estado,
                 FkIdReporte = idReporte
             };
 
             return daoAplicacion.InsertarAplicacion(nuevaApp);
         }
 
-
-
         // Actualizar aplicación existente
-        public bool ActualizarAplicacion(int idAplicacion, string nombre, string descripcion, bool habilitado, bool deshabilitado, int? idReporte = null)
+        public bool ActualizarAplicacion(int idAplicacion, string nombre, string descripcion, bool estado, int? idReporte = null)
         {
             Cls_Aplicacion appActualizada = new Cls_Aplicacion
             {
                 PkIdAplicacion = idAplicacion,
                 NombreAplicacion = nombre,
                 DescripcionAplicacion = descripcion,
-                HabilitadoAplicacion = habilitado,
-                DeshabilitadoAplicacion = deshabilitado,
+                EstadoAplicacion = estado,
                 FkIdReporte = idReporte
             };
 
@@ -62,6 +56,14 @@ namespace CapaControlador
         public Cls_Aplicacion BuscarAplicacionPorId(int idAplicacion)
         {
             return daoAplicacion.Query(idAplicacion);
+        }
+
+        // Buscar aplicación por nombre
+        public Cls_Aplicacion BuscarAplicacionPorNombre(string nombre)
+        {
+            return daoAplicacion.ObtenerAplicaciones()
+                                .FirstOrDefault(a =>
+                                    a.NombreAplicacion.Equals(nombre, StringComparison.OrdinalIgnoreCase));
         }
     }
 }
