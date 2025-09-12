@@ -33,7 +33,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
@@ -44,19 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
-    <Compile Include="Frm_Editar.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Frm_Editar.Designer.cs">
-      <DependentUpon>Frm_Editar.cs</DependentUpon>
-=======
     <Compile Include="Consulta_Compleja.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Consulta_Compleja.Designer.cs">
       <DependentUpon>Consulta_Compleja.cs</DependentUpon>
->>>>>>> d4cd3924a04a62529e66204d991a4c6e1a90671d
     </Compile>
     <Compile Include="Frm_Creacion.cs">
       <SubType>Form</SubType>
@@ -87,29 +78,13 @@
     <EmbeddedResource Include="Frm_Creacion.resx">
       <DependentUpon>Frm_Creacion.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Frm_Editar.resx">
-      <DependentUpon>Frm_Editar.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\android-search_icon-icons.com_50501.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\icons8-add-50.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\icons8-cancel-50.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\icons8-delete-50.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\icons8-edit-50.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
