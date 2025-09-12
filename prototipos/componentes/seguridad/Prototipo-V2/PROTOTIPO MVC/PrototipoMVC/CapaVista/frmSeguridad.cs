@@ -116,5 +116,23 @@ namespace CapaVista
             formEmpleado.Show();
 
         }
+
+        private void perfilesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmPerfiles perfiles = new frmPerfiles();
+            perfiles.Show();
+        }
+
+        private void asignacionDeAplicacionAUsuarioToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmasignacion_aplicacion_usuario asig_app_user = new frmasignacion_aplicacion_usuario();
+            asig_app_user.Show();
+        }
+
+        private void asignacionPerfilesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmasignacion_perfil_usuario asig_perfil = new frmasignacion_perfil_usuario();
+            asig_perfil.Show();
+        }
     }
 }

@@ -217,5 +217,7 @@ namespace CapaVista
             Rdb_estado_activo.Checked = true;
             Rdb_inactivo.Checked = false;
         }
+
+       
     }
 }
