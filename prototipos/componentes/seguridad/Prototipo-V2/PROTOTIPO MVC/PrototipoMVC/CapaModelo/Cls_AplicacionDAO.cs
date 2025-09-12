@@ -11,29 +11,27 @@ namespace CapaModelo
 
         private static readonly string SQL_SELECT = @"
             SELECT pk_id_aplicacion, fk_id_reporte, nombre_aplicacion, 
-                   descripcion_aplicacion, habilitado_aplicacion, desabilitado_aplicacion
+                   descripcion_aplicacion, estado_aplicacion
             FROM tbl_APLICACION";
 
         private static readonly string SQL_INSERT = @"
-            INSERT INTO tbl_aplicacion 
-                (pk_id_aplicacion, fk_id_reporte, nombre_aplicacion, descripcion_aplicacion,
-                 habilitado_aplicacion, desabilitado_aplicacion)
-            VALUES (?, ?, ?, ?, ?, ?)";
+            INSERT INTO tbl_APLICACION 
+                (pk_id_aplicacion, fk_id_reporte, nombre_aplicacion, descripcion_aplicacion, estado_aplicacion)
+            VALUES (?, ?, ?, ?, ?)";
 
         private static readonly string SQL_UPDATE = @"
             UPDATE tbl_APLICACION SET
                 fk_id_reporte = ?, 
                 nombre_aplicacion = ?, 
                 descripcion_aplicacion = ?, 
-                habilitado_aplicacion = ?, 
-                desabilitado_aplicacion = ?
+                estado_aplicacion = ?
             WHERE pk_id_aplicacion = ?";
 
         private static readonly string SQL_DELETE = "DELETE FROM tbl_APLICACION WHERE pk_id_aplicacion = ?";
 
         private static readonly string SQL_QUERY = @"
             SELECT pk_id_aplicacion, fk_id_reporte, nombre_aplicacion, 
-                   descripcion_aplicacion, habilitado_aplicacion, desabilitado_aplicacion
+                   descripcion_aplicacion, estado_aplicacion
             FROM tbl_APLICACION 
             WHERE pk_id_aplicacion = ?";
 
@@ -54,8 +52,7 @@ namespace CapaModelo
                         FkIdReporte = reader.IsDBNull(1) ? (int?)null : reader.GetInt32(1),
                         NombreAplicacion = reader.GetString(2),
                         DescripcionAplicacion = reader.GetString(3),
-                        HabilitadoAplicacion = reader.GetBoolean(4),
-                        DeshabilitadoAplicacion = reader.GetBoolean(5)
+                        EstadoAplicacion = reader.GetBoolean(4)
                     };
                     lista.Add(app);
                 }
@@ -70,19 +67,11 @@ namespace CapaModelo
             {
                 OdbcCommand cmd = new OdbcCommand(SQL_INSERT, conn);
 
-                // ID manual
                 cmd.Parameters.AddWithValue("@pk_id_aplicacion", app.PkIdAplicacion);
-
-                // fk_id_reporte opcional
-                if (app.FkIdReporte.HasValue)
-                    cmd.Parameters.AddWithValue("@fk_id_reporte", app.FkIdReporte.Value);
-                else
-                    cmd.Parameters.AddWithValue("@fk_id_reporte", DBNull.Value);
-
+                cmd.Parameters.AddWithValue("@fk_id_reporte", app.FkIdReporte.HasValue ? (object)app.FkIdReporte.Value : DBNull.Value);
                 cmd.Parameters.AddWithValue("@nombre_aplicacion", app.NombreAplicacion);
                 cmd.Parameters.AddWithValue("@descripcion_aplicacion", app.DescripcionAplicacion);
-                cmd.Parameters.AddWithValue("@habilitado_aplicacion", app.HabilitadoAplicacion);
-                cmd.Parameters.AddWithValue("@desabilitado_aplicacion", app.DeshabilitadoAplicacion);
+                cmd.Parameters.AddWithValue("@estado_aplicacion", app.EstadoAplicacion);
 
                 return cmd.ExecuteNonQuery();
             }
@@ -98,8 +87,7 @@ namespace CapaModelo
                 cmd.Parameters.AddWithValue("@fk_id_reporte", app.FkIdReporte.HasValue ? (object)app.FkIdReporte.Value : DBNull.Value);
                 cmd.Parameters.AddWithValue("@nombre_aplicacion", app.NombreAplicacion);
                 cmd.Parameters.AddWithValue("@descripcion_aplicacion", app.DescripcionAplicacion);
-                cmd.Parameters.AddWithValue("@habilitado_aplicacion", app.HabilitadoAplicacion);
-                cmd.Parameters.AddWithValue("@desabilitado_aplicacion", app.DeshabilitadoAplicacion);
+                cmd.Parameters.AddWithValue("@estado_aplicacion", app.EstadoAplicacion);
                 cmd.Parameters.AddWithValue("@pk_id_aplicacion", app.PkIdAplicacion);
 
                 return cmd.ExecuteNonQuery();
@@ -135,13 +123,11 @@ namespace CapaModelo
                         FkIdReporte = reader.IsDBNull(1) ? (int?)null : reader.GetInt32(1),
                         NombreAplicacion = reader.GetString(2),
                         DescripcionAplicacion = reader.GetString(3),
-                        HabilitadoAplicacion = reader.GetBoolean(4),
-                        DeshabilitadoAplicacion = reader.GetBoolean(5)
+                        EstadoAplicacion = reader.GetBoolean(4)
                     };
                 }
             }
             return app;
         }
-
     }
 }

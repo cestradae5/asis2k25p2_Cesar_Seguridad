@@ -23,6 +23,7 @@ namespace CapaVista
             InitializeComponent();
             CargarAplicaciones();
             ConfigurarComboBox();
+            CargarComboModulos();
         }
         private void CargarAplicaciones()
         {
@@ -44,7 +45,7 @@ namespace CapaVista
             Cbo_buscar.DisplayMember = "Display";
             Cbo_buscar.ValueMember = "Id";
 
-            // Crear items combinados (ID + Nombre)
+            // Crear items combinados id-Nombre
             foreach (var app in listaAplicaciones)
             {
                 Cbo_buscar.Items.Add(new
@@ -59,8 +60,8 @@ namespace CapaVista
             Txt_id_aplicacion.Text = app.PkIdAplicacion.ToString();
             Txt_Nombre_aplicacion.Text = app.NombreAplicacion;
             Txt_descripcion.Text = app.DescripcionAplicacion;
-            Rdb_estado_activo.Checked = app.HabilitadoAplicacion;
-            Rdb_inactivo.Checked = app.DeshabilitadoAplicacion;
+            Rdb_estado_activo.Checked = app.EstadoAplicacion;
+            Rdb_inactivo.Checked = !app.EstadoAplicacion;
         }
         private void Btn_buscar_Click(object sender, EventArgs e)
         {
@@ -74,22 +75,52 @@ namespace CapaVista
 
             Cls_Aplicacion appEncontrada = null;
 
-            // Buscar por ID si es numérico
-            if (int.TryParse(busqueda, out int id))
+            // id-nombre
+            if (busqueda.Contains("-"))
             {
-                appEncontrada = listaAplicaciones.FirstOrDefault(a => a.PkIdAplicacion == id);
+                string[] partes = busqueda.Split('-');
+                if (int.TryParse(partes[0], out int idParte))
+                {
+                    appEncontrada = controlador.BuscarAplicacionPorId(idParte);
+                }
             }
 
-            // Si no encontró por ID, buscar por nombre
+            // solo ID
+            if (appEncontrada == null && int.TryParse(busqueda, out int id))
+            {
+                appEncontrada = controlador.BuscarAplicacionPorId(id);
+            }
+
+            // solo Nombre
             if (appEncontrada == null)
             {
-                appEncontrada = listaAplicaciones.FirstOrDefault(a =>
-                    a.NombreAplicacion.Equals(busqueda, StringComparison.OrdinalIgnoreCase));
+                appEncontrada = controlador.BuscarAplicacionPorNombre(busqueda);
             }
 
+            // Mostrar resultado y seleccionar módulo asignado
             if (appEncontrada != null)
             {
                 MostrarAplicacion(appEncontrada);
+
+                // Obtener módulo asignado
+                Cls_AsignacionModuloAplicacionControlador asignacionCtrl = new Cls_AsignacionModuloAplicacionControlador();
+                int? idModulo = asignacionCtrl.ObtenerModuloPorAplicacion(appEncontrada.PkIdAplicacion);
+
+                if (idModulo.HasValue)
+                {
+                    foreach (var item in Cbo_id_modulo.Items)
+                    {
+                        if (((dynamic)item).Id == idModulo.Value)
+                        {
+                            Cbo_id_modulo.SelectedItem = item;
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    Cbo_id_modulo.SelectedItem = null;
+                }
             }
             else
             {
@@ -97,6 +128,7 @@ namespace CapaVista
                 LimpiarCampos();
             }
         }
+
 
         private void Cbo_buscar_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -139,25 +171,19 @@ namespace CapaVista
 
         private void Btn_modificar_Click(object sender, EventArgs e)
         {
-            int id;
-            if (!int.TryParse(Txt_id_aplicacion.Text, out id))
+            if (!int.TryParse(Txt_id_aplicacion.Text, out int id))
             {
                 MessageBox.Show("Ingrese un ID válido para modificar.");
                 return;
             }
-
             bool exito = controlador.ActualizarAplicacion(
                 id,
                 Txt_Nombre_aplicacion.Text,
                 Txt_descripcion.Text,
                 Rdb_estado_activo.Checked,
-                Rdb_inactivo.Checked,
-                null // fk_id_reporte opcional
+                null
             );
-
             MessageBox.Show(exito ? "Aplicación modificada" : "Error al modificar");
-
-
         }
 
         private void Btn_nuevo_Click(object sender, EventArgs e)
@@ -171,29 +197,48 @@ namespace CapaVista
 
         private void Btn_guardar_Click(object sender, EventArgs e)
         {
-            var app = new Cls_Aplicacion
+            //Validar ID de aplicación
+            if (!int.TryParse(Txt_id_aplicacion.Text, out int idAplicacion))
             {
-                PkIdAplicacion = int.Parse(Txt_id_aplicacion.Text), // <- manual
-                NombreAplicacion = Txt_Nombre_aplicacion.Text,
-                DescripcionAplicacion = Txt_descripcion.Text,
-                HabilitadoAplicacion = Rdb_estado_activo.Checked,
-                DeshabilitadoAplicacion = Rdb_inactivo.Checked,
-                FkIdReporte = null // si no usas reporte
-            };
+                MessageBox.Show("Ingrese un ID válido.");
+                return;
+            }
 
-            int resultado = controlador.InsertarAplicacion(
-                app.PkIdAplicacion,
-                app.NombreAplicacion,
-                app.DescripcionAplicacion,
-                app.HabilitadoAplicacion,
-                app.DeshabilitadoAplicacion,
-                app.FkIdReporte
-            );
+            string nombre = Txt_Nombre_aplicacion.Text.Trim();
+            string descripcion = Txt_descripcion.Text.Trim();
+            bool estado = Rdb_estado_activo.Checked;
 
-            if (resultado > 0)
-                MessageBox.Show("Aplicación guardada correctamente");
-            else
-                MessageBox.Show("Error al guardar");
+            //  Guardar aplicación 
+            int resultadoApp = controlador.InsertarAplicacion(idAplicacion, nombre, descripcion, estado, null);
+
+            if (resultadoApp <= 0)
+            {
+                MessageBox.Show("Error al guardar la aplicación. Verifique que el ID no exista.");
+                return;
+            }
+
+            //  Obtener ID de módulo
+            if (Cbo_id_modulo.SelectedItem == null)
+            {
+                MessageBox.Show("Seleccione un módulo para la asignación.");
+                return;
+            }
+
+            int idModulo = Convert.ToInt32(((dynamic)Cbo_id_modulo.SelectedItem).Id);
+
+            //Guardar asignación 
+            Cls_AsignacionModuloAplicacionControlador asignacionCtrl = new Cls_AsignacionModuloAplicacionControlador();
+
+            bool asignacionGuardada = asignacionCtrl.GuardarAsignacion(idModulo, idAplicacion);
+
+            if (!asignacionGuardada)
+            {
+                MessageBox.Show("La asignación ya existe o hubo un error al guardar.");
+                return;
+            }
+
+            MessageBox.Show("Aplicación y asignación guardadas correctamente.");
+            LimpiarCampos();
         }
 
 
@@ -216,6 +261,45 @@ namespace CapaVista
             Rdb_inactivo.Checked = false;
         }
 
-       
+        private void Lbl_mantenimiento_aplicacion_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Cbo_id_modulo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Btn_salir_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void Btn_Consultar_Asignacion_Click(object sender, EventArgs e)
+        {
+            Frm_Consultar_Asignacion_Modulo_Aplicacion consulta = new Frm_Consultar_Asignacion_Modulo_Aplicacion();
+            consulta.ShowDialog();
+        }
+        private void CargarComboModulos()
+        {
+            // Suponiendo que tienes un controlador de módulos
+            ControladorModulos controladorModulos = new ControladorModulos();
+
+            DataTable dtModulos = controladorModulos.ObtenerModulos(); // Devuelve pk_id_modulo y nombre_modulo
+
+            Cbo_id_modulo.DisplayMember = "Display";
+            Cbo_id_modulo.ValueMember = "Id";
+
+            foreach (DataRow row in dtModulos.Rows)
+            {
+                Cbo_id_modulo.Items.Add(new
+                {
+                    Display = $"{row["pk_id_modulo"]} - {row["nombre_modulo"]}",
+                    Id = row["pk_id_modulo"]
+                });
+            }
+        }
+
     }
 }

@@ -106,8 +106,7 @@ namespace CapaVista
 
         private void btn_aplicacion_Click(object sender, EventArgs e)
         {
-            FrmAplicacion formAplicacion = new FrmAplicacion();
-            formAplicacion.Show();
+
         }
 
         private void empleadosToolStripMenuItem_Click(object sender, EventArgs e)
@@ -170,6 +169,12 @@ namespace CapaVista
             frmModulo formModulo = new frmModulo();
             formModulo.Show();
 
+        }
+
+        private void Btn_Aplicacion_Click_1(object sender, EventArgs e)
+        {
+            FrmAplicacion formAplicacion = new FrmAplicacion();
+            formAplicacion.Show();
         }
     }
 }

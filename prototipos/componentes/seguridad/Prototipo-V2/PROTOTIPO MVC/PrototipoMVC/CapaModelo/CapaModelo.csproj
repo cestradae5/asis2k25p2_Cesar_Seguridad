@@ -45,6 +45,7 @@
     <Compile Include="Cls_Aplicacion.cs" />
     <Compile Include="Cls_AplicacionDAO.cs" />
     <Compile Include="Cls_AsignacionModuloAplicacion.cs" />
+    <Compile Include="Cls_AsignacionModuloAplicacionDAO.cs" />
     <Compile Include="Cls_Empleados.cs" />
     <Compile Include="Cls_EmpleadosDAO.cs" />
     <Compile Include="Cls_PerfilesDAO.cs" />
