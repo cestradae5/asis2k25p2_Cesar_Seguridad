@@ -70,5 +70,23 @@ namespace Capa_Modelo_Reporteador
 
 
         // Fin de código de: Rocio Lopez con carné: 9959-23-740 en la fecha de: 11/09/2025
+   // Inicio de código de: Leticia Sontay con carné: 9959-21-9664 en la fecha de: 12/09/2025
+
+        public void EliminarReporte(int id)
+        {
+            Conexion_Reporteador cn = new Conexion_Reporteador();
+            using (OdbcConnection con = cn.conexion())
+            {
+                string sql = "DELETE FROM tbl_reportes WHERE pk_id_reportes=?";
+                OdbcCommand cmd = new OdbcCommand(sql, con);
+                cmd.Parameters.AddWithValue("id", id);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+
+  // Fin de código de: Leticia Sontay con carné: 9959-21-9664 en la fecha de: 12/09/2025
     }
 }
+
+
