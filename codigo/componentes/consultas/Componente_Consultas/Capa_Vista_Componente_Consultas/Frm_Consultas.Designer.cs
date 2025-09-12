@@ -60,7 +60,11 @@ namespace Capa_Vista_Componente_Consultas
             this.gpb_Listado.Font = new System.Drawing.Font("Rockwell", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gpb_Listado.Location = new System.Drawing.Point(0, 26);
             this.gpb_Listado.Name = "gpb_Listado";
+<<<<<<< HEAD
+            this.gpb_Listado.Size = new System.Drawing.Size(754, 115);
+=======
             this.gpb_Listado.Size = new System.Drawing.Size(752, 115);
+>>>>>>> d4cd3924a04a62529e66204d991a4c6e1a90671d
             this.gpb_Listado.TabIndex = 5;
             this.gpb_Listado.TabStop = false;
             this.gpb_Listado.Text = "m";
@@ -70,7 +74,11 @@ namespace Capa_Vista_Componente_Consultas
             this.txt_Consulta.BackColor = System.Drawing.SystemColors.ControlLight;
             this.txt_Consulta.Font = new System.Drawing.Font("Rockwell", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txt_Consulta.Location = new System.Drawing.Point(250, 66);
+<<<<<<< HEAD
+            this.txt_Consulta.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+=======
             this.txt_Consulta.Margin = new System.Windows.Forms.Padding(2);
+>>>>>>> d4cd3924a04a62529e66204d991a4c6e1a90671d
             this.txt_Consulta.Name = "txt_Consulta";
             this.txt_Consulta.ReadOnly = true;
             this.txt_Consulta.Size = new System.Drawing.Size(330, 23);
@@ -126,7 +134,11 @@ namespace Capa_Vista_Componente_Consultas
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(40, 147);
+<<<<<<< HEAD
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+=======
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(2);
+>>>>>>> d4cd3924a04a62529e66204d991a4c6e1a90671d
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
@@ -143,7 +155,11 @@ namespace Capa_Vista_Componente_Consultas
             this.Mstp_Consultas.Location = new System.Drawing.Point(0, 0);
             this.Mstp_Consultas.Name = "Mstp_Consultas";
             this.Mstp_Consultas.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
+<<<<<<< HEAD
+            this.Mstp_Consultas.Size = new System.Drawing.Size(759, 25);
+=======
             this.Mstp_Consultas.Size = new System.Drawing.Size(757, 25);
+>>>>>>> d4cd3924a04a62529e66204d991a4c6e1a90671d
             this.Mstp_Consultas.TabIndex = 9;
             this.Mstp_Consultas.Text = "menuStrip1";
             // 
@@ -166,8 +182,13 @@ namespace Capa_Vista_Componente_Consultas
             // 
             this.editarToolStripMenuItem.Font = new System.Drawing.Font("Rockwell", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.editarToolStripMenuItem.Name = "editarToolStripMenuItem";
+<<<<<<< HEAD
+            this.editarToolStripMenuItem.Size = new System.Drawing.Size(59, 21);
+            this.editarToolStripMenuItem.Text = "Editar";
+=======
             this.editarToolStripMenuItem.Size = new System.Drawing.Size(119, 21);
             this.editarToolStripMenuItem.Text = "Editar/Eliminar";
+>>>>>>> d4cd3924a04a62529e66204d991a4c6e1a90671d
             // 
             // btn_cerrar
             // 
@@ -201,6 +222,13 @@ namespace Capa_Vista_Componente_Consultas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+<<<<<<< HEAD
+            this.ClientSize = new System.Drawing.Size(759, 472);
+            this.Controls.Add(this.Mstp_Consultas);
+            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.gpb_Listado);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+=======
             this.ClientSize = new System.Drawing.Size(757, 472);
             this.Controls.Add(this.btn_max);
             this.Controls.Add(this.btn_min);
@@ -209,6 +237,7 @@ namespace Capa_Vista_Componente_Consultas
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.gpb_Listado);
             this.Margin = new System.Windows.Forms.Padding(2);
+>>>>>>> d4cd3924a04a62529e66204d991a4c6e1a90671d
             this.Name = "Frm_Consultas";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Frm_Consultas";
