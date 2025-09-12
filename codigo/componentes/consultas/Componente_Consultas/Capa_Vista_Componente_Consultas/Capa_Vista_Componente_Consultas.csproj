@@ -43,6 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Consulta_Compleja.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Consulta_Compleja.Designer.cs">
+      <DependentUpon>Consulta_Compleja.cs</DependentUpon>
+    </Compile>
     <Compile Include="Frm_Creacion.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -63,6 +69,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Consulta_Compleja.resx">
+      <DependentUpon>Consulta_Compleja.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Frm_Consultas.resx">
       <DependentUpon>Frm_Consultas.cs</DependentUpon>
     </EmbeddedResource>
