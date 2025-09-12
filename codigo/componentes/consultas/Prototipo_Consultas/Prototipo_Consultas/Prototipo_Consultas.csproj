@@ -33,7 +33,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Capa_Vista_Componente_Consultas">
+    <Reference Include="Capa_Vista_Componente_Consultas, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Componente_Consultas\Capa_Vista_Componente_Consultas\bin\Debug\Capa_Vista_Componente_Consultas.dll</HintPath>
     </Reference>
     <Reference Include="System" />

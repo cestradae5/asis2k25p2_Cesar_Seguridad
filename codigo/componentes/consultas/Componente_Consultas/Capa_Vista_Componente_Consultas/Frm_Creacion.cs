@@ -15,6 +15,8 @@ namespace Capa_Vista_Componente_Consultas
         public Frm_Creacion()
         {
             InitializeComponent();
+            this.FormBorderStyle = FormBorderStyle.None;
+            this.ControlBox = false;
         }
 
         private void editarToolStripMenuItem_Click(object sender, EventArgs e)
@@ -28,6 +30,34 @@ namespace Capa_Vista_Componente_Consultas
             Frm_Consultas consultas = new Frm_Consultas();
             consultas.Show();
             this.Hide();
+        }
+
+        private void Frm_Creacion_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_cerrar_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btn_min_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void btn_max_Click(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Normal)
+                this.WindowState = FormWindowState.Maximized;
+            else
+                this.WindowState = FormWindowState.Normal;
         }
     }
 }

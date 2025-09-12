@@ -44,11 +44,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <Compile Include="Frm_Editar.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Frm_Editar.Designer.cs">
       <DependentUpon>Frm_Editar.cs</DependentUpon>
+=======
+    <Compile Include="Consulta_Compleja.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Consulta_Compleja.Designer.cs">
+      <DependentUpon>Consulta_Compleja.cs</DependentUpon>
+>>>>>>> d4cd3924a04a62529e66204d991a4c6e1a90671d
     </Compile>
     <Compile Include="Frm_Creacion.cs">
       <SubType>Form</SubType>
@@ -70,6 +78,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Consulta_Compleja.resx">
+      <DependentUpon>Consulta_Compleja.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Frm_Consultas.resx">
       <DependentUpon>Frm_Consultas.cs</DependentUpon>
     </EmbeddedResource>
