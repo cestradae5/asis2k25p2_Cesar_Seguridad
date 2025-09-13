@@ -138,7 +138,7 @@ namespace Capa_Vista_Reporteador
         }
 
         private void ActualizarGrid()
-        {   // inicio codigo Kevin Santos 0901-17-2994
+        {   // Inicio codigo Kevin Santos 0901-17-2994
             DataTable datos = controlador.ObtenerReportes();
             Dgv_reportes.DataSource = controlador.ObtenerReportes();
             // Opcional: cambiar los encabezados de las columnas
@@ -149,7 +149,7 @@ namespace Capa_Vista_Reporteador
                 Dgv_reportes.Columns["ruta_reportes"].HeaderText = "Ruta";
                 Dgv_reportes.Columns["fecha_reportes"].HeaderText = "Fecha";
             }
-            // Fin codigo Kevin Santos 0901-17-2994
+            // fin codigo Kevin Santos 0901-17-2994
         }
 
         private void Btn_eliminar_Click(object sender, EventArgs e)
