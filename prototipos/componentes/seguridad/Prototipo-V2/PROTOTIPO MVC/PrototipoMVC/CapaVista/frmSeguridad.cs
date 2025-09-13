@@ -162,5 +162,11 @@ namespace CapaVista
             frm.MdiParent = this;   
             frm.Show();
         }
+
+        private void empleadosToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            frmEmpleados formEmpleado = new frmEmpleados();
+            formEmpleado.Show();
+        }
     }
 }

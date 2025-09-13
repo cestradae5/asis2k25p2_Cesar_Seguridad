@@ -62,6 +62,7 @@ namespace CapaVista
             this.Btn_buscar_empleado = new System.Windows.Forms.Button();
             this.Cbo_mostrar_empleado = new System.Windows.Forms.ComboBox();
             this.Btn_salario_empleados = new System.Windows.Forms.Button();
+            this.Btn_cancelar = new System.Windows.Forms.Button();
             this.Gpb_datos_empleados.SuspendLayout();
             this.Gpb_genero_empleados.SuspendLayout();
             this.Gpb_opciones_empleados.SuspendLayout();
@@ -305,67 +306,75 @@ namespace CapaVista
             // 
             // Gpb_opciones_empleados
             // 
+            this.Gpb_opciones_empleados.Controls.Add(this.Btn_cancelar);
+            this.Gpb_opciones_empleados.Controls.Add(this.Btn_salario_empleados);
             this.Gpb_opciones_empleados.Controls.Add(this.Btn_guardar_empleado);
             this.Gpb_opciones_empleados.Controls.Add(this.Btn_eliminar_empleado);
+            this.Gpb_opciones_empleados.Controls.Add(this.Btn_salir_empleado);
             this.Gpb_opciones_empleados.Controls.Add(this.Btn_modificar_empleado);
             this.Gpb_opciones_empleados.Controls.Add(this.Btn_nuevo_empleado);
             this.Gpb_opciones_empleados.Font = new System.Drawing.Font("Rockwell", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Gpb_opciones_empleados.Location = new System.Drawing.Point(804, 94);
             this.Gpb_opciones_empleados.Name = "Gpb_opciones_empleados";
-            this.Gpb_opciones_empleados.Size = new System.Drawing.Size(151, 294);
+            this.Gpb_opciones_empleados.Size = new System.Drawing.Size(151, 375);
             this.Gpb_opciones_empleados.TabIndex = 5;
             this.Gpb_opciones_empleados.TabStop = false;
             this.Gpb_opciones_empleados.Text = "Opciones";
             // 
             // Btn_guardar_empleado
             // 
-            this.Btn_guardar_empleado.Location = new System.Drawing.Point(22, 116);
+            this.Btn_guardar_empleado.BackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.Btn_guardar_empleado.Location = new System.Drawing.Point(22, 87);
             this.Btn_guardar_empleado.Name = "Btn_guardar_empleado";
             this.Btn_guardar_empleado.Size = new System.Drawing.Size(114, 30);
             this.Btn_guardar_empleado.TabIndex = 9;
             this.Btn_guardar_empleado.Text = "Guardar";
-            this.Btn_guardar_empleado.UseVisualStyleBackColor = true;
+            this.Btn_guardar_empleado.UseVisualStyleBackColor = false;
             this.Btn_guardar_empleado.Click += new System.EventHandler(this.Btn_guardar_empleado_Click);
             // 
             // Btn_eliminar_empleado
             // 
-            this.Btn_eliminar_empleado.Location = new System.Drawing.Point(22, 226);
+            this.Btn_eliminar_empleado.BackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.Btn_eliminar_empleado.Location = new System.Drawing.Point(22, 176);
             this.Btn_eliminar_empleado.Name = "Btn_eliminar_empleado";
             this.Btn_eliminar_empleado.Size = new System.Drawing.Size(114, 30);
             this.Btn_eliminar_empleado.TabIndex = 8;
             this.Btn_eliminar_empleado.Text = "Eliminar";
-            this.Btn_eliminar_empleado.UseVisualStyleBackColor = true;
+            this.Btn_eliminar_empleado.UseVisualStyleBackColor = false;
             this.Btn_eliminar_empleado.Click += new System.EventHandler(this.Btn_eliminar_empleado_Click);
             // 
             // Btn_modificar_empleado
             // 
-            this.Btn_modificar_empleado.Location = new System.Drawing.Point(22, 173);
+            this.Btn_modificar_empleado.BackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.Btn_modificar_empleado.Location = new System.Drawing.Point(22, 129);
             this.Btn_modificar_empleado.Name = "Btn_modificar_empleado";
             this.Btn_modificar_empleado.Size = new System.Drawing.Size(114, 30);
             this.Btn_modificar_empleado.TabIndex = 7;
             this.Btn_modificar_empleado.Text = "Modificar";
-            this.Btn_modificar_empleado.UseVisualStyleBackColor = true;
+            this.Btn_modificar_empleado.UseVisualStyleBackColor = false;
             this.Btn_modificar_empleado.Click += new System.EventHandler(this.Btn_modificar_empleado_Click);
             // 
             // Btn_nuevo_empleado
             // 
-            this.Btn_nuevo_empleado.Location = new System.Drawing.Point(22, 52);
+            this.Btn_nuevo_empleado.BackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.Btn_nuevo_empleado.Location = new System.Drawing.Point(22, 37);
             this.Btn_nuevo_empleado.Name = "Btn_nuevo_empleado";
             this.Btn_nuevo_empleado.Size = new System.Drawing.Size(114, 30);
             this.Btn_nuevo_empleado.TabIndex = 6;
             this.Btn_nuevo_empleado.Text = "Nuevo";
-            this.Btn_nuevo_empleado.UseVisualStyleBackColor = true;
+            this.Btn_nuevo_empleado.UseVisualStyleBackColor = false;
             this.Btn_nuevo_empleado.Click += new System.EventHandler(this.Btn_nuevo_empleado_Click);
             // 
             // Btn_salir_empleado
             // 
+            this.Btn_salir_empleado.BackColor = System.Drawing.SystemColors.ButtonShadow;
             this.Btn_salir_empleado.Font = new System.Drawing.Font("Rockwell", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Btn_salir_empleado.Location = new System.Drawing.Point(836, 429);
+            this.Btn_salir_empleado.Location = new System.Drawing.Point(22, 339);
             this.Btn_salir_empleado.Name = "Btn_salir_empleado";
             this.Btn_salir_empleado.Size = new System.Drawing.Size(114, 30);
             this.Btn_salir_empleado.TabIndex = 9;
             this.Btn_salir_empleado.Text = "Salir";
-            this.Btn_salir_empleado.UseVisualStyleBackColor = true;
+            this.Btn_salir_empleado.UseVisualStyleBackColor = false;
             this.Btn_salir_empleado.Click += new System.EventHandler(this.Btn_salir_empleado_Click);
             // 
             // Gpb_mostrar_empleados
@@ -382,12 +391,13 @@ namespace CapaVista
             // 
             // Btn_buscar_empleado
             // 
+            this.Btn_buscar_empleado.BackColor = System.Drawing.SystemColors.ButtonShadow;
             this.Btn_buscar_empleado.Location = new System.Drawing.Point(49, 24);
             this.Btn_buscar_empleado.Name = "Btn_buscar_empleado";
             this.Btn_buscar_empleado.Size = new System.Drawing.Size(114, 30);
             this.Btn_buscar_empleado.TabIndex = 9;
             this.Btn_buscar_empleado.Text = "Buscar";
-            this.Btn_buscar_empleado.UseVisualStyleBackColor = true;
+            this.Btn_buscar_empleado.UseVisualStyleBackColor = false;
             this.Btn_buscar_empleado.Click += new System.EventHandler(this.Btn_buscar_empleado_Click);
             // 
             // Cbo_mostrar_empleado
@@ -397,27 +407,36 @@ namespace CapaVista
             this.Cbo_mostrar_empleado.Name = "Cbo_mostrar_empleado";
             this.Cbo_mostrar_empleado.Size = new System.Drawing.Size(213, 28);
             this.Cbo_mostrar_empleado.TabIndex = 15;
-
             // 
             // Btn_salario_empleados
             // 
+            this.Btn_salario_empleados.BackColor = System.Drawing.SystemColors.ButtonShadow;
             this.Btn_salario_empleados.Font = new System.Drawing.Font("Rockwell", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Btn_salario_empleados.Location = new System.Drawing.Point(826, 36);
+            this.Btn_salario_empleados.Location = new System.Drawing.Point(22, 221);
             this.Btn_salario_empleados.Name = "Btn_salario_empleados";
             this.Btn_salario_empleados.Size = new System.Drawing.Size(114, 30);
             this.Btn_salario_empleados.TabIndex = 11;
             this.Btn_salario_empleados.Text = "Salario";
-            this.Btn_salario_empleados.UseVisualStyleBackColor = true;
+            this.Btn_salario_empleados.UseVisualStyleBackColor = false;
             this.Btn_salario_empleados.Click += new System.EventHandler(this.Btn_salario_empleados_Click);
+            // 
+            // Btn_cancelar
+            // 
+            this.Btn_cancelar.BackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.Btn_cancelar.Location = new System.Drawing.Point(22, 274);
+            this.Btn_cancelar.Name = "Btn_cancelar";
+            this.Btn_cancelar.Size = new System.Drawing.Size(114, 30);
+            this.Btn_cancelar.TabIndex = 12;
+            this.Btn_cancelar.Text = "Cancelar";
+            this.Btn_cancelar.UseVisualStyleBackColor = false;
+            this.Btn_cancelar.Click += new System.EventHandler(this.Btn_cancelar_Click);
             // 
             // frmEmpleados
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(967, 481);
-            this.Controls.Add(this.Btn_salario_empleados);
             this.Controls.Add(this.Gpb_mostrar_empleados);
-            this.Controls.Add(this.Btn_salir_empleado);
             this.Controls.Add(this.Gpb_opciones_empleados);
             this.Controls.Add(this.Gpb_genero_empleados);
             this.Controls.Add(this.Gpb_datos_empleados);
@@ -470,5 +489,6 @@ namespace CapaVista
         private System.Windows.Forms.TextBox Txt_correo_empleado;
         private System.Windows.Forms.Label lbl_correo_empleado;
         private System.Windows.Forms.Button Btn_salario_empleados;
+        private System.Windows.Forms.Button Btn_cancelar;
     }
 }
