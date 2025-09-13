@@ -51,12 +51,14 @@
     <Compile Include="Cls_AplicacionControlador.cs" />
     <Compile Include="Cls_AsignacionModuloAplicacionControlador.cs" />
     <Compile Include="Cls_PerfilesControlador.cs" />
+    <Compile Include="Cls_UsuarioControlador.cs" />
     <Compile Include="ControladorAsignacionUsuarioAplicacion.cs" />
     <Compile Include="ControladorLogin.cs" />
     <Compile Include="Cls_EmpleadosControlador.cs" />
     <Compile Include="ControladorModulos.cs" />
     <Compile Include="Cls_controladorRecuperarContrasena.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SeguridadHash.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

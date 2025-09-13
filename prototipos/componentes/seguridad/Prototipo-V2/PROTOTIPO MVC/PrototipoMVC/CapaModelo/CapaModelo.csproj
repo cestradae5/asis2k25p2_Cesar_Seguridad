@@ -50,7 +50,9 @@
     <Compile Include="Cls_EmpleadosDAO.cs" />
     <Compile Include="Cls_PerfilesDAO.cs" />
     <Compile Include="Cls_SentenciasBitacora.cs" />
+    <Compile Include="Cls_Usuario.cs" />
     <Compile Include="Cls_UsuarioConectado.cs" />
+    <Compile Include="Cls_UsuarioDAO.cs" />
     <Compile Include="Conexion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SentenciaAsignacionUsuarioAplicacion.cs" />
