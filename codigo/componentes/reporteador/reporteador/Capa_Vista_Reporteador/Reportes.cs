@@ -139,7 +139,18 @@ namespace Capa_Vista_Reporteador
 
         private void ActualizarGrid()
         {
+            //inicio del codigo Kevin Santos 0901-17-2994
+            DataTable datos = controlador.ObtenerReportes();
             Dgv_reportes.DataSource = controlador.ObtenerReportes();
+            // Opcional: cambiar los encabezados de las columnas
+            if (Dgv_reportes.Columns.Count > 0)
+            {
+                Dgv_reportes.Columns["pk_id_reportes"].HeaderText = "ID";
+                Dgv_reportes.Columns["titulo_reportes"].HeaderText = "Título";
+                Dgv_reportes.Columns["ruta_reportes"].HeaderText = "Ruta";
+                Dgv_reportes.Columns["fecha_reportes"].HeaderText = "Fecha";
+            }
+            //fin codigo Kevin Santos 0901-17-2994
         }
 
         private void Btn_eliminar_Click(object sender, EventArgs e)
