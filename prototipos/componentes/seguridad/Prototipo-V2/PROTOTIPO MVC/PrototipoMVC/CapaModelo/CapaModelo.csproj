@@ -53,8 +53,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SentenciaAsignacionUsuarioAplicacion.cs" />
     <Compile Include="SentenciaLogin.cs" />
-    <Compile Include="SentenciaPruebaBD.cs" />
-    <Compile Include="SentenciaRecuperarContrasena.cs" />
+    <Compile Include="Cls_sentenciaRecuperarContrasena.cs" />
     <Compile Include="Cls_Perfiles.cs" />
     <Compile Include="SentenciasModulos.cs" />
   </ItemGroup>

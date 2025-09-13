@@ -55,8 +55,7 @@
     <Compile Include="ControladorLogin.cs" />
     <Compile Include="Cls_EmpleadosControlador.cs" />
     <Compile Include="ControladorModulos.cs" />
-    <Compile Include="ControladorPruebaBD.cs" />
-    <Compile Include="ControladorRecuperarContrasena.cs" />
+    <Compile Include="Cls_controladorRecuperarContrasena.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
