@@ -55,12 +55,8 @@ namespace CapaVista
             this.asignacionesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.asignacionDeAplicacionAUsuarioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.asignacionPerfilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.menu_bitacora = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.imprimirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.consultarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.salirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.modulosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Btn_Bitacora = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -73,7 +69,7 @@ namespace CapaVista
             this.statusStrip.Location = new System.Drawing.Point(0, 477);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Padding = new System.Windows.Forms.Padding(3, 0, 19, 0);
-            this.statusStrip.Size = new System.Drawing.Size(1016, 26);
+            this.statusStrip.Size = new System.Drawing.Size(1070, 26);
             this.statusStrip.TabIndex = 2;
             this.statusStrip.Text = "StatusStrip";
             // 
@@ -97,12 +93,11 @@ namespace CapaVista
             this.helpMenu,
             this.empleadosToolStripMenuItem,
             this.asignacionesToolStripMenuItem,
-            this.menu_bitacora,
             this.modulosToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1016, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(1070, 28);
             this.menuStrip1.TabIndex = 24;
             this.menuStrip1.Text = "MenuStrip";
             // 
@@ -155,6 +150,8 @@ namespace CapaVista
             // 
             // procesosToolStripMenuItem
             // 
+            this.procesosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Btn_Bitacora});
             this.procesosToolStripMenuItem.Font = new System.Drawing.Font("Rockwell", 10F);
             this.procesosToolStripMenuItem.Name = "procesosToolStripMenuItem";
             this.procesosToolStripMenuItem.Size = new System.Drawing.Size(95, 24);
@@ -179,7 +176,7 @@ namespace CapaVista
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(168, 26);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.optionsToolStripMenuItem.Text = "&Opciones";
             // 
             // helpMenu
@@ -261,46 +258,6 @@ namespace CapaVista
             this.asignacionPerfilesToolStripMenuItem.Text = "Asignacion Perfiles";
             this.asignacionPerfilesToolStripMenuItem.Click += new System.EventHandler(this.asignacionPerfilesToolStripMenuItem_Click);
             // 
-            // menu_bitacora
-            // 
-            this.menu_bitacora.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.exportarToolStripMenuItem,
-            this.imprimirToolStripMenuItem,
-            this.consultarToolStripMenuItem,
-            this.salirToolStripMenuItem});
-            this.menu_bitacora.Font = new System.Drawing.Font("Rockwell", 10F);
-            this.menu_bitacora.Name = "menu_bitacora";
-            this.menu_bitacora.Size = new System.Drawing.Size(87, 24);
-            this.menu_bitacora.Text = "Bitacora";
-            // 
-            // exportarToolStripMenuItem
-            // 
-            this.exportarToolStripMenuItem.Name = "exportarToolStripMenuItem";
-            this.exportarToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
-            this.exportarToolStripMenuItem.Text = "Exportar";
-            this.exportarToolStripMenuItem.Click += new System.EventHandler(this.exportarToolStripMenuItem_Click);
-            // 
-            // imprimirToolStripMenuItem
-            // 
-            this.imprimirToolStripMenuItem.Name = "imprimirToolStripMenuItem";
-            this.imprimirToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
-            this.imprimirToolStripMenuItem.Text = "Imprimir";
-            this.imprimirToolStripMenuItem.Click += new System.EventHandler(this.imprimirToolStripMenuItem_Click);
-            // 
-            // consultarToolStripMenuItem
-            // 
-            this.consultarToolStripMenuItem.Name = "consultarToolStripMenuItem";
-            this.consultarToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
-            this.consultarToolStripMenuItem.Text = "Consultar";
-            this.consultarToolStripMenuItem.Click += new System.EventHandler(this.consultarToolStripMenuItem_Click);
-            // 
-            // salirToolStripMenuItem
-            // 
-            this.salirToolStripMenuItem.Name = "salirToolStripMenuItem";
-            this.salirToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
-            this.salirToolStripMenuItem.Text = "Salir";
-            this.salirToolStripMenuItem.Click += new System.EventHandler(this.salirToolStripMenuItem_Click);
-            // 
             // modulosToolStripMenuItem
             // 
             this.modulosToolStripMenuItem.Font = new System.Drawing.Font("Rockwell", 10F);
@@ -309,11 +266,18 @@ namespace CapaVista
             this.modulosToolStripMenuItem.Text = "Modulos";
             this.modulosToolStripMenuItem.Click += new System.EventHandler(this.modulosToolStripMenuItem_Click);
             // 
+            // Btn_Bitacora
+            // 
+            this.Btn_Bitacora.Name = "Btn_Bitacora";
+            this.Btn_Bitacora.Size = new System.Drawing.Size(224, 26);
+            this.Btn_Bitacora.Text = "Bitacora";
+            this.Btn_Bitacora.Click += new System.EventHandler(this.Btn_Bitacora_Click);
+            // 
             // frmSeguridad
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1016, 503);
+            this.ClientSize = new System.Drawing.Size(1070, 503);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.statusStrip);
             this.IsMdiContainer = true;
@@ -352,15 +316,11 @@ namespace CapaVista
         private System.Windows.Forms.ToolStripMenuItem asignacionesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem asignacionDeAplicacionAUsuarioToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem asignacionPerfilesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem menu_bitacora;
-        private System.Windows.Forms.ToolStripMenuItem exportarToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem imprimirToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem consultarToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem salirToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem perfilesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem modulosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem Btn_Aplicacion;
         private System.Windows.Forms.ToolStripMenuItem Btn_Modulo;
+        private System.Windows.Forms.ToolStripMenuItem Btn_Bitacora;
     }
 }
 

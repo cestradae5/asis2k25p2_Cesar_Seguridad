@@ -134,30 +134,6 @@ namespace CapaVista
         }
 
 
-        private void salirToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void consultarToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            frmBitacora bitacora = new frmBitacora();
-            bitacora.Show();
-        }
-
-        private void exportarToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            frmBitacora bitacora = new frmBitacora();
-            bitacora.ExportarCSV();
-
-        }
-
-        private void imprimirToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            frmBitacora bitacora = new frmBitacora();
-            bitacora.Imprimir();
-        }
-
         private void perfilesToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             frmPerfiles perfiles = new frmPerfiles();
@@ -175,6 +151,16 @@ namespace CapaVista
         {
             FrmAplicacion formAplicacion = new FrmAplicacion();
             formAplicacion.Show();
+        }
+
+
+        //Bitacora 
+        //Aron Ricardo Esquit Silva    0901-22-13036
+        private void Btn_Bitacora_Click(object sender, EventArgs e)
+        {
+            Frm_Bitacora frm = new Frm_Bitacora();
+            frm.MdiParent = this;   
+            frm.Show();
         }
     }
 }

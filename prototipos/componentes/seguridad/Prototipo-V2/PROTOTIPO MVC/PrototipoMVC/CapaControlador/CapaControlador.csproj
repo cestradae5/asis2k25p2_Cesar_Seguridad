@@ -47,7 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BitacoraControlador.cs" />
+    <Compile Include="Cls_BitacoraControlador.cs" />
     <Compile Include="Cls_AplicacionControlador.cs" />
     <Compile Include="Cls_AsignacionModuloAplicacionControlador.cs" />
     <Compile Include="Cls_PerfilesControlador.cs" />
