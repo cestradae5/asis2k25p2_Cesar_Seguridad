@@ -15,7 +15,11 @@ namespace PruebaEjecucionNavegador
         public Form1()
         {
             InitializeComponent();
-            navegador1.alias = new string[] { "pacientes", "id_paciente", "nombre", "apellido" };
+            string nombreTabla = "empleados";
+            string[] columnas = { "codigo_empleado", "nombre_completo", "puesto", "departamento", "estado" };
+            navegador1.nombreTabla = nombreTabla; 
+            navegador1.alias = columnas;
+
             navegador1.mostrarDatos();
         }
     }
