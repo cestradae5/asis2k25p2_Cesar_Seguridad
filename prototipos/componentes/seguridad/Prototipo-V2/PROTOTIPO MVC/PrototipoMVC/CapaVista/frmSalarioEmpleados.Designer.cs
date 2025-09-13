@@ -45,10 +45,10 @@ namespace CapaVista
             this.Rdb_inactivo_salario = new System.Windows.Forms.RadioButton();
             this.Rdb_activo_salario = new System.Windows.Forms.RadioButton();
             this.Gpb_opciones_salario = new System.Windows.Forms.GroupBox();
+            this.Btn_guardar_salario = new System.Windows.Forms.Button();
             this.Btn_eliminar_salario = new System.Windows.Forms.Button();
             this.Btn_modificar_salario = new System.Windows.Forms.Button();
             this.Btn_nuevo_salario = new System.Windows.Forms.Button();
-            this.Btn_guardar_salario = new System.Windows.Forms.Button();
             this.Btn_salir_salario = new System.Windows.Forms.Button();
             this.Gpb_datos_salario_empleados.SuspendLayout();
             this.Gpb_estado_salario.SuspendLayout();
@@ -80,23 +80,23 @@ namespace CapaVista
             this.Gpb_datos_salario_empleados.Font = new System.Drawing.Font("Rockwell", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Gpb_datos_salario_empleados.Location = new System.Drawing.Point(12, 76);
             this.Gpb_datos_salario_empleados.Name = "Gpb_datos_salario_empleados";
-            this.Gpb_datos_salario_empleados.Size = new System.Drawing.Size(789, 167);
+            this.Gpb_datos_salario_empleados.Size = new System.Drawing.Size(617, 167);
             this.Gpb_datos_salario_empleados.TabIndex = 4;
             this.Gpb_datos_salario_empleados.TabStop = false;
             this.Gpb_datos_salario_empleados.Text = "Datos";
             // 
             // Txt_fechafin_salario
             // 
-            this.Txt_fechafin_salario.Location = new System.Drawing.Point(520, 127);
+            this.Txt_fechafin_salario.Location = new System.Drawing.Point(469, 127);
             this.Txt_fechafin_salario.Name = "Txt_fechafin_salario";
-            this.Txt_fechafin_salario.Size = new System.Drawing.Size(205, 29);
+            this.Txt_fechafin_salario.Size = new System.Drawing.Size(139, 29);
             this.Txt_fechafin_salario.TabIndex = 14;
             // 
             // lbl_fechafin_salario
             // 
             this.lbl_fechafin_salario.AutoSize = true;
             this.lbl_fechafin_salario.Font = new System.Drawing.Font("Rockwell", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_fechafin_salario.Location = new System.Drawing.Point(346, 130);
+            this.lbl_fechafin_salario.Location = new System.Drawing.Point(304, 130);
             this.lbl_fechafin_salario.Name = "lbl_fechafin_salario";
             this.lbl_fechafin_salario.Size = new System.Drawing.Size(159, 20);
             this.lbl_fechafin_salario.TabIndex = 13;
@@ -121,16 +121,16 @@ namespace CapaVista
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(433, 73);
+            this.textBox1.Location = new System.Drawing.Point(374, 28);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(205, 29);
+            this.textBox1.Size = new System.Drawing.Size(149, 29);
             this.textBox1.TabIndex = 6;
             // 
             // lbl_monto_salario
             // 
             this.lbl_monto_salario.AutoSize = true;
             this.lbl_monto_salario.Font = new System.Drawing.Font("Rockwell", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_monto_salario.Location = new System.Drawing.Point(346, 76);
+            this.lbl_monto_salario.Location = new System.Drawing.Point(304, 28);
             this.lbl_monto_salario.Name = "lbl_monto_salario";
             this.lbl_monto_salario.Size = new System.Drawing.Size(64, 20);
             this.lbl_monto_salario.TabIndex = 5;
@@ -140,7 +140,7 @@ namespace CapaVista
             // 
             this.Txt_id_empl_salario.Location = new System.Drawing.Point(127, 73);
             this.Txt_id_empl_salario.Name = "Txt_id_empl_salario";
-            this.Txt_id_empl_salario.Size = new System.Drawing.Size(205, 29);
+            this.Txt_id_empl_salario.Size = new System.Drawing.Size(83, 29);
             this.Txt_id_empl_salario.TabIndex = 4;
             // 
             // lbl_fk_id_empl_salario
@@ -157,7 +157,7 @@ namespace CapaVista
             // 
             this.Txt_id_salario.Location = new System.Drawing.Point(127, 28);
             this.Txt_id_salario.Name = "Txt_id_salario";
-            this.Txt_id_salario.Size = new System.Drawing.Size(205, 29);
+            this.Txt_id_salario.Size = new System.Drawing.Size(83, 29);
             this.Txt_id_salario.TabIndex = 2;
             // 
             // lbl_id_salario
@@ -206,21 +206,31 @@ namespace CapaVista
             // 
             // Gpb_opciones_salario
             // 
+            this.Gpb_opciones_salario.Controls.Add(this.Btn_salir_salario);
             this.Gpb_opciones_salario.Controls.Add(this.Btn_guardar_salario);
             this.Gpb_opciones_salario.Controls.Add(this.Btn_eliminar_salario);
             this.Gpb_opciones_salario.Controls.Add(this.Btn_modificar_salario);
             this.Gpb_opciones_salario.Controls.Add(this.Btn_nuevo_salario);
             this.Gpb_opciones_salario.Font = new System.Drawing.Font("Rockwell", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Gpb_opciones_salario.Location = new System.Drawing.Point(415, 249);
+            this.Gpb_opciones_salario.Location = new System.Drawing.Point(648, 40);
             this.Gpb_opciones_salario.Name = "Gpb_opciones_salario";
-            this.Gpb_opciones_salario.Size = new System.Drawing.Size(246, 138);
+            this.Gpb_opciones_salario.Size = new System.Drawing.Size(168, 300);
             this.Gpb_opciones_salario.TabIndex = 6;
             this.Gpb_opciones_salario.TabStop = false;
             this.Gpb_opciones_salario.Text = "Opciones";
             // 
+            // Btn_guardar_salario
+            // 
+            this.Btn_guardar_salario.Location = new System.Drawing.Point(25, 73);
+            this.Btn_guardar_salario.Name = "Btn_guardar_salario";
+            this.Btn_guardar_salario.Size = new System.Drawing.Size(114, 30);
+            this.Btn_guardar_salario.TabIndex = 10;
+            this.Btn_guardar_salario.Text = "Guardar";
+            this.Btn_guardar_salario.UseVisualStyleBackColor = true;
+            // 
             // Btn_eliminar_salario
             // 
-            this.Btn_eliminar_salario.Location = new System.Drawing.Point(126, 88);
+            this.Btn_eliminar_salario.Location = new System.Drawing.Point(25, 156);
             this.Btn_eliminar_salario.Name = "Btn_eliminar_salario";
             this.Btn_eliminar_salario.Size = new System.Drawing.Size(114, 30);
             this.Btn_eliminar_salario.TabIndex = 8;
@@ -229,7 +239,7 @@ namespace CapaVista
             // 
             // Btn_modificar_salario
             // 
-            this.Btn_modificar_salario.Location = new System.Drawing.Point(6, 88);
+            this.Btn_modificar_salario.Location = new System.Drawing.Point(25, 112);
             this.Btn_modificar_salario.Name = "Btn_modificar_salario";
             this.Btn_modificar_salario.Size = new System.Drawing.Size(114, 30);
             this.Btn_modificar_salario.TabIndex = 7;
@@ -238,26 +248,17 @@ namespace CapaVista
             // 
             // Btn_nuevo_salario
             // 
-            this.Btn_nuevo_salario.Location = new System.Drawing.Point(6, 52);
+            this.Btn_nuevo_salario.Location = new System.Drawing.Point(25, 36);
             this.Btn_nuevo_salario.Name = "Btn_nuevo_salario";
             this.Btn_nuevo_salario.Size = new System.Drawing.Size(114, 30);
             this.Btn_nuevo_salario.TabIndex = 6;
             this.Btn_nuevo_salario.Text = "Nuevo";
             this.Btn_nuevo_salario.UseVisualStyleBackColor = true;
             // 
-            // Btn_guardar_salario
-            // 
-            this.Btn_guardar_salario.Location = new System.Drawing.Point(126, 52);
-            this.Btn_guardar_salario.Name = "Btn_guardar_salario";
-            this.Btn_guardar_salario.Size = new System.Drawing.Size(114, 30);
-            this.Btn_guardar_salario.TabIndex = 10;
-            this.Btn_guardar_salario.Text = "Guardar";
-            this.Btn_guardar_salario.UseVisualStyleBackColor = true;
-            // 
             // Btn_salir_salario
             // 
             this.Btn_salir_salario.Font = new System.Drawing.Font("Rockwell", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Btn_salir_salario.Location = new System.Drawing.Point(702, 357);
+            this.Btn_salir_salario.Location = new System.Drawing.Point(25, 244);
             this.Btn_salir_salario.Name = "Btn_salir_salario";
             this.Btn_salir_salario.Size = new System.Drawing.Size(114, 30);
             this.Btn_salir_salario.TabIndex = 10;
@@ -269,7 +270,6 @@ namespace CapaVista
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(828, 399);
-            this.Controls.Add(this.Btn_salir_salario);
             this.Controls.Add(this.Gpb_opciones_salario);
             this.Controls.Add(this.Gpb_estado_salario);
             this.Controls.Add(this.Gpb_datos_salario_empleados);

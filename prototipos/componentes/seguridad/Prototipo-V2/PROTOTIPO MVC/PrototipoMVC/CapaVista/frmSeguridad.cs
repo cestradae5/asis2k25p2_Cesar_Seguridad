@@ -109,11 +109,10 @@ namespace CapaVista
 
         }
 
-        private void empleadosToolStripMenuItem_Click(object sender, EventArgs e)
+        private void empleadosToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             frmEmpleados formEmpleado = new frmEmpleados();
             formEmpleado.Show();
-
         }
 
         private void perfilesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -176,5 +175,6 @@ namespace CapaVista
             FrmAplicacion formAplicacion = new FrmAplicacion();
             formAplicacion.Show();
         }
+
     }
 }

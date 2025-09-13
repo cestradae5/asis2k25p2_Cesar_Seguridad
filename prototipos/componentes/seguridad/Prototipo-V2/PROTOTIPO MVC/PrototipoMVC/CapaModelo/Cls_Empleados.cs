@@ -34,16 +34,18 @@ namespace CapaModelo
             DateTime fechaContratacionEmpleado
         )
         {
-            PkIdEmpleado = pkIdEmpleado;
-            NombresEmpleado = nombresEmpleado;
-            ApellidosEmpleado = apellidosEmpleado;
-            DpiEmpleado = dpiEmpleado;
-            NitEmpleado = nitEmpleado;
-            CorreoEmpleado = correoEmpleado;
-            TelefonoEmpleado = telefonoEmpleado;
-            GeneroEmpleado = generoEmpleado;
-            FechaNacimientoEmpleado = fechaNacimientoEmpleado;
-            FechaContratacionEmpleado = fechaContratacionEmpleado;
+            this.PkIdEmpleado = pkIdEmpleado;
+            this.NombresEmpleado = nombresEmpleado;
+            this.ApellidosEmpleado = apellidosEmpleado;
+            this.DpiEmpleado = dpiEmpleado;
+            this.NitEmpleado = nitEmpleado;
+            this.CorreoEmpleado = correoEmpleado;
+            this.TelefonoEmpleado = telefonoEmpleado;
+            this.GeneroEmpleado = generoEmpleado;
+            this.FechaNacimientoEmpleado = fechaNacimientoEmpleado;
+            this.FechaContratacionEmpleado = fechaContratacionEmpleado;
         }
     }
 }
+
+

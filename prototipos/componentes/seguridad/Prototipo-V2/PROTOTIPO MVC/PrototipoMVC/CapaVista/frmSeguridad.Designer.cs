@@ -51,7 +51,6 @@ namespace CapaVista
             this.searchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.empleadosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.asignacionesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.asignacionDeAplicacionAUsuarioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.asignacionPerfilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -61,6 +60,7 @@ namespace CapaVista
             this.consultarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.salirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.modulosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.empleadosToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -95,7 +95,6 @@ namespace CapaVista
             this.reportesToolStripMenuItem,
             this.toolsMenu,
             this.helpMenu,
-            this.empleadosToolStripMenuItem,
             this.asignacionesToolStripMenuItem,
             this.menu_bitacora,
             this.modulosToolStripMenuItem});
@@ -127,7 +126,8 @@ namespace CapaVista
             this.catálogosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.perfilesToolStripMenuItem,
             this.Btn_Aplicacion,
-            this.Btn_Modulo});
+            this.Btn_Modulo,
+            this.empleadosToolStripMenuItem1});
             this.catálogosToolStripMenuItem.Font = new System.Drawing.Font("Rockwell", 10F);
             this.catálogosToolStripMenuItem.Name = "catálogosToolStripMenuItem";
             this.catálogosToolStripMenuItem.Size = new System.Drawing.Size(102, 24);
@@ -136,21 +136,21 @@ namespace CapaVista
             // perfilesToolStripMenuItem
             // 
             this.perfilesToolStripMenuItem.Name = "perfilesToolStripMenuItem";
-            this.perfilesToolStripMenuItem.Size = new System.Drawing.Size(176, 26);
+            this.perfilesToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.perfilesToolStripMenuItem.Text = "Perfiles";
             this.perfilesToolStripMenuItem.Click += new System.EventHandler(this.perfilesToolStripMenuItem_Click_1);
             // 
             // Btn_Aplicacion
             // 
             this.Btn_Aplicacion.Name = "Btn_Aplicacion";
-            this.Btn_Aplicacion.Size = new System.Drawing.Size(176, 26);
+            this.Btn_Aplicacion.Size = new System.Drawing.Size(224, 26);
             this.Btn_Aplicacion.Text = "Aplicacion";
             this.Btn_Aplicacion.Click += new System.EventHandler(this.Btn_Aplicacion_Click_1);
             // 
             // Btn_Modulo
             // 
             this.Btn_Modulo.Name = "Btn_Modulo";
-            this.Btn_Modulo.Size = new System.Drawing.Size(176, 26);
+            this.Btn_Modulo.Size = new System.Drawing.Size(224, 26);
             this.Btn_Modulo.Text = "Modulos";
             // 
             // procesosToolStripMenuItem
@@ -229,14 +229,6 @@ namespace CapaVista
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(243, 26);
             this.aboutToolStripMenuItem.Text = "&Acerca de... ...";
             // 
-            // empleadosToolStripMenuItem
-            // 
-            this.empleadosToolStripMenuItem.Font = new System.Drawing.Font("Rockwell", 10F);
-            this.empleadosToolStripMenuItem.Name = "empleadosToolStripMenuItem";
-            this.empleadosToolStripMenuItem.Size = new System.Drawing.Size(111, 24);
-            this.empleadosToolStripMenuItem.Text = "Empleados";
-            this.empleadosToolStripMenuItem.Click += new System.EventHandler(this.empleadosToolStripMenuItem_Click);
-            // 
             // asignacionesToolStripMenuItem
             // 
             this.asignacionesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -309,6 +301,13 @@ namespace CapaVista
             this.modulosToolStripMenuItem.Text = "Modulos";
             this.modulosToolStripMenuItem.Click += new System.EventHandler(this.modulosToolStripMenuItem_Click);
             // 
+            // empleadosToolStripMenuItem1
+            // 
+            this.empleadosToolStripMenuItem1.Name = "empleadosToolStripMenuItem1";
+            this.empleadosToolStripMenuItem1.Size = new System.Drawing.Size(224, 26);
+            this.empleadosToolStripMenuItem1.Text = "Empleados";
+            this.empleadosToolStripMenuItem1.Click += new System.EventHandler(this.empleadosToolStripMenuItem1_Click);
+            // 
             // frmSeguridad
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -348,7 +347,6 @@ namespace CapaVista
         private System.Windows.Forms.ToolStripMenuItem searchToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem empleadosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem asignacionesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem asignacionDeAplicacionAUsuarioToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem asignacionPerfilesToolStripMenuItem;
@@ -361,6 +359,7 @@ namespace CapaVista
         private System.Windows.Forms.ToolStripMenuItem modulosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem Btn_Aplicacion;
         private System.Windows.Forms.ToolStripMenuItem Btn_Modulo;
+        private System.Windows.Forms.ToolStripMenuItem empleadosToolStripMenuItem1;
     }
 }
 
