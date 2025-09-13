@@ -104,6 +104,7 @@ namespace Capa_Vista_Reporteador
             this.Btn_eliminar.TabIndex = 5;
             this.Btn_eliminar.Text = "Eliminar";
             this.Btn_eliminar.UseVisualStyleBackColor = false;
+            this.Btn_eliminar.Click += new System.EventHandler(this.Btn_eliminar_Click);
             // 
             // Btn_modificar
             // 
