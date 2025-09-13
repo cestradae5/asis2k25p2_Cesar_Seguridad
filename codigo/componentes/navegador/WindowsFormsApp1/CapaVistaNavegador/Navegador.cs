@@ -13,6 +13,8 @@ namespace CapaVistaNavegador
     public partial class Navegador : UserControl
     {
         public string[] alias { get; set; }
+        public string nombreTabla { get; set; } // Nueva propiedad para el nombre de la tabla
+
         public Navegador()
         {
             InitializeComponent();
@@ -22,10 +24,28 @@ namespace CapaVistaNavegador
 
         private void Btn_ingresar_Click(object sender, EventArgs e)
         {
-            ControladorNavegador ctrl = new ControladorNavegador(); //crea instancia controlador
+            /*ControladorNavegador ctrl = new ControladorNavegador(); //crea instancia controlador
             ctrl.AsignarAlias(alias, this, 10, 100); //llama al metodo
             // habilitar botones
-            habilitar_botones();
+            habilitar_botones();*/
+
+            // Verifica que los alias estén configurados desde el proyecto que usa la DLL
+            if (alias == null || alias.Length < 2)
+            {
+                MessageBox.Show("No se han definido los alias de la tabla.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            //Parámetros para validar 
+            string tabla = nombreTabla; 
+            string[] columnas = alias; 
+
+            // Asigna los alias al controlador y crea los controles necesarios
+            if (ctrl.AsignarAlias(tabla, alias, this, 10, 100))
+            {
+                habilitar_botones();
+                mostrarDatos();
+            }
         }
 
         ControladorNavegador ctrl = new ControladorNavegador();
@@ -34,7 +54,7 @@ namespace CapaVistaNavegador
         // parte del datagridview con la funcion del boton imprimir
 
         private DataGridView Dgv_Datos;
-        private int registrosPorPagina = 9; // aqui se cambia el numero de registros por pagina
+        private int registrosPorPagina = 9; 
         private int paginaActual = 1;
         private int totalPaginas = 0;
         private DataTable dtCompleto;
@@ -62,6 +82,29 @@ namespace CapaVistaNavegador
 
         public void mostrarDatos()
         {
+            /* if (Dgv_Datos == null)
+             {
+                 Dgv_Datos = new DataGridView();
+                 Dgv_Datos.Name = "Dgv_Datos";
+                 Dgv_Datos.ScrollBars = ScrollBars.None;
+                 Dgv_Datos.BackgroundColor = Color.White;
+                 Dgv_Datos.ColumnHeadersDefaultCellStyle.Font = new Font("Microsoft Sans Serif", 9, FontStyle.Bold);
+                 Dgv_Datos.Location = new System.Drawing.Point(10, 250); // aqui se cambia la posicion (por si hay que agregar otra cosa)
+                 Dgv_Datos.Size = new System.Drawing.Size(1100, 200); // aqui se cambia el tamaño (tambien por si acaso ajaj)
+                 Dgv_Datos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                 this.Controls.Add(Dgv_Datos);
+                 ctrl.AsignarDataGridView(Dgv_Datos);
+             }
+
+             // aqui se llena la tabla y tambien se le pone el nombre (dependiendo de la tabla que se vaya a usar)
+             dtCompleto = ctrl.LlenarTabla(alias[0], alias.Skip(1).ToArray());
+             Dgv_Datos.DataSource = dtCompleto;
+
+
+             totalPaginas = (int)Math.Ceiling(dtCompleto.Rows.Count / (double)registrosPorPagina);
+             paginaActual = 1;
+             MostrarPagina(paginaActual);*/
+
             if (Dgv_Datos == null)
             {
                 Dgv_Datos = new DataGridView();
@@ -69,17 +112,21 @@ namespace CapaVistaNavegador
                 Dgv_Datos.ScrollBars = ScrollBars.None;
                 Dgv_Datos.BackgroundColor = Color.White;
                 Dgv_Datos.ColumnHeadersDefaultCellStyle.Font = new Font("Microsoft Sans Serif", 9, FontStyle.Bold);
-                Dgv_Datos.Location = new System.Drawing.Point(10, 250); // aqui se cambia la posicion (por si hay que agregar otra cosa)
-                Dgv_Datos.Size = new System.Drawing.Size(1100, 200); // aqui se cambia el tamaño (tambien por si acaso ajaj)
+                Dgv_Datos.Location = new System.Drawing.Point(10, 250);
+                Dgv_Datos.Size = new System.Drawing.Size(1100, 200);
                 Dgv_Datos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
                 this.Controls.Add(Dgv_Datos);
-                ctrl.AsignarDataGridView(Dgv_Datos);
             }
 
-            // aqui se llena la tabla y tambien se le pone el nombre (dependiendo de la tabla que se vaya a usar)
-            dtCompleto = ctrl.LlenarTabla(alias[0], alias.Skip(1).ToArray());
-            Dgv_Datos.DataSource = dtCompleto;
+            // Asegurarse de que alias no sea null
+            if (alias == null || alias.Length < 2)
+            {
+                MessageBox.Show("Alias no configurado correctamente.");
+                return;
+            }
 
+            dtCompleto = ctrl.LlenarTabla(nombreTabla, alias);
+            Dgv_Datos.DataSource = dtCompleto;
 
             totalPaginas = (int)Math.Ceiling(dtCompleto.Rows.Count / (double)registrosPorPagina);
             paginaActual = 1;
@@ -118,13 +165,12 @@ namespace CapaVistaNavegador
 
         private void Btn_cancelar_Click_1(object sender, EventArgs e)
         {
-       //deshabilitar botones
             deshabilitar_botones();
         }
 
         private void Btn_guardar_Click_1(object sender, EventArgs e)
         {
-            ControladorNavegador ctrl = new ControladorNavegador(); //crea instancia controlador
+            ControladorNavegador ctrl = new ControladorNavegador(); 
             ctrl.Insertar_Datos(this, alias);
         }
 

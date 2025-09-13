@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Odbc;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,31 +14,143 @@ namespace CapaControladorNavegador
     public class ControladorNavegador
     {
         SentenciasMYSQL sentencias = new SentenciasMYSQL();
-        public void AsignarAlias(string[] alias, Control contenedor, int startX, int startY)
+
+        // ---------------------VALIDANDO ALIAS-----------------------------------------
+
+        private ConexionMYSQL conexion = new ConexionMYSQL();
+        private bool ExisteTabla(string nombreTabla)
         {
-            int spacingY = 30; // Espacio vertical entre cada par Label/TextBox
-
-            for (int i = 1; i < alias.Length; i++)
+            OdbcConnection conn = conexion.conexion();
+            try
             {
-                // Crear Label
-                Label lbl = new Label();
-                lbl.Text = alias[i] + ":";
-                lbl.AutoSize = true;
-                lbl.Location = new System.Drawing.Point(startX, startY + (i * spacingY));
+                conn.Open();
+                string query = "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = DATABASE() AND table_name = ?";
+                OdbcCommand cmd = new OdbcCommand(query, conn);
+                cmd.Parameters.AddWithValue("?", nombreTabla);
 
-                // Crear TextBox
-                TextBox txt = new TextBox();
-                txt.Name = "txt_" + alias[i]; // ejemplo: txtNombre, txtEdad...
-                txt.Width = 150;
-                txt.Location = new System.Drawing.Point(startX + 100, startY + (i * spacingY));
+                int count = Convert.ToInt32(cmd.ExecuteScalar());
+                return count > 0;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al verificar la tabla: " + ex.Message);
+                return false;
+            }
+            finally
+            {
+                conexion.desconexion(conn);
+            }
+        }
 
-                // Agregar al contenedor (Form o Panel)
-                contenedor.Controls.Add(lbl);
-                contenedor.Controls.Add(txt);
+        // Obtiene todas las columnas de la tabla
+        private List<string> ObtenerColumnas(string nombreTabla)
+        {
+            List<string> columnas = new List<string>();
+            OdbcConnection conn = conexion.conexion();
+
+            try
+            {
+                conn.Open();
+                string query = "SELECT column_name FROM information_schema.columns WHERE table_schema = DATABASE() AND table_name = ?";
+                OdbcCommand cmd = new OdbcCommand(query, conn);
+                cmd.Parameters.AddWithValue("?", nombreTabla);
+
+                OdbcDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    columnas.Add(reader.GetString(0));
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al obtener columnas: " + ex.Message);
+            }
+            finally
+            {
+                conexion.desconexion(conn);
             }
 
+            return columnas;
         }
-    //-----------------------------------------------------------------------
+
+
+
+        // METODO ASIGNAR ALIAS NUEVO
+        public bool AsignarAlias(string tabla, string[] alias, Control contenedor, int startX, int startY)
+        {
+            if (!ExisteTabla(tabla))
+            {
+                MessageBox.Show($"❌ La tabla '{tabla}' no existe en la base de datos.");
+                return false;
+            }
+
+            List<string> columnas = ObtenerColumnas(tabla);
+            int spacingY = 30;
+            int creados = 0;
+
+            foreach (string campo in alias)
+            {
+                if (!columnas.Contains(campo))
+                {
+                    MessageBox.Show($"⚠️ La columna '{campo}' no existe en la tabla '{tabla}'.");
+                    continue;
+                }
+
+                Label lbl = new Label
+                {
+                    Text = campo + ":",
+                    AutoSize = true,
+                    Location = new System.Drawing.Point(startX, startY + (creados * spacingY))
+                };
+
+                TextBox txt = new TextBox
+                {
+                    Name = "txt_" + campo,
+                    Width = 150,
+                    Location = new System.Drawing.Point(startX + 100, startY + (creados * spacingY))
+                };
+
+                contenedor.Controls.Add(lbl);
+                contenedor.Controls.Add(txt);
+
+                creados++;
+            }
+
+            return creados > 0;
+        }
+
+
+        //-----------------------------------------------------------------------------
+
+
+
+
+
+        /*public void AsignarAlias(string[] alias, Control contenedor, int startX, int startY)
+         {
+             int spacingY = 30; // Espacio vertical entre cada par Label/TextBox
+
+             for (int i = 1; i < alias.Length; i++)
+             {
+                 // Crear Label
+                 Label lbl = new Label();
+                 lbl.Text = alias[i] + ":";
+                 lbl.AutoSize = true;
+                 lbl.Location = new System.Drawing.Point(startX, startY + (i * spacingY));
+
+                 // Crear TextBox
+                 TextBox txt = new TextBox();
+                 txt.Name = "txt_" + alias[i]; // ejemplo: txtNombre, txtEdad...
+                 txt.Width = 150;
+                 txt.Location = new System.Drawing.Point(startX + 100, startY + (i * spacingY));
+
+                 // Agregar al contenedor (Form o Panel)
+                 contenedor.Controls.Add(lbl);
+                 contenedor.Controls.Add(txt);
+             }
+
+         }*/
+        //-----------------------------------------------------------------------
         private DataGridView dgv;
 
         public void AsignarDataGridView(DataGridView grid)
