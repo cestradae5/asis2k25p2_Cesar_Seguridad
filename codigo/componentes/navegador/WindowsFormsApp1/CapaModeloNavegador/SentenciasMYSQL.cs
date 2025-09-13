@@ -35,12 +35,19 @@ namespace CapaModeloNavegador
         // aqui se insertarán las instrucciones SQL genericas
         public string Insertar(string[] alias)
         {
-            string tabla = alias[0]; //posicion tabla
-            string[] campos = alias.Skip(2).ToArray(); // ignora tabla y pk
-            string columnas = string.Join(",", campos);
-            string parametros = string.Join(",", campos.Select(c => "?"));
+            // por compatibilidad PK es autoinc
+            return Insertar(alias, true); // llama a la nueva sobrecarga con pkAutoIncrement true
+        }
 
-            return $"INSERT INTO {tabla} ({columnas}) VALUES ({parametros})";
+        // nueva sobrecarga de Insertar que recibe si la pk es autoincrement o no
+        public string Insertar(string[] alias, bool pkAutoIncrement)
+        {
+            string tabla = alias[0];
+            string[] campos = pkAutoIncrement ? alias.Skip(2).ToArray() : alias.Skip(1).ToArray(); // si es autoinc ignora pk, si no, la incluye
+            string columnas = string.Join(",", campos); 
+            string parametros = string.Join(",", campos.Select(c => "?")); 
+
+            return $"INSERT INTO {tabla} ({columnas}) VALUES ({parametros})"; // sentencia sql de insertar
         }
 
         // aqui se consultarán los registros con select segun la tabla que le enviemos
@@ -70,6 +77,35 @@ namespace CapaModeloNavegador
 
             return $"DELETE FROM {tabla} WHERE {pkCampo}=?"; // retorna la sentencia sql de delete
         }
+
+        public bool EsPKAutoInc(string tabla, string pkCampo)
+        {
+            // devuelve true si la columna pkCampo en tabla tiene auto_increment
+            using (OdbcConnection conn = con.conexion())
+            {
+                conn.Open();
+
+                // consulta para verificar si la columna es auto_increment
+                string sql = @"
+                SELECT EXTRA FROM INFORMATION_SCHEMA.COLUMNS
+                WHERE TABLE_SCHEMA = DATABASE()
+                AND TABLE_NAME = ?
+                AND COLUMN_NAME = ?; "; 
+
+                using (OdbcCommand cmd = new OdbcCommand(sql, conn))
+                {
+                    cmd.Parameters.Add("?", OdbcType.VarChar).Value = tabla;
+                    cmd.Parameters.Add("?", OdbcType.VarChar).Value = pkCampo; 
+
+                    object result = cmd.ExecuteScalar();
+                    if (result == null || result == DBNull.Value) return false;
+
+                    string extra = result.ToString().ToLowerInvariant(); 
+                    return extra.Contains("auto_increment"); // verifica si contiene auto_increment
+                }
+            }
+        }
+
 
     }
 }
