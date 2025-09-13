@@ -14,13 +14,38 @@ namespace Capa_Vista_Reporteador
     public partial class Reportes : Form
     {
         Controlador_Reporteador controlador = new Controlador_Reporteador();
+        private int iCodigoRuta = -1;
+
         public Reportes()
         {
             InitializeComponent();
         }
 
+        private void modificarRuta(string sNuevaRuta)
+        {
+            //Inicio de código de: Anderson Trigueros con carné: 0901-22-6961 en la fecha 12/09/2025
+            controlador.ModificarRuta(iCodigoRuta, sNuevaRuta);
+            Txt_reportes_ruta.Clear();
+            iCodigoRuta = -1;
+            // Fin de código de: Anderson Trigueros con carné: 0901-22-6961 en la fecha 12/09/2025
+        }
+
+
         private void Btn_modificar_Click(object sender, EventArgs e)
         {
+            //Inicio de código de: Anderson Trigueros con carné: 0901-22-6961 en la fecha 12/09/2025
+            if (string.IsNullOrEmpty(Txt_reportes_ruta.Text) && iCodigoRuta < 0)
+            {
+                MessageBox.Show("Seleccione primero la ruta que desea modificar de la tabla.");
+                return;
+            }
+            else
+            {
+                string sRutaModificada = Txt_reportes_ruta.Text;
+                modificarRuta(sRutaModificada);
+            }
+
+            // Fin de código de: Anderson Trigueros con carné: 0901-22-6961 en la fecha 12/09/2025
 
         }
 
@@ -35,6 +60,24 @@ namespace Capa_Vista_Reporteador
 
         private void Dgv_reportes_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            //Inicio de código de: Anderson Trigueros con carné: 0901-22-6961 en la fecha 12/09/2025
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow filaSeleccionada = Dgv_reportes.Rows[e.RowIndex];
+                string sRuta = filaSeleccionada.Cells["ruta_reportes"].Value?.ToString();
+                iCodigoRuta = Convert.ToInt32(filaSeleccionada.Cells["pk_id_reportes"].Value);
+                Txt_reportes_ruta.Text = sRuta;
+            }
+            // Fin de código de: Anderson Trigueros con carné: 0901-22-6961 en la fecha 12/09/2025
+        }
+
+        private void eliminarRegistro()
+        {
+            //Inicio de código de: Anderson Trigueros con carné: 0901-22-6961 en la fecha 12/09/2025
+            controlador.EliminarReporte(iCodigoRuta);
+            Txt_reportes_ruta.Clear();
+            iCodigoRuta = -1;
+            // Fin de código de: Anderson Trigueros con carné: 0901-22-6961 en la fecha 12/09/2025     
 
         }
 
@@ -91,11 +134,30 @@ namespace Capa_Vista_Reporteador
             {
                 MessageBox.Show("Error al guardar: " + ex.Message);
             }
+            // fin  de código de: Cesar Santizo con carné: 0901-22-5215 en la fecha de: 12/09/2025
         }
 
         private void ActualizarGrid()
         {
             Dgv_reportes.DataSource = controlador.ObtenerReportes();
         }
+
+        private void Btn_eliminar_Click(object sender, EventArgs e)
+        {
+            //Inicio de código de: Anderson Trigueros con carné: 0901-22-6961 en la fecha 12/09/2025
+            if (string.IsNullOrEmpty(Txt_reportes_ruta.Text) && iCodigoRuta < 0)
+            {
+                MessageBox.Show("Seleccione primero la ruta que desea eliminar de la tabla.");
+                return;
+            }
+            else
+            {
+                eliminarRegistro();
+            }
+            // Fin de código de: Anderson Trigueros con carné: 0901-22-6961 en la fecha 12/09/2025
+        }
+
+
+
     }
-} // fin  de código de: Cesar Santizo con carné: 0901-22-5215 en la fecha de: 12/09/2025
+} 
