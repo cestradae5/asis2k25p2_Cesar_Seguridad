@@ -74,6 +74,7 @@ namespace Capa_Vista_Reporteador
             this.Txt_reportes_ruta.Name = "Txt_reportes_ruta";
             this.Txt_reportes_ruta.Size = new System.Drawing.Size(582, 22);
             this.Txt_reportes_ruta.TabIndex = 3;
+            this.Txt_reportes_ruta.TextChanged += new System.EventHandler(this.Txt_reportes_ruta_TextChanged);
             // 
             // Btn_guardar
             // 
@@ -89,6 +90,7 @@ namespace Capa_Vista_Reporteador
             this.Btn_guardar.TabIndex = 4;
             this.Btn_guardar.Text = "Guardar";
             this.Btn_guardar.UseVisualStyleBackColor = false;
+            this.Btn_guardar.Click += new System.EventHandler(this.Btn_guardar_Click);
             // 
             // Btn_eliminar
             // 
@@ -145,6 +147,7 @@ namespace Capa_Vista_Reporteador
             this.Btn_ruta_reporte.TabIndex = 8;
             this.Btn_ruta_reporte.Text = "Ruta";
             this.Btn_ruta_reporte.UseVisualStyleBackColor = false;
+            this.Btn_ruta_reporte.Click += new System.EventHandler(this.Btn_ruta_reporte_Click);
             // 
             // Reportes
             // 
