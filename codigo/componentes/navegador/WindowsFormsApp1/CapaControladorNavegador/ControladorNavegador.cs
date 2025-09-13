@@ -220,5 +220,35 @@ namespace CapaControladorNavegador
         {
             return sentencias.LlenarTabla(tabla, alias);
         }
+
+        //---------------------------------------------------------------------------------------------
+
+        public void Eliminar_Datos(Control contenedor, string[] alias)
+        {
+            DAOGenerico dao = new DAOGenerico();
+
+            try
+            {
+                TextBox txtPK = contenedor.Controls
+                    .OfType<TextBox>()
+                    .FirstOrDefault(t => t.Name == "txt_" + alias[0]);
+
+                if (txtPK == null || string.IsNullOrWhiteSpace(txtPK.Text))
+                {
+                    MessageBox.Show("No se encontró el campo clave primaria o está vacío.");
+                    return;
+                }
+
+                object pkValor = txtPK.Text;
+
+                dao.EliminarDatos(alias, pkValor); // llamada directa al DAO
+                MessageBox.Show("Registro eliminado correctamente.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al eliminar datos: " + ex.Message);
+            }
+        }
+
     }
 }
