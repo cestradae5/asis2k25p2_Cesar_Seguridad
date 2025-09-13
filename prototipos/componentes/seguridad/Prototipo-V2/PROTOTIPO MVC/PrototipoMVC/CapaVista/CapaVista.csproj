@@ -117,6 +117,12 @@
     <Compile Include="frmSeguridad.Designer.cs">
       <DependentUpon>frmSeguridad.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmUsuario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmUsuario.Designer.cs">
+      <DependentUpon>FrmUsuario.cs</DependentUpon>
+    </Compile>
     <Compile Include="Frm_Bitacora.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -164,6 +170,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmSeguridad.resx">
       <DependentUpon>frmSeguridad.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmUsuario.resx">
+      <DependentUpon>FrmUsuario.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Frm_Bitacora.resx">
       <DependentUpon>Frm_Bitacora.cs</DependentUpon>

@@ -1,4 +1,5 @@
-﻿using System; //0901-22-2929 Pablo Jose Quiroa Martinez
+﻿///Pablo Quiroa 0901-22-2929
+using System;
 using System.Data.Odbc;
 using CapaModelo;
 
@@ -6,8 +7,11 @@ namespace CapaControlador
 {
     public class ControladorLogin
     {
-        SentenciaLogin sl = new SentenciaLogin();
+        private SentenciaLogin sl = new SentenciaLogin();
 
+       
+     
+      
         public bool autenticarUsuario(string usuario, string contrasena, out string mensaje)
         {
             mensaje = "";
@@ -21,32 +25,39 @@ namespace CapaControlador
                 int intentosFallidos = reader.GetInt32(3);
                 string estado = reader.GetString(4);
 
+               
                 if (estado == "Bloqueado")
                 {
                     mensaje = "El usuario está bloqueado.";
                     return false;
                 }
 
-                if (contrasenaBD == contrasena) 
+             
+                string hashIngresado = SeguridadHash.HashearSHA256(contrasena);
+
+                if (contrasenaBD == hashIngresado)
                 {
-                    sl.actualizarIntentos(idUsuario, 0); 
+                   
+                    sl.actualizarIntentos(idUsuario, 0);
                     mensaje = "Bienvenido " + nombreUsuario;
                     return true;
                 }
                 else
                 {
+                    
                     intentosFallidos++;
                     sl.actualizarIntentos(idUsuario, intentosFallidos);
 
-                    if (intentosFallidos >= 3) 
+                    if (intentosFallidos >= 3)
                     {
-                        sl.bloquearUsuario(idUsuario, "Exceso de intentos erroneos");
-                        mensaje = "Usuario bloqueado por muchos intentos erroneos.";
+                        sl.bloquearUsuario(idUsuario, "Exceso de intentos incorrectos");
+                        mensaje = "Usuario bloqueado por muchos intentos incorrectos.";
                     }
                     else
                     {
                         mensaje = "Contraseña incorrecta. Intentos: " + intentosFallidos;
                     }
+
                     return false;
                 }
             }
@@ -58,3 +69,5 @@ namespace CapaControlador
         }
     }
 }
+
+

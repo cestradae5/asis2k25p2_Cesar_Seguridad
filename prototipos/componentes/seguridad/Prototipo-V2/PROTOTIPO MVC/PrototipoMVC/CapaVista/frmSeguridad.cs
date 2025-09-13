@@ -168,5 +168,13 @@ namespace CapaVista
             frmEmpleados formEmpleado = new frmEmpleados();
             formEmpleado.Show();
         }
+
+        private void usuariosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmUsuario frm = new FrmUsuario();
+
+           
+            frm.Show();
+        }
     }
 }
