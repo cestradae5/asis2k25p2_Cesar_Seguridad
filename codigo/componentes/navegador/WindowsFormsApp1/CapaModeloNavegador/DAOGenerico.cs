@@ -7,10 +7,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Odbc;
 
+// trabajado por Kenph Luna 9959-22-6326
+
 namespace CapaModeloNavegador
 {
     public class DAOGenerico
     {
+        // guarda el resultado en un para no consultar INFORMATION_SCHEMA cada vez y mejorar rendimiento solo para traer si es auto_increment o no
+        private Dictionary<string, bool> pkAutoCache = new Dictionary<string, bool>(); 
+
         SentenciasMYSQL sentencias = new SentenciasMYSQL();
         ConexionMYSQL con = new ConexionMYSQL();
 
@@ -25,34 +30,45 @@ namespace CapaModeloNavegador
             return OdbcType.VarChar; // por defecto retorna varchar
         }
 
-        // seccion para insertar
+        // seccion para insertar pk autoincr o no autoincr
         public void InsertarDatos(string[] alias, object[] valores)
         {
-            try
-            {
-                string sql = sentencias.Insertar(alias); // genera INSERT
-                string[] campos = alias.Skip(2).ToArray(); // ignora tabla y pk
+            string tabla = alias[0];
+            string pkCampo = alias[1];
 
-                using (OdbcConnection conn = con.conexion())
+            // consulta sobre si la PK es auto
+            string cacheKey = tabla + "." + pkCampo; // clave unica para cache
+            bool pkAuto;
+            if (!pkAutoCache.TryGetValue(cacheKey, out pkAuto)) // intenta obtener de cache el resultado
+            {
+                pkAuto = sentencias.EsPKAutoInc(tabla, pkCampo); // consulta si es auto_increment
+                pkAutoCache[cacheKey] = pkAuto; // guarda en cache el resultado
+            }
+
+            // se decide como insertar
+            string[] campos = pkAuto ? alias.Skip(2).ToArray() : alias.Skip(1).ToArray(); // si es autoinc ignora pk y si no lo es incluye pk en recorrido de array
+
+            // validar los tamaños del arreglo valores y campos
+            if (valores == null || valores.Length != campos.Length)
+                throw new Exception($"InsertarDatos: el arreglo 'valores' debe tener {campos.Length} elementos (tiene {(valores == null ? 0 : valores.Length)}). " +
+                                    $"Si PK '{pkCampo}' no es autoincrement, se debe incluir su valor en 'valores'.");
+            
+            string sql = sentencias.Insertar(alias, pkAuto); // obtiene la sentencia sql de insert (considerando si pk es autoinc)
+
+            using (OdbcConnection conn = con.conexion())
+            {
+                conn.Open();
+                using (OdbcCommand cmd = new OdbcCommand(sql, conn))
                 {
-                    conn.Open(); // se abre conexion
-
-                    using (OdbcCommand cmd = new OdbcCommand(sql, conn))
+                    for (int i = 0; i < campos.Length; i++)
                     {
-                        for (int i = 0; i < campos.Length; i++)
-                        {
-                            cmd.Parameters.Add("?", MapeadoTipoDatos(valores[i])).Value = valores[i] ?? DBNull.Value; // asigna valores
-                        }
-
-                        cmd.ExecuteNonQuery();
+                        cmd.Parameters.Add("?", MapeadoTipoDatos(valores[i])).Value = valores[i] ?? DBNull.Value; // asigna valores segun el mapeo de tipos
                     }
+                    cmd.ExecuteNonQuery();
                 }
-            }
-            catch (OdbcException ex)
-            {
-                throw new Exception("Error al insertar datos en " + alias[0] + ": " + ex.Message, ex);
-            }
+            } // la conexion se cierra automáticamente
         }
+
 
         // seccion para consultar registros
         public DataTable ConsultarDatos(string[] alias)
@@ -116,7 +132,7 @@ namespace CapaModeloNavegador
         public void EliminarDatos(string[] alias, object pkValor)
         {
             try
-            {
+            {   
                 string sql = sentencias.Eliminar(alias); // obtiene la sentencia sql de delete
 
                 using (OdbcConnection conn = con.conexion()) 
