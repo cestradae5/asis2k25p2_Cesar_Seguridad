@@ -6,24 +6,56 @@ using System.Drawing;
 using System.Drawing.Printing;
 using CapaModelo;
 
-//0901-22-13036 Arón Ricardo Esquit Silva
 namespace CapaControlador
 {
-    // Puente entre la Vista y el DAO
-    public class BitacoraControlador
+    public class Cls_BitacoraControlador
     {
-        private readonly BitacoraDao _dao = new BitacoraDao();
+        private readonly Cls_SentenciasBitacora sentencias = new Cls_SentenciasBitacora();
 
-        //  Consultar bitácora 
-        public DataTable ObtenerBitacora()
+        //Método de consultas
+
+        public DataTable MostrarBitacora()
         {
-            return _dao.Listar();
+            return sentencias.Listar();
         }
 
-        //  Exportar CSV 
+        public DataTable BuscarPorFecha(DateTime fecha)
+        {
+            return sentencias.ConsultarPorFecha(fecha);
+        }
+
+        public DataTable BuscarPorRango(DateTime inicio, DateTime fin)
+        {
+            return sentencias.ConsultarPorRango(inicio, fin);
+        }
+
+        public DataTable BuscarPorUsuario(int idUsuario)
+        {
+            return sentencias.ConsultarPorUsuario(idUsuario);
+        }
+
+        // Método de registros
+
+
+        public void RegistrarAccion(int idUsuario, int idAplicacion, string accion, bool estadoLogin)
+        {
+            sentencias.InsertarBitacora(idUsuario, idAplicacion, accion, estadoLogin);
+        }
+
+        public void RegistrarInicioSesion(int idUsuario, int idAplicacion)
+        {
+            sentencias.RegistrarInicioSesion(idUsuario, idAplicacion);
+        }
+
+        public void RegistrarCierreSesion(int idUsuario, int idAplicacion)
+        {
+            sentencias.RegistrarCierreSesion(idUsuario, idAplicacion);
+        }
+
+        // Exportar
         public void ExportarCsv(string path)
         {
-            var dt = ObtenerBitacora();
+            var dt = MostrarBitacora();
             if (dt == null || dt.Rows.Count == 0)
                 throw new InvalidOperationException("No hay datos de bitácora para exportar.");
 
@@ -60,7 +92,8 @@ namespace CapaControlador
             return s;
         }
 
-        // Imprimir 
+        // Imprimir Bitacora
+
         private DataTable _printData;
         private int _printRowIndex;
         private readonly Font _fontHeader = new Font("Segoe UI", 10, FontStyle.Bold);
@@ -68,7 +101,7 @@ namespace CapaControlador
 
         public PrintDocument CrearDocumentoImpresion()
         {
-            _printData = ObtenerBitacora();
+            _printData = MostrarBitacora();
             if (_printData == null || _printData.Rows.Count == 0)
                 throw new InvalidOperationException("No hay datos de bitácora para imprimir.");
 
@@ -94,8 +127,8 @@ namespace CapaControlador
                              _fontCell, Brushes.Black, area.Right - 160, area.Top - 24);
             }
 
-            string[] cols = { "id", "usuario", "aplicacion", "fecha", "accion", "ip", "equipo", "login" };
-            int[] colW = { 50, 120, 120, 130, 160, 110, 100, 60 };
+            string[] cols = { "id", "usuario", "aplicacion", "fecha", "accion", "ip", "equipo", "estado" };
+            int[] colW = { 50, 120, 120, 130, 160, 110, 100, 100 };
 
             int x = area.Left;
             int y = area.Top;
@@ -131,8 +164,6 @@ namespace CapaControlador
 
                     if (cols[i] == "fecha" && DateTime.TryParse(text, out var dt))
                         text = dt.ToString("yyyy-MM-dd HH:mm");
-                    if (cols[i] == "login" && int.TryParse(text, out var v))
-                        text = (v != 0) ? "Sí" : "No";
 
                     g.DrawString(text, _fontCell, Brushes.Black, rect.Left + 4, rect.Top + 4);
                     x += colW[i];
@@ -145,5 +176,12 @@ namespace CapaControlador
 
             e.HasMorePages = (_printRowIndex < _printData.Rows.Count);
         }
+        public DataTable ObtenerUsuarios()
+        {
+            var dao = new Cls_BitacoraDao(); // DAO que se ejecuta en SQL
+            string sql = "SELECT pk_id_usuario AS id, nombre_usuario AS usuario FROM tbl_USUARIO ORDER BY nombre_usuario;";
+            return dao.EjecutarConsulta(sql);
+        }
+
     }
 }

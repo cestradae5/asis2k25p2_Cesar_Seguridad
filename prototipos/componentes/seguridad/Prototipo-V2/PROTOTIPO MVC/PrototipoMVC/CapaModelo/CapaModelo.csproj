@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BitacoraDao.cs" />
+    <Compile Include="Cls_BitacoraDao.cs" />
     <Compile Include="Cls_Aplicacion.cs" />
     <Compile Include="Cls_AplicacionDAO.cs" />
     <Compile Include="Cls_AsignacionModuloAplicacion.cs" />
@@ -49,6 +49,8 @@
     <Compile Include="Cls_Empleados.cs" />
     <Compile Include="Cls_EmpleadosDAO.cs" />
     <Compile Include="Cls_PerfilesDAO.cs" />
+    <Compile Include="Cls_SentenciasBitacora.cs" />
+    <Compile Include="Cls_UsuarioConectado.cs" />
     <Compile Include="Conexion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SentenciaAsignacionUsuarioAplicacion.cs" />

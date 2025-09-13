@@ -69,12 +69,6 @@
     <Compile Include="frmasignacion_perfil_usuario.designer.cs">
       <DependentUpon>frmasignacion_perfil_usuario.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmBitacora.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmBitacora.Designer.cs">
-      <DependentUpon>frmBitacora.cs</DependentUpon>
-    </Compile>
     <Compile Include="frmEmpleados.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -123,6 +117,12 @@
     <Compile Include="frmSeguridad.Designer.cs">
       <DependentUpon>frmSeguridad.cs</DependentUpon>
     </Compile>
+    <Compile Include="Frm_Bitacora.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Bitacora.Designer.cs">
+      <DependentUpon>Frm_Bitacora.cs</DependentUpon>
+    </Compile>
     <Compile Include="Frm_Consultar_Asignacion_Modulo_Aplicacion.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -140,9 +140,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmasignacion_perfil_usuario.resx">
       <DependentUpon>frmasignacion_perfil_usuario.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmBitacora.resx">
-      <DependentUpon>frmBitacora.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmEmpleados.resx">
       <DependentUpon>frmEmpleados.cs</DependentUpon>
@@ -167,6 +164,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmSeguridad.resx">
       <DependentUpon>frmSeguridad.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Bitacora.resx">
+      <DependentUpon>Frm_Bitacora.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Frm_Consultar_Asignacion_Modulo_Aplicacion.resx">
       <DependentUpon>Frm_Consultar_Asignacion_Modulo_Aplicacion.cs</DependentUpon>
