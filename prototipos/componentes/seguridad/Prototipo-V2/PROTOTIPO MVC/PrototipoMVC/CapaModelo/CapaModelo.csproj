@@ -49,6 +49,8 @@
     <Compile Include="Cls_Empleados.cs" />
     <Compile Include="Cls_EmpleadosDAO.cs" />
     <Compile Include="Cls_PerfilesDAO.cs" />
+    <Compile Include="Cls_SalarioEmpleados.cs" />
+    <Compile Include="Cls_SalarioEmpleadosDAO.cs" />
     <Compile Include="Cls_SentenciasBitacora.cs" />
     <Compile Include="Cls_Usuario.cs" />
     <Compile Include="Cls_UsuarioConectado.cs" />
