@@ -12,10 +12,6 @@ namespace CapaControlador
     {
         private Cls_AplicacionDAO daoAplicacion = new Cls_AplicacionDAO();
 
-        public List<Cls_Aplicacion> ObtenerTodasLasAplicaciones()
-        {
-            return daoAplicacion.ObtenerAplicaciones();
-        }
 
         public int InsertarAplicacion(int idAplicacion, string nombre, string descripcion, bool estado, int? idReporte = null)
         {

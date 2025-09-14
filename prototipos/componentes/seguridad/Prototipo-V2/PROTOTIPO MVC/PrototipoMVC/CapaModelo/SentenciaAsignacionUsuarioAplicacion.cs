@@ -112,6 +112,6 @@ namespace CapaModelo
             return filasAfectadas;
         }
 
-        // Aquí puedes agregar métodos para eliminar permisos si lo necesitas
+        
     }
 }
