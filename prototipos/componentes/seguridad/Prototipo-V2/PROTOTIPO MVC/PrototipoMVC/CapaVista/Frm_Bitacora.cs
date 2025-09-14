@@ -1,4 +1,5 @@
-﻿// Autor: Arón Ricardo Esquit Silva    0901-22-13036
+﻿// Arón Ricardo Esquit Silva
+// Carnet: 0901-22-13036
 // Fecha: 12/09/2025
 
 using System;
@@ -27,18 +28,20 @@ namespace CapaVista
             panel1.Controls.SetChildIndex(Btn_Maximizar, 1);
             panel1.Controls.SetChildIndex(Btn_Cerrar, 0);
 
-            // Botón minimizar deshabilitado (según estandarización)
+            // Botón minimizar deshabilitado
             Btn_Minimizar.Enabled = false;
 
-            // Estilo plano y colores
+            // Estilo plano
             Btn_Minimizar.FlatAppearance.BorderSize = 0;
             Btn_Maximizar.FlatAppearance.BorderSize = 0;
             Btn_Cerrar.FlatAppearance.BorderSize = 0;
 
+            // Colores al pasar el mouse
             Btn_Minimizar.FlatAppearance.MouseOverBackColor = Color.LightGray;
             Btn_Maximizar.FlatAppearance.MouseOverBackColor = Color.LightGray;
             Btn_Cerrar.FlatAppearance.MouseOverBackColor = Color.Red;
 
+            // Colores al hacer clic
             Btn_Minimizar.FlatAppearance.MouseDownBackColor = Color.Gray;
             Btn_Maximizar.FlatAppearance.MouseDownBackColor = Color.Gray;
             Btn_Cerrar.FlatAppearance.MouseDownBackColor = Color.DarkRed;
@@ -46,27 +49,28 @@ namespace CapaVista
             // Ocultar filtros al inicio
             OcultarFiltros();
 
-            // 1) Mostrar toda la bitácora al abrir
+            // Consultar toda la bitácora al cargar
             CargarEnGrid(_ctrl.MostrarBitacora());
 
-            // 2) Cargar usuarios en el combo
+            // Cargar usuarios en el combo
             CargarUsuariosEnCombo();
         }
 
-
+        // Cargar datos en el DataGridView
         private void CargarEnGrid(DataTable dt)
         {
-            Dgv_Bitacora.DataSource = dt; // ajusta el nombre si tu grid se llama distinto
+            Dgv_Bitacora.DataSource = dt;
             Dgv_Bitacora.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             Dgv_Bitacora.ReadOnly = true;
             Dgv_Bitacora.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
         }
 
+        // Cargar usuarios en el ComboBox
         private void CargarUsuariosEnCombo()
         {
             try
             {
-                var dt = _ctrl.ObtenerUsuarios(); // id, usuario
+                var dt = _ctrl.ObtenerUsuarios();
                 Cbo_Usuario.DisplayMember = "usuario";
                 Cbo_Usuario.ValueMember = "id";
                 Cbo_Usuario.DataSource = dt;
@@ -78,6 +82,7 @@ namespace CapaVista
             }
         }
 
+        // Ocultar filtros
         private void OcultarFiltros()
         {
             Lbl_PrimeraFecha.Visible = false;
@@ -94,14 +99,13 @@ namespace CapaVista
             Btn_Imprimir.Visible = false;
         }
 
-
-        // Botones de barra personalizada
-
+        // Botón cerrar
         private void Btn_Cerrar_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
+        // Botón maximizar/restaurar
         private void Btn_Maximizar_Click(object sender, EventArgs e)
         {
             if (this.WindowState == FormWindowState.Normal)
@@ -110,19 +114,19 @@ namespace CapaVista
                 this.WindowState = FormWindowState.Normal;
         }
 
+        // Botón minimizar
         private void Btn_Minimizar_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
         }
 
-
-        // Comandos de la vista
-
+        // Consultar
         private void Btn_Consultar_Click(object sender, EventArgs e)
         {
             CargarEnGrid(_ctrl.MostrarBitacora());
         }
 
+        // Exportar
         private void Btn_Exportar_Click(object sender, EventArgs e)
         {
             try
@@ -152,13 +156,13 @@ namespace CapaVista
             }
         }
 
+        // Imprimir
         private void Btn_Imprimir_Click(object sender, EventArgs e)
         {
             try
             {
                 PrintDocument doc = _ctrl.CrearDocumentoImpresion();
 
-                // Vista previa 
                 PrintPreviewDialog preview = new PrintPreviewDialog
                 {
                     Document = doc
@@ -174,14 +178,13 @@ namespace CapaVista
             }
         }
 
+        // Salir
         private void Btn_Salir_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        // Filtros (mostrar/ocultar)
-
-
+        // Buscar por rango
         private void Btn_BuscarRango_Click(object sender, EventArgs e)
         {
             OcultarFiltros();
@@ -190,36 +193,32 @@ namespace CapaVista
             Dtp_PrimeraFecha.Visible = true;
             Lbl_SegundaFecha.Visible = true;
             Dtp_SegundaFecha.Visible = true;
-
             Btn_Imprimir.Visible = true;
 
-            // Hace una primera carga con el rango actual
             CargarEnGrid(_ctrl.BuscarPorRango(Dtp_PrimeraFecha.Value, Dtp_SegundaFecha.Value));
         }
 
+        // Buscar por fecha
         private void Btn_BuscarFecha_Click(object sender, EventArgs e)
         {
             OcultarFiltros();
 
             Lbl_FechaEspecifica.Visible = true;
             Dtp_FechaEspecifica.Visible = true;
-
             Btn_Imprimir.Visible = true;
 
-            // Hace una primera carga con la fecha actual
             CargarEnGrid(_ctrl.BuscarPorFecha(Dtp_FechaEspecifica.Value));
         }
 
+        // Buscar por usuario
         private void Btn_BuscarUsuario_Click(object sender, EventArgs e)
         {
             OcultarFiltros();
 
             Lbl_Usuario.Visible = true;
             Cbo_Usuario.Visible = true;
-
             Btn_Imprimir.Visible = true;
 
-            // Si ya hay usuario seleccionado, filtra
             if (Cbo_Usuario.SelectedValue != null &&
                 int.TryParse(Cbo_Usuario.SelectedValue.ToString(), out int idUsuario))
             {
@@ -227,24 +226,28 @@ namespace CapaVista
             }
         }
 
+        // Cambiar fecha específica
         private void Dtp_FechaEspecifica_ValueChanged(object sender, EventArgs e)
         {
             if (Dtp_FechaEspecifica.Visible)
                 CargarEnGrid(_ctrl.BuscarPorFecha(Dtp_FechaEspecifica.Value));
         }
 
+        // Cambiar primera fecha
         private void Dtp_PrimeraFecha_ValueChanged(object sender, EventArgs e)
         {
             if (Dtp_PrimeraFecha.Visible && Dtp_SegundaFecha.Visible)
                 CargarEnGrid(_ctrl.BuscarPorRango(Dtp_PrimeraFecha.Value, Dtp_SegundaFecha.Value));
         }
 
+        // Cambiar segunda fecha
         private void Dtp_SegundaFecha_ValueChanged(object sender, EventArgs e)
         {
             if (Dtp_PrimeraFecha.Visible && Dtp_SegundaFecha.Visible)
                 CargarEnGrid(_ctrl.BuscarPorRango(Dtp_PrimeraFecha.Value, Dtp_SegundaFecha.Value));
         }
 
+        // Cambiar usuario
         private void Cbo_Usuario_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (!Cbo_Usuario.Visible) return;
