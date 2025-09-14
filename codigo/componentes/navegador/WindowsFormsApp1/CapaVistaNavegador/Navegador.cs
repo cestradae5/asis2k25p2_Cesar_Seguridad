@@ -181,7 +181,21 @@ namespace CapaVistaNavegador
 
         private void Btn_eliminar_Click(object sender, EventArgs e)
         {
+            if (alias == null || alias.Length < 2)
+            {
+                MessageBox.Show("Alias no configurado correctamente.");
+                return;
+            }
 
+            try
+            {
+                ctrl.Eliminar_Datos(this, alias);
+                mostrarDatos();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al eliminar el registro: " + ex.Message);
+            }
         }
 
         private void Btn_consultar_Click(object sender, EventArgs e)
@@ -249,7 +263,7 @@ namespace CapaVistaNavegador
 
         private void Btn_salir_Click_1(object sender, EventArgs e)
         {
-
+            Application.Exit();
         }
     }
 }
