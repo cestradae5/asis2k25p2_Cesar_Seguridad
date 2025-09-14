@@ -47,31 +47,44 @@ namespace CapaVista
             listaEmpleados = controlador.ObtenerTodosLosEmpleados();
         }
 
+        public class EmpleadoDisplay
+        {
+            public int Id { get; set; }
+            public string Display { get; set; }
+
+            public override string ToString()
+            {
+                return Display;
+            }
+        }
+
+
+
+
         private void func_ConfigurarComboBoxEmpleados()
         {
-            // Configurar AutoComplete
             Cbo_mostrar_empleado.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             Cbo_mostrar_empleado.AutoCompleteSource = AutoCompleteSource.CustomSource;
 
-            // Crear fuente de autocompletado
             AutoCompleteStringCollection autoComplete = new AutoCompleteStringCollection();
-            autoComplete.AddRange(listaEmpleados.Select(a => a.PkIdEmpleado.ToString()).ToArray());
-            autoComplete.AddRange(listaEmpleados.Select(a => a.NombresEmpleado).ToArray());
+            autoComplete.AddRange(listaEmpleados
+                .Select(e => $"{e.PkIdEmpleado} {e.NombresEmpleado} {e.ApellidosEmpleado}")
+                .ToArray());
             Cbo_mostrar_empleado.AutoCompleteCustomSource = autoComplete;
 
-            // Configurar display y value
-            Cbo_mostrar_empleado.DisplayMember = "Display";
-            Cbo_mostrar_empleado.ValueMember = "Id";
+            Cbo_mostrar_empleado.Items.Clear();
 
-            // Crear items combinados (ID + Nombre + Apellido)
             foreach (var emp in listaEmpleados)
             {
-                Cbo_mostrar_empleado.Items.Add(new
+                Cbo_mostrar_empleado.Items.Add(new EmpleadoDisplay
                 {
-                    Display = $"{emp.PkIdEmpleado} - {emp.NombresEmpleado} {emp.ApellidosEmpleado}",
-                    Id = emp.PkIdEmpleado
+                    Id = emp.PkIdEmpleado,
+                    Display = $"{emp.PkIdEmpleado} - {emp.NombresEmpleado} {emp.ApellidosEmpleado}"
                 });
             }
+
+            Cbo_mostrar_empleado.DisplayMember = "Display";
+            Cbo_mostrar_empleado.ValueMember = "Id";
         }
 
 
