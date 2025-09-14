@@ -176,5 +176,12 @@ namespace CapaVista
            
             frm.Show();
         }
+
+        // 0901-20-4620 Ruben Armando Lopez Luch
+        private void cambiarContraseñaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frm_cambiar_contrasena ventana = new frm_cambiar_contrasena(Cls_sesion.iUsuarioId);
+            ventana.Show();
+        }
     }
 }

@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cls_sesion.cs" />
     <Compile Include="frmAplicacion.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -129,6 +130,12 @@
     <Compile Include="Frm_Bitacora.Designer.cs">
       <DependentUpon>Frm_Bitacora.cs</DependentUpon>
     </Compile>
+    <Compile Include="frm_cambiar_contrasena.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frm_cambiar_contrasena.Designer.cs">
+      <DependentUpon>frm_cambiar_contrasena.cs</DependentUpon>
+    </Compile>
     <Compile Include="Frm_Consultar_Asignacion_Modulo_Aplicacion.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -176,6 +183,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Frm_Bitacora.resx">
       <DependentUpon>Frm_Bitacora.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frm_cambiar_contrasena.resx">
+      <DependentUpon>frm_cambiar_contrasena.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Frm_Consultar_Asignacion_Modulo_Aplicacion.resx">
       <DependentUpon>Frm_Consultar_Asignacion_Modulo_Aplicacion.cs</DependentUpon>

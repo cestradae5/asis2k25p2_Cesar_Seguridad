@@ -42,6 +42,7 @@ namespace CapaVista
             this.Btn_Aplicacion = new System.Windows.Forms.ToolStripMenuItem();
             this.Btn_Modulo = new System.Windows.Forms.ToolStripMenuItem();
             this.empleadosToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.usuariosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.procesosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Btn_Bitacora = new System.Windows.Forms.ToolStripMenuItem();
             this.reportesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,7 +58,7 @@ namespace CapaVista
             this.asignacionDeAplicacionAUsuarioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.asignacionPerfilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.modulosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.usuariosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cambiarContraseñaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -133,29 +134,36 @@ namespace CapaVista
             // perfilesToolStripMenuItem
             // 
             this.perfilesToolStripMenuItem.Name = "perfilesToolStripMenuItem";
-            this.perfilesToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.perfilesToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
             this.perfilesToolStripMenuItem.Text = "Perfiles";
             this.perfilesToolStripMenuItem.Click += new System.EventHandler(this.perfilesToolStripMenuItem_Click_1);
             // 
             // Btn_Aplicacion
             // 
             this.Btn_Aplicacion.Name = "Btn_Aplicacion";
-            this.Btn_Aplicacion.Size = new System.Drawing.Size(224, 26);
+            this.Btn_Aplicacion.Size = new System.Drawing.Size(180, 26);
             this.Btn_Aplicacion.Text = "Aplicacion";
             this.Btn_Aplicacion.Click += new System.EventHandler(this.Btn_Aplicacion_Click_1);
             // 
             // Btn_Modulo
             // 
             this.Btn_Modulo.Name = "Btn_Modulo";
-            this.Btn_Modulo.Size = new System.Drawing.Size(224, 26);
+            this.Btn_Modulo.Size = new System.Drawing.Size(180, 26);
             this.Btn_Modulo.Text = "Modulos";
             // 
             // empleadosToolStripMenuItem1
             // 
             this.empleadosToolStripMenuItem1.Name = "empleadosToolStripMenuItem1";
-            this.empleadosToolStripMenuItem1.Size = new System.Drawing.Size(224, 26);
+            this.empleadosToolStripMenuItem1.Size = new System.Drawing.Size(180, 26);
             this.empleadosToolStripMenuItem1.Text = "Empleados";
             this.empleadosToolStripMenuItem1.Click += new System.EventHandler(this.empleadosToolStripMenuItem1_Click);
+            // 
+            // usuariosToolStripMenuItem
+            // 
+            this.usuariosToolStripMenuItem.Name = "usuariosToolStripMenuItem";
+            this.usuariosToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
+            this.usuariosToolStripMenuItem.Text = "Usuarios";
+            this.usuariosToolStripMenuItem.Click += new System.EventHandler(this.usuariosToolStripMenuItem_Click);
             // 
             // procesosToolStripMenuItem
             // 
@@ -183,7 +191,8 @@ namespace CapaVista
             // toolsMenu
             // 
             this.toolsMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.optionsToolStripMenuItem});
+            this.optionsToolStripMenuItem,
+            this.cambiarContraseñaToolStripMenuItem});
             this.toolsMenu.Font = new System.Drawing.Font("Rockwell", 10F);
             this.toolsMenu.Name = "toolsMenu";
             this.toolsMenu.Size = new System.Drawing.Size(130, 24);
@@ -192,7 +201,7 @@ namespace CapaVista
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(168, 26);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(251, 26);
             this.optionsToolStripMenuItem.Text = "&Opciones";
             // 
             // helpMenu
@@ -274,12 +283,12 @@ namespace CapaVista
             this.modulosToolStripMenuItem.Text = "Modulos";
             this.modulosToolStripMenuItem.Click += new System.EventHandler(this.modulosToolStripMenuItem_Click);
             // 
-            // usuariosToolStripMenuItem
+            // cambiarContraseñaToolStripMenuItem
             // 
-            this.usuariosToolStripMenuItem.Name = "usuariosToolStripMenuItem";
-            this.usuariosToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.usuariosToolStripMenuItem.Text = "Usuarios";
-            this.usuariosToolStripMenuItem.Click += new System.EventHandler(this.usuariosToolStripMenuItem_Click);
+            this.cambiarContraseñaToolStripMenuItem.Name = "cambiarContraseñaToolStripMenuItem";
+            this.cambiarContraseñaToolStripMenuItem.Size = new System.Drawing.Size(251, 26);
+            this.cambiarContraseñaToolStripMenuItem.Text = "Cambiar contraseña";
+            this.cambiarContraseñaToolStripMenuItem.Click += new System.EventHandler(this.cambiarContraseñaToolStripMenuItem_Click);
             // 
             // frmSeguridad
             // 
@@ -330,6 +339,7 @@ namespace CapaVista
         private System.Windows.Forms.ToolStripMenuItem Btn_Bitacora;
         private System.Windows.Forms.ToolStripMenuItem empleadosToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem usuariosToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cambiarContraseñaToolStripMenuItem;
     }
 }
 

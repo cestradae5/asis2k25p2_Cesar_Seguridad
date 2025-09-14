@@ -12,14 +12,15 @@ namespace CapaControlador
        
      
       
-        public bool autenticarUsuario(string usuario, string contrasena, out string mensaje)
+        public bool autenticarUsuario(string usuario, string contrasena, out string mensaje, out int idUsuario)
         {
+            idUsuario = 0;
             mensaje = "";
             OdbcDataReader reader = sl.validarLogin(usuario);
 
             if (reader != null && reader.Read())
             {
-                int idUsuario = reader.GetInt32(0);
+                idUsuario = reader.GetInt32(0);
                 string nombreUsuario = reader.GetString(1);
                 string contrasenaBD = reader.GetString(2);
                 int intentosFallidos = reader.GetInt32(3);
