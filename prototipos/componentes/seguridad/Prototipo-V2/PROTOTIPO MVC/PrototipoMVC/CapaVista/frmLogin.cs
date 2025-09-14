@@ -59,13 +59,15 @@ namespace CapaVista
             string contrasena = txtContrasena.Text.Trim();
 
             string mensaje;
-            bool loginExitoso = cn.autenticarUsuario(usuario, contrasena, out mensaje);
+            bool loginExitoso = cn.autenticarUsuario(usuario, contrasena, out mensaje, out int idUsuario);
 
             MessageBox.Show(mensaje);
 
             if (loginExitoso)
             {
-                
+                Cls_sesion.iUsuarioId = idUsuario;
+                Cls_sesion.sNombreUsuario = usuario;
+
                 frmPrincipal menu = new frmPrincipal();
                 menu.Show();
                 this.Hide();
