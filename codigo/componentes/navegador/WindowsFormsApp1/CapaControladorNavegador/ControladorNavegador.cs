@@ -75,16 +75,16 @@ namespace CapaControladorNavegador
 
 
 
-        // METODO ASIGNAR ALIAS NUEVO
-        public bool AsignarAlias(string tabla, string[] alias, Control contenedor, int startX, int startY)
+        // Asigna alias validando tabla y columnas
+        public bool AsignarAlias(string[] alias, Control contenedor, int startX, int startY)
         {
-            if (!ExisteTabla(tabla))
+            if (!ExisteTabla(alias[0]))
             {
-                MessageBox.Show($"❌ La tabla '{tabla}' no existe en la base de datos.");
+                MessageBox.Show($"❌ La tabla '{alias[0]}' no existe en la base de datos.");
                 return false;
             }
 
-            List<string> columnas = ObtenerColumnas(tabla);
+            List<string> columnas = ObtenerColumnas(alias[0]);
             int spacingY = 30;
             int creados = 0;
 
@@ -92,7 +92,7 @@ namespace CapaControladorNavegador
             {
                 if (!columnas.Contains(campo))
                 {
-                    MessageBox.Show($"⚠️ La columna '{campo}' no existe en la tabla '{tabla}'.");
+                    MessageBox.Show($"⚠️ La columna '{campo}' no existe en la tabla '{alias[0]}'.");
                     continue;
                 }
 

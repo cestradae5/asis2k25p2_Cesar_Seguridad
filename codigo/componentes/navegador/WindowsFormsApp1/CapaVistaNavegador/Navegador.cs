@@ -13,7 +13,7 @@ namespace CapaVistaNavegador
     public partial class Navegador : UserControl
     {
         public string[] alias { get; set; }
-        public string nombreTabla { get; set; } // Nueva propiedad para el nombre de la tabla
+       // public string nombreTabla { get; set; } // Nueva propiedad para el nombre de la tabla
 
         public Navegador()
         {
@@ -37,11 +37,11 @@ namespace CapaVistaNavegador
             }
 
             //Parámetros para validar 
-            string tabla = nombreTabla; 
+           // string tabla = nombreTabla; 
             string[] columnas = alias; 
 
             // Asigna los alias al controlador y crea los controles necesarios
-            if (ctrl.AsignarAlias(tabla, alias, this, 10, 100))
+            if (ctrl.AsignarAlias(alias, this, 10, 100))
             {
                 habilitar_botones();
                 mostrarDatos();
@@ -125,7 +125,7 @@ namespace CapaVistaNavegador
                 return;
             }
 
-            dtCompleto = ctrl.LlenarTabla(nombreTabla, alias);
+            dtCompleto = ctrl.LlenarTabla(alias[0], alias);
             Dgv_Datos.DataSource = dtCompleto;
 
             totalPaginas = (int)Math.Ceiling(dtCompleto.Rows.Count / (double)registrosPorPagina);
