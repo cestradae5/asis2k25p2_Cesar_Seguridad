@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Data;
 using System.Data.Odbc;
+using CapaModelo;
 
 namespace CapaModelo
 {
-    /* Marcos Andres Velásquez Alcántara
- * 0901-22-1115
- * */
+    /* Marcos Andres Velásquez Alcántara 0901-22-1115* */
     public class SentenciaAsignacionUsuarioAplicacion
     {
         Conexion conexion = new Conexion();
@@ -53,15 +52,20 @@ namespace CapaModelo
 
 
         // Obtener aplicaciones por módulo
-        public DataTable ObtenerAplicaciones()
+        // Obtener aplicaciones filtradas por módulo
+        public DataTable ObtenerAplicacionesPorModulo(int idModulo)
         {
             DataTable dt = new DataTable();
-            string query = "SELECT pk_id_aplicacion, nombre_aplicacion FROM tbl_APLICACION WHERE estado_aplicacion = 1";
+            string query = @"SELECT pk_id_aplicacion, nombre_aplicacion 
+                     FROM tbl_APLICACION 
+                     WHERE estado_aplicacion = 1 AND fk_id_modulo = ?";
 
             using (OdbcConnection conn = conexion.conexion())
             {
                 using (OdbcCommand cmd = new OdbcCommand(query, conn))
                 {
+                    cmd.Parameters.AddWithValue("?", idModulo);
+
                     using (OdbcDataAdapter da = new OdbcDataAdapter(cmd))
                     {
                         da.Fill(dt);
@@ -71,6 +75,7 @@ namespace CapaModelo
 
             return dt;
         }
+
 
 
 
@@ -112,6 +117,6 @@ namespace CapaModelo
             return filasAfectadas;
         }
 
-        // Aquí puedes agregar métodos para eliminar permisos si lo necesitas
+        
     }
 }

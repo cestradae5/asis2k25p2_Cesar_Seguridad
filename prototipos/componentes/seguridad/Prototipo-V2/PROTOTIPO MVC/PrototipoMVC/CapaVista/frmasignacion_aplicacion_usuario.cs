@@ -5,22 +5,25 @@ using System.Data;
 using CapaModelo;
 
 namespace CapaVista
+
+/* Marcos Andres Velasquez Alcántara 0901-21-1115 */
 {
     public partial class frmasignacion_aplicacion_usuario : Form
     {
-
-
-        // ...existing code...
+        // Este se usa para insertar permisos
         SentenciaAsignacionUsuarioAplicacion modelo = new SentenciaAsignacionUsuarioAplicacion();
-        // ...existing code...
+
+        // Este se usa para obtener aplicaciones
+        Cls_AplicacionControlador appControlador = new Cls_AplicacionControlador();
+
+        // Este ya lo tenías para usuarios y módulos
         ControladorAsignacionUsuarioAplicacion controlador = new ControladorAsignacionUsuarioAplicacion();
-        /* Marcos Andres Velasquez Alcántara 0901-21-1115
- * */
+
+       
         public frmasignacion_aplicacion_usuario()
         {
             InitializeComponent();
             this.Load += frmAsignacion_aplicacion_usuario_Load;
-
         }
 
         private void frmAsignacion_aplicacion_usuario_Load(object sender, EventArgs e)
@@ -38,10 +41,6 @@ namespace CapaVista
             Cbo_Modulos.DisplayMember = "nombre_modulo";
             Cbo_Modulos.ValueMember = "pk_id_modulo";
             Cbo_Modulos.SelectedIndex = -1;
-
-            // Inicializar DataGridView Permisos
-
-            
 
             InicializarDataGridView();
         }
@@ -65,8 +64,18 @@ namespace CapaVista
             Dgv_Permisos.Columns.Add("IdAplicacion", "IdAplicacion");
             Dgv_Permisos.Columns["IdAplicacion"].Visible = false;
 
-            DataTable dtAplicacion = modelo.ObtenerAplicaciones();
+            // Obtener lista de aplicaciones
+            var lista = appControlador.ObtenerTodasLasAplicaciones();
 
+            // Convertir a DataTable
+            DataTable dtAplicacion = new DataTable();
+            dtAplicacion.Columns.Add("pk_id_aplicacion", typeof(int));
+            dtAplicacion.Columns.Add("nombre_aplicacion", typeof(string));
+
+            foreach (var app in lista)
+            {
+                dtAplicacion.Rows.Add(app.PkIdAplicacion, app.NombreAplicacion);
+            }
 
             Cbo_Aplicaciones.DataSource = dtAplicacion;
             Cbo_Aplicaciones.DisplayMember = "nombre_aplicacion";
@@ -78,14 +87,18 @@ namespace CapaVista
         {
             if (Cbo_Modulos.SelectedValue != null)
             {
-                // Si quieres filtrar por módulo, usa tu propio método (ver #Untitled-1)
-                // Si quieres mostrar todas las aplicaciones:
-                SentenciaAsignacionUsuarioAplicacion modelo = new SentenciaAsignacionUsuarioAplicacion();
+                // Volver a cargar todas las aplicaciones
+                var lista = appControlador.ObtenerTodasLasAplicaciones();
 
-                // Cuando quieras llenar el ComboBox de aplicaciones:
-                DataTable dtAplicacion = modelo.ObtenerAplicaciones();
+                DataTable dtAplicacion = new DataTable();
+                dtAplicacion.Columns.Add("pk_id_aplicacion", typeof(int));
+                dtAplicacion.Columns.Add("nombre_aplicacion", typeof(string));
 
-               
+                foreach (var app in lista)
+                {
+                    dtAplicacion.Rows.Add(app.PkIdAplicacion, app.NombreAplicacion);
+                }
+
                 Cbo_Aplicaciones.DataSource = dtAplicacion;
                 Cbo_Aplicaciones.DisplayMember = "nombre_aplicacion";
                 Cbo_Aplicaciones.ValueMember = "pk_id_aplicacion";
@@ -104,10 +117,8 @@ namespace CapaVista
             string usuario = Cbo_Usuarios.Text;
             string aplicacion = Cbo_Aplicaciones.Text;
 
-            // Agregar fila al DataGridView con permisos por defecto (false)
             Dgv_Permisos.Rows.Add(usuario, aplicacion, false, false, false, false, false);
 
-            // Limpiar selección de los ComboBox
             Cbo_Usuarios.SelectedIndex = -1;
             Cbo_Modulos.SelectedIndex = -1;
             Cbo_Aplicaciones.SelectedIndex = -1;
@@ -119,9 +130,7 @@ namespace CapaVista
         }
 
         private void Btn_agregar_Click_1(object sender, EventArgs e)
-
         {
-
             if (Cbo_Usuarios.SelectedIndex == -1 || Cbo_Modulos.SelectedIndex == -1 || Cbo_Aplicaciones.SelectedIndex == -1)
             {
                 MessageBox.Show("Seleccione usuario, módulo y aplicación.");
@@ -136,18 +145,13 @@ namespace CapaVista
 
             Dgv_Permisos.Rows.Add(usuario, aplicacion, false, false, false, false, false, idUsuario, idModulo, idAplicacion);
 
-            // Limpiar selección
             Cbo_Usuarios.SelectedIndex = -1;
             Cbo_Modulos.SelectedIndex = -1;
             Cbo_Aplicaciones.SelectedIndex = -1;
-
-
-
         }
 
         private void Btn_quitar_Click(object sender, EventArgs e)
         {
-            // Verificar que haya fila seleccionada
             if (Dgv_Permisos.CurrentRow != null && !Dgv_Permisos.CurrentRow.IsNewRow)
             {
                 Dgv_Permisos.Rows.Remove(Dgv_Permisos.CurrentRow);
@@ -160,7 +164,6 @@ namespace CapaVista
 
         private void Dgv_Permisos_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
         private void Btn_finalizar_Click(object sender, EventArgs e)
@@ -175,7 +178,7 @@ namespace CapaVista
 
             foreach (DataGridViewRow row in Dgv_Permisos.Rows)
             {
-                if (row.IsNewRow) continue; // ignorar fila vacía
+                if (row.IsNewRow) continue;
 
                 try
                 {
@@ -204,7 +207,7 @@ namespace CapaVista
             }
 
             MessageBox.Show($"Se insertaron {insertados} registros correctamente.");
-            Dgv_Permisos.Rows.Clear(); // opcional: limpiar después de insertar
+            Dgv_Permisos.Rows.Clear();
         }
     }
 }
