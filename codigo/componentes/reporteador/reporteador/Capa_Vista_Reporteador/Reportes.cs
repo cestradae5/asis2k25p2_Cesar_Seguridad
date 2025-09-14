@@ -52,11 +52,22 @@ namespace Capa_Vista_Reporteador
         private void Btn_ver_reporte_Click(object sender, EventArgs e)
         {
             // Instancia para ver reportes //Paula Leonardo 
-            VistaDeReportes frm = new VistaDeReportes();
+            //Inicio de código de: Gerber Asturias con carné: 0901-22-11992 en la fecha 13/09/2025
+            if (Dgv_reportes.CurrentRow !=null)
+            {
+                string ruta = Dgv_reportes.CurrentRow.Cells["ruta_reportes"].Value?.ToString();
 
-            // Mostrarlo como ventana aparte //Paula Leonardo
-            frm.Show();
+                VistaDeReportes frm = new VistaDeReportes();
+                frm.MostrarReporte(ruta);
+                // Mostrarlo como ventana aparte //Paula Leonardo
+                frm.Show();
+            }
+            else
+            {
+                MessageBox.Show("Seleccione un reporte de la tabla primero");
+            }
         }
+        //Fin de código de: Gerber Asturias con carné: 0901-22-11992 en la fecha 13/09/2025
 
         private void Dgv_reportes_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -94,9 +105,9 @@ namespace Capa_Vista_Reporteador
             // ofd.Filter = "Crystal Reports (.rpt)|.rpt";  // 
 
             SaveFileDialog sfd = new SaveFileDialog();
-            sfd.Filter = "Archivo PDF (*.pdf)|*.pdf"; 
-            sfd.Title = "Guardar reporte como PDF";
-            sfd.FileName = "Reporte.pdf"; // Nombre sugerido 
+            sfd.Filter = "Archivo RPT (*.rpt)|*.rpt"; 
+            sfd.Title = "Guardar reporte como RPT";
+            sfd.FileName = "Reporte.rpt"; // Nombre sugerido 
 
             if (sfd.ShowDialog() == DialogResult.OK)
             {
