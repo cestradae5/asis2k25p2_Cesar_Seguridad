@@ -47,44 +47,31 @@ namespace CapaVista
             listaEmpleados = controlador.ObtenerTodosLosEmpleados();
         }
 
-        public class EmpleadoDisplay
-        {
-            public int Id { get; set; }
-            public string Display { get; set; }
-
-            public override string ToString()
-            {
-                return Display;
-            }
-        }
-
-
-
-
         private void func_ConfigurarComboBoxEmpleados()
         {
+            // Configurar AutoComplete
             Cbo_mostrar_empleado.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             Cbo_mostrar_empleado.AutoCompleteSource = AutoCompleteSource.CustomSource;
 
+            // Crear fuente de autocompletado
             AutoCompleteStringCollection autoComplete = new AutoCompleteStringCollection();
-            autoComplete.AddRange(listaEmpleados
-                .Select(e => $"{e.PkIdEmpleado} {e.NombresEmpleado} {e.ApellidosEmpleado}")
-                .ToArray());
+            autoComplete.AddRange(listaEmpleados.Select(a => a.PkIdEmpleado.ToString()).ToArray());
+            autoComplete.AddRange(listaEmpleados.Select(a => a.NombresEmpleado).ToArray());
             Cbo_mostrar_empleado.AutoCompleteCustomSource = autoComplete;
 
-            Cbo_mostrar_empleado.Items.Clear();
-
-            foreach (var emp in listaEmpleados)
-            {
-                Cbo_mostrar_empleado.Items.Add(new EmpleadoDisplay
-                {
-                    Id = emp.PkIdEmpleado,
-                    Display = $"{emp.PkIdEmpleado} - {emp.NombresEmpleado} {emp.ApellidosEmpleado}"
-                });
-            }
-
+            // Configurar display y value
             Cbo_mostrar_empleado.DisplayMember = "Display";
             Cbo_mostrar_empleado.ValueMember = "Id";
+
+            // Crear items combinados (ID + Nombre + Apellido)
+            foreach (var emp in listaEmpleados)
+            {
+                Cbo_mostrar_empleado.Items.Add(new
+                {
+                    Display = $"{emp.PkIdEmpleado} - {emp.NombresEmpleado} {emp.ApellidosEmpleado}",
+                    Id = emp.PkIdEmpleado
+                });
+            }
         }
 
 

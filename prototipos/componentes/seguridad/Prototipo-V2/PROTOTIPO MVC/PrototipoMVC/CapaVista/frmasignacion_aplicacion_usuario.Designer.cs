@@ -149,6 +149,7 @@ namespace CapaVista
             this.Dgv_Permisos.RowTemplate.Height = 24;
             this.Dgv_Permisos.Size = new System.Drawing.Size(570, 215);
             this.Dgv_Permisos.TabIndex = 2;
+            this.Dgv_Permisos.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dgv_Permisos_CellContentClick);
             // 
             // Btn_quitar
             // 
@@ -162,6 +163,7 @@ namespace CapaVista
             this.Btn_quitar.TabIndex = 6;
             this.Btn_quitar.Text = "Quitar";
             this.Btn_quitar.UseVisualStyleBackColor = false;
+            this.Btn_quitar.Click += new System.EventHandler(this.Btn_quitar_Click);
             // 
             // Btn_finalizar
             // 
@@ -173,8 +175,9 @@ namespace CapaVista
             this.Btn_finalizar.Name = "Btn_finalizar";
             this.Btn_finalizar.Size = new System.Drawing.Size(96, 41);
             this.Btn_finalizar.TabIndex = 7;
-            this.Btn_finalizar.Text = "Finalizar";
+            this.Btn_finalizar.Text = "Insertar";
             this.Btn_finalizar.UseVisualStyleBackColor = false;
+            this.Btn_finalizar.Click += new System.EventHandler(this.Btn_finalizar_Click);
             // 
             // Btn_salir
             // 

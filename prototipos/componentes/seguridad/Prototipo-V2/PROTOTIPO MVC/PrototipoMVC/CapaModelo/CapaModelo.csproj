@@ -33,8 +33,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -43,8 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cls_asignacion_perfil_usuario.cs" />
-    <Compile Include="Cls_asignacion_perfil_usuarioDAO.cs" />
     <Compile Include="Cls_BitacoraDao.cs" />
     <Compile Include="Cls_Aplicacion.cs" />
     <Compile Include="Cls_AplicacionDAO.cs" />
@@ -53,8 +49,6 @@
     <Compile Include="Cls_Empleados.cs" />
     <Compile Include="Cls_EmpleadosDAO.cs" />
     <Compile Include="Cls_PerfilesDAO.cs" />
-    <Compile Include="Cls_SalarioEmpleados.cs" />
-    <Compile Include="Cls_SalarioEmpleadosDAO.cs" />
     <Compile Include="Cls_SentenciasBitacora.cs" />
     <Compile Include="Cls_Usuario.cs" />
     <Compile Include="Cls_UsuarioConectado.cs" />

@@ -1,12 +1,17 @@
-﻿// Arón Ricardo Esquit Silva    0901-22-13036
-// Fecha: 12/09/2025
-
+﻿
 namespace CapaVista
 {
     partial class Frm_Bitacora
     {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -18,6 +23,10 @@ namespace CapaVista
 
         #region Windows Form Designer generated code
 
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
         private void InitializeComponent()
         {
             this.Btn_Consultar = new System.Windows.Forms.Button();
@@ -27,9 +36,9 @@ namespace CapaVista
             this.Btn_BuscarUsuario = new System.Windows.Forms.Button();
             this.Btn_Salir = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.Btn_Cerrar = new System.Windows.Forms.Button();
-            this.Btn_Maximizar = new System.Windows.Forms.Button();
             this.Btn_Minimizar = new System.Windows.Forms.Button();
+            this.Btn_Maximizar = new System.Windows.Forms.Button();
+            this.Btn_Cerrar = new System.Windows.Forms.Button();
             this.Dgv_Bitacora = new System.Windows.Forms.DataGridView();
             this.Lbl_PrimeraFecha = new System.Windows.Forms.Label();
             this.Lbl_SegundaFecha = new System.Windows.Forms.Label();
@@ -84,7 +93,7 @@ namespace CapaVista
             this.Btn_BuscarRango.Name = "Btn_BuscarRango";
             this.Btn_BuscarRango.Size = new System.Drawing.Size(273, 62);
             this.Btn_BuscarRango.TabIndex = 8;
-            this.Btn_BuscarRango.Text = "Buscar por rango de fechas";
+            this.Btn_BuscarRango.Text = "Buscar por rango de fehcas";
             this.Btn_BuscarRango.UseVisualStyleBackColor = true;
             this.Btn_BuscarRango.Click += new System.EventHandler(this.Btn_BuscarRango_Click);
             // 
@@ -123,6 +132,36 @@ namespace CapaVista
             this.panel1.Size = new System.Drawing.Size(1330, 44);
             this.panel1.TabIndex = 6;
             // 
+            // Btn_Minimizar
+            // 
+            this.Btn_Minimizar.Dock = System.Windows.Forms.DockStyle.Right;
+            this.Btn_Minimizar.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
+            this.Btn_Minimizar.FlatAppearance.BorderSize = 0;
+            this.Btn_Minimizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Btn_Minimizar.Font = new System.Drawing.Font("Rockwell", 11F);
+            this.Btn_Minimizar.Location = new System.Drawing.Point(1300, 0);
+            this.Btn_Minimizar.Name = "Btn_Minimizar";
+            this.Btn_Minimizar.Size = new System.Drawing.Size(30, 44);
+            this.Btn_Minimizar.TabIndex = 0;
+            this.Btn_Minimizar.Text = "-";
+            this.Btn_Minimizar.UseVisualStyleBackColor = true;
+            this.Btn_Minimizar.Click += new System.EventHandler(this.Btn_Minimizar_Click);
+            // 
+            // Btn_Maximizar
+            // 
+            this.Btn_Maximizar.Dock = System.Windows.Forms.DockStyle.Right;
+            this.Btn_Maximizar.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
+            this.Btn_Maximizar.FlatAppearance.BorderSize = 0;
+            this.Btn_Maximizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Btn_Maximizar.Font = new System.Drawing.Font("Rockwell", 11F);
+            this.Btn_Maximizar.Location = new System.Drawing.Point(1269, 0);
+            this.Btn_Maximizar.Name = "Btn_Maximizar";
+            this.Btn_Maximizar.Size = new System.Drawing.Size(31, 44);
+            this.Btn_Maximizar.TabIndex = 1;
+            this.Btn_Maximizar.Text = "□";
+            this.Btn_Maximizar.UseVisualStyleBackColor = true;
+            this.Btn_Maximizar.Click += new System.EventHandler(this.Btn_Maximizar_Click);
+            // 
             // Btn_Cerrar
             // 
             this.Btn_Cerrar.Dock = System.Windows.Forms.DockStyle.Right;
@@ -137,34 +176,6 @@ namespace CapaVista
             this.Btn_Cerrar.Text = "X";
             this.Btn_Cerrar.UseVisualStyleBackColor = true;
             this.Btn_Cerrar.Click += new System.EventHandler(this.Btn_Cerrar_Click);
-            // 
-            // Btn_Maximizar
-            // 
-            this.Btn_Maximizar.Dock = System.Windows.Forms.DockStyle.Right;
-            this.Btn_Maximizar.FlatAppearance.BorderSize = 0;
-            this.Btn_Maximizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Btn_Maximizar.Font = new System.Drawing.Font("Rockwell", 11F);
-            this.Btn_Maximizar.Location = new System.Drawing.Point(1269, 0);
-            this.Btn_Maximizar.Name = "Btn_Maximizar";
-            this.Btn_Maximizar.Size = new System.Drawing.Size(31, 44);
-            this.Btn_Maximizar.TabIndex = 1;
-            this.Btn_Maximizar.Text = "□";
-            this.Btn_Maximizar.UseVisualStyleBackColor = true;
-            this.Btn_Maximizar.Click += new System.EventHandler(this.Btn_Maximizar_Click);
-            // 
-            // Btn_Minimizar
-            // 
-            this.Btn_Minimizar.Dock = System.Windows.Forms.DockStyle.Right;
-            this.Btn_Minimizar.FlatAppearance.BorderSize = 0;
-            this.Btn_Minimizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Btn_Minimizar.Font = new System.Drawing.Font("Rockwell", 11F);
-            this.Btn_Minimizar.Location = new System.Drawing.Point(1300, 0);
-            this.Btn_Minimizar.Name = "Btn_Minimizar";
-            this.Btn_Minimizar.Size = new System.Drawing.Size(30, 44);
-            this.Btn_Minimizar.TabIndex = 0;
-            this.Btn_Minimizar.Text = "-";
-            this.Btn_Minimizar.UseVisualStyleBackColor = true;
-            this.Btn_Minimizar.Click += new System.EventHandler(this.Btn_Minimizar_Click);
             // 
             // Dgv_Bitacora
             // 
@@ -253,7 +264,6 @@ namespace CapaVista
             this.Lbl_Usuario.Size = new System.Drawing.Size(70, 20);
             this.Lbl_Usuario.TabIndex = 6;
             this.Lbl_Usuario.Text = "Usuario";
-            this.Lbl_Usuario.Visible = false; // CORREGIDO
             // 
             // Cbo_Usuario
             // 
@@ -263,7 +273,6 @@ namespace CapaVista
             this.Cbo_Usuario.Name = "Cbo_Usuario";
             this.Cbo_Usuario.Size = new System.Drawing.Size(200, 25);
             this.Cbo_Usuario.TabIndex = 7;
-            this.Cbo_Usuario.Visible = false; // CORREGIDO
             this.Cbo_Usuario.SelectedIndexChanged += new System.EventHandler(this.Cbo_Usuario_SelectedIndexChanged);
             // 
             // Btn_Imprimir
@@ -314,6 +323,7 @@ namespace CapaVista
             ((System.ComponentModel.ISupportInitialize)(this.Dgv_Bitacora)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         #endregion
