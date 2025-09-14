@@ -51,6 +51,7 @@
     <Compile Include="Cls_AplicacionControlador.cs" />
     <Compile Include="Cls_AsignacionModuloAplicacionControlador.cs" />
     <Compile Include="Cls_PerfilesControlador.cs" />
+    <Compile Include="Cls_SalarioEmpleadosControlador.cs" />
     <Compile Include="Cls_UsuarioControlador.cs" />
     <Compile Include="ControladorAsignacionUsuarioAplicacion.cs" />
     <Compile Include="ControladorLogin.cs" />
