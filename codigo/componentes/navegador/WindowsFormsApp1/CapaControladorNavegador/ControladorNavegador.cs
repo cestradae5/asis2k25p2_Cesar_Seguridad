@@ -103,15 +103,33 @@ namespace CapaControladorNavegador
                     Location = new System.Drawing.Point(startX, startY + (creados * spacingY))
                 };
 
-                TextBox txt = new TextBox
+                ComboBox Cbo = new ComboBox
                 {
-                    Name = "txt_" + campo,
+                    Name = "Cbo_" + campo,
                     Width = 150,
-                    Location = new System.Drawing.Point(startX + 100, startY + (creados * spacingY))
-                };
+                    Location = new System.Drawing.Point(startX + 100, startY + (creados * spacingY)),
 
+                };
+                // esto se elimina, es solo para pruebas hasta que se arregle lo de la valiadcion
+                Cbo.Items.Add("Prueba 1");
+                Cbo.Items.Add("Prueba 2");
+                Cbo.Items.Add("Prueba 3");
+                // hasta aqui
+
+                // para bloquear el combobox de la PK
+                if (creados == 0)
+                {
+                    Cbo.SelectedIndexChanged += (s, e) =>
+                    {
+                        if (Cbo.SelectedIndex >= 0)
+                        {
+                            Cbo.Enabled = false;
+                        }
+                    };
+                }
+                contenedor.Controls.Add(Cbo);
                 contenedor.Controls.Add(lbl);
-                contenedor.Controls.Add(txt);
+                
 
                 creados++;
             }
@@ -190,11 +208,11 @@ namespace CapaControladorNavegador
                 for (int i = 2; i < alias.Length; i++)
                 {
                     // Buscar el TextBox con nombre dinámico
-                    TextBox txt = contenedor.Controls.OfType<TextBox>().FirstOrDefault(t => t.Name == "txt_" + alias[i]);
+                    ComboBox Cbo = contenedor.Controls.OfType<ComboBox>().FirstOrDefault(t => t.Name == "Cbo_" + alias[i]);
 
-                    if (txt != null)
+                    if (Cbo != null)
                     {
-                        valores[i - 2] = txt.Text; // Guardar el texto en la posición correspondiente
+                        valores[i - 2] = Cbo.Text; // Guardar el texto en la posición correspondiente
                     }
                     else
                     {
@@ -229,17 +247,17 @@ namespace CapaControladorNavegador
 
             try
             {
-                TextBox txtPK = contenedor.Controls
-                    .OfType<TextBox>()
-                    .FirstOrDefault(t => t.Name == "txt_" + alias[0]);
+                ComboBox CboPK = contenedor.Controls
+                    .OfType<ComboBox>()
+                    .FirstOrDefault(t => t.Name == "Cbo_" + alias[0]);
 
-                if (txtPK == null || string.IsNullOrWhiteSpace(txtPK.Text))
+                if (CboPK == null || string.IsNullOrWhiteSpace(CboPK.Text))
                 {
                     MessageBox.Show("No se encontró el campo clave primaria o está vacío.");
                     return;
                 }
 
-                object pkValor = txtPK.Text;
+                object pkValor = CboPK.Text;
 
                 dao.EliminarDatos(alias, pkValor); // llamada directa al DAO
                 MessageBox.Show("Registro eliminado correctamente.");
