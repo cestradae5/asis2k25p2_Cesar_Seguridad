@@ -1,16 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using CapaControlador;
 
 // 0901-20-4620 Ruben Armando Lopez Luch
-
 namespace CapaVista
 {
     public partial class frmRecuperarContrasena : Form
@@ -107,9 +99,17 @@ namespace CapaVista
             {
                 string sHashNueva = SeguridadHash.HashearSHA256(sNueva);
                 if (cls_recuperar.fun_cambiar_contrasena(iIdUsuario, sHashNueva, idToken))
+                {
                     MessageBox.Show("Contraseña actualizada correctamente.");
+
+                    // Registrar en Bitácora Arón Ricardo Esquit Silva   0901-22-13036
+                    Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
+                    bit.RegistrarAccion(iIdUsuario, "Recuperar contraseña", true);
+                }
                 else
+                {
                     MessageBox.Show("Error al actualizar la contraseña. Revisa la consola para detalles.");
+                }
             }
             else
             {

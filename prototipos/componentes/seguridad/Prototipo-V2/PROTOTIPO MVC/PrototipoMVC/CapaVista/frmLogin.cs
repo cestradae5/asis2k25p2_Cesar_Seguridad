@@ -1,11 +1,4 @@
 ﻿using System; //0901-22-2929 Pablo Jose Quiroa Martinez
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using CapaControlador;
 
@@ -21,27 +14,16 @@ namespace CapaVista
             txtContrasena.UseSystemPasswordChar = true;
         }
 
-        private void txtUsuario_TextChanged(object sender, EventArgs e)
-        {
+        private void txtUsuario_TextChanged(object sender, EventArgs e) { }
 
-        }
-
-        private void txtContrasena_TextChanged(object sender, EventArgs e)
-        {
-
-        }
+        private void txtContrasena_TextChanged(object sender, EventArgs e) { }
 
         private void chkMostrarContrasena_CheckedChanged(object sender, EventArgs e)
         {
             if (chkMostrarContrasena.Checked)
-            {
-                txtContrasena.UseSystemPasswordChar = false; // Mostrar texto
-            }
+                txtContrasena.UseSystemPasswordChar = false; // Mostrar
             else
-            {
-                txtContrasena.UseSystemPasswordChar = true; // Ocultar texto
-            }
-
+                txtContrasena.UseSystemPasswordChar = true;  // Ocultar
         }
 
         private void lblkRecuperarContrasena_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -49,12 +31,10 @@ namespace CapaVista
             frmRecuperarContrasena ventana = new frmRecuperarContrasena();
             ventana.Show();
             this.Hide();
-
         }
 
-        private void btnIniciarSesion_Click(object sender, EventArgs e) 
+        private void btnIniciarSesion_Click(object sender, EventArgs e)
         {
-
             string usuario = txtUsuario.Text.Trim();
             string contrasena = txtContrasena.Text.Trim();
 
@@ -65,8 +45,13 @@ namespace CapaVista
 
             if (loginExitoso)
             {
+                // Guardar datos de sesión
                 Cls_sesion.iUsuarioId = idUsuario;
                 Cls_sesion.sNombreUsuario = usuario;
+
+                // Registrar en bitácora //Aron Ricardo Esquit Silva   0901-22-13036
+                Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
+                bit.RegistrarInicioSesion(idUsuario);
 
                 frmPrincipal menu = new frmPrincipal();
                 menu.Show();
@@ -74,11 +59,11 @@ namespace CapaVista
             }
             else
             {
-               
                 txtContrasena.Clear();
                 txtContrasena.Focus();
             }
         }
+
+        private void frmLogin_Load(object sender, EventArgs e) { }
     }
 }
-

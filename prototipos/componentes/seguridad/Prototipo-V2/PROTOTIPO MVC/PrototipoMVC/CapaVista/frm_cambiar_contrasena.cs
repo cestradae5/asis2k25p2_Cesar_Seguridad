@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using CapaControlador;
 
@@ -37,25 +30,35 @@ namespace CapaVista
 
             if (sNueva != sConfirmar)
             {
-                MessageBox.Show("Las contraseñas nuevas no coinciden.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Las contraseñas nuevas no coinciden.",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             if (!controlador.fun_validar_contrasena(iIdUsuario, sActual))
             {
-                MessageBox.Show("La contraseña actual es incorrecta.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("La contraseña actual es incorrecta.",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             bool bExito = controlador.fun_actualizar_Contrasena(iIdUsuario, sNueva);
             if (bExito)
             {
-                MessageBox.Show("Contraseña cambiada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Contraseña cambiada correctamente.",
+                                "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Registrar en Bitácora Arón Ricardo Esquit Silva   0901-22-13036
+                Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
+                bit.RegistrarAccion(iIdUsuario, "Cambio de contraseña", true);
+
+
                 this.Close();
             }
             else
             {
-                MessageBox.Show("Ocurrió un error al cambiar la contraseña.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Ocurrió un error al cambiar la contraseña.",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -66,7 +69,6 @@ namespace CapaVista
             Txt_contrasena_actual.UseSystemPasswordChar = !bMostrar;
             Txt_nueva_contrasena.UseSystemPasswordChar = !bMostrar;
             Txt_confirmar_contrasena.UseSystemPasswordChar = !bMostrar;
-
         }
     }
 }
