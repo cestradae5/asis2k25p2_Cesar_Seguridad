@@ -101,22 +101,18 @@ namespace Capa_Vista_Reporteador
         {
             // Inicio de código de: Cesar Santizo con carné: 0901-22-5215 en la fecha de: 12/09/2025
 
-            // OpenFileDialog ofd = new OpenFileDialog();
-            // ofd.Filter = "Crystal Reports (.rpt)|.rpt";  // 
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "Archivos de Crystal Reports (*.rpt)|*.rpt|Todos los archivos (*.*)|*.*";
+            ofd.Title = "Seleccionar reporte RPT";
 
-            SaveFileDialog sfd = new SaveFileDialog();
-            sfd.Filter = "Archivo RPT (*.rpt)|*.rpt"; 
-            sfd.Title = "Guardar reporte como RPT";
-            sfd.FileName = "Reporte.rpt"; // Nombre sugerido 
-
-            if (sfd.ShowDialog() == DialogResult.OK)
+            if (ofd.ShowDialog() == DialogResult.OK)
             {
-                Txt_reportes_ruta.Text = sfd.FileName;
-                // Aquí queda la ruta seleccionada, por ejemplo:  C:\Users\Usuario\Desktop\Reporte.pdf
-
+                Txt_reportes_ruta.Text = ofd.FileName;
+                // Aquí queda la ruta seleccionada, por ejemplo: C:\Users\Usuario\Desktop\Reporte1.rpt
             }
+
+            // fin de código de: Cesar Santizo con carné: 0901-22-5215 en la fecha de: 12/09/2025
         }
-        // fin  de código de: Cesar Santizo con carné: 0901-22-5215 en la fecha de: 12/09/2025
 
 
         private void Txt_reportes_ruta_TextChanged(object sender, EventArgs e)
