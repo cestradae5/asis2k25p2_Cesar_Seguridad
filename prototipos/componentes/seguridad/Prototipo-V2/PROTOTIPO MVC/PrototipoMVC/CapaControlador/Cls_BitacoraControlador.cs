@@ -1,4 +1,6 @@
-﻿using System;
+﻿/// Autor: Arón Ricardo Esquit Silva    0901-22-13036
+// Fecha: 12/09/2025
+using System;
 using System.Data;
 using System.IO;
 using System.Text;
@@ -12,47 +14,29 @@ namespace CapaControlador
     {
         private readonly Cls_SentenciasBitacora sentencias = new Cls_SentenciasBitacora();
 
-        //Método de consultas
+        // Consultas
+        public DataTable MostrarBitacora() => sentencias.Listar();
+        public DataTable BuscarPorFecha(DateTime fecha) => sentencias.ConsultarPorFecha(fecha);
+        public DataTable BuscarPorRango(DateTime inicio, DateTime fin) => sentencias.ConsultarPorRango(inicio, fin);
+        public DataTable BuscarPorUsuario(int idUsuario) => sentencias.ConsultarPorUsuario(idUsuario);
 
-        public DataTable MostrarBitacora()
+        // Registrar acciones
+        public void RegistrarAccion(int idUsuario, string accion, bool estadoLogin)
         {
-            return sentencias.Listar();
+            sentencias.InsertarBitacora(idUsuario, 0, accion, estadoLogin);
         }
 
-        public DataTable BuscarPorFecha(DateTime fecha)
+        public void RegistrarInicioSesion(int idUsuario)
         {
-            return sentencias.ConsultarPorFecha(fecha);
+            sentencias.RegistrarInicioSesion(idUsuario, 0);
         }
 
-        public DataTable BuscarPorRango(DateTime inicio, DateTime fin)
+        public void RegistrarCierreSesion(int idUsuario)
         {
-            return sentencias.ConsultarPorRango(inicio, fin);
+            sentencias.RegistrarCierreSesion(idUsuario, 0);
         }
 
-        public DataTable BuscarPorUsuario(int idUsuario)
-        {
-            return sentencias.ConsultarPorUsuario(idUsuario);
-        }
-
-        // Método de registros
-
-
-        public void RegistrarAccion(int idUsuario, int idAplicacion, string accion, bool estadoLogin)
-        {
-            sentencias.InsertarBitacora(idUsuario, idAplicacion, accion, estadoLogin);
-        }
-
-        public void RegistrarInicioSesion(int idUsuario, int idAplicacion)
-        {
-            sentencias.RegistrarInicioSesion(idUsuario, idAplicacion);
-        }
-
-        public void RegistrarCierreSesion(int idUsuario, int idAplicacion)
-        {
-            sentencias.RegistrarCierreSesion(idUsuario, idAplicacion);
-        }
-
-        // Exportar
+        // Exportar a CSV
         public void ExportarCsv(string path)
         {
             var dt = MostrarBitacora();
@@ -61,7 +45,6 @@ namespace CapaControlador
 
             var sb = new StringBuilder();
 
-            // Encabezados
             for (int i = 0; i < dt.Columns.Count; i++)
             {
                 if (i > 0) sb.Append(',');
@@ -69,7 +52,6 @@ namespace CapaControlador
             }
             sb.AppendLine();
 
-            // Filas
             foreach (DataRow row in dt.Rows)
             {
                 for (int i = 0; i < dt.Columns.Count; i++)
@@ -92,8 +74,7 @@ namespace CapaControlador
             return s;
         }
 
-        // Imprimir Bitacora
-
+        // Imprimir
         private DataTable _printData;
         private int _printRowIndex;
         private readonly Font _fontHeader = new Font("Segoe UI", 10, FontStyle.Bold);
@@ -134,7 +115,6 @@ namespace CapaControlador
             int y = area.Top;
             int rowH = (int)_fontCell.GetHeight(g) + 8;
 
-            // Encabezado
             for (int i = 0; i < cols.Length; i++)
             {
                 var rect = new Rectangle(x, y, colW[i], rowH);
@@ -145,7 +125,6 @@ namespace CapaControlador
             }
             y += rowH;
 
-            // Filas por página
             int linesPerPage = (area.Bottom - y) / rowH;
             int printed = 0;
 
@@ -176,12 +155,13 @@ namespace CapaControlador
 
             e.HasMorePages = (_printRowIndex < _printData.Rows.Count);
         }
+
+        // Obtener usuarios
         public DataTable ObtenerUsuarios()
         {
-            var dao = new Cls_BitacoraDao(); // DAO que se ejecuta en SQL
+            var dao = new Cls_BitacoraDao();
             string sql = "SELECT pk_id_usuario AS id, nombre_usuario AS usuario FROM tbl_USUARIO ORDER BY nombre_usuario;";
             return dao.EjecutarConsulta(sql);
         }
-
     }
 }

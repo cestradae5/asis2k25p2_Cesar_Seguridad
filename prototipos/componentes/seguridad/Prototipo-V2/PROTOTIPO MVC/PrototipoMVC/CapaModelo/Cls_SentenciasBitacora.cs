@@ -36,8 +36,7 @@ namespace CapaModelo
             return DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         }
 
-        // Lista la bitacora completo 
- 
+        // Listar bitácora completa 
         public DataTable Listar()
         {
             string sSql = @"
@@ -59,7 +58,6 @@ namespace CapaModelo
 
             return dao.EjecutarConsulta(sSql);
         }
-
 
         // Consultar por una fecha
         public DataTable ConsultarPorFecha(DateTime fecha)
@@ -109,7 +107,7 @@ namespace CapaModelo
             return dao.EjecutarConsulta(sSql);
         }
 
-        // Consultar pos usuario
+        // Consultar por usuario
         public DataTable ConsultarPorUsuario(int idUsuario)
         {
             string sSql = $@"
@@ -133,32 +131,31 @@ namespace CapaModelo
             return dao.EjecutarConsulta(sSql);
         }
 
-
-        // Insertar en bitacora
+        // Insertar en bitácora (ahora usa EjecutarComando)
         public void InsertarBitacora(int idUsuario, int idAplicacion, string accion, bool estadoLogin)
         {
+            string idApp = (idAplicacion == 0) ? "NULL" : idAplicacion.ToString();
+
             string sSql = $@"
                 INSERT INTO tbl_BITACORA
                 (fk_id_usuario, fk_id_aplicacion, fecha_bitacora, accion_bitacora, ip_bitacora, nombre_pc_bitacora, login_estado_bitacora)
-                VALUES ({idUsuario}, {idAplicacion}, '{FechaActual()}', '{accion}', '{ObtenerIP()}', '{ObtenerNombrePc()}', {(estadoLogin ? 1 : 0)})";
+                VALUES ({idUsuario}, {idApp}, '{FechaActual()}', '{accion}', '{ObtenerIP()}', '{ObtenerNombrePc()}', {(estadoLogin ? 1 : 0)});";
 
-            dao.EjecutarConsulta(sSql);
+            dao.EjecutarComando(sSql); // ✅ ahora sí guarda en la BD
         }
 
         // Registrar inicio de sesión en la bitácora
-        public void RegistrarInicioSesion(int idUsuario, int idAplicacion)
+        public void RegistrarInicioSesion(int idUsuario, int idAplicacion = 0)
         {
-            // Guardamos datos del usuario conectado
-            Cls_UsuarioConectado.IniciarSesion(idUsuario, "nombre_usuario"); 
-            InsertarBitacora(idUsuario, idAplicacion, "Inicio de sesión", Cls_UsuarioConectado.bLoginEstado);
+            Cls_UsuarioConectado.IniciarSesion(idUsuario, "nombre_usuario");
+            InsertarBitacora(idUsuario, idAplicacion, "Ingreso", Cls_UsuarioConectado.bLoginEstado);
         }
 
         // Registrar cierre de sesión en la bitácora
-        public void RegistrarCierreSesion(int idUsuario, int idAplicacion)
+        public void RegistrarCierreSesion(int idUsuario, int idAplicacion = 0)
         {
             InsertarBitacora(idUsuario, idAplicacion, "Cierre de sesión", false);
             Cls_UsuarioConectado.CerrarSesion();
         }
-
     }
 }
