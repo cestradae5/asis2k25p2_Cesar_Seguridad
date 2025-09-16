@@ -13,7 +13,7 @@ namespace CapaVistaNavegador
     public partial class Navegador : UserControl
     {
         public string[] alias { get; set; }
-        public string nombreTabla { get; set; } // Nueva propiedad para el nombre de la tabla
+       public string nombreTabla { get; set; } // Nueva propiedad para el nombre de la tabla
 
         public Navegador()
         {
@@ -29,7 +29,7 @@ namespace CapaVistaNavegador
             // habilitar botones
             habilitar_botones();*/
 
-            // Verifica que los alias estén configurados desde el proyecto que usa la DLL
+            
             if (alias == null || alias.Length < 2)
             {
                 MessageBox.Show("No se han definido los alias de la tabla.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -41,7 +41,7 @@ namespace CapaVistaNavegador
             string[] columnas = alias; 
 
             // Asigna los alias al controlador y crea los controles necesarios
-            if (ctrl.AsignarAlias(tabla, alias, this, 10, 100))
+            if (ctrl.AsignarAlias(alias, this, 10, 100))
             {
                 habilitar_botones();
                 mostrarDatos();
@@ -125,7 +125,7 @@ namespace CapaVistaNavegador
                 return;
             }
 
-            dtCompleto = ctrl.LlenarTabla(nombreTabla, alias);
+            dtCompleto = ctrl.LlenarTabla(alias[0], alias.Skip(1).ToArray());
             Dgv_Datos.DataSource = dtCompleto;
 
             totalPaginas = (int)Math.Ceiling(dtCompleto.Rows.Count / (double)registrosPorPagina);

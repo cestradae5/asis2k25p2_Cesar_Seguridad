@@ -75,24 +75,26 @@ namespace CapaControladorNavegador
 
 
 
-        // METODO ASIGNAR ALIAS NUEVO
-        public bool AsignarAlias(string tabla, string[] alias, Control contenedor, int startX, int startY)
+        // Asigna alias validando tabla y columnas
+        public bool AsignarAlias(string[] alias, Control contenedor, int startX, int startY)
         {
-            if (!ExisteTabla(tabla))
+            if (!ExisteTabla(alias[0]))
             {
-                MessageBox.Show($"❌ La tabla '{tabla}' no existe en la base de datos.");
+                MessageBox.Show($"❌ La tabla '{alias[0]}' no existe en la base de datos.");
                 return false;
             }
 
-            List<string> columnas = ObtenerColumnas(tabla);
+            List<string> columnas = ObtenerColumnas(alias[0]);
             int spacingY = 30;
             int creados = 0;
 
-            foreach (string campo in alias)
+            for(int i=1;i<alias.Length;i++) //Se cambio foreach por for, se arregló el error
             {
-                if (!columnas.Contains(campo))
+                string campo = alias[i];
+                //
+                if (!columnas.Contains(campo)) 
                 {
-                    MessageBox.Show($"⚠️ La columna '{campo}' no existe en la tabla '{tabla}'.");
+                    MessageBox.Show($"⚠️ La columna '{campo}' no existe en la tabla '{alias[0]}'.");
                     continue;
                 }
 
@@ -205,18 +207,18 @@ namespace CapaControladorNavegador
             DAOGenerico dao = new DAOGenerico();
             try
             {
-                for (int i = 2; i < alias.Length; i++)
+                for (int i = 1; i < alias.Length; i++)
                 {
                     // Buscar el TextBox con nombre dinámico
                     ComboBox Cbo = contenedor.Controls.OfType<ComboBox>().FirstOrDefault(t => t.Name == "Cbo_" + alias[i]);
 
                     if (Cbo != null)
                     {
-                        valores[i - 2] = Cbo.Text; // Guardar el texto en la posición correspondiente
+                        valores[i - 1] = Cbo.Text; // Guardar el texto en la posición correspondiente
                     }
                     else
                     {
-                        valores[i - 2] = null; // Si no existe el textbox, poner null
+                        valores[i - 1] = null; // Si no existe el textbox, poner null
                     }
                 }
 
@@ -249,7 +251,7 @@ namespace CapaControladorNavegador
             {
                 ComboBox CboPK = contenedor.Controls
                     .OfType<ComboBox>()
-                    .FirstOrDefault(t => t.Name == "Cbo_" + alias[0]);
+                    .FirstOrDefault(t => t.Name == "Cbo_" + alias[1]); // Se colocó la posicion 1 del array, ya elimina registros
 
                 if (CboPK == null || string.IsNullOrWhiteSpace(CboPK.Text))
                 {
