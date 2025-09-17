@@ -112,11 +112,11 @@ namespace CapaControladorNavegador
                     Location = new System.Drawing.Point(startX + 100, startY + (creados * spacingY)),
 
                 };
-                // esto se elimina, es solo para pruebas hasta que se arregle lo de la valiadcion
-                Cbo.Items.Add("Prueba 1");
-                Cbo.Items.Add("Prueba 2");
-                Cbo.Items.Add("Prueba 3");
-                // hasta aqui
+                List<string> items = sentencias.ObtenerValoresColumna(alias[0], campo);
+                foreach (var item in items)
+                {
+                    Cbo.Items.Add(item);
+                }
 
                 // para bloquear el combobox de la PK
                 if (creados == 0)
