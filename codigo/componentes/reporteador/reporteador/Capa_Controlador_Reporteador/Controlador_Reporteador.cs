@@ -39,5 +39,12 @@ namespace Capa_Controlador_Reporteador
         }
         //fin codigo Sergio
 
+        //inicio codigo Sergio Izeppi 0901-22-8946 en la fecha 16/09/2025
+        public int verificartitulo(string titulo)
+        {
+            int iResultado = sentencias.verificarExistencia(titulo);
+            return iResultado;
+        }
+        //fin codigo Sergio
     }
 }

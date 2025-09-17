@@ -86,7 +86,25 @@ namespace Capa_Modelo_Reporteador
 
 
   // Fin de código de: Leticia Sontay con carné: 9959-21-9664 en la fecha de: 12/09/2025
+
+  // inicio codigo de: Sergio Izeppi 0901-22-8946 en la fecha de: 16/09/2025
+        public int verificarExistencia(string titulo)
+        {
+            Conexion_Reporteador cn = new Conexion_Reporteador();
+            using (OdbcConnection con = cn.conexion())
+            {
+                string sql = "SELECT 1 FROM tbl_reportes WHERE titulo_reportes = ? LIMIT 1";
+                OdbcCommand cmd = new OdbcCommand(sql, con);
+                cmd.Parameters.AddWithValue("titulo_reportes", titulo);
+
+                object result = cmd.ExecuteScalar();
+                return result != null ? 1 : 0;
+            }
+
+        }
+//fin de codigo de Sergio Izeppi
     }
 }
+
 
 
