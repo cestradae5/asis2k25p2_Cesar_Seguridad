@@ -34,8 +34,10 @@ namespace PruebaEjecucionNavegador
             // 
             // navegador1
             // 
+            this.navegador1.alias = null;
             this.navegador1.Location = new System.Drawing.Point(13, 13);
             this.navegador1.Name = "navegador1";
+            this.navegador1.nombreTabla = null;
             this.navegador1.Size = new System.Drawing.Size(1180, 488);
             this.navegador1.TabIndex = 0;
             // 

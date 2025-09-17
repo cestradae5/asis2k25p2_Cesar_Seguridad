@@ -16,7 +16,7 @@ namespace PruebaEjecucionNavegador
         {
             InitializeComponent();
             
-            string[] columnas = { "empleados","codigo_empleado", "nombre_completo", "puesto", "departamento", "estado" };
+            string[] columnas = { "empleados", "codigo_empleado", "nombre_completo", "puesto", "departamento", "estado" };
             navegador1.nombreTabla = columnas[0];
             navegador1.alias = columnas;
 
