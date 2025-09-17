@@ -33,27 +33,31 @@ namespace CapaModeloNavegador
         // seccion para insertar pk autoincr o no autoincr
         public void InsertarDatos(string[] alias, object[] valores)
         {
-            string tabla = alias[0];
-            string pkCampo = alias[1];
+            string tabla = alias[0]; // nombre de la tabla
+            string pkCampo = alias[1]; // posicion primary key
 
-            // consulta sobre si la PK es auto
-            string cacheKey = tabla + "." + pkCampo; // clave unica para cache
+            // consulta si la pk es autoincrementable o no
+            string cacheKey = tabla + "." + pkCampo;
             bool pkAuto;
-            if (!pkAutoCache.TryGetValue(cacheKey, out pkAuto)) // intenta obtener de cache el resultado
+            if (!pkAutoCache.TryGetValue(cacheKey, out pkAuto))
             {
-                pkAuto = sentencias.EsPKAutoInc(tabla, pkCampo); // consulta si es auto_increment
-                pkAutoCache[cacheKey] = pkAuto; // guarda en cache el resultado
+                pkAuto = sentencias.EsPKAutoInc(tabla, pkCampo);
+                pkAutoCache[cacheKey] = pkAuto;
             }
 
-            // se decide como insertar
-            string[] campos = pkAuto ? alias.Skip(2).ToArray() : alias.Skip(1).ToArray(); // si es autoinc ignora pk y si no lo es incluye pk en recorrido de array
+            // define los campos a insertar (si PK si es autoincrementable)
+            string[] campos = pkAuto ? alias.Skip(2).ToArray() : alias.Skip(1).ToArray();
 
-            // validar los tamaños del arreglo valores y campos
-            if (valores == null || valores.Length != campos.Length)
-                throw new Exception($"InsertarDatos: el arreglo 'valores' debe tener {campos.Length} elementos (tiene {(valores == null ? 0 : valores.Length)}). " +
-                                    $"Si PK '{pkCampo}' no es autoincrement, se debe incluir su valor en 'valores'.");
-            
-            string sql = sentencias.Insertar(alias, pkAuto); // obtiene la sentencia sql de insert (considerando si pk es autoinc)
+            // filtrar los valores según la PK, si es autoincrementable se ignora el primer valor
+            object[] valoresFiltrados = pkAuto ? valores.Skip(1).ToArray() : valores;
+
+            // valida que coincidan los valores enviados
+            if (valoresFiltrados == null || valoresFiltrados.Length != campos.Length)
+                throw new Exception(
+                    $"InsertarDatos: el arreglo 'valores' debe tener {campos.Length} elementos (tiene {(valoresFiltrados == null ? 0 : valoresFiltrados.Length)}). " +
+                    $"Si PK '{pkCampo}' no es autoincrement, se debe incluir su valor en 'valores'.");
+
+            string sql = sentencias.Insertar(alias, pkAuto);
 
             using (OdbcConnection conn = con.conexion())
             {
@@ -62,11 +66,11 @@ namespace CapaModeloNavegador
                 {
                     for (int i = 0; i < campos.Length; i++)
                     {
-                        cmd.Parameters.Add("?", MapeadoTipoDatos(valores[i])).Value = valores[i] ?? DBNull.Value; // asigna valores segun el mapeo de tipos
+                        cmd.Parameters.Add("?", MapeadoTipoDatos(valoresFiltrados[i])).Value = valoresFiltrados[i] ?? DBNull.Value; // asigna tipo de dato
                     }
                     cmd.ExecuteNonQuery();
                 }
-            } // la conexion se cierra automáticamente
+            } // la conexión se cierra automáticamente
         }
 
 

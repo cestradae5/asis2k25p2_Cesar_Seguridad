@@ -32,6 +32,7 @@ namespace CapaModeloNavegador
             return dt;
         }
 
+        //kenph luna
         // aqui se insertarán las instrucciones SQL genericas
         public string Insertar(string[] alias)
         {
