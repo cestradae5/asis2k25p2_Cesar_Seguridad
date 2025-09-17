@@ -110,14 +110,13 @@ namespace Capa_Vista_Reporteador
             // Btn_modificar
             // 
             this.Btn_modificar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Btn_modificar.BackColor = System.Drawing.Color.Khaki;
-            this.Btn_modificar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Btn_modificar.BackColor = System.Drawing.Color.White;
             this.Btn_modificar.Font = new System.Drawing.Font("Rockwell", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Btn_modificar.Location = new System.Drawing.Point(620, 209);
+            this.Btn_modificar.Image = ((System.Drawing.Image)(resources.GetObject("Btn_modificar.Image")));
+            this.Btn_modificar.Location = new System.Drawing.Point(143, 201);
             this.Btn_modificar.Name = "Btn_modificar";
-            this.Btn_modificar.Size = new System.Drawing.Size(285, 37);
+            this.Btn_modificar.Size = new System.Drawing.Size(53, 45);
             this.Btn_modificar.TabIndex = 6;
-            this.Btn_modificar.Text = "Modificar";
             this.Btn_modificar.UseVisualStyleBackColor = false;
             this.Btn_modificar.Click += new System.EventHandler(this.Btn_modificar_Click);
             // 
