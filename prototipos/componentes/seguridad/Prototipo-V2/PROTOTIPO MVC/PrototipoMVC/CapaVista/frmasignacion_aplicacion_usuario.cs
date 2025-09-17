@@ -6,9 +6,8 @@ using System.Runtime.InteropServices;
 using CapaModelo;
 
 namespace CapaVista
-
-/* Marcos Andres Velasquez Alcántara 0901-21-1115 */
 {
+    /* Marcos Andres Velasquez Alcántara 0901-21-1115 */
     public partial class frmasignacion_aplicacion_usuario : Form
     {
         // Este se usa para insertar permisos
@@ -20,7 +19,9 @@ namespace CapaVista
         // Este ya lo tenías para usuarios y módulos
         ControladorAsignacionUsuarioAplicacion controlador = new ControladorAsignacionUsuarioAplicacion();
 
-       
+        // Registrar en Bitácora Arón Ricardo Esquit Silva 0901-22-13036
+        Cls_SentenciasBitacora bitacora = new Cls_SentenciasBitacora();
+
         public frmasignacion_aplicacion_usuario()
         {
             InitializeComponent();
@@ -57,7 +58,7 @@ namespace CapaVista
             Dgv_Permisos.Columns.Add(new DataGridViewCheckBoxColumn() { Name = "Eliminar", HeaderText = "Eliminar" });
             Dgv_Permisos.Columns.Add(new DataGridViewCheckBoxColumn() { Name = "Imprimir", HeaderText = "Imprimir" });
 
-            // IDs ocultos para insertar después
+            // IDs ocultos
             Dgv_Permisos.Columns.Add("IdUsuario", "IdUsuario");
             Dgv_Permisos.Columns["IdUsuario"].Visible = false;
             Dgv_Permisos.Columns.Add("IdModulo", "IdModulo");
@@ -68,7 +69,6 @@ namespace CapaVista
             // Obtener lista de aplicaciones
             var lista = appControlador.ObtenerTodasLasAplicaciones();
 
-            // Convertir a DataTable
             DataTable dtAplicacion = new DataTable();
             dtAplicacion.Columns.Add("pk_id_aplicacion", typeof(int));
             dtAplicacion.Columns.Add("nombre_aplicacion", typeof(string));
@@ -88,7 +88,6 @@ namespace CapaVista
         {
             if (Cbo_Modulos.SelectedValue != null)
             {
-                // Volver a cargar todas las aplicaciones
                 var lista = appControlador.ObtenerTodasLasAplicaciones();
 
                 DataTable dtAplicacion = new DataTable();
@@ -107,29 +106,6 @@ namespace CapaVista
             }
         }
 
-        private void Btn_Agregar_Click(object sender, EventArgs e)
-        {
-            if (Cbo_Usuarios.SelectedIndex == -1 || Cbo_Modulos.SelectedIndex == -1 || Cbo_Aplicaciones.SelectedIndex == -1)
-            {
-                MessageBox.Show("Seleccione usuario, módulo y aplicación.");
-                return;
-            }
-
-            string usuario = Cbo_Usuarios.Text;
-            string aplicacion = Cbo_Aplicaciones.Text;
-
-            Dgv_Permisos.Rows.Add(usuario, aplicacion, false, false, false, false, false);
-
-            Cbo_Usuarios.SelectedIndex = -1;
-            Cbo_Modulos.SelectedIndex = -1;
-            Cbo_Aplicaciones.SelectedIndex = -1;
-        }
-
-        private void Btn_salir_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
         private void Btn_agregar_Click_1(object sender, EventArgs e)
         {
             if (Cbo_Usuarios.SelectedIndex == -1 || Cbo_Modulos.SelectedIndex == -1 || Cbo_Aplicaciones.SelectedIndex == -1)
@@ -146,6 +122,9 @@ namespace CapaVista
 
             Dgv_Permisos.Rows.Add(usuario, aplicacion, false, false, false, false, false, idUsuario, idModulo, idAplicacion);
 
+            // Registrar en Bitácora Arón Ricardo Esquit Silva 0901-22-13036
+            bitacora.InsertarBitacora(Cls_sesion.iUsuarioId, idAplicacion, "Asignación - Agregar", true);
+
             Cbo_Usuarios.SelectedIndex = -1;
             Cbo_Modulos.SelectedIndex = -1;
             Cbo_Aplicaciones.SelectedIndex = -1;
@@ -155,16 +134,17 @@ namespace CapaVista
         {
             if (Dgv_Permisos.CurrentRow != null && !Dgv_Permisos.CurrentRow.IsNewRow)
             {
+                int idAplicacion = Convert.ToInt32(Dgv_Permisos.CurrentRow.Cells["IdAplicacion"].Value);
+
+                // Registrar en Bitácora Arón Ricardo Esquit Silva 0901-22-13036
+                bitacora.InsertarBitacora(Cls_sesion.iUsuarioId, idAplicacion, "Asignación - Quitar", true);
+
                 Dgv_Permisos.Rows.Remove(Dgv_Permisos.CurrentRow);
             }
             else
             {
                 MessageBox.Show("Seleccione una fila para quitar.");
             }
-        }
-
-        private void Dgv_Permisos_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
         }
 
         private void Btn_finalizar_Click(object sender, EventArgs e)
@@ -199,7 +179,13 @@ namespace CapaVista
                         eliminar, imprimir
                     );
 
-                    if (resultado > 0) insertados++;
+                    if (resultado > 0)
+                    {
+                        insertados++;
+
+                        // Registrar en Bitácora Arón Ricardo Esquit Silva 0901-22-13036
+                        bitacora.InsertarBitacora(Cls_sesion.iUsuarioId, idAplicacion, "Asignación - Insertar", true);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -211,9 +197,17 @@ namespace CapaVista
             Dgv_Permisos.Rows.Clear();
         }
 
+        private void Btn_salir_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void Dgv_Permisos_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+        }
+
         // Panel superior
         //0901-20-4620 Ruben Armando Lopez Luch
-
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HTCAPTION = 0x2;
 
@@ -232,8 +226,8 @@ namespace CapaVista
         {
             if (e.Button == MouseButtons.Left)
             {
-                ReleaseCapture(); // Libera el mouse
-                SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0); // Simula arrastre
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
             }
         }
     }

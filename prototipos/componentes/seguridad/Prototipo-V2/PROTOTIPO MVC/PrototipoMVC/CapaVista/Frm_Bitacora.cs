@@ -19,7 +19,10 @@ namespace CapaVista
         public Frm_Bitacora()
         {
             InitializeComponent();
+            CargarUsuariosEnCombo(); // carga usuarios al abrir
+            OcultarFiltros();        // opcional
         }
+
 
 
         private void CargarEnGrid(DataTable dt)
