@@ -97,14 +97,13 @@ namespace Capa_Vista_Reporteador
             // Btn_eliminar
             // 
             this.Btn_eliminar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Btn_eliminar.BackColor = System.Drawing.Color.IndianRed;
-            this.Btn_eliminar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Btn_eliminar.BackColor = System.Drawing.Color.White;
             this.Btn_eliminar.Font = new System.Drawing.Font("Rockwell", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Btn_eliminar.Location = new System.Drawing.Point(322, 209);
+            this.Btn_eliminar.Image = ((System.Drawing.Image)(resources.GetObject("Btn_eliminar.Image")));
+            this.Btn_eliminar.Location = new System.Drawing.Point(84, 201);
             this.Btn_eliminar.Name = "Btn_eliminar";
-            this.Btn_eliminar.Size = new System.Drawing.Size(285, 37);
+            this.Btn_eliminar.Size = new System.Drawing.Size(53, 45);
             this.Btn_eliminar.TabIndex = 5;
-            this.Btn_eliminar.Text = "Eliminar";
             this.Btn_eliminar.UseVisualStyleBackColor = false;
             this.Btn_eliminar.Click += new System.EventHandler(this.Btn_eliminar_Click);
             // 
