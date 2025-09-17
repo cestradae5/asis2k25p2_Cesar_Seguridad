@@ -50,12 +50,6 @@ namespace CapaVista
                 // Oculta el splash
                 this.Hide();
 
-                // Abre el login
-                frmLogin frmLogin = new frmLogin();
-                frmLogin.ShowDialog();
-
-                // Cuando cierres el login, termina la aplicación
-                Application.Exit();
             }
         }
     }

@@ -148,7 +148,7 @@ namespace CapaVista
             this.Cbo_buscar.Name = "Cbo_buscar";
             this.Cbo_buscar.Size = new System.Drawing.Size(407, 28);
             this.Cbo_buscar.TabIndex = 6;
-            this.Cbo_buscar.SelectedIndexChanged += new System.EventHandler(this.Cbo_buscar_SelectedIndexChanged);
+            //this.Cbo_buscar.SelectedIndexChanged += new System.EventHandler(this.Cbo_buscar_SelectedIndexChanged);
             // 
             // Txt_id_aplicacion
             // 
@@ -158,7 +158,7 @@ namespace CapaVista
             this.Txt_id_aplicacion.Name = "Txt_id_aplicacion";
             this.Txt_id_aplicacion.Size = new System.Drawing.Size(535, 29);
             this.Txt_id_aplicacion.TabIndex = 7;
-            this.Txt_id_aplicacion.TextChanged += new System.EventHandler(this.Txt_id_aplicacion_TextChanged);
+            //this.Txt_id_aplicacion.TextChanged += new System.EventHandler(this.Txt_id_aplicacion_TextChanged);
             // 
             // Gpb_buscar_aplicacion
             // 
@@ -226,7 +226,7 @@ namespace CapaVista
             this.Txt_Nombre_aplicacion.Name = "Txt_Nombre_aplicacion";
             this.Txt_Nombre_aplicacion.Size = new System.Drawing.Size(535, 29);
             this.Txt_Nombre_aplicacion.TabIndex = 14;
-            this.Txt_Nombre_aplicacion.TextChanged += new System.EventHandler(this.Txt_Nombre_aplicacion_TextChanged);
+            //this.Txt_Nombre_aplicacion.TextChanged += new System.EventHandler(this.Txt_Nombre_aplicacion_TextChanged);
             // 
             // Txt_descripcion
             // 
@@ -236,7 +236,7 @@ namespace CapaVista
             this.Txt_descripcion.Name = "Txt_descripcion";
             this.Txt_descripcion.Size = new System.Drawing.Size(535, 29);
             this.Txt_descripcion.TabIndex = 15;
-            this.Txt_descripcion.TextChanged += new System.EventHandler(this.Txt_descripcion_TextChanged);
+            //this.Txt_descripcion.TextChanged += new System.EventHandler(this.Txt_descripcion_TextChanged);
             // 
             // Gbp_datos_aplicacion
             // 
@@ -266,7 +266,7 @@ namespace CapaVista
             this.Cbo_id_modulo.Name = "Cbo_id_modulo";
             this.Cbo_id_modulo.Size = new System.Drawing.Size(534, 28);
             this.Cbo_id_modulo.TabIndex = 16;
-            this.Cbo_id_modulo.SelectedIndexChanged += new System.EventHandler(this.Cbo_id_modulo_SelectedIndexChanged);
+            //this.Cbo_id_modulo.SelectedIndexChanged += new System.EventHandler(this.Cbo_id_modulo_SelectedIndexChanged);
             // 
             // Gbp_estado_aplicacion
             // 
@@ -294,7 +294,7 @@ namespace CapaVista
             this.Rdb_inactivo.TabStop = true;
             this.Rdb_inactivo.Text = "Inactivo";
             this.Rdb_inactivo.UseVisualStyleBackColor = true;
-            this.Rdb_inactivo.CheckedChanged += new System.EventHandler(this.Rdb_inactivo_CheckedChanged);
+            //this.Rdb_inactivo.CheckedChanged += new System.EventHandler(this.Rdb_inactivo_CheckedChanged);
             // 
             // Rdb_estado_activo
             // 
@@ -308,7 +308,7 @@ namespace CapaVista
             this.Rdb_estado_activo.TabStop = true;
             this.Rdb_estado_activo.Text = "Activo";
             this.Rdb_estado_activo.UseVisualStyleBackColor = true;
-            this.Rdb_estado_activo.CheckedChanged += new System.EventHandler(this.Rdb_estado_activo_CheckedChanged);
+            //this.Rdb_estado_activo.CheckedChanged += new System.EventHandler(this.Rdb_estado_activo_CheckedChanged);
             // 
             // Lbl_mantenimiento_aplicacion
             // 

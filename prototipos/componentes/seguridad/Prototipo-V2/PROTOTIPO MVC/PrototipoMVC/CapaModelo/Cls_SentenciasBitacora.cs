@@ -86,22 +86,23 @@ namespace CapaModelo
         // Consultar por rango
         public DataTable ConsultarPorRango(DateTime inicio, DateTime fin)
         {
+            // fin exclusivo = día siguiente (incluye todo el día fin)
+            DateTime finExclusivo = fin.Date.AddDays(1);
+
             string sSql = $@"
-                SELECT  b.pk_id_bitacora        AS id,
-                        u.nombre_usuario        AS usuario,
-                        a.nombre_aplicacion     AS aplicacion,
-                        b.fecha_bitacora        AS fecha,
-                        b.accion_bitacora       AS accion,
-                        b.ip_bitacora           AS ip,
-                        b.nombre_pc_bitacora    AS equipo,
-                        CASE b.login_estado_bitacora
-                             WHEN 1 THEN 'Conectado'
-                             ELSE 'Desconectado'
-                        END AS estado
+                SELECT  b.pk_id_bitacora AS id,
+                        u.nombre_usuario AS usuario,
+                        a.nombre_aplicacion AS aplicacion,
+                        b.fecha_bitacora AS fecha,
+                        b.accion_bitacora AS accion,
+                        b.ip_bitacora AS ip,
+                        b.nombre_pc_bitacora AS equipo,
+                        CASE b.login_estado_bitacora WHEN 1 THEN 'Conectado' ELSE 'Desconectado' END AS estado
                 FROM tbl_BITACORA b
                 LEFT JOIN tbl_USUARIO u    ON u.pk_id_usuario = b.fk_id_usuario
                 LEFT JOIN tbl_APLICACION a ON a.pk_id_aplicacion = b.fk_id_aplicacion
-                WHERE b.fecha_bitacora BETWEEN '{inicio:yyyy-MM-dd}' AND '{fin:yyyy-MM-dd}'
+                WHERE b.fecha_bitacora >= '{inicio:yyyy-MM-dd}'
+                  AND b.fecha_bitacora  < '{finExclusivo:yyyy-MM-dd}'
                 ORDER BY b.fecha_bitacora DESC;";
 
             return dao.EjecutarConsulta(sSql);
@@ -111,19 +112,19 @@ namespace CapaModelo
         public DataTable ConsultarPorUsuario(int idUsuario)
         {
             string sSql = $@"
-                SELECT  b.pk_id_bitacora        AS id,
-                        u.nombre_usuario        AS usuario,
-                        a.nombre_aplicacion     AS aplicacion,
-                        b.fecha_bitacora        AS fecha,
-                        b.accion_bitacora       AS accion,
-                        b.ip_bitacora           AS ip,
-                        b.nombre_pc_bitacora    AS equipo,
+                SELECT  b.pk_id_bitacora AS id,
+                        u.nombre_usuario AS usuario,
+                        a.nombre_aplicacion AS aplicacion,
+                        b.fecha_bitacora AS fecha,
+                        b.accion_bitacora AS accion,
+                        b.ip_bitacora AS ip,
+                        b.nombre_pc_bitacora AS equipo,
                         CASE b.login_estado_bitacora
                              WHEN 1 THEN 'Conectado'
                              ELSE 'Desconectado'
                         END AS estado
                 FROM tbl_BITACORA b
-                LEFT JOIN tbl_USUARIO u    ON u.pk_id_usuario = b.fk_id_usuario
+                LEFT JOIN tbl_USUARIO u ON u.pk_id_usuario = b.fk_id_usuario
                 LEFT JOIN tbl_APLICACION a ON a.pk_id_aplicacion = b.fk_id_aplicacion
                 WHERE b.fk_id_usuario = {idUsuario}
                 ORDER BY b.fecha_bitacora DESC;";
@@ -131,7 +132,18 @@ namespace CapaModelo
             return dao.EjecutarConsulta(sSql);
         }
 
-        // Insertar en bitácora (ahora usa EjecutarComando)
+        // Obtener todos los usuarios
+        public DataTable ObtenerUsuarios()
+        {
+            string sSql = @"
+                SELECT pk_id_usuario, nombre_usuario
+                FROM tbl_USUARIO
+                WHERE estado_usuario <> 'Bloqueado';";
+
+            return dao.EjecutarConsulta(sSql);
+        }
+
+        // Insertar en bitácora
         public void InsertarBitacora(int idUsuario, int idAplicacion, string accion, bool estadoLogin)
         {
             string idApp = (idAplicacion == 0) ? "NULL" : idAplicacion.ToString();
@@ -141,7 +153,7 @@ namespace CapaModelo
                 (fk_id_usuario, fk_id_aplicacion, fecha_bitacora, accion_bitacora, ip_bitacora, nombre_pc_bitacora, login_estado_bitacora)
                 VALUES ({idUsuario}, {idApp}, '{FechaActual()}', '{accion}', '{ObtenerIP()}', '{ObtenerNombrePc()}', {(estadoLogin ? 1 : 0)});";
 
-            dao.EjecutarComando(sSql); // ✅ ahora sí guarda en la BD
+            dao.EjecutarComando(sSql);
         }
 
         // Registrar inicio de sesión en la bitácora

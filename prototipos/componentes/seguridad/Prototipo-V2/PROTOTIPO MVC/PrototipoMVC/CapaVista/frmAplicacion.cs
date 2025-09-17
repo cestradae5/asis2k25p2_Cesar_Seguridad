@@ -12,13 +12,13 @@ using System.Runtime.InteropServices;
 using CapaControlador;
 using CapaModelo;
 
-
 namespace CapaVista
 {
     public partial class FrmAplicacion : Form
     {
         private Cls_AplicacionControlador controlador = new Cls_AplicacionControlador();
         private List<Cls_Aplicacion> listaAplicaciones = new List<Cls_Aplicacion>();
+
         public FrmAplicacion()
         {
             InitializeComponent();
@@ -26,10 +26,12 @@ namespace CapaVista
             ConfigurarComboBox();
             CargarComboModulos();
         }
+
         private void CargarAplicaciones()
         {
             listaAplicaciones = controlador.ObtenerTodasLasAplicaciones();
         }
+
         private void ConfigurarComboBox()
         {
             // Configurar AutoComplete
@@ -56,6 +58,7 @@ namespace CapaVista
                 });
             }
         }
+
         private void MostrarAplicacion(Cls_Aplicacion app)
         {
             Txt_id_aplicacion.Text = app.PkIdAplicacion.ToString();
@@ -64,6 +67,7 @@ namespace CapaVista
             Rdb_estado_activo.Checked = app.EstadoAplicacion;
             Rdb_inactivo.Checked = !app.EstadoAplicacion;
         }
+
         private void Btn_buscar_Click(object sender, EventArgs e)
         {
             string busqueda = Cbo_buscar.Text.Trim();
@@ -130,32 +134,6 @@ namespace CapaVista
             }
         }
 
-
-        private void Cbo_buscar_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Txt_id_aplicacion_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Txt_Nombre_aplicacion_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Txt_descripcion_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void Btn_eliminar_Click(object sender, EventArgs e)
         {
             int id;
@@ -168,6 +146,13 @@ namespace CapaVista
             bool exito = controlador.BorrarAplicacion(id);
             MessageBox.Show(exito ? "Aplicación eliminada" : "Error al eliminar");
             LimpiarCampos();
+
+            // Registrar en Bitácora Arón Ricardo Esquit Silva   0901-22-13036
+            if (exito)
+            {
+                Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
+                bit.RegistrarAccion(Cls_sesion.iUsuarioId, "Eliminar aplicación", true);
+            }
         }
 
         private void Btn_modificar_Click(object sender, EventArgs e)
@@ -177,6 +162,7 @@ namespace CapaVista
                 MessageBox.Show("Ingrese un ID válido para modificar.");
                 return;
             }
+
             bool exito = controlador.ActualizarAplicacion(
                 id,
                 Txt_Nombre_aplicacion.Text,
@@ -184,7 +170,15 @@ namespace CapaVista
                 Rdb_estado_activo.Checked,
                 null
             );
+
             MessageBox.Show(exito ? "Aplicación modificada" : "Error al modificar");
+
+            // Registrar en Bitácora Arón Ricardo Esquit Silva   0901-22-13036
+            if (exito)
+            {
+                Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
+                bit.RegistrarAccion(Cls_sesion.iUsuarioId, "Modificar aplicación", true);
+            }
         }
 
         private void Btn_nuevo_Click(object sender, EventArgs e)
@@ -209,7 +203,7 @@ namespace CapaVista
             string descripcion = Txt_descripcion.Text.Trim();
             bool estado = Rdb_estado_activo.Checked;
 
-            //  Guardar aplicación 
+            // Guardar aplicación 
             int resultadoApp = controlador.InsertarAplicacion(idAplicacion, nombre, descripcion, estado, null);
 
             if (resultadoApp <= 0)
@@ -218,7 +212,7 @@ namespace CapaVista
                 return;
             }
 
-            //  Obtener ID de módulo
+            // Obtener ID de módulo
             if (Cbo_id_modulo.SelectedItem == null)
             {
                 MessageBox.Show("Seleccione un módulo para la asignación.");
@@ -227,9 +221,8 @@ namespace CapaVista
 
             int idModulo = Convert.ToInt32(((dynamic)Cbo_id_modulo.SelectedItem).Id);
 
-            //Guardar asignación 
+            // Guardar asignación 
             Cls_AsignacionModuloAplicacionControlador asignacionCtrl = new Cls_AsignacionModuloAplicacionControlador();
-
             bool asignacionGuardada = asignacionCtrl.GuardarAsignacion(idModulo, idAplicacion);
 
             if (!asignacionGuardada)
@@ -240,19 +233,12 @@ namespace CapaVista
 
             MessageBox.Show("Aplicación y asignación guardadas correctamente.");
             LimpiarCampos();
+
+            // Registrar en Bitácora Arón Ricardo Esquit Silva   0901-22-13036
+            Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
+            bit.RegistrarAccion(Cls_sesion.iUsuarioId, "Guardar aplicación", true);
         }
 
-
-
-        private void Rdb_estado_activo_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Rdb_inactivo_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
         private void LimpiarCampos()
         {
             Txt_id_aplicacion.Clear();
@@ -260,16 +246,6 @@ namespace CapaVista
             Txt_descripcion.Clear();
             Rdb_estado_activo.Checked = true;
             Rdb_inactivo.Checked = false;
-        }
-
-        private void Lbl_mantenimiento_aplicacion_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Cbo_id_modulo_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void Btn_salir_Click(object sender, EventArgs e)
@@ -282,6 +258,7 @@ namespace CapaVista
             Frm_Consultar_Asignacion_Modulo_Aplicacion consulta = new Frm_Consultar_Asignacion_Modulo_Aplicacion();
             consulta.ShowDialog();
         }
+
         private void CargarComboModulos()
         {
             // Suponiendo que tienes un controlador de módulos
@@ -313,6 +290,7 @@ namespace CapaVista
 
         [DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+
         private void Pic_Cerrar_Click(object sender, EventArgs e)
         {
             this.Close();
