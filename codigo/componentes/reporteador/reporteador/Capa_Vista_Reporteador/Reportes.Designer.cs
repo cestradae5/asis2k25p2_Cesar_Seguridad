@@ -37,8 +37,8 @@ namespace Capa_Vista_Reporteador
             this.Btn_modificar = new System.Windows.Forms.Button();
             this.Btn_ver_reporte = new System.Windows.Forms.Button();
             this.Btn_ruta_reporte = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.Txt_Titulo = new System.Windows.Forms.Label();
+            this.Txt_Titulo = new System.Windows.Forms.TextBox();
+            this.Lbl_Titulo = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.Dgv_reportes)).BeginInit();
             this.SuspendLayout();
             // 
@@ -152,24 +152,24 @@ namespace Capa_Vista_Reporteador
             this.Btn_ruta_reporte.UseVisualStyleBackColor = false;
             this.Btn_ruta_reporte.Click += new System.EventHandler(this.Btn_ruta_reporte_Click);
             // 
-            // textBox1
-            // 
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox1.Location = new System.Drawing.Point(101, 173);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(506, 22);
-            this.textBox1.TabIndex = 9;
-            // 
             // Txt_Titulo
             // 
-            this.Txt_Titulo.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.Txt_Titulo.AutoSize = true;
-            this.Txt_Titulo.Font = new System.Drawing.Font("Rockwell", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Txt_Titulo.Location = new System.Drawing.Point(20, 171);
+            this.Txt_Titulo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Txt_Titulo.Location = new System.Drawing.Point(101, 173);
             this.Txt_Titulo.Name = "Txt_Titulo";
-            this.Txt_Titulo.Size = new System.Drawing.Size(75, 27);
-            this.Txt_Titulo.TabIndex = 10;
-            this.Txt_Titulo.Text = "Título";
+            this.Txt_Titulo.Size = new System.Drawing.Size(506, 22);
+            this.Txt_Titulo.TabIndex = 9;
+            // 
+            // Lbl_Titulo
+            // 
+            this.Lbl_Titulo.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.Lbl_Titulo.AutoSize = true;
+            this.Lbl_Titulo.Font = new System.Drawing.Font("Rockwell", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Lbl_Titulo.Location = new System.Drawing.Point(20, 171);
+            this.Lbl_Titulo.Name = "Lbl_Titulo";
+            this.Lbl_Titulo.Size = new System.Drawing.Size(75, 27);
+            this.Lbl_Titulo.TabIndex = 10;
+            this.Lbl_Titulo.Text = "Título";
             // 
             // Reportes
             // 
@@ -177,8 +177,8 @@ namespace Capa_Vista_Reporteador
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(930, 474);
+            this.Controls.Add(this.Lbl_Titulo);
             this.Controls.Add(this.Txt_Titulo);
-            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.Btn_ruta_reporte);
             this.Controls.Add(this.Btn_ver_reporte);
             this.Controls.Add(this.Btn_modificar);
@@ -208,7 +208,7 @@ namespace Capa_Vista_Reporteador
         private System.Windows.Forms.Button Btn_modificar;
         private System.Windows.Forms.Button Btn_ver_reporte;
         private System.Windows.Forms.Button Btn_ruta_reporte;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label Txt_Titulo;
+        private System.Windows.Forms.TextBox Txt_Titulo;
+        private System.Windows.Forms.Label Lbl_Titulo;
     }
 }

@@ -25,6 +25,7 @@ namespace Capa_Vista_Reporteador
         {
             //Inicio de código de: Anderson Trigueros con carné: 0901-22-6961 en la fecha 12/09/2025
             controlador.ModificarRuta(iCodigoRuta, sNuevaRuta);
+            ActualizarGrid();
             Txt_reportes_ruta.Clear();
             iCodigoRuta = -1;
             // Fin de código de: Anderson Trigueros con carné: 0901-22-6961 en la fecha 12/09/2025
@@ -75,8 +76,8 @@ namespace Capa_Vista_Reporteador
             if (e.RowIndex >= 0)
             {
                 DataGridViewRow filaSeleccionada = Dgv_reportes.Rows[e.RowIndex];
-                string sRuta = filaSeleccionada.Cells["ruta_reportes"].Value?.ToString();
-                iCodigoRuta = Convert.ToInt32(filaSeleccionada.Cells["pk_id_reportes"].Value);
+                string sRuta = filaSeleccionada.Cells["Ruta"].Value?.ToString();
+                iCodigoRuta = Convert.ToInt32(filaSeleccionada.Cells["ID"].Value);
                 Txt_reportes_ruta.Text = sRuta;
             }
             // Fin de código de: Anderson Trigueros con carné: 0901-22-6961 en la fecha 12/09/2025
@@ -86,16 +87,24 @@ namespace Capa_Vista_Reporteador
         {
             //Inicio de código de: Anderson Trigueros con carné: 0901-22-6961 en la fecha 12/09/2025
             controlador.EliminarReporte(iCodigoRuta);
+            ActualizarGrid();
             Txt_reportes_ruta.Clear();
             iCodigoRuta = -1;
             // Fin de código de: Anderson Trigueros con carné: 0901-22-6961 en la fecha 12/09/2025     
-
         }
 
         private void Reportes_Load(object sender, EventArgs e)
         {
             ActualizarGrid();
         }
+
+        //Inicio de código de: Anderson Trigueros con carné: 0901-22-6961 en la fecha 16/09/2025
+        private int verificarRegistroExistente(string titulo)
+        {
+            int iResultadoConsulta = controlador.verificartitulo(titulo);
+            return iResultadoConsulta;
+        }
+        // Fin de código de: Anderson Trigueros con carné: 0901-22-6961 en la fecha 16/09/2025
 
         private void Btn_ruta_reporte_Click(object sender, EventArgs e)
         {
@@ -126,16 +135,22 @@ namespace Capa_Vista_Reporteador
 
             try
             {
-                
-                string titulo = "Título Prueba";
+                string titulo = Txt_Titulo.Text;
                 string ruta = Txt_reportes_ruta.Text;
                 DateTime fecha = DateTime.Now;
 
-                controlador.GuardarReporte(titulo, ruta, fecha);
-
-                MessageBox.Show("Reporte Guardado Correctamente");
-
-                ActualizarGrid();
+                int iExistencia = verificarRegistroExistente(titulo);
+                if (iExistencia == 1)
+                {
+                    MessageBox.Show("Ya existe un registro con el mismo titulo.");
+                }
+                else if (iExistencia == 0)
+                {
+                    controlador.GuardarReporte(titulo, ruta, fecha);
+                    MessageBox.Show("Reporte Guardado Correctamente");
+                    ActualizarGrid();
+                }
+      
             }
             catch (Exception ex)
             {
