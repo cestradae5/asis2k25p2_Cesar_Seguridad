@@ -76,8 +76,8 @@ namespace Capa_Vista_Reporteador
             if (e.RowIndex >= 0)
             {
                 DataGridViewRow filaSeleccionada = Dgv_reportes.Rows[e.RowIndex];
-                string sRuta = filaSeleccionada.Cells["Ruta"].Value?.ToString();
-                iCodigoRuta = Convert.ToInt32(filaSeleccionada.Cells["ID"].Value);
+                string sRuta = filaSeleccionada.Cells["ruta_reportes"].Value?.ToString();
+                iCodigoRuta = Convert.ToInt32(filaSeleccionada.Cells["pk_id_reportes"].Value);
                 Txt_reportes_ruta.Text = sRuta;
             }
             // Fin de código de: Anderson Trigueros con carné: 0901-22-6961 en la fecha 12/09/2025

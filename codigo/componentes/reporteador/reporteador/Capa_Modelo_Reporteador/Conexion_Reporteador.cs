@@ -12,7 +12,7 @@ namespace Capa_Modelo_Reporteador
         //Método de creación de la conexion via ODBC
         public OdbcConnection conexion()
         {
-            OdbcConnection conn = new OdbcConnection("db_reportes");
+            OdbcConnection conn = new OdbcConnection("Dsn=db_reportes");
             try
             {
                 conn.Open();
