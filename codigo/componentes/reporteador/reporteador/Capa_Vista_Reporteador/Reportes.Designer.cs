@@ -29,6 +29,7 @@ namespace Capa_Vista_Reporteador
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Reportes));
             this.Txt_reportes = new System.Windows.Forms.Label();
             this.Dgv_reportes = new System.Windows.Forms.DataGridView();
             this.Txt_reportes_ruta = new System.Windows.Forms.TextBox();
@@ -82,15 +83,14 @@ namespace Capa_Vista_Reporteador
             // 
             this.Btn_guardar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.Btn_guardar.BackColor = System.Drawing.Color.MediumSeaGreen;
-            this.Btn_guardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Btn_guardar.BackColor = System.Drawing.Color.White;
             this.Btn_guardar.Font = new System.Drawing.Font("Rockwell", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Btn_guardar.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.Btn_guardar.Location = new System.Drawing.Point(25, 209);
+            this.Btn_guardar.Image = ((System.Drawing.Image)(resources.GetObject("Btn_guardar.Image")));
+            this.Btn_guardar.Location = new System.Drawing.Point(25, 201);
             this.Btn_guardar.Name = "Btn_guardar";
-            this.Btn_guardar.Size = new System.Drawing.Size(285, 37);
+            this.Btn_guardar.Size = new System.Drawing.Size(53, 45);
             this.Btn_guardar.TabIndex = 4;
-            this.Btn_guardar.Text = "Guardar";
             this.Btn_guardar.UseVisualStyleBackColor = false;
             this.Btn_guardar.Click += new System.EventHandler(this.Btn_guardar_Click);
             // 
