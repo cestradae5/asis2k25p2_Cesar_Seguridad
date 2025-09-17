@@ -42,15 +42,19 @@ namespace CapaVista
             this.Btn_quitar = new System.Windows.Forms.Button();
             this.Btn_finalizar = new System.Windows.Forms.Button();
             this.Btn_salir = new System.Windows.Forms.Button();
+            this.Pnl_Superior = new System.Windows.Forms.Panel();
+            this.Pic_Cerrar = new System.Windows.Forms.PictureBox();
             this.Gbp_datos.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Dgv_Permisos)).BeginInit();
+            this.Pnl_Superior.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Cerrar)).BeginInit();
             this.SuspendLayout();
             // 
             // Lbl_titulo
             // 
             this.Lbl_titulo.AutoSize = true;
             this.Lbl_titulo.Font = new System.Drawing.Font("Rockwell", 18F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Lbl_titulo.Location = new System.Drawing.Point(136, 28);
+            this.Lbl_titulo.Location = new System.Drawing.Point(139, 74);
             this.Lbl_titulo.Name = "Lbl_titulo";
             this.Lbl_titulo.Size = new System.Drawing.Size(540, 38);
             this.Lbl_titulo.TabIndex = 0;
@@ -65,7 +69,7 @@ namespace CapaVista
             this.Gbp_datos.Controls.Add(this.Lbl_aplicaciones);
             this.Gbp_datos.Controls.Add(this.Lbl_Usuarios);
             this.Gbp_datos.Controls.Add(this.Lbl_modulos);
-            this.Gbp_datos.Location = new System.Drawing.Point(25, 89);
+            this.Gbp_datos.Location = new System.Drawing.Point(28, 135);
             this.Gbp_datos.Name = "Gbp_datos";
             this.Gbp_datos.Size = new System.Drawing.Size(736, 119);
             this.Gbp_datos.TabIndex = 1;
@@ -74,10 +78,10 @@ namespace CapaVista
             // 
             // Btn_agregar
             // 
-            this.Btn_agregar.BackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.Btn_agregar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_agregar.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonShadow;
-            this.Btn_agregar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Btn_agregar.Font = new System.Drawing.Font("Rockwell", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Btn_agregar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
             this.Btn_agregar.Location = new System.Drawing.Point(612, 44);
             this.Btn_agregar.Name = "Btn_agregar";
             this.Btn_agregar.Size = new System.Drawing.Size(96, 41);
@@ -88,6 +92,7 @@ namespace CapaVista
             // 
             // Cbo_Aplicaciones
             // 
+            this.Cbo_Aplicaciones.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(236)))), ((int)(((byte)(238)))));
             this.Cbo_Aplicaciones.FormattingEnabled = true;
             this.Cbo_Aplicaciones.Location = new System.Drawing.Point(413, 61);
             this.Cbo_Aplicaciones.Name = "Cbo_Aplicaciones";
@@ -96,6 +101,7 @@ namespace CapaVista
             // 
             // Cbo_Modulos
             // 
+            this.Cbo_Modulos.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(236)))), ((int)(((byte)(238)))));
             this.Cbo_Modulos.FormattingEnabled = true;
             this.Cbo_Modulos.Location = new System.Drawing.Point(200, 61);
             this.Cbo_Modulos.Name = "Cbo_Modulos";
@@ -104,6 +110,7 @@ namespace CapaVista
             // 
             // Cbo_Usuarios
             // 
+            this.Cbo_Usuarios.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(236)))), ((int)(((byte)(238)))));
             this.Cbo_Usuarios.FormattingEnabled = true;
             this.Cbo_Usuarios.Location = new System.Drawing.Point(15, 61);
             this.Cbo_Usuarios.Name = "Cbo_Usuarios";
@@ -113,7 +120,7 @@ namespace CapaVista
             // Lbl_aplicaciones
             // 
             this.Lbl_aplicaciones.AutoSize = true;
-            this.Lbl_aplicaciones.Font = new System.Drawing.Font("Rockwell", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Lbl_aplicaciones.Font = new System.Drawing.Font("Rockwell", 10F);
             this.Lbl_aplicaciones.Location = new System.Drawing.Point(423, 29);
             this.Lbl_aplicaciones.Name = "Lbl_aplicaciones";
             this.Lbl_aplicaciones.Size = new System.Drawing.Size(111, 20);
@@ -123,7 +130,7 @@ namespace CapaVista
             // Lbl_Usuarios
             // 
             this.Lbl_Usuarios.AutoSize = true;
-            this.Lbl_Usuarios.Font = new System.Drawing.Font("Rockwell", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Lbl_Usuarios.Font = new System.Drawing.Font("Rockwell", 10F);
             this.Lbl_Usuarios.Location = new System.Drawing.Point(42, 29);
             this.Lbl_Usuarios.Name = "Lbl_Usuarios";
             this.Lbl_Usuarios.Size = new System.Drawing.Size(78, 20);
@@ -133,7 +140,7 @@ namespace CapaVista
             // Lbl_modulos
             // 
             this.Lbl_modulos.AutoSize = true;
-            this.Lbl_modulos.Font = new System.Drawing.Font("Rockwell", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Lbl_modulos.Font = new System.Drawing.Font("Rockwell", 10F);
             this.Lbl_modulos.Location = new System.Drawing.Point(239, 29);
             this.Lbl_modulos.Name = "Lbl_modulos";
             this.Lbl_modulos.Size = new System.Drawing.Size(77, 20);
@@ -143,7 +150,7 @@ namespace CapaVista
             // Dgv_Permisos
             // 
             this.Dgv_Permisos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.Dgv_Permisos.Location = new System.Drawing.Point(25, 223);
+            this.Dgv_Permisos.Location = new System.Drawing.Point(28, 269);
             this.Dgv_Permisos.Name = "Dgv_Permisos";
             this.Dgv_Permisos.RowHeadersWidth = 51;
             this.Dgv_Permisos.RowTemplate.Height = 24;
@@ -153,11 +160,11 @@ namespace CapaVista
             // 
             // Btn_quitar
             // 
-            this.Btn_quitar.BackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.Btn_quitar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_quitar.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonShadow;
-            this.Btn_quitar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Btn_quitar.Font = new System.Drawing.Font("Rockwell", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Btn_quitar.Location = new System.Drawing.Point(637, 241);
+            this.Btn_quitar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
+            this.Btn_quitar.Location = new System.Drawing.Point(640, 287);
             this.Btn_quitar.Name = "Btn_quitar";
             this.Btn_quitar.Size = new System.Drawing.Size(96, 41);
             this.Btn_quitar.TabIndex = 6;
@@ -167,11 +174,11 @@ namespace CapaVista
             // 
             // Btn_finalizar
             // 
-            this.Btn_finalizar.BackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.Btn_finalizar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_finalizar.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonShadow;
-            this.Btn_finalizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Btn_finalizar.Font = new System.Drawing.Font("Rockwell", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Btn_finalizar.Location = new System.Drawing.Point(637, 311);
+            this.Btn_finalizar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
+            this.Btn_finalizar.Location = new System.Drawing.Point(640, 357);
             this.Btn_finalizar.Name = "Btn_finalizar";
             this.Btn_finalizar.Size = new System.Drawing.Size(96, 41);
             this.Btn_finalizar.TabIndex = 7;
@@ -181,11 +188,11 @@ namespace CapaVista
             // 
             // Btn_salir
             // 
-            this.Btn_salir.BackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.Btn_salir.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_salir.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonShadow;
-            this.Btn_salir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Btn_salir.Font = new System.Drawing.Font("Rockwell", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Btn_salir.Location = new System.Drawing.Point(637, 379);
+            this.Btn_salir.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
+            this.Btn_salir.Location = new System.Drawing.Point(640, 425);
             this.Btn_salir.Name = "Btn_salir";
             this.Btn_salir.Size = new System.Drawing.Size(96, 41);
             this.Btn_salir.TabIndex = 8;
@@ -193,22 +200,52 @@ namespace CapaVista
             this.Btn_salir.UseVisualStyleBackColor = false;
             this.Btn_salir.Click += new System.EventHandler(this.Btn_salir_Click);
             // 
+            // Pnl_Superior
+            // 
+            this.Pnl_Superior.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
+            this.Pnl_Superior.Controls.Add(this.Pic_Cerrar);
+            this.Pnl_Superior.Dock = System.Windows.Forms.DockStyle.Top;
+            this.Pnl_Superior.Location = new System.Drawing.Point(0, 0);
+            this.Pnl_Superior.Name = "Pnl_Superior";
+            this.Pnl_Superior.Size = new System.Drawing.Size(800, 44);
+            this.Pnl_Superior.TabIndex = 95;
+            this.Pnl_Superior.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Pnl_Superior_MouseDown);
+            // 
+            // Pic_Cerrar
+            // 
+            this.Pic_Cerrar.BackColor = System.Drawing.Color.Transparent;
+            this.Pic_Cerrar.Dock = System.Windows.Forms.DockStyle.Right;
+            this.Pic_Cerrar.Image = global::CapaVista.Properties.Resources.cancel_77947;
+            this.Pic_Cerrar.Location = new System.Drawing.Point(763, 0);
+            this.Pic_Cerrar.Name = "Pic_Cerrar";
+            this.Pic_Cerrar.Size = new System.Drawing.Size(37, 44);
+            this.Pic_Cerrar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.Pic_Cerrar.TabIndex = 0;
+            this.Pic_Cerrar.TabStop = false;
+            this.Pic_Cerrar.Click += new System.EventHandler(this.Pic_Cerrar_Click);
+            // 
             // frmasignacion_aplicacion_usuario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(185)))), ((int)(((byte)(185)))));
+            this.ClientSize = new System.Drawing.Size(800, 532);
+            this.Controls.Add(this.Pnl_Superior);
             this.Controls.Add(this.Btn_salir);
             this.Controls.Add(this.Btn_finalizar);
             this.Controls.Add(this.Btn_quitar);
             this.Controls.Add(this.Dgv_Permisos);
             this.Controls.Add(this.Gbp_datos);
             this.Controls.Add(this.Lbl_titulo);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "frmasignacion_aplicacion_usuario";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Asignacion de Aplicación a Usuario";
             this.Gbp_datos.ResumeLayout(false);
             this.Gbp_datos.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Dgv_Permisos)).EndInit();
+            this.Pnl_Superior.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Cerrar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -229,5 +266,7 @@ namespace CapaVista
         private System.Windows.Forms.Button Btn_quitar;
         private System.Windows.Forms.Button Btn_finalizar;
         private System.Windows.Forms.Button Btn_salir;
+        private System.Windows.Forms.Panel Pnl_Superior;
+        private System.Windows.Forms.PictureBox Pic_Cerrar;
     }
 }
