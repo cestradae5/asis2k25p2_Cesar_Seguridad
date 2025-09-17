@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 using CapaControlador;
 
 namespace CapaVista
@@ -18,39 +19,6 @@ namespace CapaVista
         public Frm_Bitacora()
         {
             InitializeComponent();
-        }
-
-        private void Frm_Bitacora_Load(object sender, EventArgs e)
-        {
-            // Orden de botones en la barra personalizada
-            panel1.Controls.SetChildIndex(Btn_Minimizar, 2);
-            panel1.Controls.SetChildIndex(Btn_Maximizar, 1);
-            panel1.Controls.SetChildIndex(Btn_Cerrar, 0);
-
-            // Botón minimizar deshabilitado (según estandarización)
-            Btn_Minimizar.Enabled = false;
-
-            // Estilo plano y colores
-            Btn_Minimizar.FlatAppearance.BorderSize = 0;
-            Btn_Maximizar.FlatAppearance.BorderSize = 0;
-            Btn_Cerrar.FlatAppearance.BorderSize = 0;
-
-            Btn_Minimizar.FlatAppearance.MouseOverBackColor = Color.LightGray;
-            Btn_Maximizar.FlatAppearance.MouseOverBackColor = Color.LightGray;
-            Btn_Cerrar.FlatAppearance.MouseOverBackColor = Color.Red;
-
-            Btn_Minimizar.FlatAppearance.MouseDownBackColor = Color.Gray;
-            Btn_Maximizar.FlatAppearance.MouseDownBackColor = Color.Gray;
-            Btn_Cerrar.FlatAppearance.MouseDownBackColor = Color.DarkRed;
-
-            // Ocultar filtros al inicio
-            OcultarFiltros();
-
-            // 1) Mostrar toda la bitácora al abrir
-            CargarEnGrid(_ctrl.MostrarBitacora());
-
-            // 2) Cargar usuarios en el combo
-            CargarUsuariosEnCombo();
         }
 
 
@@ -252,6 +220,32 @@ namespace CapaVista
 
             if (int.TryParse(Cbo_Usuario.SelectedValue.ToString(), out int idUsuario))
                 CargarEnGrid(_ctrl.BuscarPorUsuario(idUsuario));
+        }
+
+        // Panel superior
+        //0901-20-4620 Ruben Armando Lopez Luch
+
+        public const int WM_NCLBUTTONDOWN = 0xA1;
+        public const int HTCAPTION = 0x2;
+
+        [DllImport("user32.dll")]
+        public static extern bool ReleaseCapture();
+
+        [DllImport("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+
+        private void Pic_Cerrar_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void Pnl_Superior_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture(); // Libera el mouse
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0); // Simula arrastre
+            }
         }
     }
 }

@@ -51,10 +51,14 @@ namespace CapaVista
             this.Btn_modificar = new System.Windows.Forms.Button();
             this.Btn_nuevo = new System.Windows.Forms.Button();
             this.Btn_guardar = new System.Windows.Forms.Button();
+            this.Pnl_Superior = new System.Windows.Forms.Panel();
+            this.Pic_Cerrar = new System.Windows.Forms.PictureBox();
             this.Gpb_buscarperfiles.SuspendLayout();
             this.Gpb_datosperfil.SuspendLayout();
             this.Gbp_estado.SuspendLayout();
             this.Gbp_opc.SuspendLayout();
+            this.Pnl_Superior.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Cerrar)).BeginInit();
             this.SuspendLayout();
             // 
             // Gpb_buscarperfiles
@@ -62,7 +66,7 @@ namespace CapaVista
             this.Gpb_buscarperfiles.Controls.Add(this.Btn_buscar);
             this.Gpb_buscarperfiles.Controls.Add(this.Cbo_perfiles);
             this.Gpb_buscarperfiles.Font = new System.Drawing.Font("Rockwell", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Gpb_buscarperfiles.Location = new System.Drawing.Point(12, 21);
+            this.Gpb_buscarperfiles.Location = new System.Drawing.Point(25, 102);
             this.Gpb_buscarperfiles.Name = "Gpb_buscarperfiles";
             this.Gpb_buscarperfiles.Size = new System.Drawing.Size(919, 125);
             this.Gpb_buscarperfiles.TabIndex = 0;
@@ -71,9 +75,10 @@ namespace CapaVista
             // 
             // Btn_buscar
             // 
-            this.Btn_buscar.BackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.Btn_buscar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_buscar.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonShadow;
-            this.Btn_buscar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Btn_buscar.Font = new System.Drawing.Font("Rockwell", 10F);
+            this.Btn_buscar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
             this.Btn_buscar.Location = new System.Drawing.Point(544, 35);
             this.Btn_buscar.Name = "Btn_buscar";
             this.Btn_buscar.Size = new System.Drawing.Size(152, 66);
@@ -84,6 +89,7 @@ namespace CapaVista
             // 
             // Cbo_perfiles
             // 
+            this.Cbo_perfiles.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(236)))), ((int)(((byte)(238)))));
             this.Cbo_perfiles.FormattingEnabled = true;
             this.Cbo_perfiles.Location = new System.Drawing.Point(32, 55);
             this.Cbo_perfiles.Name = "Cbo_perfiles";
@@ -102,7 +108,7 @@ namespace CapaVista
             this.Gpb_datosperfil.Controls.Add(this.Txt_idperfil);
             this.Gpb_datosperfil.Controls.Add(this.Lbl_idpuesto);
             this.Gpb_datosperfil.Font = new System.Drawing.Font("Rockwell", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Gpb_datosperfil.Location = new System.Drawing.Point(12, 165);
+            this.Gpb_datosperfil.Location = new System.Drawing.Point(25, 246);
             this.Gpb_datosperfil.Name = "Gpb_datosperfil";
             this.Gpb_datosperfil.Size = new System.Drawing.Size(733, 488);
             this.Gpb_datosperfil.TabIndex = 2;
@@ -111,6 +117,7 @@ namespace CapaVista
             // 
             // Cbo_tipoperfil
             // 
+            this.Cbo_tipoperfil.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(236)))), ((int)(((byte)(238)))));
             this.Cbo_tipoperfil.FormattingEnabled = true;
             this.Cbo_tipoperfil.Location = new System.Drawing.Point(125, 213);
             this.Cbo_tipoperfil.Name = "Cbo_tipoperfil";
@@ -119,6 +126,7 @@ namespace CapaVista
             // 
             // Txt_descripcion
             // 
+            this.Txt_descripcion.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(236)))), ((int)(((byte)(238)))));
             this.Txt_descripcion.Location = new System.Drawing.Point(125, 157);
             this.Txt_descripcion.Name = "Txt_descripcion";
             this.Txt_descripcion.Size = new System.Drawing.Size(525, 27);
@@ -177,6 +185,7 @@ namespace CapaVista
             // 
             // Txt_puesto
             // 
+            this.Txt_puesto.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(236)))), ((int)(((byte)(238)))));
             this.Txt_puesto.Location = new System.Drawing.Point(125, 95);
             this.Txt_puesto.Name = "Txt_puesto";
             this.Txt_puesto.Size = new System.Drawing.Size(525, 27);
@@ -193,6 +202,7 @@ namespace CapaVista
             // 
             // Txt_idperfil
             // 
+            this.Txt_idperfil.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(236)))), ((int)(((byte)(238)))));
             this.Txt_idperfil.Location = new System.Drawing.Point(125, 49);
             this.Txt_idperfil.Name = "Txt_idperfil";
             this.Txt_idperfil.Size = new System.Drawing.Size(525, 27);
@@ -216,7 +226,7 @@ namespace CapaVista
             this.Gbp_opc.Controls.Add(this.Btn_nuevo);
             this.Gbp_opc.Controls.Add(this.Btn_guardar);
             this.Gbp_opc.Font = new System.Drawing.Font("Rockwell", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Gbp_opc.Location = new System.Drawing.Point(751, 181);
+            this.Gbp_opc.Location = new System.Drawing.Point(764, 262);
             this.Gbp_opc.Name = "Gbp_opc";
             this.Gbp_opc.Size = new System.Drawing.Size(227, 472);
             this.Gbp_opc.TabIndex = 3;
@@ -225,9 +235,10 @@ namespace CapaVista
             // 
             // Btn_Eliminar
             // 
-            this.Btn_Eliminar.BackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.Btn_Eliminar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_Eliminar.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonShadow;
-            this.Btn_Eliminar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Btn_Eliminar.Font = new System.Drawing.Font("Rockwell", 10F);
+            this.Btn_Eliminar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
             this.Btn_Eliminar.Location = new System.Drawing.Point(54, 242);
             this.Btn_Eliminar.Name = "Btn_Eliminar";
             this.Btn_Eliminar.Size = new System.Drawing.Size(138, 54);
@@ -238,9 +249,10 @@ namespace CapaVista
             // 
             // Btn_salir
             // 
-            this.Btn_salir.BackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.Btn_salir.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_salir.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonShadow;
-            this.Btn_salir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Btn_salir.Font = new System.Drawing.Font("Rockwell", 10F);
+            this.Btn_salir.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
             this.Btn_salir.Location = new System.Drawing.Point(54, 384);
             this.Btn_salir.Name = "Btn_salir";
             this.Btn_salir.Size = new System.Drawing.Size(138, 54);
@@ -251,9 +263,10 @@ namespace CapaVista
             // 
             // Btn_cancelar
             // 
-            this.Btn_cancelar.BackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.Btn_cancelar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_cancelar.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonShadow;
-            this.Btn_cancelar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Btn_cancelar.Font = new System.Drawing.Font("Rockwell", 10F);
+            this.Btn_cancelar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
             this.Btn_cancelar.Location = new System.Drawing.Point(54, 311);
             this.Btn_cancelar.Name = "Btn_cancelar";
             this.Btn_cancelar.Size = new System.Drawing.Size(138, 54);
@@ -264,9 +277,10 @@ namespace CapaVista
             // 
             // Btn_modificar
             // 
-            this.Btn_modificar.BackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.Btn_modificar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_modificar.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonShadow;
-            this.Btn_modificar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Btn_modificar.Font = new System.Drawing.Font("Rockwell", 10F);
+            this.Btn_modificar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
             this.Btn_modificar.Location = new System.Drawing.Point(54, 171);
             this.Btn_modificar.Name = "Btn_modificar";
             this.Btn_modificar.Size = new System.Drawing.Size(138, 54);
@@ -277,10 +291,10 @@ namespace CapaVista
             // 
             // Btn_nuevo
             // 
-            this.Btn_nuevo.BackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.Btn_nuevo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_nuevo.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonShadow;
-            this.Btn_nuevo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Btn_nuevo.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.Btn_nuevo.Font = new System.Drawing.Font("Rockwell", 10F);
+            this.Btn_nuevo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
             this.Btn_nuevo.Location = new System.Drawing.Point(54, 30);
             this.Btn_nuevo.Name = "Btn_nuevo";
             this.Btn_nuevo.Size = new System.Drawing.Size(138, 54);
@@ -291,9 +305,10 @@ namespace CapaVista
             // 
             // Btn_guardar
             // 
-            this.Btn_guardar.BackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.Btn_guardar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_guardar.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonShadow;
-            this.Btn_guardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Btn_guardar.Font = new System.Drawing.Font("Rockwell", 10F);
+            this.Btn_guardar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
             this.Btn_guardar.Location = new System.Drawing.Point(54, 98);
             this.Btn_guardar.Name = "Btn_guardar";
             this.Btn_guardar.Size = new System.Drawing.Size(138, 54);
@@ -302,17 +317,44 @@ namespace CapaVista
             this.Btn_guardar.UseVisualStyleBackColor = false;
             this.Btn_guardar.Click += new System.EventHandler(this.Btn_guardar_Click);
             // 
+            // Pnl_Superior
+            // 
+            this.Pnl_Superior.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
+            this.Pnl_Superior.Controls.Add(this.Pic_Cerrar);
+            this.Pnl_Superior.Dock = System.Windows.Forms.DockStyle.Top;
+            this.Pnl_Superior.Location = new System.Drawing.Point(0, 0);
+            this.Pnl_Superior.Name = "Pnl_Superior";
+            this.Pnl_Superior.Size = new System.Drawing.Size(1028, 44);
+            this.Pnl_Superior.TabIndex = 95;
+            this.Pnl_Superior.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Pnl_Superior_MouseDown);
+            // 
+            // Pic_Cerrar
+            // 
+            this.Pic_Cerrar.BackColor = System.Drawing.Color.Transparent;
+            this.Pic_Cerrar.Dock = System.Windows.Forms.DockStyle.Right;
+            this.Pic_Cerrar.Image = global::CapaVista.Properties.Resources.cancel_77947;
+            this.Pic_Cerrar.Location = new System.Drawing.Point(991, 0);
+            this.Pic_Cerrar.Name = "Pic_Cerrar";
+            this.Pic_Cerrar.Size = new System.Drawing.Size(37, 44);
+            this.Pic_Cerrar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.Pic_Cerrar.TabIndex = 0;
+            this.Pic_Cerrar.TabStop = false;
+            this.Pic_Cerrar.Click += new System.EventHandler(this.Pic_Cerrar_Click);
+            // 
             // frmPerfiles
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1028, 665);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(185)))), ((int)(((byte)(185)))));
+            this.ClientSize = new System.Drawing.Size(1028, 761);
+            this.Controls.Add(this.Pnl_Superior);
             this.Controls.Add(this.Gbp_opc);
             this.Controls.Add(this.Gpb_datosperfil);
             this.Controls.Add(this.Gpb_buscarperfiles);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MinimizeBox = false;
             this.Name = "frmPerfiles";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Perfiles";
             this.Gpb_buscarperfiles.ResumeLayout(false);
             this.Gpb_datosperfil.ResumeLayout(false);
@@ -320,6 +362,8 @@ namespace CapaVista
             this.Gbp_estado.ResumeLayout(false);
             this.Gbp_estado.PerformLayout();
             this.Gbp_opc.ResumeLayout(false);
+            this.Pnl_Superior.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Cerrar)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -348,5 +392,7 @@ namespace CapaVista
         private System.Windows.Forms.Button Btn_guardar;
         private System.Windows.Forms.ComboBox Cbo_tipoperfil;
         private System.Windows.Forms.Button Btn_Eliminar;
+        private System.Windows.Forms.Panel Pnl_Superior;
+        private System.Windows.Forms.PictureBox Pic_Cerrar;
     }
 }
