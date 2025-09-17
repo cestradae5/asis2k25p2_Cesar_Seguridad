@@ -35,10 +35,6 @@ namespace CapaVista
             this.Btn_BuscarRango = new System.Windows.Forms.Button();
             this.Btn_BuscarUsuario = new System.Windows.Forms.Button();
             this.Btn_Salir = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.Btn_Minimizar = new System.Windows.Forms.Button();
-            this.Btn_Maximizar = new System.Windows.Forms.Button();
-            this.Btn_Cerrar = new System.Windows.Forms.Button();
             this.Dgv_Bitacora = new System.Windows.Forms.DataGridView();
             this.Lbl_PrimeraFecha = new System.Windows.Forms.Label();
             this.Lbl_SegundaFecha = new System.Windows.Forms.Label();
@@ -49,133 +45,90 @@ namespace CapaVista
             this.Lbl_Usuario = new System.Windows.Forms.Label();
             this.Cbo_Usuario = new System.Windows.Forms.ComboBox();
             this.Btn_Imprimir = new System.Windows.Forms.Button();
-            this.panel1.SuspendLayout();
+            this.Pnl_Superior = new System.Windows.Forms.Panel();
+            this.Pic_Cerrar = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.Dgv_Bitacora)).BeginInit();
+            this.Pnl_Superior.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Cerrar)).BeginInit();
             this.SuspendLayout();
             // 
             // Btn_Consultar
             // 
-            this.Btn_Consultar.Font = new System.Drawing.Font("Rockwell", 11F);
+            this.Btn_Consultar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
+            this.Btn_Consultar.Font = new System.Drawing.Font("Rockwell", 10F);
+            this.Btn_Consultar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
             this.Btn_Consultar.Location = new System.Drawing.Point(44, 49);
             this.Btn_Consultar.Name = "Btn_Consultar";
             this.Btn_Consultar.Size = new System.Drawing.Size(122, 64);
             this.Btn_Consultar.TabIndex = 0;
             this.Btn_Consultar.Text = "Consultar";
-            this.Btn_Consultar.UseVisualStyleBackColor = true;
+            this.Btn_Consultar.UseVisualStyleBackColor = false;
             this.Btn_Consultar.Click += new System.EventHandler(this.Btn_Consultar_Click);
             // 
             // Btn_Exportar
             // 
-            this.Btn_Exportar.Font = new System.Drawing.Font("Rockwell", 11F);
+            this.Btn_Exportar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
+            this.Btn_Exportar.Font = new System.Drawing.Font("Rockwell", 10F);
+            this.Btn_Exportar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
             this.Btn_Exportar.Location = new System.Drawing.Point(223, 49);
             this.Btn_Exportar.Name = "Btn_Exportar";
             this.Btn_Exportar.Size = new System.Drawing.Size(132, 64);
             this.Btn_Exportar.TabIndex = 1;
             this.Btn_Exportar.Text = "Exportar";
-            this.Btn_Exportar.UseVisualStyleBackColor = true;
+            this.Btn_Exportar.UseVisualStyleBackColor = false;
             this.Btn_Exportar.Click += new System.EventHandler(this.Btn_Exportar_Click);
             // 
             // Btn_BuscarFecha
             // 
-            this.Btn_BuscarFecha.Font = new System.Drawing.Font("Rockwell", 11F);
+            this.Btn_BuscarFecha.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
+            this.Btn_BuscarFecha.Font = new System.Drawing.Font("Rockwell", 10F);
+            this.Btn_BuscarFecha.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
             this.Btn_BuscarFecha.Location = new System.Drawing.Point(407, 50);
             this.Btn_BuscarFecha.Name = "Btn_BuscarFecha";
             this.Btn_BuscarFecha.Size = new System.Drawing.Size(204, 63);
             this.Btn_BuscarFecha.TabIndex = 2;
             this.Btn_BuscarFecha.Text = "Buscar por fecha";
-            this.Btn_BuscarFecha.UseVisualStyleBackColor = true;
+            this.Btn_BuscarFecha.UseVisualStyleBackColor = false;
             this.Btn_BuscarFecha.Click += new System.EventHandler(this.Btn_BuscarFecha_Click);
             // 
             // Btn_BuscarRango
             // 
-            this.Btn_BuscarRango.Font = new System.Drawing.Font("Rockwell", 11F);
+            this.Btn_BuscarRango.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
+            this.Btn_BuscarRango.Font = new System.Drawing.Font("Rockwell", 10F);
+            this.Btn_BuscarRango.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
             this.Btn_BuscarRango.Location = new System.Drawing.Point(996, 51);
             this.Btn_BuscarRango.Name = "Btn_BuscarRango";
             this.Btn_BuscarRango.Size = new System.Drawing.Size(273, 62);
             this.Btn_BuscarRango.TabIndex = 8;
             this.Btn_BuscarRango.Text = "Buscar por rango de fehcas";
-            this.Btn_BuscarRango.UseVisualStyleBackColor = true;
+            this.Btn_BuscarRango.UseVisualStyleBackColor = false;
             this.Btn_BuscarRango.Click += new System.EventHandler(this.Btn_BuscarRango_Click);
             // 
             // Btn_BuscarUsuario
             // 
-            this.Btn_BuscarUsuario.Font = new System.Drawing.Font("Rockwell", 11F);
+            this.Btn_BuscarUsuario.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
+            this.Btn_BuscarUsuario.Font = new System.Drawing.Font("Rockwell", 10F);
+            this.Btn_BuscarUsuario.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
             this.Btn_BuscarUsuario.Location = new System.Drawing.Point(660, 50);
             this.Btn_BuscarUsuario.Name = "Btn_BuscarUsuario";
             this.Btn_BuscarUsuario.Size = new System.Drawing.Size(246, 63);
             this.Btn_BuscarUsuario.TabIndex = 5;
             this.Btn_BuscarUsuario.Text = "Buscar por usuario";
-            this.Btn_BuscarUsuario.UseVisualStyleBackColor = true;
+            this.Btn_BuscarUsuario.UseVisualStyleBackColor = false;
             this.Btn_BuscarUsuario.Click += new System.EventHandler(this.Btn_BuscarUsuario_Click);
             // 
             // Btn_Salir
             // 
-            this.Btn_Salir.Font = new System.Drawing.Font("Rockwell", 11F);
-            this.Btn_Salir.Location = new System.Drawing.Point(1020, 478);
+            this.Btn_Salir.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
+            this.Btn_Salir.Font = new System.Drawing.Font("Rockwell", 10F);
+            this.Btn_Salir.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
+            this.Btn_Salir.Location = new System.Drawing.Point(1026, 457);
             this.Btn_Salir.Name = "Btn_Salir";
             this.Btn_Salir.Size = new System.Drawing.Size(115, 61);
             this.Btn_Salir.TabIndex = 14;
             this.Btn_Salir.Text = "Salir";
-            this.Btn_Salir.UseVisualStyleBackColor = true;
+            this.Btn_Salir.UseVisualStyleBackColor = false;
             this.Btn_Salir.Click += new System.EventHandler(this.Btn_Salir_Click);
-            // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.Color.LightGray;
-            this.panel1.Controls.Add(this.Btn_Cerrar);
-            this.panel1.Controls.Add(this.Btn_Maximizar);
-            this.panel1.Controls.Add(this.Btn_Minimizar);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Font = new System.Drawing.Font("Rockwell", 12F);
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1330, 44);
-            this.panel1.TabIndex = 6;
-            // 
-            // Btn_Minimizar
-            // 
-            this.Btn_Minimizar.Dock = System.Windows.Forms.DockStyle.Right;
-            this.Btn_Minimizar.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
-            this.Btn_Minimizar.FlatAppearance.BorderSize = 0;
-            this.Btn_Minimizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Btn_Minimizar.Font = new System.Drawing.Font("Rockwell", 11F);
-            this.Btn_Minimizar.Location = new System.Drawing.Point(1300, 0);
-            this.Btn_Minimizar.Name = "Btn_Minimizar";
-            this.Btn_Minimizar.Size = new System.Drawing.Size(30, 44);
-            this.Btn_Minimizar.TabIndex = 0;
-            this.Btn_Minimizar.Text = "-";
-            this.Btn_Minimizar.UseVisualStyleBackColor = true;
-            this.Btn_Minimizar.Click += new System.EventHandler(this.Btn_Minimizar_Click);
-            // 
-            // Btn_Maximizar
-            // 
-            this.Btn_Maximizar.Dock = System.Windows.Forms.DockStyle.Right;
-            this.Btn_Maximizar.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
-            this.Btn_Maximizar.FlatAppearance.BorderSize = 0;
-            this.Btn_Maximizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Btn_Maximizar.Font = new System.Drawing.Font("Rockwell", 11F);
-            this.Btn_Maximizar.Location = new System.Drawing.Point(1269, 0);
-            this.Btn_Maximizar.Name = "Btn_Maximizar";
-            this.Btn_Maximizar.Size = new System.Drawing.Size(31, 44);
-            this.Btn_Maximizar.TabIndex = 1;
-            this.Btn_Maximizar.Text = "□";
-            this.Btn_Maximizar.UseVisualStyleBackColor = true;
-            this.Btn_Maximizar.Click += new System.EventHandler(this.Btn_Maximizar_Click);
-            // 
-            // Btn_Cerrar
-            // 
-            this.Btn_Cerrar.Dock = System.Windows.Forms.DockStyle.Right;
-            this.Btn_Cerrar.FlatAppearance.BorderColor = System.Drawing.Color.Red;
-            this.Btn_Cerrar.FlatAppearance.BorderSize = 0;
-            this.Btn_Cerrar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Btn_Cerrar.Font = new System.Drawing.Font("Rockwell", 11F);
-            this.Btn_Cerrar.Location = new System.Drawing.Point(1242, 0);
-            this.Btn_Cerrar.Name = "Btn_Cerrar";
-            this.Btn_Cerrar.Size = new System.Drawing.Size(27, 44);
-            this.Btn_Cerrar.TabIndex = 2;
-            this.Btn_Cerrar.Text = "X";
-            this.Btn_Cerrar.UseVisualStyleBackColor = true;
-            this.Btn_Cerrar.Click += new System.EventHandler(this.Btn_Cerrar_Click);
             // 
             // Dgv_Bitacora
             // 
@@ -215,6 +168,7 @@ namespace CapaVista
             // 
             // Dtp_PrimeraFecha
             // 
+            this.Dtp_PrimeraFecha.CalendarMonthBackground = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(236)))), ((int)(((byte)(238)))));
             this.Dtp_PrimeraFecha.Font = new System.Drawing.Font("Rockwell", 10F);
             this.Dtp_PrimeraFecha.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.Dtp_PrimeraFecha.Location = new System.Drawing.Point(1020, 158);
@@ -225,6 +179,7 @@ namespace CapaVista
             // 
             // Dtp_SegundaFecha
             // 
+            this.Dtp_SegundaFecha.CalendarMonthBackground = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(236)))), ((int)(((byte)(238)))));
             this.Dtp_SegundaFecha.Font = new System.Drawing.Font("Rockwell", 10F);
             this.Dtp_SegundaFecha.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.Dtp_SegundaFecha.Location = new System.Drawing.Point(1020, 270);
@@ -246,6 +201,7 @@ namespace CapaVista
             // 
             // Dtp_FechaEspecifica
             // 
+            this.Dtp_FechaEspecifica.CalendarMonthBackground = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(236)))), ((int)(((byte)(238)))));
             this.Dtp_FechaEspecifica.CustomFormat = "yyyy-MM-dd HH:mm:ss";
             this.Dtp_FechaEspecifica.Font = new System.Drawing.Font("Rockwell", 10F);
             this.Dtp_FechaEspecifica.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
@@ -267,6 +223,7 @@ namespace CapaVista
             // 
             // Cbo_Usuario
             // 
+            this.Cbo_Usuario.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(236)))), ((int)(((byte)(238)))));
             this.Cbo_Usuario.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.Cbo_Usuario.FormattingEnabled = true;
             this.Cbo_Usuario.Location = new System.Drawing.Point(679, 156);
@@ -278,23 +235,50 @@ namespace CapaVista
             // Btn_Imprimir
             // 
             this.Btn_Imprimir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.Btn_Imprimir.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_Imprimir.FlatAppearance.BorderSize = 0;
-            this.Btn_Imprimir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Btn_Imprimir.Font = new System.Drawing.Font("Rockwell", 11F);
-            this.Btn_Imprimir.Location = new System.Drawing.Point(1013, 357);
+            this.Btn_Imprimir.Font = new System.Drawing.Font("Rockwell", 10F);
+            this.Btn_Imprimir.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
+            this.Btn_Imprimir.Location = new System.Drawing.Point(1026, 356);
             this.Btn_Imprimir.Name = "Btn_Imprimir";
-            this.Btn_Imprimir.Size = new System.Drawing.Size(127, 35);
+            this.Btn_Imprimir.Size = new System.Drawing.Size(114, 61);
             this.Btn_Imprimir.TabIndex = 13;
             this.Btn_Imprimir.Text = "Imprimir";
-            this.Btn_Imprimir.UseVisualStyleBackColor = true;
+            this.Btn_Imprimir.UseVisualStyleBackColor = false;
             this.Btn_Imprimir.Click += new System.EventHandler(this.Btn_Imprimir_Click);
+            // 
+            // Pnl_Superior
+            // 
+            this.Pnl_Superior.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
+            this.Pnl_Superior.Controls.Add(this.Pic_Cerrar);
+            this.Pnl_Superior.Dock = System.Windows.Forms.DockStyle.Top;
+            this.Pnl_Superior.Location = new System.Drawing.Point(0, 0);
+            this.Pnl_Superior.Name = "Pnl_Superior";
+            this.Pnl_Superior.Size = new System.Drawing.Size(1330, 44);
+            this.Pnl_Superior.TabIndex = 95;
+            this.Pnl_Superior.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Pnl_Superior_MouseDown);
+            // 
+            // Pic_Cerrar
+            // 
+            this.Pic_Cerrar.BackColor = System.Drawing.Color.Transparent;
+            this.Pic_Cerrar.Dock = System.Windows.Forms.DockStyle.Right;
+            this.Pic_Cerrar.Image = global::CapaVista.Properties.Resources.cancel_77947;
+            this.Pic_Cerrar.Location = new System.Drawing.Point(1293, 0);
+            this.Pic_Cerrar.Name = "Pic_Cerrar";
+            this.Pic_Cerrar.Size = new System.Drawing.Size(37, 44);
+            this.Pic_Cerrar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.Pic_Cerrar.TabIndex = 0;
+            this.Pic_Cerrar.TabStop = false;
+            this.Pic_Cerrar.Click += new System.EventHandler(this.Pic_Cerrar_Click);
             // 
             // Frm_Bitacora
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(185)))), ((int)(((byte)(185)))));
             this.ClientSize = new System.Drawing.Size(1330, 568);
             this.ControlBox = false;
+            this.Controls.Add(this.Pnl_Superior);
             this.Controls.Add(this.Btn_Imprimir);
             this.Controls.Add(this.Cbo_Usuario);
             this.Controls.Add(this.Lbl_Usuario);
@@ -305,7 +289,6 @@ namespace CapaVista
             this.Controls.Add(this.Lbl_SegundaFecha);
             this.Controls.Add(this.Lbl_PrimeraFecha);
             this.Controls.Add(this.Dgv_Bitacora);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.Btn_Salir);
             this.Controls.Add(this.Btn_BuscarUsuario);
             this.Controls.Add(this.Btn_BuscarRango);
@@ -317,10 +300,11 @@ namespace CapaVista
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(850, 550);
             this.Name = "Frm_Bitacora";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Bitacora";
-            this.Load += new System.EventHandler(this.Frm_Bitacora_Load);
-            this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.Dgv_Bitacora)).EndInit();
+            this.Pnl_Superior.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Cerrar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -334,10 +318,6 @@ namespace CapaVista
         private System.Windows.Forms.Button Btn_BuscarRango;
         private System.Windows.Forms.Button Btn_BuscarUsuario;
         private System.Windows.Forms.Button Btn_Salir;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button Btn_Cerrar;
-        private System.Windows.Forms.Button Btn_Maximizar;
-        private System.Windows.Forms.Button Btn_Minimizar;
         private System.Windows.Forms.DataGridView Dgv_Bitacora;
         private System.Windows.Forms.Label Lbl_PrimeraFecha;
         private System.Windows.Forms.Label Lbl_SegundaFecha;
@@ -348,5 +328,7 @@ namespace CapaVista
         private System.Windows.Forms.Label Lbl_Usuario;
         private System.Windows.Forms.ComboBox Cbo_Usuario;
         private System.Windows.Forms.Button Btn_Imprimir;
+        private System.Windows.Forms.Panel Pnl_Superior;
+        private System.Windows.Forms.PictureBox Pic_Cerrar;
     }
 }

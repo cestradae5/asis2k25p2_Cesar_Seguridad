@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 using CapaControlador;
 
 namespace CapaVista
@@ -143,6 +144,32 @@ namespace CapaVista
             else
             {
                 MessageBox.Show("Módulo no encontrado.");
+            }
+        }
+
+        // Panel superior
+        //0901-20-4620 Ruben Armando Lopez Luch
+
+        public const int WM_NCLBUTTONDOWN = 0xA1;
+        public const int HTCAPTION = 0x2;
+
+        [DllImport("user32.dll")]
+        public static extern bool ReleaseCapture();
+
+        [DllImport("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+
+        private void Pic_Cerrar_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void Pnl_Superior_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture(); // Libera el mouse
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0); // Simula arrastre
             }
         }
     }
