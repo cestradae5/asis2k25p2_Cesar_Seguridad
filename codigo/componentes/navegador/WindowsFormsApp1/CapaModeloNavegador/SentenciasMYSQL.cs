@@ -108,5 +108,32 @@ namespace CapaModeloNavegador
         }
 
 
+
+        public List<string> ObtenerValoresColumna(string tabla, string columna)
+        {
+            List<string> valores = new List<string>();
+            try
+            {
+                using (OdbcConnection conn = con.conexion())
+                {
+                    conn.Open();
+                    string sql = $"SELECT DISTINCT {columna} FROM {tabla}";
+                    using (OdbcCommand cmd = new OdbcCommand(sql, conn))
+                    using (OdbcDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            valores.Add(reader[0].ToString());
+                        }
+                    }
+                }
+            }
+            catch (OdbcException ex)
+            {
+                Console.WriteLine("Error al obtener valores de columna");
+            }
+            return valores;
+        }
+
     }
 }
