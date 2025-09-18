@@ -29,12 +29,6 @@ namespace CapaVista
         /// </summary>
         private void InitializeComponent()
         {
-            this.Btn_Consultar = new System.Windows.Forms.Button();
-            this.Btn_Exportar = new System.Windows.Forms.Button();
-            this.Btn_BuscarFecha = new System.Windows.Forms.Button();
-            this.Btn_BuscarRango = new System.Windows.Forms.Button();
-            this.Btn_BuscarUsuario = new System.Windows.Forms.Button();
-            this.Btn_Salir = new System.Windows.Forms.Button();
             this.Dgv_Bitacora = new System.Windows.Forms.DataGridView();
             this.Lbl_PrimeraFecha = new System.Windows.Forms.Label();
             this.Lbl_SegundaFecha = new System.Windows.Forms.Label();
@@ -44,91 +38,19 @@ namespace CapaVista
             this.Dtp_FechaEspecifica = new System.Windows.Forms.DateTimePicker();
             this.Lbl_Usuario = new System.Windows.Forms.Label();
             this.Cbo_Usuario = new System.Windows.Forms.ComboBox();
-            this.Btn_Imprimir = new System.Windows.Forms.Button();
             this.Pnl_Superior = new System.Windows.Forms.Panel();
             this.Pic_Cerrar = new System.Windows.Forms.PictureBox();
+            this.Btn_Imprimir = new System.Windows.Forms.Button();
+            this.Btn_Salir = new System.Windows.Forms.Button();
+            this.Btn_BuscarUsuario = new System.Windows.Forms.Button();
+            this.Btn_BuscarRango = new System.Windows.Forms.Button();
+            this.Btn_BuscarFecha = new System.Windows.Forms.Button();
+            this.Btn_Exportar = new System.Windows.Forms.Button();
+            this.Btn_Consultar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.Dgv_Bitacora)).BeginInit();
             this.Pnl_Superior.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Cerrar)).BeginInit();
             this.SuspendLayout();
-            // 
-            // Btn_Consultar
-            // 
-            this.Btn_Consultar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
-            this.Btn_Consultar.Font = new System.Drawing.Font("Rockwell", 10F);
-            this.Btn_Consultar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_Consultar.Location = new System.Drawing.Point(44, 49);
-            this.Btn_Consultar.Name = "Btn_Consultar";
-            this.Btn_Consultar.Size = new System.Drawing.Size(122, 64);
-            this.Btn_Consultar.TabIndex = 0;
-            this.Btn_Consultar.Text = "Consultar";
-            this.Btn_Consultar.UseVisualStyleBackColor = false;
-            this.Btn_Consultar.Click += new System.EventHandler(this.Btn_Consultar_Click);
-            // 
-            // Btn_Exportar
-            // 
-            this.Btn_Exportar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
-            this.Btn_Exportar.Font = new System.Drawing.Font("Rockwell", 10F);
-            this.Btn_Exportar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_Exportar.Location = new System.Drawing.Point(223, 49);
-            this.Btn_Exportar.Name = "Btn_Exportar";
-            this.Btn_Exportar.Size = new System.Drawing.Size(132, 64);
-            this.Btn_Exportar.TabIndex = 1;
-            this.Btn_Exportar.Text = "Exportar";
-            this.Btn_Exportar.UseVisualStyleBackColor = false;
-            this.Btn_Exportar.Click += new System.EventHandler(this.Btn_Exportar_Click);
-            // 
-            // Btn_BuscarFecha
-            // 
-            this.Btn_BuscarFecha.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
-            this.Btn_BuscarFecha.Font = new System.Drawing.Font("Rockwell", 10F);
-            this.Btn_BuscarFecha.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_BuscarFecha.Location = new System.Drawing.Point(407, 50);
-            this.Btn_BuscarFecha.Name = "Btn_BuscarFecha";
-            this.Btn_BuscarFecha.Size = new System.Drawing.Size(204, 63);
-            this.Btn_BuscarFecha.TabIndex = 2;
-            this.Btn_BuscarFecha.Text = "Buscar por fecha";
-            this.Btn_BuscarFecha.UseVisualStyleBackColor = false;
-            this.Btn_BuscarFecha.Click += new System.EventHandler(this.Btn_BuscarFecha_Click);
-            // 
-            // Btn_BuscarRango
-            // 
-            this.Btn_BuscarRango.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
-            this.Btn_BuscarRango.Font = new System.Drawing.Font("Rockwell", 10F);
-            this.Btn_BuscarRango.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_BuscarRango.Location = new System.Drawing.Point(996, 51);
-            this.Btn_BuscarRango.Name = "Btn_BuscarRango";
-            this.Btn_BuscarRango.Size = new System.Drawing.Size(273, 62);
-            this.Btn_BuscarRango.TabIndex = 8;
-            this.Btn_BuscarRango.Text = "Buscar por rango de fehcas";
-            this.Btn_BuscarRango.UseVisualStyleBackColor = false;
-            this.Btn_BuscarRango.Click += new System.EventHandler(this.Btn_BuscarRango_Click);
-            // 
-            // Btn_BuscarUsuario
-            // 
-            this.Btn_BuscarUsuario.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
-            this.Btn_BuscarUsuario.Font = new System.Drawing.Font("Rockwell", 10F);
-            this.Btn_BuscarUsuario.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_BuscarUsuario.Location = new System.Drawing.Point(660, 50);
-            this.Btn_BuscarUsuario.Name = "Btn_BuscarUsuario";
-            this.Btn_BuscarUsuario.Size = new System.Drawing.Size(246, 63);
-            this.Btn_BuscarUsuario.TabIndex = 5;
-            this.Btn_BuscarUsuario.Text = "Buscar por usuario";
-            this.Btn_BuscarUsuario.UseVisualStyleBackColor = false;
-            this.Btn_BuscarUsuario.Click += new System.EventHandler(this.Btn_BuscarUsuario_Click);
-            // 
-            // Btn_Salir
-            // 
-            this.Btn_Salir.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
-            this.Btn_Salir.Font = new System.Drawing.Font("Rockwell", 10F);
-            this.Btn_Salir.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_Salir.Location = new System.Drawing.Point(1026, 457);
-            this.Btn_Salir.Name = "Btn_Salir";
-            this.Btn_Salir.Size = new System.Drawing.Size(115, 61);
-            this.Btn_Salir.TabIndex = 14;
-            this.Btn_Salir.Text = "Salir";
-            this.Btn_Salir.UseVisualStyleBackColor = false;
-            this.Btn_Salir.Click += new System.EventHandler(this.Btn_Salir_Click);
             // 
             // Dgv_Bitacora
             // 
@@ -232,21 +154,6 @@ namespace CapaVista
             this.Cbo_Usuario.TabIndex = 7;
             this.Cbo_Usuario.SelectedIndexChanged += new System.EventHandler(this.Cbo_Usuario_SelectedIndexChanged);
             // 
-            // Btn_Imprimir
-            // 
-            this.Btn_Imprimir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Btn_Imprimir.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
-            this.Btn_Imprimir.FlatAppearance.BorderSize = 0;
-            this.Btn_Imprimir.Font = new System.Drawing.Font("Rockwell", 10F);
-            this.Btn_Imprimir.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_Imprimir.Location = new System.Drawing.Point(1026, 356);
-            this.Btn_Imprimir.Name = "Btn_Imprimir";
-            this.Btn_Imprimir.Size = new System.Drawing.Size(114, 61);
-            this.Btn_Imprimir.TabIndex = 13;
-            this.Btn_Imprimir.Text = "Imprimir";
-            this.Btn_Imprimir.UseVisualStyleBackColor = false;
-            this.Btn_Imprimir.Click += new System.EventHandler(this.Btn_Imprimir_Click);
-            // 
             // Pnl_Superior
             // 
             this.Pnl_Superior.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
@@ -262,7 +169,7 @@ namespace CapaVista
             // 
             this.Pic_Cerrar.BackColor = System.Drawing.Color.Transparent;
             this.Pic_Cerrar.Dock = System.Windows.Forms.DockStyle.Right;
-            this.Pic_Cerrar.Image = global::CapaVista.Properties.Resources.cancel_77947;
+            this.Pic_Cerrar.Image = global::CapaVista.Properties.Resources.Cancel_icon_icons_com_73703;
             this.Pic_Cerrar.Location = new System.Drawing.Point(1293, 0);
             this.Pic_Cerrar.Name = "Pic_Cerrar";
             this.Pic_Cerrar.Size = new System.Drawing.Size(37, 44);
@@ -270,6 +177,120 @@ namespace CapaVista
             this.Pic_Cerrar.TabIndex = 0;
             this.Pic_Cerrar.TabStop = false;
             this.Pic_Cerrar.Click += new System.EventHandler(this.Pic_Cerrar_Click);
+            // 
+            // Btn_Imprimir
+            // 
+            this.Btn_Imprimir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.Btn_Imprimir.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
+            this.Btn_Imprimir.FlatAppearance.BorderSize = 0;
+            this.Btn_Imprimir.Font = new System.Drawing.Font("Rockwell", 10F);
+            this.Btn_Imprimir.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
+            this.Btn_Imprimir.Image = global::CapaVista.Properties.Resources.print_black_printer_tool_symbol_icon_icons_com_54467;
+            this.Btn_Imprimir.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Btn_Imprimir.Location = new System.Drawing.Point(1026, 356);
+            this.Btn_Imprimir.Name = "Btn_Imprimir";
+            this.Btn_Imprimir.Size = new System.Drawing.Size(114, 61);
+            this.Btn_Imprimir.TabIndex = 13;
+            this.Btn_Imprimir.Text = "Imprimir";
+            this.Btn_Imprimir.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Btn_Imprimir.UseVisualStyleBackColor = false;
+            this.Btn_Imprimir.Click += new System.EventHandler(this.Btn_Imprimir_Click);
+            // 
+            // Btn_Salir
+            // 
+            this.Btn_Salir.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
+            this.Btn_Salir.Font = new System.Drawing.Font("Rockwell", 10F);
+            this.Btn_Salir.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
+            this.Btn_Salir.Image = global::CapaVista.Properties.Resources.sign_emergency_code_sos_61_icon_icons_com_57216;
+            this.Btn_Salir.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Btn_Salir.Location = new System.Drawing.Point(1026, 457);
+            this.Btn_Salir.Name = "Btn_Salir";
+            this.Btn_Salir.Size = new System.Drawing.Size(115, 61);
+            this.Btn_Salir.TabIndex = 14;
+            this.Btn_Salir.Text = "   Salir";
+            this.Btn_Salir.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Btn_Salir.UseVisualStyleBackColor = false;
+            this.Btn_Salir.Click += new System.EventHandler(this.Btn_Salir_Click);
+            // 
+            // Btn_BuscarUsuario
+            // 
+            this.Btn_BuscarUsuario.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
+            this.Btn_BuscarUsuario.Font = new System.Drawing.Font("Rockwell", 10F);
+            this.Btn_BuscarUsuario.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
+            this.Btn_BuscarUsuario.Image = global::CapaVista.Properties.Resources.android_search_icon_icons1;
+            this.Btn_BuscarUsuario.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Btn_BuscarUsuario.Location = new System.Drawing.Point(679, 51);
+            this.Btn_BuscarUsuario.Name = "Btn_BuscarUsuario";
+            this.Btn_BuscarUsuario.Size = new System.Drawing.Size(185, 63);
+            this.Btn_BuscarUsuario.TabIndex = 5;
+            this.Btn_BuscarUsuario.Text = "  Buscar por usuario";
+            this.Btn_BuscarUsuario.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Btn_BuscarUsuario.UseVisualStyleBackColor = false;
+            this.Btn_BuscarUsuario.Click += new System.EventHandler(this.Btn_BuscarUsuario_Click);
+            // 
+            // Btn_BuscarRango
+            // 
+            this.Btn_BuscarRango.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
+            this.Btn_BuscarRango.Font = new System.Drawing.Font("Rockwell", 10F);
+            this.Btn_BuscarRango.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
+            this.Btn_BuscarRango.Image = global::CapaVista.Properties.Resources.android_search_icon_icons1;
+            this.Btn_BuscarRango.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Btn_BuscarRango.Location = new System.Drawing.Point(996, 51);
+            this.Btn_BuscarRango.Name = "Btn_BuscarRango";
+            this.Btn_BuscarRango.Size = new System.Drawing.Size(239, 62);
+            this.Btn_BuscarRango.TabIndex = 8;
+            this.Btn_BuscarRango.Text = " Buscar por rango de fehcas";
+            this.Btn_BuscarRango.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Btn_BuscarRango.UseVisualStyleBackColor = false;
+            this.Btn_BuscarRango.Click += new System.EventHandler(this.Btn_BuscarRango_Click);
+            // 
+            // Btn_BuscarFecha
+            // 
+            this.Btn_BuscarFecha.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
+            this.Btn_BuscarFecha.Font = new System.Drawing.Font("Rockwell", 10F);
+            this.Btn_BuscarFecha.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
+            this.Btn_BuscarFecha.Image = global::CapaVista.Properties.Resources.android_search_icon_icons1;
+            this.Btn_BuscarFecha.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Btn_BuscarFecha.Location = new System.Drawing.Point(407, 50);
+            this.Btn_BuscarFecha.Name = "Btn_BuscarFecha";
+            this.Btn_BuscarFecha.Size = new System.Drawing.Size(204, 63);
+            this.Btn_BuscarFecha.TabIndex = 2;
+            this.Btn_BuscarFecha.Text = "  Buscar por fecha";
+            this.Btn_BuscarFecha.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Btn_BuscarFecha.UseVisualStyleBackColor = false;
+            this.Btn_BuscarFecha.Click += new System.EventHandler(this.Btn_BuscarFecha_Click);
+            // 
+            // Btn_Exportar
+            // 
+            this.Btn_Exportar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
+            this.Btn_Exportar.Font = new System.Drawing.Font("Rockwell", 10F);
+            this.Btn_Exportar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
+            this.Btn_Exportar.Image = global::CapaVista.Properties.Resources.exportar;
+            this.Btn_Exportar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Btn_Exportar.Location = new System.Drawing.Point(223, 49);
+            this.Btn_Exportar.Name = "Btn_Exportar";
+            this.Btn_Exportar.Size = new System.Drawing.Size(132, 64);
+            this.Btn_Exportar.TabIndex = 1;
+            this.Btn_Exportar.Text = "  Exportar";
+            this.Btn_Exportar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Btn_Exportar.UseVisualStyleBackColor = false;
+            this.Btn_Exportar.Click += new System.EventHandler(this.Btn_Exportar_Click);
+            // 
+            // Btn_Consultar
+            // 
+            this.Btn_Consultar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
+            this.Btn_Consultar.Font = new System.Drawing.Font("Rockwell", 10F);
+            this.Btn_Consultar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
+            this.Btn_Consultar.Image = global::CapaVista.Properties.Resources.android_search_icon_icons_com_50501;
+            this.Btn_Consultar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Btn_Consultar.Location = new System.Drawing.Point(44, 49);
+            this.Btn_Consultar.Name = "Btn_Consultar";
+            this.Btn_Consultar.Size = new System.Drawing.Size(122, 64);
+            this.Btn_Consultar.TabIndex = 0;
+            this.Btn_Consultar.Text = "Consultar";
+            this.Btn_Consultar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Btn_Consultar.UseVisualStyleBackColor = false;
+            this.Btn_Consultar.Click += new System.EventHandler(this.Btn_Consultar_Click);
             // 
             // Frm_Bitacora
             // 
