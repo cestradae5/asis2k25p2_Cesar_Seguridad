@@ -39,5 +39,11 @@ namespace CapaControlador
             int filas = snm.ModificarModulo(id, nombre, descripcion, estado);
             return filas > 0;
         }
+
+        public bool ModuloEnUso(int id)
+        {
+            return snm.ModuloEnUso(id);
+        }
+
     }
 }

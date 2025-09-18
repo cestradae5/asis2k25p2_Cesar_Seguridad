@@ -83,6 +83,18 @@ namespace CapaModelo
             }
         }
 
+        public bool ModuloEnUso(int idModulo)
+        {
+            string sql = @"SELECT COUNT(*) FROM tbl_ASIGNACION_MODULO_APLICACION 
+                   WHERE fk_id_modulo = ?";
+            using (OdbcCommand cmd = new OdbcCommand(sql, conexion.conexion()))
+            {
+                cmd.Parameters.Add("id", OdbcType.Int).Value = idModulo;
+                int count = Convert.ToInt32(cmd.ExecuteScalar());
+                return count > 0; // true si el módulo está en uso
+            }
+        }
+
 
     }
 }
