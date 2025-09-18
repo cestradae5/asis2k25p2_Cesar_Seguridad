@@ -39,14 +39,14 @@ namespace CapaVista
             this.Txt_nombre = new System.Windows.Forms.TextBox();
             this.Txt_descripcion = new System.Windows.Forms.TextBox();
             this.Btn_guardar = new System.Windows.Forms.Button();
-            this.Btn_nuevo = new System.Windows.Forms.Button();
             this.Btn_eliminar = new System.Windows.Forms.Button();
             this.Lbl_busqueda = new System.Windows.Forms.Label();
             this.Cbo_busqueda = new System.Windows.Forms.ComboBox();
-            this.Btn_buscar = new System.Windows.Forms.Button();
             this.Rdb_inabilitado = new System.Windows.Forms.RadioButton();
             this.Pnl_Superior = new System.Windows.Forms.Panel();
             this.Pic_Cerrar = new System.Windows.Forms.PictureBox();
+            this.Btn_buscar = new System.Windows.Forms.Button();
+            this.Btn_nuevo = new System.Windows.Forms.Button();
             this.Pnl_Superior.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Cerrar)).BeginInit();
             this.SuspendLayout();
@@ -151,40 +151,32 @@ namespace CapaVista
             this.Btn_guardar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_guardar.Font = new System.Drawing.Font("Rockwell", 10F);
             this.Btn_guardar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_guardar.Location = new System.Drawing.Point(515, 326);
+            this.Btn_guardar.Image = global::CapaVista.Properties.Resources.savetheapplication_guardar_2958;
+            this.Btn_guardar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Btn_guardar.Location = new System.Drawing.Point(522, 317);
             this.Btn_guardar.Margin = new System.Windows.Forms.Padding(4);
             this.Btn_guardar.Name = "Btn_guardar";
-            this.Btn_guardar.Size = new System.Drawing.Size(141, 48);
+            this.Btn_guardar.Size = new System.Drawing.Size(134, 57);
             this.Btn_guardar.TabIndex = 11;
             this.Btn_guardar.Text = "Guardar";
+            this.Btn_guardar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Btn_guardar.UseVisualStyleBackColor = false;
             this.Btn_guardar.Click += new System.EventHandler(this.Btn_guardar_Click);
-            // 
-            // Btn_nuevo
-            // 
-            this.Btn_nuevo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
-            this.Btn_nuevo.Font = new System.Drawing.Font("Rockwell", 10F);
-            this.Btn_nuevo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_nuevo.Location = new System.Drawing.Point(364, 326);
-            this.Btn_nuevo.Margin = new System.Windows.Forms.Padding(4);
-            this.Btn_nuevo.Name = "Btn_nuevo";
-            this.Btn_nuevo.Size = new System.Drawing.Size(141, 48);
-            this.Btn_nuevo.TabIndex = 12;
-            this.Btn_nuevo.Text = "Limpiar";
-            this.Btn_nuevo.UseVisualStyleBackColor = false;
-            this.Btn_nuevo.Click += new System.EventHandler(this.Btn_nuevo_Click);
             // 
             // Btn_eliminar
             // 
             this.Btn_eliminar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_eliminar.Font = new System.Drawing.Font("Rockwell", 10F);
             this.Btn_eliminar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_eliminar.Location = new System.Drawing.Point(664, 326);
+            this.Btn_eliminar.Image = global::CapaVista.Properties.Resources.delete_remove_trash_icon_177304;
+            this.Btn_eliminar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Btn_eliminar.Location = new System.Drawing.Point(704, 317);
             this.Btn_eliminar.Margin = new System.Windows.Forms.Padding(4);
             this.Btn_eliminar.Name = "Btn_eliminar";
-            this.Btn_eliminar.Size = new System.Drawing.Size(141, 48);
+            this.Btn_eliminar.Size = new System.Drawing.Size(134, 57);
             this.Btn_eliminar.TabIndex = 13;
             this.Btn_eliminar.Text = "Elmininar";
+            this.Btn_eliminar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Btn_eliminar.UseVisualStyleBackColor = false;
             this.Btn_eliminar.Click += new System.EventHandler(this.Btn_eliminar_Click);
             // 
@@ -208,20 +200,6 @@ namespace CapaVista
             this.Cbo_busqueda.Name = "Cbo_busqueda";
             this.Cbo_busqueda.Size = new System.Drawing.Size(160, 24);
             this.Cbo_busqueda.TabIndex = 15;
-            // 
-            // Btn_buscar
-            // 
-            this.Btn_buscar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
-            this.Btn_buscar.Font = new System.Drawing.Font("Rockwell", 10F);
-            this.Btn_buscar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_buscar.Location = new System.Drawing.Point(792, 134);
-            this.Btn_buscar.Margin = new System.Windows.Forms.Padding(4);
-            this.Btn_buscar.Name = "Btn_buscar";
-            this.Btn_buscar.Size = new System.Drawing.Size(141, 48);
-            this.Btn_buscar.TabIndex = 16;
-            this.Btn_buscar.Text = "Buscar";
-            this.Btn_buscar.UseVisualStyleBackColor = false;
-            this.Btn_buscar.Click += new System.EventHandler(this.Btn_buscar_Click);
             // 
             // Rdb_inabilitado
             // 
@@ -251,7 +229,7 @@ namespace CapaVista
             // 
             this.Pic_Cerrar.BackColor = System.Drawing.Color.Transparent;
             this.Pic_Cerrar.Dock = System.Windows.Forms.DockStyle.Right;
-            this.Pic_Cerrar.Image = global::CapaVista.Properties.Resources.cancel_77947;
+            this.Pic_Cerrar.Image = global::CapaVista.Properties.Resources.Cancel_icon_icons_com_73703;
             this.Pic_Cerrar.Location = new System.Drawing.Point(972, 0);
             this.Pic_Cerrar.Name = "Pic_Cerrar";
             this.Pic_Cerrar.Size = new System.Drawing.Size(37, 44);
@@ -259,6 +237,40 @@ namespace CapaVista
             this.Pic_Cerrar.TabIndex = 0;
             this.Pic_Cerrar.TabStop = false;
             this.Pic_Cerrar.Click += new System.EventHandler(this.Pic_Cerrar_Click);
+            // 
+            // Btn_buscar
+            // 
+            this.Btn_buscar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
+            this.Btn_buscar.Font = new System.Drawing.Font("Rockwell", 10F);
+            this.Btn_buscar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
+            this.Btn_buscar.Image = global::CapaVista.Properties.Resources.android_search_icon_icons1;
+            this.Btn_buscar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Btn_buscar.Location = new System.Drawing.Point(780, 136);
+            this.Btn_buscar.Margin = new System.Windows.Forms.Padding(4);
+            this.Btn_buscar.Name = "Btn_buscar";
+            this.Btn_buscar.Size = new System.Drawing.Size(134, 57);
+            this.Btn_buscar.TabIndex = 16;
+            this.Btn_buscar.Text = "Buscar";
+            this.Btn_buscar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Btn_buscar.UseVisualStyleBackColor = false;
+            this.Btn_buscar.Click += new System.EventHandler(this.Btn_buscar_Click);
+            // 
+            // Btn_nuevo
+            // 
+            this.Btn_nuevo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
+            this.Btn_nuevo.Font = new System.Drawing.Font("Rockwell", 10F);
+            this.Btn_nuevo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
+            this.Btn_nuevo.Image = global::CapaVista.Properties.Resources.limpiar;
+            this.Btn_nuevo.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Btn_nuevo.Location = new System.Drawing.Point(352, 317);
+            this.Btn_nuevo.Margin = new System.Windows.Forms.Padding(4);
+            this.Btn_nuevo.Name = "Btn_nuevo";
+            this.Btn_nuevo.Size = new System.Drawing.Size(134, 57);
+            this.Btn_nuevo.TabIndex = 12;
+            this.Btn_nuevo.Text = "Limpiar";
+            this.Btn_nuevo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Btn_nuevo.UseVisualStyleBackColor = false;
+            this.Btn_nuevo.Click += new System.EventHandler(this.Btn_nuevo_Click);
             // 
             // frmModulo
             // 

@@ -321,15 +321,15 @@ namespace CapaVista
             // 
             this.Gpb_opciones_empleados.Controls.Add(this.Btn_cancelar);
             this.Gpb_opciones_empleados.Controls.Add(this.Btn_salario_empleados);
+            this.Gpb_opciones_empleados.Controls.Add(this.Btn_nuevo_empleado);
             this.Gpb_opciones_empleados.Controls.Add(this.Btn_guardar_empleado);
             this.Gpb_opciones_empleados.Controls.Add(this.Btn_eliminar_empleado);
             this.Gpb_opciones_empleados.Controls.Add(this.Btn_salir_empleado);
             this.Gpb_opciones_empleados.Controls.Add(this.Btn_modificar_empleado);
-            this.Gpb_opciones_empleados.Controls.Add(this.Btn_nuevo_empleado);
             this.Gpb_opciones_empleados.Font = new System.Drawing.Font("Rockwell", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Gpb_opciones_empleados.Location = new System.Drawing.Point(803, 148);
             this.Gpb_opciones_empleados.Name = "Gpb_opciones_empleados";
-            this.Gpb_opciones_empleados.Size = new System.Drawing.Size(151, 402);
+            this.Gpb_opciones_empleados.Size = new System.Drawing.Size(195, 477);
             this.Gpb_opciones_empleados.TabIndex = 5;
             this.Gpb_opciones_empleados.TabStop = false;
             this.Gpb_opciones_empleados.Text = "Opciones";
@@ -337,13 +337,16 @@ namespace CapaVista
             // Btn_cancelar
             // 
             this.Btn_cancelar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
-            this.Btn_cancelar.Font = new System.Drawing.Font("Rockwell", 10F);
+            this.Btn_cancelar.Font = new System.Drawing.Font("Rockwell", 9.5F);
             this.Btn_cancelar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_cancelar.Location = new System.Drawing.Point(22, 289);
+            this.Btn_cancelar.Image = global::CapaVista.Properties.Resources.cancelar_32px;
+            this.Btn_cancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Btn_cancelar.Location = new System.Drawing.Point(22, 347);
             this.Btn_cancelar.Name = "Btn_cancelar";
-            this.Btn_cancelar.Size = new System.Drawing.Size(114, 44);
+            this.Btn_cancelar.Size = new System.Drawing.Size(136, 52);
             this.Btn_cancelar.TabIndex = 12;
             this.Btn_cancelar.Text = "Cancelar";
+            this.Btn_cancelar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Btn_cancelar.UseVisualStyleBackColor = false;
             this.Btn_cancelar.Click += new System.EventHandler(this.Btn_cancelar_Click);
             // 
@@ -352,11 +355,14 @@ namespace CapaVista
             this.Btn_salario_empleados.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_salario_empleados.Font = new System.Drawing.Font("Rockwell", 10F);
             this.Btn_salario_empleados.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_salario_empleados.Location = new System.Drawing.Point(22, 244);
+            this.Btn_salario_empleados.Image = global::CapaVista.Properties.Resources.dinero;
+            this.Btn_salario_empleados.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Btn_salario_empleados.Location = new System.Drawing.Point(22, 286);
             this.Btn_salario_empleados.Name = "Btn_salario_empleados";
-            this.Btn_salario_empleados.Size = new System.Drawing.Size(114, 39);
+            this.Btn_salario_empleados.Size = new System.Drawing.Size(136, 55);
             this.Btn_salario_empleados.TabIndex = 11;
-            this.Btn_salario_empleados.Text = "Salario";
+            this.Btn_salario_empleados.Text = "  Salario";
+            this.Btn_salario_empleados.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Btn_salario_empleados.UseVisualStyleBackColor = false;
             this.Btn_salario_empleados.Click += new System.EventHandler(this.Btn_salario_empleados_Click);
             // 
@@ -365,11 +371,14 @@ namespace CapaVista
             this.Btn_guardar_empleado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_guardar_empleado.Font = new System.Drawing.Font("Rockwell", 10F);
             this.Btn_guardar_empleado.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_guardar_empleado.Location = new System.Drawing.Point(22, 87);
+            this.Btn_guardar_empleado.Image = global::CapaVista.Properties.Resources.savetheapplication_guardar_2958;
+            this.Btn_guardar_empleado.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Btn_guardar_empleado.Location = new System.Drawing.Point(22, 103);
             this.Btn_guardar_empleado.Name = "Btn_guardar_empleado";
-            this.Btn_guardar_empleado.Size = new System.Drawing.Size(114, 45);
+            this.Btn_guardar_empleado.Size = new System.Drawing.Size(136, 55);
             this.Btn_guardar_empleado.TabIndex = 9;
             this.Btn_guardar_empleado.Text = "Guardar";
+            this.Btn_guardar_empleado.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Btn_guardar_empleado.UseVisualStyleBackColor = false;
             this.Btn_guardar_empleado.Click += new System.EventHandler(this.Btn_guardar_empleado_Click);
             // 
@@ -378,11 +387,14 @@ namespace CapaVista
             this.Btn_eliminar_empleado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_eliminar_empleado.Font = new System.Drawing.Font("Rockwell", 10F);
             this.Btn_eliminar_empleado.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_eliminar_empleado.Location = new System.Drawing.Point(22, 193);
+            this.Btn_eliminar_empleado.Image = global::CapaVista.Properties.Resources.delete_remove_trash_icon_177304;
+            this.Btn_eliminar_empleado.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Btn_eliminar_empleado.Location = new System.Drawing.Point(22, 225);
             this.Btn_eliminar_empleado.Name = "Btn_eliminar_empleado";
-            this.Btn_eliminar_empleado.Size = new System.Drawing.Size(114, 45);
+            this.Btn_eliminar_empleado.Size = new System.Drawing.Size(136, 55);
             this.Btn_eliminar_empleado.TabIndex = 8;
             this.Btn_eliminar_empleado.Text = "Eliminar";
+            this.Btn_eliminar_empleado.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Btn_eliminar_empleado.UseVisualStyleBackColor = false;
             this.Btn_eliminar_empleado.Click += new System.EventHandler(this.Btn_eliminar_empleado_Click);
             // 
@@ -391,24 +403,30 @@ namespace CapaVista
             this.Btn_salir_empleado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_salir_empleado.Font = new System.Drawing.Font("Rockwell", 10F);
             this.Btn_salir_empleado.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_salir_empleado.Location = new System.Drawing.Point(22, 339);
+            this.Btn_salir_empleado.Image = global::CapaVista.Properties.Resources.sign_emergency_code_sos_61_icon_icons_com_57216;
+            this.Btn_salir_empleado.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Btn_salir_empleado.Location = new System.Drawing.Point(22, 405);
             this.Btn_salir_empleado.Name = "Btn_salir_empleado";
-            this.Btn_salir_empleado.Size = new System.Drawing.Size(114, 44);
+            this.Btn_salir_empleado.Size = new System.Drawing.Size(136, 52);
             this.Btn_salir_empleado.TabIndex = 9;
-            this.Btn_salir_empleado.Text = "Salir";
+            this.Btn_salir_empleado.Text = "   Salir";
+            this.Btn_salir_empleado.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Btn_salir_empleado.UseVisualStyleBackColor = false;
             this.Btn_salir_empleado.Click += new System.EventHandler(this.Btn_salir_empleado_Click);
             // 
             // Btn_modificar_empleado
             // 
             this.Btn_modificar_empleado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
-            this.Btn_modificar_empleado.Font = new System.Drawing.Font("Rockwell", 10F);
+            this.Btn_modificar_empleado.Font = new System.Drawing.Font("Rockwell", 9F);
             this.Btn_modificar_empleado.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_modificar_empleado.Location = new System.Drawing.Point(22, 138);
+            this.Btn_modificar_empleado.Image = global::CapaVista.Properties.Resources.compose_edit_modify_icon_177770;
+            this.Btn_modificar_empleado.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Btn_modificar_empleado.Location = new System.Drawing.Point(22, 164);
             this.Btn_modificar_empleado.Name = "Btn_modificar_empleado";
-            this.Btn_modificar_empleado.Size = new System.Drawing.Size(114, 49);
+            this.Btn_modificar_empleado.Size = new System.Drawing.Size(136, 55);
             this.Btn_modificar_empleado.TabIndex = 7;
             this.Btn_modificar_empleado.Text = "Modificar";
+            this.Btn_modificar_empleado.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Btn_modificar_empleado.UseVisualStyleBackColor = false;
             this.Btn_modificar_empleado.Click += new System.EventHandler(this.Btn_modificar_empleado_Click);
             // 
@@ -417,11 +435,14 @@ namespace CapaVista
             this.Btn_nuevo_empleado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_nuevo_empleado.Font = new System.Drawing.Font("Rockwell", 10F);
             this.Btn_nuevo_empleado.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
+            this.Btn_nuevo_empleado.Image = global::CapaVista.Properties.Resources.add_insert_new_plus_button_icon_142943;
+            this.Btn_nuevo_empleado.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Btn_nuevo_empleado.Location = new System.Drawing.Point(22, 37);
             this.Btn_nuevo_empleado.Name = "Btn_nuevo_empleado";
-            this.Btn_nuevo_empleado.Size = new System.Drawing.Size(114, 44);
+            this.Btn_nuevo_empleado.Size = new System.Drawing.Size(136, 55);
             this.Btn_nuevo_empleado.TabIndex = 6;
             this.Btn_nuevo_empleado.Text = "Nuevo";
+            this.Btn_nuevo_empleado.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Btn_nuevo_empleado.UseVisualStyleBackColor = false;
             this.Btn_nuevo_empleado.Click += new System.EventHandler(this.Btn_nuevo_empleado_Click);
             // 
@@ -432,7 +453,7 @@ namespace CapaVista
             this.Gpb_mostrar_empleados.Font = new System.Drawing.Font("Rockwell", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Gpb_mostrar_empleados.Location = new System.Drawing.Point(366, 66);
             this.Gpb_mostrar_empleados.Name = "Gpb_mostrar_empleados";
-            this.Gpb_mostrar_empleados.Size = new System.Drawing.Size(428, 76);
+            this.Gpb_mostrar_empleados.Size = new System.Drawing.Size(428, 85);
             this.Gpb_mostrar_empleados.TabIndex = 10;
             this.Gpb_mostrar_empleados.TabStop = false;
             this.Gpb_mostrar_empleados.Text = "Mostrar";
@@ -442,11 +463,14 @@ namespace CapaVista
             this.Btn_buscar_empleado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_buscar_empleado.Font = new System.Drawing.Font("Rockwell", 10F);
             this.Btn_buscar_empleado.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_buscar_empleado.Location = new System.Drawing.Point(49, 24);
+            this.Btn_buscar_empleado.Image = global::CapaVista.Properties.Resources.android_search_icon_icons1;
+            this.Btn_buscar_empleado.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Btn_buscar_empleado.Location = new System.Drawing.Point(21, 24);
             this.Btn_buscar_empleado.Name = "Btn_buscar_empleado";
-            this.Btn_buscar_empleado.Size = new System.Drawing.Size(114, 46);
+            this.Btn_buscar_empleado.Size = new System.Drawing.Size(136, 55);
             this.Btn_buscar_empleado.TabIndex = 9;
             this.Btn_buscar_empleado.Text = "Buscar";
+            this.Btn_buscar_empleado.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Btn_buscar_empleado.UseVisualStyleBackColor = false;
             this.Btn_buscar_empleado.Click += new System.EventHandler(this.Btn_buscar_empleado_Click);
             // 
@@ -466,7 +490,7 @@ namespace CapaVista
             this.Pnl_Superior.Dock = System.Windows.Forms.DockStyle.Top;
             this.Pnl_Superior.Location = new System.Drawing.Point(0, 0);
             this.Pnl_Superior.Name = "Pnl_Superior";
-            this.Pnl_Superior.Size = new System.Drawing.Size(967, 44);
+            this.Pnl_Superior.Size = new System.Drawing.Size(1046, 44);
             this.Pnl_Superior.TabIndex = 95;
             this.Pnl_Superior.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Pnl_Superior_MouseDown);
             // 
@@ -474,8 +498,8 @@ namespace CapaVista
             // 
             this.Pic_Cerrar.BackColor = System.Drawing.Color.Transparent;
             this.Pic_Cerrar.Dock = System.Windows.Forms.DockStyle.Right;
-            this.Pic_Cerrar.Image = global::CapaVista.Properties.Resources.cancel_77947;
-            this.Pic_Cerrar.Location = new System.Drawing.Point(930, 0);
+            this.Pic_Cerrar.Image = global::CapaVista.Properties.Resources.Cancel_icon_icons_com_73703;
+            this.Pic_Cerrar.Location = new System.Drawing.Point(1009, 0);
             this.Pic_Cerrar.Name = "Pic_Cerrar";
             this.Pic_Cerrar.Size = new System.Drawing.Size(37, 44);
             this.Pic_Cerrar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -488,7 +512,7 @@ namespace CapaVista
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(185)))), ((int)(((byte)(185)))));
-            this.ClientSize = new System.Drawing.Size(967, 562);
+            this.ClientSize = new System.Drawing.Size(1046, 647);
             this.Controls.Add(this.Pnl_Superior);
             this.Controls.Add(this.Gpb_mostrar_empleados);
             this.Controls.Add(this.Gpb_opciones_empleados);
