@@ -120,6 +120,8 @@ namespace Capa_Vista_Reporteador
                 // Aquí queda la ruta seleccionada, por ejemplo: C:\Users\Usuario\Desktop\Reporte1.rpt
             }
 
+                
+
             // fin de código de: Cesar Santizo con carné: 0901-22-5215 en la fecha de: 12/09/2025
         }
 

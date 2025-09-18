@@ -32,8 +32,8 @@ namespace Capa_Vista_Reporteador
             this.titulo_vista_reportes = new System.Windows.Forms.Label();
             this.panelViewSetting = new System.Windows.Forms.Panel();
             this.pv_reporte = new System.Windows.Forms.Panel();
-            this.PicB_vista_reportes = new System.Windows.Forms.PictureBox();
             this.crystalReportViewer1 = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
+            this.PicB_vista_reportes = new System.Windows.Forms.PictureBox();
             this.panelViewSetting.SuspendLayout();
             this.pv_reporte.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PicB_vista_reportes)).BeginInit();
@@ -77,6 +77,18 @@ namespace Capa_Vista_Reporteador
             this.pv_reporte.TabIndex = 0;
             this.pv_reporte.Paint += new System.Windows.Forms.PaintEventHandler(this.pv_reporte_Paint);
             // 
+            // crystalReportViewer1
+            // 
+            this.crystalReportViewer1.ActiveViewIndex = -1;
+            this.crystalReportViewer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.crystalReportViewer1.Cursor = System.Windows.Forms.Cursors.Default;
+            this.crystalReportViewer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.crystalReportViewer1.Location = new System.Drawing.Point(0, 0);
+            this.crystalReportViewer1.Name = "crystalReportViewer1";
+            this.crystalReportViewer1.Size = new System.Drawing.Size(765, 369);
+            this.crystalReportViewer1.TabIndex = 1;
+            this.crystalReportViewer1.Load += new System.EventHandler(this.crystalReportViewer1_Load);
+            // 
             // PicB_vista_reportes
             // 
             this.PicB_vista_reportes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -90,17 +102,6 @@ namespace Capa_Vista_Reporteador
             this.PicB_vista_reportes.TabIndex = 0;
             this.PicB_vista_reportes.TabStop = false;
             this.PicB_vista_reportes.Click += new System.EventHandler(this.pictureBox1_Click);
-            // 
-            // crystalReportViewer1
-            // 
-            this.crystalReportViewer1.ActiveViewIndex = -1;
-            this.crystalReportViewer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.crystalReportViewer1.Cursor = System.Windows.Forms.Cursors.Default;
-            this.crystalReportViewer1.Location = new System.Drawing.Point(286, 91);
-            this.crystalReportViewer1.Name = "crystalReportViewer1";
-            this.crystalReportViewer1.Size = new System.Drawing.Size(203, 182);
-            this.crystalReportViewer1.TabIndex = 1;
-            this.crystalReportViewer1.Load += new System.EventHandler(this.crystalReportViewer1_Load);
             // 
             // VistaDeReportes
             // 

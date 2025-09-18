@@ -38,6 +38,24 @@ namespace Capa_Vista_Reporteador
 
                 ReportDocument reporte = new ReportDocument();
                 reporte.Load(ruta);
+
+                //Configuración de conexión ODBC
+                ConnectionInfo connection = new ConnectionInfo
+                {
+                    ServerName = "db_reportes", //DNS para conexión (modificar según lo indicado)
+                    DatabaseName = "db_reportes", //DNS para conexión (modificar según lo indicado)
+                    UserID = "root", //Usuario MySql (modificar según lo indicado)
+                    Password = "123456" //Constraseña de Mysql (modificar según lo indicado) 
+                };
+
+                //Aplicar conexión a cada tabla dentor del reporte
+                foreach (Table table in reporte.Database.Tables)
+                {
+                    TableLogOnInfo logonInfo = table.LogOnInfo;
+                    logonInfo.ConnectionInfo = connection;
+                    table.ApplyLogOnInfo(logonInfo);
+                }
+
                 crystalReportViewer1.ReportSource = reporte;
                 crystalReportViewer1.Refresh();
             }
