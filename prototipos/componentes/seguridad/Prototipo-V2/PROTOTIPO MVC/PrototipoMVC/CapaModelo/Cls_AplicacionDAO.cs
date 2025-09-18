@@ -95,15 +95,44 @@ namespace CapaModelo
         }
 
         // Borrar aplicación
+        // Borrar aplicación y sus dependencias
         public int BorrarAplicacion(int idAplicacion)
         {
             using (OdbcConnection conn = conexion.conexion())
             {
-                OdbcCommand cmd = new OdbcCommand(SQL_DELETE, conn);
-                cmd.Parameters.AddWithValue("@pk_id_aplicacion", idAplicacion);
-                return cmd.ExecuteNonQuery();
+                using (OdbcTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        // 1. Eliminar registros dependientes en tbl_ASIGNACION_MODULO_APLICACION
+                        string sqlDeleteDependientes = "DELETE FROM tbl_ASIGNACION_MODULO_APLICACION WHERE fk_id_aplicacion = ?";
+                        using (OdbcCommand cmdDependientes = new OdbcCommand(sqlDeleteDependientes, conn, transaction))
+                        {
+                            cmdDependientes.Parameters.AddWithValue("@fk_id_aplicacion", idAplicacion);
+                            cmdDependientes.ExecuteNonQuery();
+                        }
+
+                        // 2. Eliminar registro en tbl_APLICACION
+                        using (OdbcCommand cmd = new OdbcCommand(SQL_DELETE, conn, transaction))
+                        {
+                            cmd.Parameters.AddWithValue("@pk_id_aplicacion", idAplicacion);
+                            int result = cmd.ExecuteNonQuery();
+
+                            // 3. Confirmar cambios
+                            transaction.Commit();
+                            return result;
+                        }
+                    }
+                    catch
+                    {
+                        // Si algo falla, revertimos todo
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
             }
         }
+
 
         // Buscar una aplicación por ID
         public Cls_Aplicacion Query(int idAplicacion)
