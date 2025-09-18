@@ -171,8 +171,13 @@ namespace Capa_Vista_Reporteador
                 Dgv_reportes.Columns["titulo_reportes"].HeaderText = "Título";
                 Dgv_reportes.Columns["ruta_reportes"].HeaderText = "Ruta";
                 Dgv_reportes.Columns["fecha_reportes"].HeaderText = "Fecha";
-            }
-            //fin codigo Kevin Santos 0901-17-2994
+            }   //fin codigo Kevin Santos 0901-17-2994
+                // Inicio código Paula Leonardo  0901-22-9580
+            Dgv_reportes.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            Dgv_reportes.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            Dgv_reportes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            Dgv_reportes.AllowUserToAddRows = false;
+            // Fin código Paula Leonardo  0901-22-9580
         }
 
         private void Btn_eliminar_Click(object sender, EventArgs e)

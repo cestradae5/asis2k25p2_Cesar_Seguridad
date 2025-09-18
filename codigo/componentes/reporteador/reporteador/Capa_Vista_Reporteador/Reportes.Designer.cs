@@ -81,8 +81,6 @@ namespace Capa_Vista_Reporteador
             // 
             // Btn_guardar
             // 
-            this.Btn_guardar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.Btn_guardar.BackColor = System.Drawing.Color.White;
             this.Btn_guardar.Font = new System.Drawing.Font("Rockwell", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Btn_guardar.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
@@ -96,7 +94,6 @@ namespace Capa_Vista_Reporteador
             // 
             // Btn_eliminar
             // 
-            this.Btn_eliminar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Btn_eliminar.BackColor = System.Drawing.Color.White;
             this.Btn_eliminar.Font = new System.Drawing.Font("Rockwell", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Btn_eliminar.Image = ((System.Drawing.Image)(resources.GetObject("Btn_eliminar.Image")));
@@ -109,7 +106,6 @@ namespace Capa_Vista_Reporteador
             // 
             // Btn_modificar
             // 
-            this.Btn_modificar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Btn_modificar.BackColor = System.Drawing.Color.White;
             this.Btn_modificar.Font = new System.Drawing.Font("Rockwell", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Btn_modificar.Image = ((System.Drawing.Image)(resources.GetObject("Btn_modificar.Image")));
@@ -160,7 +156,6 @@ namespace Capa_Vista_Reporteador
             // 
             // Lbl_Titulo
             // 
-            this.Lbl_Titulo.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.Lbl_Titulo.AutoSize = true;
             this.Lbl_Titulo.Font = new System.Drawing.Font("Rockwell", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Lbl_Titulo.Location = new System.Drawing.Point(20, 171);
