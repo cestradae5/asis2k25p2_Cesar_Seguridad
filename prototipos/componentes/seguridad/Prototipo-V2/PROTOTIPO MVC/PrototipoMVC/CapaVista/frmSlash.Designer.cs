@@ -41,9 +41,9 @@ namespace CapaVista
             // Lbl_carga
             // 
             this.Lbl_carga.AutoSize = true;
-            this.Lbl_carga.BackColor = System.Drawing.Color.Transparent;
+            this.Lbl_carga.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(185)))), ((int)(((byte)(185)))));
             this.Lbl_carga.Font = new System.Drawing.Font("Rockwell", 15F, System.Drawing.FontStyle.Bold);
-            this.Lbl_carga.Location = new System.Drawing.Point(279, 237);
+            this.Lbl_carga.Location = new System.Drawing.Point(280, 237);
             this.Lbl_carga.Name = "Lbl_carga";
             this.Lbl_carga.Size = new System.Drawing.Size(40, 24);
             this.Lbl_carga.TabIndex = 0;
@@ -56,14 +56,15 @@ namespace CapaVista
             // 
             // Pgb_carga
             // 
-            this.Pgb_carga.Location = new System.Drawing.Point(71, 187);
+            this.Pgb_carga.Location = new System.Drawing.Point(71, 199);
             this.Pgb_carga.Maximum = 101;
             this.Pgb_carga.Name = "Pgb_carga";
-            this.Pgb_carga.Size = new System.Drawing.Size(449, 47);
+            this.Pgb_carga.Size = new System.Drawing.Size(450, 35);
             this.Pgb_carga.TabIndex = 1;
             // 
             // Pic_carga
             // 
+            this.Pic_carga.BackColor = System.Drawing.Color.Transparent;
             this.Pic_carga.Image = ((System.Drawing.Image)(resources.GetObject("Pic_carga.Image")));
             this.Pic_carga.Location = new System.Drawing.Point(0, -1);
             this.Pic_carga.Name = "Pic_carga";

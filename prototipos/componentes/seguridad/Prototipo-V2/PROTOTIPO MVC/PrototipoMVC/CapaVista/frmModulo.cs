@@ -107,6 +107,13 @@ namespace CapaVista
                 return;
             }
 
+            // ✅ Nuevo: Verificar si el módulo está en uso
+            if (cm.ModuloEnUso(id))
+            {
+                MessageBox.Show("No se puede eliminar el módulo porque está siendo utilizado en una aplicación.");
+                return;
+            }
+
             bool resultado = cm.EliminarModulo(id); // Elimina físicamente
             if (resultado)
             {
@@ -140,6 +147,9 @@ namespace CapaVista
                 bool estado = Convert.ToBoolean(dr["estado_modulo"]);
                 Rdb_habilitado.Checked = estado;
                 Rdb_inabilitado.Checked = !estado;
+
+                // ✅ Nuevo: limpiar el ComboBox después de buscar
+                Cbo_busqueda.SelectedIndex = -1;
             }
             else
             {
