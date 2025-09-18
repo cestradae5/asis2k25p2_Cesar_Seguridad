@@ -72,7 +72,7 @@ namespace CapaVistaNavegador
         }
 
 
-        private void ActualizarBotonesSegunPaginasDisponibles()
+        private void Actualizar_Estado_Botones()
         {
             Btn_inicio.Enabled = paginaActual > 1;
             Btn_anterior.Enabled = paginaActual > 1;
@@ -225,6 +225,7 @@ namespace CapaVistaNavegador
             paginaActual = 1;
             MostrarPagina(paginaActual);
             ctrl.MoverAlInicio();
+            Actualizar_Estado_Botones();
         }
 
         private void Btn_anterior_Click_1(object sender, EventArgs e)
@@ -235,7 +236,7 @@ namespace CapaVistaNavegador
             }
             paginaActual -= 1;
             MostrarPagina(paginaActual);
-            ActualizarBotonesSegunPaginasDisponibles();
+            Actualizar_Estado_Botones();
         }
 
         private void Btn_sig_Click(object sender, EventArgs e)
@@ -246,7 +247,7 @@ namespace CapaVistaNavegador
             }
             paginaActual += 1;
             MostrarPagina(paginaActual);
-            ActualizarBotonesSegunPaginasDisponibles();
+            Actualizar_Estado_Botones();
         }
 
         private void Btn_fin_Click_1(object sender, EventArgs e)
@@ -254,6 +255,7 @@ namespace CapaVistaNavegador
             paginaActual = totalPaginas;
             MostrarPagina(paginaActual);
             ctrl.MoverAlFin();
+            Actualizar_Estado_Botones();
         }
 
         private void Btn_ayuda_Click(object sender, EventArgs e)
