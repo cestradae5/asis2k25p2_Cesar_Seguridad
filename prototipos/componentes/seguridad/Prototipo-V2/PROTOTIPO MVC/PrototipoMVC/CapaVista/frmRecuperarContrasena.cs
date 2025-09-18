@@ -105,7 +105,7 @@ namespace CapaVista
 
                     // Registrar en Bitácora Arón Ricardo Esquit Silva   0901-22-13036
                     Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
-                    bit.RegistrarAccion(iIdUsuario, "Recuperar contraseña", true);
+                    bit.RegistrarAccion(iIdUsuario,0, "Recuperar contraseña", true);
                 }
                 else
                 {

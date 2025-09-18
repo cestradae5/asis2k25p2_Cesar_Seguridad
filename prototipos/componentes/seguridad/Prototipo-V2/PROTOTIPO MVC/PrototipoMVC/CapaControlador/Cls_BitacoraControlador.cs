@@ -21,9 +21,10 @@ namespace CapaControlador
         public DataTable BuscarPorUsuario(int idUsuario) => sentencias.ConsultarPorUsuario(idUsuario);
 
         // Registrar acciones
-        public void RegistrarAccion(int idUsuario, string accion, bool estadoLogin)
+        public void RegistrarAccion(int idUsuario, int idAplicacion, string accion, bool estado)
         {
-            sentencias.InsertarBitacora(idUsuario, 0, accion, estadoLogin);
+            var sent = new Cls_SentenciasBitacora();
+            sent.InsertarBitacora(idUsuario, idAplicacion, accion, estado);
         }
 
         public void RegistrarInicioSesion(int idUsuario)

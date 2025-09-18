@@ -123,7 +123,7 @@ namespace CapaVista
             Dgv_Permisos.Rows.Add(usuario, aplicacion, false, false, false, false, false, idUsuario, idModulo, idAplicacion);
 
             // Registrar en Bitácora Arón Ricardo Esquit Silva 0901-22-13036
-            bitacora.InsertarBitacora(Cls_sesion.iUsuarioId, idAplicacion, "Asignación - Agregar", true);
+            bitacora.InsertarBitacora(Cls_sesion.iUsuarioId, idAplicacion, "Asignación Aplicación a Usuario - Agregar", true);
 
             Cbo_Usuarios.SelectedIndex = -1;
             Cbo_Modulos.SelectedIndex = -1;
@@ -137,7 +137,7 @@ namespace CapaVista
                 int idAplicacion = Convert.ToInt32(Dgv_Permisos.CurrentRow.Cells["IdAplicacion"].Value);
 
                 // Registrar en Bitácora Arón Ricardo Esquit Silva 0901-22-13036
-                bitacora.InsertarBitacora(Cls_sesion.iUsuarioId, idAplicacion, "Asignación - Quitar", true);
+                bitacora.InsertarBitacora(Cls_sesion.iUsuarioId, idAplicacion, "Asignación Aplicación a Usuario  - Quitar", true);
 
                 Dgv_Permisos.Rows.Remove(Dgv_Permisos.CurrentRow);
             }
@@ -184,7 +184,7 @@ namespace CapaVista
                         insertados++;
 
                         // Registrar en Bitácora Arón Ricardo Esquit Silva 0901-22-13036
-                        bitacora.InsertarBitacora(Cls_sesion.iUsuarioId, idAplicacion, "Asignación - Insertar", true);
+                        bitacora.InsertarBitacora(Cls_sesion.iUsuarioId, idAplicacion, "Asignación Aplicación a Usuario  - Insertar", true);
                     }
                 }
                 catch (Exception ex)

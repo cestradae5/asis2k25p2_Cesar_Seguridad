@@ -30,7 +30,7 @@ namespace CapaModelo
             }
         }
 
-        // 👇 Nuevo: para INSERT, UPDATE y DELETE
+        // INSERT, UPDATE y DELETE
         public void EjecutarComando(string sSql)
         {
             try
