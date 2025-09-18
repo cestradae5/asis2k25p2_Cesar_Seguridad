@@ -56,11 +56,15 @@ namespace CapaVista
             string nombre = Txt_nombre.Text;
             string descripcion = Txt_descripcion.Text;
 
+
             // Validar los RadioButtons -> ahora solo 1 columna estado_modulo
             byte estado = (Rdb_habilitado.Checked) ? (byte)1 : (byte)0;
 
+
             DataRow dr = cm.BuscarModulo(id);
             bool resultado = false;
+
+
             if (dr == null)
             {
                 // Insertar
@@ -76,6 +80,9 @@ namespace CapaVista
             {
                 MessageBox.Show("Guardado correctamente!");
                 CargarComboBox();
+
+                Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
+                bit.RegistrarAccion(Cls_sesion.iUsuarioId, 1, "Guardar módulo", true);
             }
             else
             {
@@ -119,6 +126,10 @@ namespace CapaVista
             {
                 MessageBox.Show("Módulo eliminado correctamente.");
                 CargarComboBox();
+
+                // Registrar en Bitácora - Arón Ricardo Esquit Silva 0901-22-13036
+                Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
+                bit.RegistrarAccion(Cls_sesion.iUsuarioId, 1, "Eliminar módulo", true);
             }
             else
             {
@@ -150,6 +161,10 @@ namespace CapaVista
 
                 // ✅ Nuevo: limpiar el ComboBox después de buscar
                 Cbo_busqueda.SelectedIndex = -1;
+
+                // Registrar en Bitácora - Arón Ricardo Esquit Silva 0901-22-13036
+                Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
+                bit.RegistrarAccion(Cls_sesion.iUsuarioId, 1, "Buscar módulo", true);
             }
             else
             {

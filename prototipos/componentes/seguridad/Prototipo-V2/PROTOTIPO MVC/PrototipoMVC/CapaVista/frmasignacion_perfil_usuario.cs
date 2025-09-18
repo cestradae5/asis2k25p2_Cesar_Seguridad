@@ -93,6 +93,10 @@ namespace CapaVista
 
             asignacionesPendientes.Add(new Cls_asignacion_perfil_usuario(idUsuario, idPerfil));
             fun_RefrescarAsignacionesPendientes();
+
+            // Registrar en Bitácora -Arón Ricardo Esquit Silva  0901 - 22 - 13036
+            Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
+            bit.RegistrarAccion(Cls_sesion.iUsuarioId, 1, "Asignación Perfil a Usuario - Agregar", true); 
         }
 
         private void fun_RefrescarAsignacionesPendientes()
@@ -119,6 +123,10 @@ namespace CapaVista
             MessageBox.Show($"Se guardaron {guardados} asignaciones correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
             asignacionesPendientes.Clear();
             fun_RefrescarAsignacionesPendientes();
+
+            // Registrar en Bitácora - Arón Ricardo Esquit Silva  0901-22-13036
+            Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
+            bit.RegistrarAccion(Cls_sesion.iUsuarioId, 1, "Asignación Perfil a Uusario - Guardar", true);
         }
 
 
@@ -147,6 +155,10 @@ namespace CapaVista
 
                     
                     fun_RefrescarAsignacionesPendientes();
+
+                    // Registrar en Bitácora - Arón Ricardo Esquit Silva  0901-22-13036
+                    Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
+                    bit.RegistrarAccion(Cls_sesion.iUsuarioId, 1, "Asignación Perfil a Usuario - Eliminar", true);
                 }
             }
         }
