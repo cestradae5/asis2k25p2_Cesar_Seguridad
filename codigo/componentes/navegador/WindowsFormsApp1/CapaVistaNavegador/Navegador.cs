@@ -13,7 +13,9 @@ namespace CapaVistaNavegador
     public partial class Navegador : UserControl
     {
         public string[] alias { get; set; }
-       public string nombreTabla { get; set; } // Nueva propiedad para el nombre de la tabla
+        public string nombreTabla { get; set; } // Nueva propiedad para el nombre de la tabla
+
+        public ConfiguracionDataGridView configuracionDataGridView;
 
         public Navegador()
         {
@@ -29,7 +31,7 @@ namespace CapaVistaNavegador
             // habilitar botones
             habilitar_botones();*/
 
-            
+
             if (alias == null || alias.Length < 2)
             {
                 MessageBox.Show("No se han definido los alias de la tabla.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -37,8 +39,8 @@ namespace CapaVistaNavegador
             }
 
             //Parámetros para validar 
-            string tabla = nombreTabla; 
-            string[] columnas = alias; 
+            string tabla = nombreTabla;
+            string[] columnas = alias;
 
             // Asigna los alias al controlador y crea los controles necesarios
             if (ctrl.AsignarAlias(alias, this, 10, 100))
@@ -54,11 +56,11 @@ namespace CapaVistaNavegador
         // parte del datagridview con la funcion del boton imprimir
 
         private DataGridView Dgv_Datos;
-        private int registrosPorPagina = 9; 
+        private int registrosPorPagina = 9;
         private int paginaActual = 1;
         private int totalPaginas = 0;
         private DataTable dtCompleto;
-    
+
         private void MostrarPagina(int pagina)
         {
             DataTable dtPagina = dtCompleto.Clone();
@@ -107,15 +109,15 @@ namespace CapaVistaNavegador
 
             if (Dgv_Datos == null)
             {
-                Dgv_Datos = new DataGridView();
-                Dgv_Datos.Name = "Dgv_Datos";
-                Dgv_Datos.ScrollBars = ScrollBars.None;
-                Dgv_Datos.BackgroundColor = Color.White;
-                Dgv_Datos.ColumnHeadersDefaultCellStyle.Font = new Font("Microsoft Sans Serif", 9, FontStyle.Bold);
-                Dgv_Datos.Location = new System.Drawing.Point(10, 250);
-                Dgv_Datos.Size = new System.Drawing.Size(1100, 200);
-                Dgv_Datos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-                this.Controls.Add(Dgv_Datos);
+                //Dgv_Datos = new DataGridView();
+                //Dgv_Datos.Name = "Dgv_Datos";
+                //Dgv_Datos.ScrollBars = ScrollBars.None;
+                //Dgv_Datos.BackgroundColor = Color.White;
+                //Dgv_Datos.ColumnHeadersDefaultCellStyle.Font = new Font("Microsoft Sans Serif", 9, FontStyle.Bold);
+                //Dgv_Datos.Location = new System.Drawing.Point(10, 250);
+                //Dgv_Datos.Size = new System.Drawing.Size(1100, 200);
+                //Dgv_Datos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                //this.Controls.Add(Dgv_Datos);
             }
 
             // Asegurarse de que alias no sea null
@@ -170,7 +172,7 @@ namespace CapaVistaNavegador
 
         private void Btn_guardar_Click_1(object sender, EventArgs e)
         {
-            ControladorNavegador ctrl = new ControladorNavegador(); 
+            ControladorNavegador ctrl = new ControladorNavegador();
             ctrl.Insertar_Datos(this, alias);
         }
 
@@ -267,5 +269,45 @@ namespace CapaVistaNavegador
         {
             Application.Exit();
         }
+
+        // Configuracion de data grid view
+        public void configurarDataGridView(ConfiguracionDataGridView configuracion)
+        {
+            configuracionDataGridView = configuracion;
+            registrosPorPagina = configuracionDataGridView.RegistrosPorPagina;
+
+            if (Dgv_Datos == null)
+            {
+                Dgv_Datos = new DataGridView();
+                Dgv_Datos.Name = configuracionDataGridView.Nombre;
+
+                // ScrollBars
+                Dgv_Datos.ScrollBars = configuracionDataGridView.TipoScrollBars;
+
+                // Colores y estilos
+                Dgv_Datos.BackgroundColor = configuracionDataGridView.ColorFondo;
+                Dgv_Datos.RowsDefaultCellStyle.BackColor = configuracionDataGridView.ColorFilas;
+                Dgv_Datos.RowsDefaultCellStyle.ForeColor = configuracionDataGridView.ColorTextoFilas;
+                Dgv_Datos.AlternatingRowsDefaultCellStyle.BackColor = configuracionDataGridView.ColorFilasAlternas;
+
+                // Encabezados
+                Dgv_Datos.ColumnHeadersDefaultCellStyle.Font = configuracionDataGridView.FuenteEncabezado;
+                Dgv_Datos.EnableHeadersVisualStyles = false;
+                Dgv_Datos.ColumnHeadersDefaultCellStyle.BackColor = configuracionDataGridView.ColorEncabezado;
+                Dgv_Datos.ColumnHeadersDefaultCellStyle.ForeColor = configuracionDataGridView.ColorTextoEncabezado;
+
+                // Ubicación y tamaño
+                Dgv_Datos.Location = new Point(configuracionDataGridView.PosX, configuracionDataGridView.PosY);
+                Dgv_Datos.Size = new Size(configuracionDataGridView.Ancho, configuracionDataGridView.Alto);
+                Dgv_Datos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+                // Agregar al formulario
+                this.Controls.Add(Dgv_Datos);
+
+                // Mandarlo al controlador
+                ctrl.AsignarDataGridView(Dgv_Datos);
+            }
+        }
+
     }
 }

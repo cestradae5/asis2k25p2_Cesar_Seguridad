@@ -15,12 +15,24 @@ namespace PruebaEjecucionNavegador
         public Form1()
         {
             InitializeComponent();
-            
-            string[] columnas = { "empleados","codigo_empleado", "nombre_completo", "puesto", "departamento", "estado" };
+            CapaControladorNavegador.ConfiguracionDataGridView config = new CapaControladorNavegador.ConfiguracionDataGridView
+            {
+                Ancho = 1100,
+                Alto = 200,
+                PosX = 10,
+                PosY = 250,
+                RegistrosPorPagina = 15,
+                ColorFondo = Color.White,
+                TipoScrollBars = ScrollBars.Both,
+                Nombre = "dgv_empleados"
+            };
+
+            string[] columnas = { "empleados", "codigo_empleado", "nombre_completo", "puesto", "departamento", "estado" };
+            navegador1.configurarDataGridView(config);
             navegador1.nombreTabla = columnas[0];
             navegador1.alias = columnas;
-
             navegador1.mostrarDatos();
         }
+
     }
 }

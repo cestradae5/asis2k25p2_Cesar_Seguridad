@@ -64,6 +64,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConfiguracionDataGridView.cs" />
     <Compile Include="ControladorNavegador.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
