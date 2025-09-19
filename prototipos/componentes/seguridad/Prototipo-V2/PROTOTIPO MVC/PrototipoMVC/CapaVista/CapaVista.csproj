@@ -52,11 +52,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cls_sesion.cs" />
-    <Compile Include="frmAplicacion.cs">
+    <Compile Include="Frm_Aplicacion.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmAplicacion.Designer.cs">
-      <DependentUpon>frmAplicacion.cs</DependentUpon>
+    <Compile Include="Frm_Aplicacion.Designer.cs">
+      <DependentUpon>Frm_Aplicacion.cs</DependentUpon>
     </Compile>
     <Compile Include="frmasignacion_aplicacion_usuario.cs">
       <SubType>Form</SubType>
@@ -156,8 +156,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="frmAplicacion.resx">
-      <DependentUpon>frmAplicacion.cs</DependentUpon>
+    <EmbeddedResource Include="Frm_Aplicacion.resx">
+      <DependentUpon>Frm_Aplicacion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmasignacion_aplicacion_usuario.resx">
       <DependentUpon>frmasignacion_aplicacion_usuario.cs</DependentUpon>

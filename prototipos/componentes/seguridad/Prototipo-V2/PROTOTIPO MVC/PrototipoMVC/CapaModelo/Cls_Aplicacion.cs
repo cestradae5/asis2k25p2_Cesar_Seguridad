@@ -13,7 +13,6 @@ namespace CapaModelo
         public string NombreAplicacion { get; set; }
         public string DescripcionAplicacion { get; set; }
 
-        // Solo un campo de estado en la BD
         public bool EstadoAplicacion { get; set; } // true = habilitado, false = deshabilitado
 
         public Cls_Aplicacion() { }
