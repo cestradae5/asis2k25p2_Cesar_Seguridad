@@ -107,6 +107,7 @@ namespace CapaVista
                     MessageBox.Show("Complete todos los campos antes de guardar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
+
                 bool estado = Rdb_Habilitado.Checked;
                 int tipo;
                 if (!int.TryParse(Cbo_tipoperfil.Text, out tipo) || (tipo != 0 && tipo != 1))
@@ -114,8 +115,22 @@ namespace CapaVista
                     MessageBox.Show("Tipo de perfil inválido. Debe ser 0 o 1.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+
                 bool exito = controlador.bInsertarPerfil(Txt_puesto.Text, Txt_descripcion.Text, estado, tipo);
-                MessageBox.Show(exito ? "Perfil guardado correctamente" : "Error al guardar perfil");
+
+                if (exito)
+                {
+                    MessageBox.Show("Perfil guardado correctamente");
+
+                    // Registrar en Bitácora - Arón Ricardo Esquit Silva 0901-22-13036
+                    Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
+                    bit.RegistrarAccion(Cls_sesion.iUsuarioId, 1, "Guardar perfil", true);
+                }
+                else
+                {
+                    MessageBox.Show("Error al guardar perfil");
+                }
+
                 fun_CargarPerfiles();
                 fun_ConfigurarComboBoxPerfiles();
                 fun_LimpiarCampos();
@@ -126,6 +141,7 @@ namespace CapaVista
             }
             fun_Configuracioninicial();
         }
+
 
         private void Btn_modificar_Click(object sender, EventArgs e)
         {
@@ -141,6 +157,7 @@ namespace CapaVista
                 MessageBox.Show("Complete todos los campos antes de modificar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
             bool estado = Rdb_Habilitado.Checked;
             int tipo;
             if (!int.TryParse(Cbo_tipoperfil.Text, out tipo) || (tipo != 0 && tipo != 1))
@@ -148,12 +165,27 @@ namespace CapaVista
                 MessageBox.Show("Tipo de perfil inválido. Debe ser 0 o 1.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
             bool exito = controlador.bActualizarPerfil(id, Txt_puesto.Text, Txt_descripcion.Text, estado, tipo);
-            MessageBox.Show(exito ? "Perfil modificado correctamente" : "Error al modificar perfil");
+
+            if (exito)
+            {
+                MessageBox.Show("Perfil modificado correctamente");
+
+                // Registrar en Bitácora - Arón Ricardo Esquit Silva 0901-22-13036
+                Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
+                bit.RegistrarAccion(Cls_sesion.iUsuarioId, 1, "Modificar perfil", true);
+            }
+            else
+            {
+                MessageBox.Show("Error al modificar perfil");
+            }
+
             fun_CargarPerfiles();
             fun_ConfigurarComboBoxPerfiles();
             fun_LimpiarCampos();
         }
+
 
 
         private void Btn_cancelar_Click(object sender, EventArgs e)
@@ -229,12 +261,25 @@ namespace CapaVista
                 MessageBox.Show("Ingrese un ID válido para eliminar.");
                 return;
             }
+
             bool exito = controlador.bBorrarPerfil(id);
-            MessageBox.Show(exito ? "Perfil eliminado" : "Error al eliminar perfil");
+
+            if (exito)
+            {
+                MessageBox.Show("Perfil eliminado");
+
+                // Registrar en Bitácora - Arón Ricardo Esquit Silva 0901-22-13036
+                Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
+                bit.RegistrarAccion(Cls_sesion.iUsuarioId, 1, "Eliminar perfil", true);
+            }
+            else
+            {
+                MessageBox.Show("Error al eliminar perfil");
+            }
+
             fun_CargarPerfiles();
             Cbo_perfiles.Items.Clear();
             fun_ConfigurarComboBoxPerfiles();
-            
             fun_LimpiarCampos();
             fun_Configuracioninicial();
         }
