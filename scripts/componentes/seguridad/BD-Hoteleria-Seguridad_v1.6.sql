@@ -1,4 +1,4 @@
-CREATE DATABASE IF NOT EXISTS hoteleria;
+
 USE hoteleria;
 
 create table tbl_USUARIO
