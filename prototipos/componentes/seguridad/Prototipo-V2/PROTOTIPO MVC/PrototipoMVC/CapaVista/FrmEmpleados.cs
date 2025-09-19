@@ -14,6 +14,7 @@ using CapaModelo;
 
 namespace CapaVista
 {
+
     public partial class frmEmpleados : Form
     {
         private Cls_EmpleadoControlador controlador = new Cls_EmpleadoControlador();
@@ -211,6 +212,9 @@ namespace CapaVista
             );
 
             MessageBox.Show(exito ? "Empleado modificado correctamente" : "Error al modificar empleado");
+            // Registrar en Bitácora -Arón Ricardo Esquit Silva  0901 - 22 - 13036
+            Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
+            bit.RegistrarAccion(Cls_sesion.iUsuarioId, 1, "Modificar empleado", true);
             func_CargarEmpleados();
             func_ConfigurarComboBoxEmpleados();
             func_LimpiarCampos();
@@ -226,6 +230,9 @@ namespace CapaVista
 
             bool exito = controlador.BorrarEmpleado(id);
             MessageBox.Show(exito ? "Empleado eliminado" : "Error al eliminar");
+            // Registrar en Bitácora -Arón Ricardo Esquit Silva  0901 - 22 - 13036
+            Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
+            bit.RegistrarAccion(Cls_sesion.iUsuarioId, 1, "Eliminar Empleado", true);
             func_CargarEmpleados();
             func_ConfigurarComboBoxEmpleados();
             func_LimpiarCampos();
@@ -302,11 +309,20 @@ namespace CapaVista
                     emp.FechaContratacionEmpleado
                 );
 
+     
+
                 // Mensaje de éxito
                 MessageBox.Show("Empleado guardado correctamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Registrar en Bitácora - Arón Ricardo Esquit Silva 0901-22-13036
+                Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
+                bit.RegistrarAccion(Cls_sesion.iUsuarioId, 1, "Guardar empleado", true);
+
                 CargarEmpleados();
                 func_ConfigurarComboBoxEmpleados();
                 func_LimpiarCampos();
+
+
             }
 
             catch (Exception ex)
