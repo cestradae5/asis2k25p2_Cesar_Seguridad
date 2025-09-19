@@ -70,21 +70,26 @@ namespace CapaVista
                 var selected = (dynamic)Cbo_Empleado.SelectedItem;
                 int fkIdEmpleado = selected.Id;
 
-              //esto lo puse para hashear la contraseña
+                // Hashear la contraseña
                 string contraseñaHasheada = SeguridadHash.HashearSHA256(Txt_Contraseña.Text);
 
                 usuarioControlador.InsertarUsuario(
                     fkIdEmpleado,
                     Txt_Nombre.Text,
                     contraseñaHasheada,
-                    0,              
-                    true,          
-                    DateTime.Now,   
-                    DateTime.Now,  
-                    false         
+                    0,
+                    true,
+                    DateTime.Now,
+                    DateTime.Now,
+                    false
                 );
 
                 MessageBox.Show("Usuario creado correctamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Registrar en Bitácora - Arón Ricardo Esquit Silva 0901-22-13036
+                Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
+                bit.RegistrarAccion(Cls_sesion.iUsuarioId, 1, "Guardar usuario", true);
+
                 LimpiarCampos();
                 ConfiguracionInicial();
             }
@@ -107,7 +112,6 @@ namespace CapaVista
                 var selected = (dynamic)Cbo_Empleado.SelectedItem;
                 int fkIdEmpleado = selected.Id;
 
-               
                 string contraseñaHasheada = SeguridadHash.HashearSHA256(Txt_Contraseña.Text);
 
                 usuarioControlador.ActualizarUsuario(
@@ -123,6 +127,11 @@ namespace CapaVista
                 );
 
                 MessageBox.Show("Usuario modificado correctamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Registrar en Bitácora - Arón Ricardo Esquit Silva 0901-22-13036
+                Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
+                bit.RegistrarAccion(Cls_sesion.iUsuarioId, 1, "Modificar usuario", true);
+
                 LimpiarCampos();
                 ConfiguracionInicial();
             }
@@ -131,6 +140,7 @@ namespace CapaVista
                 MessageBox.Show("Error al modificar usuario: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
         private void Btn_Limpiar_Click(object sender, EventArgs e)
         {

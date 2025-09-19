@@ -1,5 +1,4 @@
-﻿
-namespace CapaVista
+﻿namespace CapaVista
 {
     partial class frmEmpleados
     {
