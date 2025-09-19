@@ -10,16 +10,9 @@ namespace CapaVista
     /* Marcos Andres Velasquez Alcántara 0901-21-1115 */
     public partial class frmasignacion_aplicacion_usuario : Form
     {
-        // Este se usa para insertar permisos
         SentenciaAsignacionUsuarioAplicacion modelo = new SentenciaAsignacionUsuarioAplicacion();
-
-        // Este se usa para obtener aplicaciones
         Cls_AplicacionControlador appControlador = new Cls_AplicacionControlador();
-
-        // Este ya lo tenías para usuarios y módulos
         ControladorAsignacionUsuarioAplicacion controlador = new ControladorAsignacionUsuarioAplicacion();
-
-        // Registrar en Bitácora Arón Ricardo Esquit Silva 0901-22-13036
         Cls_SentenciasBitacora bitacora = new Cls_SentenciasBitacora();
 
         public frmasignacion_aplicacion_usuario()
@@ -30,14 +23,12 @@ namespace CapaVista
 
         private void frmAsignacion_aplicacion_usuario_Load(object sender, EventArgs e)
         {
-            // Llenar ComboBox Usuarios
             DataTable dtUsuarios = controlador.ObtenerUsuarios();
             Cbo_Usuarios.DataSource = dtUsuarios;
             Cbo_Usuarios.DisplayMember = "nombre_usuario";
             Cbo_Usuarios.ValueMember = "pk_id_usuario";
             Cbo_Usuarios.SelectedIndex = -1;
 
-            // Llenar ComboBox Modulos
             DataTable dtModulos = controlador.ObtenerModulos();
             Cbo_Modulos.DataSource = dtModulos;
             Cbo_Modulos.DisplayMember = "nombre_modulo";
@@ -58,7 +49,6 @@ namespace CapaVista
             Dgv_Permisos.Columns.Add(new DataGridViewCheckBoxColumn() { Name = "Eliminar", HeaderText = "Eliminar" });
             Dgv_Permisos.Columns.Add(new DataGridViewCheckBoxColumn() { Name = "Imprimir", HeaderText = "Imprimir" });
 
-            // IDs ocultos
             Dgv_Permisos.Columns.Add("IdUsuario", "IdUsuario");
             Dgv_Permisos.Columns["IdUsuario"].Visible = false;
             Dgv_Permisos.Columns.Add("IdModulo", "IdModulo");
@@ -66,46 +56,19 @@ namespace CapaVista
             Dgv_Permisos.Columns.Add("IdAplicacion", "IdAplicacion");
             Dgv_Permisos.Columns["IdAplicacion"].Visible = false;
 
-            // Obtener lista de aplicaciones
             var lista = appControlador.ObtenerTodasLasAplicaciones();
-
             DataTable dtAplicacion = new DataTable();
             dtAplicacion.Columns.Add("pk_id_aplicacion", typeof(int));
             dtAplicacion.Columns.Add("nombre_aplicacion", typeof(string));
-
             foreach (var app in lista)
-            {
                 dtAplicacion.Rows.Add(app.PkIdAplicacion, app.NombreAplicacion);
-            }
 
             Cbo_Aplicaciones.DataSource = dtAplicacion;
             Cbo_Aplicaciones.DisplayMember = "nombre_aplicacion";
             Cbo_Aplicaciones.ValueMember = "pk_id_aplicacion";
             Cbo_Aplicaciones.SelectedIndex = -1;
         }
-
-        private void Cbo_Modulos_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            if (Cbo_Modulos.SelectedValue != null)
-            {
-                var lista = appControlador.ObtenerTodasLasAplicaciones();
-
-                DataTable dtAplicacion = new DataTable();
-                dtAplicacion.Columns.Add("pk_id_aplicacion", typeof(int));
-                dtAplicacion.Columns.Add("nombre_aplicacion", typeof(string));
-
-                foreach (var app in lista)
-                {
-                    dtAplicacion.Rows.Add(app.PkIdAplicacion, app.NombreAplicacion);
-                }
-
-                Cbo_Aplicaciones.DataSource = dtAplicacion;
-                Cbo_Aplicaciones.DisplayMember = "nombre_aplicacion";
-                Cbo_Aplicaciones.ValueMember = "pk_id_aplicacion";
-                Cbo_Aplicaciones.SelectedIndex = -1;
-            }
-        }
-
+        //Pablo Quiroa 0901-22-2929
         private void Btn_agregar_Click_1(object sender, EventArgs e)
         {
             if (Cbo_Usuarios.SelectedIndex == -1 || Cbo_Modulos.SelectedIndex == -1 || Cbo_Aplicaciones.SelectedIndex == -1)
@@ -120,31 +83,36 @@ namespace CapaVista
             int idModulo = Convert.ToInt32(Cbo_Modulos.SelectedValue);
             int idAplicacion = Convert.ToInt32(Cbo_Aplicaciones.SelectedValue);
 
-            Dgv_Permisos.Rows.Add(usuario, aplicacion, false, false, false, false, false, idUsuario, idModulo, idAplicacion);
+            // Valida si ya existe en el DataGridView
+            bool existe = false;
+            foreach (DataGridViewRow row in Dgv_Permisos.Rows)
+            {
+                if (row.IsNewRow) continue;
+                int u = Convert.ToInt32(row.Cells["IdUsuario"].Value);
+                int m = Convert.ToInt32(row.Cells["IdModulo"].Value);
+                int a = Convert.ToInt32(row.Cells["IdAplicacion"].Value);
 
-            // Registrar en Bitácora Arón Ricardo Esquit Silva 0901-22-13036
-            bitacora.InsertarBitacora(Cls_sesion.iUsuarioId, idAplicacion, "Asignación Aplicación a Usuario - Agregar", true);
+                if (u == idUsuario && m == idModulo && a == idAplicacion)
+                {
+                    existe = true;
+                    break;
+                }
+            }
+
+            if (!existe)
+                //Aron Esquit 0901-22-13036
+            {
+                Dgv_Permisos.Rows.Add(usuario, aplicacion, false, false, false, false, false, idUsuario, idModulo, idAplicacion);
+                bitacora.InsertarBitacora(Cls_sesion.iUsuarioId, idAplicacion, "Asignación Aplicación a Usuario - Agregar", true);
+            }
+            else
+            {
+                MessageBox.Show("Este usuario ya tiene esa aplicación asignada. Solo modifique los permisos.");
+            }
 
             Cbo_Usuarios.SelectedIndex = -1;
             Cbo_Modulos.SelectedIndex = -1;
             Cbo_Aplicaciones.SelectedIndex = -1;
-        }
-
-        private void Btn_quitar_Click(object sender, EventArgs e)
-        {
-            if (Dgv_Permisos.CurrentRow != null && !Dgv_Permisos.CurrentRow.IsNewRow)
-            {
-                int idAplicacion = Convert.ToInt32(Dgv_Permisos.CurrentRow.Cells["IdAplicacion"].Value);
-
-                // Registrar en Bitácora Arón Ricardo Esquit Silva 0901-22-13036
-                bitacora.InsertarBitacora(Cls_sesion.iUsuarioId, idAplicacion, "Asignación Aplicación a Usuario  - Quitar", true);
-
-                Dgv_Permisos.Rows.Remove(Dgv_Permisos.CurrentRow);
-            }
-            else
-            {
-                MessageBox.Show("Seleccione una fila para quitar.");
-            }
         }
 
         private void Btn_finalizar_Click(object sender, EventArgs e)
@@ -156,58 +124,62 @@ namespace CapaVista
             }
 
             int insertados = 0;
+            int actualizados = 0;
 
             foreach (DataGridViewRow row in Dgv_Permisos.Rows)
             {
                 if (row.IsNewRow) continue;
 
-                try
+                int idUsuario = Convert.ToInt32(row.Cells["IdUsuario"].Value);
+                int idModulo = Convert.ToInt32(row.Cells["IdModulo"].Value);
+                int idAplicacion = Convert.ToInt32(row.Cells["IdAplicacion"].Value);
+
+                bool ingresar = Convert.ToBoolean(row.Cells["Ingresar"].Value ?? false);
+                bool consultar = Convert.ToBoolean(row.Cells["Consultar"].Value ?? false);
+                bool modificar = Convert.ToBoolean(row.Cells["Modificar"].Value ?? false);
+                bool eliminar = Convert.ToBoolean(row.Cells["Eliminar"].Value ?? false);
+                bool imprimir = Convert.ToBoolean(row.Cells["Imprimir"].Value ?? false);
+
+                if (modelo.ExistePermiso(idUsuario, idModulo, idAplicacion))
                 {
-                    int idUsuario = Convert.ToInt32(row.Cells["IdUsuario"].Value);
-                    int idModulo = Convert.ToInt32(row.Cells["IdModulo"].Value);
-                    int idAplicacion = Convert.ToInt32(row.Cells["IdAplicacion"].Value);
-
-                    bool ingresar = Convert.ToBoolean(row.Cells["Ingresar"].Value ?? false);
-                    bool consultar = Convert.ToBoolean(row.Cells["Consultar"].Value ?? false);
-                    bool modificar = Convert.ToBoolean(row.Cells["Modificar"].Value ?? false);
-                    bool eliminar = Convert.ToBoolean(row.Cells["Eliminar"].Value ?? false);
-                    bool imprimir = Convert.ToBoolean(row.Cells["Imprimir"].Value ?? false);
-
-                    int resultado = modelo.InsertarPermisoUsuarioAplicacion(
-                        idUsuario, idModulo, idAplicacion,
-                        ingresar, consultar, modificar,
-                        eliminar, imprimir
-                    );
-
-                    if (resultado > 0)
-                    {
-                        insertados++;
-
-                        // Registrar en Bitácora Arón Ricardo Esquit Silva 0901-22-13036
-                        bitacora.InsertarBitacora(Cls_sesion.iUsuarioId, idAplicacion, "Asignación Aplicación a Usuario  - Insertar", true);
-                    }
+                    modelo.ActualizarPermisoUsuarioAplicacion(idUsuario, idModulo, idAplicacion,
+                                                              ingresar, consultar, modificar,
+                                                              eliminar, imprimir);
+                    actualizados++;
+                    bitacora.InsertarBitacora(Cls_sesion.iUsuarioId, idAplicacion, "Asignación Aplicación a Usuario - Actualizar", true);
                 }
-                catch (Exception ex)
+                else
                 {
-                    MessageBox.Show($"Error insertando fila: {ex.Message}");
+                    modelo.InsertarPermisoUsuarioAplicacion(idUsuario, idModulo, idAplicacion,
+                                                            ingresar, consultar, modificar,
+                                                            eliminar, imprimir);
+                    insertados++;
+                    bitacora.InsertarBitacora(Cls_sesion.iUsuarioId, idAplicacion, "Asignación Aplicación a Usuario - Insertar", true);
                 }
             }
 
-            MessageBox.Show($"Se insertaron {insertados} registros correctamente.");
+            MessageBox.Show($"Se insertaron {insertados} registros y se actualizaron {actualizados} registros correctamente.");
             Dgv_Permisos.Rows.Clear();
         }
 
-        private void Btn_salir_Click(object sender, EventArgs e)
+        private void Btn_quitar_Click(object sender, EventArgs e)
         {
-            this.Close();
+            if (Dgv_Permisos.CurrentRow != null && !Dgv_Permisos.CurrentRow.IsNewRow)
+            {
+                int idAplicacion = Convert.ToInt32(Dgv_Permisos.CurrentRow.Cells["IdAplicacion"].Value);
+                bitacora.InsertarBitacora(Cls_sesion.iUsuarioId, idAplicacion, "Asignación Aplicación a Usuario  - Quitar", true);
+                Dgv_Permisos.Rows.Remove(Dgv_Permisos.CurrentRow);
+            }
+            else
+            {
+                MessageBox.Show("Seleccione una fila para quitar.");
+            }
         }
 
-        private void Dgv_Permisos_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-        }
+        private void Btn_salir_Click(object sender, EventArgs e) => this.Close();
 
-        // Panel superior
-        //0901-20-4620 Ruben Armando Lopez Luch
+        private void Dgv_Permisos_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
+
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HTCAPTION = 0x2;
 
@@ -217,10 +189,7 @@ namespace CapaVista
         [DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
 
-        private void Pic_Cerrar_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
+        private void Pic_Cerrar_Click(object sender, EventArgs e) => this.Close();
 
         private void Pnl_Superior_MouseDown(object sender, MouseEventArgs e)
         {
