@@ -100,7 +100,6 @@ namespace CapaVistaNavegador
 
             if (Dgv_Datos == null)
             {
-<<<<<<< HEAD
                 Dgv_Datos = new DataGridView();
                 Dgv_Datos.Name = "Dgv_Datos";
                 Dgv_Datos.ScrollBars = ScrollBars.None;
@@ -114,7 +113,6 @@ namespace CapaVistaNavegador
                 // preguntar a Stevens
                 ctrl.AsignarDataGridView(Dgv_Datos);
                 Dgv_Datos.SelectionChanged += Dgv_Datos_SelectionChanged;
-=======
                 //Dgv_Datos = new DataGridView();
                 //Dgv_Datos.Name = "Dgv_Datos";
                 //Dgv_Datos.ScrollBars = ScrollBars.None;
@@ -124,7 +122,6 @@ namespace CapaVistaNavegador
                 //Dgv_Datos.Size = new System.Drawing.Size(1100, 200);
                 //Dgv_Datos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
                 //this.Controls.Add(Dgv_Datos);
->>>>>>> d36fa1eed5afa9529183c4515d3d3a8980adac4c
             }
 
             // Asegurarse de que alias no sea null
