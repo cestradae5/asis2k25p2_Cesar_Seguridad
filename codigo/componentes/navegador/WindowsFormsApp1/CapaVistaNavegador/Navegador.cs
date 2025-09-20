@@ -73,15 +73,6 @@ namespace CapaVistaNavegador
             Dgv_Datos.DataSource = dtPagina;
         }
 
-
-        private void Actualizar_Estado_Botones()
-        {
-            Btn_inicio.Enabled = paginaActual > 1;
-            Btn_anterior.Enabled = paginaActual > 1;
-            Btn_sig.Enabled = paginaActual < totalPaginas;
-            Btn_fin.Enabled = paginaActual < totalPaginas;
-        }
-
         public void mostrarDatos()
         {
             /* if (Dgv_Datos == null)
@@ -227,29 +218,36 @@ namespace CapaVistaNavegador
             paginaActual = 1;
             MostrarPagina(paginaActual);
             ctrl.MoverAlInicio();
-            Actualizar_Estado_Botones();
         }
 
         private void Btn_anterior_Click_1(object sender, EventArgs e)
         {
-            if (paginaActual == 1)
-            {
+            if (Dgv_Datos == null || Dgv_Datos.Rows.Count == 0)
                 return;
+
+            int filaActual = Dgv_Datos.CurrentCell?.RowIndex ?? -1;
+            if (filaActual > 0)
+            {
+                int filaAnterior = filaActual - 1;
+                Dgv_Datos.ClearSelection();
+                Dgv_Datos.Rows[filaAnterior].Selected = true;
+                Dgv_Datos.CurrentCell = Dgv_Datos.Rows[filaAnterior].Cells[0];
             }
-            paginaActual -= 1;
-            MostrarPagina(paginaActual);
-            Actualizar_Estado_Botones();
         }
 
         private void Btn_sig_Click(object sender, EventArgs e)
         {
-            if (paginaActual == totalPaginas)
-            {
+            if (Dgv_Datos == null || Dgv_Datos.Rows.Count == 0)
                 return;
+
+            int filaActual = Dgv_Datos.CurrentCell?.RowIndex ?? -1;
+            if (filaActual >= 0 && filaActual < Dgv_Datos.Rows.Count - 1)
+            {
+                int filaSiguiente = filaActual + 1;
+                Dgv_Datos.ClearSelection();
+                Dgv_Datos.Rows[filaSiguiente].Selected = true;
+                Dgv_Datos.CurrentCell = Dgv_Datos.Rows[filaSiguiente].Cells[0];
             }
-            paginaActual += 1;
-            MostrarPagina(paginaActual);
-            Actualizar_Estado_Botones();
         }
 
         private void Btn_fin_Click_1(object sender, EventArgs e)
@@ -257,7 +255,6 @@ namespace CapaVistaNavegador
             paginaActual = totalPaginas;
             MostrarPagina(paginaActual);
             ctrl.MoverAlFin();
-            Actualizar_Estado_Botones();
         }
 
         private void Btn_ayuda_Click(object sender, EventArgs e)
@@ -274,7 +271,6 @@ namespace CapaVistaNavegador
         public void configurarDataGridView(ConfiguracionDataGridView configuracion)
         {
             configuracionDataGridView = configuracion;
-            registrosPorPagina = configuracionDataGridView.RegistrosPorPagina;
 
             if (Dgv_Datos == null)
             {

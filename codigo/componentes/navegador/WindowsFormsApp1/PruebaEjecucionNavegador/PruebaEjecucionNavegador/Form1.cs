@@ -21,7 +21,6 @@ namespace PruebaEjecucionNavegador
                 Alto = 200,
                 PosX = 10,
                 PosY = 250,
-                RegistrosPorPagina = 15,
                 ColorFondo = Color.White,
                 TipoScrollBars = ScrollBars.Both,
                 Nombre = "dgv_empleados"

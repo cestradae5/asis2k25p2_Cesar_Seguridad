@@ -16,7 +16,6 @@ namespace CapaControladorNavegador
         public int Alto { get; set; }
         public int PosX { get; set; }
         public int PosY { get; set; }
-        public int RegistrosPorPagina { get; set; }
 
         // Colores y estilos
         public Color ColorFondo { get; set; }                // Áreas vacías
@@ -38,7 +37,6 @@ namespace CapaControladorNavegador
             Alto = 200;
             PosX = 10;
             PosY = 250;
-            RegistrosPorPagina = 9;
 
             // Estilos por defecto
             ColorFondo = Color.White;
