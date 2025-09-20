@@ -190,5 +190,11 @@ namespace CapaVista
             frm_cambiar_contrasena ventana = new frm_cambiar_contrasena(Cls_sesion.iUsuarioId);
             ventana.Show();
         }
+
+        private void asignacionPermisoPerfilesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmPermisosPerfiles permisoperfil = new FrmPermisosPerfiles();
+            permisoperfil.Show();
+        }
     }
 }
