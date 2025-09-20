@@ -15,6 +15,7 @@ namespace PruebaEjecucionNavegador
         public Form1()
         {
             InitializeComponent();
+<<<<<<< Updated upstream
 <<<<<<< HEAD
             
             string[] columnas = { "empleados", "codigo_empleado", "nombre_completo", "puesto", "departamento", "estado" };
@@ -29,6 +30,12 @@ namespace PruebaEjecucionNavegador
                 TipoScrollBars = ScrollBars.Both,
                 Nombre = "dgv_empleados"
             };
+=======
+            
+            string[] columnas = { "empleados", "codigo_empleado", "nombre_completo", "puesto", "departamento", "estado" };
+            navegador1.nombreTabla = columnas[0]; 
+            navegador1.alias = columnas;
+>>>>>>> Stashed changes
 
             string[] columnas = { "empleados", "codigo_empleado", "nombre_completo", "puesto", "departamento", "estado" };
             navegador1.configurarDataGridView(config);

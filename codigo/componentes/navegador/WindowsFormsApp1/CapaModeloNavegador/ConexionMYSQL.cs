@@ -9,7 +9,7 @@ namespace CapaModeloNavegador
 {
     public class ConexionMYSQL
     {
-        private readonly string ConexionODBC = "Dsn=Prueba1"; // DSN de odbc
+        private readonly string ConexionODBC = "Dsn=CapaODBC"; // DSN de odbc
 
         //retorna conexion cerrada para que el DAO la abra y cierre cuando sea necesario
         public OdbcConnection conexion()
