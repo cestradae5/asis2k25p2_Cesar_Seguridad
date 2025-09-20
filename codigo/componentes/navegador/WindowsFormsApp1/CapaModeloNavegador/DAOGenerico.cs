@@ -30,7 +30,7 @@ namespace CapaModeloNavegador
             return OdbcType.VarChar; // por defecto retorna varchar
         }
 
-        // seccion para insertar pk autoincr o no autoincr
+        // insertar datos
         public void InsertarDatos(string[] alias, object[] valores)
         {
             string tabla = alias[0]; // nombre de la tabla
@@ -45,7 +45,7 @@ namespace CapaModeloNavegador
                 pkAutoCache[cacheKey] = pkAuto;
             }
 
-            // define los campos a insertar (si PK si es autoincrementable)
+            // define los campos a insertar (si PK es autoincrementable)
             string[] campos = pkAuto ? alias.Skip(2).ToArray() : alias.Skip(1).ToArray();
 
             // filtrar los valores según la PK, si es autoincrementable se ignora el primer valor
@@ -62,16 +62,39 @@ namespace CapaModeloNavegador
             using (OdbcConnection conn = con.conexion())
             {
                 conn.Open();
-                using (OdbcCommand cmd = new OdbcCommand(sql, conn))
+
+                // inicio de transaccion
+                // using (OdbcTransaction trans = conn.BeginTransaction())
+                // {
+                try
                 {
-                    for (int i = 0; i < campos.Length; i++)
+                    using (OdbcCommand cmd = new OdbcCommand(sql, conn))
                     {
-                        cmd.Parameters.Add("?", MapeadoTipoDatos(valoresFiltrados[i])).Value = valoresFiltrados[i] ?? DBNull.Value; // asigna tipo de dato
+                        // se liga la transacción al comando
+                        // cmd.Transaction = trans;
+
+                        for (int i = 0; i < campos.Length; i++)
+                        {
+                            cmd.Parameters.Add("?", MapeadoTipoDatos(valoresFiltrados[i]))
+                                          .Value = valoresFiltrados[i] ?? DBNull.Value; // asigna tipo de dato
+                        }
+                        cmd.ExecuteNonQuery(); // ejecuta el insert
                     }
-                    cmd.ExecuteNonQuery();
+
+                    // Bitacora.InsertarBitacora(conn, trans, idUsuario, aplicacion, "INS"); // inserta datos en bitacora
+
+                    // trans.Commit(); // realiza commit si sale bien
                 }
-            } // la conexión se cierra automáticamente
+                catch
+                {
+
+                    // trans.Rollback(); // revertir en caso que haya error
+                    throw; // lanza la excepción 
+                }
+                // }
+            } //la conexión se cierra automáticamente
         }
+
 
 
         // seccion para consultar registros
