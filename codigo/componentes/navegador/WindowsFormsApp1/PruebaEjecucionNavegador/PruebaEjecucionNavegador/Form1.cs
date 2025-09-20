@@ -15,11 +15,8 @@ namespace PruebaEjecucionNavegador
         public Form1()
         {
             InitializeComponent();
-<<<<<<< Updated upstream
-<<<<<<< HEAD
             
-            string[] columnas = { "empleados", "codigo_empleado", "nombre_completo", "puesto", "departamento", "estado" };
-=======
+            /*string[] columnas = { "empleados", "codigo_empleado", "nombre_completo", "puesto", "departamento", "estado" };
             CapaControladorNavegador.ConfiguracionDataGridView config = new CapaControladorNavegador.ConfiguracionDataGridView
             {
                 Ancho = 1100,
@@ -29,20 +26,17 @@ namespace PruebaEjecucionNavegador
                 ColorFondo = Color.White,
                 TipoScrollBars = ScrollBars.Both,
                 Nombre = "dgv_empleados"
-            };
-=======
-            
-            string[] columnas = { "empleados", "codigo_empleado", "nombre_completo", "puesto", "departamento", "estado" };
-            navegador1.nombreTabla = columnas[0]; 
-            navegador1.alias = columnas;
->>>>>>> Stashed changes
+            };*/
 
             string[] columnas = { "empleados", "codigo_empleado", "nombre_completo", "puesto", "departamento", "estado" };
-            navegador1.configurarDataGridView(config);
->>>>>>> d36fa1eed5afa9529183c4515d3d3a8980adac4c
             navegador1.nombreTabla = columnas[0];
             navegador1.alias = columnas;
-            navegador1.mostrarDatos();
+
+            /*string[] columnas = { "empleados", "codigo_empleado", "nombre_completo", "puesto", "departamento", "estado" };
+            navegador1.configurarDataGridView(config);
+            navegador1.nombreTabla = columnas[0];
+            navegador1.alias = columnas;
+            navegador1.mostrarDatos();*/
         }
 
     }

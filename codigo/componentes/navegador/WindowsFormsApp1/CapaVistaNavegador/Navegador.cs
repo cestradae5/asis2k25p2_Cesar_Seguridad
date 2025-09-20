@@ -75,29 +75,6 @@ namespace CapaVistaNavegador
 
         public void mostrarDatos()
         {
-            /* if (Dgv_Datos == null)
-             {
-                 Dgv_Datos = new DataGridView();
-                 Dgv_Datos.Name = "Dgv_Datos";
-                 Dgv_Datos.ScrollBars = ScrollBars.None;
-                 Dgv_Datos.BackgroundColor = Color.White;
-                 Dgv_Datos.ColumnHeadersDefaultCellStyle.Font = new Font("Microsoft Sans Serif", 9, FontStyle.Bold);
-                 Dgv_Datos.Location = new System.Drawing.Point(10, 250); // aqui se cambia la posicion (por si hay que agregar otra cosa)
-                 Dgv_Datos.Size = new System.Drawing.Size(1100, 200); // aqui se cambia el tamaño (tambien por si acaso ajaj)
-                 Dgv_Datos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-                 this.Controls.Add(Dgv_Datos);
-                 ctrl.AsignarDataGridView(Dgv_Datos);
-             }
-
-             // aqui se llena la tabla y tambien se le pone el nombre (dependiendo de la tabla que se vaya a usar)
-             dtCompleto = ctrl.LlenarTabla(alias[0], alias.Skip(1).ToArray());
-             Dgv_Datos.DataSource = dtCompleto;
-
-
-             totalPaginas = (int)Math.Ceiling(dtCompleto.Rows.Count / (double)registrosPorPagina);
-             paginaActual = 1;
-             MostrarPagina(paginaActual);*/
-
             if (Dgv_Datos == null)
             {
                 Dgv_Datos = new DataGridView();
@@ -113,15 +90,6 @@ namespace CapaVistaNavegador
                 // preguntar a Stevens
                 ctrl.AsignarDataGridView(Dgv_Datos);
                 Dgv_Datos.SelectionChanged += Dgv_Datos_SelectionChanged;
-                //Dgv_Datos = new DataGridView();
-                //Dgv_Datos.Name = "Dgv_Datos";
-                //Dgv_Datos.ScrollBars = ScrollBars.None;
-                //Dgv_Datos.BackgroundColor = Color.White;
-                //Dgv_Datos.ColumnHeadersDefaultCellStyle.Font = new Font("Microsoft Sans Serif", 9, FontStyle.Bold);
-                //Dgv_Datos.Location = new System.Drawing.Point(10, 250);
-                //Dgv_Datos.Size = new System.Drawing.Size(1100, 200);
-                //Dgv_Datos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-                //this.Controls.Add(Dgv_Datos);
             }
 
             // Asegurarse de que alias no sea null
