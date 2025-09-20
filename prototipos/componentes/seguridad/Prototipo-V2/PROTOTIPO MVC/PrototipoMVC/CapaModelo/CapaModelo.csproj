@@ -43,6 +43,8 @@
   <ItemGroup>
     <Compile Include="Cls_asignacion_perfil_usuario.cs" />
     <Compile Include="Cls_asignacion_perfil_usuarioDAO.cs" />
+    <Compile Include="Cls_Asignacion_Permiso_PerfilesDAO.cs" />
+    <Compile Include="Cls_Asignacion_Perrmisos_Perfiles.cs" />
     <Compile Include="Cls_BitacoraDao.cs" />
     <Compile Include="Cls_Aplicacion.cs" />
     <Compile Include="Cls_AplicacionDAO.cs" />
