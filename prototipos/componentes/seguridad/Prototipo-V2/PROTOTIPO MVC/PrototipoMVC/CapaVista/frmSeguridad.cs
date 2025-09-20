@@ -149,8 +149,7 @@ namespace CapaVista
 
         private void modulosToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmModulo formModulo = new frmModulo();
-            formModulo.Show();
+            
 
         }
 
@@ -191,10 +190,10 @@ namespace CapaVista
             ventana.Show();
         }
 
-        private void asignacionPermisoPerfilesToolStripMenuItem_Click(object sender, EventArgs e)
+        private void Btn_Modulo_Click(object sender, EventArgs e)
         {
-            FrmPermisosPerfiles permisoperfil = new FrmPermisosPerfiles();
-            permisoperfil.Show();
+            frmModulo formModulo = new frmModulo();
+            formModulo.Show();
         }
     }
 }
