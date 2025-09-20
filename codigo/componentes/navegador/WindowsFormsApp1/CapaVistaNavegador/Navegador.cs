@@ -13,7 +13,9 @@ namespace CapaVistaNavegador
     public partial class Navegador : UserControl
     {
         public string[] alias { get; set; }
-       public string nombreTabla { get; set; } // Nueva propiedad para el nombre de la tabla
+        public string nombreTabla { get; set; } // Nueva propiedad para el nombre de la tabla
+
+        public ConfiguracionDataGridView configuracionDataGridView;
 
         public Navegador()
         {
@@ -29,7 +31,7 @@ namespace CapaVistaNavegador
             // habilitar botones
             habilitar_botones();*/
 
-            
+
             if (alias == null || alias.Length < 2)
             {
                 MessageBox.Show("No se han definido los alias de la tabla.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -37,8 +39,8 @@ namespace CapaVistaNavegador
             }
 
             //Parámetros para validar 
-            string tabla = nombreTabla; 
-            string[] columnas = alias; 
+            string tabla = nombreTabla;
+            string[] columnas = alias;
 
             // Asigna los alias al controlador y crea los controles necesarios
             if (ctrl.AsignarAlias(alias, this, 10, 100))
@@ -54,11 +56,11 @@ namespace CapaVistaNavegador
         // parte del datagridview con la funcion del boton imprimir
 
         private DataGridView Dgv_Datos;
-        private int registrosPorPagina = 9; 
+        private int registrosPorPagina = 9;
         private int paginaActual = 1;
         private int totalPaginas = 0;
         private DataTable dtCompleto;
-    
+
         private void MostrarPagina(int pagina)
         {
             DataTable dtPagina = dtCompleto.Clone();
@@ -69,15 +71,6 @@ namespace CapaVistaNavegador
                 dtPagina.ImportRow(dtCompleto.Rows[i]);
             }
             Dgv_Datos.DataSource = dtPagina;
-        }
-
-
-        private void Actualizar_Estado_Botones()
-        {
-            Btn_inicio.Enabled = paginaActual > 1;
-            Btn_anterior.Enabled = paginaActual > 1;
-            Btn_sig.Enabled = paginaActual < totalPaginas;
-            Btn_fin.Enabled = paginaActual < totalPaginas;
         }
 
         public void mostrarDatos()
@@ -107,6 +100,7 @@ namespace CapaVistaNavegador
 
             if (Dgv_Datos == null)
             {
+<<<<<<< HEAD
                 Dgv_Datos = new DataGridView();
                 Dgv_Datos.Name = "Dgv_Datos";
                 Dgv_Datos.ScrollBars = ScrollBars.None;
@@ -120,6 +114,17 @@ namespace CapaVistaNavegador
                 // preguntar a Stevens
                 ctrl.AsignarDataGridView(Dgv_Datos);
                 Dgv_Datos.SelectionChanged += Dgv_Datos_SelectionChanged;
+=======
+                //Dgv_Datos = new DataGridView();
+                //Dgv_Datos.Name = "Dgv_Datos";
+                //Dgv_Datos.ScrollBars = ScrollBars.None;
+                //Dgv_Datos.BackgroundColor = Color.White;
+                //Dgv_Datos.ColumnHeadersDefaultCellStyle.Font = new Font("Microsoft Sans Serif", 9, FontStyle.Bold);
+                //Dgv_Datos.Location = new System.Drawing.Point(10, 250);
+                //Dgv_Datos.Size = new System.Drawing.Size(1100, 200);
+                //Dgv_Datos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                //this.Controls.Add(Dgv_Datos);
+>>>>>>> d36fa1eed5afa9529183c4515d3d3a8980adac4c
             }
 
             // Asegurarse de que alias no sea null
@@ -176,7 +181,7 @@ namespace CapaVistaNavegador
 
         private void Btn_guardar_Click_1(object sender, EventArgs e)
         {
-            ControladorNavegador ctrl = new ControladorNavegador(); 
+            ControladorNavegador ctrl = new ControladorNavegador();
             ctrl.Insertar_Datos(this, alias);
 
             // Recarga despues de insertar = Stevens Cambranes
@@ -254,29 +259,36 @@ namespace CapaVistaNavegador
             paginaActual = 1;
             MostrarPagina(paginaActual);
             ctrl.MoverAlInicio();
-            Actualizar_Estado_Botones();
         }
 
         private void Btn_anterior_Click_1(object sender, EventArgs e)
         {
-            if (paginaActual == 1)
-            {
+            if (Dgv_Datos == null || Dgv_Datos.Rows.Count == 0)
                 return;
+
+            int filaActual = Dgv_Datos.CurrentCell?.RowIndex ?? -1;
+            if (filaActual > 0)
+            {
+                int filaAnterior = filaActual - 1;
+                Dgv_Datos.ClearSelection();
+                Dgv_Datos.Rows[filaAnterior].Selected = true;
+                Dgv_Datos.CurrentCell = Dgv_Datos.Rows[filaAnterior].Cells[0];
             }
-            paginaActual -= 1;
-            MostrarPagina(paginaActual);
-            Actualizar_Estado_Botones();
         }
 
         private void Btn_sig_Click(object sender, EventArgs e)
         {
-            if (paginaActual == totalPaginas)
-            {
+            if (Dgv_Datos == null || Dgv_Datos.Rows.Count == 0)
                 return;
+
+            int filaActual = Dgv_Datos.CurrentCell?.RowIndex ?? -1;
+            if (filaActual >= 0 && filaActual < Dgv_Datos.Rows.Count - 1)
+            {
+                int filaSiguiente = filaActual + 1;
+                Dgv_Datos.ClearSelection();
+                Dgv_Datos.Rows[filaSiguiente].Selected = true;
+                Dgv_Datos.CurrentCell = Dgv_Datos.Rows[filaSiguiente].Cells[0];
             }
-            paginaActual += 1;
-            MostrarPagina(paginaActual);
-            Actualizar_Estado_Botones();
         }
 
         private void Btn_fin_Click_1(object sender, EventArgs e)
@@ -284,7 +296,6 @@ namespace CapaVistaNavegador
             paginaActual = totalPaginas;
             MostrarPagina(paginaActual);
             ctrl.MoverAlFin();
-            Actualizar_Estado_Botones();
         }
 
         private void Btn_ayuda_Click(object sender, EventArgs e)
@@ -296,5 +307,44 @@ namespace CapaVistaNavegador
         {
             Application.Exit();
         }
+
+        // Configuracion de data grid view
+        public void configurarDataGridView(ConfiguracionDataGridView configuracion)
+        {
+            configuracionDataGridView = configuracion;
+
+            if (Dgv_Datos == null)
+            {
+                Dgv_Datos = new DataGridView();
+                Dgv_Datos.Name = configuracionDataGridView.Nombre;
+
+                // ScrollBars
+                Dgv_Datos.ScrollBars = configuracionDataGridView.TipoScrollBars;
+
+                // Colores y estilos
+                Dgv_Datos.BackgroundColor = configuracionDataGridView.ColorFondo;
+                Dgv_Datos.RowsDefaultCellStyle.BackColor = configuracionDataGridView.ColorFilas;
+                Dgv_Datos.RowsDefaultCellStyle.ForeColor = configuracionDataGridView.ColorTextoFilas;
+                Dgv_Datos.AlternatingRowsDefaultCellStyle.BackColor = configuracionDataGridView.ColorFilasAlternas;
+
+                // Encabezados
+                Dgv_Datos.ColumnHeadersDefaultCellStyle.Font = configuracionDataGridView.FuenteEncabezado;
+                Dgv_Datos.EnableHeadersVisualStyles = false;
+                Dgv_Datos.ColumnHeadersDefaultCellStyle.BackColor = configuracionDataGridView.ColorEncabezado;
+                Dgv_Datos.ColumnHeadersDefaultCellStyle.ForeColor = configuracionDataGridView.ColorTextoEncabezado;
+
+                // Ubicación y tamaño
+                Dgv_Datos.Location = new Point(configuracionDataGridView.PosX, configuracionDataGridView.PosY);
+                Dgv_Datos.Size = new Size(configuracionDataGridView.Ancho, configuracionDataGridView.Alto);
+                Dgv_Datos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+                // Agregar al formulario
+                this.Controls.Add(Dgv_Datos);
+
+                // Mandarlo al controlador
+                ctrl.AsignarDataGridView(Dgv_Datos);
+            }
+        }
+
     }
 }
