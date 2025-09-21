@@ -39,6 +39,7 @@ namespace CapaVista
             this.Lbl_Usuario = new System.Windows.Forms.Label();
             this.Cbo_Usuario = new System.Windows.Forms.ComboBox();
             this.Pnl_Superior = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
             this.Pic_Cerrar = new System.Windows.Forms.PictureBox();
             this.Btn_Imprimir = new System.Windows.Forms.Button();
             this.Btn_Salir = new System.Windows.Forms.Button();
@@ -164,6 +165,22 @@ namespace CapaVista
             this.Pnl_Superior.Size = new System.Drawing.Size(1330, 44);
             this.Pnl_Superior.TabIndex = 95;
             this.Pnl_Superior.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Pnl_Superior_MouseDown);
+            // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
+            this.button1.Font = new System.Drawing.Font("Rockwell", 10F);
+            this.button1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
+            this.button1.Image = global::CapaVista.Properties.Resources.exportar;
+            this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.button1.Location = new System.Drawing.Point(1162, 457);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(133, 61);
+            this.button1.TabIndex = 96;
+            this.button1.Text = "Reporte";
+            this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Pic_Cerrar
             // 
@@ -299,6 +316,7 @@ namespace CapaVista
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(185)))), ((int)(((byte)(185)))));
             this.ClientSize = new System.Drawing.Size(1330, 568);
             this.ControlBox = false;
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.Pnl_Superior);
             this.Controls.Add(this.Btn_Imprimir);
             this.Controls.Add(this.Cbo_Usuario);
@@ -351,5 +369,6 @@ namespace CapaVista
         private System.Windows.Forms.Button Btn_Imprimir;
         private System.Windows.Forms.Panel Pnl_Superior;
         private System.Windows.Forms.PictureBox Pic_Cerrar;
+        private System.Windows.Forms.Button button1;
     }
 }

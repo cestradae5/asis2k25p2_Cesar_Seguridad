@@ -54,16 +54,17 @@
             this.Gpb_opciones_empleados = new System.Windows.Forms.GroupBox();
             this.Btn_cancelar = new System.Windows.Forms.Button();
             this.Btn_salario_empleados = new System.Windows.Forms.Button();
+            this.Btn_nuevo_empleado = new System.Windows.Forms.Button();
             this.Btn_guardar_empleado = new System.Windows.Forms.Button();
             this.Btn_eliminar_empleado = new System.Windows.Forms.Button();
             this.Btn_salir_empleado = new System.Windows.Forms.Button();
             this.Btn_modificar_empleado = new System.Windows.Forms.Button();
-            this.Btn_nuevo_empleado = new System.Windows.Forms.Button();
             this.Gpb_mostrar_empleados = new System.Windows.Forms.GroupBox();
             this.Btn_buscar_empleado = new System.Windows.Forms.Button();
             this.Cbo_mostrar_empleado = new System.Windows.Forms.ComboBox();
             this.Pnl_Superior = new System.Windows.Forms.Panel();
             this.Pic_Cerrar = new System.Windows.Forms.PictureBox();
+            this.Btn_reporte = new System.Windows.Forms.Button();
             this.Gpb_datos_empleados.SuspendLayout();
             this.Gpb_genero_empleados.SuspendLayout();
             this.Gpb_opciones_empleados.SuspendLayout();
@@ -365,6 +366,22 @@
             this.Btn_salario_empleados.UseVisualStyleBackColor = false;
             this.Btn_salario_empleados.Click += new System.EventHandler(this.Btn_salario_empleados_Click);
             // 
+            // Btn_nuevo_empleado
+            // 
+            this.Btn_nuevo_empleado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
+            this.Btn_nuevo_empleado.Font = new System.Drawing.Font("Rockwell", 10F);
+            this.Btn_nuevo_empleado.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
+            this.Btn_nuevo_empleado.Image = global::CapaVista.Properties.Resources.add_insert_new_plus_button_icon_142943;
+            this.Btn_nuevo_empleado.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Btn_nuevo_empleado.Location = new System.Drawing.Point(22, 37);
+            this.Btn_nuevo_empleado.Name = "Btn_nuevo_empleado";
+            this.Btn_nuevo_empleado.Size = new System.Drawing.Size(136, 55);
+            this.Btn_nuevo_empleado.TabIndex = 6;
+            this.Btn_nuevo_empleado.Text = "Nuevo";
+            this.Btn_nuevo_empleado.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Btn_nuevo_empleado.UseVisualStyleBackColor = false;
+            this.Btn_nuevo_empleado.Click += new System.EventHandler(this.Btn_nuevo_empleado_Click);
+            // 
             // Btn_guardar_empleado
             // 
             this.Btn_guardar_empleado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
@@ -429,22 +446,6 @@
             this.Btn_modificar_empleado.UseVisualStyleBackColor = false;
             this.Btn_modificar_empleado.Click += new System.EventHandler(this.Btn_modificar_empleado_Click);
             // 
-            // Btn_nuevo_empleado
-            // 
-            this.Btn_nuevo_empleado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
-            this.Btn_nuevo_empleado.Font = new System.Drawing.Font("Rockwell", 10F);
-            this.Btn_nuevo_empleado.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_nuevo_empleado.Image = global::CapaVista.Properties.Resources.add_insert_new_plus_button_icon_142943;
-            this.Btn_nuevo_empleado.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Btn_nuevo_empleado.Location = new System.Drawing.Point(22, 37);
-            this.Btn_nuevo_empleado.Name = "Btn_nuevo_empleado";
-            this.Btn_nuevo_empleado.Size = new System.Drawing.Size(136, 55);
-            this.Btn_nuevo_empleado.TabIndex = 6;
-            this.Btn_nuevo_empleado.Text = "Nuevo";
-            this.Btn_nuevo_empleado.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Btn_nuevo_empleado.UseVisualStyleBackColor = false;
-            this.Btn_nuevo_empleado.Click += new System.EventHandler(this.Btn_nuevo_empleado_Click);
-            // 
             // Gpb_mostrar_empleados
             // 
             this.Gpb_mostrar_empleados.Controls.Add(this.Btn_buscar_empleado);
@@ -506,12 +507,29 @@
             this.Pic_Cerrar.TabStop = false;
             this.Pic_Cerrar.Click += new System.EventHandler(this.Pic_Cerrar_Click);
             // 
+            // Btn_reporte
+            // 
+            this.Btn_reporte.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
+            this.Btn_reporte.Font = new System.Drawing.Font("Rockwell", 10F);
+            this.Btn_reporte.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
+            this.Btn_reporte.Image = global::CapaVista.Properties.Resources.exportar;
+            this.Btn_reporte.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Btn_reporte.Location = new System.Drawing.Point(813, 83);
+            this.Btn_reporte.Name = "Btn_reporte";
+            this.Btn_reporte.Size = new System.Drawing.Size(136, 55);
+            this.Btn_reporte.TabIndex = 96;
+            this.Btn_reporte.Text = "Reporte";
+            this.Btn_reporte.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Btn_reporte.UseVisualStyleBackColor = false;
+            this.Btn_reporte.Click += new System.EventHandler(this.Btn_reporte_Click);
+            // 
             // frmEmpleados
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(185)))), ((int)(((byte)(185)))));
             this.ClientSize = new System.Drawing.Size(1046, 647);
+            this.Controls.Add(this.Btn_reporte);
             this.Controls.Add(this.Pnl_Superior);
             this.Controls.Add(this.Gpb_mostrar_empleados);
             this.Controls.Add(this.Gpb_opciones_empleados);
@@ -573,5 +591,6 @@
         private System.Windows.Forms.Button Btn_cancelar;
         private System.Windows.Forms.Panel Pnl_Superior;
         private System.Windows.Forms.PictureBox Pic_Cerrar;
+        private System.Windows.Forms.Button Btn_reporte;
     }
 }
