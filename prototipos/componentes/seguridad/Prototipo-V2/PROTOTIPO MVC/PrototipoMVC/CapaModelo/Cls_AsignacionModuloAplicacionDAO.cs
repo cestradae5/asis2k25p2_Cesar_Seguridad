@@ -1,11 +1,11 @@
-﻿using System;
+﻿//Cesar Armando Estrada Elias 0901-22-10153
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.Odbc;
 using System.Data;
-
 
 namespace CapaModelo
 {
@@ -14,15 +14,17 @@ namespace CapaModelo
         private Conexion conexion = new Conexion();
 
         private static readonly string SQL_INSERT =
-            "INSERT INTO tbl_ASIGNACION_MODULO_APLICACION (fk_id_modulo, fk_id_aplicacion) VALUES (?, ?)";
+            "INSERT INTO Tbl_Asignacion_Modulo_Aplicacion (Fk_Id_Modulo, Fk_Id_Aplicacion) VALUES (?, ?)";
+
         private static readonly string SQL_EXISTE =
-            "SELECT COUNT(*) FROM tbl_ASIGNACION_MODULO_APLICACION WHERE fk_id_modulo = ? AND fk_id_aplicacion = ?";
-        private static readonly string SQL_SELECT =
-            @"SELECT a.fk_id_aplicacion, app.nombre_aplicacion,
-                     a.fk_id_modulo, m.nombre_modulo
-              FROM tbl_ASIGNACION_MODULO_APLICACION a
-              INNER JOIN tbl_APLICACION app ON a.fk_id_aplicacion = app.pk_id_aplicacion
-              INNER JOIN tbl_MODULO m ON a.fk_id_modulo = m.pk_id_modulo";
+            "SELECT COUNT(*) FROM Tbl_Asignacion_Modulo_Aplicacion WHERE Fk_Id_Modulo = ? AND Fk_Id_Aplicacion = ?";
+
+        private static readonly string SQL_SELECT = @"
+            SELECT a.Fk_Id_Aplicacion, app.Cmp_Nombre_Aplicacion,
+                   a.Fk_Id_Modulo, m.Cmp_Nombre_Modulo
+            FROM Tbl_Asignacion_Modulo_Aplicacion a
+            INNER JOIN Tbl_Aplicacion app ON a.Fk_Id_Aplicacion = app.Pk_Id_Aplicacion
+            INNER JOIN Tbl_Modulo m ON a.Fk_Id_Modulo = m.Pk_Id_Modulo";
 
         // Insertar nueva asignación
         public int InsertarAsignacion(int idModulo, int idAplicacion)

@@ -1,4 +1,4 @@
-﻿//Cesar Armando Estrtada Elias 0901-22-10153
+﻿//Cesar Armando Estrada Elias 0901-22-10153
 using System;
 using System.Collections.Generic;
 using System.Data.Odbc;
@@ -10,30 +10,30 @@ namespace CapaModelo
         private Conexion conexion = new Conexion();
 
         private static readonly string SQL_SELECT = @"
-            SELECT pk_id_aplicacion, fk_id_reporte, nombre_aplicacion, 
-                   descripcion_aplicacion, estado_aplicacion
-            FROM tbl_APLICACION";
+            SELECT Pk_Id_Aplicacion, Fk_Id_Reporte_Aplicacion, Cmp_Nombre_Aplicacion, 
+                   Cmp_Descripcion_Aplicacion, Cmp_Estado_Aplicacion
+            FROM Tbl_Aplicacion";
 
         private static readonly string SQL_INSERT = @"
-            INSERT INTO tbl_APLICACION 
-                (pk_id_aplicacion, fk_id_reporte, nombre_aplicacion, descripcion_aplicacion, estado_aplicacion)
+            INSERT INTO Tbl_Aplicacion 
+                (Pk_Id_Aplicacion, Fk_Id_Reporte_Aplicacion, Cmp_Nombre_Aplicacion, Cmp_Descripcion_Aplicacion, Cmp_Estado_Aplicacion)
             VALUES (?, ?, ?, ?, ?)";
 
         private static readonly string SQL_UPDATE = @"
-            UPDATE tbl_APLICACION SET
-                fk_id_reporte = ?, 
-                nombre_aplicacion = ?, 
-                descripcion_aplicacion = ?, 
-                estado_aplicacion = ?
-            WHERE pk_id_aplicacion = ?";
+            UPDATE Tbl_Aplicacion SET
+                Fk_Id_Reporte_Aplicacion = ?, 
+                Cmp_Nombre_Aplicacion = ?, 
+                Cmp_Descripcion_Aplicacion = ?, 
+                Cmp_Estado_Aplicacion = ?
+            WHERE Pk_Id_Aplicacion = ?";
 
-        private static readonly string SQL_DELETE = "DELETE FROM tbl_APLICACION WHERE pk_id_aplicacion = ?";
+        private static readonly string SQL_DELETE = "DELETE FROM Tbl_Aplicacion WHERE Pk_Id_Aplicacion = ?";
 
         private static readonly string SQL_QUERY = @"
-            SELECT pk_id_aplicacion, fk_id_reporte, nombre_aplicacion, 
-                   descripcion_aplicacion, estado_aplicacion
-            FROM tbl_APLICACION 
-            WHERE pk_id_aplicacion = ?";
+            SELECT Pk_Id_Aplicacion, Fk_Id_Reporte_Aplicacion, Cmp_Nombre_Aplicacion, 
+                   Cmp_Descripcion_Aplicacion, Cmp_Estado_Aplicacion
+            FROM Tbl_Aplicacion 
+            WHERE Pk_Id_Aplicacion = ?";
 
         // Obtener todas las aplicaciones
         public List<Cls_Aplicacion> ObtenerAplicaciones()
@@ -67,11 +67,11 @@ namespace CapaModelo
             {
                 OdbcCommand cmd = new OdbcCommand(SQL_INSERT, conn);
 
-                cmd.Parameters.AddWithValue("@pk_id_aplicacion", app.PkIdAplicacion);
-                cmd.Parameters.AddWithValue("@fk_id_reporte", app.FkIdReporte.HasValue ? (object)app.FkIdReporte.Value : DBNull.Value);
-                cmd.Parameters.AddWithValue("@nombre_aplicacion", app.NombreAplicacion);
-                cmd.Parameters.AddWithValue("@descripcion_aplicacion", app.DescripcionAplicacion);
-                cmd.Parameters.AddWithValue("@estado_aplicacion", app.EstadoAplicacion);
+                cmd.Parameters.AddWithValue("@Pk_Id_Aplicacion", app.PkIdAplicacion);
+                cmd.Parameters.AddWithValue("@Fk_Id_Reporte_Aplicacion", app.FkIdReporte.HasValue ? (object)app.FkIdReporte.Value : DBNull.Value);
+                cmd.Parameters.AddWithValue("@Cmp_Nombre_Aplicacion", app.NombreAplicacion);
+                cmd.Parameters.AddWithValue("@Cmp_Descripcion_Aplicacion", app.DescripcionAplicacion);
+                cmd.Parameters.AddWithValue("@Cmp_Estado_Aplicacion", app.EstadoAplicacion);
 
                 return cmd.ExecuteNonQuery();
             }
@@ -84,17 +84,16 @@ namespace CapaModelo
             {
                 OdbcCommand cmd = new OdbcCommand(SQL_UPDATE, conn);
 
-                cmd.Parameters.AddWithValue("@fk_id_reporte", app.FkIdReporte.HasValue ? (object)app.FkIdReporte.Value : DBNull.Value);
-                cmd.Parameters.AddWithValue("@nombre_aplicacion", app.NombreAplicacion);
-                cmd.Parameters.AddWithValue("@descripcion_aplicacion", app.DescripcionAplicacion);
-                cmd.Parameters.AddWithValue("@estado_aplicacion", app.EstadoAplicacion);
-                cmd.Parameters.AddWithValue("@pk_id_aplicacion", app.PkIdAplicacion);
+                cmd.Parameters.AddWithValue("@Fk_Id_Reporte_Aplicacion", app.FkIdReporte.HasValue ? (object)app.FkIdReporte.Value : DBNull.Value);
+                cmd.Parameters.AddWithValue("@Cmp_Nombre_Aplicacion", app.NombreAplicacion);
+                cmd.Parameters.AddWithValue("@Cmp_Descripcion_Aplicacion", app.DescripcionAplicacion);
+                cmd.Parameters.AddWithValue("@Cmp_Estado_Aplicacion", app.EstadoAplicacion);
+                cmd.Parameters.AddWithValue("@Pk_Id_Aplicacion", app.PkIdAplicacion);
 
                 return cmd.ExecuteNonQuery();
             }
         }
 
-        // Borrar aplicación
         // Borrar aplicación y sus dependencias
         public int BorrarAplicacion(int idAplicacion)
         {
@@ -112,10 +111,10 @@ namespace CapaModelo
                             cmdDependientes.ExecuteNonQuery();
                         }
 
-                        // 2. Eliminar registro en tbl_APLICACION
+                        // 2. Eliminar registro en Tbl_Aplicacion
                         using (OdbcCommand cmd = new OdbcCommand(SQL_DELETE, conn, transaction))
                         {
-                            cmd.Parameters.AddWithValue("@pk_id_aplicacion", idAplicacion);
+                            cmd.Parameters.AddWithValue("@Pk_Id_Aplicacion", idAplicacion);
                             int result = cmd.ExecuteNonQuery();
 
                             // 3. Confirmar cambios
@@ -133,7 +132,6 @@ namespace CapaModelo
             }
         }
 
-
         // Buscar una aplicación por ID
         public Cls_Aplicacion Query(int idAplicacion)
         {
@@ -141,7 +139,7 @@ namespace CapaModelo
             using (OdbcConnection conn = conexion.conexion())
             {
                 OdbcCommand cmd = new OdbcCommand(SQL_QUERY, conn);
-                cmd.Parameters.AddWithValue("@pk_id_aplicacion", idAplicacion);
+                cmd.Parameters.AddWithValue("@Pk_Id_Aplicacion", idAplicacion);
 
                 OdbcDataReader reader = cmd.ExecuteReader();
                 if (reader.Read())
