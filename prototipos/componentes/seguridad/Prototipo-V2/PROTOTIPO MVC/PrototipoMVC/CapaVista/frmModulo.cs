@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using CapaControlador;
+using CapaModelo;
 
 namespace CapaVista
 {
@@ -131,6 +132,10 @@ namespace CapaVista
                 MessageBox.Show("Módulo eliminado correctamente.");
                 CargarComboBox();
                 LimpiarCampos();
+
+                //Registrar en Bitácora - Arón Ricardo Esquit Silva
+                Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador();
+                ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, 1, "Eliminar módulo", true);
             }
             else
             {
@@ -165,8 +170,9 @@ namespace CapaVista
                 Cbo_busqueda.SelectedIndex = -1;
 
                 // Registrar en Bitácora - Arón Ricardo Esquit Silva 0901-22-13036
-                Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
-                bit.RegistrarAccion(Cls_sesion.iUsuarioId, 1, "Buscar módulo", true);
+                Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador();
+                ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, 1, "Guardar módulo", true);
+
             }
             else
             {

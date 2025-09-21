@@ -1,5 +1,5 @@
 ﻿/// Autor: Arón Ricardo Esquit Silva    0901-22-13036
-// Fecha: 12/09/2025
+// Fecha: 21/09/2025
 using System;
 using System.Data;
 using System.IO;
@@ -66,6 +66,7 @@ namespace CapaControlador
             File.WriteAllText(path, sb.ToString(), new UTF8Encoding(true));
         }
 
+        //Prepara el archivo
         private static string CsvCell(object value)
         {
             string s = (value == null || value == DBNull.Value) ? "" : value.ToString();
@@ -161,7 +162,7 @@ namespace CapaControlador
         public DataTable ObtenerUsuarios()
         {
             var dao = new Cls_BitacoraDao();
-            string sql = "SELECT pk_id_usuario AS id, nombre_usuario AS usuario FROM tbl_USUARIO ORDER BY nombre_usuario;";
+            string sql = "SELECT Pk_Id_Usuario AS id, Cmp_Nombre_Usuario AS usuario FROM Tbl_Usuario ORDER BY Cmp_Nombre_Usuario;";
             return dao.EjecutarConsulta(sql);
         }
     }

@@ -158,8 +158,8 @@ namespace CapaVista
             // Registrar en Bitácora Arón Ricardo Esquit Silva   0901-22-13036
             if (exito)
             {
-                Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
-                bit.RegistrarAccion(Cls_sesion.iUsuarioId,1, "Eliminar aplicación", true);
+                Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador();
+                ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, 1, "Eliminar aplicación", true);
             }
             RecargarTodo();
         }
@@ -185,8 +185,9 @@ namespace CapaVista
             // Registrar en Bitácora Arón Ricardo Esquit Silva   0901-22-13036
             if (exito)
             {
-                Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
-                bit.RegistrarAccion(Cls_sesion.iUsuarioId,1, "Modificar aplicación", true);
+                Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador();
+                ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, 1, "Modificar aplicación", true);
+
             }
             RecargarTodo();
         }
@@ -252,8 +253,8 @@ namespace CapaVista
             LimpiarCampos();
 
             // Registrar en Bitácora Arón Ricardo Esquit Silva   0901-22-13036
-            Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
-            bit.RegistrarAccion(Cls_sesion.iUsuarioId,1, "Guardar aplicación", true);
+            Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador();
+            ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, 1, "Guardar aplicación", true);
             RecargarTodo();
         }
 

@@ -267,6 +267,16 @@ namespace CapaVista
             this.asignacionesToolStripMenuItem.Name = "asignacionesToolStripMenuItem";
             this.asignacionesToolStripMenuItem.Size = new System.Drawing.Size(105, 21);
             this.asignacionesToolStripMenuItem.Text = "Asignaciones";
+
+            // 
+            // asignacionPermisoPerfilesToolStripMenuItem
+            //AGRUE ESTO PARA EL ERROR
+            this.asignacionPermisoPerfilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.asignacionPermisoPerfilesToolStripMenuItem.Name = "asignacionPermisoPerfilesToolStripMenuItem";
+            this.asignacionPermisoPerfilesToolStripMenuItem.Size = new System.Drawing.Size(304, 22);
+            this.asignacionPermisoPerfilesToolStripMenuItem.Text = "Asignación Permiso Perfiles";
+            this.asignacionPermisoPerfilesToolStripMenuItem.Click += new System.EventHandler(this.asignacionPermisoPerfilesToolStripMenuItem_Click);
+
             // 
             // asignacionDeAplicacionAUsuarioToolStripMenuItem
             // 

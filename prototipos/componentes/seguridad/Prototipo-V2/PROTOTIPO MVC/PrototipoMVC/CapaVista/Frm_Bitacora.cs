@@ -92,6 +92,7 @@ namespace CapaVista
         private void Btn_Consultar_Click(object sender, EventArgs e)
         {
             CargarEnGrid(_ctrl.MostrarBitacora());
+            Btn_Imprimir.Visible = true;
         }
 
         private void Btn_Exportar_Click(object sender, EventArgs e)

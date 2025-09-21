@@ -154,8 +154,10 @@ namespace CapaVista
                     idModulo,
                     idAplicacion
                 );
-                
-                bitacora.InsertarBitacora(Cls_sesion.iUsuarioId, idAplicacion, "Asignación Permisos Perfil - Agregar", true);
+
+                //Registrar en Bitácora - Arón Ricardo Esquit Silva - 0901-22-13036
+                Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador();
+                ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, idAplicacion, "Asignación Permisos Perfil - Agregar", true);
             }
             else
             {
@@ -196,8 +198,11 @@ namespace CapaVista
                     controlador.iInsertarPermisoPerfilAplicacion(iperfil, imodulo, iaplicacion, ingresar, consultar, modificar, eliminar, imprimir);
                     insertados++;
                 }
-               
-                bitacora.InsertarBitacora(Cls_sesion.iUsuarioId, iaplicacion, "Asignación aplicación a perfil - insertar", true);
+
+                //Registrar en Bitácora - Arón Ricardo Esquit Silva 0901-22-13036
+                Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador();
+                ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, iaplicacion, "Asignación aplicación a perfil - Insertar", true);
+
             }
             MessageBox.Show($"Se insertaron {insertados} registros y se actualizaron {actualizados} registros correctamente.");
             Dgv_Permisos.Rows.Clear();
@@ -208,7 +213,9 @@ namespace CapaVista
             if (Dgv_Permisos.CurrentRow != null && !Dgv_Permisos.CurrentRow.IsNewRow) // FIX: Sintaxis
             {
                 int idaplicacion = Convert.ToInt32(Dgv_Permisos.CurrentRow.Cells["IdAplicacion"].Value);
-                bitacora.InsertarBitacora(Cls_sesion.iUsuarioId, idaplicacion, "Asignación Perfil a Usuario - Quitar", true);
+                //Registrar en Bitácora - Arón Ricardo Esquit Silva
+                Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador();
+                ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, idaplicacion, "Asignación Perfil a Usuario - Quitar", true);
                 Dgv_Permisos.Rows.Remove(Dgv_Permisos.CurrentRow);
             }
             else

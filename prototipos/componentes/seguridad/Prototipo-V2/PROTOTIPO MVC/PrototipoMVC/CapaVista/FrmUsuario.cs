@@ -87,8 +87,8 @@ namespace CapaVista
                 MessageBox.Show("Usuario creado correctamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 // Registrar en Bitácora - Arón Ricardo Esquit Silva 0901-22-13036
-                Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
-                bit.RegistrarAccion(Cls_sesion.iUsuarioId, 1, "Guardar usuario", true);
+                Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador();
+                ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, 1, "Guardar usuario", true);
 
                 LimpiarCampos();
                 ConfiguracionInicial();

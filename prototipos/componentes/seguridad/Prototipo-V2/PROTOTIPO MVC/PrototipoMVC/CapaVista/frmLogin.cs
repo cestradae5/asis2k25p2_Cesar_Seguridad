@@ -51,9 +51,10 @@ namespace CapaVista
                 Cls_sesion.iUsuarioId = idUsuario;
                 Cls_sesion.sNombreUsuario = usuario;
 
-                // Registrar en bitácora //Aron Ricardo Esquit Silva   0901-22-13036
-                Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
-                bit.RegistrarInicioSesion(idUsuario);
+                //Registrar en Bitácora - Arón Ricardo Esquit Silva
+                Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador();
+                ctrlBitacora.RegistrarInicioSesion(idUsuario);
+
 
                 frmPrincipal menu = new frmPrincipal();
                 menu.Show();

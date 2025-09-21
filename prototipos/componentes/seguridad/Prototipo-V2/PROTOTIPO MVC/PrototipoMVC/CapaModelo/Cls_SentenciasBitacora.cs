@@ -40,21 +40,21 @@ namespace CapaModelo
         public DataTable Listar()
         {
             string sSql = @"
-                SELECT  b.pk_id_bitacora        AS id,
-                        COALESCE(u.nombre_usuario,'')    AS usuario,
-                        COALESCE(a.nombre_aplicacion,'') AS aplicacion,
-                        b.fecha_bitacora        AS fecha,
-                        b.accion_bitacora       AS accion,
-                        b.ip_bitacora           AS ip,
-                        b.nombre_pc_bitacora    AS equipo,
-                        CASE b.login_estado_bitacora
+                SELECT  b.Pk_Id_Bitacora      AS id,
+                        COALESCE(u.Cmp_Nombre_Usuario,'')    AS usuario,
+                        COALESCE(a.Cmp_Nombre_Aplicacion,'') AS aplicacion,
+                        b.Cmp_Fecha          AS fecha,
+                        b.Cmp_Accion         AS accion,
+                        b.Cmp_Ip             AS ip,
+                        b.Cmp_Nombre_Pc      AS equipo,
+                        CASE b.Cmp_Login_Estado
                              WHEN 1 THEN 'Conectado'
                              ELSE 'Desconectado'
                         END AS estado
-                FROM tbl_BITACORA b
-                LEFT JOIN tbl_USUARIO u    ON u.pk_id_usuario = b.fk_id_usuario
-                LEFT JOIN tbl_APLICACION a ON a.pk_id_aplicacion = b.fk_id_aplicacion
-                ORDER BY b.fecha_bitacora DESC, b.pk_id_bitacora DESC;";
+                FROM Tbl_Bitacora b
+                LEFT JOIN Tbl_Usuario u    ON u.Pk_Id_Usuario = b.Fk_Id_Usuario
+                LEFT JOIN Tbl_Aplicacion a ON a.Pk_Id_Aplicacion = b.Fk_Id_Aplicacion
+                ORDER BY b.Cmp_Fecha DESC, b.Pk_Id_Bitacora DESC;";
 
             return dao.EjecutarConsulta(sSql);
         }
@@ -63,22 +63,22 @@ namespace CapaModelo
         public DataTable ConsultarPorFecha(DateTime fecha)
         {
             string sSql = $@"
-                SELECT  b.pk_id_bitacora        AS id,
-                        u.nombre_usuario        AS usuario,
-                        a.nombre_aplicacion     AS aplicacion,
-                        b.fecha_bitacora        AS fecha,
-                        b.accion_bitacora       AS accion,
-                        b.ip_bitacora           AS ip,
-                        b.nombre_pc_bitacora    AS equipo,
-                        CASE b.login_estado_bitacora
+                SELECT  b.Pk_Id_Bitacora      AS id,
+                        u.Cmp_Nombre_Usuario  AS usuario,
+                        a.Cmp_Nombre_Aplicacion AS aplicacion,
+                        b.Cmp_Fecha           AS fecha,
+                        b.Cmp_Accion          AS accion,
+                        b.Cmp_Ip              AS ip,
+                        b.Cmp_Nombre_Pc       AS equipo,
+                        CASE b.Cmp_Login_Estado
                              WHEN 1 THEN 'Conectado'
                              ELSE 'Desconectado'
                         END AS estado
-                FROM tbl_BITACORA b
-                LEFT JOIN tbl_USUARIO u    ON u.pk_id_usuario = b.fk_id_usuario
-                LEFT JOIN tbl_APLICACION a ON a.pk_id_aplicacion = b.fk_id_aplicacion
-                WHERE DATE(b.fecha_bitacora) = '{fecha:yyyy-MM-dd}'
-                ORDER BY b.fecha_bitacora DESC;";
+                FROM Tbl_Bitacora b
+                LEFT JOIN Tbl_Usuario u    ON u.Pk_Id_Usuario = b.Fk_Id_Usuario
+                LEFT JOIN Tbl_Aplicacion a ON a.Pk_Id_Aplicacion = b.Fk_Id_Aplicacion
+                WHERE DATE(b.Cmp_Fecha) = '{fecha:yyyy-MM-dd}'
+                ORDER BY b.Cmp_Fecha DESC;";
 
             return dao.EjecutarConsulta(sSql);
         }
@@ -86,24 +86,23 @@ namespace CapaModelo
         // Consultar por rango
         public DataTable ConsultarPorRango(DateTime inicio, DateTime fin)
         {
-            // fin exclusivo = día siguiente (incluye todo el día fin)
             DateTime finExclusivo = fin.Date.AddDays(1);
 
             string sSql = $@"
-                SELECT  b.pk_id_bitacora AS id,
-                        u.nombre_usuario AS usuario,
-                        a.nombre_aplicacion AS aplicacion,
-                        b.fecha_bitacora AS fecha,
-                        b.accion_bitacora AS accion,
-                        b.ip_bitacora AS ip,
-                        b.nombre_pc_bitacora AS equipo,
-                        CASE b.login_estado_bitacora WHEN 1 THEN 'Conectado' ELSE 'Desconectado' END AS estado
-                FROM tbl_BITACORA b
-                LEFT JOIN tbl_USUARIO u    ON u.pk_id_usuario = b.fk_id_usuario
-                LEFT JOIN tbl_APLICACION a ON a.pk_id_aplicacion = b.fk_id_aplicacion
-                WHERE b.fecha_bitacora >= '{inicio:yyyy-MM-dd}'
-                  AND b.fecha_bitacora  < '{finExclusivo:yyyy-MM-dd}'
-                ORDER BY b.fecha_bitacora DESC;";
+                SELECT  b.Pk_Id_Bitacora AS id,
+                        u.Cmp_Nombre_Usuario AS usuario,
+                        a.Cmp_Nombre_Aplicacion AS aplicacion,
+                        b.Cmp_Fecha          AS fecha,
+                        b.Cmp_Accion         AS accion,
+                        b.Cmp_Ip             AS ip,
+                        b.Cmp_Nombre_Pc      AS equipo,
+                        CASE b.Cmp_Login_Estado WHEN 1 THEN 'Conectado' ELSE 'Desconectado' END AS estado
+                FROM Tbl_Bitacora b
+                LEFT JOIN Tbl_Usuario u    ON u.Pk_Id_Usuario = b.Fk_Id_Usuario
+                LEFT JOIN Tbl_Aplicacion a ON a.Pk_Id_Aplicacion = b.Fk_Id_Aplicacion
+                WHERE b.Cmp_Fecha >= '{inicio:yyyy-MM-dd}'
+                  AND b.Cmp_Fecha  < '{finExclusivo:yyyy-MM-dd}'
+                ORDER BY b.Cmp_Fecha DESC;";
 
             return dao.EjecutarConsulta(sSql);
         }
@@ -112,33 +111,22 @@ namespace CapaModelo
         public DataTable ConsultarPorUsuario(int idUsuario)
         {
             string sSql = $@"
-                SELECT  b.pk_id_bitacora AS id,
-                        u.nombre_usuario AS usuario,
-                        a.nombre_aplicacion AS aplicacion,
-                        b.fecha_bitacora AS fecha,
-                        b.accion_bitacora AS accion,
-                        b.ip_bitacora AS ip,
-                        b.nombre_pc_bitacora AS equipo,
-                        CASE b.login_estado_bitacora
+                SELECT  b.Pk_Id_Bitacora AS id,
+                        u.Cmp_Nombre_Usuario AS usuario,
+                        a.Cmp_Nombre_Aplicacion AS aplicacion,
+                        b.Cmp_Fecha          AS fecha,
+                        b.Cmp_Accion         AS accion,
+                        b.Cmp_Ip             AS ip,
+                        b.Cmp_Nombre_Pc      AS equipo,
+                        CASE b.Cmp_Login_Estado
                              WHEN 1 THEN 'Conectado'
                              ELSE 'Desconectado'
                         END AS estado
-                FROM tbl_BITACORA b
-                LEFT JOIN tbl_USUARIO u ON u.pk_id_usuario = b.fk_id_usuario
-                LEFT JOIN tbl_APLICACION a ON a.pk_id_aplicacion = b.fk_id_aplicacion
-                WHERE b.fk_id_usuario = {idUsuario}
-                ORDER BY b.fecha_bitacora DESC;";
-
-            return dao.EjecutarConsulta(sSql);
-        }
-
-        // Obtener todos los usuarios
-        public DataTable ObtenerUsuarios()
-        {
-            string sSql = @"
-                SELECT pk_id_usuario, nombre_usuario
-                FROM tbl_USUARIO
-                WHERE estado_usuario <> 'Bloqueado';";
+                FROM Tbl_Bitacora b
+                LEFT JOIN Tbl_Usuario u ON u.Pk_Id_Usuario = b.Fk_Id_Usuario
+                LEFT JOIN Tbl_Aplicacion a ON a.Pk_Id_Aplicacion = b.Fk_Id_Aplicacion
+                WHERE b.Fk_Id_Usuario = {idUsuario}
+                ORDER BY b.Cmp_Fecha DESC;";
 
             return dao.EjecutarConsulta(sSql);
         }
@@ -149,8 +137,8 @@ namespace CapaModelo
             string idApp = (idAplicacion == 0) ? "NULL" : idAplicacion.ToString();
 
             string sSql = $@"
-                INSERT INTO tbl_BITACORA
-                (fk_id_usuario, fk_id_aplicacion, fecha_bitacora, accion_bitacora, ip_bitacora, nombre_pc_bitacora, login_estado_bitacora)
+                INSERT INTO Tbl_Bitacora
+                (Fk_Id_Usuario, Fk_Id_Aplicacion, Cmp_Fecha, Cmp_Accion, Cmp_Ip, Cmp_Nombre_Pc, Cmp_Login_Estado)
                 VALUES ({idUsuario}, {idApp}, '{FechaActual()}', '{accion}', '{ObtenerIP()}', '{ObtenerNombrePc()}', {(estadoLogin ? 1 : 0)});";
 
             dao.EjecutarComando(sSql);

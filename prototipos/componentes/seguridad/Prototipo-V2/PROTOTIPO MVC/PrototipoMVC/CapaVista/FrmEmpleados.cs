@@ -247,13 +247,24 @@ namespace CapaVista
                 DateTime.Parse(Txt_fechaContra_empleado.Text)
             );
 
-            MessageBox.Show(exito ? "Empleado modificado correctamente" : "Error al modificar empleado");
-            Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
-            bit.RegistrarAccion(Cls_sesion.iUsuarioId, aplicacionId, "Modificar empleado", true);
+            if (exito)
+            {
+                MessageBox.Show("Empleado modificado correctamente");
+
+                //Registrar en Bitácora - Arón Ricardo Esquit Silva - 0901-22-13036
+                Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador();
+                ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, aplicacionId, "Modificar empleado", true);
+            }
+            else
+            {
+                MessageBox.Show("Error al modificar empleado");
+            }
+
             func_CargarEmpleados();
             func_ConfigurarComboBoxEmpleados();
             func_LimpiarCampos();
             ActualizarEstadoBotonesSegunPermisos(empleadoCargado: false);
+
         }
 
         // Botón eliminar: solo si tienes permiso
@@ -272,13 +283,23 @@ namespace CapaVista
             }
 
             bool exito = controlador.BorrarEmpleado(id);
-            MessageBox.Show(exito ? "Empleado eliminado" : "Error al eliminar");
-            Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
-            bit.RegistrarAccion(Cls_sesion.iUsuarioId, aplicacionId, "Eliminar Empleado", true);
-            func_CargarEmpleados();
-            func_ConfigurarComboBoxEmpleados();
-            func_LimpiarCampos();
-            func_ConfiguracionInicial();
+            if (exito)
+            {
+                MessageBox.Show("Empleado eliminado");
+
+                //Registrar en Bitácora - Arón Ricardo Esquit Silva - 0901-22-13036
+                Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador();
+                ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, aplicacionId, "Eliminar empleado", true);
+
+                func_CargarEmpleados();
+                func_ConfigurarComboBoxEmpleados();
+                func_LimpiarCampos();
+                func_ConfiguracionInicial();
+            }
+            else
+            {
+                MessageBox.Show("Error al eliminar");
+            }
         }
 
         private void Btn_cancelar_Click(object sender, EventArgs e)
@@ -355,8 +376,9 @@ namespace CapaVista
                 );
 
                 MessageBox.Show("Empleado guardado correctamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
-                bit.RegistrarAccion(Cls_sesion.iUsuarioId, aplicacionId, "Guardar empleado", true);
+                //Registrar en Bitácora - Arón Ricardo Esquit Silva  0901-22-13036
+                Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador();
+                ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, aplicacionId, "Guardar empleado", true);
 
                 CargarEmpleados();
                 func_ConfigurarComboBoxEmpleados();

@@ -195,5 +195,15 @@ namespace CapaVista
             frmModulo formModulo = new frmModulo();
             formModulo.Show();
         }
+
+
+        //AGRUE ESTO PARA EL ERROR
+        private void asignacionPermisoPerfilesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Aquí abres el formulario que corresponda
+            FrmPermisosPerfiles frm = new FrmPermisosPerfiles();
+            frm.Show();
+        }
+
     }
 }
