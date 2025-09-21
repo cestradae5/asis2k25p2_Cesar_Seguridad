@@ -199,5 +199,44 @@ namespace CapaVista
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
             }
         }
+        //Boton Buscar Pablo Quiroa 0901-22-2929
+        private void Btn_Buscar_Click(object sender, EventArgs e)
+        {
+            if (Cbo_Usuarios.SelectedIndex == -1)
+            {
+                MessageBox.Show("Seleccione un usuario.");
+                return;
+            }
+
+            int idUsuario = Convert.ToInt32(Cbo_Usuarios.SelectedValue);
+            DataTable dtPermisos = controlador.ObtenerPermisosPorUsuario(idUsuario);
+
+            Dgv_Permisos.Rows.Clear();
+
+            if (dtPermisos.Rows.Count > 0)
+            {
+                foreach (DataRow row in dtPermisos.Rows)
+                {
+                    Dgv_Permisos.Rows.Add(
+                        row["nombre_usuario"].ToString(),
+                        row["nombre_aplicacion"].ToString(),
+                        Convert.ToBoolean(row["ingresar_permiso_aplicacion_usuario"]),
+                        Convert.ToBoolean(row["consultar_permiso_aplicacion_usuario"]),
+                        Convert.ToBoolean(row["modificar_permiso_aplicacion_usuario"]),
+                        Convert.ToBoolean(row["eliminar_permiso_aplicacion_usuario"]),
+                        Convert.ToBoolean(row["imprimir_permiso_aplicacion_usuario"]),
+                        row["fk_id_usuario"],
+                        row["fk_id_modulo"],
+                        row["fk_id_aplicacion"]
+                    );
+                }
+                MessageBox.Show("Permisos cargados correctamente.");
+            }
+            else
+            {
+                MessageBox.Show("El usuario no tiene permisos asignados.");
+            }
+        }
     }
 }
+
