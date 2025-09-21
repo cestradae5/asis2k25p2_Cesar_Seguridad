@@ -105,6 +105,23 @@ namespace CapaVistaNavegador
             totalPaginas = (int)Math.Ceiling(dtCompleto.Rows.Count / (double)registrosPorPagina);
             paginaActual = 1;
             MostrarPagina(paginaActual);
+
+            // ======================= Stevens Cambranes =======================
+            // Re-engancha por si el DataSource cambió con la paginación
+            Dgv_Datos.SelectionChanged -= Dgv_Datos_SelectionChanged;
+            Dgv_Datos.SelectionChanged += Dgv_Datos_SelectionChanged;
+
+            // Selección inicial para disparar el handler y rellenar los combos
+            if (Dgv_Datos.Rows.Count > 0)
+            {
+                Dgv_Datos.ClearSelection();
+                Dgv_Datos.Rows[0].Selected = true;
+                Dgv_Datos.CurrentCell = Dgv_Datos.Rows[0].Cells[0];
+
+                // Llamada explícita por si el evento no se dispara automáticamente
+                ctrl.RellenarCombosDesdeFila(this, alias, Dgv_Datos.Rows[0]);
+            }
+
         }
 
         public void habilitar_botones()
@@ -308,6 +325,12 @@ namespace CapaVistaNavegador
 
                 // Mandarlo al controlador
                 ctrl.AsignarDataGridView(Dgv_Datos);
+
+                // ======================= Stevens Cambranes =======================
+                // Enganchar siempre el handler (si el grid se creó desde aquí)
+                Dgv_Datos.SelectionChanged -= Dgv_Datos_SelectionChanged;
+                Dgv_Datos.SelectionChanged += Dgv_Datos_SelectionChanged;
+
             }
         }
 
