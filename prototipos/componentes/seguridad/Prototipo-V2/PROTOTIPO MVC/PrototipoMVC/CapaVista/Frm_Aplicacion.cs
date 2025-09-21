@@ -321,5 +321,11 @@ namespace CapaVista
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0); // Simula arrastre
             }
         }
+
+        private void Btn_reporte_Click(object sender, EventArgs e)
+        {
+            frm_reporte_aplicacion frm = new frm_reporte_aplicacion();
+            frm.Show();
+        }
     }
 }

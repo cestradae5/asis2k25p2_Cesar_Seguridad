@@ -43,6 +43,7 @@ namespace CapaVista
             this.Btn_Salir = new System.Windows.Forms.Button();
             this.Pnl_Superior = new System.Windows.Forms.Panel();
             this.Pic_Cerrar = new System.Windows.Forms.PictureBox();
+            this.Btn_reporte = new System.Windows.Forms.Button();
             this.Pnl_Superior.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Cerrar)).BeginInit();
             this.SuspendLayout();
@@ -204,12 +205,26 @@ namespace CapaVista
             this.Pic_Cerrar.TabStop = false;
             this.Pic_Cerrar.Click += new System.EventHandler(this.Pic_Cerrar_Click);
             // 
+            // Btn_reporte
+            // 
+            this.Btn_reporte.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
+            this.Btn_reporte.Font = new System.Drawing.Font("Rockwell", 10F);
+            this.Btn_reporte.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
+            this.Btn_reporte.Location = new System.Drawing.Point(498, 68);
+            this.Btn_reporte.Name = "Btn_reporte";
+            this.Btn_reporte.Size = new System.Drawing.Size(114, 40);
+            this.Btn_reporte.TabIndex = 96;
+            this.Btn_reporte.Text = "Reporte";
+            this.Btn_reporte.UseVisualStyleBackColor = false;
+            this.Btn_reporte.Click += new System.EventHandler(this.Btn_reporte_Click);
+            // 
             // FrmUsuario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(185)))), ((int)(((byte)(185)))));
             this.ClientSize = new System.Drawing.Size(666, 372);
+            this.Controls.Add(this.Btn_reporte);
             this.Controls.Add(this.Pnl_Superior);
             this.Controls.Add(this.Btn_Salir);
             this.Controls.Add(this.Btn_Limpiar);
@@ -250,5 +265,6 @@ namespace CapaVista
         private System.Windows.Forms.Button Btn_Salir;
         private System.Windows.Forms.Panel Pnl_Superior;
         private System.Windows.Forms.PictureBox Pic_Cerrar;
+        private System.Windows.Forms.Button Btn_reporte;
     }
 }

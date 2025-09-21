@@ -417,5 +417,11 @@ namespace CapaVista
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
             }
         }
+
+        private void Btn_reporte_Click(object sender, EventArgs e)
+        {
+            frmReporte_Empleados frm = new frmReporte_Empleados();
+            frm.Show();
+        }
     }
 }

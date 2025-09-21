@@ -33,6 +33,7 @@ namespace CapaVista
             this.Cbo_buscar = new System.Windows.Forms.ComboBox();
             this.Txt_id_aplicacion = new System.Windows.Forms.TextBox();
             this.Gpb_buscar_aplicacion = new System.Windows.Forms.GroupBox();
+            this.Btn_buscar = new System.Windows.Forms.Button();
             this.Lbl_id_aplicacion = new System.Windows.Forms.Label();
             this.Lbl_id_modulo = new System.Windows.Forms.Label();
             this.Lbl_nombre_aplicacion = new System.Windows.Forms.Label();
@@ -49,10 +50,10 @@ namespace CapaVista
             this.Pnl_Superior = new System.Windows.Forms.Panel();
             this.Pic_Cerrar = new System.Windows.Forms.PictureBox();
             this.Btn_guardar = new System.Windows.Forms.Button();
-            this.Btn_buscar = new System.Windows.Forms.Button();
             this.Btn_eliminar = new System.Windows.Forms.Button();
             this.Btn_modificar = new System.Windows.Forms.Button();
             this.Btn_nuevo = new System.Windows.Forms.Button();
+            this.Btn_reporte = new System.Windows.Forms.Button();
             this.Gpb_buscar_aplicacion.SuspendLayout();
             this.Gbp_datos_aplicacion.SuspendLayout();
             this.Gbp_estado_aplicacion.SuspendLayout();
@@ -108,6 +109,23 @@ namespace CapaVista
             this.Gpb_buscar_aplicacion.TabIndex = 8;
             this.Gpb_buscar_aplicacion.TabStop = false;
             this.Gpb_buscar_aplicacion.Text = "Modificar";
+            // 
+            // Btn_buscar
+            // 
+            this.Btn_buscar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
+            this.Btn_buscar.Font = new System.Drawing.Font("Rockwell", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Btn_buscar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
+            this.Btn_buscar.Image = global::CapaVista.Properties.Resources.android_search_icon_icons1;
+            this.Btn_buscar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Btn_buscar.Location = new System.Drawing.Point(20, 26);
+            this.Btn_buscar.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            this.Btn_buscar.Name = "Btn_buscar";
+            this.Btn_buscar.Size = new System.Drawing.Size(119, 47);
+            this.Btn_buscar.TabIndex = 5;
+            this.Btn_buscar.Text = "Buscar";
+            this.Btn_buscar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Btn_buscar.UseVisualStyleBackColor = false;
+            this.Btn_buscar.Click += new System.EventHandler(this.Btn_buscar_Click);
             // 
             // Lbl_id_aplicacion
             // 
@@ -306,23 +324,6 @@ namespace CapaVista
             this.Btn_guardar.UseVisualStyleBackColor = false;
             this.Btn_guardar.Click += new System.EventHandler(this.Btn_guardar_Click);
             // 
-            // Btn_buscar
-            // 
-            this.Btn_buscar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
-            this.Btn_buscar.Font = new System.Drawing.Font("Rockwell", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Btn_buscar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_buscar.Image = global::CapaVista.Properties.Resources.android_search_icon_icons1;
-            this.Btn_buscar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Btn_buscar.Location = new System.Drawing.Point(20, 26);
-            this.Btn_buscar.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
-            this.Btn_buscar.Name = "Btn_buscar";
-            this.Btn_buscar.Size = new System.Drawing.Size(119, 47);
-            this.Btn_buscar.TabIndex = 5;
-            this.Btn_buscar.Text = "Buscar";
-            this.Btn_buscar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Btn_buscar.UseVisualStyleBackColor = false;
-            this.Btn_buscar.Click += new System.EventHandler(this.Btn_buscar_Click);
-            // 
             // Btn_eliminar
             // 
             this.Btn_eliminar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
@@ -371,12 +372,29 @@ namespace CapaVista
             this.Btn_nuevo.UseVisualStyleBackColor = false;
             this.Btn_nuevo.Click += new System.EventHandler(this.Btn_nuevo_Click);
             // 
+            // Btn_reporte
+            // 
+            this.Btn_reporte.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
+            this.Btn_reporte.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
+            this.Btn_reporte.Image = global::CapaVista.Properties.Resources.exportar;
+            this.Btn_reporte.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Btn_reporte.Location = new System.Drawing.Point(1108, 398);
+            this.Btn_reporte.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            this.Btn_reporte.Name = "Btn_reporte";
+            this.Btn_reporte.Size = new System.Drawing.Size(119, 47);
+            this.Btn_reporte.TabIndex = 96;
+            this.Btn_reporte.Text = "Reporte";
+            this.Btn_reporte.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Btn_reporte.UseVisualStyleBackColor = false;
+            this.Btn_reporte.Click += new System.EventHandler(this.Btn_reporte_Click);
+            // 
             // FrmAplicacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(185)))), ((int)(((byte)(185)))));
             this.ClientSize = new System.Drawing.Size(1277, 617);
+            this.Controls.Add(this.Btn_reporte);
             this.Controls.Add(this.Pnl_Superior);
             this.Controls.Add(this.Btn_Consultar_Asignacion);
             this.Controls.Add(this.Btn_guardar);
@@ -434,5 +452,6 @@ namespace CapaVista
         private System.Windows.Forms.Button Btn_Consultar_Asignacion;
         private System.Windows.Forms.Panel Pnl_Superior;
         private System.Windows.Forms.PictureBox Pic_Cerrar;
+        private System.Windows.Forms.Button Btn_reporte;
     }
 }

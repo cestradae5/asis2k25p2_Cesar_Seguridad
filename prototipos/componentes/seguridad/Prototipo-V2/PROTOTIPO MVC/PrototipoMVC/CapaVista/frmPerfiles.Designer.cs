@@ -53,6 +53,7 @@ namespace CapaVista
             this.Btn_guardar = new System.Windows.Forms.Button();
             this.Pnl_Superior = new System.Windows.Forms.Panel();
             this.Pic_Cerrar = new System.Windows.Forms.PictureBox();
+            this.Btn_reporte = new System.Windows.Forms.Button();
             this.Gpb_buscarperfiles.SuspendLayout();
             this.Gpb_datosperfil.SuspendLayout();
             this.Gbp_estado.SuspendLayout();
@@ -362,12 +363,30 @@ namespace CapaVista
             this.Pic_Cerrar.TabStop = false;
             this.Pic_Cerrar.Click += new System.EventHandler(this.Pic_Cerrar_Click);
             // 
+            // Btn_reporte
+            // 
+            this.Btn_reporte.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
+            this.Btn_reporte.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonShadow;
+            this.Btn_reporte.Font = new System.Drawing.Font("Rockwell", 10F);
+            this.Btn_reporte.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
+            this.Btn_reporte.Image = global::CapaVista.Properties.Resources.exportar;
+            this.Btn_reporte.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Btn_reporte.Location = new System.Drawing.Point(794, 50);
+            this.Btn_reporte.Name = "Btn_reporte";
+            this.Btn_reporte.Size = new System.Drawing.Size(143, 54);
+            this.Btn_reporte.TabIndex = 2;
+            this.Btn_reporte.Text = "Reporte";
+            this.Btn_reporte.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Btn_reporte.UseVisualStyleBackColor = false;
+            this.Btn_reporte.Click += new System.EventHandler(this.Btn_reporte_Click);
+            // 
             // frmPerfiles
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(185)))), ((int)(((byte)(185)))));
             this.ClientSize = new System.Drawing.Size(1028, 761);
+            this.Controls.Add(this.Btn_reporte);
             this.Controls.Add(this.Pnl_Superior);
             this.Controls.Add(this.Gbp_opc);
             this.Controls.Add(this.Gpb_datosperfil);
@@ -415,5 +434,6 @@ namespace CapaVista
         private System.Windows.Forms.Button Btn_Eliminar;
         private System.Windows.Forms.Panel Pnl_Superior;
         private System.Windows.Forms.PictureBox Pic_Cerrar;
+        private System.Windows.Forms.Button Btn_reporte;
     }
 }
