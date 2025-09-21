@@ -11,14 +11,20 @@ using System.Runtime.InteropServices;
 using CapaControlador;
 using CapaModelo;
 
-
 namespace CapaVista
 {
-
     public partial class frmEmpleados : Form
     {
         private Cls_EmpleadoControlador controlador = new Cls_EmpleadoControlador();
         private List<Cls_Empleado> listaEmpleados = new List<Cls_Empleado>();
+
+        private Cls_PermisoUsuario permisoUsuario = new Cls_PermisoUsuario();
+
+        private int moduloId = -1;
+        private int aplicacionId = -1;
+
+        // Guardamos el objeto permisos actual para usarlo en todo el form
+        private (bool ingresar, bool consultar, bool modificar, bool eliminar, bool imprimir)? permisosActuales = null;
 
         public frmEmpleados()
         {
@@ -26,18 +32,79 @@ namespace CapaVista
             CargarEmpleados();
             func_ConfigurarComboBoxEmpleados();
             func_ConfiguracionInicial();
+            ConfigurarIdsDinamicamenteYAplicarPermisos();
+        }
+
+        /// <summary>
+        /// Consulta los IDs de módulo y aplicación por nombre y aplica los permisos del usuario logueado.
+        /// </summary>
+        private void ConfigurarIdsDinamicamenteYAplicarPermisos()
+        {
+            string nombreModulo = "Empleados";     // nombre exacto en tbl_MODULO
+            string nombreAplicacion = "Empleados"; // nombre exacto en tbl_APLICACION
+
+            aplicacionId = permisoUsuario.ObtenerIdAplicacionPorNombre(nombreAplicacion);
+            moduloId = permisoUsuario.ObtenerIdModuloPorNombre(nombreModulo);
+
+            AplicarPermisosUsuario();
+        }
+
+        private void AplicarPermisosUsuario()
+        {
+            int usuarioId = Cls_sesion.iUsuarioId; // Usuario logueado
+
+            if (aplicacionId == -1 || moduloId == -1)
+            {
+                // Si no se encontraron los IDs, deshabilita todo
+                permisosActuales = null;
+                ActualizarEstadoBotonesSegunPermisos();
+                return;
+            }
+
+            var permisos = permisoUsuario.ConsultarPermisos(usuarioId, aplicacionId, moduloId);
+
+            permisosActuales = permisos;
+            ActualizarEstadoBotonesSegunPermisos();
+        }
+
+        // Centraliza el habilitado/deshabilitado de botones según permisos y estado de navegación
+        private void ActualizarEstadoBotonesSegunPermisos(bool empleadoCargado = false)
+        {
+            // Si no hay permisos, todo deshabilitado
+            if (!permisosActuales.HasValue)
+            {
+                Btn_guardar_empleado.Enabled = false;
+                Btn_modificar_empleado.Enabled = false;
+                Btn_eliminar_empleado.Enabled = false;
+                Btn_nuevo_empleado.Enabled = false;
+                Btn_buscar_empleado.Enabled = false;
+                
+                return;
+            }
+
+            var p = permisosActuales.Value;
+
+            // Siempre puedes buscar si tienes consultar
+            Btn_buscar_empleado.Enabled = p.consultar;
+
+            // "Nuevo" y "Guardar" dependen de ingresar
+            Btn_nuevo_empleado.Enabled = p.ingresar;
+            Btn_guardar_empleado.Enabled = false; // Solo habilitado en flujo de "nuevo" o "guardar"
+
+            // Modificar y eliminar solo si hay un empleado cargado y el permiso existe
+            Btn_modificar_empleado.Enabled = empleadoCargado && p.modificar;
+            Btn_eliminar_empleado.Enabled = empleadoCargado && p.eliminar;
+
+
         }
 
         private void func_ConfiguracionInicial()
         {
-            Btn_guardar_empleado.Enabled = false;
-            Btn_modificar_empleado.Enabled = false;
-            Btn_eliminar_empleado.Enabled = false;
-            Btn_nuevo_empleado.Enabled = true;
+            // Por defecto, ningún empleado está cargado
+            ActualizarEstadoBotonesSegunPermisos(empleadoCargado: false);
             Btn_cancelar.Enabled = true;
             Txt_id_empleado.Enabled = false;
         }
-
 
         private void func_CargarEmpleados()
         {
@@ -51,21 +118,18 @@ namespace CapaVista
 
         private void func_ConfigurarComboBoxEmpleados()
         {
-            // Configurar AutoComplete
             Cbo_mostrar_empleado.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             Cbo_mostrar_empleado.AutoCompleteSource = AutoCompleteSource.CustomSource;
 
-            // Crear fuente de autocompletado
             AutoCompleteStringCollection autoComplete = new AutoCompleteStringCollection();
             autoComplete.AddRange(listaEmpleados.Select(a => a.PkIdEmpleado.ToString()).ToArray());
             autoComplete.AddRange(listaEmpleados.Select(a => a.NombresEmpleado).ToArray());
             Cbo_mostrar_empleado.AutoCompleteCustomSource = autoComplete;
 
-            // Configurar display y value
             Cbo_mostrar_empleado.DisplayMember = "Display";
             Cbo_mostrar_empleado.ValueMember = "Id";
 
-            // Crear items combinados (ID + Nombre + Apellido)
+            Cbo_mostrar_empleado.Items.Clear();
             foreach (var emp in listaEmpleados)
             {
                 Cbo_mostrar_empleado.Items.Add(new
@@ -75,7 +139,6 @@ namespace CapaVista
                 });
             }
         }
-
 
         private void MostrarEmpleado(Cls_Empleado emp)
         {
@@ -92,55 +155,18 @@ namespace CapaVista
             Rdb_femenino_empleado.Checked = !emp.GeneroEmpleado;
         }
 
-        private void Txt_id_empleado_TextChanged(object sender, EventArgs e)
-        {
+        private void Txt_id_empleado_TextChanged(object sender, EventArgs e) { }
+        private void Txt_nombre_empleado_TextChanged(object sender, EventArgs e) { }
+        private void Txt_dpi_empleados_TextChanged(object sender, EventArgs e) { }
+        private void Txt_fechaNac_empleado_TextChanged(object sender, EventArgs e) { }
+        private void Txt_apellido_empleado_TextChanged(object sender, EventArgs e) { }
+        private void Txt_nit_empleados_TextChanged(object sender, EventArgs e) { }
+        private void Txt_fechaContra_empleado_TextChanged(object sender, EventArgs e) { }
+        private void Txt_correo_empleado_TextChanged(object sender, EventArgs e) { }
+        private void Rdb_masculino_empleado_CheckedChanged(object sender, EventArgs e) { }
+        private void Rdb_femenino_empleado_CheckedChanged(object sender, EventArgs e) { }
 
-        }
-
-        private void Txt_nombre_empleado_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Txt_dpi_empleados_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Txt_fechaNac_empleado_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Txt_apellido_empleado_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Txt_nit_empleados_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Txt_fechaContra_empleado_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-        private void Txt_correo_empleado_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Rdb_masculino_empleado_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Rdb_femenino_empleado_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
+        // Al buscar, sólo habilitar modificar/eliminar si hay permiso
         private void Btn_buscar_empleado_Click(object sender, EventArgs e)
         {
             string busqueda = Cbo_mostrar_empleado.Text.Trim();
@@ -166,21 +192,25 @@ namespace CapaVista
             if (empEncontrado != null)
             {
                 MostrarEmpleado(empEncontrado);
-                Btn_modificar_empleado.Enabled = true;
-                Btn_eliminar_empleado.Enabled = true;
-                Btn_guardar_empleado.Enabled = false;
+                // Actualiza botones según permisos y que hay un empleado cargado
+                ActualizarEstadoBotonesSegunPermisos(empleadoCargado: true);
             }
             else
             {
                 MessageBox.Show("Empleado no encontrado");
                 func_LimpiarCampos();
+                ActualizarEstadoBotonesSegunPermisos(empleadoCargado: false);
             }
         }
 
-
-
+        // Botón nuevo: solo limpia y deja listo para guardar si tienes permiso
         private void Btn_nuevo_empleado_Click(object sender, EventArgs e)
         {
+            if (!permisosActuales.HasValue || !permisosActuales.Value.ingresar)
+            {
+                MessageBox.Show("No tienes permisos para agregar nuevos empleados.", "Permiso denegado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             func_LimpiarCampos();
             Btn_guardar_empleado.Enabled = true;
             Btn_modificar_empleado.Enabled = false;
@@ -188,9 +218,15 @@ namespace CapaVista
             Txt_id_empleado.Enabled = true;
         }
 
-
+        // Botón modificar: solo si tienes permiso
         private void Btn_modificar_empleado_Click(object sender, EventArgs e)
         {
+            if (!permisosActuales.HasValue || !permisosActuales.Value.modificar)
+            {
+                MessageBox.Show("No tienes permisos para modificar empleados.", "Permiso denegado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             int id;
             if (!int.TryParse(Txt_id_empleado.Text, out id))
             {
@@ -206,22 +242,29 @@ namespace CapaVista
                 long.Parse(Txt_nit_empleados.Text),
                 Txt_correo_empleado.Text,
                 Txt_telefono_empleado.Text,
-                Rdb_masculino_empleado.Checked,   // true = Masculino, false = Femenino
+                Rdb_masculino_empleado.Checked,
                 DateTime.Parse(Txt_fechaNac_empleado.Text),
                 DateTime.Parse(Txt_fechaContra_empleado.Text)
             );
 
             MessageBox.Show(exito ? "Empleado modificado correctamente" : "Error al modificar empleado");
-            // Registrar en Bitácora -Arón Ricardo Esquit Silva  0901 - 22 - 13036
             Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
-            bit.RegistrarAccion(Cls_sesion.iUsuarioId, 1, "Modificar empleado", true);
+            bit.RegistrarAccion(Cls_sesion.iUsuarioId, aplicacionId, "Modificar empleado", true);
             func_CargarEmpleados();
             func_ConfigurarComboBoxEmpleados();
             func_LimpiarCampos();
+            ActualizarEstadoBotonesSegunPermisos(empleadoCargado: false);
         }
 
+        // Botón eliminar: solo si tienes permiso
         private void Btn_eliminar_empleado_Click(object sender, EventArgs e)
         {
+            if (!permisosActuales.HasValue || !permisosActuales.Value.eliminar)
+            {
+                MessageBox.Show("No tienes permisos para eliminar empleados.", "Permiso denegado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             if (!int.TryParse(Txt_id_empleado.Text, out int id))
             {
                 MessageBox.Show("ID no válido");
@@ -230,9 +273,8 @@ namespace CapaVista
 
             bool exito = controlador.BorrarEmpleado(id);
             MessageBox.Show(exito ? "Empleado eliminado" : "Error al eliminar");
-            // Registrar en Bitácora -Arón Ricardo Esquit Silva  0901 - 22 - 13036
             Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
-            bit.RegistrarAccion(Cls_sesion.iUsuarioId, 1, "Eliminar Empleado", true);
+            bit.RegistrarAccion(Cls_sesion.iUsuarioId, aplicacionId, "Eliminar Empleado", true);
             func_CargarEmpleados();
             func_ConfigurarComboBoxEmpleados();
             func_LimpiarCampos();
@@ -245,11 +287,16 @@ namespace CapaVista
             func_ConfiguracionInicial();
         }
 
+        // Guardar: solo si tienes permiso de ingresar
         private void Btn_guardar_empleado_Click(object sender, EventArgs e)
         {
+            if (!permisosActuales.HasValue || !permisosActuales.Value.ingresar)
+            {
+                MessageBox.Show("No tienes permisos para guardar empleados.", "Permiso denegado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             try
             {
-                // Validar campos numéricos y fechas antes de crear el objeto
                 if (!int.TryParse(Txt_id_empleado.Text, out int idEmpleado))
                 {
                     MessageBox.Show("ID no válido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -280,7 +327,6 @@ namespace CapaVista
                     return;
                 }
 
-                // Crear objeto empleado con datos del formulario
                 var emp = new Cls_Empleado
                 {
                     PkIdEmpleado = idEmpleado,
@@ -290,12 +336,11 @@ namespace CapaVista
                     NitEmpleado = nit,
                     CorreoEmpleado = Txt_correo_empleado.Text,
                     TelefonoEmpleado = Txt_telefono_empleado.Text,
-                    GeneroEmpleado = Rdb_masculino_empleado.Checked, // true = Masculino
+                    GeneroEmpleado = Rdb_masculino_empleado.Checked,
                     FechaNacimientoEmpleado = fechaNacimiento,
                     FechaContratacionEmpleado = fechaContratacion
                 };
 
-                // Llamar al controlador para insertar el empleado
                 controlador.InsertarEmpleado(
                     emp.PkIdEmpleado,
                     emp.NombresEmpleado,
@@ -309,28 +354,19 @@ namespace CapaVista
                     emp.FechaContratacionEmpleado
                 );
 
-     
-
-                // Mensaje de éxito
                 MessageBox.Show("Empleado guardado correctamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                // Registrar en Bitácora - Arón Ricardo Esquit Silva 0901-22-13036
                 Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
-                bit.RegistrarAccion(Cls_sesion.iUsuarioId, 1, "Guardar empleado", true);
+                bit.RegistrarAccion(Cls_sesion.iUsuarioId, aplicacionId, "Guardar empleado", true);
 
                 CargarEmpleados();
                 func_ConfigurarComboBoxEmpleados();
                 func_LimpiarCampos();
-
-
             }
-
             catch (Exception ex)
             {
                 MessageBox.Show("Error al guardar empleado: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             func_ConfiguracionInicial();
-
         }
 
         private void func_LimpiarCampos()
@@ -356,13 +392,10 @@ namespace CapaVista
 
         private void Btn_salir_empleado_Click(object sender, EventArgs e)
         {
-            this.Close(); // Cierra solo este formulario
+            this.Close();
         }
 
-
         // Panel superior
-        //0901-20-4620 Ruben Armando Lopez Luch
-
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HTCAPTION = 0x2;
 
@@ -380,10 +413,9 @@ namespace CapaVista
         {
             if (e.Button == MouseButtons.Left)
             {
-                ReleaseCapture(); // Libera el mouse
-                SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0); // Simula arrastre
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
             }
-
         }
     }
 }

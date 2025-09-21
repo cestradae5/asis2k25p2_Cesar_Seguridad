@@ -1,18 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.Odbc;
 
 namespace CapaModelo
 {
-    class Conexion
+    public class Conexion
     {
+        // Devuelve la cadena de conexión ODBC
+        public string ObtenerCadenaConexion()
+        {
+            return "Dsn=hotel_San_Carlos";
+        }
+
+        // Abre y retorna una nueva conexión ODBC
         public OdbcConnection conexion()
         {
-            //creacion de la conexion via ODBC
-            OdbcConnection conn = new OdbcConnection("Dsn=hotel_San_Carlos");
+            OdbcConnection conn = new OdbcConnection(ObtenerCadenaConexion());
             try
             {
                 conn.Open();
@@ -24,7 +26,15 @@ namespace CapaModelo
             return conn;
         }
 
-        //metodo para cerrar la conexion
+        // Alternativo: método estándar para abrir conexión (sin try/catch interno)
+        public OdbcConnection AbrirConexion()
+        {
+            OdbcConnection conn = new OdbcConnection(ObtenerCadenaConexion());
+            conn.Open();
+            return conn;
+        }
+
+        // Cierra la conexión recibida
         public void desconexion(OdbcConnection conn)
         {
             try
@@ -33,9 +43,8 @@ namespace CapaModelo
             }
             catch (OdbcException)
             {
-                Console.WriteLine("No Conectó");
+                Console.WriteLine("No se pudo cerrar la conexión");
             }
         }
-
     }
 }
