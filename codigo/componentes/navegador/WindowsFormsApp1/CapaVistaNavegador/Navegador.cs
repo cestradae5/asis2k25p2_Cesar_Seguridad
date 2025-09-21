@@ -75,40 +75,21 @@ namespace CapaVistaNavegador
 
         public void mostrarDatos()
         {
-            /* if (Dgv_Datos == null)
-             {
-                 Dgv_Datos = new DataGridView();
-                 Dgv_Datos.Name = "Dgv_Datos";
-                 Dgv_Datos.ScrollBars = ScrollBars.None;
-                 Dgv_Datos.BackgroundColor = Color.White;
-                 Dgv_Datos.ColumnHeadersDefaultCellStyle.Font = new Font("Microsoft Sans Serif", 9, FontStyle.Bold);
-                 Dgv_Datos.Location = new System.Drawing.Point(10, 250); // aqui se cambia la posicion (por si hay que agregar otra cosa)
-                 Dgv_Datos.Size = new System.Drawing.Size(1100, 200); // aqui se cambia el tamaño (tambien por si acaso ajaj)
-                 Dgv_Datos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-                 this.Controls.Add(Dgv_Datos);
-                 ctrl.AsignarDataGridView(Dgv_Datos);
-             }
-
-             // aqui se llena la tabla y tambien se le pone el nombre (dependiendo de la tabla que se vaya a usar)
-             dtCompleto = ctrl.LlenarTabla(alias[0], alias.Skip(1).ToArray());
-             Dgv_Datos.DataSource = dtCompleto;
-
-
-             totalPaginas = (int)Math.Ceiling(dtCompleto.Rows.Count / (double)registrosPorPagina);
-             paginaActual = 1;
-             MostrarPagina(paginaActual);*/
-
             if (Dgv_Datos == null)
             {
-                //Dgv_Datos = new DataGridView();
-                //Dgv_Datos.Name = "Dgv_Datos";
-                //Dgv_Datos.ScrollBars = ScrollBars.None;
-                //Dgv_Datos.BackgroundColor = Color.White;
-                //Dgv_Datos.ColumnHeadersDefaultCellStyle.Font = new Font("Microsoft Sans Serif", 9, FontStyle.Bold);
-                //Dgv_Datos.Location = new System.Drawing.Point(10, 250);
-                //Dgv_Datos.Size = new System.Drawing.Size(1100, 200);
-                //Dgv_Datos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-                //this.Controls.Add(Dgv_Datos);
+                Dgv_Datos = new DataGridView();
+                Dgv_Datos.Name = "Dgv_Datos";
+                Dgv_Datos.ScrollBars = ScrollBars.None;
+                Dgv_Datos.BackgroundColor = Color.White;
+                Dgv_Datos.ColumnHeadersDefaultCellStyle.Font = new Font("Microsoft Sans Serif", 9, FontStyle.Bold);
+                Dgv_Datos.Location = new System.Drawing.Point(10, 250);
+                Dgv_Datos.Size = new System.Drawing.Size(1100, 200);
+                Dgv_Datos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                this.Controls.Add(Dgv_Datos);
+
+                // preguntar a Stevens
+                ctrl.AsignarDataGridView(Dgv_Datos);
+                Dgv_Datos.SelectionChanged += Dgv_Datos_SelectionChanged;
             }
 
             // Asegurarse de que alias no sea null
@@ -159,18 +140,39 @@ namespace CapaVistaNavegador
         private void Btn_cancelar_Click_1(object sender, EventArgs e)
         {
             deshabilitar_botones();
+            // Limpiar Cbo
+            ctrl.LimpiarCombos(this, alias);
         }
 
         private void Btn_guardar_Click_1(object sender, EventArgs e)
         {
             ControladorNavegador ctrl = new ControladorNavegador();
             ctrl.Insertar_Datos(this, alias);
+
+            // Recarga despues de insertar = Stevens Cambranes
+            mostrarDatos();
+            ctrl.RefrescarCombos(this, alias[0], alias.Skip(1).ToArray());
         }
 
+        // ======================= Modificar / Update = Stevens Cambranes =======================
         private void Btn_modificar_Click(object sender, EventArgs e)
         {
+            ctrl.Actualizar_Datos(this, alias);
 
+            mostrarDatos();
+            ctrl.RefrescarCombos(this, alias[0], alias.Skip(1).ToArray());
+            ctrl.LimpiarCombos(this, alias);
         }
+        // ======================= Modificar / Update = Stevens Cambranes =======================
+
+        // ======================= Esta funcion es para seleccionar la fila del Dgv y Rellenar los Cbo =======================
+        private void Dgv_Datos_SelectionChanged(object sender, EventArgs e)
+        {
+            if (Dgv_Datos?.CurrentRow == null || alias == null || alias.Length < 2) return;
+            // Llama directamente a tu función del controlador: RellenarCombosDesdeFila
+            ctrl.RellenarCombosDesdeFila(this, alias, Dgv_Datos.CurrentRow);
+        }
+        // ======================= Esta funcion es para seleccionar la fila del Dgv y Rellenar los Cbo =======================
 
         private void Btn_eliminar_Click(object sender, EventArgs e)
         {
@@ -184,6 +186,10 @@ namespace CapaVistaNavegador
             {
                 ctrl.Eliminar_Datos(this, alias);
                 mostrarDatos();
+                // Recarga despues de eliminar = Stevens Cambranes
+                ctrl.RefrescarCombos(this, alias[0], alias.Skip(1).ToArray());
+                // limpia Cbo despues de eliminar = Stevens Cambranes
+                ctrl.LimpiarCombos(this, alias);
             }
             catch (Exception ex)
             {
@@ -193,12 +199,12 @@ namespace CapaVistaNavegador
 
         private void Btn_consultar_Click(object sender, EventArgs e)
         {
-
+            // Llamar al componente consultas inteligentes
         }
 
         private void Btn_imprimir_Click_1(object sender, EventArgs e)
         {
-
+            // Llamar al componente reporteadores
         }
 
         private void Btn_refrescar_Click(object sender, EventArgs e)

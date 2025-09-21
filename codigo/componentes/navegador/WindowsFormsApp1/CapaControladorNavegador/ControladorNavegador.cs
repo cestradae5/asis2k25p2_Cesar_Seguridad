@@ -270,5 +270,159 @@ namespace CapaControladorNavegador
             }
         }
 
+        // ======================= Modificar / Update = Stevens Cambranes =======================
+        // ======================= Actualizar en BD leyendo los ComboBox =======================
+        public void Actualizar_Datos(Control contenedor, string[] alias)
+        {
+            if (alias == null || alias.Length < 3)
+            {
+                MessageBox.Show("Alias inválido: se espera [tabla, pk, campos...]");
+                return;
+            }
+
+            string pkNombre = alias[1];
+            ComboBox cboPK = contenedor.Controls.OfType<ComboBox>().FirstOrDefault(t => t.Name == "Cbo_" + pkNombre);
+
+            if (cboPK == null || string.IsNullOrWhiteSpace(cboPK.Text))
+            {
+                MessageBox.Show("Seleccione un valor válido de la clave primaria.");
+                return;
+            }
+
+            object pkValor = cboPK.Text; // llega como texto; ODBC hará la conversión
+            string[] campos = alias.Skip(2).ToArray();
+            object[] valores = new object[campos.Length];
+
+            for (int i = 0; i < campos.Length; i++)
+            {
+                string campo = campos[i];
+                ComboBox cboCampo = contenedor.Controls.OfType<ComboBox>()
+                    .FirstOrDefault(t => t.Name == "Cbo_" + campo);
+
+                valores[i] = (cboCampo != null) ? (object)cboCampo.Text : null;
+            }
+
+            try
+            {
+                DAOGenerico dao = new DAOGenerico();
+                dao.ActualizarDatos(alias, valores, pkValor);
+                MessageBox.Show("Registro actualizado correctamente.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al actualizar: " + ex.Message);
+            }
+        }
+
+        // ======================= Rellenar los ComboBox desde la fila seleccionada del DataGridView =======================
+        public void RellenarCombosDesdeFila(Control contenedor, string[] alias, DataGridViewRow fila)
+        {
+            if (fila == null || alias == null || alias.Length < 2) return;
+
+            // Caso ideal: el DataSource es un DataTable (DataRowView)
+            var drv = fila.DataBoundItem as DataRowView;
+            if (drv != null)
+            {
+                DataTable table = drv.Row.Table;
+
+                for (int i = 1; i < alias.Length; i++)
+                {
+                    string campo = alias[i];
+                    var cbo = contenedor.Controls.OfType<ComboBox>()
+                                 .FirstOrDefault(c => c.Name == "Cbo_" + campo);
+                    if (cbo == null) continue;
+
+                    object valor = table.Columns.Contains(campo) ? drv[campo] : null;
+                    cbo.Text = valor?.ToString() ?? string.Empty;
+                }
+                return; // listo en el caso DataRowView
+            }
+
+            // buscar columna en el grid por Name o DataPropertyName
+            var grid = fila.DataGridView;
+            for (int i = 1; i < alias.Length; i++)
+            {
+                string campo = alias[i];
+                var cbo = contenedor.Controls.OfType<ComboBox>()
+                             .FirstOrDefault(c => c.Name == "Cbo_" + campo);
+                if (cbo == null) continue;
+
+                var col = grid.Columns.Cast<DataGridViewColumn>()
+                           .FirstOrDefault(c =>
+                                string.Equals(c.Name, campo, StringComparison.OrdinalIgnoreCase) ||
+                                string.Equals(c.DataPropertyName, campo, StringComparison.OrdinalIgnoreCase));
+                if (col == null) { cbo.Text = string.Empty; continue; }
+
+                var cell = fila.Cells[col.Index];
+                cbo.Text = cell?.Value?.ToString() ?? string.Empty;
+            }
+        }
+
+        // ======================= Refrescar las opciones de cada ComboBox con valores actuales de la BD =======================
+        public void RefrescarCombos(Control contenedor, string tabla, string[] columnas)
+        {
+            foreach (var campo in columnas)
+            {
+                var cbo = contenedor.Controls.OfType<ComboBox>()
+                             .FirstOrDefault(c => c.Name == "Cbo_" + campo);
+                if (cbo == null) continue;
+
+                // Guardar el valor que se ve actualmente para conservarlo
+                string valorActual = cbo.Text;
+
+                List<string> items;
+                try
+                {
+                    items = sentencias.ObtenerValoresColumna(tabla, campo);
+                }
+                catch
+                {
+                    items = new List<string>();
+                }
+                cbo.BeginUpdate();
+                try
+                {
+                    cbo.Items.Clear();
+                    foreach (var it in items) cbo.Items.Add(it);
+
+                    // Si el valor anterior sigue existiendo, re-seleccionarlo
+                    if (!string.IsNullOrEmpty(valorActual) && cbo.Items.Contains(valorActual))
+                    {
+                        cbo.SelectedItem = valorActual;
+                    }
+                    else
+                    {
+                        // Si ya no está, deja el texto tal cual (útil para PK o valores recién cambiados)
+                        cbo.Text = valorActual ?? string.Empty;
+                    }
+                }
+                finally
+                {
+                    cbo.EndUpdate();
+                }
+            }
+        }
+
+        // ======================= Limpiar todos los ComboBox generados =======================
+        public void LimpiarCombos(Control contenedor, string[] alias)
+        {
+            if (alias == null || alias.Length < 2) return;
+
+            for (int i = 1; i < alias.Length; i++)
+            {
+                string campo = alias[i];
+                var cbo = contenedor.Controls.OfType<ComboBox>()
+                             .FirstOrDefault(c => c.Name == "Cbo_" + campo);
+
+                if (cbo != null)
+                {
+                    cbo.SelectedIndex = -1; // quita selección
+                    cbo.Text = string.Empty; // limpia el texto mostrado
+                }
+            }
+        }
+
+        // ======================= Diccionario de Datos =======================
+
     }
 }
