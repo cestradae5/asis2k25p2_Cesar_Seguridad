@@ -179,5 +179,61 @@ namespace CapaModeloNavegador
                 throw new Exception("Error al eliminar datos de " + alias[0] + ": " + ex.Message, ex);
             }
         }
+
+        //------------------------------Validaciones de alias -------------------------------------------------------
+
+        public bool ExisteTabla(string nombreTabla)
+        {
+            using (OdbcConnection conn = con.conexion())
+            {
+                try
+                {
+                    conn.Open();
+                    string query = "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = DATABASE() AND table_name = ?";
+                    using (OdbcCommand cmd = new OdbcCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("?", nombreTabla);
+                        int count = Convert.ToInt32(cmd.ExecuteScalar());
+                        return count > 0;
+                    }
+                }
+                catch
+                {
+                    throw; 
+                }
+            }
+        }
+
+        public List<string> ObtenerColumnas(string nombreTabla)
+        {
+            List<string> columnas = new List<string>();
+
+            using (OdbcConnection conn = con.conexion())
+            {
+                try
+                {
+                    conn.Open();
+                    string query = "SELECT column_name FROM information_schema.columns WHERE table_schema = DATABASE() AND table_name = ?";
+                    using (OdbcCommand cmd = new OdbcCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("?", nombreTabla);
+                        using (OdbcDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                                columnas.Add(reader.GetString(0));
+                        }
+                    }
+                }
+                catch
+                {
+                    throw; 
+                }
+            }
+
+            return columnas;
+        }
+
+
+
     }
 }

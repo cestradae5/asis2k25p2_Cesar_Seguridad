@@ -14,88 +14,31 @@ namespace CapaControladorNavegador
     public class ControladorNavegador
     {
         SentenciasMYSQL sentencias = new SentenciasMYSQL();
+        private DAOGenerico dao = new DAOGenerico();
 
         // ---------------------VALIDANDO ALIAS-----------------------------------------
-
-        private ConexionMYSQL conexion = new ConexionMYSQL();
-        private bool ExisteTabla(string nombreTabla)
-        {
-            OdbcConnection conn = conexion.conexion();
-            try
-            {
-                conn.Open();
-                string query = "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = DATABASE() AND table_name = ?";
-                OdbcCommand cmd = new OdbcCommand(query, conn);
-                cmd.Parameters.AddWithValue("?", nombreTabla);
-
-                int count = Convert.ToInt32(cmd.ExecuteScalar());
-                return count > 0;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al verificar la tabla: " + ex.Message);
-                return false;
-            }
-            finally
-            {
-                conexion.desconexion(conn);
-            }
-        }
-
-        // Obtiene todas las columnas de la tabla
-        private List<string> ObtenerColumnas(string nombreTabla)
-        {
-            List<string> columnas = new List<string>();
-            OdbcConnection conn = conexion.conexion();
-
-            try
-            {
-                conn.Open();
-                string query = "SELECT column_name FROM information_schema.columns WHERE table_schema = DATABASE() AND table_name = ?";
-                OdbcCommand cmd = new OdbcCommand(query, conn);
-                cmd.Parameters.AddWithValue("?", nombreTabla);
-
-                OdbcDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
-                    columnas.Add(reader.GetString(0));
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al obtener columnas: " + ex.Message);
-            }
-            finally
-            {
-                conexion.desconexion(conn);
-            }
-
-            return columnas;
-        }
-
-
 
         // Asigna alias validando tabla y columnas
         public bool AsignarAlias(string[] alias, Control contenedor, int startX, int startY)
         {
-            if (!ExisteTabla(alias[0]))
+            if (!dao.ExisteTabla(alias[0]))
             {
                 MessageBox.Show($"❌ La tabla '{alias[0]}' no existe en la base de datos.");
                 return false;
             }
 
-            List<string> columnas = ObtenerColumnas(alias[0]);
+            List<string> columnas = dao.ObtenerColumnas(alias[0]);
             int spacingY = 30;
             int creados = 0;
 
-            for(int i=1;i<alias.Length;i++) //Se cambio foreach por for, se arregló el error
+            for (int i = 1; i < alias.Length; i++)
             {
                 string campo = alias[i];
-                //
-                if (!columnas.Contains(campo)) 
+
+                if (!columnas.Contains(campo))
                 {
                     MessageBox.Show($"⚠️ La columna '{campo}' no existe en la tabla '{alias[0]}'.");
-                    continue;
+                    return false;
                 }
 
                 Label lbl = new Label
@@ -110,15 +53,15 @@ namespace CapaControladorNavegador
                     Name = "Cbo_" + campo,
                     Width = 150,
                     Location = new System.Drawing.Point(startX + 100, startY + (creados * spacingY)),
-
                 };
-                List<string> items = sentencias.ObtenerValoresColumna(alias[0], campo);
+
+                List<string> items = sentencias.ObtenerValoresColumna(alias[0], campo); 
                 foreach (var item in items)
                 {
                     Cbo.Items.Add(item);
                 }
 
-                // para bloquear el combobox de la PK
+                // bloquear combobox de la PK
                 if (creados == 0)
                 {
                     Cbo.SelectedIndexChanged += (s, e) =>
@@ -129,10 +72,9 @@ namespace CapaControladorNavegador
                         }
                     };
                 }
+
                 contenedor.Controls.Add(Cbo);
                 contenedor.Controls.Add(lbl);
-                
-
                 creados++;
             }
 
@@ -140,37 +82,6 @@ namespace CapaControladorNavegador
         }
 
 
-        //-----------------------------------------------------------------------------
-
-
-
-
-
-        /*public void AsignarAlias(string[] alias, Control contenedor, int startX, int startY)
-         {
-             int spacingY = 30; // Espacio vertical entre cada par Label/TextBox
-
-             for (int i = 1; i < alias.Length; i++)
-             {
-                 // Crear Label
-                 Label lbl = new Label();
-                 lbl.Text = alias[i] + ":";
-                 lbl.AutoSize = true;
-                 lbl.Location = new System.Drawing.Point(startX, startY + (i * spacingY));
-
-                 // Crear TextBox
-                 TextBox txt = new TextBox();
-                 txt.Name = "txt_" + alias[i]; // ejemplo: txtNombre, txtEdad...
-                 txt.Width = 150;
-                 txt.Location = new System.Drawing.Point(startX + 100, startY + (i * spacingY));
-
-                 // Agregar al contenedor (Form o Panel)
-                 contenedor.Controls.Add(lbl);
-                 contenedor.Controls.Add(txt);
-             }
-
-         }*/
-        //-----------------------------------------------------------------------
         private DataGridView dgv;
 
         public void AsignarDataGridView(DataGridView grid)
