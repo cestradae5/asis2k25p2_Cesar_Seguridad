@@ -3,28 +3,31 @@ using System.Data;
 using System.Data.Odbc;
 using System.Collections.Generic;
 
+
+
 namespace CapaModelo
 {
     /* Brandon Alexander Hernandez Salguero
      * 0901-22-9663
+     * Adaptado a los campos de la nueva tabla (ver imagen1)
      */
     public class Cls_Perfiles
     {
-        public int pk_id_perfil { get; set; }
-        public string puesto_perfil { get; set; }
-        public string descripcion_perfil { get; set; }
-        public bool estado_perfil { get; set; }
-        public int tipo_perfil { get; set; }
+        public int Pk_Id_Perfil { get; set; }
+        public string Cmp_Puesto_Perfil { get; set; }
+        public string Cmp_Descripcion_Perfil { get; set; }
+        public bool Cmp_Estado_Perfil { get; set; }
+        public int Cmp_Tipo_Perfil { get; set; }
 
         public Cls_Perfiles() { }
 
-        public Cls_Perfiles(int pk_id_perfil, string puesto_perfil, string descripcion_perfil, bool estado_perfil, int tipo_perfil)
+        public Cls_Perfiles(int pkIdPerfil, string cmpPuestoPerfil, string cmpDescripcionPerfil, bool cmpEstadoPerfil, int cmpTipoPerfil)
         {
-            this.pk_id_perfil = pk_id_perfil;
-            this.puesto_perfil = puesto_perfil;
-            this.descripcion_perfil = descripcion_perfil;
-            this.estado_perfil = estado_perfil;
-            this.tipo_perfil = tipo_perfil;
+            this.Pk_Id_Perfil = pkIdPerfil;
+            this.Cmp_Puesto_Perfil = cmpPuestoPerfil;
+            this.Cmp_Descripcion_Perfil = cmpDescripcionPerfil;
+            this.Cmp_Estado_Perfil = cmpEstadoPerfil;
+            this.Cmp_Tipo_Perfil = cmpTipoPerfil;
         }
     }
 }

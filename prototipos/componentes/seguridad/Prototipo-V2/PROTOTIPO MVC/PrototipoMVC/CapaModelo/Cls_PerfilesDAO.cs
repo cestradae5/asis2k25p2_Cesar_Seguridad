@@ -48,11 +48,11 @@ namespace CapaModelo
                 {
                     Cls_Perfiles perfil = new Cls_Perfiles()
                     {
-                        pk_id_perfil = reader.GetInt32(0),
-                        puesto_perfil = reader.IsDBNull(1) ? null : reader.GetString(1),
-                        descripcion_perfil = reader.IsDBNull(2) ? null : reader.GetString(2),
-                        estado_perfil = reader.GetBoolean(3),
-                        tipo_perfil = reader.IsDBNull(4) ? 0 : reader.GetInt32(4)
+                        Pk_Id_Perfil = reader.GetInt32(0),
+                        Cmp_Puesto_Perfil = reader.IsDBNull(1) ? null : reader.GetString(1),
+                        Cmp_Descripcion_Perfil = reader.IsDBNull(2) ? null : reader.GetString(2),
+                        Cmp_Estado_Perfil = reader.GetBoolean(3),
+                        Cmp_Tipo_Perfil = reader.IsDBNull(4) ? 0 : reader.GetInt32(4)
                     };
                     lista.Add(perfil);
                 }
@@ -65,10 +65,10 @@ namespace CapaModelo
             using (OdbcConnection conn = conexion.conexion())
             {
                 OdbcCommand cmd = new OdbcCommand(SQL_INSERT, conn);
-                cmd.Parameters.AddWithValue("@Cmp_Puesto_Perfil", perfil.puesto_perfil);
-                cmd.Parameters.AddWithValue("@Cmp_Descripcion_Perfil", perfil.descripcion_perfil);
-                cmd.Parameters.AddWithValue("@Cmp_Estado_Perfil", perfil.estado_perfil);
-                cmd.Parameters.AddWithValue("@Cmp_Tipo_Perfil", perfil.tipo_perfil);
+                cmd.Parameters.AddWithValue("@Cmp_Puesto_Perfil", perfil.Cmp_Puesto_Perfil);
+                cmd.Parameters.AddWithValue("@Cmp_Descripcion_Perfil", perfil.Cmp_Descripcion_Perfil);
+                cmd.Parameters.AddWithValue("@Cmp_Estado_Perfil", perfil.Cmp_Estado_Perfil);
+                cmd.Parameters.AddWithValue("@Cmp_Tipo_Perfil", perfil.Cmp_Tipo_Perfil);
                 return cmd.ExecuteNonQuery() > 0;
             }
         }
@@ -78,41 +78,41 @@ namespace CapaModelo
             using (OdbcConnection conn = conexion.conexion())
             {
                 OdbcCommand cmd = new OdbcCommand(SQL_UPDATE, conn);
-                cmd.Parameters.AddWithValue("@Cmp_Puesto_Perfil", perfil.puesto_perfil);
-                cmd.Parameters.AddWithValue("@Cmp_Descripcion_Perfil", perfil.descripcion_perfil);
-                cmd.Parameters.AddWithValue("@Cmp_Estado_Perfil", perfil.estado_perfil);
-                cmd.Parameters.AddWithValue("@Cmp_Tipo_Perfil", perfil.tipo_perfil);
-                cmd.Parameters.AddWithValue("@Pk_Id_Perfil", perfil.pk_id_perfil);
+                cmd.Parameters.AddWithValue("@Cmp_Puesto_Perfil", perfil.Cmp_Puesto_Perfil);
+                cmd.Parameters.AddWithValue("@Cmp_Descripcion_Perfil", perfil.Cmp_Descripcion_Perfil);
+                cmd.Parameters.AddWithValue("@Cmp_Estado_Perfil", perfil.Cmp_Estado_Perfil);
+                cmd.Parameters.AddWithValue("@Cmp_Tipo_Perfil", perfil.Cmp_Tipo_Perfil);
+                cmd.Parameters.AddWithValue("@Pk_Id_Perfil", perfil.Pk_Id_Perfil);
                 return cmd.ExecuteNonQuery() > 0;
             }
         }
 
-        public bool bEliminarPerfil(int pk_id_perfil)
+        public bool bEliminarPerfil(int pk_Id_Perfil)
         {
             using (OdbcConnection conn = conexion.conexion())
             {
                 OdbcCommand cmd = new OdbcCommand(SQL_DELETE, conn);
-                cmd.Parameters.AddWithValue("@Pk_Id_Perfil", pk_id_perfil);
+                cmd.Parameters.AddWithValue("@Pk_Id_Perfil", pk_Id_Perfil);
                 return cmd.ExecuteNonQuery() > 0;
             }
         }
 
-        public Cls_Perfiles ObtenerPerfilPorId(int pk_id_perfil)
+        public Cls_Perfiles ObtenerPerfilPorId(int pk_Id_Perfil)
         {
             using (OdbcConnection conn = conexion.conexion())
             {
                 OdbcCommand cmd = new OdbcCommand(SQL_QUERY, conn);
-                cmd.Parameters.AddWithValue("@Pk_Id_Perfil", pk_id_perfil);
+                cmd.Parameters.AddWithValue("@Pk_Id_Perfil", pk_Id_Perfil);
                 OdbcDataReader reader = cmd.ExecuteReader();
                 if (reader.Read())
                 {
                     return new Cls_Perfiles()
                     {
-                        pk_id_perfil = reader.GetInt32(0),
-                        puesto_perfil = reader.IsDBNull(1) ? null : reader.GetString(1),
-                        descripcion_perfil = reader.IsDBNull(2) ? null : reader.GetString(2),
-                        estado_perfil = reader.GetBoolean(3),
-                        tipo_perfil = reader.IsDBNull(4) ? 0 : reader.GetInt32(4)
+                        Pk_Id_Perfil = reader.GetInt32(0),
+                        Cmp_Puesto_Perfil = reader.IsDBNull(1) ? null : reader.GetString(1),
+                        Cmp_Descripcion_Perfil = reader.IsDBNull(2) ? null : reader.GetString(2),
+                        Cmp_Estado_Perfil = reader.GetBoolean(3),
+                        Cmp_Tipo_Perfil = reader.IsDBNull(4) ? 0 : reader.GetInt32(4)
                     };
                 }
             }

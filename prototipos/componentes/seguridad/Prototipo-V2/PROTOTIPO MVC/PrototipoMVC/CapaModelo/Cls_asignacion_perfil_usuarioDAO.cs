@@ -59,8 +59,8 @@ namespace CapaModelo
             {
                 using (OdbcCommand cmd = new OdbcCommand(SQL_INSERT, conn))
                 {
-                    cmd.Parameters.AddWithValue("@Fk_Id_Usuario", rel.fk_id_usuario);
-                    cmd.Parameters.AddWithValue("@Fk_Id_Perfil", rel.fk_id_perfil);
+                    cmd.Parameters.AddWithValue("@Fk_Id_Usuario", rel.Fk_Id_Usuario);
+                    cmd.Parameters.AddWithValue("@Fk_Id_Perfil", rel.Fk_Id_Perfil);
                     return cmd.ExecuteNonQuery() > 0;
                 }
             }

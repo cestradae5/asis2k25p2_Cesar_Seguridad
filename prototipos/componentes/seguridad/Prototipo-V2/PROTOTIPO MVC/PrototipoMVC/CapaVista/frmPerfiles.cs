@@ -21,10 +21,6 @@ namespace CapaVista
             fun_ConfigurarComboBoxPerfiles();
             fun_ConfigurarComboBoxTipoPerfil();
             fun_Configuracioninicial();
-            
-            
-            
-
         }
 
         private void fun_Configuracioninicial()
@@ -49,8 +45,8 @@ namespace CapaVista
 
             // Fuente de autocompletado
             AutoCompleteStringCollection autoComplete = new AutoCompleteStringCollection();
-            autoComplete.AddRange(listaPerfiles.Select(p => p.pk_id_perfil.ToString()).ToArray());
-            autoComplete.AddRange(listaPerfiles.Select(p => p.puesto_perfil).ToArray());
+            autoComplete.AddRange(listaPerfiles.Select(p => p.Pk_Id_Perfil.ToString()).ToArray());
+            autoComplete.AddRange(listaPerfiles.Select(p => p.Cmp_Puesto_Perfil).ToArray());
             Cbo_perfiles.AutoCompleteCustomSource = autoComplete;
 
             // Display y Value
@@ -60,8 +56,8 @@ namespace CapaVista
             {
                 Cbo_perfiles.Items.Add(new
                 {
-                    Display = $"{perfil.pk_id_perfil} - {perfil.puesto_perfil}",
-                    Id = perfil.pk_id_perfil
+                    Display = $"{perfil.Pk_Id_Perfil} - {perfil.Cmp_Puesto_Perfil}",
+                    Id = perfil.Pk_Id_Perfil
                 });
             }
         }
@@ -76,21 +72,18 @@ namespace CapaVista
 
         private void fun_MostrarPerfil(Cls_Perfiles perfil)
         {
-            Txt_idperfil.Text = perfil.pk_id_perfil.ToString();
-            Txt_puesto.Text = perfil.puesto_perfil;
-            Txt_descripcion.Text = perfil.descripcion_perfil;
-            Cbo_tipoperfil.Text = perfil.tipo_perfil.ToString();
-            Rdb_Habilitado.Checked = perfil.estado_perfil;
-            Rdb_inhabilitado.Checked = !perfil.estado_perfil;
+            Txt_idperfil.Text = perfil.Pk_Id_Perfil.ToString();
+            Txt_puesto.Text = perfil.Cmp_Puesto_Perfil;
+            Txt_descripcion.Text = perfil.Cmp_Descripcion_Perfil;
+            Cbo_tipoperfil.Text = perfil.Cmp_Tipo_Perfil.ToString();
+            Rdb_Habilitado.Checked = perfil.Cmp_Estado_Perfil;
+            Rdb_inhabilitado.Checked = !perfil.Cmp_Estado_Perfil;
         }
-
-
-            
 
         private void Btn_nuevo_Click(object sender, EventArgs e)
         {
             fun_LimpiarCampos();
-              Btn_nuevo.Enabled = false;
+            Btn_nuevo.Enabled = false;
             Btn_guardar.Enabled = true;
             Btn_modificar.Enabled = false;
             Txt_idperfil.Enabled = false;
@@ -142,7 +135,6 @@ namespace CapaVista
             fun_Configuracioninicial();
         }
 
-
         private void Btn_modificar_Click(object sender, EventArgs e)
         {
             if (!int.TryParse(Txt_idperfil.Text, out int id))
@@ -186,8 +178,6 @@ namespace CapaVista
             fun_LimpiarCampos();
         }
 
-
-
         private void Btn_cancelar_Click(object sender, EventArgs e)
         {
             fun_LimpiarCampos();
@@ -199,7 +189,6 @@ namespace CapaVista
             this.Close();
         }
 
-
         private void fun_LimpiarCampos()
         {
             Txt_idperfil.Clear();
@@ -208,10 +197,7 @@ namespace CapaVista
             Cbo_tipoperfil.SelectedIndex = -1;
             Rdb_Habilitado.Checked = false;
             Rdb_inhabilitado.Checked = false;
-            
         }
-
-
 
         private void Btn_buscar_Click(object sender, EventArgs e)
         {
@@ -227,13 +213,13 @@ namespace CapaVista
             // Buscar por ID si es numérico
             if (int.TryParse(busqueda.Split('-')[0].Trim(), out int id))
             {
-                perfilEncontrado = listaPerfiles.FirstOrDefault(p => p.pk_id_perfil == id);
+                perfilEncontrado = listaPerfiles.FirstOrDefault(p => p.Pk_Id_Perfil == id);
             }
             // Si no encontró por ID, buscar por nombre
             if (perfilEncontrado == null)
             {
                 perfilEncontrado = listaPerfiles.FirstOrDefault(p =>
-                    p.puesto_perfil.Equals(busqueda, StringComparison.OrdinalIgnoreCase));
+                    p.Cmp_Puesto_Perfil != null && p.Cmp_Puesto_Perfil.Equals(busqueda, StringComparison.OrdinalIgnoreCase));
             }
             if (perfilEncontrado != null)
             {
@@ -242,17 +228,14 @@ namespace CapaVista
                 Btn_guardar.Enabled = false;
                 Btn_modificar.Enabled = true;
                 Txt_idperfil.Enabled = false;
-                Txt_idperfil.Enabled = false;
                 Btn_Eliminar.Enabled = true;
-
             }
             else
             {
                 MessageBox.Show("Perfil no encontrado");
                 fun_LimpiarCampos();
             }
-        
-    }
+        }
 
         private void Btn_Eliminar_Click(object sender, EventArgs e)
         {
@@ -307,7 +290,6 @@ namespace CapaVista
                 ReleaseCapture(); // Libera el mouse
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0); // Simula arrastre
             }
-
         }
 
         private void Btn_reporte_Click(object sender, EventArgs e)
