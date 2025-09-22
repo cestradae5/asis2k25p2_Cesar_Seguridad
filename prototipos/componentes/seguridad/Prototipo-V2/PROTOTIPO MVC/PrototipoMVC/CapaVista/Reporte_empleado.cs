@@ -16,14 +16,14 @@ namespace CapaVista {
     using CrystalDecisions.CrystalReports.Engine;
     
     
-    public class Reporte_Usuarios : ReportClass {
+    public class Reporte_empleado : ReportClass {
         
-        public Reporte_Usuarios() {
+        public Reporte_empleado() {
         }
         
         public override string ResourceName {
             get {
-                return "Reporte_Usuarios.rpt";
+                return "Reporte_empleado.rpt";
             }
             set {
                 // Do nothing
@@ -41,7 +41,7 @@ namespace CapaVista {
         
         public override string FullResourceName {
             get {
-                return "CapaVista.Reporte_Usuarios.rpt";
+                return "CapaVista.Reporte_empleado.rpt";
             }
             set {
                 // Do nothing
@@ -90,9 +90,9 @@ namespace CapaVista {
     }
     
     [System.Drawing.ToolboxBitmapAttribute(typeof(CrystalDecisions.Shared.ExportOptions), "report.bmp")]
-    public class CachedReporte_Usuarios : Component, ICachedReport {
+    public class CachedReporte_empleado : Component, ICachedReport {
         
-        public CachedReporte_Usuarios() {
+        public CachedReporte_empleado() {
         }
         
         [Browsable(false)]
@@ -129,7 +129,7 @@ namespace CapaVista {
         }
         
         public virtual CrystalDecisions.CrystalReports.Engine.ReportDocument CreateReport() {
-            Reporte_Usuarios rpt = new Reporte_Usuarios();
+            Reporte_empleado rpt = new Reporte_empleado();
             rpt.Site = this.Site;
             return rpt;
         }

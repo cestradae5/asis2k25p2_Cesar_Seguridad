@@ -1,7 +1,7 @@
 ﻿
 namespace CapaVista
 {
-    partial class frm_reporte_aplicacion
+    partial class frmReporte_Bitacoras
     {
         /// <summary>
         /// Required designer variable.
@@ -30,7 +30,7 @@ namespace CapaVista
         private void InitializeComponent()
         {
             this.crystalReportViewer1 = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
-            this.Reporte_aplicacion1 = new CapaVista.Reporte_aplicacion();
+            this.Reporte_bitacoras1 = new CapaVista.Reporte_bitacoras();
             this.SuspendLayout();
             // 
             // crystalReportViewer1
@@ -41,18 +41,18 @@ namespace CapaVista
             this.crystalReportViewer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.crystalReportViewer1.Location = new System.Drawing.Point(0, 0);
             this.crystalReportViewer1.Name = "crystalReportViewer1";
-            this.crystalReportViewer1.ReportSource = this.Reporte_aplicacion1;
+            this.crystalReportViewer1.ReportSource = this.Reporte_bitacoras1;
             this.crystalReportViewer1.Size = new System.Drawing.Size(800, 450);
             this.crystalReportViewer1.TabIndex = 0;
             // 
-            // frm_reporte_aplicacion
+            // frmReporte_Bitacoras
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.crystalReportViewer1);
-            this.Name = "frm_reporte_aplicacion";
-            this.Text = "frm_reporte_aplicacion";
+            this.Name = "frmReporte_Bitacoras";
+            this.Text = "frmReporte_Bitacoras";
             this.ResumeLayout(false);
 
         }
@@ -60,6 +60,6 @@ namespace CapaVista
         #endregion
 
         private CrystalDecisions.Windows.Forms.CrystalReportViewer crystalReportViewer1;
-        private Reporte_aplicacion Reporte_aplicacion1;
+        private Reporte_bitacoras Reporte_bitacoras1;
     }
 }

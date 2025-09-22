@@ -423,7 +423,7 @@ namespace CapaVista
 
         private void Btn_reporte_Click(object sender, EventArgs e)
         {
-            frmReporte_Empleados frm = new frmReporte_Empleados();
+            frmReporte_Empleado frm = new frmReporte_Empleado();
             frm.Show();
         }
     }

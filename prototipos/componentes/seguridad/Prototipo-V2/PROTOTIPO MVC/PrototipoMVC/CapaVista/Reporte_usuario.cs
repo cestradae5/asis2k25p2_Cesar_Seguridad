@@ -16,14 +16,14 @@ namespace CapaVista {
     using CrystalDecisions.CrystalReports.Engine;
     
     
-    public class Reporte_modulo : ReportClass {
+    public class Reporte_usuario : ReportClass {
         
-        public Reporte_modulo() {
+        public Reporte_usuario() {
         }
         
         public override string ResourceName {
             get {
-                return "Reporte_modulo.rpt";
+                return "Reporte_usuario.rpt";
             }
             set {
                 // Do nothing
@@ -41,7 +41,7 @@ namespace CapaVista {
         
         public override string FullResourceName {
             get {
-                return "CapaVista.Reporte_modulo.rpt";
+                return "CapaVista.Reporte_usuario.rpt";
             }
             set {
                 // Do nothing
@@ -90,9 +90,9 @@ namespace CapaVista {
     }
     
     [System.Drawing.ToolboxBitmapAttribute(typeof(CrystalDecisions.Shared.ExportOptions), "report.bmp")]
-    public class CachedReporte_modulo : Component, ICachedReport {
+    public class CachedReporte_usuario : Component, ICachedReport {
         
-        public CachedReporte_modulo() {
+        public CachedReporte_usuario() {
         }
         
         [Browsable(false)]
@@ -129,7 +129,7 @@ namespace CapaVista {
         }
         
         public virtual CrystalDecisions.CrystalReports.Engine.ReportDocument CreateReport() {
-            Reporte_modulo rpt = new Reporte_modulo();
+            Reporte_usuario rpt = new Reporte_usuario();
             rpt.Site = this.Site;
             return rpt;
         }

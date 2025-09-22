@@ -1,7 +1,6 @@
-﻿
-namespace CapaVista
+﻿namespace CapaVista
 {
-    partial class frmReporte_Empleados
+    partial class frmReporte_Usuario
     {
         /// <summary>
         /// Required designer variable.
@@ -30,7 +29,7 @@ namespace CapaVista
         private void InitializeComponent()
         {
             this.crystalReportViewer1 = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
-            this.Reporte_Empleados1 = new CapaVista.Reporte_Empleados();
+            this.Reporte_usuario1 = new CapaVista.Reporte_usuario();
             this.SuspendLayout();
             // 
             // crystalReportViewer1
@@ -41,18 +40,18 @@ namespace CapaVista
             this.crystalReportViewer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.crystalReportViewer1.Location = new System.Drawing.Point(0, 0);
             this.crystalReportViewer1.Name = "crystalReportViewer1";
-            this.crystalReportViewer1.ReportSource = this.Reporte_Empleados1;
+            this.crystalReportViewer1.ReportSource = this.Reporte_usuario1;
             this.crystalReportViewer1.Size = new System.Drawing.Size(800, 450);
             this.crystalReportViewer1.TabIndex = 0;
             // 
-            // frmReporte_Empleados
+            // frmReporte_Usuario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.crystalReportViewer1);
-            this.Name = "frmReporte_Empleados";
-            this.Text = "frmReporte_Empleados";
+            this.Name = "frmReporte_Usuario";
+            this.Text = "frmReporte_Usuario";
             this.ResumeLayout(false);
 
         }
@@ -60,6 +59,6 @@ namespace CapaVista
         #endregion
 
         private CrystalDecisions.Windows.Forms.CrystalReportViewer crystalReportViewer1;
-        private Reporte_Empleados Reporte_Empleados1;
+        private Reporte_usuario Reporte_usuario1;
     }
 }

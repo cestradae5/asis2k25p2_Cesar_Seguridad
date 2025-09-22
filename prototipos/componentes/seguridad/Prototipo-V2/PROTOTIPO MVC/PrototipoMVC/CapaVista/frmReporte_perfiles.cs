@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace CapaVista
 {
-    public partial class frmReporte_modulo : Form
+    public partial class frmreporte_perfiles : Form
     {
-        public frmReporte_modulo()
+        public frmreporte_perfiles()
         {
             InitializeComponent();
         }
