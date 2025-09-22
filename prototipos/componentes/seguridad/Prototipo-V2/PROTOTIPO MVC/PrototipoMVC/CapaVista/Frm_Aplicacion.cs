@@ -290,8 +290,8 @@ namespace CapaVista
             {
                 Cbo_id_modulo.Items.Add(new
                 {
-                    Display = $"{row["pk_id_modulo"]} - {row["nombre_modulo"]}",
-                    Id = row["pk_id_modulo"]
+                    Display = $"{row["Pk_id_modulo"]} - {row["Cmp_Nombre_Modulo"]}",
+                    Id = row["Pk_Id_Modulo"]
                 });
             }
         }

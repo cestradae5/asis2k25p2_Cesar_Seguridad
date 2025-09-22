@@ -10,23 +10,18 @@ namespace CapaModelo
         /// <summary>
         /// Obtiene los permisos de un usuario para una aplicación y módulo específicos.
         /// </summary>
-        /// <param name="idUsuario">ID del usuario.</param>
-        /// <param name="idAplicacion">ID de la aplicación.</param>
-        /// <param name="idModulo">ID del módulo.</param>
-        /// <returns>
-        /// Una tupla con los permisos (ingresar, consultar, modificar, eliminar, imprimir) o null si no hay permisos.
-        /// </returns>
         public (bool ingresar, bool consultar, bool modificar, bool eliminar, bool imprimir)? ConsultarPermisos(int idUsuario, int idAplicacion, int idModulo)
         {
             string query = @"
-                SELECT ingresar_permiso_aplicacion_usuario,
-                       consultar_permiso_aplicacion_usuario,
-                       modificar_permiso_aplicacion_usuario,
-                       eliminar_permiso_aplicacion_usuario,
-                       imprimir_permiso_aplicacion_usuario
-                FROM tbl_PERMISO_USUARIO_APLICACION
-                WHERE fk_id_usuario = ? AND fk_id_aplicacion = ? AND fk_id_modulo = ?
+                SELECT Cmp_Ingresar_Permiso_Aplicacion_Usuario,
+                       Cmp_Consultar_Permiso_Aplicacion_Usuario,
+                       Cmp_Modificar_Permiso_Aplicacion_Usuario,
+                       Cmp_Eliminar_Permiso_Aplicacion_Usuario,
+                       Cmp_Imprimir_Permiso_Aplicacion_Usuario
+                FROM Tbl_Permiso_Usuario_Aplicacion
+                WHERE Fk_Id_Usuario = ? AND Fk_Id_Aplicacion = ? AND Fk_Id_Modulo = ?;
             ";
+
             using (OdbcConnection conn = conexion.conexion())
             using (OdbcCommand cmd = new OdbcCommand(query, conn))
             {
@@ -54,11 +49,9 @@ namespace CapaModelo
         /// <summary>
         /// Obtiene el ID de una aplicación por su nombre.
         /// </summary>
-        /// <param name="nombreAplicacion">Nombre de la aplicación.</param>
-        /// <returns>ID de la aplicación o -1 si no existe.</returns>
         public int ObtenerIdAplicacionPorNombre(string nombreAplicacion)
         {
-            string query = "SELECT pk_id_aplicacion FROM tbl_APLICACION WHERE nombre_aplicacion = ?";
+            string query = "SELECT Pk_Id_Aplicacion FROM Tbl_Aplicacion WHERE Cmp_Nombre_Aplicacion = ?";
             using (OdbcConnection conn = conexion.conexion())
             using (OdbcCommand cmd = new OdbcCommand(query, conn))
             {
@@ -71,11 +64,9 @@ namespace CapaModelo
         /// <summary>
         /// Obtiene el ID de un módulo por su nombre.
         /// </summary>
-        /// <param name="nombreModulo">Nombre del módulo.</param>
-        /// <returns>ID del módulo o -1 si no existe.</returns>
         public int ObtenerIdModuloPorNombre(string nombreModulo)
         {
-            string query = "SELECT pk_id_modulo FROM tbl_MODULO WHERE nombre_modulo = ?";
+            string query = "SELECT Pk_Id_Modulo FROM Tbl_Modulo WHERE Cmp_Nombre_Modulo = ?";
             using (OdbcConnection conn = conexion.conexion())
             using (OdbcCommand cmd = new OdbcCommand(query, conn))
             {

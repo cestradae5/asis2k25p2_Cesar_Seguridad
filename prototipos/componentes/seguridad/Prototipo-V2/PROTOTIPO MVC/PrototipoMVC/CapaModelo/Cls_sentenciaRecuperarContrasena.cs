@@ -17,7 +17,7 @@ namespace CapaModelo
         {
             using (OdbcConnection conn = cn.conexion())
             {
-                string sSql = "SELECT pk_id_usuario FROM tbl_USUARIO WHERE nombre_usuario = ?";
+                string sSql = "SELECT Pk_Id_Usuario FROM Tbl_Usuario WHERE Cmp_Nombre_Usuario = ?";
                 using (OdbcCommand cmd = new OdbcCommand(sSql, conn))
                 {
                     cmd.Parameters.AddWithValue("@nombre", sNombreUsuario);
@@ -32,15 +32,16 @@ namespace CapaModelo
         {
             using (OdbcConnection conn = cn.conexion())
             {
-                string sSql = @"INSERT INTO tbl_TOKEN_RESTAURAR_CONTRASENA
-                               (fk_id_usuario, token_restaurar_contrasena, fecha_creacion_token_restaurar_contrasena, expiracion_token_restaurar_contrasena, utilizado_token_restaurar_contrasena)
+                string sSql = @"INSERT INTO Tbl_Token_RestaurarContrasena
+                               (Fk_Id_Usuario, Cmp_Token, Cmp_Fecha_Creacion_Restaurar_Contrasenea, 
+                                Cmp_Expiracion_Restaurar_Contrasenea, Cmp_Utilizado_Restaurar_Contrasenea)
                                VALUES (?, ?, ?, ?, 0)";
                 using (OdbcCommand cmd = new OdbcCommand(sSql, conn))
                 {
-                    cmd.Parameters.AddWithValue("@fk_id_usuario", iIdUsuario);
-                    cmd.Parameters.AddWithValue("@token", sToken);
-                    cmd.Parameters.AddWithValue("@fecha_creacion", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@expiracion", DateTime.Now.AddMinutes(5));
+                    cmd.Parameters.AddWithValue("@Fk_Id_Usuario", iIdUsuario);
+                    cmd.Parameters.AddWithValue("@Cmp_Token", sToken);
+                    cmd.Parameters.AddWithValue("@Cmp_Fecha_Creacion_Restaurar_Contrasenea", DateTime.Now);
+                    cmd.Parameters.AddWithValue("@Cmp_Expiracion_Restaurar_Contrasenea", DateTime.Now.AddMinutes(5));
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -51,21 +52,21 @@ namespace CapaModelo
         {
             using (OdbcConnection conn = cn.conexion())
             {
-                string sSql = @"SELECT pk_id_token_restaurar_contrasena, expiracion_token_restaurar_contrasena, utilizado_token_restaurar_contrasena
-                               FROM tbl_TOKEN_RESTAURAR_CONTRASENA
-                               WHERE fk_id_usuario = ? AND token_restaurar_contrasena = ?";
+                string sSql = @"SELECT Pk_Id_Token, Cmp_Expiracion_Restaurar_Contrasenea, Cmp_Utilizado_Restaurar_Contrasenea
+                               FROM Tbl_Token_RestaurarContrasena
+                               WHERE Fk_Id_Usuario = ? AND Cmp_Token = ?";
                 using (OdbcCommand cmd = new OdbcCommand(sSql, conn))
                 {
-                    cmd.Parameters.AddWithValue("@fk_id_usuario", iIdUsuario);
-                    cmd.Parameters.AddWithValue("@token", sToken);
+                    cmd.Parameters.AddWithValue("@Fk_Id_Usuario", iIdUsuario);
+                    cmd.Parameters.AddWithValue("@Cmp_Token", sToken);
                     using (OdbcDataReader dr = cmd.ExecuteReader())
                     {
                         if (dr.Read())
                         {
-                            DateTime expiracion = Convert.ToDateTime(dr["expiracion_token_restaurar_contrasena"]);
-                            bool bUsado = Convert.ToBoolean(dr["utilizado_token_restaurar_contrasena"]);
+                            DateTime expiracion = Convert.ToDateTime(dr["Cmp_Expiracion_Restaurar_Contrasenea"]);
+                            bool bUsado = Convert.ToBoolean(dr["Cmp_Utilizado_Restaurar_Contrasenea"]);
                             if (!bUsado && DateTime.Now <= expiracion)
-                                return (true, Convert.ToInt32(dr["pk_id_token_restaurar_contrasena"]));
+                                return (true, Convert.ToInt32(dr["Pk_Id_Token"]));
                         }
                     }
                 }
@@ -83,9 +84,9 @@ namespace CapaModelo
                     try
                     {
                         // Actualiza solo la contraseña y la fecha del último cambio
-                        string sSql1 = @"UPDATE tbl_USUARIO
-                                SET contrasena_usuario = ?, ultimo_cambio_contrasena_usuario = ?
-                                WHERE pk_id_usuario = ?";
+                        string sSql1 = @"UPDATE Tbl_Usuario
+                                SET Cmp_Contrasena_Usuario = ?, Cmp_Ultimo_Cambio_Contrasenea = ?
+                                WHERE Pk_Id_Usuario = ?";
                         using (OdbcCommand cmd1 = new OdbcCommand(sSql1, conn, trans))
                         {
                             cmd1.Parameters.AddWithValue("@hash", sHashNueva);
@@ -95,9 +96,9 @@ namespace CapaModelo
                         }
 
                         // Marca el token como utilizado
-                        string sSql2 = @"UPDATE tbl_TOKEN_RESTAURAR_CONTRASENA
-                                SET utilizado_token_restaurar_contrasena = 1, fecha_utilizado_restaurar_contrasena = ?
-                                WHERE pk_id_token_restaurar_contrasena = ?";
+                        string sSql2 = @"UPDATE Tbl_Token_RestaurarContrasena
+                                SET Cmp_Utilizado_Restaurar_Contrasenea = 1, Cmp_Fecha_Uso_Restaurar_Contrasenea = ?
+                                WHERE Pk_Id_Token = ?";
                         using (OdbcCommand cmd2 = new OdbcCommand(sSql2, conn, trans))
                         {
                             cmd2.Parameters.AddWithValue("@fecha", DateTime.Now);

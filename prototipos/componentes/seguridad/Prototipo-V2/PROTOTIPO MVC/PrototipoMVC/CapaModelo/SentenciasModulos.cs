@@ -12,7 +12,7 @@ namespace CapaModelo
         public string[] LlenarComboModulos()
         {
             List<string> lista = new List<string>();
-            string sql = "SELECT pk_id_modulo, nombre_modulo FROM tbl_MODULO";
+            string sql = "SELECT Pk_Id_Modulo, Cmp_Nombre_Modulo FROM Tbl_Modulo";
             OdbcCommand cmd = new OdbcCommand(sql, conexion.conexion());
             OdbcDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -24,7 +24,7 @@ namespace CapaModelo
 
         public DataTable ObtenerModulos()
         {
-            string sql = "SELECT pk_id_modulo, nombre_modulo FROM tbl_MODULO";
+            string sql = "SELECT Pk_Id_Modulo, Cmp_Nombre_Modulo FROM Tbl_Modulo";
             OdbcCommand cmd = new OdbcCommand(sql, conexion.conexion());
             OdbcDataAdapter da = new OdbcDataAdapter(cmd);
             DataTable dt = new DataTable();
@@ -34,7 +34,7 @@ namespace CapaModelo
 
         public DataRow BuscarModuloPorId(int idModulo)
         {
-            string sql = @"SELECT * FROM tbl_MODULO WHERE pk_id_modulo = ?";
+            string sql = @"SELECT * FROM Tbl_Modulo WHERE Pk_Id_Modulo = ?";
             OdbcCommand cmd = new OdbcCommand(sql, conexion.conexion());
             cmd.Parameters.AddWithValue("@id", idModulo);
             OdbcDataAdapter da = new OdbcDataAdapter(cmd);
@@ -45,8 +45,8 @@ namespace CapaModelo
 
         public int InsertarModulo(int id, string nombre, string descripcion, byte estado)
         {
-            string sql = @"INSERT INTO tbl_MODULO 
-                   (pk_id_modulo, nombre_modulo, descripcion_modulo, estado_modulo) 
+            string sql = @"INSERT INTO Tbl_Modulo 
+                   (Pk_Id_Modulo, Cmp_Nombre_Modulo, Cmp_Descripcion_Modulo, Cmp_Estado_Modulo) 
                    VALUES (?, ?, ?, ?)";
             using (OdbcCommand cmd = new OdbcCommand(sql, conexion.conexion()))
             {
@@ -58,9 +58,10 @@ namespace CapaModelo
                 return cmd.ExecuteNonQuery();
             }
         }
+
         public int EliminarModulo(int id)
         {
-            string sql = @"DELETE FROM tbl_MODULO WHERE pk_id_modulo = ?";
+            string sql = @"DELETE FROM Tbl_Modulo WHERE Pk_Id_Modulo = ?";
             OdbcCommand cmd = new OdbcCommand(sql, conexion.conexion());
             cmd.Parameters.AddWithValue("@id", id);
             return cmd.ExecuteNonQuery();
@@ -68,9 +69,9 @@ namespace CapaModelo
 
         public int ModificarModulo(int id, string nombre, string descripcion, byte estado)
         {
-            string sql = @"UPDATE tbl_MODULO 
-                   SET nombre_modulo=?, descripcion_modulo=?, estado_modulo=? 
-                   WHERE pk_id_modulo = ?";
+            string sql = @"UPDATE Tbl_Modulo 
+                   SET Cmp_Nombre_Modulo=?, Cmp_Descripcion_Modulo=?, Cmp_Estado_Modulo=? 
+                   WHERE Pk_Id_Modulo = ?";
             using (OdbcCommand cmd = new OdbcCommand(sql, conexion.conexion()))
             {
                 // El orden debe coincidir con los '?'
@@ -85,8 +86,8 @@ namespace CapaModelo
 
         public bool ModuloEnUso(int idModulo)
         {
-            string sql = @"SELECT COUNT(*) FROM tbl_ASIGNACION_MODULO_APLICACION 
-                   WHERE fk_id_modulo = ?";
+            string sql = @"SELECT COUNT(*) FROM Tbl_Asignacion_Modulo_Aplicacion 
+                   WHERE Fk_Id_Modulo = ?";
             using (OdbcCommand cmd = new OdbcCommand(sql, conexion.conexion()))
             {
                 cmd.Parameters.Add("id", OdbcType.Int).Value = idModulo;
@@ -94,7 +95,5 @@ namespace CapaModelo
                 return count > 0; // true si el módulo está en uso
             }
         }
-
-
     }
 }

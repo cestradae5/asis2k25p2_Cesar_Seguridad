@@ -15,10 +15,11 @@ namespace CapaModelo
     public class Cls_Asignacion_Permiso_PerfilesDAO
     {
         private Conexion conexion = new Conexion();
+
         public DataTable datObtenerPerfiles()
         {
             DataTable dt = new DataTable();
-            string query = "SELECT pk_id_perfil, puesto_perfil FROM tbl_PERFIL";
+            string query = "SELECT Pk_Id_Perfil, Cmp_Puesto_Perfil FROM Tbl_Perfil";
 
             using (OdbcConnection conn = conexion.conexion())
             {
@@ -33,10 +34,11 @@ namespace CapaModelo
 
             return dt;
         }
+
         public DataTable datObtenerModulos()
         {
             DataTable dt = new DataTable();
-            string query = "SELECT pk_id_modulo, nombre_modulo FROM tbl_MODULO";
+            string query = "SELECT Pk_Id_Modulo, Cmp_Nombre_Modulo FROM Tbl_Modulo";
 
             using (OdbcConnection conn = conexion.conexion())
             {
@@ -51,10 +53,11 @@ namespace CapaModelo
 
             return dt;
         }
+
         public DataTable datObtenerAplicaciones()
         {
             DataTable dt = new DataTable();
-            string query = "SELECT pk_id_aplicacion, nombre_aplicacion FROM tbl_APLICACION";
+            string query = "SELECT Pk_Id_Aplicacion, Cmp_Nombre_Aplicacion FROM Tbl_Aplicacion";
 
             using (OdbcConnection conn = conexion.conexion())
             {
@@ -68,25 +71,26 @@ namespace CapaModelo
                 return dt;
             }
         }
+
         public int iInsertarPermisoPerfilAplicacion(
-    int idPerfil,
-    int idModulo,
-    int idAplicacion,
-    bool ingresar,
-    bool consultar,
-    bool modificar,
-    bool eliminar,
-    bool imprimir)
+            int idPerfil,
+            int idModulo,
+            int idAplicacion,
+            bool ingresar,
+            bool consultar,
+            bool modificar,
+            bool eliminar,
+            bool imprimir)
         {
             int filasAfectadas = 0;
 
-            string query = @"INSERT INTO tbl_PERMISO_PERFIL_APLICACION
-                (fk_id_modulo, fk_id_perfil, fk_id_aplicacion,
-                 ingresar_permiso_aplicacion_perfil,
-                 consultar_permiso_aplicacion_perfil,
-                 modificar_permiso_aplicacion_perfil,
-                 eliminar_permiso_aplicacion_perfil,
-                 imprimir_permiso_aplicacion_perfil)
+            string query = @"INSERT INTO Tbl_Permiso_Perfil_Aplicacion
+                (Fk_Id_Modulo, Fk_Id_Perfil, Fk_Id_Aplicacion,
+                 Cmp_Ingresar_Permisos_Aplicacion_Perfil,
+                 Cmp_Consultar_Permisos_Aplicacion_Perfil,
+                 Cmp_Modificar_Permisos_Aplicacion_Perfil,
+                 Cmp_Eliminar_Permisos_Aplicacion_Perfil,
+                 Cmp_Imprimir_Permisos_Aplicacion_Perfil)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
             using (OdbcConnection conn = conexion.conexion())
@@ -108,13 +112,14 @@ namespace CapaModelo
 
             return filasAfectadas;
         }
+
         public bool bExistePermisoPerfil(int idPerfil, int idModulo, int idAplicacion)
         {
             using (OdbcConnection conn = conexion.conexion())
             {
                 string verificar = @"SELECT COUNT(*) 
-                             FROM tbl_PERMISO_PERFIL_APLICACION
-                             WHERE fk_id_perfil = ? AND fk_id_modulo = ? AND fk_id_aplicacion = ?";
+                             FROM Tbl_Permiso_Perfil_Aplicacion
+                             WHERE Fk_Id_Perfil = ? AND Fk_Id_Modulo = ? AND Fk_Id_Aplicacion = ?";
 
                 using (OdbcCommand cmd = new OdbcCommand(verificar, conn))
                 {
@@ -127,19 +132,20 @@ namespace CapaModelo
                 }
             }
         }
+
         public int iActualizarPermisoPerfilAplicacion(int idPerfil, int idModulo, int idAplicacion,
                                              bool ingresar, bool consultar, bool modificar,
                                              bool eliminar, bool imprimir)
         {
             int filasAfectadas = 0;
 
-            string query = @"UPDATE tbl_PERMISO_PERFIL_APLICACION
-                     SET ingresar_permiso_aplicacion_perfil = ?,
-                         consultar_permiso_aplicacion_perfil = ?,
-                         modificar_permiso_aplicacion_perfil = ?,
-                         eliminar_permiso_aplicacion_perfil = ?,
-                         imprimir_permiso_aplicacion_perfil = ?
-                     WHERE fk_id_perfil = ? AND fk_id_modulo = ? AND fk_id_aplicacion = ?";
+            string query = @"UPDATE Tbl_Permiso_Perfil_Aplicacion
+                     SET Cmp_Ingresar_Permisos_Aplicacion_Perfil = ?,
+                         Cmp_Consultar_Permisos_Aplicacion_Perfil = ?,
+                         Cmp_Modificar_Permisos_Aplicacion_Perfil = ?,
+                         Cmp_Eliminar_Permisos_Aplicacion_Perfil = ?,
+                         Cmp_Imprimir_Permisos_Aplicacion_Perfil = ?
+                     WHERE Fk_Id_Perfil = ? AND Fk_Id_Modulo = ? AND Fk_Id_Aplicacion = ?";
 
             using (OdbcConnection conn = conexion.conexion())
             {
@@ -161,5 +167,4 @@ namespace CapaModelo
             return filasAfectadas;
         }
     }
-
 }
