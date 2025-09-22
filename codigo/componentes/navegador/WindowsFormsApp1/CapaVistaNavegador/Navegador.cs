@@ -20,8 +20,8 @@ namespace CapaVistaNavegador
         public Navegador()
         {
             InitializeComponent();
-            // deshabilitar botones
-            deshabilitar_botones();
+            // Los botones se inicializan en su estado inicial, Reportes, ingresar e imprimir
+            BotonesEstadoInicial();
         }
 
         private void Btn_ingresar_Click(object sender, EventArgs e)
@@ -45,8 +45,10 @@ namespace CapaVistaNavegador
             // Asigna los alias al controlador y crea los controles necesarios
             if (ctrl.AsignarAlias(alias, this, 10, 100))
             {
-                habilitar_botones();
+                Btn_ingresar.Enabled = false;
+                BotonesEstadoCRUD();
                 mostrarDatos();
+                ctrl.ActivarTodosComboBoxes(this);
             }
         }
 
@@ -73,6 +75,7 @@ namespace CapaVistaNavegador
             Dgv_Datos.DataSource = dtPagina;
         }
 
+
         public void mostrarDatos()
         {
             if (Dgv_Datos == null)
@@ -85,6 +88,7 @@ namespace CapaVistaNavegador
                 Dgv_Datos.Location = new System.Drawing.Point(10, 250);
                 Dgv_Datos.Size = new System.Drawing.Size(1100, 200);
                 Dgv_Datos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                Dgv_Datos.ReadOnly = true; 
                 this.Controls.Add(Dgv_Datos);
 
                 // preguntar a Stevens
@@ -106,32 +110,30 @@ namespace CapaVistaNavegador
             paginaActual = 1;
             MostrarPagina(paginaActual);
 
-            // ======================= Stevens Cambranes =======================
-            // Re-engancha por si el DataSource cambió con la paginación
-            Dgv_Datos.SelectionChanged -= Dgv_Datos_SelectionChanged;
-            Dgv_Datos.SelectionChanged += Dgv_Datos_SelectionChanged;
-
-            // Selección inicial para disparar el handler y rellenar los combos
-            if (Dgv_Datos.Rows.Count > 0)
-            {
-                Dgv_Datos.ClearSelection();
-                Dgv_Datos.Rows[0].Selected = true;
-                Dgv_Datos.CurrentCell = Dgv_Datos.Rows[0].Cells[0];
-
-                // Llamada explícita por si el evento no se dispara automáticamente
-                ctrl.RellenarCombosDesdeFila(this, alias, Dgv_Datos.Rows[0]);
-            }
+            // Enganchar el evento solo una vez
+            Dgv_Datos.DataBindingComplete -= Dgv_Datos_DataBindingComplete;
+            Dgv_Datos.DataBindingComplete += Dgv_Datos_DataBindingComplete;
 
         }
 
-        public void habilitar_botones()
+
+        private void Dgv_Datos_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            if (Dgv_Datos.Rows.Count > 0)
+            {
+                Dgv_Datos.ClearSelection();
+                Dgv_Datos.CurrentCell = null;
+            }
+        }
+
+        public void BotonesEstadoCRUD()
         {
             Btn_modificar.Enabled = true;
             Btn_guardar.Enabled = true;
             Btn_cancelar.Enabled = true;
             Btn_eliminar.Enabled = true;
-            Btn_consultar.Enabled = true;
-            Btn_imprimir.Enabled = true;
+            Btn_consultar.Enabled = false;
+            Btn_imprimir.Enabled = false;
             Btn_refrescar.Enabled = true;
             Btn_inicio.Enabled = true;
             Btn_anterior.Enabled = true;
@@ -139,14 +141,15 @@ namespace CapaVistaNavegador
             Btn_fin.Enabled = true;
         }
 
-        public void deshabilitar_botones()
+        public void BotonesEstadoInicial()
         {
+            Btn_ingresar.Enabled = true;
             Btn_modificar.Enabled = false;
             Btn_guardar.Enabled = false;
             Btn_cancelar.Enabled = false;
             Btn_eliminar.Enabled = false;
-            Btn_consultar.Enabled = false;
-            Btn_imprimir.Enabled = false;
+            Btn_consultar.Enabled = true;
+            Btn_imprimir.Enabled = true;
             Btn_refrescar.Enabled = false;
             Btn_inicio.Enabled = false;
             Btn_anterior.Enabled = false;
@@ -156,9 +159,10 @@ namespace CapaVistaNavegador
 
         private void Btn_cancelar_Click_1(object sender, EventArgs e)
         {
-            deshabilitar_botones();
+            BotonesEstadoInicial();
             // Limpiar Cbo
             ctrl.LimpiarCombos(this, alias);
+            ctrl.DesactivarTodosComboBoxes(this);
         }
 
         private void Btn_guardar_Click_1(object sender, EventArgs e)
@@ -185,8 +189,10 @@ namespace CapaVistaNavegador
         // ======================= Esta funcion es para seleccionar la fila del Dgv y Rellenar los Cbo =======================
         private void Dgv_Datos_SelectionChanged(object sender, EventArgs e)
         {
+            // Solo si el usuario hizo clic o usó teclado
+            if (Control.MouseButtons == MouseButtons.None && !Dgv_Datos.Focused) return;
+
             if (Dgv_Datos?.CurrentRow == null || alias == null || alias.Length < 2) return;
-            // Llama directamente a tu función del controlador: RellenarCombosDesdeFila
             ctrl.RellenarCombosDesdeFila(this, alias, Dgv_Datos.CurrentRow);
         }
         // ======================= Esta funcion es para seleccionar la fila del Dgv y Rellenar los Cbo =======================
