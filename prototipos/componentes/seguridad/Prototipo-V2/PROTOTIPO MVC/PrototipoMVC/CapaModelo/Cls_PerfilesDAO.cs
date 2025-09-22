@@ -1,37 +1,40 @@
-﻿using System;
+﻿// Brandon Alexander Hernandez Salguero 0901-22-9663
+using System;
 using System.Collections.Generic;
 using System.Data.Odbc;
-//Brandon Alexander Hernandez Salguero 0901-22-9663
+
 namespace CapaModelo
 {
     public class Cls_PerfilesDAO
     {
-        // Sentencias SQL adaptadas a la tabla 'tbl_perfil'
+        // Sentencias SQL adaptadas a la tabla 'Tbl_Perfil'
         private static readonly string SQL_SELECT = @"
-            SELECT pk_id_perfil, puesto_perfil, descripcion_perfil, estado_perfil, tipo_perfil
-            FROM tbl_PERFIL";
+            SELECT Pk_Id_Perfil, Cmp_Puesto_Perfil, Cmp_Descripcion_Perfil, 
+                   Cmp_Estado_Perfil, Cmp_Tipo_Perfil
+            FROM Tbl_Perfil";
 
         private static readonly string SQL_INSERT = @"
-            INSERT INTO tbl_PERFIL 
-                (puesto_perfil, descripcion_perfil, estado_perfil, tipo_perfil)
+            INSERT INTO Tbl_Perfil 
+                (Cmp_Puesto_Perfil, Cmp_Descripcion_Perfil, Cmp_Estado_Perfil, Cmp_Tipo_Perfil)
             VALUES (?, ?, ?, ?)";
 
         private static readonly string SQL_UPDATE = @"
-            UPDATE tbl_PERFIL SET
-                puesto_perfil = ?, 
-                descripcion_perfil = ?, 
-                estado_perfil = ?, 
-                tipo_perfil = ?
-            WHERE pk_id_perfil = ?";
+            UPDATE Tbl_Perfil SET
+                Cmp_Puesto_Perfil = ?, 
+                Cmp_Descripcion_Perfil = ?, 
+                Cmp_Estado_Perfil = ?, 
+                Cmp_Tipo_Perfil = ?
+            WHERE Pk_Id_Perfil = ?";
 
-        private static readonly string SQL_DELETE = "DELETE FROM tbl_PERFIL WHERE pk_id_perfil = ?";
+        private static readonly string SQL_DELETE = "DELETE FROM Tbl_Perfil WHERE Pk_Id_Perfil = ?";
 
         private static readonly string SQL_QUERY = @"
-            SELECT pk_id_perfil, puesto_perfil, descripcion_perfil, estado_perfil, tipo_perfil
-            FROM tbl_PERFIL 
-            WHERE pk_id_perfil = ?";
+            SELECT Pk_Id_Perfil, Cmp_Puesto_Perfil, Cmp_Descripcion_Perfil, 
+                   Cmp_Estado_Perfil, Cmp_Tipo_Perfil
+            FROM Tbl_Perfil 
+            WHERE Pk_Id_Perfil = ?";
 
-        // Clase de conexión (ajusta el método si tu clase se llama diferente)
+        // Clase de conexión
         private Conexion conexion = new Conexion();
 
         public List<Cls_Perfiles> lisObtenerPerfiles()
@@ -62,10 +65,10 @@ namespace CapaModelo
             using (OdbcConnection conn = conexion.conexion())
             {
                 OdbcCommand cmd = new OdbcCommand(SQL_INSERT, conn);
-                cmd.Parameters.AddWithValue("@puesto_perfil", perfil.puesto_perfil);
-                cmd.Parameters.AddWithValue("@descripcion_perfil", perfil.descripcion_perfil);
-                cmd.Parameters.AddWithValue("@estado_perfil", perfil.estado_perfil);
-                cmd.Parameters.AddWithValue("@tipo_perfil", perfil.tipo_perfil);
+                cmd.Parameters.AddWithValue("@Cmp_Puesto_Perfil", perfil.puesto_perfil);
+                cmd.Parameters.AddWithValue("@Cmp_Descripcion_Perfil", perfil.descripcion_perfil);
+                cmd.Parameters.AddWithValue("@Cmp_Estado_Perfil", perfil.estado_perfil);
+                cmd.Parameters.AddWithValue("@Cmp_Tipo_Perfil", perfil.tipo_perfil);
                 return cmd.ExecuteNonQuery() > 0;
             }
         }
@@ -75,11 +78,11 @@ namespace CapaModelo
             using (OdbcConnection conn = conexion.conexion())
             {
                 OdbcCommand cmd = new OdbcCommand(SQL_UPDATE, conn);
-                cmd.Parameters.AddWithValue("@puesto_perfil", perfil.puesto_perfil);
-                cmd.Parameters.AddWithValue("@descripcion_perfil", perfil.descripcion_perfil);
-                cmd.Parameters.AddWithValue("@estado_perfil", perfil.estado_perfil);
-                cmd.Parameters.AddWithValue("@tipo_perfil", perfil.tipo_perfil);
-                cmd.Parameters.AddWithValue("@pk_id_perfil", perfil.pk_id_perfil);
+                cmd.Parameters.AddWithValue("@Cmp_Puesto_Perfil", perfil.puesto_perfil);
+                cmd.Parameters.AddWithValue("@Cmp_Descripcion_Perfil", perfil.descripcion_perfil);
+                cmd.Parameters.AddWithValue("@Cmp_Estado_Perfil", perfil.estado_perfil);
+                cmd.Parameters.AddWithValue("@Cmp_Tipo_Perfil", perfil.tipo_perfil);
+                cmd.Parameters.AddWithValue("@Pk_Id_Perfil", perfil.pk_id_perfil);
                 return cmd.ExecuteNonQuery() > 0;
             }
         }
@@ -89,7 +92,7 @@ namespace CapaModelo
             using (OdbcConnection conn = conexion.conexion())
             {
                 OdbcCommand cmd = new OdbcCommand(SQL_DELETE, conn);
-                cmd.Parameters.AddWithValue("@pk_id_perfil", pk_id_perfil);
+                cmd.Parameters.AddWithValue("@Pk_Id_Perfil", pk_id_perfil);
                 return cmd.ExecuteNonQuery() > 0;
             }
         }
@@ -99,7 +102,7 @@ namespace CapaModelo
             using (OdbcConnection conn = conexion.conexion())
             {
                 OdbcCommand cmd = new OdbcCommand(SQL_QUERY, conn);
-                cmd.Parameters.AddWithValue("@pk_id_perfil", pk_id_perfil);
+                cmd.Parameters.AddWithValue("@Pk_Id_Perfil", pk_id_perfil);
                 OdbcDataReader reader = cmd.ExecuteReader();
                 if (reader.Read())
                 {

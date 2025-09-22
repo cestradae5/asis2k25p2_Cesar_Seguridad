@@ -13,17 +13,13 @@ namespace CapaModelo
         public DataTable ObtenerUsuarios()
         {
             DataTable dt = new DataTable();
-            string query = "SELECT pk_id_usuario, nombre_usuario FROM tbl_USUARIO";
+            string query = "SELECT Pk_Id_Usuario, Cmp_Nombre_Usuario FROM Tbl_Usuario";
 
             using (OdbcConnection conn = conexion.conexion())
+            using (OdbcCommand cmd = new OdbcCommand(query, conn))
+            using (OdbcDataAdapter da = new OdbcDataAdapter(cmd))
             {
-                using (OdbcCommand cmd = new OdbcCommand(query, conn))
-                {
-                    using (OdbcDataAdapter da = new OdbcDataAdapter(cmd))
-                    {
-                        da.Fill(dt);
-                    }
-                }
+                da.Fill(dt);
             }
 
             return dt;
@@ -33,17 +29,13 @@ namespace CapaModelo
         public DataTable ObtenerModulos()
         {
             DataTable dt = new DataTable();
-            string query = "SELECT pk_id_modulo, nombre_modulo FROM tbl_MODULO";
+            string query = "SELECT Pk_Id_Modulo, Cmp_Nombre_Modulo FROM Tbl_Modulo";
 
             using (OdbcConnection conn = conexion.conexion())
+            using (OdbcCommand cmd = new OdbcCommand(query, conn))
+            using (OdbcDataAdapter da = new OdbcDataAdapter(cmd))
             {
-                using (OdbcCommand cmd = new OdbcCommand(query, conn))
-                {
-                    using (OdbcDataAdapter da = new OdbcDataAdapter(cmd))
-                    {
-                        da.Fill(dt);
-                    }
-                }
+                da.Fill(dt);
             }
 
             return dt;
@@ -53,20 +45,17 @@ namespace CapaModelo
         public DataTable ObtenerAplicacionesPorModulo(int idModulo)
         {
             DataTable dt = new DataTable();
-            string query = @"SELECT pk_id_aplicacion, nombre_aplicacion 
-                             FROM tbl_APLICACION 
-                             WHERE estado_aplicacion = 1 AND fk_id_modulo = ?";
+            string query = @"SELECT Pk_Id_Aplicacion, Cmp_Nombre_Aplicacion 
+                             FROM Tbl_Aplicacion 
+                             WHERE Cmp_Estado_Aplicacion = 1 AND Fk_Id_Modulo = ?";
 
             using (OdbcConnection conn = conexion.conexion())
+            using (OdbcCommand cmd = new OdbcCommand(query, conn))
             {
-                using (OdbcCommand cmd = new OdbcCommand(query, conn))
+                cmd.Parameters.AddWithValue("?", idModulo);
+                using (OdbcDataAdapter da = new OdbcDataAdapter(cmd))
                 {
-                    cmd.Parameters.AddWithValue("?", idModulo);
-
-                    using (OdbcDataAdapter da = new OdbcDataAdapter(cmd))
-                    {
-                        da.Fill(dt);
-                    }
+                    da.Fill(dt);
                 }
             }
 
@@ -79,8 +68,8 @@ namespace CapaModelo
             using (OdbcConnection conn = conexion.conexion())
             {
                 string verificar = @"SELECT COUNT(*) 
-                                     FROM tbl_PERMISO_USUARIO_APLICACION
-                                     WHERE fk_id_usuario = ? AND fk_id_modulo = ? AND fk_id_aplicacion = ?";
+                                     FROM Tbl_Permiso_Usuario_Aplicacion
+                                     WHERE Fk_Id_Usuario = ? AND Fk_Id_Modulo = ? AND Fk_Id_Aplicacion = ?";
 
                 using (OdbcCommand cmd = new OdbcCommand(verificar, conn))
                 {
@@ -103,13 +92,13 @@ namespace CapaModelo
 
             using (OdbcConnection conn = conexion.conexion())
             {
-                string query = @"INSERT INTO tbl_PERMISO_USUARIO_APLICACION
-                                 (fk_id_usuario, fk_id_modulo, fk_id_aplicacion,
-                                  ingresar_permiso_aplicacion_usuario,
-                                  consultar_permiso_aplicacion_usuario,
-                                  modificar_permiso_aplicacion_usuario,
-                                  eliminar_permiso_aplicacion_usuario,
-                                  imprimir_permiso_aplicacion_usuario)
+                string query = @"INSERT INTO Tbl_Permiso_Usuario_Aplicacion
+                                 (Fk_Id_Usuario, Fk_Id_Modulo, Fk_Id_Aplicacion,
+                                  Ingresar_Permiso_Aplicacion_Usuario,
+                                  Consultar_Permiso_Aplicacion_Usuario,
+                                  Modificar_Permiso_Aplicacion_Usuario,
+                                  Eliminar_Permiso_Aplicacion_Usuario,
+                                  Imprimir_Permiso_Aplicacion_Usuario)
                                  VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
                 using (OdbcCommand cmdInsertar = new OdbcCommand(query, conn))
@@ -130,36 +119,34 @@ namespace CapaModelo
             return filasAfectadas;
         }
 
-        // Pablo Quiroa 0901-22-2929
+        // Actualizar permisos de usuario por aplicación
         public int ActualizarPermisoUsuarioAplicacion(int idUsuario, int idModulo, int idAplicacion,
                                                       bool ingresar, bool consultar, bool modificar,
                                                       bool eliminar, bool imprimir)
         {
             int filasAfectadas = 0;
 
-            string query = @"UPDATE tbl_PERMISO_USUARIO_APLICACION
-                             SET ingresar_permiso_aplicacion_usuario = ?,
-                                 consultar_permiso_aplicacion_usuario = ?,
-                                 modificar_permiso_aplicacion_usuario = ?,
-                                 eliminar_permiso_aplicacion_usuario = ?,
-                                 imprimir_permiso_aplicacion_usuario = ?
-                             WHERE fk_id_usuario = ? AND fk_id_modulo = ? AND fk_id_aplicacion = ?";
+            string query = @"UPDATE Tbl_Permiso_Usuario_Aplicacion
+                             SET Ingresar_Permiso_Aplicacion_Usuario = ?,
+                                 Consultar_Permiso_Aplicacion_Usuario = ?,
+                                 Modificar_Permiso_Aplicacion_Usuario = ?,
+                                 Eliminar_Permiso_Aplicacion_Usuario = ?,
+                                 Imprimir_Permiso_Aplicacion_Usuario = ?
+                             WHERE Fk_Id_Usuario = ? AND Fk_Id_Modulo = ? AND Fk_Id_Aplicacion = ?";
 
             using (OdbcConnection conn = conexion.conexion())
+            using (OdbcCommand cmd = new OdbcCommand(query, conn))
             {
-                using (OdbcCommand cmd = new OdbcCommand(query, conn))
-                {
-                    cmd.Parameters.AddWithValue("?", ingresar);
-                    cmd.Parameters.AddWithValue("?", consultar);
-                    cmd.Parameters.AddWithValue("?", modificar);
-                    cmd.Parameters.AddWithValue("?", eliminar);
-                    cmd.Parameters.AddWithValue("?", imprimir);
-                    cmd.Parameters.AddWithValue("?", idUsuario);
-                    cmd.Parameters.AddWithValue("?", idModulo);
-                    cmd.Parameters.AddWithValue("?", idAplicacion);
+                cmd.Parameters.AddWithValue("?", ingresar);
+                cmd.Parameters.AddWithValue("?", consultar);
+                cmd.Parameters.AddWithValue("?", modificar);
+                cmd.Parameters.AddWithValue("?", eliminar);
+                cmd.Parameters.AddWithValue("?", imprimir);
+                cmd.Parameters.AddWithValue("?", idUsuario);
+                cmd.Parameters.AddWithValue("?", idModulo);
+                cmd.Parameters.AddWithValue("?", idAplicacion);
 
-                    filasAfectadas = cmd.ExecuteNonQuery();
-                }
+                filasAfectadas = cmd.ExecuteNonQuery();
             }
 
             return filasAfectadas;

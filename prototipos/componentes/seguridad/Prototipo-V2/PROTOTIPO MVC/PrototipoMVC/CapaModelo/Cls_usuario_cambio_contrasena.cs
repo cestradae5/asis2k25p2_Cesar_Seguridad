@@ -12,14 +12,14 @@ namespace CapaModelo
     {
         Conexion cn = new Conexion();
 
-        // 0901-20-4620 Ruben Armando Lopez Luch
+        // Validar la contraseña actual del usuario
         public bool fun_validar_contrasena_actual(int iIdUsuario, string sContrasenaActual)
         {
             bool bValido = false;
             OdbcConnection conn = cn.conexion();
             try
             {
-                string sSql = "SELECT contrasena_usuario FROM tbl_USUARIO WHERE pk_id_usuario=?;";
+                string sSql = "SELECT Cmp_Contrasena_Usuario FROM Tbl_Usuario WHERE Pk_Id_Usuario=?;";
                 OdbcCommand cmd = new OdbcCommand(sSql, conn);
                 cmd.Parameters.AddWithValue("@idUsuario", iIdUsuario);
 
@@ -42,17 +42,17 @@ namespace CapaModelo
             return bValido;
         }
 
-        // 0901-20-4620 Ruben Armando Lopez Luch
+        // Cambiar la contraseña del usuario
         public bool fun_cambiar_contrasena(int iIdUsuario, string sNuevaContrasena)
         {
             bool bExito = false;
             OdbcConnection conn = cn.conexion();
             try
             {
-                string sSql = @"UPDATE tbl_USUARIO 
-                                 SET contrasena_usuario=?, 
-                                     ultimo_cambio_contrasena_usuario=?
-                                 WHERE pk_id_usuario=?;";
+                string sSql = @"UPDATE Tbl_Usuario 
+                                 SET Cmp_Contrasena_Usuario=?, 
+                                     Cmp_Ultimo_Cambio_Contrasenea=?
+                                 WHERE Pk_Id_Usuario=?;";
                 OdbcCommand cmd = new OdbcCommand(sSql, conn);
                 cmd.Parameters.AddWithValue("@nuevaContrasena", sNuevaContrasena);
                 cmd.Parameters.AddWithValue("@fecha", DateTime.Now);

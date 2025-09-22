@@ -1,4 +1,4 @@
-﻿// Ernesto David Samayoa Jocol - DAO para tbl_EMPLEADO
+﻿// Ernesto David Samayoa Jocol - DAO para Tbl_Empleado
 using System;
 using System.Collections.Generic;
 using System.Data.Odbc;
@@ -11,42 +11,42 @@ namespace CapaModelo
 
         // Consultas SQL
         private static readonly string SQL_SELECT = @"
-            SELECT pk_id_empleado, nombres_empleado, apellidos_empleado,
-                   dpi_empleado, nit_empleado, correo_empleado,
-                   telefono_empleado, genero_empleado,
-                   fecha_nacimiento_empleado, fecha_contratacion_empleado
-            FROM tbl_EMPLEADO";
+            SELECT Pk_Id_Empleado, Cmp_Nombres_Empleado, Cmp_Apellidos_Empleado,
+                   Cmp_Dpi_Empleado, Cmp_Nit_Empleado, Cmp_Correo_Empleado,
+                   Cmp_Telefono_Empleado, Cmp_Genero_Empleado,
+                   Cmp_Fecha_Nacimiento_Empleado, Cmp_Fecha_Contratacion__Empleado
+            FROM Tbl_Empleado";
 
         private static readonly string SQL_INSERT = @"
-            INSERT INTO tbl_EMPLEADO
-                (pk_id_empleado, nombres_empleado, apellidos_empleado,
-                 dpi_empleado, nit_empleado, correo_empleado,
-                 telefono_empleado, genero_empleado,
-                 fecha_nacimiento_empleado, fecha_contratacion_empleado)
+            INSERT INTO Tbl_Empleado
+                (Pk_Id_Empleado, Cmp_Nombres_Empleado, Cmp_Apellidos_Empleado,
+                 Cmp_Dpi_Empleado, Cmp_Nit_Empleado, Cmp_Correo_Empleado,
+                 Cmp_Telefono_Empleado, Cmp_Genero_Empleado,
+                 Cmp_Fecha_Nacimiento_Empleado, Cmp_Fecha_Contratacion__Empleado)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         private static readonly string SQL_UPDATE = @"
-            UPDATE tbl_EMPLEADO SET
-                nombres_empleado = ?, 
-                apellidos_empleado = ?, 
-                dpi_empleado = ?, 
-                nit_empleado = ?, 
-                correo_empleado = ?, 
-                telefono_empleado = ?, 
-                genero_empleado = ?, 
-                fecha_nacimiento_empleado = ?, 
-                fecha_contratacion_empleado = ?
-            WHERE pk_id_empleado = ?";
+            UPDATE Tbl_Empleado SET
+                Cmp_Nombres_Empleado = ?, 
+                Cmp_Apellidos_Empleado = ?, 
+                Cmp_Dpi_Empleado = ?, 
+                Cmp_Nit_Empleado = ?, 
+                Cmp_Correo_Empleado = ?, 
+                Cmp_Telefono_Empleado = ?, 
+                Cmp_Genero_Empleado = ?, 
+                Cmp_Fecha_Nacimiento_Empleado = ?, 
+                Cmp_Fecha_Contratacion__Empleado = ?
+            WHERE Pk_Id_Empleado = ?";
 
-        private static readonly string SQL_DELETE = "DELETE FROM tbl_EMPLEADO WHERE pk_id_empleado = ?";
+        private static readonly string SQL_DELETE = "DELETE FROM Tbl_Empleado WHERE Pk_Id_Empleado = ?";
 
         private static readonly string SQL_QUERY = @"
-            SELECT pk_id_empleado, nombres_empleado, apellidos_empleado,
-                   dpi_empleado, nit_empleado, correo_empleado,
-                   telefono_empleado, genero_empleado,
-                   fecha_nacimiento_empleado, fecha_contratacion_empleado
-            FROM tbl_EMPLEADO
-            WHERE pk_id_empleado = ?";
+            SELECT Pk_Id_Empleado, Cmp_Nombres_Empleado, Cmp_Apellidos_Empleado,
+                   Cmp_Dpi_Empleado, Cmp_Nit_Empleado, Cmp_Correo_Empleado,
+                   Cmp_Telefono_Empleado, Cmp_Genero_Empleado,
+                   Cmp_Fecha_Nacimiento_Empleado, Cmp_Fecha_Contratacion__Empleado
+            FROM Tbl_Empleado
+            WHERE Pk_Id_Empleado = ?";
 
         // --------------------------
         // Obtener todos los empleados
@@ -89,16 +89,16 @@ namespace CapaModelo
             {
                 OdbcCommand cmd = new OdbcCommand(SQL_INSERT, conn);
 
-                cmd.Parameters.AddWithValue("@pk_id_empleado", emp.PkIdEmpleado);
-                cmd.Parameters.AddWithValue("@nombres_empleado", emp.NombresEmpleado);
-                cmd.Parameters.AddWithValue("@apellidos_empleado", emp.ApellidosEmpleado);
-                cmd.Parameters.AddWithValue("@dpi_empleado", emp.DpiEmpleado);
-                cmd.Parameters.AddWithValue("@nit_empleado", emp.NitEmpleado);
-                cmd.Parameters.AddWithValue("@correo_empleado", emp.CorreoEmpleado);
-                cmd.Parameters.AddWithValue("@telefono_empleado", emp.TelefonoEmpleado);
-                cmd.Parameters.AddWithValue("@genero_empleado", emp.GeneroEmpleado);
-                cmd.Parameters.AddWithValue("@fecha_nacimiento_empleado", emp.FechaNacimientoEmpleado);
-                cmd.Parameters.AddWithValue("@fecha_contratacion_empleado", emp.FechaContratacionEmpleado);
+                cmd.Parameters.AddWithValue("@Pk_Id_Empleado", emp.PkIdEmpleado);
+                cmd.Parameters.AddWithValue("@Cmp_Nombres_Empleado", emp.NombresEmpleado);
+                cmd.Parameters.AddWithValue("@Cmp_Apellidos_Empleado", emp.ApellidosEmpleado);
+                cmd.Parameters.AddWithValue("@Cmp_Dpi_Empleado", emp.DpiEmpleado);
+                cmd.Parameters.AddWithValue("@Cmp_Nit_Empleado", emp.NitEmpleado);
+                cmd.Parameters.AddWithValue("@Cmp_Correo_Empleado", emp.CorreoEmpleado);
+                cmd.Parameters.AddWithValue("@Cmp_Telefono_Empleado", emp.TelefonoEmpleado);
+                cmd.Parameters.AddWithValue("@Cmp_Genero_Empleado", emp.GeneroEmpleado);
+                cmd.Parameters.AddWithValue("@Cmp_Fecha_Nacimiento_Empleado", emp.FechaNacimientoEmpleado);
+                cmd.Parameters.AddWithValue("@Cmp_Fecha_Contratacion__Empleado", emp.FechaContratacionEmpleado);
 
                 return cmd.ExecuteNonQuery();
             }
@@ -113,16 +113,16 @@ namespace CapaModelo
             {
                 OdbcCommand cmd = new OdbcCommand(SQL_UPDATE, conn);
 
-                cmd.Parameters.AddWithValue("@nombres_empleado", emp.NombresEmpleado);
-                cmd.Parameters.AddWithValue("@apellidos_empleado", emp.ApellidosEmpleado);
-                cmd.Parameters.AddWithValue("@dpi_empleado", emp.DpiEmpleado);
-                cmd.Parameters.AddWithValue("@nit_empleado", emp.NitEmpleado);
-                cmd.Parameters.AddWithValue("@correo_empleado", emp.CorreoEmpleado);
-                cmd.Parameters.AddWithValue("@telefono_empleado", emp.TelefonoEmpleado);
-                cmd.Parameters.AddWithValue("@genero_empleado", emp.GeneroEmpleado);
-                cmd.Parameters.AddWithValue("@fecha_nacimiento_empleado", emp.FechaNacimientoEmpleado);
-                cmd.Parameters.AddWithValue("@fecha_contratacion_empleado", emp.FechaContratacionEmpleado);
-                cmd.Parameters.AddWithValue("@pk_id_empleado", emp.PkIdEmpleado);
+                cmd.Parameters.AddWithValue("@Cmp_Nombres_Empleado", emp.NombresEmpleado);
+                cmd.Parameters.AddWithValue("@Cmp_Apellidos_Empleado", emp.ApellidosEmpleado);
+                cmd.Parameters.AddWithValue("@Cmp_Dpi_Empleado", emp.DpiEmpleado);
+                cmd.Parameters.AddWithValue("@Cmp_Nit_Empleado", emp.NitEmpleado);
+                cmd.Parameters.AddWithValue("@Cmp_Correo_Empleado", emp.CorreoEmpleado);
+                cmd.Parameters.AddWithValue("@Cmp_Telefono_Empleado", emp.TelefonoEmpleado);
+                cmd.Parameters.AddWithValue("@Cmp_Genero_Empleado", emp.GeneroEmpleado);
+                cmd.Parameters.AddWithValue("@Cmp_Fecha_Nacimiento_Empleado", emp.FechaNacimientoEmpleado);
+                cmd.Parameters.AddWithValue("@Cmp_Fecha_Contratacion__Empleado", emp.FechaContratacionEmpleado);
+                cmd.Parameters.AddWithValue("@Pk_Id_Empleado", emp.PkIdEmpleado);
 
                 return cmd.ExecuteNonQuery();
             }
@@ -136,7 +136,7 @@ namespace CapaModelo
             using (OdbcConnection conn = conexion.conexion())
             {
                 OdbcCommand cmd = new OdbcCommand(SQL_DELETE, conn);
-                cmd.Parameters.AddWithValue("@pk_id_empleado", idEmpleado);
+                cmd.Parameters.AddWithValue("@Pk_Id_Empleado", idEmpleado);
                 return cmd.ExecuteNonQuery();
             }
         }
@@ -150,7 +150,7 @@ namespace CapaModelo
             using (OdbcConnection conn = conexion.conexion())
             {
                 OdbcCommand cmd = new OdbcCommand(SQL_QUERY, conn);
-                cmd.Parameters.AddWithValue("@pk_id_empleado", idEmpleado);
+                cmd.Parameters.AddWithValue("@Pk_Id_Empleado", idEmpleado);
 
                 OdbcDataReader reader = cmd.ExecuteReader();
                 if (reader.Read())

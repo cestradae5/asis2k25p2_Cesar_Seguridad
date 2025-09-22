@@ -7,27 +7,30 @@ namespace CapaModelo
     {
         Conexion conexion = new Conexion();
 
-        
+        // Validar login
         public OdbcDataReader validarLogin(string usuario)
         {
             try
             {
                 OdbcConnection con = conexion.conexion();
-                string sql = "SELECT pk_id_usuario, nombre_usuario, contrasena_usuario, contador_intentos_fallidos_usuario, estado_usuario " +
-                             "FROM tbl_USUARIO WHERE nombre_usuario = ?;";
+                string sql = @"
+                    SELECT Pk_Id_Usuario, Cmp_Nombre_Usuario, Cmp_Contrasena_Usuario, Cmp_Intentos_Fallidos_Usuario, Cmp_Estado_Usuario
+                    FROM Tbl_Usuario
+                    WHERE LOWER(Cmp_Nombre_Usuario) = LOWER(?);";
+
 
                 OdbcCommand cmd = new OdbcCommand(sql, con);
-                cmd.Parameters.AddWithValue("@usuario", usuario);
+                cmd.Parameters.AddWithValue("?", usuario);
 
                 OdbcDataReader reader = cmd.ExecuteReader();
 
                 if (reader.HasRows)
-                    return reader; 
+                    return reader;
                 else
                 {
                     reader.Close();
                     con.Close();
-                    return null; 
+                    return null;
                 }
             }
             catch (Exception ex)
@@ -44,10 +47,12 @@ namespace CapaModelo
             {
                 using (OdbcConnection con = conexion.conexion())
                 {
-                    string sql = "UPDATE tbl_USUARIO SET contador_intentos_fallidos_usuario = ? WHERE pk_id_usuario = ?;";
+                    string sql = @"UPDATE Tbl_Usuario 
+                                   SET Cmp_Contador_Intentos_Fallidos_Usuario = ? 
+                                   WHERE Pk_Id_Usuario = ?;";
                     OdbcCommand cmd = new OdbcCommand(sql, con);
-                    cmd.Parameters.AddWithValue("@intentos", intentos);
-                    cmd.Parameters.AddWithValue("@idUsuario", idUsuario);
+                    cmd.Parameters.AddWithValue("?", intentos);
+                    cmd.Parameters.AddWithValue("?", idUsuario);
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -64,18 +69,21 @@ namespace CapaModelo
             {
                 using (OdbcConnection con = conexion.conexion())
                 {
-             
-                    string sql = "UPDATE tbl_USUARIO SET estado_usuario = 'Bloqueado' WHERE pk_id_usuario = ?;";
+                    // Actualizar estado del usuario
+                    string sql = @"UPDATE Tbl_Usuario 
+                                   SET Cmp_Estado_Usuario = 'Bloqueado' 
+                                   WHERE Pk_Id_Usuario = ?;";
                     OdbcCommand cmd = new OdbcCommand(sql, con);
-                    cmd.Parameters.AddWithValue("@idUsuario", idUsuario);
+                    cmd.Parameters.AddWithValue("?", idUsuario);
                     cmd.ExecuteNonQuery();
 
-                 
-                    string sqlBloqueo = "INSERT INTO tbl_bloqueo_usuario (fk_id_usuario, fecha_inicio_bloqueo_usuario, motivo_bloqueo_usuario) " +
-                                         "VALUES (?, NOW(), ?);";
+                    // Registrar bloqueo en la tabla de bloqueos
+                    string sqlBloqueo = @"INSERT INTO Tbl_Bloqueo_Usuario
+                                          (Fk_Id_Usuario, Cmp_Fecha_Inicio_Bloqueo_Usuario, Cmp_Motivo_Bloqueo_Usuario)
+                                          VALUES (?, NOW(), ?);";
                     OdbcCommand cmdBloqueo = new OdbcCommand(sqlBloqueo, con);
-                    cmdBloqueo.Parameters.AddWithValue("@idUsuario", idUsuario);
-                    cmdBloqueo.Parameters.AddWithValue("@motivo", motivo);
+                    cmdBloqueo.Parameters.AddWithValue("?", idUsuario);
+                    cmdBloqueo.Parameters.AddWithValue("?", motivo);
                     cmdBloqueo.ExecuteNonQuery();
                 }
             }
@@ -86,5 +94,3 @@ namespace CapaModelo
         }
     }
 }
-
-
