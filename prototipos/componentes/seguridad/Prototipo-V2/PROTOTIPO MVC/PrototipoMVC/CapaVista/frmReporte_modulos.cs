@@ -10,11 +10,16 @@ using System.Windows.Forms;
 
 namespace CapaVista
 {
-    public partial class frmReporte_Bitacora : Form
+    public partial class frmReporte_modulos : Form
     {
-        public frmReporte_Bitacora()
+        public frmReporte_modulos()
         {
             InitializeComponent();
+        }
+
+        private void crystalReportViewer1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

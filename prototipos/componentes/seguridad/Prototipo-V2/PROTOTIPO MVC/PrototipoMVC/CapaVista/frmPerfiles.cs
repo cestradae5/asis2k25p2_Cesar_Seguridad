@@ -293,7 +293,7 @@ namespace CapaVista
 
         private void Btn_reporte_Click(object sender, EventArgs e)
         {
-            frm_reporte_perfiles frm = new frm_reporte_perfiles();
+            frmreporte_perfiles frm = new frmreporte_perfiles();
             frm.Show();
         }
     }

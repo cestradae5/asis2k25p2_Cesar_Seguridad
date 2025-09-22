@@ -65,29 +65,41 @@
     <Compile Include="FrmPermisosPerfiles.Designer.cs">
       <DependentUpon>FrmPermisosPerfiles.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmReporte_Bitacora.cs">
+    <Compile Include="frmReporte_aplicacion.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmReporte_Bitacora.Designer.cs">
-      <DependentUpon>frmReporte_Bitacora.cs</DependentUpon>
+    <Compile Include="frmReporte_aplicacion.Designer.cs">
+      <DependentUpon>frmReporte_aplicacion.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmReporte_Empleados.cs">
+    <Compile Include="frmReporte_Bitacoras.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmReporte_Empleados.Designer.cs">
-      <DependentUpon>frmReporte_Empleados.cs</DependentUpon>
+    <Compile Include="frmReporte_Bitacoras.Designer.cs">
+      <DependentUpon>frmReporte_Bitacoras.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmReporte_modulo.cs">
+    <Compile Include="frmReporte_Empleado.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmReporte_modulo.Designer.cs">
-      <DependentUpon>frmReporte_modulo.cs</DependentUpon>
+    <Compile Include="frmReporte_Empleado.Designer.cs">
+      <DependentUpon>frmReporte_Empleado.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmReporte_Usuarios.cs">
+    <Compile Include="frmReporte_modulos.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmReporte_Usuarios.Designer.cs">
-      <DependentUpon>frmReporte_Usuarios.cs</DependentUpon>
+    <Compile Include="frmReporte_modulos.Designer.cs">
+      <DependentUpon>frmReporte_modulos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmReporte_perfiles.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmReporte_perfiles.Designer.cs">
+      <DependentUpon>frmReporte_perfiles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmReporte_Usuario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmReporte_Usuario.Designer.cs">
+      <DependentUpon>FrmReporte_Usuario.cs</DependentUpon>
     </Compile>
     <Compile Include="Frm_Aplicacion.cs">
       <SubType>Form</SubType>
@@ -185,18 +197,6 @@
     <Compile Include="Frm_Consultar_Asignacion_Modulo_Aplicacion.Designer.cs">
       <DependentUpon>Frm_Consultar_Asignacion_Modulo_Aplicacion.cs</DependentUpon>
     </Compile>
-    <Compile Include="frm_reporte_aplicacion.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frm_reporte_aplicacion.Designer.cs">
-      <DependentUpon>frm_reporte_aplicacion.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frm_reporte_perfiles.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frm_reporte_perfiles.Designer.cs">
-      <DependentUpon>frm_reporte_perfiles.cs</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -209,22 +209,22 @@
       <DependentUpon>Reporte_aplicacion.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Reporte_Bitacora.cs">
+    <Compile Include="Reporte_bitacoras.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Reporte_Bitacora.rpt</DependentUpon>
+      <DependentUpon>Reporte_bitacoras.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Reporte_Empleados.cs">
+    <Compile Include="Reporte_empleado.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Reporte_Empleados.rpt</DependentUpon>
+      <DependentUpon>Reporte_empleado.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Reporte_Modulo.cs">
+    <Compile Include="Reporte_modulo.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Reporte_Modulo.rpt</DependentUpon>
+      <DependentUpon>Reporte_modulo.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reporte_perfiles.cs">
@@ -233,10 +233,10 @@
       <DependentUpon>Reporte_perfiles.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Reporte_Usuarios.cs">
+    <Compile Include="Reporte_usuario.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Reporte_Usuarios.rpt</DependentUpon>
+      <DependentUpon>Reporte_usuario.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
   </ItemGroup>
@@ -244,17 +244,23 @@
     <EmbeddedResource Include="FrmPermisosPerfiles.resx">
       <DependentUpon>FrmPermisosPerfiles.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmReporte_Bitacora.resx">
-      <DependentUpon>frmReporte_Bitacora.cs</DependentUpon>
+    <EmbeddedResource Include="frmReporte_aplicacion.resx">
+      <DependentUpon>frmReporte_aplicacion.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmReporte_Empleados.resx">
-      <DependentUpon>frmReporte_Empleados.cs</DependentUpon>
+    <EmbeddedResource Include="frmReporte_Bitacoras.resx">
+      <DependentUpon>frmReporte_Bitacoras.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmReporte_modulo.resx">
-      <DependentUpon>frmReporte_modulo.cs</DependentUpon>
+    <EmbeddedResource Include="frmReporte_Empleado.resx">
+      <DependentUpon>frmReporte_Empleado.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmReporte_Usuarios.resx">
-      <DependentUpon>frmReporte_Usuarios.cs</DependentUpon>
+    <EmbeddedResource Include="frmReporte_modulos.resx">
+      <DependentUpon>frmReporte_modulos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmReporte_perfiles.resx">
+      <DependentUpon>frmReporte_perfiles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmReporte_Usuario.resx">
+      <DependentUpon>FrmReporte_Usuario.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Frm_Aplicacion.resx">
       <DependentUpon>Frm_Aplicacion.cs</DependentUpon>
@@ -304,12 +310,6 @@
     <EmbeddedResource Include="Frm_Consultar_Asignacion_Modulo_Aplicacion.resx">
       <DependentUpon>Frm_Consultar_Asignacion_Modulo_Aplicacion.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frm_reporte_aplicacion.resx">
-      <DependentUpon>frm_reporte_aplicacion.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frm_reporte_perfiles.resx">
-      <DependentUpon>frm_reporte_perfiles.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -318,25 +318,25 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>Reporte_aplicacion.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reporte_Bitacora.rpt">
+    <EmbeddedResource Include="Reporte_bitacoras.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>Reporte_Bitacora.cs</LastGenOutput>
+      <LastGenOutput>Reporte_bitacoras.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reporte_Empleados.rpt">
+    <EmbeddedResource Include="Reporte_empleado.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>Reporte_Empleados.cs</LastGenOutput>
+      <LastGenOutput>Reporte_empleado.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reporte_Modulo.rpt">
+    <EmbeddedResource Include="Reporte_modulo.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>Reporte_Modulo.cs</LastGenOutput>
+      <LastGenOutput>Reporte_modulo.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Reporte_perfiles.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>Reporte_perfiles.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reporte_Usuarios.rpt">
+    <EmbeddedResource Include="Reporte_usuario.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>Reporte_Usuarios.cs</LastGenOutput>
+      <LastGenOutput>Reporte_usuario.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

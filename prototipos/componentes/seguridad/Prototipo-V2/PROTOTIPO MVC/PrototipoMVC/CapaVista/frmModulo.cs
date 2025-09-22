@@ -201,7 +201,7 @@ namespace CapaVista
 
         private void Btn_reporte_Click(object sender, EventArgs e)
         {
-            frmReporte_modulo frm = new frmReporte_modulo();
+            frmReporte_modulos frm = new frmReporte_modulos();
             frm.Show();
         }
     }

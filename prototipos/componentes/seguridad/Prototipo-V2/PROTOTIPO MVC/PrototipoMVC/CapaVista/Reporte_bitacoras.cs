@@ -16,14 +16,14 @@ namespace CapaVista {
     using CrystalDecisions.CrystalReports.Engine;
     
     
-    public class Reporte_Bitacora : ReportClass {
+    public class Reporte_bitacoras : ReportClass {
         
-        public Reporte_Bitacora() {
+        public Reporte_bitacoras() {
         }
         
         public override string ResourceName {
             get {
-                return "Reporte_Bitacora.rpt";
+                return "Reporte_bitacoras.rpt";
             }
             set {
                 // Do nothing
@@ -41,7 +41,7 @@ namespace CapaVista {
         
         public override string FullResourceName {
             get {
-                return "CapaVista.Reporte_Bitacora.rpt";
+                return "CapaVista.Reporte_bitacoras.rpt";
             }
             set {
                 // Do nothing
@@ -90,9 +90,9 @@ namespace CapaVista {
     }
     
     [System.Drawing.ToolboxBitmapAttribute(typeof(CrystalDecisions.Shared.ExportOptions), "report.bmp")]
-    public class CachedReporte_Bitacora : Component, ICachedReport {
+    public class CachedReporte_bitacoras : Component, ICachedReport {
         
-        public CachedReporte_Bitacora() {
+        public CachedReporte_bitacoras() {
         }
         
         [Browsable(false)]
@@ -129,7 +129,7 @@ namespace CapaVista {
         }
         
         public virtual CrystalDecisions.CrystalReports.Engine.ReportDocument CreateReport() {
-            Reporte_Bitacora rpt = new Reporte_Bitacora();
+            Reporte_bitacoras rpt = new Reporte_bitacoras();
             rpt.Site = this.Site;
             return rpt;
         }

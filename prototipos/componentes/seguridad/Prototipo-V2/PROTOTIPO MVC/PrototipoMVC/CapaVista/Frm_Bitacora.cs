@@ -214,7 +214,7 @@ namespace CapaVista
 
         private void button1_Click(object sender, EventArgs e)
         {
-            frmReporte_Bitacora frm = new frmReporte_Bitacora();
+            frmReporte_Bitacoras frm = new frmReporte_Bitacoras();
             frm.Show();
         }
     }
