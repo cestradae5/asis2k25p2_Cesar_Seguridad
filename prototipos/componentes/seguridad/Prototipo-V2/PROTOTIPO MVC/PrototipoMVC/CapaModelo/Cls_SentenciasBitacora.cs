@@ -1,4 +1,5 @@
-﻿using System;
+﻿//Registrar en Bitácora - Arón Ricardo Esquit Silva - 0901-22-13036 - 12/09/2025
+using System;
 using System.Data;
 using System.Net;
 
@@ -6,9 +7,9 @@ namespace CapaModelo
 {
     public class Cls_SentenciasBitacora
     {
-        private readonly Cls_BitacoraDao dao = new Cls_BitacoraDao();
+        private readonly Cls_BitacoraDao ctrlBitacoraDao = new Cls_BitacoraDao();
 
-        private string ObtenerIP()
+        private string ObtenerIp()
         {
             foreach (var ip in Dns.GetHostEntry(Dns.GetHostName()).AddressList)
             {
@@ -49,7 +50,7 @@ namespace CapaModelo
                 LEFT JOIN Tbl_Aplicacion a ON a.Pk_Id_Aplicacion = b.Fk_Id_Aplicacion
                 ORDER BY b.Cmp_Fecha DESC, b.Pk_Id_Bitacora DESC;";
 
-            return dao.EjecutarConsulta(sSql);
+            return ctrlBitacoraDao.EjecutarConsulta(sSql);
         }
 
         public DataTable ConsultarPorFecha(DateTime fecha)
@@ -69,7 +70,7 @@ namespace CapaModelo
                 WHERE DATE(b.Cmp_Fecha) = '{fecha:yyyy-MM-dd}'
                 ORDER BY b.Cmp_Fecha DESC;";
 
-            return dao.EjecutarConsulta(sSql);
+            return ctrlBitacoraDao.EjecutarConsulta(sSql);
         }
 
         public DataTable ConsultarPorRango(DateTime inicio, DateTime fin)
@@ -92,7 +93,7 @@ namespace CapaModelo
                   AND b.Cmp_Fecha  < '{finExclusivo:yyyy-MM-dd}'
                 ORDER BY b.Cmp_Fecha DESC;";
 
-            return dao.EjecutarConsulta(sSql);
+            return ctrlBitacoraDao.EjecutarConsulta(sSql);
         }
 
         public DataTable ConsultarPorUsuario(int idUsuario)
@@ -112,7 +113,7 @@ namespace CapaModelo
                 WHERE b.Fk_Id_Usuario = {idUsuario}
                 ORDER BY b.Cmp_Fecha DESC;";
 
-            return dao.EjecutarConsulta(sSql);
+            return ctrlBitacoraDao.EjecutarConsulta(sSql);
         }
 
         public DataTable ObtenerUsuarios()
@@ -122,7 +123,7 @@ namespace CapaModelo
                 FROM Tbl_Usuario
                 WHERE Cmp_Estado_Usuario <> 'Bloqueado';";
 
-            return dao.EjecutarConsulta(sSql);
+            return ctrlBitacoraDao.EjecutarConsulta(sSql);
         }
 
         public void InsertarBitacora(int idUsuario, int idAplicacion, string accion, bool estadoLogin)
@@ -132,9 +133,9 @@ namespace CapaModelo
             string sSql = $@"
                 INSERT INTO Tbl_Bitacora
                 (Fk_Id_Usuario, Fk_Id_Aplicacion, Cmp_Fecha, Cmp_Accion, Cmp_Ip, Cmp_Nombre_Pc, Cmp_Login_Estado)
-                VALUES ({idUsuario}, {idApp}, '{FechaActual()}', '{accion}', '{ObtenerIP()}', '{ObtenerNombrePc()}', {(estadoLogin ? 1 : 0)});";
+                VALUES ({idUsuario}, {idApp}, '{FechaActual()}', '{accion}', '{ObtenerIp()}', '{ObtenerNombrePc()}', {(estadoLogin ? 1 : 0)});";
 
-            dao.EjecutarComando(sSql);
+            ctrlBitacoraDao.EjecutarComando(sSql);
         }
 
         public void RegistrarInicioSesion(int idUsuario, int idAplicacion = 0)

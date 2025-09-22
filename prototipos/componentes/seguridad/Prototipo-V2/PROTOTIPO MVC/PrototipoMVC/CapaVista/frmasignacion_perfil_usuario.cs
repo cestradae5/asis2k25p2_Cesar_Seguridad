@@ -14,6 +14,7 @@ namespace CapaVista
      */
     public partial class frmasignacion_perfil_usuario : Form
     {
+        Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador(); // Bitacora
         Cls_asignacion_perfil_usuarioControlador controlador = new Cls_asignacion_perfil_usuarioControlador();
         Cls_asignacion_perfil_usuarioDAO modelo = new Cls_asignacion_perfil_usuarioDAO();
         private List<Cls_asignacion_perfil_usuario> asignacionesPendientes = new List<Cls_asignacion_perfil_usuario>();
@@ -95,8 +96,7 @@ namespace CapaVista
             fun_RefrescarAsignacionesPendientes();
 
             // Registrar en Bitácora -Arón Ricardo Esquit Silva  0901 - 22 - 13036
-            Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
-            bit.RegistrarAccion(Cls_sesion.iUsuarioId, 1, "Asignación Perfil a Usuario - Agregar", true);
+            ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, 1, "Asignación Perfil a Usuario - Agregar", true);
         }
 
         private void fun_RefrescarAsignacionesPendientes()
@@ -125,8 +125,7 @@ namespace CapaVista
             fun_RefrescarAsignacionesPendientes();
 
             // Registrar en Bitácora - Arón Ricardo Esquit Silva  0901-22-13036
-            Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
-            bit.RegistrarAccion(Cls_sesion.iUsuarioId, 1, "Asignación Perfil a Uusario - Guardar", true);
+            ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, 1, "Asignación Perfil a Usuario - Guardar", true);
         }
 
 
@@ -157,8 +156,7 @@ namespace CapaVista
                     fun_RefrescarAsignacionesPendientes();
 
                     // Registrar en Bitácora - Arón Ricardo Esquit Silva  0901-22-13036
-                    Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
-                    bit.RegistrarAccion(Cls_sesion.iUsuarioId, 1, "Asignación Perfil a Usuario - Eliminar", true);
+                    ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, 1, "Asignación Perfil a Usuario - Eliminar", true);
                 }
             }
         }

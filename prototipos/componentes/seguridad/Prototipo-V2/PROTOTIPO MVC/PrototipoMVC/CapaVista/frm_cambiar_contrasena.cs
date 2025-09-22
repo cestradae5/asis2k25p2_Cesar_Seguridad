@@ -8,6 +8,7 @@ namespace CapaVista
 {
     public partial class frm_cambiar_contrasena : Form
     {
+        Cls_BitacoraControlador bit = new Cls_BitacoraControlador(); //Bitacora
         private Cls_controlador_cambio_contrasena controlador = new Cls_controlador_cambio_contrasena();
         private int iIdUsuario;
 
@@ -50,8 +51,7 @@ namespace CapaVista
                                 "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 // Registrar en Bitácora Arón Ricardo Esquit Silva   0901-22-13036
-                Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
-                bit.RegistrarAccion(iIdUsuario,0, "Cambio de contraseña", true);
+                bit.RegistrarAccion(iIdUsuario, 0, "Cambio de contraseña", true);
 
 
                 this.Close();

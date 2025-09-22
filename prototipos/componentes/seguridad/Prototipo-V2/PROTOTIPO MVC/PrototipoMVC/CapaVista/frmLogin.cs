@@ -8,6 +8,7 @@ namespace CapaVista
 {
     public partial class frmLogin : Form
     {
+        Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador(); // Bitacora
         ControladorLogin cn = new ControladorLogin();
 
         public frmLogin()
@@ -52,8 +53,8 @@ namespace CapaVista
                 Cls_sesion.sNombreUsuario = usuario;
 
                 // Registrar en bitácora //Aron Ricardo Esquit Silva   0901-22-13036
-                Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
-                bit.RegistrarInicioSesion(idUsuario);
+                ctrlBitacora.RegistrarInicioSesion(idUsuario);
+
 
                 frmPrincipal menu = new frmPrincipal();
                 menu.Show();

@@ -11,6 +11,7 @@ namespace CapaVista
 {
     public partial class frmPerfiles : Form
     {
+        Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador();
         private Cls_PerfilesControlador controlador = new Cls_PerfilesControlador();
         private List<Cls_Perfiles> listaPerfiles = new List<Cls_Perfiles>();
 
@@ -116,8 +117,8 @@ namespace CapaVista
                     MessageBox.Show("Perfil guardado correctamente");
 
                     // Registrar en Bitácora - Arón Ricardo Esquit Silva 0901-22-13036
-                    Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
-                    bit.RegistrarAccion(Cls_sesion.iUsuarioId, 1, "Guardar perfil", true);
+                    ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, 1, "Guardar perfil", true);
+
                 }
                 else
                 {
@@ -165,8 +166,7 @@ namespace CapaVista
                 MessageBox.Show("Perfil modificado correctamente");
 
                 // Registrar en Bitácora - Arón Ricardo Esquit Silva 0901-22-13036
-                Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
-                bit.RegistrarAccion(Cls_sesion.iUsuarioId, 1, "Modificar perfil", true);
+                ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, 1, "Modificar perfil", true);
             }
             else
             {
@@ -252,8 +252,7 @@ namespace CapaVista
                 MessageBox.Show("Perfil eliminado");
 
                 // Registrar en Bitácora - Arón Ricardo Esquit Silva 0901-22-13036
-                Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
-                bit.RegistrarAccion(Cls_sesion.iUsuarioId, 1, "Eliminar perfil", true);
+                ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, 1, "Eliminar perfil", true);
             }
             else
             {

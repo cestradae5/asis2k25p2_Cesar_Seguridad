@@ -15,6 +15,7 @@ namespace CapaVista
 {
     public partial class frmEmpleados : Form
     {
+        Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador(); // Bitacroa
         private Cls_EmpleadoControlador controlador = new Cls_EmpleadoControlador();
         private List<Cls_Empleado> listaEmpleados = new List<Cls_Empleado>();
 
@@ -248,8 +249,8 @@ namespace CapaVista
             );
 
             MessageBox.Show(exito ? "Empleado modificado correctamente" : "Error al modificar empleado");
-            Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
-            bit.RegistrarAccion(Cls_sesion.iUsuarioId, aplicacionId, "Modificar empleado", true);
+            //Registrar en Bitácora - Arón Ricardo Esquit Silva
+            ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, aplicacionId, "Modificar empleado", true);
             func_CargarEmpleados();
             func_ConfigurarComboBoxEmpleados();
             func_LimpiarCampos();
@@ -273,8 +274,9 @@ namespace CapaVista
 
             bool exito = controlador.BorrarEmpleado(id);
             MessageBox.Show(exito ? "Empleado eliminado" : "Error al eliminar");
-            Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
-            bit.RegistrarAccion(Cls_sesion.iUsuarioId, aplicacionId, "Eliminar Empleado", true);
+            //Registrar en Bitácora - Arón Ricardo Esquit Silva - 0901 - 22 - 13036
+            ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, aplicacionId, "Eliminar empleado", true);
+
             func_CargarEmpleados();
             func_ConfigurarComboBoxEmpleados();
             func_LimpiarCampos();
@@ -355,8 +357,9 @@ namespace CapaVista
                 );
 
                 MessageBox.Show("Empleado guardado correctamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
-                bit.RegistrarAccion(Cls_sesion.iUsuarioId, aplicacionId, "Guardar empleado", true);
+                //Registrar en Bitácora - Arón Ricardo Esquit Silva - 0901 -22- 13036
+                ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, aplicacionId, "Guardar empleado", true);
+
 
                 CargarEmpleados();
                 func_ConfigurarComboBoxEmpleados();
