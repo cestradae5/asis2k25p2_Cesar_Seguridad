@@ -332,7 +332,21 @@ namespace CapaControladorNavegador
                 }
             }
         }
-
+        //======================= Habilitar y Deshabilitar todos los comboBoxes=======================
+        public void ActivarTodosComboBoxes(Control contenedor)
+        {
+            foreach (var cbo in contenedor.Controls.OfType<ComboBox>())
+            {
+                cbo.Enabled = true;
+            }
+        }
+        public void DesactivarTodosComboBoxes(Control contenedor)
+        {
+            foreach (var cbo in contenedor.Controls.OfType<ComboBox>())
+            {
+                cbo.Enabled = false;
+            }
+        }
         // ======================= Diccionario de Datos =======================
 
     }
