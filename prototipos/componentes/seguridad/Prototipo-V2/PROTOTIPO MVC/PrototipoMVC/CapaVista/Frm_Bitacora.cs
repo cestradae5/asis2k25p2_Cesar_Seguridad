@@ -1,12 +1,9 @@
-﻿// Autor: Arón Ricardo Esquit Silva    0901-22-13036
-// Fecha: 12/09/2025
-
+﻿//Registrar en Bitácora - Arón Ricardo Esquit Silva - 0901-22-13036 - 12/09/2025
 using System;
 using System.Data;
-using System.Drawing;
 using System.Drawing.Printing;
-using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 using CapaControlador;
 
 namespace CapaVista
@@ -14,7 +11,7 @@ namespace CapaVista
     public partial class Frm_Bitacora : Form
     {
         // Controlador (puente con la capa modelo)
-        private readonly Cls_BitacoraControlador _ctrl = new Cls_BitacoraControlador();
+        private readonly Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador();
 
         public Frm_Bitacora()
         {
@@ -23,11 +20,9 @@ namespace CapaVista
             OcultarFiltros();        // opcional
         }
 
-
-
         private void CargarEnGrid(DataTable dt)
         {
-            Dgv_Bitacora.DataSource = dt; // ajusta el nombre si tu grid se llama distinto
+            Dgv_Bitacora.DataSource = dt;
             Dgv_Bitacora.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             Dgv_Bitacora.ReadOnly = true;
             Dgv_Bitacora.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
@@ -37,7 +32,7 @@ namespace CapaVista
         {
             try
             {
-                var dt = _ctrl.ObtenerUsuarios(); // id, usuario
+                var dt = ctrlBitacora.ObtenerUsuarios(); // id, usuario
                 Cbo_Usuario.DisplayMember = "usuario";
                 Cbo_Usuario.ValueMember = "id";
                 Cbo_Usuario.DataSource = dt;
@@ -65,34 +60,22 @@ namespace CapaVista
             Btn_Imprimir.Visible = false;
         }
 
-
         // Botones de barra personalizada
-
-        private void Btn_Cerrar_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
+        private void Btn_Cerrar_Click(object sender, EventArgs e) => this.Close();
 
         private void Btn_Maximizar_Click(object sender, EventArgs e)
         {
-            if (this.WindowState == FormWindowState.Normal)
-                this.WindowState = FormWindowState.Maximized;
+            if (WindowState == FormWindowState.Normal)
+                WindowState = FormWindowState.Maximized;
             else
-                this.WindowState = FormWindowState.Normal;
+                WindowState = FormWindowState.Normal;
         }
 
-        private void Btn_Minimizar_Click(object sender, EventArgs e)
-        {
-            this.WindowState = FormWindowState.Minimized;
-        }
-
+        private void Btn_Minimizar_Click(object sender, EventArgs e) => WindowState = FormWindowState.Minimized;
 
         // Comandos de la vista
-
-        private void Btn_Consultar_Click(object sender, EventArgs e)
-        {
-            CargarEnGrid(_ctrl.MostrarBitacora());
-        }
+        private void Btn_Consultar_Click(object sender, EventArgs e) =>
+            CargarEnGrid(ctrlBitacora.MostrarBitacora());
 
         private void Btn_Exportar_Click(object sender, EventArgs e)
         {
@@ -107,7 +90,7 @@ namespace CapaVista
 
                 if (sfd.ShowDialog() == DialogResult.OK)
                 {
-                    _ctrl.ExportarCsv(sfd.FileName);
+                    ctrlBitacora.ExportarCsv(sfd.FileName);
                     MessageBox.Show("Bitácora exportada correctamente.",
                                     "Exportar",
                                     MessageBoxButtons.OK,
@@ -127,13 +110,8 @@ namespace CapaVista
         {
             try
             {
-                PrintDocument doc = _ctrl.CrearDocumentoImpresion();
-
-                // Vista previa 
-                PrintPreviewDialog preview = new PrintPreviewDialog
-                {
-                    Document = doc
-                };
+                PrintDocument doc = ctrlBitacora.CrearDocumentoImpresion();
+                PrintPreviewDialog preview = new PrintPreviewDialog { Document = doc };
                 preview.ShowDialog();
             }
             catch (Exception ex)
@@ -145,14 +123,9 @@ namespace CapaVista
             }
         }
 
-        private void Btn_Salir_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
+        private void Btn_Salir_Click(object sender, EventArgs e) => this.Close();
 
-        // Filtros (mostrar/ocultar)
-
-
+        // Filtros
         private void Btn_BuscarRango_Click(object sender, EventArgs e)
         {
             OcultarFiltros();
@@ -161,11 +134,9 @@ namespace CapaVista
             Dtp_PrimeraFecha.Visible = true;
             Lbl_SegundaFecha.Visible = true;
             Dtp_SegundaFecha.Visible = true;
-
             Btn_Imprimir.Visible = true;
 
-            // Hace una primera carga con el rango actual
-            CargarEnGrid(_ctrl.BuscarPorRango(Dtp_PrimeraFecha.Value, Dtp_SegundaFecha.Value));
+            CargarEnGrid(ctrlBitacora.BuscarPorRango(Dtp_PrimeraFecha.Value, Dtp_SegundaFecha.Value));
         }
 
         private void Btn_BuscarFecha_Click(object sender, EventArgs e)
@@ -174,11 +145,9 @@ namespace CapaVista
 
             Lbl_FechaEspecifica.Visible = true;
             Dtp_FechaEspecifica.Visible = true;
-
             Btn_Imprimir.Visible = true;
 
-            // Hace una primera carga con la fecha actual
-            CargarEnGrid(_ctrl.BuscarPorFecha(Dtp_FechaEspecifica.Value));
+            CargarEnGrid(ctrlBitacora.BuscarPorFecha(Dtp_FechaEspecifica.Value));
         }
 
         private void Btn_BuscarUsuario_Click(object sender, EventArgs e)
@@ -187,47 +156,42 @@ namespace CapaVista
 
             Lbl_Usuario.Visible = true;
             Cbo_Usuario.Visible = true;
-
             Btn_Imprimir.Visible = true;
 
-            // Si ya hay usuario seleccionado, filtra
             if (Cbo_Usuario.SelectedValue != null &&
                 int.TryParse(Cbo_Usuario.SelectedValue.ToString(), out int idUsuario))
             {
-                CargarEnGrid(_ctrl.BuscarPorUsuario(idUsuario));
+                CargarEnGrid(ctrlBitacora.BuscarPorUsuario(idUsuario));
             }
         }
 
         private void Dtp_FechaEspecifica_ValueChanged(object sender, EventArgs e)
         {
             if (Dtp_FechaEspecifica.Visible)
-                CargarEnGrid(_ctrl.BuscarPorFecha(Dtp_FechaEspecifica.Value));
+                CargarEnGrid(ctrlBitacora.BuscarPorFecha(Dtp_FechaEspecifica.Value));
         }
 
         private void Dtp_PrimeraFecha_ValueChanged(object sender, EventArgs e)
         {
             if (Dtp_PrimeraFecha.Visible && Dtp_SegundaFecha.Visible)
-                CargarEnGrid(_ctrl.BuscarPorRango(Dtp_PrimeraFecha.Value, Dtp_SegundaFecha.Value));
+                CargarEnGrid(ctrlBitacora.BuscarPorRango(Dtp_PrimeraFecha.Value, Dtp_SegundaFecha.Value));
         }
 
         private void Dtp_SegundaFecha_ValueChanged(object sender, EventArgs e)
         {
             if (Dtp_PrimeraFecha.Visible && Dtp_SegundaFecha.Visible)
-                CargarEnGrid(_ctrl.BuscarPorRango(Dtp_PrimeraFecha.Value, Dtp_SegundaFecha.Value));
+                CargarEnGrid(ctrlBitacora.BuscarPorRango(Dtp_PrimeraFecha.Value, Dtp_SegundaFecha.Value));
         }
 
         private void Cbo_Usuario_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!Cbo_Usuario.Visible) return;
-            if (Cbo_Usuario.SelectedValue == null) return;
+            if (!Cbo_Usuario.Visible || Cbo_Usuario.SelectedValue == null) return;
 
             if (int.TryParse(Cbo_Usuario.SelectedValue.ToString(), out int idUsuario))
-                CargarEnGrid(_ctrl.BuscarPorUsuario(idUsuario));
+                CargarEnGrid(ctrlBitacora.BuscarPorUsuario(idUsuario));
         }
 
         // Panel superior
-        //0901-20-4620 Ruben Armando Lopez Luch
-
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HTCAPTION = 0x2;
 
@@ -237,19 +201,16 @@ namespace CapaVista
         [DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
 
-        private void Pic_Cerrar_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
         private void Pnl_Superior_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
-                ReleaseCapture(); // Libera el mouse
-                SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0); // Simula arrastre
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
             }
         }
+
+        private void Pic_Cerrar_Click(object sender, EventArgs e) => this.Close();
 
         private void button1_Click(object sender, EventArgs e)
         {

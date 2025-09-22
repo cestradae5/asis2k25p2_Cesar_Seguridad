@@ -7,13 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using CapaModelo; 
+using CapaModelo;
+using CapaControlador;
 
 
 namespace CapaVista
 {
     public partial class frmSeguridad : Form
     {
+        Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador();
         private int childFormNumber = 0;
 
         public frmSeguridad()
@@ -101,8 +103,7 @@ namespace CapaVista
         private void cerrarSesiónToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // Registrar en Bitácora - Arón Ricardo Esquit Silva  0901-22-13036
-            Cls_SentenciasBitacora bitacora = new Cls_SentenciasBitacora();
-            bitacora.RegistrarCierreSesion(Cls_sesion.iUsuarioId); // Solo usuario, la aplicación queda en 0 por default
+            ctrlBitacora.RegistrarCierreSesion(Cls_UsuarioConectado.iIdUsuario);
 
 
             frmPrincipal ventanaPrincipal = new frmPrincipal();

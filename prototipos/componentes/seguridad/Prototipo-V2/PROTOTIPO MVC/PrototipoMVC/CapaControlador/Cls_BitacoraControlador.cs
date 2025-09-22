@@ -1,5 +1,4 @@
-﻿/// Autor: Arón Ricardo Esquit Silva    0901-22-13036
-// Fecha: 12/09/2025
+﻿//Registrar en Bitácora - Arón Ricardo Esquit Silva - 0901-22-13036 - 12/09/2025
 using System;
 using System.Data;
 using System.IO;
@@ -12,29 +11,28 @@ namespace CapaControlador
 {
     public class Cls_BitacoraControlador
     {
-        private readonly Cls_SentenciasBitacora sentencias = new Cls_SentenciasBitacora();
+        private readonly Cls_SentenciasBitacora ctrlSentencias = new Cls_SentenciasBitacora();
 
         // Consultas
-        public DataTable MostrarBitacora() => sentencias.Listar();
-        public DataTable BuscarPorFecha(DateTime fecha) => sentencias.ConsultarPorFecha(fecha);
-        public DataTable BuscarPorRango(DateTime inicio, DateTime fin) => sentencias.ConsultarPorRango(inicio, fin);
-        public DataTable BuscarPorUsuario(int idUsuario) => sentencias.ConsultarPorUsuario(idUsuario);
+        public DataTable MostrarBitacora() => ctrlSentencias.Listar();
+        public DataTable BuscarPorFecha(DateTime fecha) => ctrlSentencias.ConsultarPorFecha(fecha);
+        public DataTable BuscarPorRango(DateTime inicio, DateTime fin) => ctrlSentencias.ConsultarPorRango(inicio, fin);
+        public DataTable BuscarPorUsuario(int idUsuario) => ctrlSentencias.ConsultarPorUsuario(idUsuario);
 
         // Registrar acciones
         public void RegistrarAccion(int idUsuario, int idAplicacion, string accion, bool estado)
         {
-            var sent = new Cls_SentenciasBitacora();
-            sent.InsertarBitacora(idUsuario, idAplicacion, accion, estado);
+            ctrlSentencias.InsertarBitacora(idUsuario, idAplicacion, accion, estado);
         }
 
         public void RegistrarInicioSesion(int idUsuario)
         {
-            sentencias.RegistrarInicioSesion(idUsuario, 0);
+            ctrlSentencias.RegistrarInicioSesion(idUsuario, 0);
         }
 
         public void RegistrarCierreSesion(int idUsuario)
         {
-            sentencias.RegistrarCierreSesion(idUsuario, 0);
+            ctrlSentencias.RegistrarCierreSesion(idUsuario, 0);
         }
 
         // Exportar a CSV
@@ -76,28 +74,28 @@ namespace CapaControlador
         }
 
         // Imprimir
-        private DataTable _printData;
-        private int _printRowIndex;
-        private readonly Font _fontHeader = new Font("Segoe UI", 10, FontStyle.Bold);
-        private readonly Font _fontCell = new Font("Segoe UI", 9, FontStyle.Regular);
+        private DataTable dtImpresion;
+        private int filaActual;
+        private readonly Font fontHeader = new Font("Segoe UI", 10, FontStyle.Bold);
+        private readonly Font fontCell = new Font("Segoe UI", 9, FontStyle.Regular);
 
         public PrintDocument CrearDocumentoImpresion()
         {
-            _printData = MostrarBitacora();
-            if (_printData == null || _printData.Rows.Count == 0)
+            dtImpresion = MostrarBitacora();
+            if (dtImpresion == null || dtImpresion.Rows.Count == 0)
                 throw new InvalidOperationException("No hay datos de bitácora para imprimir.");
 
-            _printRowIndex = 0;
+            filaActual = 0;
 
             var doc = new PrintDocument();
-            doc.DocumentName = "Bitacora";
+            doc.DocumentName = "Bitácora";
             doc.PrintPage += OnPrintPage;
             return doc;
         }
 
         private void OnPrintPage(object sender, PrintPageEventArgs e)
         {
-            if (_printData == null) return;
+            if (dtImpresion == null) return;
 
             Graphics g = e.Graphics;
             Rectangle area = e.MarginBounds;
@@ -106,7 +104,7 @@ namespace CapaControlador
             {
                 g.DrawString("Bitácora", fontTitulo, Brushes.Black, area.Left, area.Top - 30);
                 g.DrawString(DateTime.Now.ToString("yyyy-MM-dd HH:mm"),
-                             _fontCell, Brushes.Black, area.Right - 160, area.Top - 24);
+                             fontCell, Brushes.Black, area.Right - 160, area.Top - 24);
             }
 
             string[] cols = { "id", "usuario", "aplicacion", "fecha", "accion", "ip", "equipo", "estado" };
@@ -114,14 +112,14 @@ namespace CapaControlador
 
             int x = area.Left;
             int y = area.Top;
-            int rowH = (int)_fontCell.GetHeight(g) + 8;
+            int rowH = (int)fontCell.GetHeight(g) + 8;
 
             for (int i = 0; i < cols.Length; i++)
             {
                 var rect = new Rectangle(x, y, colW[i], rowH);
                 g.FillRectangle(Brushes.Gainsboro, rect);
                 g.DrawRectangle(Pens.Black, rect);
-                g.DrawString(cols[i].ToUpperInvariant(), _fontHeader, Brushes.Black, rect.Left + 4, rect.Top + 4);
+                g.DrawString(cols[i].ToUpperInvariant(), fontHeader, Brushes.Black, rect.Left + 4, rect.Top + 4);
                 x += colW[i];
             }
             y += rowH;
@@ -129,32 +127,32 @@ namespace CapaControlador
             int linesPerPage = (area.Bottom - y) / rowH;
             int printed = 0;
 
-            while (_printRowIndex < _printData.Rows.Count && printed < linesPerPage)
+            while (filaActual < dtImpresion.Rows.Count && printed < linesPerPage)
             {
                 x = area.Left;
-                var row = _printData.Rows[_printRowIndex];
+                var row = dtImpresion.Rows[filaActual];
 
                 for (int i = 0; i < cols.Length; i++)
                 {
                     var rect = new Rectangle(x, y, colW[i], rowH);
                     g.DrawRectangle(Pens.Black, rect);
 
-                    object val = _printData.Columns.Contains(cols[i]) ? row[cols[i]] : null;
+                    object val = dtImpresion.Columns.Contains(cols[i]) ? row[cols[i]] : null;
                     string text = (val == null || val == DBNull.Value) ? "" : val.ToString();
 
                     if (cols[i] == "fecha" && DateTime.TryParse(text, out var dt))
                         text = dt.ToString("yyyy-MM-dd HH:mm");
 
-                    g.DrawString(text, _fontCell, Brushes.Black, rect.Left + 4, rect.Top + 4);
+                    g.DrawString(text, fontCell, Brushes.Black, rect.Left + 4, rect.Top + 4);
                     x += colW[i];
                 }
 
                 y += rowH;
-                _printRowIndex++;
+                filaActual++;
                 printed++;
             }
 
-            e.HasMorePages = (_printRowIndex < _printData.Rows.Count);
+            e.HasMorePages = (filaActual < dtImpresion.Rows.Count);
         }
 
         // Obtener usuarios

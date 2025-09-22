@@ -1,10 +1,5 @@
-﻿/// Autor: Arón Ricardo Esquit Silva    0901-22-13036
-// Fecha: 12/09/2025
+﻿//Registrar en Bitácora - Arón Ricardo Esquit Silva - 0901-22-13036 - 12/09/2025
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CapaModelo
 {

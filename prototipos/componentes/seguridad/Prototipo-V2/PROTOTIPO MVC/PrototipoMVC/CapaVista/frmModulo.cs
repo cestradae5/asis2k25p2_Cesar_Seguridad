@@ -9,11 +9,14 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using CapaControlador;
+using CapaModelo;
 
 namespace CapaVista
 {
     public partial class frmModulo : Form
     {
+        Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador(); //Bitacora
+
         // Instancia del controlador
         ControladorModulos cm = new ControladorModulos();
 
@@ -81,8 +84,9 @@ namespace CapaVista
                 MessageBox.Show("Guardado correctamente!");
                 CargarComboBox();
 
-                Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
-                bit.RegistrarAccion(Cls_sesion.iUsuarioId, 1, "Guardar módulo", true);
+                //Registrar en Bitácora - Arón Ricardo Esquit Silva - 0901-22-13036
+                ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, 1, "Guardar módulo", true);
+
             }
             else
             {
@@ -128,8 +132,8 @@ namespace CapaVista
                 CargarComboBox();
 
                 // Registrar en Bitácora - Arón Ricardo Esquit Silva 0901-22-13036
-                Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
-                bit.RegistrarAccion(Cls_sesion.iUsuarioId, 1, "Eliminar módulo", true);
+                ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, 1, "Eliminar módulo", true);
+
             }
             else
             {
@@ -162,9 +166,6 @@ namespace CapaVista
                 // ✅ Nuevo: limpiar el ComboBox después de buscar
                 Cbo_busqueda.SelectedIndex = -1;
 
-                // Registrar en Bitácora - Arón Ricardo Esquit Silva 0901-22-13036
-                Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
-                bit.RegistrarAccion(Cls_sesion.iUsuarioId, 1, "Buscar módulo", true);
             }
             else
             {

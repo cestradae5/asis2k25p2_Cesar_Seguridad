@@ -13,7 +13,7 @@ namespace CapaVista
         SentenciaAsignacionUsuarioAplicacion modelo = new SentenciaAsignacionUsuarioAplicacion();
         Cls_AplicacionControlador appControlador = new Cls_AplicacionControlador();
         ControladorAsignacionUsuarioAplicacion controlador = new ControladorAsignacionUsuarioAplicacion();
-        Cls_SentenciasBitacora bitacora = new Cls_SentenciasBitacora();
+        Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador(); // Bitacroa
 
         public frmasignacion_aplicacion_usuario()
         {
@@ -100,10 +100,10 @@ namespace CapaVista
             }
 
             if (!existe)
-                //Aron Esquit 0901-22-13036
             {
                 Dgv_Permisos.Rows.Add(usuario, aplicacion, false, false, false, false, false, idUsuario, idModulo, idAplicacion);
-                bitacora.InsertarBitacora(Cls_sesion.iUsuarioId, idAplicacion, "Asignación Aplicación a Usuario - Agregar", true);
+                //Registrar en Bitácora - Arón Ricardo Esquit Silva - 0901-22-13036
+                ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, idAplicacion, "Asignación Aplicación a Usuario - Agregar", true);
             }
             else
             {
@@ -146,7 +146,9 @@ namespace CapaVista
                                                               ingresar, consultar, modificar,
                                                               eliminar, imprimir);
                     actualizados++;
-                    bitacora.InsertarBitacora(Cls_sesion.iUsuarioId, idAplicacion, "Asignación Aplicación a Usuario - Actualizar", true);
+                    //Registrar en Bitácora - Arón Ricardo Esquit Silva - 0901-22-13036
+                    ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, idAplicacion, "Asignación Aplicación a Usuario - Actualizar", true);
+
                 }
                 else
                 {
@@ -154,7 +156,9 @@ namespace CapaVista
                                                             ingresar, consultar, modificar,
                                                             eliminar, imprimir);
                     insertados++;
-                    bitacora.InsertarBitacora(Cls_sesion.iUsuarioId, idAplicacion, "Asignación Aplicación a Usuario - Insertar", true);
+                    //Registrar en Bitácora - Arón Ricardo Esquit Silva - 0901-22-13036
+                    ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, idAplicacion, "Asignación Aplicación a Usuario - Insertar", true);
+
                 }
             }
 
@@ -167,7 +171,8 @@ namespace CapaVista
             if (Dgv_Permisos.CurrentRow != null && !Dgv_Permisos.CurrentRow.IsNewRow)
             {
                 int idAplicacion = Convert.ToInt32(Dgv_Permisos.CurrentRow.Cells["IdAplicacion"].Value);
-                bitacora.InsertarBitacora(Cls_sesion.iUsuarioId, idAplicacion, "Asignación Aplicación a Usuario  - Quitar", true);
+                //Registrar en Bitácora - Arón Ricardo Esquit Silva - 0901-22-13036
+                ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, idAplicacion, "Asignación Aplicación a Usuario - Quitar", true);
                 Dgv_Permisos.Rows.Remove(Dgv_Permisos.CurrentRow);
             }
             else

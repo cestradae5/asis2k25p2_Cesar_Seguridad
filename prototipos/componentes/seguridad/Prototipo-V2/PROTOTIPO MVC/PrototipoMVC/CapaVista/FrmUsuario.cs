@@ -9,6 +9,7 @@ namespace CapaVista
 {
     public partial class FrmUsuario : Form
     {
+        Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador();
         private Cls_UsuarioControlador usuarioControlador = new Cls_UsuarioControlador();
         private Cls_EmpleadoControlador empleadoControlador = new Cls_EmpleadoControlador();
         private List<Cls_Empleado> listaEmpleados = new List<Cls_Empleado>();
@@ -87,8 +88,7 @@ namespace CapaVista
                 MessageBox.Show("Usuario creado correctamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 // Registrar en Bitácora - Arón Ricardo Esquit Silva 0901-22-13036
-                Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
-                bit.RegistrarAccion(Cls_sesion.iUsuarioId, 1, "Guardar usuario", true);
+                ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, 1, "Guardar usuario", true);
 
                 LimpiarCampos();
                 ConfiguracionInicial();
@@ -129,8 +129,7 @@ namespace CapaVista
                 MessageBox.Show("Usuario modificado correctamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 // Registrar en Bitácora - Arón Ricardo Esquit Silva 0901-22-13036
-                Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
-                bit.RegistrarAccion(Cls_sesion.iUsuarioId, 1, "Modificar usuario", true);
+                ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, 1, "Modificar usuario", true);
 
                 LimpiarCampos();
                 ConfiguracionInicial();
