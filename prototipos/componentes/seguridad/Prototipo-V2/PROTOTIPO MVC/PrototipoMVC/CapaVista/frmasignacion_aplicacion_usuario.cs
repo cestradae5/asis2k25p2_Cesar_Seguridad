@@ -25,14 +25,14 @@ namespace CapaVista
         {
             DataTable dtUsuarios = controlador.ObtenerUsuarios();
             Cbo_Usuarios.DataSource = dtUsuarios;
-            Cbo_Usuarios.DisplayMember = "nombre_usuario";
-            Cbo_Usuarios.ValueMember = "pk_id_usuario";
+            Cbo_Usuarios.DisplayMember = "Cmp_Nombre_Usuario";
+            Cbo_Usuarios.ValueMember = "Pk_Id_Usuario";
             Cbo_Usuarios.SelectedIndex = -1;
 
             DataTable dtModulos = controlador.ObtenerModulos();
             Cbo_Modulos.DataSource = dtModulos;
-            Cbo_Modulos.DisplayMember = "nombre_modulo";
-            Cbo_Modulos.ValueMember = "pk_id_modulo";
+            Cbo_Modulos.DisplayMember = "Cmp_Nombre_Modulo";
+            Cbo_Modulos.ValueMember = "Pk_Id_Modulo";
             Cbo_Modulos.SelectedIndex = -1;
 
             InicializarDataGridView();
