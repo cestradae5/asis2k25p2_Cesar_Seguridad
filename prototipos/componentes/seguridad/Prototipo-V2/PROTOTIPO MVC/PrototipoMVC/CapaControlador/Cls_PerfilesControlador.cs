@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using CapaModelo;
-
+//Brandon Hernandez 0901-22-9663
 namespace CapaControlador
 {
     public class Cls_PerfilesControlador
@@ -19,10 +19,10 @@ namespace CapaControlador
         {
             Cls_Perfiles nuevoPerfil = new Cls_Perfiles
             {
-                puesto_perfil = puesto,
-                descripcion_perfil = descripcion,
-                estado_perfil = estado,
-                tipo_perfil = tipo
+                Cmp_Puesto_Perfil = puesto,
+                Cmp_Descripcion_Perfil = descripcion,
+                Cmp_Estado_Perfil = estado,
+                Cmp_Tipo_Perfil = tipo
             };
 
             return daoPerfil.bInsertarPerfil(nuevoPerfil);
@@ -33,11 +33,11 @@ namespace CapaControlador
         {
             Cls_Perfiles perfilActualizado = new Cls_Perfiles
             {
-                pk_id_perfil = idPerfil,
-                puesto_perfil = puesto,
-                descripcion_perfil = descripcion,
-                estado_perfil = estado,
-                tipo_perfil = tipo
+                Pk_Id_Perfil = idPerfil,
+                Cmp_Puesto_Perfil = puesto,
+                Cmp_Descripcion_Perfil = descripcion,
+                Cmp_Estado_Perfil = estado,
+                Cmp_Tipo_Perfil = tipo
             };
 
             return daoPerfil.bActualizarPerfil(perfilActualizado);

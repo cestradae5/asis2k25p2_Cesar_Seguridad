@@ -24,8 +24,8 @@ namespace CapaControlador
         {
             Cls_asignacion_perfil_usuario nuevaRelacion = new Cls_asignacion_perfil_usuario
             {
-                fk_id_usuario = id_usuario,
-                fk_id_perfil = id_perfil,
+                Fk_Id_Usuario = id_usuario,
+                Fk_Id_Perfil = id_perfil,
             };
 
             return DAO.bInsertar(nuevaRelacion);

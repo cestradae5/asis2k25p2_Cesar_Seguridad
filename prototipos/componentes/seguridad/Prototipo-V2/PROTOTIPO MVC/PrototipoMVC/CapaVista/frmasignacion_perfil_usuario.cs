@@ -32,20 +32,20 @@ namespace CapaVista
             // Llenar ComboBox Usuarios y guardar DataTable
             dtUsuarios = controlador.datObtenerUsuarios();
             Cbo_usuario.DataSource = dtUsuarios.Copy();
-            Cbo_usuario.DisplayMember = "nombre_usuario";
-            Cbo_usuario.ValueMember = "pk_id_usuario";
+            Cbo_usuario.DisplayMember = "Cmp_Nombre_Usuario";
+            Cbo_usuario.ValueMember = "Pk_Id_Usuario";
             Cbo_usuario.SelectedIndex = -1;
 
             Cbo_usuarios2.DataSource = dtUsuarios.Copy();
-            Cbo_usuarios2.DisplayMember = "nombre_usuario";
-            Cbo_usuarios2.ValueMember = "pk_id_usuario";
+            Cbo_usuarios2.DisplayMember = "Cmp_Nombre_Usuario";
+            Cbo_usuarios2.ValueMember = "Pk_Id_Usuario";
             Cbo_usuarios2.SelectedIndex = -1;
 
-            
+
             dtPerfiles = controlador.datObtenerPerfiles();
             Cbo_perfil.DataSource = dtPerfiles.Copy();
-            Cbo_perfil.DisplayMember = "puesto_perfil";
-            Cbo_perfil.ValueMember = "pk_id_perfil";
+            Cbo_perfil.DisplayMember = "Cmp_Puesto_Perfil";
+            Cbo_perfil.ValueMember = "Pk_id_Perfil";
             Cbo_perfil.SelectedIndex = -1;
         }
 
@@ -54,10 +54,10 @@ namespace CapaVista
             if (Cbo_usuario.SelectedIndex != -1 && Cbo_usuario.SelectedValue != null)
             {
                 int idUsuario;
-                
+
                 if (Cbo_usuario.SelectedValue is DataRowView drv)
                 {
-                    idUsuario = Convert.ToInt32(drv["pk_id_usuario"]);
+                    idUsuario = Convert.ToInt32(drv["Pk_Id_Usuario"]);
                 }
                 else
                 {
@@ -84,8 +84,8 @@ namespace CapaVista
             int idUsuario = Convert.ToInt32(Cbo_usuarios2.SelectedValue);
             int idPerfil = Convert.ToInt32(Cbo_perfil.SelectedValue);
 
-   
-            if (asignacionesPendientes.Any(x => x.fk_id_usuario == idUsuario && x.fk_id_perfil == idPerfil))
+
+            if (asignacionesPendientes.Any(x => x.Fk_Id_Usuario == idUsuario && x.Fk_Id_Perfil == idPerfil))
             {
                 MessageBox.Show("Esta asignación ya está en la lista.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
@@ -96,7 +96,7 @@ namespace CapaVista
 
             // Registrar en Bitácora -Arón Ricardo Esquit Silva  0901 - 22 - 13036
             Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
-            bit.RegistrarAccion(Cls_sesion.iUsuarioId, 1, "Asignación Perfil a Usuario - Agregar", true); 
+            bit.RegistrarAccion(Cls_sesion.iUsuarioId, 1, "Asignación Perfil a Usuario - Agregar", true);
         }
 
         private void fun_RefrescarAsignacionesPendientes()
@@ -105,8 +105,8 @@ namespace CapaVista
             var lista = asignacionesPendientes
                 .Select(x => new
                 {
-                    Usuario = dtUsuarios.Select($"pk_id_usuario = {x.fk_id_usuario}").FirstOrDefault()?["nombre_usuario"]?.ToString() ?? x.fk_id_usuario.ToString(),
-                    Perfil = dtPerfiles.Select($"pk_id_perfil = {x.fk_id_perfil}").FirstOrDefault()?["puesto_perfil"]?.ToString() ?? x.fk_id_perfil.ToString()
+                    Usuario = dtUsuarios.Select($"Pk_Id_Usuario = {x.Fk_Id_Usuario}").FirstOrDefault()?["Cmp_Nombre_Usuario"]?.ToString() ?? x.Fk_Id_Usuario.ToString(),
+                    Perfil = dtPerfiles.Select($"Pk_Id_Perfil = {x.Fk_Id_Perfil}").FirstOrDefault()?["Cmp_Puesto_Perfil"]?.ToString() ?? x.Fk_Id_Perfil.ToString()
                 }).ToList();
 
             Dgv_asignaciones.DataSource = lista;
@@ -117,7 +117,7 @@ namespace CapaVista
             int guardados = 0;
             foreach (var asignacion in asignacionesPendientes)
             {
-                if (controlador.bInsertar(asignacion.fk_id_usuario, asignacion.fk_id_perfil))
+                if (controlador.bInsertar(asignacion.Fk_Id_Usuario, asignacion.Fk_Id_Perfil))
                     guardados++;
             }
             MessageBox.Show($"Se guardaron {guardados} asignaciones correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -132,28 +132,28 @@ namespace CapaVista
 
         private void Btn_eliminar_asignacion_Click_1(object sender, EventArgs e)
         {
-            
+
             if (Dgv_asignaciones.CurrentRow != null)
             {
-                
+
                 string snombreUsuario = Dgv_asignaciones.CurrentRow.Cells["Usuario"].Value.ToString();
                 string snombrePerfil = Dgv_asignaciones.CurrentRow.Cells["Perfil"].Value.ToString();
 
-                
+
                 var usuarioRow = dtUsuarios.AsEnumerable()
-                    .FirstOrDefault(r => r.Field<string>("nombre_usuario") == snombreUsuario);
+                    .FirstOrDefault(r => r.Field<string>("Cmp_Nombre_Usuario") == snombreUsuario);
                 var perfilRow = dtPerfiles.AsEnumerable()
-                    .FirstOrDefault(r => r.Field<string>("puesto_perfil") == snombrePerfil);
+                    .FirstOrDefault(r => r.Field<string>("Cmp_Puesto_Perfil") == snombrePerfil);
 
                 if (usuarioRow != null && perfilRow != null)
                 {
-                    int idUsuario = usuarioRow.Field<int>("pk_id_usuario");
-                    int idPerfil = perfilRow.Field<int>("pk_id_perfil");
+                    int idUsuario = usuarioRow.Field<int>("Pk_Id_Usuario");
+                    int idPerfil = perfilRow.Field<int>("Pk_Id_Perfil");
 
-                    
-                    asignacionesPendientes.RemoveAll(x => x.fk_id_usuario == idUsuario && x.fk_id_perfil == idPerfil);
 
-                    
+                    asignacionesPendientes.RemoveAll(x => x.Fk_Id_Usuario == idUsuario && x.Fk_Id_Perfil == idPerfil);
+
+
                     fun_RefrescarAsignacionesPendientes();
 
                     // Registrar en Bitácora - Arón Ricardo Esquit Silva  0901-22-13036
