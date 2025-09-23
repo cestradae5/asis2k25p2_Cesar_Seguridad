@@ -122,7 +122,7 @@ namespace CapaVistaNavegador
             if (Dgv_Datos.Rows.Count > 0)
             {
                 Dgv_Datos.ClearSelection();
-                Dgv_Datos.CurrentCell = null;
+                //Dgv_Datos.CurrentCell = null;
             }
         }
 
@@ -244,9 +244,17 @@ namespace CapaVistaNavegador
 
         private void Btn_inicio_Click_1(object sender, EventArgs e)
         {
-            //paginaActual = 1;
-            //MostrarPagina(paginaActual);
-            //ctrl.MoverAlInicio();
+            if (Dgv_Datos == null || Dgv_Datos.Rows.Count == 0)
+                return;
+
+            int primeraFila = 0;
+
+            Dgv_Datos.ClearSelection();
+            Dgv_Datos.Rows[primeraFila].Selected = true;
+            Dgv_Datos.CurrentCell = Dgv_Datos.Rows[primeraFila].Cells[0];
+
+            // Forzar scroll para mostrar la primera fila en pantalla
+            Dgv_Datos.FirstDisplayedScrollingRowIndex = primeraFila;
         }
 
         private void Btn_anterior_Click_1(object sender, EventArgs e)
@@ -281,9 +289,17 @@ namespace CapaVistaNavegador
 
         private void Btn_fin_Click_1(object sender, EventArgs e)
         {
-            //paginaActual = totalPaginas;
-            //MostrarPagina(paginaActual);
-            //ctrl.MoverAlFin();
+            if (Dgv_Datos == null || Dgv_Datos.Rows.Count == 0)
+                return;
+
+            int ultimaFila = Dgv_Datos.Rows.Count - 1;
+
+            Dgv_Datos.ClearSelection();
+            Dgv_Datos.Rows[ultimaFila].Selected = true;
+            Dgv_Datos.CurrentCell = Dgv_Datos.Rows[ultimaFila].Cells[0];
+
+            // Forzar scroll para mostrar la última fila en pantalla
+            Dgv_Datos.FirstDisplayedScrollingRowIndex = ultimaFila;
         }
 
         private void Btn_ayuda_Click(object sender, EventArgs e)
