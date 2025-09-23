@@ -13,7 +13,7 @@ namespace CapaVista
         SentenciaAsignacionUsuarioAplicacion modelo = new SentenciaAsignacionUsuarioAplicacion();
         Cls_AplicacionControlador appControlador = new Cls_AplicacionControlador();
         ControladorAsignacionUsuarioAplicacion controlador = new ControladorAsignacionUsuarioAplicacion();
-        Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador(); // Bitacroa
+        Cls_SentenciasBitacora bitacora = new Cls_SentenciasBitacora();
 
         public frmasignacion_aplicacion_usuario()
         {
@@ -23,16 +23,18 @@ namespace CapaVista
 
         private void frmAsignacion_aplicacion_usuario_Load(object sender, EventArgs e)
         {
+            
             DataTable dtUsuarios = controlador.ObtenerUsuarios();
             Cbo_Usuarios.DataSource = dtUsuarios;
-            Cbo_Usuarios.DisplayMember = "Cmp_Nombre_Usuario";
-            Cbo_Usuarios.ValueMember = "Pk_Id_Usuario";
+            Cbo_Usuarios.DisplayMember = "nombre_usuario";   // Debe coincidir con el SELECT del modelo
+            Cbo_Usuarios.ValueMember = "pk_id_usuario";
             Cbo_Usuarios.SelectedIndex = -1;
 
+            
             DataTable dtModulos = controlador.ObtenerModulos();
             Cbo_Modulos.DataSource = dtModulos;
-            Cbo_Modulos.DisplayMember = "Cmp_Nombre_Modulo";
-            Cbo_Modulos.ValueMember = "Pk_Id_Modulo";
+            Cbo_Modulos.DisplayMember = "nombre_modulo";    
+            Cbo_Modulos.ValueMember = "pk_id_modulo";
             Cbo_Modulos.SelectedIndex = -1;
 
             InicializarDataGridView();
@@ -49,6 +51,7 @@ namespace CapaVista
             Dgv_Permisos.Columns.Add(new DataGridViewCheckBoxColumn() { Name = "Eliminar", HeaderText = "Eliminar" });
             Dgv_Permisos.Columns.Add(new DataGridViewCheckBoxColumn() { Name = "Imprimir", HeaderText = "Imprimir" });
 
+            
             Dgv_Permisos.Columns.Add("IdUsuario", "IdUsuario");
             Dgv_Permisos.Columns["IdUsuario"].Visible = false;
             Dgv_Permisos.Columns.Add("IdModulo", "IdModulo");
@@ -56,6 +59,7 @@ namespace CapaVista
             Dgv_Permisos.Columns.Add("IdAplicacion", "IdAplicacion");
             Dgv_Permisos.Columns["IdAplicacion"].Visible = false;
 
+            // Aplicaciones
             var lista = appControlador.ObtenerTodasLasAplicaciones();
             DataTable dtAplicacion = new DataTable();
             dtAplicacion.Columns.Add("pk_id_aplicacion", typeof(int));
@@ -68,7 +72,10 @@ namespace CapaVista
             Cbo_Aplicaciones.ValueMember = "pk_id_aplicacion";
             Cbo_Aplicaciones.SelectedIndex = -1;
         }
-        //Pablo Quiroa 0901-22-2929
+
+        
+
+        // Pablo Quiroa 0901-22-2929
         private void Btn_agregar_Click_1(object sender, EventArgs e)
         {
             if (Cbo_Usuarios.SelectedIndex == -1 || Cbo_Modulos.SelectedIndex == -1 || Cbo_Aplicaciones.SelectedIndex == -1)
@@ -83,7 +90,6 @@ namespace CapaVista
             int idModulo = Convert.ToInt32(Cbo_Modulos.SelectedValue);
             int idAplicacion = Convert.ToInt32(Cbo_Aplicaciones.SelectedValue);
 
-            // Valida si ya existe en el DataGridView
             bool existe = false;
             foreach (DataGridViewRow row in Dgv_Permisos.Rows)
             {
@@ -102,8 +108,7 @@ namespace CapaVista
             if (!existe)
             {
                 Dgv_Permisos.Rows.Add(usuario, aplicacion, false, false, false, false, false, idUsuario, idModulo, idAplicacion);
-                //Registrar en Bitácora - Arón Ricardo Esquit Silva - 0901-22-13036
-                ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, idAplicacion, "Asignación Aplicación a Usuario - Agregar", true);
+                bitacora.InsertarBitacora(Cls_sesion.iUsuarioId, idAplicacion, "Asignación Aplicación a Usuario - Agregar", true);
             }
             else
             {
@@ -115,6 +120,7 @@ namespace CapaVista
             Cbo_Aplicaciones.SelectedIndex = -1;
         }
 
+     
         private void Btn_finalizar_Click(object sender, EventArgs e)
         {
             if (Dgv_Permisos.Rows.Count == 0)
@@ -146,9 +152,7 @@ namespace CapaVista
                                                               ingresar, consultar, modificar,
                                                               eliminar, imprimir);
                     actualizados++;
-                    //Registrar en Bitácora - Arón Ricardo Esquit Silva - 0901-22-13036
-                    ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, idAplicacion, "Asignación Aplicación a Usuario - Actualizar", true);
-
+                    bitacora.InsertarBitacora(Cls_sesion.iUsuarioId, idAplicacion, "Asignación Aplicación a Usuario - Actualizar", true);
                 }
                 else
                 {
@@ -156,9 +160,7 @@ namespace CapaVista
                                                             ingresar, consultar, modificar,
                                                             eliminar, imprimir);
                     insertados++;
-                    //Registrar en Bitácora - Arón Ricardo Esquit Silva - 0901-22-13036
-                    ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, idAplicacion, "Asignación Aplicación a Usuario - Insertar", true);
-
+                    bitacora.InsertarBitacora(Cls_sesion.iUsuarioId, idAplicacion, "Asignación Aplicación a Usuario - Insertar", true);
                 }
             }
 
@@ -166,13 +168,13 @@ namespace CapaVista
             Dgv_Permisos.Rows.Clear();
         }
 
+       
         private void Btn_quitar_Click(object sender, EventArgs e)
         {
             if (Dgv_Permisos.CurrentRow != null && !Dgv_Permisos.CurrentRow.IsNewRow)
             {
                 int idAplicacion = Convert.ToInt32(Dgv_Permisos.CurrentRow.Cells["IdAplicacion"].Value);
-                //Registrar en Bitácora - Arón Ricardo Esquit Silva - 0901-22-13036
-                ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, idAplicacion, "Asignación Aplicación a Usuario - Quitar", true);
+                bitacora.InsertarBitacora(Cls_sesion.iUsuarioId, idAplicacion, "Asignación Aplicación a Usuario - Quitar", true);
                 Dgv_Permisos.Rows.Remove(Dgv_Permisos.CurrentRow);
             }
             else
@@ -181,10 +183,12 @@ namespace CapaVista
             }
         }
 
+        
         private void Btn_salir_Click(object sender, EventArgs e) => this.Close();
 
         private void Dgv_Permisos_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
 
+        
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HTCAPTION = 0x2;
 
@@ -204,5 +208,47 @@ namespace CapaVista
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
             }
         }
+
+        private void Btn_Buscar_Click(object sender, EventArgs e)
+        {
+            if (Cbo_Usuarios.SelectedIndex == -1)
+            {
+                MessageBox.Show("Seleccione un usuario.");
+                return;
+            }
+
+            int idUsuario = Convert.ToInt32(Cbo_Usuarios.SelectedValue);
+            DataTable dtPermisos = controlador.ObtenerPermisosPorUsuario(idUsuario);
+
+            Dgv_Permisos.Rows.Clear();
+
+            if (dtPermisos.Rows.Count > 0)
+            {
+                foreach (DataRow row in dtPermisos.Rows)
+                {
+                    Dgv_Permisos.Rows.Add(
+                        row["nombre_usuario"].ToString(),
+                        row["nombre_aplicacion"].ToString(),
+                        Convert.ToBoolean(row["ingresar_permiso_aplicacion_usuario"]),
+                        Convert.ToBoolean(row["consultar_permiso_aplicacion_usuario"]),
+                        Convert.ToBoolean(row["modificar_permiso_aplicacion_usuario"]),
+                        Convert.ToBoolean(row["eliminar_permiso_aplicacion_usuario"]),
+                        Convert.ToBoolean(row["imprimir_permiso_aplicacion_usuario"]),
+                        row["fk_id_usuario"],
+                        row["fk_id_modulo"],
+                        row["fk_id_aplicacion"]
+                    );
+                }
+                MessageBox.Show("Permisos cargados correctamente.");
+            }
+            else
+            {
+                MessageBox.Show("El usuario no tiene permisos asignados.");
+            }
+        }
     }
-}
+
+        
+
+    }
+

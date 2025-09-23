@@ -44,6 +44,7 @@ namespace CapaVista
             this.Btn_salir = new System.Windows.Forms.Button();
             this.Pnl_Superior = new System.Windows.Forms.Panel();
             this.Pic_Cerrar = new System.Windows.Forms.PictureBox();
+            this.Btn_Buscar = new System.Windows.Forms.Button();
             this.Gbp_datos.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Dgv_Permisos)).BeginInit();
             this.Pnl_Superior.SuspendLayout();
@@ -169,7 +170,7 @@ namespace CapaVista
             this.Btn_quitar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
             this.Btn_quitar.Image = global::CapaVista.Properties.Resources.delete_remove_trash_icon_177304;
             this.Btn_quitar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Btn_quitar.Location = new System.Drawing.Point(640, 284);
+            this.Btn_quitar.Location = new System.Drawing.Point(642, 316);
             this.Btn_quitar.Name = "Btn_quitar";
             this.Btn_quitar.Size = new System.Drawing.Size(127, 52);
             this.Btn_quitar.TabIndex = 6;
@@ -186,7 +187,7 @@ namespace CapaVista
             this.Btn_finalizar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
             this.Btn_finalizar.Image = global::CapaVista.Properties.Resources.add_insert_new_plus_button_icon_142943;
             this.Btn_finalizar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Btn_finalizar.Location = new System.Drawing.Point(640, 351);
+            this.Btn_finalizar.Location = new System.Drawing.Point(640, 374);
             this.Btn_finalizar.Name = "Btn_finalizar";
             this.Btn_finalizar.Size = new System.Drawing.Size(127, 52);
             this.Btn_finalizar.TabIndex = 7;
@@ -203,7 +204,7 @@ namespace CapaVista
             this.Btn_salir.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
             this.Btn_salir.Image = global::CapaVista.Properties.Resources.sign_emergency_code_sos_61_icon_icons_com_57216;
             this.Btn_salir.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Btn_salir.Location = new System.Drawing.Point(640, 423);
+            this.Btn_salir.Location = new System.Drawing.Point(640, 432);
             this.Btn_salir.Name = "Btn_salir";
             this.Btn_salir.Size = new System.Drawing.Size(127, 52);
             this.Btn_salir.TabIndex = 8;
@@ -236,12 +237,27 @@ namespace CapaVista
             this.Pic_Cerrar.TabStop = false;
             this.Pic_Cerrar.Click += new System.EventHandler(this.Pic_Cerrar_Click);
             // 
+            // Btn_Buscar
+            // 
+            this.Btn_Buscar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
+            this.Btn_Buscar.Font = new System.Drawing.Font("Rockwell", 10.2F);
+            this.Btn_Buscar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
+            this.Btn_Buscar.Location = new System.Drawing.Point(640, 260);
+            this.Btn_Buscar.Name = "Btn_Buscar";
+            this.Btn_Buscar.Size = new System.Drawing.Size(127, 52);
+            this.Btn_Buscar.TabIndex = 96;
+            this.Btn_Buscar.Text = "Buscar";
+            this.Btn_Buscar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Btn_Buscar.UseVisualStyleBackColor = false;
+            this.Btn_Buscar.Click += new System.EventHandler(this.Btn_Buscar_Click);
+            // 
             // frmasignacion_aplicacion_usuario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(185)))), ((int)(((byte)(185)))));
             this.ClientSize = new System.Drawing.Size(845, 532);
+            this.Controls.Add(this.Btn_Buscar);
             this.Controls.Add(this.Pnl_Superior);
             this.Controls.Add(this.Btn_quitar);
             this.Controls.Add(this.Btn_salir);
@@ -280,5 +296,6 @@ namespace CapaVista
         private System.Windows.Forms.Button Btn_salir;
         private System.Windows.Forms.Panel Pnl_Superior;
         private System.Windows.Forms.PictureBox Pic_Cerrar;
+        private System.Windows.Forms.Button Btn_Buscar;
     }
 }
