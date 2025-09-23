@@ -313,6 +313,7 @@ namespace CapaVistaNavegador
 
             // Forzar scroll para mostrar la última fila en pantalla
             Dgv_Datos.FirstDisplayedScrollingRowIndex = ultimaFila;
+
         }
 
         private void Btn_ayuda_Click(object sender, EventArgs e)
