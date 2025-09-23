@@ -159,8 +159,14 @@ namespace CapaControlador
         public DataTable ObtenerUsuarios()
         {
             var dao = new Cls_BitacoraDao();
-            string sql = "SELECT pk_id_usuario AS id, nombre_usuario AS usuario FROM tbl_USUARIO ORDER BY nombre_usuario;";
+            string sql = @"
+                SELECT Pk_Id_Usuario AS id, 
+                Cmp_Nombre_Usuario AS usuario
+                FROM Tbl_Usuario
+                WHERE Cmp_Estado_Usuario = 1
+                ORDER BY Cmp_Nombre_Usuario;";
             return dao.EjecutarConsulta(sql);
         }
+
     }
 }
