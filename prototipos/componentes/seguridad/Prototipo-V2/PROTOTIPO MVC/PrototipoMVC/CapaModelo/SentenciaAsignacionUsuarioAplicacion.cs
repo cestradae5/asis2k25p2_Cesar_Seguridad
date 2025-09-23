@@ -93,13 +93,14 @@ namespace CapaModelo
             using (OdbcConnection conn = conexion.conexion())
             {
                 string query = @"INSERT INTO Tbl_Permiso_Usuario_Aplicacion
-                                 (Fk_Id_Usuario, Fk_Id_Modulo, Fk_Id_Aplicacion,
-                                  Ingresar_Permiso_Aplicacion_Usuario,
-                                  Consultar_Permiso_Aplicacion_Usuario,
-                                  Modificar_Permiso_Aplicacion_Usuario,
-                                  Eliminar_Permiso_Aplicacion_Usuario,
-                                  Imprimir_Permiso_Aplicacion_Usuario)
-                                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                 (Fk_Id_Usuario, Fk_Id_Modulo, Fk_Id_Aplicacion,
+                  Cmp_Ingresar_Permiso_Aplicacion_Usuario,
+                  Cmp_Consultar_Permiso_Aplicacion_Usuario,
+                  Cmp_Modificar_Permiso_Aplicacion_Usuario,
+                  Cmp_Eliminar_Permiso_Aplicacion_Usuario,
+                  Cmp_Imprimir_Permiso_Aplicacion_Usuario)
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
 
                 using (OdbcCommand cmdInsertar = new OdbcCommand(query, conn))
                 {
@@ -127,12 +128,12 @@ namespace CapaModelo
             int filasAfectadas = 0;
 
             string query = @"UPDATE Tbl_Permiso_Usuario_Aplicacion
-                             SET Ingresar_Permiso_Aplicacion_Usuario = ?,
-                                 Consultar_Permiso_Aplicacion_Usuario = ?,
-                                 Modificar_Permiso_Aplicacion_Usuario = ?,
-                                 Eliminar_Permiso_Aplicacion_Usuario = ?,
-                                 Imprimir_Permiso_Aplicacion_Usuario = ?
-                             WHERE Fk_Id_Usuario = ? AND Fk_Id_Modulo = ? AND Fk_Id_Aplicacion = ?";
+                 SET Cmp_Ingresar_Permiso_Aplicacion_Usuario = ?,
+                     Cmp_Consultar_Permiso_Aplicacion_Usuario = ?,
+                     Cmp_Modificar_Permiso_Aplicacion_Usuario = ?,
+                     Cmp_Eliminar_Permiso_Aplicacion_Usuario = ?,
+                     Cmp_Imprimir_Permiso_Aplicacion_Usuario = ?
+                 WHERE Fk_Id_Usuario = ? AND Fk_Id_Modulo = ? AND Fk_Id_Aplicacion = ?";
 
             using (OdbcConnection conn = conexion.conexion())
             using (OdbcCommand cmd = new OdbcCommand(query, conn))
