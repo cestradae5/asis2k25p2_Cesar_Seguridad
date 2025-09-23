@@ -70,19 +70,6 @@ namespace Capa_Vista_Reporteador
         }
         //Fin de código de: Gerber Asturias con carné: 0901-22-11992 en la fecha 13/09/2025
 
-        private void Dgv_reportes_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            //Inicio de código de: Anderson Trigueros con carné: 0901-22-6961 en la fecha 12/09/2025
-            if (e.RowIndex >= 0)
-            {
-                DataGridViewRow filaSeleccionada = Dgv_reportes.Rows[e.RowIndex];
-                string sRuta = filaSeleccionada.Cells["ruta_reportes"].Value?.ToString();
-                iCodigoRuta = Convert.ToInt32(filaSeleccionada.Cells["pk_id_reportes"].Value);
-                Txt_reportes_ruta.Text = sRuta;
-            }
-            // Fin de código de: Anderson Trigueros con carné: 0901-22-6961 en la fecha 12/09/2025
-        }
-
         private void eliminarRegistro()
         {
             //Inicio de código de: Anderson Trigueros con carné: 0901-22-6961 en la fecha 12/09/2025
@@ -197,7 +184,17 @@ namespace Capa_Vista_Reporteador
             // Fin de código de: Anderson Trigueros con carné: 0901-22-6961 en la fecha 12/09/2025
         }
 
-
-
+        private void Dgv_reportes_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            //Inicio de código de: Anderson Trigueros con carné: 0901-22-6961 en la fecha 12/09/2025
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow filaSeleccionada = Dgv_reportes.Rows[e.RowIndex];
+                string sRuta = filaSeleccionada.Cells["ruta_reportes"].Value?.ToString();
+                iCodigoRuta = Convert.ToInt32(filaSeleccionada.Cells["pk_id_reportes"].Value);
+                Txt_reportes_ruta.Text = sRuta;
+            }
+            // Fin de código de: Anderson Trigueros con carné: 0901-22-6961 en la fecha 12/09/2025
+        }
     }
 } 

@@ -66,7 +66,7 @@ namespace Capa_Vista_Reporteador
             this.Dgv_reportes.RowTemplate.Height = 24;
             this.Dgv_reportes.Size = new System.Drawing.Size(880, 195);
             this.Dgv_reportes.TabIndex = 2;
-            this.Dgv_reportes.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dgv_reportes_CellContentClick);
+            this.Dgv_reportes.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dgv_reportes_CellClick);
             // 
             // Txt_reportes_ruta
             // 
