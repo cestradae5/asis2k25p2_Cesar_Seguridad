@@ -10,6 +10,9 @@ namespace CapaModelo
         /// <summary>
         /// Obtiene los permisos de un usuario para una aplicación y módulo específicos.
         /// </summary>
+        /// <returns>
+        /// Una tupla con los permisos (ingresar, consultar, modificar, eliminar, imprimir) o null si no hay registro.
+        /// </returns>
         public (bool ingresar, bool consultar, bool modificar, bool eliminar, bool imprimir)? ConsultarPermisos(int idUsuario, int idAplicacion, int idModulo)
         {
             string query = @"
@@ -25,20 +28,20 @@ namespace CapaModelo
             using (OdbcConnection conn = conexion.conexion())
             using (OdbcCommand cmd = new OdbcCommand(query, conn))
             {
-                cmd.Parameters.AddWithValue("@idUsuario", idUsuario);
-                cmd.Parameters.AddWithValue("@idAplicacion", idAplicacion);
-                cmd.Parameters.AddWithValue("@idModulo", idModulo);
+                cmd.Parameters.AddWithValue("@Fk_Id_Usuario", idUsuario);
+                cmd.Parameters.AddWithValue("@Fk_Id_Aplicacion", idAplicacion);
+                cmd.Parameters.AddWithValue("@Fk_Id_Modulo", idModulo);
 
                 using (var reader = cmd.ExecuteReader())
                 {
                     if (reader.Read())
                     {
                         return (
-                            reader.GetBoolean(0),
-                            reader.GetBoolean(1),
-                            reader.GetBoolean(2),
-                            reader.GetBoolean(3),
-                            reader.GetBoolean(4)
+                            reader.GetBoolean(0), // Ingresar
+                            reader.GetBoolean(1), // Consultar
+                            reader.GetBoolean(2), // Modificar
+                            reader.GetBoolean(3), // Eliminar
+                            reader.GetBoolean(4)  // Imprimir
                         );
                     }
                 }
@@ -55,7 +58,7 @@ namespace CapaModelo
             using (OdbcConnection conn = conexion.conexion())
             using (OdbcCommand cmd = new OdbcCommand(query, conn))
             {
-                cmd.Parameters.AddWithValue("@nombre", nombreAplicacion);
+                cmd.Parameters.AddWithValue("@Cmp_Nombre_Aplicacion", nombreAplicacion);
                 var result = cmd.ExecuteScalar();
                 return result != null ? Convert.ToInt32(result) : -1;
             }
@@ -70,7 +73,7 @@ namespace CapaModelo
             using (OdbcConnection conn = conexion.conexion())
             using (OdbcCommand cmd = new OdbcCommand(query, conn))
             {
-                cmd.Parameters.AddWithValue("@nombre", nombreModulo);
+                cmd.Parameters.AddWithValue("@Cmp_Nombre_Modulo", nombreModulo);
                 var result = cmd.ExecuteScalar();
                 return result != null ? Convert.ToInt32(result) : -1;
             }
