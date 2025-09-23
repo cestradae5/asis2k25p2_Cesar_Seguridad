@@ -4,7 +4,7 @@ using System.Data.Odbc;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+// Trabajado por Fernando Jose Cahuex Gonzalez 0901-22-14979
 namespace CapaModeloNavegador
 {
     public class ConexionMYSQL
@@ -27,3 +27,4 @@ namespace CapaModeloNavegador
         }
     }
 }
+//======================================================================================

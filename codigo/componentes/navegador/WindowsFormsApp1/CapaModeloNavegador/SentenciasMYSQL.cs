@@ -10,8 +10,8 @@ namespace CapaModeloNavegador
 {
     public class SentenciasMYSQL
     {
+        // llenado de tabla Hecho por Fernando Jose Cahuex Gonzalez 0901-22-14979
         ConexionMYSQL con = new ConexionMYSQL();
-
         public DataTable LlenarTabla(string tabla, string[] campos)
         {
             DataTable dt = new DataTable();
@@ -108,7 +108,7 @@ namespace CapaModeloNavegador
         }
 
 
-
+        // Obtencion de valores Hecho por Fernando Jose Cahuex GOnzalez 0901-22-14979
         public List<string> ObtenerValoresColumna(string tabla, string columna)
         {
             List<string> valores = new List<string>();
@@ -128,7 +128,7 @@ namespace CapaModeloNavegador
                     }
                 }
             }
-            catch (OdbcException ex)
+            catch (OdbcException)
             {
                 Console.WriteLine("Error al obtener valores de columna");
             }
