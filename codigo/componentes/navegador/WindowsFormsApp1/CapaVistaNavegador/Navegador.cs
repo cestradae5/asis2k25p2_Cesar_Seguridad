@@ -12,8 +12,8 @@ namespace CapaVistaNavegador
 {
     public partial class Navegador : UserControl
     {
-        public string[] alias { get; set; }
-        public string nombreTabla { get; set; } // Nueva propiedad para el nombre de la tabla
+        public string[] SAlias { get; set; }
+        public string SNombreTabla { get; set; } // Nueva propiedad para el nombre de la tabla
 
         public ConfiguracionDataGridView configuracionDataGridView;
 
@@ -32,18 +32,18 @@ namespace CapaVistaNavegador
             habilitar_botones();*/
 
 
-            if (alias == null || alias.Length < 2)
+            if (SAlias == null || SAlias.Length < 2)
             {
                 MessageBox.Show("No se han definido los alias de la tabla.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             //Parámetros para validar 
-            string tabla = nombreTabla;
-            string[] columnas = alias;
+            string tabla = SNombreTabla;
+            string[] columnas = SAlias;
 
             // Asigna los alias al controlador y crea los controles necesarios
-            if (ctrl.AsignarAlias(alias, this, 10, 100))
+            if (ctrl.AsignarAlias(SAlias, this, 10, 100))
             {
                 Btn_ingresar.Enabled = false;
                 BotonesEstadoCRUD();
@@ -97,13 +97,13 @@ namespace CapaVistaNavegador
             }
 
             // Asegurarse de que alias no sea null
-            if (alias == null || alias.Length < 2)
+            if (SAlias == null || SAlias.Length < 2)
             {
                 MessageBox.Show("Alias no configurado correctamente.");
                 return;
             }
 
-            dtCompleto = ctrl.LlenarTabla(alias[0], alias.Skip(1).ToArray());
+            dtCompleto = ctrl.LlenarTabla(SAlias[0], SAlias.Skip(1).ToArray());
             Dgv_Datos.DataSource = dtCompleto;
 
             //totalPaginas = (int)Math.Ceiling(dtCompleto.Rows.Count / (double)registrosPorPagina);
@@ -161,45 +161,46 @@ namespace CapaVistaNavegador
         {
             BotonesEstadoInicial();
             // Limpiar Cbo
-            ctrl.LimpiarCombos(this, alias);
+            ctrl.LimpiarCombos(this, SAlias);
             ctrl.DesactivarTodosComboBoxes(this);
         }
 
         private void Btn_guardar_Click_1(object sender, EventArgs e)
         {
             ControladorNavegador ctrl = new ControladorNavegador();
-            ctrl.Insertar_Datos(this, alias);
+            ctrl.Insertar_Datos(this, SAlias);
 
             // Recarga despues de insertar = Stevens Cambranes
             mostrarDatos();
-            ctrl.RefrescarCombos(this, alias[0], alias.Skip(1).ToArray());
+            ctrl.RefrescarCombos(this, SAlias[0], SAlias.Skip(1).ToArray());
         }
 
         // ======================= Modificar / Update = Stevens Cambranes =======================
         private void Btn_modificar_Click(object sender, EventArgs e)
         {
-            ctrl.Actualizar_Datos(this, alias);
+            ctrl.Actualizar_Datos(this, SAlias);
 
             mostrarDatos();
-            ctrl.RefrescarCombos(this, alias[0], alias.Skip(1).ToArray());
-            ctrl.LimpiarCombos(this, alias);
+            ctrl.RefrescarCombos(this, SAlias[0], SAlias.Skip(1).ToArray());
+            ctrl.LimpiarCombos(this, SAlias);
         }
         // ======================= Modificar / Update = Stevens Cambranes =======================
 
         // ======================= Esta funcion es para seleccionar la fila del Dgv y Rellenar los Cbo =======================
         private void Dgv_Datos_SelectionChanged(object sender, EventArgs e)
         {
-            // Solo si el usuario hizo clic o usó teclado
+            // ======================= Pedro Ibañez =======================
+            // Modificacion: Se hace la seleccion solo si el usuario hizo clic o usó teclado
             if (Control.MouseButtons == MouseButtons.None && !Dgv_Datos.Focused) return;
 
-            if (Dgv_Datos?.CurrentRow == null || alias == null || alias.Length < 2) return;
-            ctrl.RellenarCombosDesdeFila(this, alias, Dgv_Datos.CurrentRow);
+            if (Dgv_Datos?.CurrentRow == null || SAlias == null || SAlias.Length < 2) return;
+            ctrl.RellenarCombosDesdeFila(this, SAlias, Dgv_Datos.CurrentRow);
         }
         // ======================= Esta funcion es para seleccionar la fila del Dgv y Rellenar los Cbo =======================
 
         private void Btn_eliminar_Click(object sender, EventArgs e)
         {
-            if (alias == null || alias.Length < 2)
+            if (SAlias == null || SAlias.Length < 2)
             {
                 MessageBox.Show("Alias no configurado correctamente.");
                 return;
@@ -207,12 +208,22 @@ namespace CapaVistaNavegador
 
             try
             {
-                ctrl.Eliminar_Datos(this, alias);
+                // ======================= Pedro Ibañez =======================
+                // Modificacion: MessageBox de confirmación simple
+                DialogResult resultado = MessageBox.Show(
+                    "¿Está seguro que desea eliminar el registro seleccionado?",
+                    "Confirmar Eliminación",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning,
+                    MessageBoxDefaultButton.Button2);
+
+                if (resultado != DialogResult.Yes)
+                    return;
+
+                ctrl.Eliminar_Datos(this, SAlias);
                 mostrarDatos();
-                // Recarga despues de eliminar = Stevens Cambranes
-                ctrl.RefrescarCombos(this, alias[0], alias.Skip(1).ToArray());
-                // limpia Cbo despues de eliminar = Stevens Cambranes
-                ctrl.LimpiarCombos(this, alias);
+                ctrl.RefrescarCombos(this, SAlias[0], SAlias.Skip(1).ToArray());
+                ctrl.LimpiarCombos(this, SAlias);
             }
             catch (Exception ex)
             {
@@ -232,9 +243,11 @@ namespace CapaVistaNavegador
 
         private void Btn_refrescar_Click(object sender, EventArgs e)
         {
+            // ======================= Pedro Ibañez =======================
+            // Creacion Metodo: vuelve a cargar los datos en el DataGridView
             try
             {
-                mostrarDatos(); // vuelve a cargar los datos en el DataGridView
+                mostrarDatos(); 
             }
             catch (Exception ex)
             {

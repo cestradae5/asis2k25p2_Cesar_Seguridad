@@ -31,10 +31,10 @@ namespace CapaModeloNavegador
         }
 
         // insertar datos
-        public void InsertarDatos(string[] alias, object[] valores)
+        public void InsertarDatos(string[] SAlias, object[] SValores)
         {
-            string tabla = alias[0]; // nombre de la tabla
-            string pkCampo = alias[1]; // posicion primary key
+            string tabla = SAlias[0]; // nombre de la tabla
+            string pkCampo = SAlias[1]; // posicion primary key
 
             // consulta si la pk es autoincrementable o no
             string cacheKey = tabla + "." + pkCampo;
@@ -46,10 +46,10 @@ namespace CapaModeloNavegador
             }
 
             // define los campos a insertar (si PK es autoincrementable)
-            string[] campos = pkAuto ? alias.Skip(2).ToArray() : alias.Skip(1).ToArray();
+            string[] campos = pkAuto ? SAlias.Skip(2).ToArray() : SAlias.Skip(1).ToArray();
 
             // filtrar los valores según la PK, si es autoincrementable se ignora el primer valor
-            object[] valoresFiltrados = pkAuto ? valores.Skip(1).ToArray() : valores;
+            object[] valoresFiltrados = pkAuto ? SValores.Skip(1).ToArray() : SValores;
 
             // valida que coincidan los valores enviados
             if (valoresFiltrados == null || valoresFiltrados.Length != campos.Length)
@@ -57,7 +57,7 @@ namespace CapaModeloNavegador
                     $"InsertarDatos: el arreglo 'valores' debe tener {campos.Length} elementos (tiene {(valoresFiltrados == null ? 0 : valoresFiltrados.Length)}). " +
                     $"Si PK '{pkCampo}' no es autoincrement, se debe incluir su valor en 'valores'.");
 
-            string sql = sentencias.Insertar(alias, pkAuto);
+            string sql = sentencias.Insertar(SAlias, pkAuto);
 
             using (OdbcConnection conn = con.conexion())
             {
@@ -98,11 +98,11 @@ namespace CapaModeloNavegador
 
 
         // seccion para consultar registros
-        public DataTable ConsultarDatos(string[] alias)
+        public DataTable ConsultarDatos(string[] SAlias)
         {
             try
             {
-                string sql = sentencias.Consultar(alias);
+                string sql = sentencias.Consultar(SAlias);
 
                 using (OdbcConnection conn = con.conexion())
                 {
@@ -118,17 +118,17 @@ namespace CapaModeloNavegador
             }
             catch (OdbcException ex)
             {
-                throw new Exception("Error al consultar datos de " + alias[0] + ": " + ex.Message, ex);
+                throw new Exception("Error al consultar datos de " + SAlias[0] + ": " + ex.Message, ex);
             }
         }
 
         // seccion de actualizar datos (update)
-        public void ActualizarDatos(string[] alias, object[] valores, object pkValor)
+        public void ActualizarDatos(string[] SAlias, object[] SValores, object pkValor)
         {
             try
             {
-                string sql = sentencias.Actualizar(alias); // obtiene la sentencia sql de update
-                string[] campos = alias.Skip(2).ToArray(); // ignora tabla y pk
+                string sql = sentencias.Actualizar(SAlias); // obtiene la sentencia sql de update
+                string[] campos = SAlias.Skip(2).ToArray(); // ignora tabla y pk
 
                 using (OdbcConnection conn = con.conexion())
                 {
@@ -139,7 +139,7 @@ namespace CapaModeloNavegador
                         // valores para SET
                         for (int i = 0; i < campos.Length; i++)
                         {
-                            cmd.Parameters.Add("?", MapeadoTipoDatos(valores[i])).Value = valores[i] ?? DBNull.Value; // asigna valores
+                            cmd.Parameters.Add("?", MapeadoTipoDatos(SValores[i])).Value = SValores[i] ?? DBNull.Value; // asigna valores
                         }
 
                         // valor de la PK para el WHERE
@@ -151,16 +151,16 @@ namespace CapaModeloNavegador
             }
             catch (OdbcException ex)
             {
-                throw new Exception("Error al actualizar datos en " + alias[0] + ": " + ex.Message, ex);
+                throw new Exception("Error al actualizar datos en " + SAlias[0] + ": " + ex.Message, ex);
             }
         }
 
         // seccion para eliminar registros
-        public void EliminarDatos(string[] alias, object pkValor)
+        public void EliminarDatos(string[] SAlias, object pkValor)
         {
             try
             {   
-                string sql = sentencias.Eliminar(alias); // obtiene la sentencia sql de delete
+                string sql = sentencias.Eliminar(SAlias); // obtiene la sentencia sql de delete
 
                 using (OdbcConnection conn = con.conexion()) 
                 {
@@ -176,13 +176,14 @@ namespace CapaModeloNavegador
             }
             catch (OdbcException ex)
             {
-                throw new Exception("Error al eliminar datos de " + alias[0] + ": " + ex.Message, ex);
+                throw new Exception("Error al eliminar datos de " + SAlias[0] + ": " + ex.Message, ex);
             }
         }
 
         //------------------------------Validaciones de alias -------------------------------------------------------
 
-        public bool ExisteTabla(string nombreTabla)
+        public bool ExisteTabla(string SNombreTabla
+            )
         {
             using (OdbcConnection conn = con.conexion())
             {
@@ -192,7 +193,7 @@ namespace CapaModeloNavegador
                     string query = "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = DATABASE() AND table_name = ?";
                     using (OdbcCommand cmd = new OdbcCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("?", nombreTabla);
+                        cmd.Parameters.AddWithValue("?", SNombreTabla);
                         int count = Convert.ToInt32(cmd.ExecuteScalar());
                         return count > 0;
                     }
@@ -204,7 +205,7 @@ namespace CapaModeloNavegador
             }
         }
 
-        public List<string> ObtenerColumnas(string nombreTabla)
+        public List<string> ObtenerColumnas(string SNombreTabla)
         {
             List<string> columnas = new List<string>();
 
@@ -216,7 +217,7 @@ namespace CapaModeloNavegador
                     string query = "SELECT column_name FROM information_schema.columns WHERE table_schema = DATABASE() AND table_name = ?";
                     using (OdbcCommand cmd = new OdbcCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("?", nombreTabla);
+                        cmd.Parameters.AddWithValue("?", SNombreTabla);
                         using (OdbcDataReader reader = cmd.ExecuteReader())
                         {
                             while (reader.Read())

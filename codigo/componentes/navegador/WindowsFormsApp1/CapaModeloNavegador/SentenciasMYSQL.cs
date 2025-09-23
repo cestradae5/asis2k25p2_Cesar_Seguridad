@@ -34,17 +34,17 @@ namespace CapaModeloNavegador
 
         //kenph luna
         // aqui se insertarán las instrucciones SQL genericas
-        public string Insertar(string[] alias)
+        public string Insertar(string[] SAlias)
         {
             // por compatibilidad PK es autoinc
-            return Insertar(alias, true); // llama a la nueva sobrecarga con pkAutoIncrement true
+            return Insertar(SAlias, true); // llama a la nueva sobrecarga con pkAutoIncrement true
         }
 
         // nueva sobrecarga de Insertar que recibe si la pk es autoincrement o no
-        public string Insertar(string[] alias, bool pkAutoIncrement)
+        public string Insertar(string[] SAlias, bool pkAutoIncrement)
         {
-            string tabla = alias[0];
-            string[] campos = pkAutoIncrement ? alias.Skip(2).ToArray() : alias.Skip(1).ToArray(); // si es autoinc ignora pk, si no, la incluye
+            string tabla = SAlias[0];
+            string[] campos = pkAutoIncrement ? SAlias.Skip(2).ToArray() : SAlias.Skip(1).ToArray(); // si es autoinc ignora pk, si no, la incluye
             string columnas = string.Join(",", campos); 
             string parametros = string.Join(",", campos.Select(c => "?")); 
 
@@ -52,18 +52,18 @@ namespace CapaModeloNavegador
         }
 
         // aqui se consultarán los registros con select segun la tabla que le enviemos
-        public string Consultar(string[] alias)
+        public string Consultar(string[] SAlias)
         {
-            string tabla = alias[0];
+            string tabla = SAlias[0];
             return $"SELECT * FROM {tabla}";
         }
         
         //seccion de actualizar datos 
-        public string Actualizar(string[] alias)
+        public string Actualizar(string[] SAlias)
         {
-            string tabla = alias[0];
-            string pkCampo = alias[1];  // posición pk (llave primaria)
-            string[] campos = alias.Skip(2).ToArray(); //los atributos y campos a actualizar
+            string tabla = SAlias[0];
+            string pkCampo = SAlias[1];  // posición pk (llave primaria)
+            string[] campos = SAlias.Skip(2).ToArray(); //los atributos y campos a actualizar
 
             string set = string.Join(",", campos.Select(c => $"{c}=?")); // genera el set para el update
 
@@ -71,10 +71,10 @@ namespace CapaModeloNavegador
         }
 
         // aqui se elimina el registro usando la pk para localizar el dato
-        public string Eliminar(string[] alias)
+        public string Eliminar(string[] SAlias)
         {
-            string tabla = alias[0];
-            string pkCampo = alias[1];
+            string tabla = SAlias[0];
+            string pkCampo = SAlias[1];
 
             return $"DELETE FROM {tabla} WHERE {pkCampo}=?"; // retorna la sentencia sql de delete
         }
