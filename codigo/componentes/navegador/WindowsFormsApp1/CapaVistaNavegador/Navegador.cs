@@ -57,6 +57,7 @@ namespace CapaVistaNavegador
 
         // parte del datagridview con la funcion del boton imprimir
 
+        // Cambio para que ya no sea paginado Fernando Jose cahuex Gonzalez 0901-22-14979
         private DataGridView Dgv_Datos;
         //private int registrosPorPagina = 9;
         //private int paginaActual = 1;

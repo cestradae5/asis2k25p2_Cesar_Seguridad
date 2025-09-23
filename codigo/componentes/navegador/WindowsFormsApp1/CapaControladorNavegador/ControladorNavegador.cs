@@ -50,6 +50,7 @@ namespace CapaControladorNavegador
                     Location = new System.Drawing.Point(startX, startY + (creados * spacingY))
                 };
 
+                // creacion de Combobox hecho por Fernando Jose Cahuex Gonzalez 0901-22-14979
                 ComboBox Cbo = new ComboBox
                 {
                     Name = "Cbo_" + campo,
@@ -63,7 +64,7 @@ namespace CapaControladorNavegador
                     Cbo.Items.Add(item);
                 }
 
-                // bloquear combobox de la PK
+                // bloquear combobox de la PK Hecho por Fernando Jose Cahuex Gonzalez 0901-22-14979
                 if (creados == 0)
                 {
                     Cbo.SelectedIndexChanged += (s, e) =>
