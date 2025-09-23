@@ -58,22 +58,22 @@ namespace CapaVistaNavegador
         // parte del datagridview con la funcion del boton imprimir
 
         private DataGridView Dgv_Datos;
-        private int registrosPorPagina = 9;
-        private int paginaActual = 1;
-        private int totalPaginas = 0;
+        //private int registrosPorPagina = 9;
+        //private int paginaActual = 1;
+        //private int totalPaginas = 0;
         private DataTable dtCompleto;
 
-        private void MostrarPagina(int pagina)
-        {
-            DataTable dtPagina = dtCompleto.Clone();
-            int inicio = (pagina - 1) * registrosPorPagina;
-            int fin = Math.Min(inicio + registrosPorPagina, dtCompleto.Rows.Count);
-            for (int i = inicio; i < fin; i++)
-            {
-                dtPagina.ImportRow(dtCompleto.Rows[i]);
-            }
-            Dgv_Datos.DataSource = dtPagina;
-        }
+        //private void MostrarPagina(int pagina)
+        //{
+        //    DataTable dtPagina = dtCompleto.Clone();
+        //    int inicio = (pagina - 1) * registrosPorPagina;
+        //    int fin = Math.Min(inicio + registrosPorPagina, dtCompleto.Rows.Count);
+        //    for (int i = inicio; i < fin; i++)
+        //    {
+        //        dtPagina.ImportRow(dtCompleto.Rows[i]);
+        //    }
+        //    Dgv_Datos.DataSource = dtPagina;
+        //}
 
 
         public void mostrarDatos()
@@ -106,9 +106,9 @@ namespace CapaVistaNavegador
             dtCompleto = ctrl.LlenarTabla(alias[0], alias.Skip(1).ToArray());
             Dgv_Datos.DataSource = dtCompleto;
 
-            totalPaginas = (int)Math.Ceiling(dtCompleto.Rows.Count / (double)registrosPorPagina);
-            paginaActual = 1;
-            MostrarPagina(paginaActual);
+            //totalPaginas = (int)Math.Ceiling(dtCompleto.Rows.Count / (double)registrosPorPagina);
+            //paginaActual = 1;
+            //MostrarPagina(paginaActual);
 
             // Enganchar el evento solo una vez
             Dgv_Datos.DataBindingComplete -= Dgv_Datos_DataBindingComplete;
@@ -244,9 +244,9 @@ namespace CapaVistaNavegador
 
         private void Btn_inicio_Click_1(object sender, EventArgs e)
         {
-            paginaActual = 1;
-            MostrarPagina(paginaActual);
-            ctrl.MoverAlInicio();
+            //paginaActual = 1;
+            //MostrarPagina(paginaActual);
+            //ctrl.MoverAlInicio();
         }
 
         private void Btn_anterior_Click_1(object sender, EventArgs e)
@@ -281,9 +281,9 @@ namespace CapaVistaNavegador
 
         private void Btn_fin_Click_1(object sender, EventArgs e)
         {
-            paginaActual = totalPaginas;
-            MostrarPagina(paginaActual);
-            ctrl.MoverAlFin();
+            //paginaActual = totalPaginas;
+            //MostrarPagina(paginaActual);
+            //ctrl.MoverAlFin();
         }
 
         private void Btn_ayuda_Click(object sender, EventArgs e)
