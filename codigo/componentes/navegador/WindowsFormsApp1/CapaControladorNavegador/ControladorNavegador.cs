@@ -19,25 +19,27 @@ namespace CapaControladorNavegador
         // ---------------------VALIDANDO ALIAS-----------------------------------------
 
         // Asigna alias validando tabla y columnas
-        public bool AsignarAlias(string[] alias, Control contenedor, int startX, int startY)
+        // ======================= Pedro Ibañez =======================
+        // Creacion de Metodo: Asignar Alias Original, generación de Textboxes antes de las modificaciones
+        public bool AsignarAlias(string[] SAlias, Control contenedor, int startX, int startY)
         {
-            if (!dao.ExisteTabla(alias[0]))
+            if (!dao.ExisteTabla(SAlias[0]))
             {
-                MessageBox.Show($"❌ La tabla '{alias[0]}' no existe en la base de datos.");
+                MessageBox.Show($"❌ La tabla '{SAlias[0]}' no existe en la base de datos.");
                 return false;
             }
 
-            List<string> columnas = dao.ObtenerColumnas(alias[0]);
+            List<string> columnas = dao.ObtenerColumnas(SAlias[0]);
             int spacingY = 30;
             int creados = 0;
 
-            for (int i = 1; i < alias.Length; i++)
+            for (int i = 1; i < SAlias.Length; i++)
             {
-                string campo = alias[i];
+                string campo = SAlias[i];
 
                 if (!columnas.Contains(campo))
                 {
-                    MessageBox.Show($"⚠️ La columna '{campo}' no existe en la tabla '{alias[0]}'.");
+                    MessageBox.Show($"⚠️ La columna '{campo}' no existe en la tabla '{SAlias[0]}'.");
                     return false;
                 }
 
@@ -55,7 +57,7 @@ namespace CapaControladorNavegador
                     Location = new System.Drawing.Point(startX + 100, startY + (creados * spacingY)),
                 };
 
-                List<string> items = sentencias.ObtenerValoresColumna(alias[0], campo); 
+                List<string> items = sentencias.ObtenerValoresColumna(SAlias[0], campo); 
                 foreach (var item in items)
                 {
                     Cbo.Items.Add(item);
@@ -111,31 +113,31 @@ namespace CapaControladorNavegador
         }
 //---------------------------------------------------------------------------------------------------------
 
-        public void Insertar_Datos(Control contenedor, string[] alias)
+        public void Insertar_Datos(Control contenedor, string[] SAlias)
         {
-            string[] valores = new string[alias.Length - 1]; // crea el arreglo con tamaño necesario para evitar errores
+            string[] SValores = new string[SAlias.Length - 1]; // crea el arreglo con tamaño necesario para evitar errores
 
             DAOGenerico dao = new DAOGenerico();
             try
             {
-                for (int i = 1; i < alias.Length; i++)
+                for (int i = 1; i < SAlias.Length; i++)
                 {
                     // Buscar el TextBox con nombre dinámico
-                    ComboBox Cbo = contenedor.Controls.OfType<ComboBox>().FirstOrDefault(t => t.Name == "Cbo_" + alias[i]);
+                    ComboBox Cbo = contenedor.Controls.OfType<ComboBox>().FirstOrDefault(t => t.Name == "Cbo_" + SAlias[i]);
 
                     if (Cbo != null)
                     {
-                        valores[i - 1] = Cbo.Text; // Guardar el texto en la posición correspondiente
+                        SValores[i - 1] = Cbo.Text; // Guardar el texto en la posición correspondiente
                     }
                     else
                     {
-                        valores[i - 1] = null; // Si no existe el textbox, poner null
+                        SValores[i - 1] = null; // Si no existe el textbox, poner null
                     }
                 }
 
-                MessageBox.Show("Valores: " + string.Join(", ", valores));
+                MessageBox.Show("Valores: " + string.Join(", ", SValores));
 
-                dao.InsertarDatos(alias, valores);
+                dao.InsertarDatos(SAlias, SValores);
 
                 MessageBox.Show("Datos insertados correctamente.");
             }
@@ -147,14 +149,14 @@ namespace CapaControladorNavegador
 
 
 
-        public DataTable LlenarTabla(string tabla, string[] alias) 
+        public DataTable LlenarTabla(string tabla, string[] SAlias) 
         {
-            return sentencias.LlenarTabla(tabla, alias);
+            return sentencias.LlenarTabla(tabla, SAlias);
         }
 
         //---------------------------------------------------------------------------------------------
 
-        public void Eliminar_Datos(Control contenedor, string[] alias)
+        public void Eliminar_Datos(Control contenedor, string[] SAlias)
         {
             DAOGenerico dao = new DAOGenerico();
 
@@ -162,7 +164,7 @@ namespace CapaControladorNavegador
             {
                 ComboBox CboPK = contenedor.Controls
                     .OfType<ComboBox>()
-                    .FirstOrDefault(t => t.Name == "Cbo_" + alias[1]); // Se colocó la posicion 1 del array, ya elimina registros
+                    .FirstOrDefault(t => t.Name == "Cbo_" + SAlias[1]); // Se colocó la posicion 1 del array, ya elimina registros
 
                 if (CboPK == null || string.IsNullOrWhiteSpace(CboPK.Text))
                 {
@@ -172,7 +174,7 @@ namespace CapaControladorNavegador
 
                 object pkValor = CboPK.Text;
 
-                dao.EliminarDatos(alias, pkValor); // llamada directa al DAO
+                dao.EliminarDatos(SAlias, pkValor); // llamada directa al DAO
                 MessageBox.Show("Registro eliminado correctamente.");
             }
             catch (Exception ex)
@@ -183,15 +185,15 @@ namespace CapaControladorNavegador
 
         // ======================= Modificar / Update = Stevens Cambranes =======================
         // ======================= Actualizar en BD leyendo los ComboBox =======================
-        public void Actualizar_Datos(Control contenedor, string[] alias)
+        public void Actualizar_Datos(Control contenedor, string[] SAlias)
         {
-            if (alias == null || alias.Length < 3)
+            if (SAlias == null || SAlias.Length < 3)
             {
                 MessageBox.Show("Alias inválido: se espera [tabla, pk, campos...]");
                 return;
             }
 
-            string pkNombre = alias[1];
+            string pkNombre = SAlias[1];
             ComboBox cboPK = contenedor.Controls.OfType<ComboBox>().FirstOrDefault(t => t.Name == "Cbo_" + pkNombre);
 
             if (cboPK == null || string.IsNullOrWhiteSpace(cboPK.Text))
@@ -201,8 +203,8 @@ namespace CapaControladorNavegador
             }
 
             object pkValor = cboPK.Text; // llega como texto; ODBC hará la conversión
-            string[] campos = alias.Skip(2).ToArray();
-            object[] valores = new object[campos.Length];
+            string[] campos = SAlias.Skip(2).ToArray();
+            object[] SValores = new object[campos.Length];
 
             for (int i = 0; i < campos.Length; i++)
             {
@@ -210,13 +212,13 @@ namespace CapaControladorNavegador
                 ComboBox cboCampo = contenedor.Controls.OfType<ComboBox>()
                     .FirstOrDefault(t => t.Name == "Cbo_" + campo);
 
-                valores[i] = (cboCampo != null) ? (object)cboCampo.Text : null;
+                SValores[i] = (cboCampo != null) ? (object)cboCampo.Text : null;
             }
 
             try
             {
                 DAOGenerico dao = new DAOGenerico();
-                dao.ActualizarDatos(alias, valores, pkValor);
+                dao.ActualizarDatos(SAlias, SValores, pkValor);
                 MessageBox.Show("Registro actualizado correctamente.");
             }
             catch (Exception ex)
@@ -226,9 +228,9 @@ namespace CapaControladorNavegador
         }
 
         // ======================= Rellenar los ComboBox desde la fila seleccionada del DataGridView =======================
-        public void RellenarCombosDesdeFila(Control contenedor, string[] alias, DataGridViewRow fila)
+        public void RellenarCombosDesdeFila(Control contenedor, string[] SAlias, DataGridViewRow fila)
         {
-            if (fila == null || alias == null || alias.Length < 2) return;
+            if (fila == null || SAlias == null || SAlias.Length < 2) return;
 
             // Caso ideal: el DataSource es un DataTable (DataRowView)
             var drv = fila.DataBoundItem as DataRowView;
@@ -236,9 +238,9 @@ namespace CapaControladorNavegador
             {
                 DataTable table = drv.Row.Table;
 
-                for (int i = 1; i < alias.Length; i++)
+                for (int i = 1; i < SAlias.Length; i++)
                 {
-                    string campo = alias[i];
+                    string campo = SAlias[i];
                     var cbo = contenedor.Controls.OfType<ComboBox>()
                                  .FirstOrDefault(c => c.Name == "Cbo_" + campo);
                     if (cbo == null) continue;
@@ -251,9 +253,9 @@ namespace CapaControladorNavegador
 
             // buscar columna en el grid por Name o DataPropertyName
             var grid = fila.DataGridView;
-            for (int i = 1; i < alias.Length; i++)
+            for (int i = 1; i < SAlias.Length; i++)
             {
-                string campo = alias[i];
+                string campo = SAlias[i];
                 var cbo = contenedor.Controls.OfType<ComboBox>()
                              .FirstOrDefault(c => c.Name == "Cbo_" + campo);
                 if (cbo == null) continue;
@@ -315,13 +317,13 @@ namespace CapaControladorNavegador
         }
 
         // ======================= Limpiar todos los ComboBox generados =======================
-        public void LimpiarCombos(Control contenedor, string[] alias)
+        public void LimpiarCombos(Control contenedor, string[] SAlias)
         {
-            if (alias == null || alias.Length < 2) return;
+            if (SAlias == null || SAlias.Length < 2) return;
 
-            for (int i = 1; i < alias.Length; i++)
+            for (int i = 1; i < SAlias.Length; i++)
             {
-                string campo = alias[i];
+                string campo = SAlias[i];
                 var cbo = contenedor.Controls.OfType<ComboBox>()
                              .FirstOrDefault(c => c.Name == "Cbo_" + campo);
 
@@ -333,6 +335,8 @@ namespace CapaControladorNavegador
             }
         }
         //======================= Habilitar y Deshabilitar todos los comboBoxes=======================
+        // ======================= Pedro Ibañez =======================
+        // Creacion de Metodos: Habilitar y deshabilitar ComboBoxes
         public void ActivarTodosComboBoxes(Control contenedor)
         {
             foreach (var cbo in contenedor.Controls.OfType<ComboBox>())
@@ -347,7 +351,7 @@ namespace CapaControladorNavegador
                 cbo.Enabled = false;
             }
         }
-        // ======================= Diccionario de Datos =======================
+        
 
     }
 }
