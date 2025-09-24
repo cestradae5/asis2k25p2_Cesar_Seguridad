@@ -10,6 +10,7 @@ namespace Capa_Modelo_Reporteador
     class Conexion_Reporteador //Paula Leonardo
     {
         //Método de creación de la conexion via ODBC
+        
         public OdbcConnection conexion()
         {
             OdbcConnection conn = new OdbcConnection("Dsn=db_reportes");
@@ -36,5 +37,6 @@ namespace Capa_Modelo_Reporteador
                 Console.WriteLine("No Conectó");
             }
         }
+       
     }
 }
