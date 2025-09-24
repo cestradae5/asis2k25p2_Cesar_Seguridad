@@ -1,5 +1,4 @@
-﻿using CapaModeloNavegador;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Odbc;
@@ -8,8 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.AxHost;
+using Capa_Modelo_Navegador;
 
-namespace CapaControladorNavegador
+namespace Capa_Controlador_Navegador
 {
     public class ControladorNavegador
     {

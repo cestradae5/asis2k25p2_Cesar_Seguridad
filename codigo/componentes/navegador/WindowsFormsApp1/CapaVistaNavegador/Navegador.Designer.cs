@@ -1,5 +1,5 @@
 ﻿
-namespace CapaVistaNavegador
+namespace Capa_Vista_Navegador
 {
     partial class Navegador
     {

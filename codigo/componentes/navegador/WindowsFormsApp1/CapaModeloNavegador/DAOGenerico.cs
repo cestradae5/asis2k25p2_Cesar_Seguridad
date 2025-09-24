@@ -9,7 +9,7 @@ using System.Data.Odbc;
 
 // trabajado por Kenph Luna 9959-22-6326
 
-namespace CapaModeloNavegador
+namespace Capa_Modelo_Navegador
 {
     public class DAOGenerico
     {

@@ -5,8 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
+using Capa_Modelo_Navegador;
 
-namespace CapaControladorNavegador
+namespace Capa_Controlador_Navegador
 {
     public class ConfiguracionDataGridView
     {
