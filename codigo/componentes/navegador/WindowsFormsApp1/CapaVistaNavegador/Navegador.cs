@@ -7,8 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using CapaControladorNavegador;
-namespace CapaVistaNavegador
+using Capa_Controlador_Navegador;
+namespace Capa_Vista_Navegador
 {
     public partial class Navegador : UserControl
     {

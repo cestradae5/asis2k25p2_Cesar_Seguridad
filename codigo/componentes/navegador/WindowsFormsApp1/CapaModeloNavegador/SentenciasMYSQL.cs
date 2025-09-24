@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CapaModeloNavegador
+namespace Capa_Modelo_Navegador
 {
     public class SentenciasMYSQL
     {

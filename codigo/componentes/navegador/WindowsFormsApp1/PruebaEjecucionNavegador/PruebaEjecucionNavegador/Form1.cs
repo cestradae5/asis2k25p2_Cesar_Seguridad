@@ -15,7 +15,7 @@ namespace PruebaEjecucionNavegador
         public Form1()
         {
             InitializeComponent();
-            CapaControladorNavegador.ConfiguracionDataGridView config = new CapaControladorNavegador.ConfiguracionDataGridView
+            Capa_Controlador_Navegador.ConfiguracionDataGridView config = new Capa_Controlador_Navegador.ConfiguracionDataGridView
             {
                 Ancho = 1100,
                 Alto = 200,

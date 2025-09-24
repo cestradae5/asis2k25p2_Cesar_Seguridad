@@ -29,7 +29,7 @@ namespace PruebaEjecucionNavegador
         /// </summary>
         private void InitializeComponent()
         {
-            this.navegador1 = new CapaVistaNavegador.Navegador();
+            this.navegador1 = new Capa_Vista_Navegador.Navegador();
             this.SuspendLayout();
             // 
             // navegador1
@@ -57,7 +57,7 @@ namespace PruebaEjecucionNavegador
 
         #endregion
 
-        private CapaVistaNavegador.Navegador navegador1;
+        private Capa_Vista_Navegador.Navegador navegador1;
     }
 }
 
