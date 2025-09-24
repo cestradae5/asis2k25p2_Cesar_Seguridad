@@ -179,8 +179,21 @@ namespace Capa_Vista_Reporteador
             }
             else
             {
-                eliminarRegistro();
-            }
+                // Inicio de código de: Rocio Lopez con carné: 9959-23-740 en la fecha de: 23/09/2025
+                DialogResult resultado = MessageBox.Show(
+                    "¿Seguro que desea eliminar este registro?",
+                    "Confirmación",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                );
+
+                if (resultado == DialogResult.Yes)
+                {
+                    eliminarRegistro();
+                }
+                // Fin de código de: Rocio Lopez con carné: 9959-23-740 en la fecha de: 23/09/2025
+            
+        }
             // Fin de código de: Anderson Trigueros con carné: 0901-22-6961 en la fecha 12/09/2025
         }
 
