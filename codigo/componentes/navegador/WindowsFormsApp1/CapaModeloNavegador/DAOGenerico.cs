@@ -181,9 +181,9 @@ namespace Capa_Modelo_Navegador
         }
 
         //------------------------------Validaciones de alias -------------------------------------------------------
+        //============================== Kevin Natareno =============================================================
 
-        public bool ExisteTabla(string SNombreTabla
-            )
+        public bool ExisteTabla(string SNombreTabla)
         {
             using (OdbcConnection conn = con.conexion())
             {
@@ -233,7 +233,7 @@ namespace Capa_Modelo_Navegador
 
             return columnas;
         }
-
+        //==========================================================================================================
 
 
     }
