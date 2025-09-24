@@ -18,10 +18,14 @@ namespace Capa_Vista_Reporteador
 {
     public partial class VistaDeReportes : Form
     {
+        
         Controlador_Reporteador controlador = new Controlador_Reporteador();
+        
+
         public VistaDeReportes()
         {
             InitializeComponent();
+           
         }
 
         //Inicio de código de: Gerber Asturias con carné: 0901-22-11992 en la fecha 13/09/2025
@@ -43,18 +47,30 @@ namespace Capa_Vista_Reporteador
                 ConnectionInfo connection = new ConnectionInfo
                 {
                     ServerName = "db_reportes", //DNS para conexión (modificar según lo indicado)
-                    DatabaseName = "db_reportes", //DNS para conexión (modificar según lo indicado)
-                    UserID = "root", //Usuario MySql (modificar según lo indicado)
-                    Password = "123456" //Constraseña de Mysql (modificar según lo indicado) 
+                    IntegratedSecurity = true // dejar false si DSN tiene credenciales guardadas
                 };
-
-                //Aplicar conexión a cada tabla dentor del reporte
-                foreach (Table table in reporte.Database.Tables)
+                void AplicarConexion(Database db)
                 {
-                    TableLogOnInfo logonInfo = table.LogOnInfo;
-                    logonInfo.ConnectionInfo = connection;
-                    table.ApplyLogOnInfo(logonInfo);
+                    foreach (Table tabla in db.Tables)
+                    {
+                        TableLogOnInfo logon = tabla.LogOnInfo;
+                        logon.ConnectionInfo = connection;
+                        tabla.ApplyLogOnInfo(logon);
+
+                        // Forzar que Crystal use la conexión remapeada
+                        tabla.Location = tabla.Location;
+                    }
                 }
+                // Aplicar al reporte principal
+                AplicarConexion(reporte.Database);
+
+                // Aplicar a todos los subreportes
+                foreach (ReportDocument sub in reporte.Subreports)
+                {
+                    AplicarConexion(sub.Database);
+                }
+
+
 
                 crystalReportViewer1.ReportSource = reporte;
                 crystalReportViewer1.Refresh();
@@ -129,6 +145,11 @@ namespace Capa_Vista_Reporteador
             {
                 MessageBox.Show("Error al obtener reportes: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+        private void VistaDeReportes_Resize(object sender, EventArgs e)
+        {
+            // forzar que siempre ocupe todo el área cliente del form
+            crystalReportViewer1.Size = this.ClientSize;
         }
 
         private void crystalReportViewer1_Load(object sender, EventArgs e)
