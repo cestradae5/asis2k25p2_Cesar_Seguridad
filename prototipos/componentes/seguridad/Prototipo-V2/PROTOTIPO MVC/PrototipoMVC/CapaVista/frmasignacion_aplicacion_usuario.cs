@@ -15,6 +15,14 @@ namespace CapaVista
         ControladorAsignacionUsuarioAplicacion controlador = new ControladorAsignacionUsuarioAplicacion();
         Cls_SentenciasBitacora bitacora = new Cls_SentenciasBitacora();
 
+        private Cls_PermisoUsuario permisoUsuario = new Cls_PermisoUsuario();
+
+        private int moduloId = -1;
+        private int aplicacionId = -1;
+
+        // Tupla para los permisos actuales
+        private (bool ingresar, bool consultar, bool modificar, bool eliminar, bool imprimir)? permisosActuales = null;
+
         public frmasignacion_aplicacion_usuario()
         {
             InitializeComponent();
@@ -38,6 +46,8 @@ namespace CapaVista
             Cbo_Modulos.SelectedIndex = -1;
 
             InicializarDataGridView();
+
+            ConfigurarIdsDinamicamenteYAplicarPermisos();
         }
 
         private void InicializarDataGridView()
@@ -74,6 +84,49 @@ namespace CapaVista
         }
 
         
+        private void ConfigurarIdsDinamicamenteYAplicarPermisos()
+        {
+            // Cambia estos nombres exactamente como están en tu BD
+            string nombreModulo ="RHM";
+            string nombreAplicacion ="Empleados";
+            aplicacionId = permisoUsuario.ObtenerIdAplicacionPorNombre(nombreAplicacion);
+            moduloId = permisoUsuario.ObtenerIdModuloPorNombre(nombreModulo);
+            AplicarPermisosUsuario();
+        }
+
+        private void AplicarPermisosUsuario()
+        {
+            int usuarioId = Cls_sesion.iUsuarioId; // Usuario logueado
+            if (aplicacionId == -1 || moduloId == -1)
+            {
+                permisosActuales = null;
+                ActualizarEstadoBotonesSegunPermisos();
+                return;
+            }
+            var permisos = permisoUsuario.ConsultarPermisos(usuarioId, aplicacionId, moduloId);
+            permisosActuales = permisos;
+            ActualizarEstadoBotonesSegunPermisos();
+        }
+
+        // Centraliza el habilitado/deshabilitado de botones según permisos y estado de navegación
+        private void ActualizarEstadoBotonesSegunPermisos(bool empleadoCargado = false)
+        {
+            if (!permisosActuales.HasValue)
+            {
+                Btn_agregar.Enabled = false;        // Botón "Agregar"
+                Btn_quitar.Enabled = false;      // Botón "Modificar
+                Btn_Buscar.Enabled = false;         // Botón "Buscar"
+                Btn_finalizar.Enabled = false;        // Botón "Guardar"
+                return;
+            }
+
+            var p = permisosActuales.Value;
+
+            Btn_Buscar.Enabled = p.consultar;      
+            Btn_agregar.Enabled = p.ingresar;      
+            Btn_quitar.Enabled =  p.modificar; 
+            Btn_finalizar.Enabled =  p.ingresar || p.modificar;
+        }
 
         // Pablo Quiroa 0901-22-2929
         private void Btn_agregar_Click_1(object sender, EventArgs e)

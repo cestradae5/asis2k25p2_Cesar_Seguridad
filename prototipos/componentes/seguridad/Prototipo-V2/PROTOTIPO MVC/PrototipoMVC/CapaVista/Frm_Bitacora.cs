@@ -5,6 +5,7 @@ using System.Drawing.Printing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using CapaControlador;
+using CapaModelo;
 
 namespace CapaVista
 {
@@ -13,11 +14,21 @@ namespace CapaVista
         // Controlador (puente con la capa modelo)
         private readonly Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador();
 
+        // permisos 0901-21-1115 Marcos Andres Velásquez Alcántara
+        private Cls_PermisoUsuario permisoUsuario = new Cls_PermisoUsuario();
+
+        private int moduloId = -1;
+        private int aplicacionId = -1;
+
+        // Tupla para los permisos actuales
+        private (bool ingresar, bool consultar, bool modificar, bool eliminar, bool imprimir)? permisosActuales = null;
+
         public Frm_Bitacora()
         {
             InitializeComponent();
             CargarUsuariosEnCombo(); // carga usuarios al abrir
             OcultarFiltros();        // opcional
+            ConfigurarIdsDinamicamenteYAplicarPermisos();
         }
 
         private void CargarEnGrid(DataTable dt)
@@ -217,5 +228,64 @@ namespace CapaVista
             frmReporte_Bitacoras frm = new frmReporte_Bitacoras();
             frm.Show();
         }
+
+
+        //0901-21-1115 Marcos Andres Velasquez Alcánatara
+
+        private void ConfigurarIdsDinamicamenteYAplicarPermisos()
+        {
+            // Cambia estos nombres exactamente como están en tu BD
+            string nombreModulo = "RHM";
+            string nombreAplicacion = "Empleados";
+            aplicacionId = permisoUsuario.ObtenerIdAplicacionPorNombre(nombreAplicacion);
+            moduloId = permisoUsuario.ObtenerIdModuloPorNombre(nombreModulo);
+            AplicarPermisosUsuario();
+        }
+
+        private void AplicarPermisosUsuario()
+        {
+            int usuarioId = Cls_sesion.iUsuarioId; // Usuario logueado
+            if (aplicacionId == -1 || moduloId == -1)
+            {
+                permisosActuales = null;
+                ActualizarEstadoBotonesSegunPermisos();
+                return;
+            }
+            var permisos = permisoUsuario.ConsultarPermisos(usuarioId, aplicacionId, moduloId);
+            permisosActuales = permisos;
+            ActualizarEstadoBotonesSegunPermisos();
+        }
+
+        // Centraliza el habilitado/deshabilitado de botones según permisos y estado de navegación
+        private void ActualizarEstadoBotonesSegunPermisos(bool empleadoCargado = false)
+        {
+            if (!permisosActuales.HasValue)
+            {
+                Btn_Consultar.Enabled = false;
+                Btn_Exportar.Enabled = false;
+                Btn_BuscarFecha.Enabled = false;
+                Btn_BuscarUsuario.Enabled = false;
+                Btn_BuscarRango.Enabled = false;
+                Btn_Imprimir.Enabled = false;
+                button1.Enabled = false;
+
+
+                return;
+            }
+
+            var p = permisosActuales.Value;
+
+            Btn_Consultar.Enabled = p.consultar;
+            Btn_Exportar.Enabled = p.imprimir;
+            Btn_BuscarFecha.Enabled = p.consultar;
+            Btn_BuscarUsuario.Enabled = p.consultar;
+            Btn_BuscarRango.Enabled = p.consultar;
+            Btn_Imprimir.Enabled = p.consultar;
+            button1.Enabled = p.consultar;
+
+
+        }
+
+
     }
 }

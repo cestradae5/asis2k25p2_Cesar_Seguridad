@@ -15,6 +15,16 @@ namespace CapaVista
         private Cls_PerfilesControlador controlador = new Cls_PerfilesControlador();
         private List<Cls_Perfiles> listaPerfiles = new List<Cls_Perfiles>();
 
+
+        // permisos 0901-21-1115 Marcos Andres Velásquez Alcántara
+        private Cls_PermisoUsuario permisoUsuario = new Cls_PermisoUsuario();
+
+        private int moduloId = -1;
+        private int aplicacionId = -1;
+
+        // Tupla para los permisos actuales
+        private (bool ingresar, bool consultar, bool modificar, bool eliminar, bool imprimir)? permisosActuales = null;
+
         public frmPerfiles()
         {
             InitializeComponent();
@@ -22,6 +32,7 @@ namespace CapaVista
             fun_ConfigurarComboBoxPerfiles();
             fun_ConfigurarComboBoxTipoPerfil();
             fun_Configuracioninicial();
+            ConfigurarIdsDinamicamenteYAplicarPermisos();
         }
 
         private void fun_Configuracioninicial()
@@ -296,5 +307,64 @@ namespace CapaVista
             frmreporte_perfiles frm = new frmreporte_perfiles();
             frm.Show();
         }
+
+        //0901-21-1115 Marcos Andres Velasquez Alcánatara
+
+        private void ConfigurarIdsDinamicamenteYAplicarPermisos()
+        {
+            
+            string nombreModulo = "RHM";
+            string nombreAplicacion = "Empleados";
+            aplicacionId = permisoUsuario.ObtenerIdAplicacionPorNombre(nombreAplicacion);
+            moduloId = permisoUsuario.ObtenerIdModuloPorNombre(nombreModulo);
+            AplicarPermisosUsuario();
+        }
+
+        private void AplicarPermisosUsuario()
+        {
+            int usuarioId = Cls_sesion.iUsuarioId; // Usuario logueado
+            if (aplicacionId == -1 || moduloId == -1)
+            {
+                permisosActuales = null;
+                ActualizarEstadoBotonesSegunPermisos();
+                return;
+            }
+            var permisos = permisoUsuario.ConsultarPermisos(usuarioId, aplicacionId, moduloId);
+            permisosActuales = permisos;
+            ActualizarEstadoBotonesSegunPermisos();
+        }
+
+        // Centraliza el habilitado/deshabilitado de botones según permisos y estado de navegación
+        private void ActualizarEstadoBotonesSegunPermisos(bool empleadoCargado = false)
+        {
+            if (!permisosActuales.HasValue)
+            {
+
+                Btn_buscar.Enabled = false;
+                Btn_reporte.Enabled = false;
+                Btn_modificar.Enabled = false;
+                Btn_guardar.Enabled = false;
+                Btn_nuevo.Enabled = false;
+                Btn_Eliminar.Enabled = false;
+                Btn_cancelar.Enabled = false;
+
+
+                return;
+            }
+
+            var p = permisosActuales.Value;
+
+            Btn_buscar.Enabled = p.consultar;
+            Btn_reporte.Enabled = p.consultar;
+            Btn_modificar.Enabled = p.modificar;
+            Btn_guardar.Enabled = p.ingresar;
+            Btn_nuevo.Enabled = p.ingresar;
+            Btn_Eliminar.Enabled = p.eliminar;
+            Btn_cancelar.Enabled = p.ingresar;
+
+        }
+
+
+
     }
 }
