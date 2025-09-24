@@ -15,6 +15,7 @@ namespace Capa_Vista_Reporteador
     {
         Controlador_Reporteador controlador = new Controlador_Reporteador();
         private int iCodigoRuta = -1;
+        private int iCodigoFilaSeleccionada = 0;
 
         public Reportes()
         {
@@ -24,10 +25,19 @@ namespace Capa_Vista_Reporteador
         private void modificarRuta(string sNuevaRuta)
         {
             //Inicio de código de: Anderson Trigueros con carné: 0901-22-6961 en la fecha 12/09/2025
-            controlador.ModificarRuta(iCodigoRuta, sNuevaRuta);
+            controlador.ModificarRuta(iCodigoFilaSeleccionada, sNuevaRuta);
             ActualizarGrid();
-            Txt_reportes_ruta.Clear();
             iCodigoRuta = -1;
+            // Fin de código de: Anderson Trigueros con carné: 0901-22-6961 en la fecha 12/09/2025
+        }
+
+        private void modificarTitulo(string sTituloNuevo)
+        {
+            //Inicio de código de: Anderson Trigueros con carné: 0901-22-6961 en la fecha 12/09/2025
+            controlador.ModificarTitulo(iCodigoFilaSeleccionada, sTituloNuevo);
+            ActualizarGrid();
+            iCodigoRuta = -1;
+            iCodigoFilaSeleccionada = 0;
             // Fin de código de: Anderson Trigueros con carné: 0901-22-6961 en la fecha 12/09/2025
         }
 
@@ -40,12 +50,18 @@ namespace Capa_Vista_Reporteador
                 MessageBox.Show("Seleccione primero la ruta que desea modificar de la tabla.");
                 return;
             }
-            else
+            if (!string.IsNullOrWhiteSpace(Txt_reportes_ruta.Text))
             {
                 string sRutaModificada = Txt_reportes_ruta.Text;
                 modificarRuta(sRutaModificada);
             }
-
+            if (!string.IsNullOrWhiteSpace(Txt_Titulo.Text))
+            {
+                string sTituloNuevo = Txt_Titulo.Text;
+                modificarTitulo(sTituloNuevo);
+            }
+            Txt_reportes_ruta.Clear();
+            Txt_Titulo.Clear();
             // Fin de código de: Anderson Trigueros con carné: 0901-22-6961 en la fecha 12/09/2025
 
         }
@@ -204,8 +220,11 @@ namespace Capa_Vista_Reporteador
             {
                 DataGridViewRow filaSeleccionada = Dgv_reportes.Rows[e.RowIndex];
                 string sRuta = filaSeleccionada.Cells["ruta_reportes"].Value?.ToString();
+                string sTitulo = filaSeleccionada.Cells["titulo_reportes"].Value?.ToString();
                 iCodigoRuta = Convert.ToInt32(filaSeleccionada.Cells["pk_id_reportes"].Value);
+                iCodigoFilaSeleccionada = iCodigoRuta;
                 Txt_reportes_ruta.Text = sRuta;
+                Txt_Titulo.Text = sTitulo;
             }
             // Fin de código de: Anderson Trigueros con carné: 0901-22-6961 en la fecha 12/09/2025
         }
