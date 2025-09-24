@@ -43,6 +43,21 @@ namespace Capa_Modelo_Reporteador
         }
         // Fin de código de: María Morales con carné: 0901-22-1226 en la fecha de: 11/09/2025
 
+        // Inicio de código de: Anderson Trigueros con carné: 0901-22-6961 en la fecha de: 23/09/2025
+        public void ModificarTitulo(int id, string titulo)
+        {
+            Conexion_Reporteador cn = new Conexion_Reporteador();
+            using (OdbcConnection con = cn.conexion())
+            {
+                string sqlTitulo = "update tbl_reportes set titulo_reportes=? where pk_id_reportes=?";
+                OdbcCommand cmdActualizar = new OdbcCommand(sqlTitulo, con);
+                cmdActualizar.Parameters.AddWithValue("", titulo);
+                cmdActualizar.Parameters.AddWithValue("", id);
+                cmdActualizar.ExecuteNonQuery();
+            }
+        }
+        // Fin de código de: Anderson Trigueros con carné: 0901-22-6961 en la fecha de: 23/09/2025
+
         // Inicio de código de: Rocio Lopez con carné: 9959-23-740 en la fecha de: 11/09/2025
 
         public DataTable ObtenerReporte()
@@ -103,6 +118,7 @@ namespace Capa_Modelo_Reporteador
 
         }
 //fin de codigo de Sergio Izeppi
+
     }
 }
 
