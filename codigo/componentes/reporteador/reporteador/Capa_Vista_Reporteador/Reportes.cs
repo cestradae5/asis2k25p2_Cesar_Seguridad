@@ -154,6 +154,8 @@ namespace Capa_Vista_Reporteador
                     controlador.GuardarReporte(titulo, ruta, fecha);
                     MessageBox.Show("Reporte Guardado Correctamente");
                     ActualizarGrid();
+                    Txt_reportes_ruta.Clear();                 // Inicio de código de: Cesar Santizo con carné: 0901-22-5215 en la fecha de: 24/09/2025
+                    Txt_Titulo.Clear(); // fin de código de: Cesar Santizo con carné: 0901-22-5215 en la fecha de: 24/09/2025
                 }
       
             }
