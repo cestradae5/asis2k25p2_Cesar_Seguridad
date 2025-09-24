@@ -40,9 +40,9 @@ namespace CapaVista
         /// </summary>  
         private void ConfigurarIdsDinamicamenteYAplicarPermisos()
         {
-            // Cambia estos nombres exactamente como están en tu BD
-            string nombreModulo ="RHM";
-            string nombreAplicacion ="Empleados";
+
+            string nombreModulo = "RHM";
+            string nombreAplicacion = "Empleados";
             aplicacionId = permisoUsuario.ObtenerIdAplicacionPorNombre(nombreAplicacion);
             moduloId = permisoUsuario.ObtenerIdModuloPorNombre(nombreModulo);
             AplicarPermisosUsuario();
@@ -73,15 +73,18 @@ namespace CapaVista
                 Btn_nuevo_empleado.Enabled = false;
                 Btn_buscar_empleado.Enabled = false;
                 Btn_reporte.Enabled = false;
+                
+
+
                 return;
             }
 
             var p = permisosActuales.Value;
             Btn_buscar_empleado.Enabled = p.consultar;
             Btn_nuevo_empleado.Enabled = p.ingresar;
-            Btn_guardar_empleado.Enabled = false; // Solo habilitado en flujo de "nuevo"
-            Btn_modificar_empleado.Enabled = empleadoCargado && p.modificar;
-            Btn_eliminar_empleado.Enabled = empleadoCargado && p.eliminar;
+            Btn_guardar_empleado.Enabled = p.modificar || p.ingresar;
+            Btn_modificar_empleado.Enabled =  p.modificar;
+            Btn_eliminar_empleado.Enabled = p.ingresar || p.modificar;
             Btn_reporte.Enabled = p.imprimir;
         }
 

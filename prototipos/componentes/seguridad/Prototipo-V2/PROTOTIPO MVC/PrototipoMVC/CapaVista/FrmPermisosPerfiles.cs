@@ -19,9 +19,22 @@ namespace CapaVista
         private DataTable dtAplicacione;
         Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador(); // Bitacora
 
+
+        // permisos 0901-21-1115 Marcos Andres Velásquez Alcántara
+        private Cls_PermisoUsuario permisoUsuario = new Cls_PermisoUsuario();
+
+        private int moduloId = -1;
+        private int aplicacionId = -1;
+
+        // Tupla para los permisos actuales
+        private (bool ingresar, bool consultar, bool modificar, bool eliminar, bool imprimir)? permisosActuales = null;
+
+
         public FrmPermisosPerfiles()
         {
             InitializeComponent();
+            ConfigurarIdsDinamicamenteYAplicarPermisos();
+            
         }
 
         private void InicializarDataGridView()
@@ -56,8 +69,8 @@ namespace CapaVista
             }
 
             Cbo_aplicaciones.DataSource = dtAplicacion;
-            Cbo_aplicaciones.DisplayMember = "nombre_aplicacion";
-            Cbo_aplicaciones.ValueMember = "pk_id_aplicacion";
+            Cbo_aplicaciones.DisplayMember = "Cmp_Nombre_Aplicacion";
+            Cbo_aplicaciones.ValueMember = "Pk_Id_Aplicacion";
             Cbo_aplicaciones.SelectedIndex = -1;
         }
 
@@ -71,14 +84,14 @@ namespace CapaVista
             // Llenar ComboBox Modulos
             DataTable dtModulos = controlador.datObtenerModulos();
             Cbo_Modulos.DataSource = dtModulos;
-            Cbo_Modulos.DisplayMember = "nombre_modulo";
-            Cbo_Modulos.ValueMember = "pk_id_modulo";
+            Cbo_Modulos.DisplayMember = "Cmp_Nombre_Modulo";
+            Cbo_Modulos.ValueMember = "Pk_Id_Modulo";
             Cbo_Modulos.SelectedIndex = -1;
 
             dtPerfiles = controlador.datObtenerPerfiles();
             Cbo_perfiles.DataSource = dtPerfiles.Copy();
-            Cbo_perfiles.DisplayMember = "puesto_perfil";
-            Cbo_perfiles.ValueMember = "pk_id_perfil";
+            Cbo_perfiles.DisplayMember = "Cmp_Puesto_Perfil";
+            Cbo_perfiles.ValueMember = "Pk_Id_Perfil";
             Cbo_perfiles.SelectedIndex = -1;
 
             dtAplicacione = controlador.datObtenerAplicaciones();
@@ -245,6 +258,57 @@ namespace CapaVista
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
             }
         }
+
+
+
+        //0901-21-1115 Marcos Andres Velasquez Alcánatara
+
+        private void ConfigurarIdsDinamicamenteYAplicarPermisos()
+        {
+            
+            string nombreModulo = "RHM";
+            string nombreAplicacion = "Empleados";
+            aplicacionId = permisoUsuario.ObtenerIdAplicacionPorNombre(nombreAplicacion);
+            moduloId = permisoUsuario.ObtenerIdModuloPorNombre(nombreModulo);
+            AplicarPermisosUsuario();
+        }
+
+        private void AplicarPermisosUsuario()
+        {
+            int usuarioId = Cls_sesion.iUsuarioId; // Usuario logueado
+            if (aplicacionId == -1 || moduloId == -1)
+            {
+                permisosActuales = null;
+                ActualizarEstadoBotonesSegunPermisos();
+                return;
+            }
+            var permisos = permisoUsuario.ConsultarPermisos(usuarioId, aplicacionId, moduloId);
+            permisosActuales = permisos;
+            ActualizarEstadoBotonesSegunPermisos();
+        }
+
+        // Centraliza el habilitado/deshabilitado de botones según permisos y estado de navegación
+        private void ActualizarEstadoBotonesSegunPermisos(bool empleadoCargado = false)
+        {
+            if (!permisosActuales.HasValue)
+            {
+                Btn_agregar.Enabled = false;
+                Btn_quitar.Enabled = false;
+                Btn_insertar.Enabled = false;
+                
+
+                return;
+            }
+
+            var p = permisosActuales.Value;
+
+
+            Btn_agregar.Enabled = p.ingresar;
+            Btn_quitar.Enabled = p.eliminar;
+            Btn_insertar.Enabled = p.ingresar;
+
+        }
+
 
 
 

@@ -23,9 +23,19 @@ namespace CapaVista
         private DataTable dtUsuarios;
         private DataTable dtPerfiles;
 
+
+        private Cls_PermisoUsuario permisoUsuario = new Cls_PermisoUsuario();
+
+        private int moduloId = -1;
+        private int aplicacionId = -1;
+
+        // Tupla para los permisos actuales
+        private (bool ingresar, bool consultar, bool modificar, bool eliminar, bool imprimir)? permisosActuales = null;
+
         public frmasignacion_perfil_usuario()
         {
             InitializeComponent();
+            ConfigurarIdsDinamicamenteYAplicarPermisos();
         }
 
         private void frmasignacion_perfil_usuario_Load(object sender, EventArgs e)
@@ -191,5 +201,59 @@ namespace CapaVista
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0); // Simula arrastre
             }
         }
+
+
+        //0901-21-1115 Marcos Andres Velasquez Alcánatara
+
+        private void ConfigurarIdsDinamicamenteYAplicarPermisos()
+        {
+            
+            string nombreModulo = "RHM";
+            string nombreAplicacion = "Empleados";
+            aplicacionId = permisoUsuario.ObtenerIdAplicacionPorNombre(nombreAplicacion);
+            moduloId = permisoUsuario.ObtenerIdModuloPorNombre(nombreModulo);
+            AplicarPermisosUsuario();
+        }
+
+        private void AplicarPermisosUsuario()
+        {
+            int usuarioId = Cls_sesion.iUsuarioId; // Usuario logueado
+            if (aplicacionId == -1 || moduloId == -1)
+            {
+                permisosActuales = null;
+                ActualizarEstadoBotonesSegunPermisos();
+                return;
+            }
+            var permisos = permisoUsuario.ConsultarPermisos(usuarioId, aplicacionId, moduloId);
+            permisosActuales = permisos;
+            ActualizarEstadoBotonesSegunPermisos();
+        }
+
+        // Centraliza el habilitado/deshabilitado de botones según permisos y estado de navegación
+        private void ActualizarEstadoBotonesSegunPermisos(bool empleadoCargado = false)
+        {
+            if (!permisosActuales.HasValue)
+            {
+                Btn_agregar.Enabled = false;
+                Btn_eliminar_asignacion.Enabled = false;
+                Btn_eliminar_consulta.Enabled = false;
+                btn_finalizar.Enabled = false;
+                 
+                return;
+            }
+
+            var p = permisosActuales.Value;
+
+            
+            Btn_agregar.Enabled = p.ingresar;
+            Btn_eliminar_asignacion.Enabled = p.eliminar;
+            Btn_eliminar_consulta.Enabled = p.eliminar;
+            btn_finalizar.Enabled = p.ingresar;
+            
+        }
+
+
+
+
     }
 }
