@@ -142,14 +142,28 @@ namespace Capa_Controlador_Navegador
 
         public void MoverAlFin()
         {
-            if (dgv != null && dgv.Rows.Count > 0)
-            {
-                int ultimaFila = dgv.Rows.Count - 1;
-                dgv.ClearSelection();
-                dgv.Rows[ultimaFila].Selected = true;
-                dgv.CurrentCell = dgv.Rows[ultimaFila].Cells[0];
-            }
+            if (dgv == null || dgv.Rows.Count == 0) return;
+
+            dgv.ClearSelection();
+
+            // Última fila real
+            int ultimaFila = dgv.Rows.Count - 1;
+            if (dgv.AllowUserToAddRows)
+                ultimaFila -= 1;
+
+            if (ultimaFila < 0) return;
+
+            // Primero fijamos el CurrentCell en la primera columna visible
+            dgv.CurrentCell = dgv.Rows[ultimaFila].Cells[0];
+
+            // Ahora seleccionamos la fila
+            dgv.Rows[ultimaFila].Selected = true;
+
+            // Aseguramos que sea visible
+            dgv.FirstDisplayedScrollingRowIndex = ultimaFila;
         }
+
+
         //===============================================================================
 
         public void Insertar_Datos(Control contenedor, string[] SAlias)
