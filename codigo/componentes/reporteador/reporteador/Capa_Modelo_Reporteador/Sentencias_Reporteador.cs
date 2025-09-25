@@ -138,6 +138,37 @@ namespace Capa_Modelo_Reporteador
 
         // ==========================
         // APLICACIÓN
+
+        // Inicio de código de: Anderson Trigueros con carné: 0901-22-6961 en la fecha de: 24/09/2025
+        // Inicio de código de: Leticia Sontay con carné: 9959-21-9664 en la fecha de: 24/09/2025
+
+        public string consultaReporteAplicacion(int idAplicacion)
+        {
+            Conexion_Reporteador cn = new Conexion_Reporteador();
+            using (OdbcConnection con = cn.conexion())
+            {
+                string sql = $@"SELECT R.Cmp_Ruta_Reporte
+                                FROM Tbl_Aplicacion A
+                                JOIN Tbl_Reportes R ON A.Fk_Id_Reporte_Aplicacion = R.Pk_Id_Reporte
+                                WHERE A.Pk_Id_Aplicacion = @idAplicacion";
+                OdbcCommand cmd = new OdbcCommand(sql, con);
+                cmd.Parameters.AddWithValue("@idAplicacion", idAplicacion);
+                object resultadoConsulta = cmd.ExecuteScalar();
+                if (resultadoConsulta != DBNull.Value && resultadoConsulta != null)
+                {
+                    return resultadoConsulta.ToString();
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+
+        // Fin de código de: Anderson Trigueros con carné: 0901-22-6961 en la fecha de: 24/09/2025
+        // Fin de código de: Leticia Sontay con carné: 9959-21-9664  en la fecha de: 24/09/2025
+
         // ==========================
 
 
