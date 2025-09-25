@@ -18,9 +18,113 @@ namespace CapaVista
         Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador();
         private int childFormNumber = 0;
 
+        //Ruben Armando Lopez Luch
+        //0901-20-4620
+        // Enum con todos los botones del menú
+        public enum MenuOpciones
+        {
+            Archivo,
+            Catalogos,
+            Procesos,
+            Reportes,
+            Herramientas,
+            Ayuda,
+            Asignaciones,
+            Modulos
+        }
+
+        private Dictionary<MenuOpciones, ToolStripMenuItem> menuItems;
+
         public frmSeguridad()
         {
             InitializeComponent();
+
+            //Ruben Armando Lopez Luch
+            //0901-20-4620
+            InicializarMenuItems();
+            InicializarBotonesPorDefecto();
+
+
+            // habilitar botones segun permisos 
+            HabilitarBotonesPorPermisos(Cls_UsuarioConectado.iIdUsuario);
+        }
+
+        //Ruben Armando Lopez Luch
+        //0901-20-4620
+        private void InicializarMenuItems()
+        {
+            menuItems = new Dictionary<MenuOpciones, ToolStripMenuItem>
+            {
+                { MenuOpciones.Archivo, archivoToolStripMenuItem },
+                { MenuOpciones.Catalogos, catálogosToolStripMenuItem },
+                { MenuOpciones.Procesos, procesosToolStripMenuItem },
+                { MenuOpciones.Reportes, reportesToolStripMenuItem },
+                { MenuOpciones.Herramientas, herramientasToolStripMenuItem },
+                { MenuOpciones.Ayuda, ayudaToolStripMenuItem },
+                { MenuOpciones.Asignaciones, asignacionesToolStripMenuItem },
+                { MenuOpciones.Modulos, modulosToolStripMenuItem }
+            };
+        }
+
+        //Ruben Armando Lopez Luch
+        //0901-20-4620
+        public void InicializarBotonesPorDefecto()
+        {
+            foreach (var opcion in menuItems.Keys)
+            {
+                switch (opcion)
+                {
+                    case MenuOpciones.Archivo:
+                    case MenuOpciones.Herramientas:
+                    case MenuOpciones.Ayuda:
+                    //case MenuOpciones.Asignaciones:
+                        menuItems[opcion].Enabled = true; 
+                        break;
+                    default:
+                        menuItems[opcion].Enabled = false; 
+                        break;
+                }
+            }
+        }
+
+        //Ruben Armando Lopez Luch
+        //0901-20-4620
+        public void HabilitarBotonesPorPermisos(int idUsuario)
+        {
+            InicializarBotonesPorDefecto(); 
+
+            SentenciaAsignacionUsuarioAplicacion modelo = new SentenciaAsignacionUsuarioAplicacion();
+            DataTable dtPermisos = modelo.ObtenerPermisosPorUsuario(idUsuario);
+
+            bool tienePermisoSeguridad = dtPermisos.AsEnumerable()
+                .Any(row => row["nombre_modulo"].ToString() == "Seguridad");
+
+            if (tienePermisoSeguridad)
+            {
+                menuItems[MenuOpciones.Catalogos].Enabled = true;
+                menuItems[MenuOpciones.Procesos].Enabled = true;
+                menuItems[MenuOpciones.Reportes].Enabled = true;
+                menuItems[MenuOpciones.Asignaciones].Enabled = true;
+                menuItems[MenuOpciones.Modulos].Enabled = true;
+            }
+        }
+
+        //Ruben Armando Lopez Luch
+        //0901-20-4620
+        public void HabilitarBotonesSeguridad(string modulo)
+        {
+            if (modulo == "Seguridad")
+            {
+                menuItems[MenuOpciones.Catalogos].Enabled = true;
+                menuItems[MenuOpciones.Procesos].Enabled = true;
+                menuItems[MenuOpciones.Reportes].Enabled = true;
+                menuItems[MenuOpciones.Asignaciones].Enabled = true;
+                menuItems[MenuOpciones.Modulos].Enabled = true;
+            }
+            else
+            {
+                InicializarBotonesPorDefecto();
+            }
         }
 
         private void ShowNewForm(object sender, EventArgs e)
@@ -69,8 +173,6 @@ namespace CapaVista
         private void PasteToolStripMenuItem_Click(object sender, EventArgs e)
         {
         }
-
-
 
         private void CascadeToolStripMenuItem_Click(object sender, EventArgs e)
         {

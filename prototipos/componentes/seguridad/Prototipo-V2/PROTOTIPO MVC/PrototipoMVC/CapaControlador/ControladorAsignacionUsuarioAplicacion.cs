@@ -42,6 +42,14 @@ namespace CapaControlador
                                                                eliminar, imprimir);
             return filas > 0;
         }
+
+
+        //Ruben Armando Lopez lUch
+        //0901-20-4620
+        public DataTable ObtenerPermisosPorUsuarioModulo(int idUsuario, int idModulo)
+        {
+            return model.ObtenerPermisosPorUsuarioModulo(idUsuario, idModulo);
+        }
     }
 }
 

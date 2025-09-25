@@ -46,10 +46,10 @@ namespace CapaVista
             this.procesosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Btn_Bitacora = new System.Windows.Forms.ToolStripMenuItem();
             this.reportesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolsMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.herramientasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cambiarContraseñaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.helpMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.ayudaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.indexToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.searchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -58,8 +58,8 @@ namespace CapaVista
             this.asignacionesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.asignacionDeAplicacionAUsuarioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.asignacionPerfilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.modulosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.asignacionPermisoPerfilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.modulosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -92,8 +92,8 @@ namespace CapaVista
             this.catálogosToolStripMenuItem,
             this.procesosToolStripMenuItem,
             this.reportesToolStripMenuItem,
-            this.toolsMenu,
-            this.helpMenu,
+            this.herramientasToolStripMenuItem,
+            this.ayudaToolStripMenuItem,
             this.asignacionesToolStripMenuItem,
             this.modulosToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -189,15 +189,15 @@ namespace CapaVista
             this.reportesToolStripMenuItem.Size = new System.Drawing.Size(93, 24);
             this.reportesToolStripMenuItem.Text = "Reportes";
             // 
-            // toolsMenu
+            // herramientasToolStripMenuItem
             // 
-            this.toolsMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.herramientasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.optionsToolStripMenuItem,
             this.cambiarContraseñaToolStripMenuItem});
-            this.toolsMenu.Font = new System.Drawing.Font("Rockwell", 10F);
-            this.toolsMenu.Name = "toolsMenu";
-            this.toolsMenu.Size = new System.Drawing.Size(130, 24);
-            this.toolsMenu.Text = "&Herramientas";
+            this.herramientasToolStripMenuItem.Font = new System.Drawing.Font("Rockwell", 10F);
+            this.herramientasToolStripMenuItem.Name = "herramientasToolStripMenuItem";
+            this.herramientasToolStripMenuItem.Size = new System.Drawing.Size(130, 24);
+            this.herramientasToolStripMenuItem.Text = "&Herramientas";
             // 
             // optionsToolStripMenuItem
             // 
@@ -212,18 +212,18 @@ namespace CapaVista
             this.cambiarContraseñaToolStripMenuItem.Text = "Cambiar contraseña";
             this.cambiarContraseñaToolStripMenuItem.Click += new System.EventHandler(this.cambiarContraseñaToolStripMenuItem_Click);
             // 
-            // helpMenu
+            // ayudaToolStripMenuItem
             // 
-            this.helpMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ayudaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.contentsToolStripMenuItem,
             this.indexToolStripMenuItem,
             this.searchToolStripMenuItem,
             this.toolStripSeparator8,
             this.aboutToolStripMenuItem});
-            this.helpMenu.Font = new System.Drawing.Font("Rockwell", 10F);
-            this.helpMenu.Name = "helpMenu";
-            this.helpMenu.Size = new System.Drawing.Size(74, 24);
-            this.helpMenu.Text = "Ay&uda";
+            this.ayudaToolStripMenuItem.Font = new System.Drawing.Font("Rockwell", 10F);
+            this.ayudaToolStripMenuItem.Name = "ayudaToolStripMenuItem";
+            this.ayudaToolStripMenuItem.Size = new System.Drawing.Size(74, 24);
+            this.ayudaToolStripMenuItem.Text = "Ay&uda";
             // 
             // contentsToolStripMenuItem
             // 
@@ -284,6 +284,13 @@ namespace CapaVista
             this.asignacionPerfilesToolStripMenuItem.Text = "Asignacion Perfiles";
             this.asignacionPerfilesToolStripMenuItem.Click += new System.EventHandler(this.asignacionPerfilesToolStripMenuItem_Click);
             // 
+            // asignacionPermisoPerfilesToolStripMenuItem
+            // 
+            this.asignacionPermisoPerfilesToolStripMenuItem.Name = "asignacionPermisoPerfilesToolStripMenuItem";
+            this.asignacionPermisoPerfilesToolStripMenuItem.Size = new System.Drawing.Size(372, 26);
+            this.asignacionPermisoPerfilesToolStripMenuItem.Text = "Asignacion Permiso Perfiles";
+            this.asignacionPermisoPerfilesToolStripMenuItem.Click += new System.EventHandler(this.asignacionPermisoPerfilesToolStripMenuItem_Click);
+            // 
             // modulosToolStripMenuItem
             // 
             this.modulosToolStripMenuItem.Font = new System.Drawing.Font("Rockwell", 10F);
@@ -291,13 +298,6 @@ namespace CapaVista
             this.modulosToolStripMenuItem.Size = new System.Drawing.Size(91, 24);
             this.modulosToolStripMenuItem.Text = "Modulos";
             this.modulosToolStripMenuItem.Click += new System.EventHandler(this.modulosToolStripMenuItem_Click);
-            // 
-            // asignacionPermisoPerfilesToolStripMenuItem
-            // 
-            this.asignacionPermisoPerfilesToolStripMenuItem.Name = "asignacionPermisoPerfilesToolStripMenuItem";
-            this.asignacionPermisoPerfilesToolStripMenuItem.Size = new System.Drawing.Size(372, 26);
-            this.asignacionPermisoPerfilesToolStripMenuItem.Text = "Asignacion Permiso Perfiles";
-            this.asignacionPermisoPerfilesToolStripMenuItem.Click += new System.EventHandler(this.asignacionPermisoPerfilesToolStripMenuItem_Click);
             // 
             // frmSeguridad
             // 
@@ -330,9 +330,9 @@ namespace CapaVista
         private System.Windows.Forms.ToolStripMenuItem catálogosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem procesosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reportesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem toolsMenu;
+        private System.Windows.Forms.ToolStripMenuItem herramientasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem helpMenu;
+        private System.Windows.Forms.ToolStripMenuItem ayudaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem contentsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem indexToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem searchToolStripMenuItem;
