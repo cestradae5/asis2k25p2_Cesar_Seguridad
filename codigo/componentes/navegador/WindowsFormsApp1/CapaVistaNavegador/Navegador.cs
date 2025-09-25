@@ -174,6 +174,7 @@ namespace Capa_Vista_Navegador
         }
         // ======================= Esta funcion es para seleccionar la fila del Dgv y Rellenar los Cbo =======================
 
+        // ======================= Eliminar / Delete = Fernando Miranda = 20/09/2025 =======================
         private void Btn_eliminar_Click(object sender, EventArgs e)
         {
             if (SAlias == null || SAlias.Length < 2)
@@ -312,6 +313,7 @@ namespace Capa_Vista_Navegador
 
         }
 
+        // ======================= Salir/Exit = Fernando Miranda = 20/09/2025 =======================
         private void Btn_salir_Click_1(object sender, EventArgs e)
         {
             Application.Exit();

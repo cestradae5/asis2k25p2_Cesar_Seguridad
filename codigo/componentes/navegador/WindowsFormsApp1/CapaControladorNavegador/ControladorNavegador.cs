@@ -198,6 +198,7 @@ namespace Capa_Controlador_Navegador
 
         //---------------------------------------------------------------------------------------------
 
+        // ====================== Eliminar / Delete = Fernando Miranda = 20/09/2025 =======================
         public void Eliminar_Datos(Control contenedor, string[] SAlias)
         {
             DAOGenerico dao = new DAOGenerico();
