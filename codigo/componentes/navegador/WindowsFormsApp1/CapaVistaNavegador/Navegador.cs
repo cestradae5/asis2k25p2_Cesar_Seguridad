@@ -26,12 +26,6 @@ namespace Capa_Vista_Navegador
 
         private void Btn_ingresar_Click(object sender, EventArgs e)
         {
-            /*ControladorNavegador ctrl = new ControladorNavegador(); //crea instancia controlador
-            ctrl.AsignarAlias(alias, this, 10, 100); //llama al metodo
-            // habilitar botones
-            habilitar_botones();*/
-
-
             if (SAlias == null || SAlias.Length < 2)
             {
                 MessageBox.Show("No se han definido los alias de la tabla.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -54,27 +48,11 @@ namespace Capa_Vista_Navegador
 
         ControladorNavegador ctrl = new ControladorNavegador();
 
-
         // parte del datagridview con la funcion del boton imprimir
 
         // Cambio para que ya no sea paginado Fernando Jose cahuex Gonzalez 0901-22-14979
         private DataGridView Dgv_Datos;
-        //private int registrosPorPagina = 9;
-        //private int paginaActual = 1;
-        //private int totalPaginas = 0;
         private DataTable dtCompleto;
-
-        //private void MostrarPagina(int pagina)
-        //{
-        //    DataTable dtPagina = dtCompleto.Clone();
-        //    int inicio = (pagina - 1) * registrosPorPagina;
-        //    int fin = Math.Min(inicio + registrosPorPagina, dtCompleto.Rows.Count);
-        //    for (int i = inicio; i < fin; i++)
-        //    {
-        //        dtPagina.ImportRow(dtCompleto.Rows[i]);
-        //    }
-        //    Dgv_Datos.DataSource = dtPagina;
-        //}
 
 
         public void mostrarDatos()
@@ -92,7 +70,7 @@ namespace Capa_Vista_Navegador
                 Dgv_Datos.ReadOnly = true; 
                 this.Controls.Add(Dgv_Datos);
 
-                // preguntar a Stevens
+                // ======================= Stevens Cambranes = 20/09/2025 =======================
                 ctrl.AsignarDataGridView(Dgv_Datos);
                 Dgv_Datos.SelectionChanged += Dgv_Datos_SelectionChanged;
             }
@@ -107,10 +85,6 @@ namespace Capa_Vista_Navegador
             dtCompleto = ctrl.LlenarTabla(SAlias[0], SAlias.Skip(1).ToArray());
             Dgv_Datos.DataSource = dtCompleto;
 
-            //totalPaginas = (int)Math.Ceiling(dtCompleto.Rows.Count / (double)registrosPorPagina);
-            //paginaActual = 1;
-            //MostrarPagina(paginaActual);
-
             // Enganchar el evento solo una vez
             Dgv_Datos.DataBindingComplete -= Dgv_Datos_DataBindingComplete;
             Dgv_Datos.DataBindingComplete += Dgv_Datos_DataBindingComplete;
@@ -123,12 +97,12 @@ namespace Capa_Vista_Navegador
             if (Dgv_Datos.Rows.Count > 0)
             {
                 Dgv_Datos.ClearSelection();
-                //Dgv_Datos.CurrentCell = null;
             }
         }
 
         public void BotonesEstadoCRUD()
         {
+            // ======================= Stevens Cambranes = 20/09/2025 =======================
             Btn_modificar.Enabled = true;
             Btn_guardar.Enabled = true;
             Btn_cancelar.Enabled = true;
@@ -144,6 +118,7 @@ namespace Capa_Vista_Navegador
 
         public void BotonesEstadoInicial()
         {
+            // ======================= Stevens Cambranes = 20/09/2025 =======================
             Btn_ingresar.Enabled = true;
             Btn_modificar.Enabled = false;
             Btn_guardar.Enabled = false;
@@ -176,7 +151,7 @@ namespace Capa_Vista_Navegador
             ctrl.RefrescarCombos(this, SAlias[0], SAlias.Skip(1).ToArray());
         }
 
-        // ======================= Modificar / Update = Stevens Cambranes =======================
+        // ======================= Modificar / Update = Stevens Cambranes = 20/09/2025 =======================
         private void Btn_modificar_Click(object sender, EventArgs e)
         {
             ctrl.Actualizar_Datos(this, SAlias);
@@ -185,7 +160,7 @@ namespace Capa_Vista_Navegador
             ctrl.RefrescarCombos(this, SAlias[0], SAlias.Skip(1).ToArray());
             ctrl.LimpiarCombos(this, SAlias);
         }
-        // ======================= Modificar / Update = Stevens Cambranes =======================
+        // ======================= Modificar / Update = Stevens Cambranes = 20/09/2025 =======================
 
         // ======================= Esta funcion es para seleccionar la fila del Dgv y Rellenar los Cbo =======================
         private void Dgv_Datos_SelectionChanged(object sender, EventArgs e)
@@ -223,6 +198,7 @@ namespace Capa_Vista_Navegador
 
                 ctrl.Eliminar_Datos(this, SAlias);
                 mostrarDatos();
+                // ======================= Stevens Cambranes = 20/09/2025 =======================
                 ctrl.RefrescarCombos(this, SAlias[0], SAlias.Skip(1).ToArray());
                 ctrl.LimpiarCombos(this, SAlias);
             }
@@ -363,7 +339,6 @@ namespace Capa_Vista_Navegador
                 // Mandarlo al controlador
                 ctrl.AsignarDataGridView(Dgv_Datos);
 
-                // ======================= Stevens Cambranes =======================
                 // Enganchar siempre el handler (si el grid se creó desde aquí)
                 Dgv_Datos.SelectionChanged -= Dgv_Datos_SelectionChanged;
                 Dgv_Datos.SelectionChanged += Dgv_Datos_SelectionChanged;
