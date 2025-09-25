@@ -53,7 +53,6 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <Reference Include="Capa_Controlador_Navegador, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\CapaVistaNavegador\bin\x86\Debug\Capa_Controlador_Navegador.dll</HintPath>
@@ -61,7 +60,6 @@
     <Reference Include="Capa_Vista_Navegador, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\CapaVistaNavegador\bin\x86\Debug\Capa_Vista_Navegador.dll</HintPath>
-=======
     <Reference Include="CapaVistaNavegador">
       <HintPath>..\..\CapaVistaNavegador\bin\Debug\CapaVistaNavegador.dll</HintPath>
     </Reference>
@@ -70,7 +68,6 @@
     </Reference>
     <Reference Include="Capa_Vista_Navegador">
       <HintPath>..\..\CapaVistaNavegador\bin\Debug\Capa_Vista_Navegador.dll</HintPath>
->>>>>>> 9df80c96e24ab2d736029046a57c566db1bba31c
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
