@@ -342,6 +342,7 @@ namespace Capa_Vista_Navegador
         }
 
         // Configuracion de data grid view
+        // ======================= Boton para posicionarse en el registro siguiente - Fredy Reyes 0901-22-9800 =======================
         public void configurarDataGridView(ConfiguracionDataGridView configuracion)
         {
             configuracionDataGridView = configuracion;
