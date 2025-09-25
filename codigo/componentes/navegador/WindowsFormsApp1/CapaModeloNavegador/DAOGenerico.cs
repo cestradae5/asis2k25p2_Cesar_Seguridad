@@ -11,13 +11,13 @@ using System.Data.Odbc;
 
 namespace Capa_Modelo_Navegador
 {
-    public class DAOGenerico
+    public class Cls_DAOGenerico
     {
         // guarda el resultado en un para no consultar INFORMATION_SCHEMA cada vez y mejorar rendimiento solo para traer si es auto_increment o no
         private Dictionary<string, bool> pkAutoCache = new Dictionary<string, bool>(); 
 
-        SentenciasMYSQL sentencias = new SentenciasMYSQL();
-        ConexionMYSQL con = new ConexionMYSQL();
+        Cls_SentenciasMYSQL sentencias = new Cls_SentenciasMYSQL();
+        Cls_ConexionMYSQL con = new Cls_ConexionMYSQL();
 
         //Conexion  de la base de datos aqui
         //Mapeado de base de datos, para conocer que tipo de dato es según el atributo (int, string, bool, datetime, decimal)

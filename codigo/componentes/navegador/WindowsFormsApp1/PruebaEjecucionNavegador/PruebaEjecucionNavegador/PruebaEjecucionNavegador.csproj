@@ -55,11 +55,11 @@
   <ItemGroup>
     <Reference Include="Capa_Controlador_Navegador, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\CapaControladorNavegador\bin\x86\Debug\Capa_Controlador_Navegador.dll</HintPath>
+      <HintPath>..\..\CapaVistaNavegador\bin\Debug\Capa_Controlador_Navegador.dll</HintPath>
     </Reference>
     <Reference Include="Capa_Vista_Navegador, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\CapaVistaNavegador\bin\x86\Debug\Capa_Vista_Navegador.dll</HintPath>
+      <HintPath>..\..\CapaVistaNavegador\bin\Debug\Capa_Vista_Navegador.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

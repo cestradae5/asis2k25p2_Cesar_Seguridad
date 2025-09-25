@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 // Trabajado por Fernando Jose Cahuex Gonzalez 0901-22-14979
 namespace Capa_Modelo_Navegador
 {
-    public class ConexionMYSQL
+    public class Cls_ConexionMYSQL
     {
         private readonly string ConexionODBC = "Dsn=Prueba1"; // DSN de odbc
 

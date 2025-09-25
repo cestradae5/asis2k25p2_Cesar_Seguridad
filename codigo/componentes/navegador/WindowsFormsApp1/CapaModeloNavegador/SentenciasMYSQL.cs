@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace Capa_Modelo_Navegador
 {
-    public class SentenciasMYSQL
+    public class Cls_SentenciasMYSQL
     {
         // llenado de tabla Hecho por Fernando Jose Cahuex Gonzalez 0901-22-14979
-        ConexionMYSQL con = new ConexionMYSQL();
+        Cls_ConexionMYSQL con = new Cls_ConexionMYSQL();
         public DataTable LlenarTabla(string tabla, string[] campos)
         {
             DataTable dt = new DataTable();
