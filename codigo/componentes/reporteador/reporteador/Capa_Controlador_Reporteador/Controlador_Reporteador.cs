@@ -81,6 +81,17 @@ namespace Capa_Controlador_Reporteador
             return iResultado;
         }
         //fin codigo Sergio
+
+
+        // ==========================
+        // Métodos de aplicación
+        // ==========================
+        // Inicio de código de: Paula Leonardo con carné: 0901-22-9580 en la fecha de: 24/09/2025
+        public string ConsultarReporteAplicacion(int idAplicacion)
+        {
+            return sentencias.consultaReporteAplicacion(idAplicacion);
+        }
+        // Fin de código de: Paula Leonardo con carné: 0901-22-9580 en la fecha de: 24/09/2025
     }
 }
 
