@@ -8,16 +8,16 @@ namespace CapaModelo
 {
     public class Cls_Empleado
     {
-        public int PkIdEmpleado { get; set; }
-        public string NombresEmpleado { get; set; }
-        public string ApellidosEmpleado { get; set; }
-        public long DpiEmpleado { get; set; }
-        public long NitEmpleado { get; set; }
-        public string CorreoEmpleado { get; set; }
-        public string TelefonoEmpleado { get; set; }
-        public bool GeneroEmpleado { get; set; }
-        public DateTime FechaNacimientoEmpleado { get; set; }
-        public DateTime FechaContratacionEmpleado { get; set; }
+        public int iPkIdEmpleado { get; set; }
+        public string sNombresEmpleado { get; set; }
+        public string sApellidosEmpleado { get; set; }
+        public long lDpiEmpleado { get; set; }
+        public long lNitEmpleado { get; set; }
+        public string sCorreoEmpleado { get; set; }
+        public string sTelefonoEmpleado { get; set; }
+        public bool bGeneroEmpleado { get; set; }
+        public DateTime dFechaNacimientoEmpleado { get; set; }
+        public DateTime dFechaContratacionEmpleado { get; set; }
 
         public Cls_Empleado() { }
 
@@ -34,16 +34,16 @@ namespace CapaModelo
             DateTime fechaContratacionEmpleado
         )
         {
-            PkIdEmpleado = pkIdEmpleado;
-            NombresEmpleado = nombresEmpleado;
-            ApellidosEmpleado = apellidosEmpleado;
-            DpiEmpleado = dpiEmpleado;
-            NitEmpleado = nitEmpleado;
-            CorreoEmpleado = correoEmpleado;
-            TelefonoEmpleado = telefonoEmpleado;
-            GeneroEmpleado = generoEmpleado;
-            FechaNacimientoEmpleado = fechaNacimientoEmpleado;
-            FechaContratacionEmpleado = fechaContratacionEmpleado;
+            iPkIdEmpleado = pkIdEmpleado;
+            sNombresEmpleado = nombresEmpleado;
+            sApellidosEmpleado = apellidosEmpleado;
+            lDpiEmpleado = dpiEmpleado;
+            lNitEmpleado = nitEmpleado;
+            sCorreoEmpleado = correoEmpleado;
+            sTelefonoEmpleado = telefonoEmpleado;
+            bGeneroEmpleado = generoEmpleado;
+            dFechaNacimientoEmpleado = fechaNacimientoEmpleado;
+            dFechaContratacionEmpleado = fechaContratacionEmpleado;
         }
     }
 }

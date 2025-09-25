@@ -63,16 +63,16 @@ namespace CapaModelo
                 {
                     Cls_Empleado emp = new Cls_Empleado
                     {
-                        PkIdEmpleado = reader.GetInt32(0),
-                        NombresEmpleado = reader.GetString(1),
-                        ApellidosEmpleado = reader.GetString(2),
-                        DpiEmpleado = reader.GetInt64(3),
-                        NitEmpleado = reader.GetInt64(4),
-                        CorreoEmpleado = reader.GetString(5),
-                        TelefonoEmpleado = reader.GetString(6),
-                        GeneroEmpleado = reader.GetBoolean(7),
-                        FechaNacimientoEmpleado = reader.GetDateTime(8),
-                        FechaContratacionEmpleado = reader.GetDateTime(9)
+                        iPkIdEmpleado = reader.GetInt32(0),
+                        sNombresEmpleado = reader.GetString(1),
+                        sApellidosEmpleado = reader.GetString(2),
+                        lDpiEmpleado = reader.GetInt64(3),
+                        lNitEmpleado = reader.GetInt64(4),
+                        sCorreoEmpleado = reader.GetString(5),
+                        sTelefonoEmpleado = reader.GetString(6),
+                        bGeneroEmpleado = reader.GetBoolean(7),
+                        dFechaNacimientoEmpleado = reader.GetDateTime(8),
+                        dFechaContratacionEmpleado = reader.GetDateTime(9)
                     };
                     lista.Add(emp);
                 }
@@ -83,22 +83,22 @@ namespace CapaModelo
         // --------------------------
         // Insertar un nuevo empleado
         // --------------------------
-        public int InsertarEmpleado(Cls_Empleado emp)
+        public int func_InsertarEmpleado(Cls_Empleado emp)
         {
             using (OdbcConnection conn = conexion.conexion())
             {
                 OdbcCommand cmd = new OdbcCommand(SQL_INSERT, conn);
 
-                cmd.Parameters.AddWithValue("@Pk_Id_Empleado", emp.PkIdEmpleado);
-                cmd.Parameters.AddWithValue("@Cmp_Nombres_Empleado", emp.NombresEmpleado);
-                cmd.Parameters.AddWithValue("@Cmp_Apellidos_Empleado", emp.ApellidosEmpleado);
-                cmd.Parameters.AddWithValue("@Cmp_Dpi_Empleado", emp.DpiEmpleado);
-                cmd.Parameters.AddWithValue("@Cmp_Nit_Empleado", emp.NitEmpleado);
-                cmd.Parameters.AddWithValue("@Cmp_Correo_Empleado", emp.CorreoEmpleado);
-                cmd.Parameters.AddWithValue("@Cmp_Telefono_Empleado", emp.TelefonoEmpleado);
-                cmd.Parameters.AddWithValue("@Cmp_Genero_Empleado", emp.GeneroEmpleado);
-                cmd.Parameters.AddWithValue("@Cmp_Fecha_Nacimiento_Empleado", emp.FechaNacimientoEmpleado);
-                cmd.Parameters.AddWithValue("@Cmp_Fecha_Contratacion__Empleado", emp.FechaContratacionEmpleado);
+                cmd.Parameters.AddWithValue("@Pk_Id_Empleado", emp.iPkIdEmpleado);
+                cmd.Parameters.AddWithValue("@Cmp_Nombres_Empleado", emp.sNombresEmpleado);
+                cmd.Parameters.AddWithValue("@Cmp_Apellidos_Empleado", emp.sApellidosEmpleado);
+                cmd.Parameters.AddWithValue("@Cmp_Dpi_Empleado", emp.lDpiEmpleado);
+                cmd.Parameters.AddWithValue("@Cmp_Nit_Empleado", emp.lNitEmpleado);
+                cmd.Parameters.AddWithValue("@Cmp_Correo_Empleado", emp.sCorreoEmpleado);
+                cmd.Parameters.AddWithValue("@Cmp_Telefono_Empleado", emp.sTelefonoEmpleado);
+                cmd.Parameters.AddWithValue("@Cmp_Genero_Empleado", emp.bGeneroEmpleado);
+                cmd.Parameters.AddWithValue("@Cmp_Fecha_Nacimiento_Empleado", emp.dFechaNacimientoEmpleado);
+                cmd.Parameters.AddWithValue("@Cmp_Fecha_Contratacion__Empleado", emp.dFechaContratacionEmpleado);
 
                 return cmd.ExecuteNonQuery();
             }
@@ -107,22 +107,22 @@ namespace CapaModelo
         // --------------------------
         // Actualizar empleado existente
         // --------------------------
-        public int ActualizarEmpleado(Cls_Empleado emp)
+        public int func_ActualizarEmpleado(Cls_Empleado emp)
         {
             using (OdbcConnection conn = conexion.conexion())
             {
                 OdbcCommand cmd = new OdbcCommand(SQL_UPDATE, conn);
 
-                cmd.Parameters.AddWithValue("@Cmp_Nombres_Empleado", emp.NombresEmpleado);
-                cmd.Parameters.AddWithValue("@Cmp_Apellidos_Empleado", emp.ApellidosEmpleado);
-                cmd.Parameters.AddWithValue("@Cmp_Dpi_Empleado", emp.DpiEmpleado);
-                cmd.Parameters.AddWithValue("@Cmp_Nit_Empleado", emp.NitEmpleado);
-                cmd.Parameters.AddWithValue("@Cmp_Correo_Empleado", emp.CorreoEmpleado);
-                cmd.Parameters.AddWithValue("@Cmp_Telefono_Empleado", emp.TelefonoEmpleado);
-                cmd.Parameters.AddWithValue("@Cmp_Genero_Empleado", emp.GeneroEmpleado);
-                cmd.Parameters.AddWithValue("@Cmp_Fecha_Nacimiento_Empleado", emp.FechaNacimientoEmpleado);
-                cmd.Parameters.AddWithValue("@Cmp_Fecha_Contratacion__Empleado", emp.FechaContratacionEmpleado);
-                cmd.Parameters.AddWithValue("@Pk_Id_Empleado", emp.PkIdEmpleado);
+                cmd.Parameters.AddWithValue("@Cmp_Nombres_Empleado", emp.sNombresEmpleado);
+                cmd.Parameters.AddWithValue("@Cmp_Apellidos_Empleado", emp.sApellidosEmpleado);
+                cmd.Parameters.AddWithValue("@Cmp_Dpi_Empleado", emp.lDpiEmpleado);
+                cmd.Parameters.AddWithValue("@Cmp_Nit_Empleado", emp.lNitEmpleado);
+                cmd.Parameters.AddWithValue("@Cmp_Correo_Empleado", emp.sCorreoEmpleado);
+                cmd.Parameters.AddWithValue("@Cmp_Telefono_Empleado", emp.sTelefonoEmpleado);
+                cmd.Parameters.AddWithValue("@Cmp_Genero_Empleado", emp.bGeneroEmpleado);
+                cmd.Parameters.AddWithValue("@Cmp_Fecha_Nacimiento_Empleado", emp.dFechaNacimientoEmpleado);
+                cmd.Parameters.AddWithValue("@Cmp_Fecha_Contratacion__Empleado", emp.dFechaContratacionEmpleado);
+                cmd.Parameters.AddWithValue("@Pk_Id_Empleado", emp.iPkIdEmpleado);
 
                 return cmd.ExecuteNonQuery();
             }
@@ -131,7 +131,7 @@ namespace CapaModelo
         // --------------------------
         // Borrar un empleado por ID
         // --------------------------
-        public int BorrarEmpleado(int idEmpleado)
+        public int func_BorrarEmpleado(int idEmpleado)
         {
             using (OdbcConnection conn = conexion.conexion())
             {
@@ -157,16 +157,16 @@ namespace CapaModelo
                 {
                     emp = new Cls_Empleado
                     {
-                        PkIdEmpleado = reader.GetInt32(0),
-                        NombresEmpleado = reader.GetString(1),
-                        ApellidosEmpleado = reader.GetString(2),
-                        DpiEmpleado = reader.GetInt64(3),
-                        NitEmpleado = reader.GetInt64(4),
-                        CorreoEmpleado = reader.GetString(5),
-                        TelefonoEmpleado = reader.GetString(6),
-                        GeneroEmpleado = reader.GetBoolean(7),
-                        FechaNacimientoEmpleado = reader.GetDateTime(8),
-                        FechaContratacionEmpleado = reader.GetDateTime(9)
+                        iPkIdEmpleado = reader.GetInt32(0),
+                        sNombresEmpleado = reader.GetString(1),
+                        sApellidosEmpleado = reader.GetString(2),
+                        lDpiEmpleado = reader.GetInt64(3),
+                        lNitEmpleado = reader.GetInt64(4),
+                        sCorreoEmpleado = reader.GetString(5),
+                        sTelefonoEmpleado = reader.GetString(6),
+                        bGeneroEmpleado = reader.GetBoolean(7),
+                        dFechaNacimientoEmpleado = reader.GetDateTime(8),
+                        dFechaContratacionEmpleado = reader.GetDateTime(9)
                     };
                 }
             }

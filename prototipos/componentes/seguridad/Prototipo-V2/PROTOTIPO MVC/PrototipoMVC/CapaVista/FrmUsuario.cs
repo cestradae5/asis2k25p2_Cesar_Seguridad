@@ -55,8 +55,8 @@ namespace CapaVista
             {
                 Cbo_Empleado.Items.Add(new
                 {
-                    Display = $"{emp.PkIdEmpleado} - {emp.NombresEmpleado} {emp.ApellidosEmpleado}",
-                    Id = emp.PkIdEmpleado
+                    Display = $"{emp.iPkIdEmpleado} - {emp.sNombresEmpleado} {emp.sApellidosEmpleado}",
+                    Id = emp.iPkIdEmpleado
                 });
             }
         }
