@@ -59,10 +59,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConexionMYSQL.cs" />
-    <Compile Include="DAOGenerico.cs" />
+    <Compile Include="Cls_ConexionMYSQL.cs" />
+    <Compile Include="Cls_DAOGenerico.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SentenciasMYSQL.cs" />
+    <Compile Include="Cls_SentenciasMYSQL.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

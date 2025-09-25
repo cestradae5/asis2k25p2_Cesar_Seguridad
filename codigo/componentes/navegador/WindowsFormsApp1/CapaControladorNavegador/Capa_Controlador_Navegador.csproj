@@ -64,8 +64,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConfiguracionDataGridView.cs" />
-    <Compile Include="ControladorNavegador.cs" />
+    <Compile Include="Cls_ConfiguracionDataGridView.cs" />
+    <Compile Include="Cls_ControladorNavegador.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
