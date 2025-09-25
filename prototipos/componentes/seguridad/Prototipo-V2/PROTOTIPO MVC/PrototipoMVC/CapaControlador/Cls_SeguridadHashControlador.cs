@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CapaControlador
 {
-    public static class SeguridadHash
+    public static class Cls_SeguridadHashControlador
     {
         
         public static string HashearSHA256(string texto)

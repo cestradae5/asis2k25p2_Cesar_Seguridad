@@ -353,7 +353,7 @@ namespace CapaVista
 
         private void CargarComboModulos()
         {
-            ControladorModulos controladorModulos = new ControladorModulos();
+            Cls_ModulosControlador controladorModulos = new Cls_ModulosControlador();
 
             DataTable dtModulos = controladorModulos.ObtenerModulos(); // Devuelve pk_id_modulo y nombre_modulo
 

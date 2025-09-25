@@ -34,7 +34,7 @@ namespace CapaControlador
                 }
 
              
-                string hashIngresado = SeguridadHash.HashearSHA256(contrasena);
+                string hashIngresado = Cls_SeguridadHashControlador.HashearSHA256(contrasena);
 
                 if (contrasenaBD == hashIngresado)
                 {

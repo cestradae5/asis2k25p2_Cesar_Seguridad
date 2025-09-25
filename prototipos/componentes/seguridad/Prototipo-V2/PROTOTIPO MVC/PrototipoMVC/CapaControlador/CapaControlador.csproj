@@ -58,10 +58,10 @@
     <Compile Include="ControladorAsignacionUsuarioAplicacion.cs" />
     <Compile Include="ControladorLogin.cs" />
     <Compile Include="Cls_EmpleadosControlador.cs" />
-    <Compile Include="ControladorModulos.cs" />
+    <Compile Include="Cls_ModulosControlador.cs" />
     <Compile Include="Cls_controladorRecuperarContrasena.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SeguridadHash.cs" />
+    <Compile Include="Cls_SeguridadHashControlador.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

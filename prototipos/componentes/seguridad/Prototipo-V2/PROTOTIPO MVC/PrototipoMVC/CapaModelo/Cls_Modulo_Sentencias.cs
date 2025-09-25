@@ -5,7 +5,7 @@ using System.Data.Odbc;
 
 namespace CapaModelo
 {
-    public class SentenciasModulos
+    public class Cls_Modulo_Sentencias
     {
         Conexion conexion = new Conexion();
 
