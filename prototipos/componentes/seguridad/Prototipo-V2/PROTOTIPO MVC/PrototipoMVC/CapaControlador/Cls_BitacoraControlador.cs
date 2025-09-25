@@ -14,26 +14,35 @@ namespace CapaControlador
         private readonly Cls_SentenciasBitacora ctrlSentencias = new Cls_SentenciasBitacora();
 
         // Consultas
+
+        //Mostar tabla
         public DataTable MostrarBitacora() => ctrlSentencias.Listar();
+        //Busca por fecha
         public DataTable BuscarPorFecha(DateTime fecha) => ctrlSentencias.ConsultarPorFecha(fecha);
+        //Busca por rango de fechas
         public DataTable BuscarPorRango(DateTime inicio, DateTime fin) => ctrlSentencias.ConsultarPorRango(inicio, fin);
-        public DataTable BuscarPorUsuario(int idUsuario) => ctrlSentencias.ConsultarPorUsuario(idUsuario);
+        //Busca por usuario
+        public DataTable BuscarPorUsuario(int iIdUsuario) => ctrlSentencias.ConsultarPorUsuario(iIdUsuario);
 
-        // Registrar acciones
-        public void RegistrarAccion(int idUsuario, int idAplicacion, string accion, bool estado)
+        //Registrar acciones
+        public void RegistrarAccion(int iIdUsuario, int iIdAplicacion, string sAccion, bool bEstado)
         {
-            ctrlSentencias.InsertarBitacora(idUsuario, idAplicacion, accion, estado);
+            ctrlSentencias.InsertarBitacora(iIdUsuario, iIdAplicacion, sAccion, bEstado);
         }
 
-        public void RegistrarInicioSesion(int idUsuario)
+        //Registrar Inicio de sesión
+        public void RegistrarInicioSesion(int iIdUsuario)
         {
-            ctrlSentencias.RegistrarInicioSesion(idUsuario, 0);
+            ctrlSentencias.RegistrarInicioSesion(iIdUsuario, 0);
         }
 
-        public void RegistrarCierreSesion(int idUsuario)
+        //Registrar cierre de sesión
+        public void RegistrarCierreSesion(int iIdUsuario)
         {
-            ctrlSentencias.RegistrarCierreSesion(idUsuario, 0);
+            ctrlSentencias.RegistrarCierreSesion(iIdUsuario, 0);
         }
+
+
 
         // Exportar a CSV
         public void ExportarCsv(string path)
@@ -93,6 +102,7 @@ namespace CapaControlador
             return doc;
         }
 
+        //Alistar el documento
         private void OnPrintPage(object sender, PrintPageEventArgs e)
         {
             if (dtImpresion == null) return;

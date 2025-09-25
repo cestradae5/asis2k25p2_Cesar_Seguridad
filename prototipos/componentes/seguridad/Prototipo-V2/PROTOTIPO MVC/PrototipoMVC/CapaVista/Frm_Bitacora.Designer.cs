@@ -39,8 +39,8 @@ namespace CapaVista
             this.Lbl_Usuario = new System.Windows.Forms.Label();
             this.Cbo_Usuario = new System.Windows.Forms.ComboBox();
             this.Pnl_Superior = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
             this.Pic_Cerrar = new System.Windows.Forms.PictureBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.Btn_Imprimir = new System.Windows.Forms.Button();
             this.Btn_Salir = new System.Windows.Forms.Button();
             this.Btn_BuscarUsuario = new System.Windows.Forms.Button();
@@ -166,6 +166,19 @@ namespace CapaVista
             this.Pnl_Superior.TabIndex = 95;
             this.Pnl_Superior.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Pnl_Superior_MouseDown);
             // 
+            // Pic_Cerrar
+            // 
+            this.Pic_Cerrar.BackColor = System.Drawing.Color.Transparent;
+            this.Pic_Cerrar.Dock = System.Windows.Forms.DockStyle.Right;
+            this.Pic_Cerrar.Image = global::CapaVista.Properties.Resources.Cancel_icon_icons_com_73703;
+            this.Pic_Cerrar.Location = new System.Drawing.Point(1293, 0);
+            this.Pic_Cerrar.Name = "Pic_Cerrar";
+            this.Pic_Cerrar.Size = new System.Drawing.Size(37, 44);
+            this.Pic_Cerrar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.Pic_Cerrar.TabIndex = 0;
+            this.Pic_Cerrar.TabStop = false;
+            this.Pic_Cerrar.Click += new System.EventHandler(this.Pic_Cerrar_Click);
+            // 
             // button1
             // 
             this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
@@ -181,19 +194,6 @@ namespace CapaVista
             this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // Pic_Cerrar
-            // 
-            this.Pic_Cerrar.BackColor = System.Drawing.Color.Transparent;
-            this.Pic_Cerrar.Dock = System.Windows.Forms.DockStyle.Right;
-            this.Pic_Cerrar.Image = global::CapaVista.Properties.Resources.Cancel_icon_icons_com_73703;
-            this.Pic_Cerrar.Location = new System.Drawing.Point(1293, 0);
-            this.Pic_Cerrar.Name = "Pic_Cerrar";
-            this.Pic_Cerrar.Size = new System.Drawing.Size(37, 44);
-            this.Pic_Cerrar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.Pic_Cerrar.TabIndex = 0;
-            this.Pic_Cerrar.TabStop = false;
-            this.Pic_Cerrar.Click += new System.EventHandler(this.Pic_Cerrar_Click);
             // 
             // Btn_Imprimir
             // 
@@ -238,7 +238,7 @@ namespace CapaVista
             this.Btn_BuscarUsuario.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Btn_BuscarUsuario.Location = new System.Drawing.Point(679, 51);
             this.Btn_BuscarUsuario.Name = "Btn_BuscarUsuario";
-            this.Btn_BuscarUsuario.Size = new System.Drawing.Size(185, 63);
+            this.Btn_BuscarUsuario.Size = new System.Drawing.Size(241, 63);
             this.Btn_BuscarUsuario.TabIndex = 5;
             this.Btn_BuscarUsuario.Text = "  Buscar por usuario";
             this.Btn_BuscarUsuario.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -254,9 +254,9 @@ namespace CapaVista
             this.Btn_BuscarRango.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Btn_BuscarRango.Location = new System.Drawing.Point(996, 51);
             this.Btn_BuscarRango.Name = "Btn_BuscarRango";
-            this.Btn_BuscarRango.Size = new System.Drawing.Size(239, 62);
+            this.Btn_BuscarRango.Size = new System.Drawing.Size(299, 62);
             this.Btn_BuscarRango.TabIndex = 8;
-            this.Btn_BuscarRango.Text = " Buscar por rango de fehcas";
+            this.Btn_BuscarRango.Text = " Buscar por rango de fechas";
             this.Btn_BuscarRango.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Btn_BuscarRango.UseVisualStyleBackColor = false;
             this.Btn_BuscarRango.Click += new System.EventHandler(this.Btn_BuscarRango_Click);
@@ -284,9 +284,9 @@ namespace CapaVista
             this.Btn_Exportar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
             this.Btn_Exportar.Image = global::CapaVista.Properties.Resources.exportar;
             this.Btn_Exportar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Btn_Exportar.Location = new System.Drawing.Point(223, 49);
+            this.Btn_Exportar.Location = new System.Drawing.Point(235, 51);
             this.Btn_Exportar.Name = "Btn_Exportar";
-            this.Btn_Exportar.Size = new System.Drawing.Size(132, 64);
+            this.Btn_Exportar.Size = new System.Drawing.Size(153, 64);
             this.Btn_Exportar.TabIndex = 1;
             this.Btn_Exportar.Text = "  Exportar";
             this.Btn_Exportar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -300,11 +300,11 @@ namespace CapaVista
             this.Btn_Consultar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
             this.Btn_Consultar.Image = global::CapaVista.Properties.Resources.android_search_icon_icons_com_50501;
             this.Btn_Consultar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Btn_Consultar.Location = new System.Drawing.Point(44, 49);
+            this.Btn_Consultar.Location = new System.Drawing.Point(12, 51);
             this.Btn_Consultar.Name = "Btn_Consultar";
-            this.Btn_Consultar.Size = new System.Drawing.Size(122, 64);
+            this.Btn_Consultar.Size = new System.Drawing.Size(205, 64);
             this.Btn_Consultar.TabIndex = 0;
-            this.Btn_Consultar.Text = "Consultar";
+            this.Btn_Consultar.Text = "Ver toda la Bitacora";
             this.Btn_Consultar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Btn_Consultar.UseVisualStyleBackColor = false;
             this.Btn_Consultar.Click += new System.EventHandler(this.Btn_Consultar_Click);

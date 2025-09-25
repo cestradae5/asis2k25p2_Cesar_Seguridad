@@ -9,6 +9,7 @@ namespace CapaModelo
     {
         private readonly Cls_BitacoraDao ctrlBitacoraDao = new Cls_BitacoraDao();
 
+        //Obtener ip
         private string ObtenerIp()
         {
             foreach (var ip in Dns.GetHostEntry(Dns.GetHostName()).AddressList)
@@ -21,16 +22,19 @@ namespace CapaModelo
             return "127.0.0.1";
         }
 
+        //Obtener nombre
         private string ObtenerNombrePc()
         {
             return Environment.MachineName;
         }
 
+        //Fecha actual
         private string FechaActual()
         {
             return DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         }
 
+        //Mostrar la tabla
         public DataTable Listar()
         {
             string sSql = @"
@@ -53,6 +57,7 @@ namespace CapaModelo
             return ctrlBitacoraDao.EjecutarConsulta(sSql);
         }
 
+        //Consulta por fecha
         public DataTable ConsultarPorFecha(DateTime fecha)
         {
             string sSql = $@"
@@ -73,6 +78,7 @@ namespace CapaModelo
             return ctrlBitacoraDao.EjecutarConsulta(sSql);
         }
 
+        //Consulta por rango de fechas
         public DataTable ConsultarPorRango(DateTime inicio, DateTime fin)
         {
             DateTime finExclusivo = fin.Date.AddDays(1);
@@ -96,7 +102,8 @@ namespace CapaModelo
             return ctrlBitacoraDao.EjecutarConsulta(sSql);
         }
 
-        public DataTable ConsultarPorUsuario(int idUsuario)
+        //Consulta por usuario
+        public DataTable ConsultarPorUsuario(int iIdUsuario)
         {
             string sSql = $@"
                 SELECT  b.Pk_Id_Bitacora AS id,
@@ -110,12 +117,13 @@ namespace CapaModelo
                 FROM Tbl_Bitacora b
                 LEFT JOIN Tbl_Usuario u ON u.Pk_Id_Usuario = b.Fk_Id_Usuario
                 LEFT JOIN Tbl_Aplicacion a ON a.Pk_Id_Aplicacion = b.Fk_Id_Aplicacion
-                WHERE b.Fk_Id_Usuario = {idUsuario}
+                WHERE b.Fk_Id_Usuario = {iIdUsuario}
                 ORDER BY b.Cmp_Fecha DESC;";
 
             return ctrlBitacoraDao.EjecutarConsulta(sSql);
         }
 
+        //Desplegar los usuarios
         public DataTable ObtenerUsuarios()
         {
             string sSql = @"
@@ -126,28 +134,32 @@ namespace CapaModelo
             return ctrlBitacoraDao.EjecutarConsulta(sSql);
         }
 
-        public void InsertarBitacora(int idUsuario, int idAplicacion, string accion, bool estadoLogin)
+        //Insert de acciones
+        public void InsertarBitacora(int iIdUsuario, int iIdAplicacion, string sAccion, bool bEstadoLogin)
         {
-            string idApp = (idAplicacion == 0) ? "NULL" : idAplicacion.ToString();
+            string sIdApp = (iIdAplicacion == 0) ? "NULL" : iIdAplicacion.ToString();
 
             string sSql = $@"
                 INSERT INTO Tbl_Bitacora
                 (Fk_Id_Usuario, Fk_Id_Aplicacion, Cmp_Fecha, Cmp_Accion, Cmp_Ip, Cmp_Nombre_Pc, Cmp_Login_Estado)
-                VALUES ({idUsuario}, {idApp}, '{FechaActual()}', '{accion}', '{ObtenerIp()}', '{ObtenerNombrePc()}', {(estadoLogin ? 1 : 0)});";
+                VALUES ({iIdUsuario}, {sIdApp}, '{FechaActual()}', '{sAccion}', '{ObtenerIp()}', '{ObtenerNombrePc()}', {(bEstadoLogin ? 1 : 0)});";
 
             ctrlBitacoraDao.EjecutarComando(sSql);
         }
 
-        public void RegistrarInicioSesion(int idUsuario, int idAplicacion = 0)
+        //Insert de inicio
+        public void RegistrarInicioSesion(int iIdUsuario, int iIdAplicacion = 0)
         {
-            Cls_UsuarioConectado.IniciarSesion(idUsuario, "Cmp_Nombre_Usuario");
-            InsertarBitacora(idUsuario, idAplicacion, "Ingreso", Cls_UsuarioConectado.bLoginEstado);
+            Cls_UsuarioConectado.IniciarSesion(iIdUsuario, "Cmp_Nombre_Usuario");
+            InsertarBitacora(iIdUsuario, iIdAplicacion, "Ingreso", Cls_UsuarioConectado.bLoginEstado);
         }
 
-        public void RegistrarCierreSesion(int idUsuario, int idAplicacion = 0)
+        //Insert de cierre
+        public void RegistrarCierreSesion(int iIdUsuario, int iIdAplicacion = 0)
         {
-            InsertarBitacora(idUsuario, idAplicacion, "Cierre de sesión", false);
+            InsertarBitacora(iIdUsuario, iIdAplicacion, "Cierre de sesión", false);
             Cls_UsuarioConectado.CerrarSesion();
         }
+
     }
 }

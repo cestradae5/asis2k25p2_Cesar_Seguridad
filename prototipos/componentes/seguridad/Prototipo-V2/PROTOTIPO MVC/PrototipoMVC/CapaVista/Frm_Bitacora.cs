@@ -29,8 +29,10 @@ namespace CapaVista
             CargarUsuariosEnCombo(); // carga usuarios al abrir
             OcultarFiltros();        // opcional
             ConfigurarIdsDinamicamenteYAplicarPermisos();
+            CargarEnGrid(ctrlBitacora.MostrarBitacora()); //Mostrar toda la bitacora al inicio
         }
 
+        //Mostrar en pantalla
         private void CargarEnGrid(DataTable dt)
         {
             Dgv_Bitacora.DataSource = dt;
@@ -39,6 +41,7 @@ namespace CapaVista
             Dgv_Bitacora.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
         }
 
+        //Desplegar usuarios
         private void CargarUsuariosEnCombo()
         {
             try
@@ -55,6 +58,7 @@ namespace CapaVista
             }
         }
 
+        //No mostrar las barras hasta precionar los botones
         private void OcultarFiltros()
         {
             Lbl_PrimeraFecha.Visible = false;
@@ -88,6 +92,7 @@ namespace CapaVista
         private void Btn_Consultar_Click(object sender, EventArgs e) =>
             CargarEnGrid(ctrlBitacora.MostrarBitacora());
 
+        //Exportar
         private void Btn_Exportar_Click(object sender, EventArgs e)
         {
             try
@@ -117,6 +122,7 @@ namespace CapaVista
             }
         }
 
+        //Imprimir
         private void Btn_Imprimir_Click(object sender, EventArgs e)
         {
             try
@@ -134,6 +140,7 @@ namespace CapaVista
             }
         }
 
+        //Salir
         private void Btn_Salir_Click(object sender, EventArgs e) => this.Close();
 
         // Filtros
@@ -150,6 +157,7 @@ namespace CapaVista
             CargarEnGrid(ctrlBitacora.BuscarPorRango(Dtp_PrimeraFecha.Value, Dtp_SegundaFecha.Value));
         }
 
+        //Muestra la barra de fecha
         private void Btn_BuscarFecha_Click(object sender, EventArgs e)
         {
             OcultarFiltros();
@@ -161,6 +169,7 @@ namespace CapaVista
             CargarEnGrid(ctrlBitacora.BuscarPorFecha(Dtp_FechaEspecifica.Value));
         }
 
+        //Botos para buscar usuari0
         private void Btn_BuscarUsuario_Click(object sender, EventArgs e)
         {
             OcultarFiltros();
@@ -176,6 +185,7 @@ namespace CapaVista
             }
         }
 
+        //Buscar por fecha especifica
         private void Dtp_FechaEspecifica_ValueChanged(object sender, EventArgs e)
         {
             if (Dtp_FechaEspecifica.Visible)
@@ -194,6 +204,7 @@ namespace CapaVista
                 CargarEnGrid(ctrlBitacora.BuscarPorRango(Dtp_PrimeraFecha.Value, Dtp_SegundaFecha.Value));
         }
 
+        //Filtrar por usuario seleccionado
         private void Cbo_Usuario_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (!Cbo_Usuario.Visible || Cbo_Usuario.SelectedValue == null) return;
