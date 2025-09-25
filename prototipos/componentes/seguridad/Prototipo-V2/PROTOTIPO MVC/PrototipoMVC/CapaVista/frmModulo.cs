@@ -17,7 +17,6 @@ namespace CapaVista
     {
         Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador(); //Bitacora
 
-
         // permisos 0901-21-1115 Marcos Andres Velásquez Alcántara
         private Cls_PermisoUsuario permisoUsuario = new Cls_PermisoUsuario();
 
@@ -70,14 +69,11 @@ namespace CapaVista
             string nombre = Txt_nombre.Text;
             string descripcion = Txt_descripcion.Text;
 
-
             // Validar los RadioButtons -> ahora solo 1 columna estado_modulo
             byte estado = (Rdb_habilitado.Checked) ? (byte)1 : (byte)0;
 
-
             DataRow dr = cm.BuscarModulo(id);
             bool resultado = false;
-
 
             if (dr == null)
             {
@@ -95,9 +91,11 @@ namespace CapaVista
                 MessageBox.Show("Guardado correctamente!");
                 CargarComboBox();
 
-                //Registrar en Bitácora - Arón Ricardo Esquit Silva - 0901-22-13036
+                // Registrar en Bitácora - Arón Ricardo Esquit Silva - 0901-22-13036
                 ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, 1, "Guardar módulo", true);
 
+                // ✅ Limpiar campos después de guardar
+                LimpiarCampos();
             }
             else
             {
@@ -129,7 +127,7 @@ namespace CapaVista
                 return;
             }
 
-            // ✅ Nuevo: Verificar si el módulo está en uso
+            // Verificar si el módulo está en uso
             if (cm.ModuloEnUso(id))
             {
                 MessageBox.Show("No se puede eliminar el módulo porque está siendo utilizado en una aplicación.");
@@ -145,6 +143,8 @@ namespace CapaVista
                 // Registrar en Bitácora - Arón Ricardo Esquit Silva 0901-22-13036
                 ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, 1, "Eliminar módulo", true);
 
+                // ✅ Limpiar campos después de eliminar
+                LimpiarCampos();
             }
             else
             {
@@ -166,22 +166,33 @@ namespace CapaVista
             DataRow dr = cm.BuscarModulo(id);
             if (dr != null)
             {
-                Txt_id.Text = dr["pk_id_modulo"].ToString();
-                Txt_nombre.Text = dr["nombre_modulo"].ToString();
-                Txt_descripcion.Text = dr["descripcion_modulo"].ToString();
+                // Cambiar los nombres de columna para que coincidan con tu SELECT
+                Txt_id.Text = dr["Pk_Id_Modulo"].ToString();
+                Txt_nombre.Text = dr["Cmp_Nombre_Modulo"].ToString();
+                Txt_descripcion.Text = dr["Cmp_Descripcion_Modulo"].ToString();
 
-                bool estado = Convert.ToBoolean(dr["estado_modulo"]);
+                bool estado = Convert.ToBoolean(dr["Cmp_Estado_Modulo"]);
                 Rdb_habilitado.Checked = estado;
                 Rdb_inabilitado.Checked = !estado;
 
-                // ✅ Nuevo: limpiar el ComboBox después de buscar
+                // Limpiar el ComboBox después de buscar
                 Cbo_busqueda.SelectedIndex = -1;
-
             }
             else
             {
                 MessageBox.Show("Módulo no encontrado.");
             }
+        }
+
+        // ✅ Función para limpiar TextBox, RadioButtons y ComboBox
+        private void LimpiarCampos()
+        {
+            Txt_id.Clear();
+            Txt_nombre.Clear();
+            Txt_descripcion.Clear();
+            Rdb_habilitado.Checked = false;
+            Rdb_inabilitado.Checked = false;
+            Cbo_busqueda.SelectedIndex = -1;
         }
 
         // Panel superior
@@ -216,17 +227,12 @@ namespace CapaVista
             frm.Show();
         }
 
-
-
-        //0901-21-1115 Marcos Andres Velasquez Alcánatara -- permisos script
-        //0901-22-9663 Brandon Alexander Hernandez Salguero --  asignacion Modulos y aplicaciones
-
+        //0901-21-1115 Marcos Andres Velasquez Alcánatara
 
         private void ConfigurarIdsDinamicamenteYAplicarPermisos()
         {
-          
             string nombreModulo = "RHM";
-            string nombreAplicacion = "Modulos";
+            string nombreAplicacion = "Empleados";
             aplicacionId = permisoUsuario.ObtenerIdAplicacionPorNombre(nombreAplicacion);
             moduloId = permisoUsuario.ObtenerIdModuloPorNombre(nombreModulo);
             AplicarPermisosUsuario();
@@ -256,26 +262,16 @@ namespace CapaVista
                 Btn_guardar.Enabled = false;
                 Btn_eliminar.Enabled = false;
                 Btn_nuevo.Enabled = false;
-
                 return;
             }
 
             var p = permisosActuales.Value;
-
 
             Btn_buscar.Enabled = p.consultar;
             Btn_reporte.Enabled = p.consultar;
             Btn_guardar.Enabled = p.ingresar;
             Btn_eliminar.Enabled = p.eliminar;
             Btn_nuevo.Enabled = p.ingresar;
-
-
-
-
         }
-
-
-
     }
-
 }
