@@ -11,7 +11,7 @@ namespace Capa_Controlador_Navegador
 {
 
     // ======================= Clase para personalizar el data grid view como el desarrollador desee - Fredy Reyes 0901-22-9800 =======================
-    public class ConfiguracionDataGridView
+    public class Cls_ConfiguracionDataGridView
     {
         // Configuración básica
         public string Nombre { get; set; }
@@ -32,7 +32,7 @@ namespace Capa_Controlador_Navegador
         // ScrollBars
         public ScrollBars TipoScrollBars { get; set; }
 
-        public ConfiguracionDataGridView()
+        public Cls_ConfiguracionDataGridView()
         {
             // Valores por defecto
             Nombre = "Dgv_Datos";

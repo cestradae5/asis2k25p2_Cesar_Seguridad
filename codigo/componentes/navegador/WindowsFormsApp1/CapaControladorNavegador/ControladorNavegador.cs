@@ -11,10 +11,10 @@ using Capa_Modelo_Navegador;
 
 namespace Capa_Controlador_Navegador
 {
-    public class ControladorNavegador
+    public class Cls_ControladorNavegador
     {
-        SentenciasMYSQL sentencias = new SentenciasMYSQL();
-        private DAOGenerico dao = new DAOGenerico();
+        Cls_SentenciasMYSQL sentencias = new Cls_SentenciasMYSQL();
+        private Cls_DAOGenerico dao = new Cls_DAOGenerico();
 
         // ---------------------VALIDANDO ALIAS-----------------------------------------
         //===================== Nuevo Método Validar Columnas - 23/09/2025 =============================
@@ -159,7 +159,7 @@ namespace Capa_Controlador_Navegador
         {
             string[] SValores = new string[SAlias.Length - 1]; // crea el arreglo con tamaño necesario para evitar errores
 
-            DAOGenerico dao = new DAOGenerico();
+            Cls_DAOGenerico dao = new Cls_DAOGenerico();
             try
             {
                 for (int i = 1; i < SAlias.Length; i++)
@@ -201,7 +201,7 @@ namespace Capa_Controlador_Navegador
         // ====================== Eliminar / Delete = Fernando Miranda = 20/09/2025 =======================
         public void Eliminar_Datos(Control contenedor, string[] SAlias)
         {
-            DAOGenerico dao = new DAOGenerico();
+            Cls_DAOGenerico dao = new Cls_DAOGenerico();
 
             try
             {
@@ -260,7 +260,7 @@ namespace Capa_Controlador_Navegador
 
             try
             {
-                DAOGenerico dao = new DAOGenerico();
+                Cls_DAOGenerico dao = new Cls_DAOGenerico();
                 dao.ActualizarDatos(SAlias, SValores, pkValor);
                 MessageBox.Show("Registro actualizado correctamente.");
             }
