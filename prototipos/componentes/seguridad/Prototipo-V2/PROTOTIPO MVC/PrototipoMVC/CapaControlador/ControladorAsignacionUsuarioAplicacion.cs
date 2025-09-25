@@ -46,10 +46,12 @@ namespace CapaControlador
 
         //Ruben Armando Lopez lUch
         //0901-20-4620
-        public DataTable ObtenerPermisosPorUsuarioModulo(int idUsuario, int idModulo)
+        public DataTable fun_obtener_permisos_por_usuario_modulo(int iIdUsuario, int iModulo)
         {
-            return model.ObtenerPermisosPorUsuarioModulo(idUsuario, idModulo);
+            return model.fun_bbtener_permisos_por_usuario_modulo(iIdUsuario, iModulo);
         }
+
+        // fin -> Ruben Armando Lopez lUch
     }
 }
 
