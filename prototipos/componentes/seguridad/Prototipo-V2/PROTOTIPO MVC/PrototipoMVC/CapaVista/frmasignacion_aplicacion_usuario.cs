@@ -45,9 +45,32 @@ namespace CapaVista
             Cbo_Modulos.ValueMember = "pk_id_modulo";
             Cbo_Modulos.SelectedIndex = -1;
 
+            CargarUsuarios();
+            CargarModulos();
+
             InicializarDataGridView();
 
             ConfigurarIdsDinamicamenteYAplicarPermisos();
+        }
+
+        //Ruben Armando Lopez Luch
+        //0901-20-4620
+        private void CargarUsuarios()
+        {
+            DataTable dtUsuarios = controlador.ObtenerUsuarios();
+            Cbo_Usuarios.DataSource = dtUsuarios;
+            Cbo_Usuarios.DisplayMember = "nombre_usuario";
+            Cbo_Usuarios.ValueMember = "pk_id_usuario";
+            Cbo_Usuarios.SelectedIndex = -1;
+        }
+
+        private void CargarModulos()
+        {
+            DataTable dtModulos = controlador.ObtenerModulos();
+            Cbo_Modulos.DataSource = dtModulos;
+            Cbo_Modulos.DisplayMember = "nombre_modulo";
+            Cbo_Modulos.ValueMember = "pk_id_modulo";
+            Cbo_Modulos.SelectedIndex = -1;
         }
 
         private void InicializarDataGridView()
@@ -87,7 +110,7 @@ namespace CapaVista
         private void ConfigurarIdsDinamicamenteYAplicarPermisos()
         {
             // Cambia estos nombres exactamente como están en tu BD
-            string nombreModulo ="RHM";
+            string nombreModulo = "Seguridad";
             string nombreAplicacion ="Empleados";
             aplicacionId = permisoUsuario.ObtenerIdAplicacionPorNombre(nombreAplicacion);
             moduloId = permisoUsuario.ObtenerIdModuloPorNombre(nombreModulo);

@@ -7,16 +7,37 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CapaControlador;
+
 
 namespace CapaVista
 {
     public partial class frmPrincipal : Form
     {
         private int childFormNumber = 0;
+        private ControladorAsignacionUsuarioAplicacion ctrlSeguridad;
 
         public frmPrincipal()
         {
             InitializeComponent();
+            ctrlSeguridad = new ControladorAsignacionUsuarioAplicacion();
+            this.Load += frmPrincipal_Load;
+        }
+
+        // Activar solo Seguridad
+        private void ActivarMenusPorPermiso(int idUsuario)
+        {
+            var permisos = ctrlSeguridad.ObtenerPermisosPorUsuario(idUsuario);
+
+            foreach (DataRow fila in permisos.Rows)
+            {
+                string nombreModulo = fila["nombre_aplicacion"].ToString();
+
+                if (nombreModulo == "Seguridad")
+                {
+                    seguridadToolStripMenuItem.Enabled = true;
+                }
+            }
         }
 
         private void ShowNewForm(object sender, EventArgs e)
@@ -112,6 +133,11 @@ namespace CapaVista
             formSeguridad.Show();
             this.Hide();
 
+        }
+
+        private void frmPrincipal_Load(object sender, EventArgs e)
+        {
+            ActivarMenusPorPermiso(Cls_sesion.iUsuarioId);
         }
     }
 }

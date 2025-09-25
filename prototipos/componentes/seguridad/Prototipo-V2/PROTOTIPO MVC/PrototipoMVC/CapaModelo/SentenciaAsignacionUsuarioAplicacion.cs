@@ -64,7 +64,8 @@ namespace CapaModelo
         public DataTable ObtenerPermisosPorUsuario(int idUsuario)
         {
             DataTable dt = new DataTable();
-            string query = @"SELECT u.Cmp_Nombre_Usuario AS nombre_usuario, 
+            string query = @"SELECT u.Cmp_Nombre_Usuario AS nombre_usuario,
+                                    m.Cmp_Nombre_Modulo AS nombre_modulo,
                                     a.Cmp_Nombre_Aplicacion AS nombre_aplicacion,
                                     p.Cmp_Ingresar_Permiso_Aplicacion_Usuario AS ingresar_permiso_aplicacion_usuario,
                                     p.Cmp_Consultar_Permiso_Aplicacion_Usuario AS consultar_permiso_aplicacion_usuario,
@@ -77,6 +78,7 @@ namespace CapaModelo
                              FROM Tbl_Permiso_Usuario_Aplicacion p
                              INNER JOIN Tbl_Usuario u ON u.Pk_Id_Usuario = p.Fk_Id_Usuario
                              INNER JOIN Tbl_Aplicacion a ON a.Pk_Id_Aplicacion = p.Fk_Id_Aplicacion
+                             INNER JOIN Tbl_Modulo m ON m.Pk_Id_Modulo = p.Fk_Id_Modulo
                              WHERE p.Fk_Id_Usuario = ?";
 
             using (OdbcConnection conn = conexion.conexion())
@@ -171,6 +173,31 @@ namespace CapaModelo
                 filasAfectadas = cmd.ExecuteNonQuery();
             }
             return filasAfectadas;
+        }
+
+        //Ruben Armando Lopez Luch
+        //0901-20-4620
+        public DataTable ObtenerPermisosPorUsuarioModulo(int idUsuario, int idModulo)
+        {
+            DataTable dt = new DataTable();
+            using (OdbcConnection conn = conexion.conexion())
+            {
+                string query = @"SELECT * 
+                         FROM Tbl_Permiso_Usuario_Aplicacion
+                         WHERE Fk_Id_Usuario = ? AND Fk_Id_Modulo = ?";
+
+                using (OdbcCommand cmd = new OdbcCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("?", idUsuario);
+                    cmd.Parameters.AddWithValue("?", idModulo);
+
+                    using (OdbcDataAdapter da = new OdbcDataAdapter(cmd))
+                    {
+                        da.Fill(dt);
+                    }
+                }
+            }
+            return dt;
         }
     }
 }
