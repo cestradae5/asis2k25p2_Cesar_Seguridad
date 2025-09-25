@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace PruebaEjecucionNavegador
 {
-    public partial class Form1 : Form
+    public partial class Form2 : Form
     {
-        public Form1()
+        public Form2()
         {
             InitializeComponent();
             Capa_Controlador_Navegador.ConfiguracionDataGridView config = new Capa_Controlador_Navegador.ConfiguracionDataGridView
@@ -25,17 +25,17 @@ namespace PruebaEjecucionNavegador
                 TipoScrollBars = ScrollBars.Both,
                 Nombre = "dgv_empleados"
             };
-            
-            string[] columnas = { "padre", "id_padre", "nombre", "apellido", "id_hijo" };
+
+            string[] columnas = { "hijo", "id_hijo", "nombre", "apellido"};
             navegador1.configurarDataGridView(config);
             navegador1.SNombreTabla = columnas[0];
             navegador1.SAlias = columnas;
             navegador1.mostrarDatos();
         }
 
-        private void Btn_Siguiente_Click(object sender, EventArgs e)
+        private void navegador1_Load(object sender, EventArgs e)
         {
-            Form2 frm = new Form2();  // Crear una nueva instancia de Form2
+            Form1 frm = new Form1();  // Crear una nueva instancia de Form2
             frm.Show();
         }
     }
