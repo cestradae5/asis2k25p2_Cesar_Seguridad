@@ -236,8 +236,8 @@ namespace Capa_Controlador_Navegador
             }
         }
 
-        // ======================= Modificar / Update = Stevens Cambranes =======================
-        // ======================= Actualizar en BD leyendo los ComboBox =======================
+        // ======================= Modificar / Update = Stevens Cambranes = 20/09/2025 =======================
+        // ======================= Actualizar en BD leyendo los ComboBox = 20/09/2025 =======================
         public void Actualizar_Datos(Control contenedor, string[] SAlias)
         {
             if (SAlias == null || SAlias.Length < 3)
@@ -280,7 +280,7 @@ namespace Capa_Controlador_Navegador
             }
         }
 
-        // ======================= Rellenar los ComboBox desde la fila seleccionada del DataGridView =======================
+        // ======================= Rellenar los ComboBox desde la fila seleccionada del DataGridView = Stevens Cambranes = 20/09/2025 =======================
         public void RellenarCombosDesdeFila(Control contenedor, string[] SAlias, DataGridViewRow fila)
         {
             if (fila == null || SAlias == null || SAlias.Length < 2) return;
@@ -324,7 +324,7 @@ namespace Capa_Controlador_Navegador
             }
         }
 
-        // ======================= Refrescar las opciones de cada ComboBox con valores actuales de la BD =======================
+        // ======================= Refrescar las opciones de cada ComboBox con valores actuales de la BD = Stevens Cambranes = 20/09/2025 =======================
         public void RefrescarCombos(Control contenedor, string tabla, string[] columnas)
         {
             foreach (var campo in columnas)
@@ -369,7 +369,7 @@ namespace Capa_Controlador_Navegador
             }
         }
 
-        // ======================= Limpiar todos los ComboBox generados =======================
+        // ======================= Limpiar todos los ComboBox generados = Stevens Cambranes = 20/09/2025 =======================
         public void LimpiarCombos(Control contenedor, string[] SAlias)
         {
             if (SAlias == null || SAlias.Length < 2) return;
@@ -387,7 +387,7 @@ namespace Capa_Controlador_Navegador
                 }
             }
         }
-        //======================= Habilitar y Deshabilitar todos los comboBoxes=======================
+        //======================= Habilitar y Deshabilitar todos los comboBoxes =======================
         // ======================= Pedro Ibañez =======================
         // Creacion de Metodos: Habilitar y deshabilitar ComboBoxes
         public void ActivarTodosComboBoxes(Control contenedor)
