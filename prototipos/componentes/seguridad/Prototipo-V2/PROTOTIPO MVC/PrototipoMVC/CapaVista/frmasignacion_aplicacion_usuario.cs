@@ -72,7 +72,7 @@ namespace CapaVista
             Cbo_Modulos.ValueMember = "pk_id_modulo";
             Cbo_Modulos.SelectedIndex = -1;
         }
-
+        // fin -> Ruben Armando Lopez Luch
         private void InicializarDataGridView()
         {
             Dgv_Permisos.Columns.Clear();

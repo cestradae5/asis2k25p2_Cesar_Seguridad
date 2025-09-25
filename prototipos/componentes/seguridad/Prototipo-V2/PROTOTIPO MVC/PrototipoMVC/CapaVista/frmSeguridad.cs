@@ -16,8 +16,10 @@ namespace CapaVista
     public partial class frmSeguridad : Form
     {
         Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador();
-        private int childFormNumber = 0;
+        private int iIChildFormNumber = 0;
 
+        //Ruben Armando Lopez Luch
+        //0901-20-4620
         public enum MenuOpciones
         {
             Archivo,
@@ -31,15 +33,18 @@ namespace CapaVista
         }
 
         private Dictionary<MenuOpciones, ToolStripMenuItem> menuItems;
+        // fin -> Ruben Armando Lopez Luch
 
         public frmSeguridad()
         {
             InitializeComponent();
             InicializarMenuItems();
-            InicializarBotonesPorDefecto();
-            HabilitarBotonesPorPermisos(Cls_UsuarioConectado.iIdUsuario);
+            fun_inicializar_botones_por_defecto();
+            fun_habilitar_botones_por_permisos(Cls_UsuarioConectado.iIdUsuario);
         }
 
+        //Ruben Armando Lopez Luch
+        //0901-20-4620
         private void InicializarMenuItems()
         {
             menuItems = new Dictionary<MenuOpciones, ToolStripMenuItem>
@@ -54,8 +59,8 @@ namespace CapaVista
                 
             };
         }
+        public void fun_inicializar_botones_por_defecto()
 
-        public void InicializarBotonesPorDefecto()
         {
             foreach (var opcion in menuItems.Keys)
             {
@@ -73,14 +78,14 @@ namespace CapaVista
             }
         }
 
-        public void HabilitarBotonesPorPermisos(int idUsuario)
+        public void fun_habilitar_botones_por_permisos(int iIdUsuario)
         {
-            InicializarBotonesPorDefecto();
+            fun_inicializar_botones_por_defecto();
             SentenciaAsignacionUsuarioAplicacion modelo = new SentenciaAsignacionUsuarioAplicacion();
-            DataTable dtPermisos = modelo.ObtenerPermisosPorUsuario(idUsuario);
-            bool tienePermisoSeguridad = dtPermisos.AsEnumerable()
+            DataTable dtPermisos = modelo.ObtenerPermisosPorUsuario(iIdUsuario);
+            bool bTienePermisoSeguridad = dtPermisos.AsEnumerable()
                 .Any(row => row["nombre_modulo"].ToString() == "Seguridad");
-            if (tienePermisoSeguridad)
+            if (bTienePermisoSeguridad)
             {
                 menuItems[MenuOpciones.Catalogos].Enabled = true;
                 menuItems[MenuOpciones.Procesos].Enabled = true;
@@ -89,9 +94,9 @@ namespace CapaVista
             }
         }
 
-        public void HabilitarBotonesSeguridad(string modulo)
+        public void fun_babilitar_botones_seguridad(string sModulo)
         {
-            if (modulo == "Seguridad")
+            if (sModulo == "Seguridad")
             {
                 menuItems[MenuOpciones.Catalogos].Enabled = true;
                 menuItems[MenuOpciones.Procesos].Enabled = true;
@@ -101,15 +106,16 @@ namespace CapaVista
             }
             else
             {
-                InicializarBotonesPorDefecto();
+                fun_inicializar_botones_por_defecto();
             }
         }
 
+        // fin -> Ruben Armando Lopez Luch
         private void ShowNewForm(object sender, EventArgs e)
         {
             Form childForm = new Form();
             childForm.MdiParent = this;
-            childForm.Text = "Ventana " + childFormNumber++;
+            childForm.Text = "Ventana " + iIChildFormNumber++;
             childForm.Show();
         }
 

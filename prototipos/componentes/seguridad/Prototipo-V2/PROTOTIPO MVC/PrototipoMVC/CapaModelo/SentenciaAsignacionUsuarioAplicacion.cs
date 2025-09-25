@@ -177,19 +177,19 @@ namespace CapaModelo
 
         //Ruben Armando Lopez Luch
         //0901-20-4620
-        public DataTable ObtenerPermisosPorUsuarioModulo(int idUsuario, int idModulo)
+        public DataTable fun_bbtener_permisos_por_usuario_modulo(int iIdUsuario, int iIdModulo)
         {
             DataTable dt = new DataTable();
             using (OdbcConnection conn = conexion.conexion())
             {
-                string query = @"SELECT * 
+                string sSql = @"SELECT * 
                          FROM Tbl_Permiso_Usuario_Aplicacion
                          WHERE Fk_Id_Usuario = ? AND Fk_Id_Modulo = ?";
 
-                using (OdbcCommand cmd = new OdbcCommand(query, conn))
+                using (OdbcCommand cmd = new OdbcCommand(sSql, conn))
                 {
-                    cmd.Parameters.AddWithValue("?", idUsuario);
-                    cmd.Parameters.AddWithValue("?", idModulo);
+                    cmd.Parameters.AddWithValue("?", iIdUsuario);
+                    cmd.Parameters.AddWithValue("?", iIdModulo);
 
                     using (OdbcDataAdapter da = new OdbcDataAdapter(cmd))
                     {
@@ -199,5 +199,7 @@ namespace CapaModelo
             }
             return dt;
         }
+
+        // fin -> Ruben Armando Lopez Luch
     }
 }

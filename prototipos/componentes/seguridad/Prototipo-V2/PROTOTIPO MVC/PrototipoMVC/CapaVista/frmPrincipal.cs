@@ -24,21 +24,24 @@ namespace CapaVista
             this.Load += frmPrincipal_Load;
         }
 
+        // Ruben Armando Lopez Luch
+        // 0901-20-4620
         // Activar solo Seguridad
-        private void ActivarMenusPorPermiso(int idUsuario)
+        private void fun_activar_menus_por_permiso(int iIdUsuario)
         {
-            var permisos = ctrlSeguridad.ObtenerPermisosPorUsuario(idUsuario);
+            var permisos = ctrlSeguridad.ObtenerPermisosPorUsuario(iIdUsuario);
 
             foreach (DataRow fila in permisos.Rows)
             {
-                string nombreModulo = fila["nombre_aplicacion"].ToString();
+                string sNombreModulo = fila["nombre_aplicacion"].ToString();
 
-                if (nombreModulo == "Seguridad")
+                if (sNombreModulo == "Seguridad")
                 {
                     seguridadToolStripMenuItem.Enabled = true;
                 }
             }
         }
+        // fin -> Ruben Armando Lopez Luch
 
         private void ShowNewForm(object sender, EventArgs e)
         {
@@ -137,7 +140,7 @@ namespace CapaVista
 
         private void frmPrincipal_Load(object sender, EventArgs e)
         {
-            ActivarMenusPorPermiso(Cls_sesion.iUsuarioId);
+            fun_activar_menus_por_permiso(Cls_sesion.iUsuarioId);
         }
     }
 }
