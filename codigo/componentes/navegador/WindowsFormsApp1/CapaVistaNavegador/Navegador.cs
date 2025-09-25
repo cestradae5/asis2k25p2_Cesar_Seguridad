@@ -217,11 +217,13 @@ namespace Capa_Vista_Navegador
         {
             // Llamar al componente reporteadores
         }
-
+        
         private void Btn_refrescar_Click(object sender, EventArgs e)
         {
             // ======================= Pedro Ibañez =======================
-            // Creacion Metodo: vuelve a cargar los datos en el DataGridView
+            // Creacion Metodo: vuelve a cargar los datos en el DataGridView y limpiar comboBoxes
+            ctrl.LimpiarCombos(this, SAlias);
+            ctrl.ActivarTodosComboBoxes(this);
             try
             {
                 mostrarDatos(); 
@@ -284,11 +286,21 @@ namespace Capa_Vista_Navegador
 
             int ultimaFila = Dgv_Datos.Rows.Count - 1;
 
+            // Si AllowUserToAddRows está activo, restar 1 para seleccionar la última fila real
+            if (Dgv_Datos.AllowUserToAddRows)
+                ultimaFila -= 1;
+
+            if (ultimaFila < 0) return; // no hay filas reales
+
             Dgv_Datos.ClearSelection();
-            Dgv_Datos.Rows[ultimaFila].Selected = true;
+
+            // Primero fijar CurrentCell para activar la fila
             Dgv_Datos.CurrentCell = Dgv_Datos.Rows[ultimaFila].Cells[0];
 
-            // Forzar scroll para mostrar la última fila en pantalla
+            // Luego seleccionar la fila completa
+            Dgv_Datos.Rows[ultimaFila].Selected = true;
+
+            // Asegurar que se vea en pantalla
             Dgv_Datos.FirstDisplayedScrollingRowIndex = ultimaFila;
 
         }
