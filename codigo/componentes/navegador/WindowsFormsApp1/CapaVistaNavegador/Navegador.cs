@@ -247,6 +247,7 @@ namespace Capa_Vista_Navegador
             // ======================= Pedro Ibañez =======================
             // Creacion Metodo: vuelve a cargar los datos en el DataGridView y limpiar comboBoxes
             ctrl.LimpiarCombos(this, SAlias);
+            ctrl.ActivarTodosComboBoxes(this);
             try
             {
                 mostrarDatos(); 
