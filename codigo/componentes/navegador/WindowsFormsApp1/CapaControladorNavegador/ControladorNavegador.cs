@@ -17,7 +17,7 @@ namespace Capa_Controlador_Navegador
         private DAOGenerico dao = new DAOGenerico();
 
         // ---------------------VALIDANDO ALIAS-----------------------------------------
-        //===================== Nuevo Método Validar Columnas =============================
+        //===================== Nuevo Método Validar Columnas - 23/09/2025 =============================
         //===================== Kevin Natareno ============================================
         private bool ValidarColumnas(string tabla, string[] columnasEnviadas, out List<string> columnasBD)
         {
@@ -128,8 +128,9 @@ namespace Capa_Controlador_Navegador
         {
             dgv = grid;
         }
-        //================Kevin Natareno===================================================
-        //===============Botones de mover al inicio y mover al final========================
+        //================ Kevin Natareno ===================================
+        //=============== Metodos de mover al inicio y mover al final========================
+
         public void MoverAlInicio()
         {
             if (dgv != null && dgv.Rows.Count > 0)
@@ -140,30 +141,18 @@ namespace Capa_Controlador_Navegador
             }
         }
 
-        public void MoverAlFin()
+        public void MoverAlFin() //Correcciones de funcionamiento - 23/09/2025
         {
             if (dgv == null || dgv.Rows.Count == 0) return;
-
             dgv.ClearSelection();
-
-            // Última fila real
             int ultimaFila = dgv.Rows.Count - 1;
             if (dgv.AllowUserToAddRows)
                 ultimaFila -= 1;
-
-            if (ultimaFila < 0) return;
-
-            // Primero fijamos el CurrentCell en la primera columna visible
+            if (ultimaFila < 0) return;  
             dgv.CurrentCell = dgv.Rows[ultimaFila].Cells[0];
-
-            // Ahora seleccionamos la fila
             dgv.Rows[ultimaFila].Selected = true;
-
-            // Aseguramos que sea visible
             dgv.FirstDisplayedScrollingRowIndex = ultimaFila;
         }
-
-
         //===============================================================================
 
         public void Insertar_Datos(Control contenedor, string[] SAlias)
