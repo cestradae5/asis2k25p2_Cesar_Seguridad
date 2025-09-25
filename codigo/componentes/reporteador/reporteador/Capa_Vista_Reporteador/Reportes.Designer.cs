@@ -48,7 +48,8 @@ namespace Capa_Vista_Reporteador
             this.Txt_reportes.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.Txt_reportes.AutoSize = true;
             this.Txt_reportes.Font = new System.Drawing.Font("Rockwell", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Txt_reportes.Location = new System.Drawing.Point(400, 36);
+            this.Txt_reportes.Location = new System.Drawing.Point(300, 29);
+            this.Txt_reportes.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Txt_reportes.Name = "Txt_reportes";
             this.Txt_reportes.Size = new System.Drawing.Size(148, 38);
             this.Txt_reportes.TabIndex = 1;
@@ -60,22 +61,25 @@ namespace Capa_Vista_Reporteador
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Dgv_reportes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.Dgv_reportes.Location = new System.Drawing.Point(25, 255);
+            this.Dgv_reportes.Location = new System.Drawing.Point(19, 207);
+            this.Dgv_reportes.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Dgv_reportes.Name = "Dgv_reportes";
             this.Dgv_reportes.RowHeadersWidth = 51;
             this.Dgv_reportes.RowTemplate.Height = 24;
-            this.Dgv_reportes.Size = new System.Drawing.Size(880, 195);
+            this.Dgv_reportes.Size = new System.Drawing.Size(660, 158);
             this.Dgv_reportes.TabIndex = 2;
             this.Dgv_reportes.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dgv_reportes_CellClick);
+            this.Dgv_reportes.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dgv_reportes_CellContentClick);
             // 
             // Txt_reportes_ruta
             // 
             this.Txt_reportes_ruta.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Txt_reportes_ruta.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Txt_reportes_ruta.Location = new System.Drawing.Point(25, 129);
+            this.Txt_reportes_ruta.Location = new System.Drawing.Point(19, 105);
+            this.Txt_reportes_ruta.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Txt_reportes_ruta.Name = "Txt_reportes_ruta";
-            this.Txt_reportes_ruta.Size = new System.Drawing.Size(582, 22);
+            this.Txt_reportes_ruta.Size = new System.Drawing.Size(437, 20);
             this.Txt_reportes_ruta.TabIndex = 3;
             this.Txt_reportes_ruta.TextChanged += new System.EventHandler(this.Txt_reportes_ruta_TextChanged);
             // 
@@ -85,9 +89,10 @@ namespace Capa_Vista_Reporteador
             this.Btn_guardar.Font = new System.Drawing.Font("Rockwell", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Btn_guardar.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.Btn_guardar.Image = ((System.Drawing.Image)(resources.GetObject("Btn_guardar.Image")));
-            this.Btn_guardar.Location = new System.Drawing.Point(25, 201);
+            this.Btn_guardar.Location = new System.Drawing.Point(19, 163);
+            this.Btn_guardar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Btn_guardar.Name = "Btn_guardar";
-            this.Btn_guardar.Size = new System.Drawing.Size(53, 45);
+            this.Btn_guardar.Size = new System.Drawing.Size(40, 37);
             this.Btn_guardar.TabIndex = 4;
             this.Btn_guardar.UseVisualStyleBackColor = false;
             this.Btn_guardar.Click += new System.EventHandler(this.Btn_guardar_Click);
@@ -97,9 +102,10 @@ namespace Capa_Vista_Reporteador
             this.Btn_eliminar.BackColor = System.Drawing.Color.White;
             this.Btn_eliminar.Font = new System.Drawing.Font("Rockwell", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Btn_eliminar.Image = ((System.Drawing.Image)(resources.GetObject("Btn_eliminar.Image")));
-            this.Btn_eliminar.Location = new System.Drawing.Point(84, 201);
+            this.Btn_eliminar.Location = new System.Drawing.Point(63, 163);
+            this.Btn_eliminar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Btn_eliminar.Name = "Btn_eliminar";
-            this.Btn_eliminar.Size = new System.Drawing.Size(53, 45);
+            this.Btn_eliminar.Size = new System.Drawing.Size(40, 37);
             this.Btn_eliminar.TabIndex = 5;
             this.Btn_eliminar.UseVisualStyleBackColor = false;
             this.Btn_eliminar.Click += new System.EventHandler(this.Btn_eliminar_Click);
@@ -109,9 +115,10 @@ namespace Capa_Vista_Reporteador
             this.Btn_modificar.BackColor = System.Drawing.Color.White;
             this.Btn_modificar.Font = new System.Drawing.Font("Rockwell", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Btn_modificar.Image = ((System.Drawing.Image)(resources.GetObject("Btn_modificar.Image")));
-            this.Btn_modificar.Location = new System.Drawing.Point(143, 201);
+            this.Btn_modificar.Location = new System.Drawing.Point(107, 163);
+            this.Btn_modificar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Btn_modificar.Name = "Btn_modificar";
-            this.Btn_modificar.Size = new System.Drawing.Size(53, 45);
+            this.Btn_modificar.Size = new System.Drawing.Size(40, 37);
             this.Btn_modificar.TabIndex = 6;
             this.Btn_modificar.UseVisualStyleBackColor = false;
             this.Btn_modificar.Click += new System.EventHandler(this.Btn_modificar_Click);
@@ -123,9 +130,10 @@ namespace Capa_Vista_Reporteador
             this.Btn_ver_reporte.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Btn_ver_reporte.Font = new System.Drawing.Font("Rockwell", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Btn_ver_reporte.ForeColor = System.Drawing.Color.White;
-            this.Btn_ver_reporte.Location = new System.Drawing.Point(620, 166);
+            this.Btn_ver_reporte.Location = new System.Drawing.Point(465, 135);
+            this.Btn_ver_reporte.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Btn_ver_reporte.Name = "Btn_ver_reporte";
-            this.Btn_ver_reporte.Size = new System.Drawing.Size(285, 37);
+            this.Btn_ver_reporte.Size = new System.Drawing.Size(214, 30);
             this.Btn_ver_reporte.TabIndex = 7;
             this.Btn_ver_reporte.Text = "Ver reporte";
             this.Btn_ver_reporte.UseVisualStyleBackColor = false;
@@ -138,9 +146,10 @@ namespace Capa_Vista_Reporteador
             this.Btn_ruta_reporte.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Btn_ruta_reporte.Font = new System.Drawing.Font("Rockwell", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Btn_ruta_reporte.ForeColor = System.Drawing.Color.White;
-            this.Btn_ruta_reporte.Location = new System.Drawing.Point(620, 123);
+            this.Btn_ruta_reporte.Location = new System.Drawing.Point(465, 100);
+            this.Btn_ruta_reporte.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Btn_ruta_reporte.Name = "Btn_ruta_reporte";
-            this.Btn_ruta_reporte.Size = new System.Drawing.Size(285, 37);
+            this.Btn_ruta_reporte.Size = new System.Drawing.Size(214, 30);
             this.Btn_ruta_reporte.TabIndex = 8;
             this.Btn_ruta_reporte.Text = "Ruta";
             this.Btn_ruta_reporte.UseVisualStyleBackColor = false;
@@ -149,16 +158,18 @@ namespace Capa_Vista_Reporteador
             // Txt_Titulo
             // 
             this.Txt_Titulo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Txt_Titulo.Location = new System.Drawing.Point(101, 173);
+            this.Txt_Titulo.Location = new System.Drawing.Point(94, 143);
+            this.Txt_Titulo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Txt_Titulo.Name = "Txt_Titulo";
-            this.Txt_Titulo.Size = new System.Drawing.Size(506, 22);
+            this.Txt_Titulo.Size = new System.Drawing.Size(361, 20);
             this.Txt_Titulo.TabIndex = 9;
             // 
             // Lbl_Titulo
             // 
             this.Lbl_Titulo.AutoSize = true;
             this.Lbl_Titulo.Font = new System.Drawing.Font("Rockwell", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Lbl_Titulo.Location = new System.Drawing.Point(20, 171);
+            this.Lbl_Titulo.Location = new System.Drawing.Point(15, 139);
+            this.Lbl_Titulo.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Lbl_Titulo.Name = "Lbl_Titulo";
             this.Lbl_Titulo.Size = new System.Drawing.Size(75, 27);
             this.Lbl_Titulo.TabIndex = 10;
@@ -166,10 +177,10 @@ namespace Capa_Vista_Reporteador
             // 
             // Reportes
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(930, 474);
+            this.ClientSize = new System.Drawing.Size(698, 385);
             this.Controls.Add(this.Lbl_Titulo);
             this.Controls.Add(this.Txt_Titulo);
             this.Controls.Add(this.Btn_ruta_reporte);
@@ -181,6 +192,7 @@ namespace Capa_Vista_Reporteador
             this.Controls.Add(this.Dgv_reportes);
             this.Controls.Add(this.Txt_reportes);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "Reportes";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Reportes";
