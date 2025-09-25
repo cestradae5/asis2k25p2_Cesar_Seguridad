@@ -9,13 +9,13 @@ namespace CapaControlador
     {
         private Cls_UsuarioDAO daoUsuario = new Cls_UsuarioDAO();
 
-       
+
         public List<Cls_Usuario> ObtenerTodosLosUsuarios()
         {
             return daoUsuario.ObtenerUsuarios();
         }
 
-        
+
         public void InsertarUsuario(int fkIdEmpleado, string nombreUsuario, string contrasena,
                                     int intentosFallidos, bool estado, DateTime fechaCreacion,
                                     DateTime ultimoCambio, bool pidioCambio)
@@ -35,7 +35,7 @@ namespace CapaControlador
             daoUsuario.InsertarUsuario(nuevoUsuario);
         }
 
-        
+
         public bool ActualizarUsuario(int idUsuario, int fkIdEmpleado, string nombreUsuario, string contrasena,
                                       int intentosFallidos, bool estado, DateTime fechaCreacion,
                                       DateTime ultimoCambio, bool pidioCambio)
@@ -57,13 +57,13 @@ namespace CapaControlador
             return true;
         }
 
-        
+
         public bool BorrarUsuario(int idUsuario)
         {
             return daoUsuario.BorrarUsuario(idUsuario) > 0;
         }
 
-        
+
         public Cls_Usuario BuscarUsuarioPorId(int idUsuario)
         {
             return daoUsuario.Query(idUsuario);

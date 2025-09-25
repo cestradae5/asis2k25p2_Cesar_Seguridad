@@ -7,7 +7,7 @@ namespace CapaControlador
 {
     public class ControladorLogin
     {
-        private SentenciaLogin sl = new SentenciaLogin();
+        private Cls_SentenciaLogin sl = new Cls_SentenciaLogin();
 
        
      

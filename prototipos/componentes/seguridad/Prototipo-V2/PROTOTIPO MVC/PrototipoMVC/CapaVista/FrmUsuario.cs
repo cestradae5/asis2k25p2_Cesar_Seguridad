@@ -1,4 +1,5 @@
-﻿using System;
+﻿//Pablo Quiroa 0901-22-2929
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
@@ -13,22 +14,20 @@ namespace CapaVista
         private Cls_UsuarioControlador usuarioControlador = new Cls_UsuarioControlador();
         private Cls_EmpleadoControlador empleadoControlador = new Cls_EmpleadoControlador();
         private List<Cls_Empleado> listaEmpleados = new List<Cls_Empleado>();
-        private int idUsuarioSeleccionado = 0; // Para saber si modificamos un usuario existente
+        private int idUsuarioSeleccionado = 0;
 
-        // permisos 0901-21-1115 Marcos Andres Velásquez Alcántara
         private Cls_PermisoUsuario permisoUsuario = new Cls_PermisoUsuario();
-
         private int moduloId = -1;
         private int aplicacionId = -1;
-
-        // Tupla para los permisos actuales
         private (bool ingresar, bool consultar, bool modificar, bool eliminar, bool imprimir)? permisosActuales = null;
-
-
 
         public FrmUsuario()
         {
             InitializeComponent();
+
+            Txt_Contraseña.UseSystemPasswordChar = true;
+            Txt_ConfirmarContraseña.UseSystemPasswordChar = true;
+
             CargarEmpleados();
             ConfigurarComboBoxEmpleados();
             ConfiguracionInicial();
@@ -65,7 +64,7 @@ namespace CapaVista
         private void Btn_Nuevo_Click(object sender, EventArgs e)
         {
             LimpiarCampos();
-            Btn_Guardar.Enabled = false; // habilitar solo si hay texto
+            Btn_Guardar.Enabled = false;
             Btn_Modificar.Enabled = false;
             idUsuarioSeleccionado = 0;
         }
@@ -74,6 +73,13 @@ namespace CapaVista
         {
             try
             {
+
+                if (Txt_Contraseña.Text != Txt_ConfirmarContraseña.Text)
+                {
+                    MessageBox.Show("Las contraseñas no coinciden", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
                 if (Cbo_Empleado.SelectedItem == null)
                 {
                     MessageBox.Show("Debe seleccionar un empleado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -83,7 +89,6 @@ namespace CapaVista
                 var selected = (dynamic)Cbo_Empleado.SelectedItem;
                 int fkIdEmpleado = selected.Id;
 
-                // Hashear la contraseña
                 string contraseñaHasheada = Cls_SeguridadHashControlador.HashearSHA256(Txt_Contraseña.Text);
 
                 usuarioControlador.InsertarUsuario(
@@ -99,7 +104,6 @@ namespace CapaVista
 
                 MessageBox.Show("Usuario creado correctamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                // Registrar en Bitácora - Arón Ricardo Esquit Silva 0901-22-13036
                 ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, 1, "Guardar usuario", true);
 
                 LimpiarCampos();
@@ -121,6 +125,13 @@ namespace CapaVista
 
             try
             {
+
+                if (Txt_Contraseña.Text != Txt_ConfirmarContraseña.Text)
+                {
+                    MessageBox.Show("Las contraseñas no coinciden", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
                 var selected = (dynamic)Cbo_Empleado.SelectedItem;
                 int fkIdEmpleado = selected.Id;
 
@@ -140,7 +151,6 @@ namespace CapaVista
 
                 MessageBox.Show("Usuario modificado correctamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                // Registrar en Bitácora - Arón Ricardo Esquit Silva 0901-22-13036
                 ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, 1, "Modificar usuario", true);
 
                 LimpiarCampos();
@@ -151,7 +161,6 @@ namespace CapaVista
                 MessageBox.Show("Error al modificar usuario: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
 
         private void Btn_Limpiar_Click(object sender, EventArgs e)
         {
@@ -169,37 +178,37 @@ namespace CapaVista
             Cbo_Empleado.SelectedIndex = -1;
             Txt_Nombre.Clear();
             Txt_Contraseña.Clear();
+            Txt_ConfirmarContraseña.Clear();
+            Txt_ConfirmarContraseña.BackColor = System.Drawing.Color.White;
             idUsuarioSeleccionado = 0;
         }
 
-        //aqui es para validar los campos
 
-        private void Txt_Nombre_TextChanged(object sender, EventArgs e)
-        {
-            ValidarCampos();
-        }
-
-        private void Txt_Contraseña_TextChanged(object sender, EventArgs e)
-        {
-            ValidarCampos();
-        }
-
-        private void Cbo_Empleado_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ValidarCampos();
-        }
+        private void Txt_Nombre_TextChanged(object sender, EventArgs e) => ValidarCampos();
+        private void Txt_Contraseña_TextChanged(object sender, EventArgs e) => ValidarCampos();
+        private void Txt_ConfirmarContraseña_TextChanged(object sender, EventArgs e) => ValidarCampos();
+        private void Cbo_Empleado_SelectedIndexChanged(object sender, EventArgs e) => ValidarCampos();
 
         private void ValidarCampos()
         {
-            Btn_Guardar.Enabled =
+            bool camposLlenos =
                 Cbo_Empleado.SelectedItem != null &&
                 !string.IsNullOrWhiteSpace(Txt_Nombre.Text) &&
-                !string.IsNullOrWhiteSpace(Txt_Contraseña.Text);
+                !string.IsNullOrWhiteSpace(Txt_Contraseña.Text) &&
+                !string.IsNullOrWhiteSpace(Txt_ConfirmarContraseña.Text);
+
+            bool contraseñasCoinciden = Txt_Contraseña.Text == Txt_ConfirmarContraseña.Text;
+
+            Btn_Guardar.Enabled = camposLlenos && contraseñasCoinciden;
+
+
+            Txt_ConfirmarContraseña.BackColor =
+                (!contraseñasCoinciden && Txt_ConfirmarContraseña.Text.Length > 0)
+                ? System.Drawing.Color.LightCoral
+                : System.Drawing.Color.White;
         }
 
         // Panel superior
-        //0901-20-4620 Ruben Armando Lopez Luch
-
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HTCAPTION = 0x2;
 
@@ -218,8 +227,8 @@ namespace CapaVista
         {
             if (e.Button == MouseButtons.Left)
             {
-                ReleaseCapture(); // Libera el mouse
-                SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0); // Simula arrastre
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
             }
         }
 
@@ -229,14 +238,8 @@ namespace CapaVista
             frm.Show();
         }
 
-
-        //0901-21-1115 Marcos Andres Velasquez Alcánatara -- permisos script
-        //0901-22-9663 Brandon Alexander Hernandez Salguero --  asignacion Modulos y aplicaciones
-
-
         private void ConfigurarIdsDinamicamenteYAplicarPermisos()
         {
-
             string nombreModulo = "Seguridad";
             string nombreAplicacion = "Administracion";
             aplicacionId = permisoUsuario.ObtenerIdAplicacionPorNombre(nombreAplicacion);
@@ -246,7 +249,7 @@ namespace CapaVista
 
         private void AplicarPermisosUsuario()
         {
-            int usuarioId = Cls_sesion.iUsuarioId; // Usuario logueado
+            int usuarioId = Cls_sesion.iUsuarioId;
             if (aplicacionId == -1 || moduloId == -1)
             {
                 permisosActuales = null;
@@ -258,7 +261,6 @@ namespace CapaVista
             ActualizarEstadoBotonesSegunPermisos();
         }
 
-        // Centraliza el habilitado/deshabilitado de botones según permisos y estado de navegación
         private void ActualizarEstadoBotonesSegunPermisos(bool empleadoCargado = false)
         {
             if (!permisosActuales.HasValue)
@@ -268,26 +270,16 @@ namespace CapaVista
                 Btn_Guardar.Enabled = false;
                 Btn_Modificar.Enabled = false;
                 Btn_Limpiar.Enabled = false;
-
-
                 return;
             }
 
             var p = permisosActuales.Value;
-
-
             Btn_Nuevo.Enabled = p.ingresar;
-            Btn_reporte.Enabled = p.imprimir|| p.consultar;
+            Btn_reporte.Enabled = p.imprimir || p.consultar;
             Btn_Guardar.Enabled = p.ingresar || p.modificar;
             Btn_Modificar.Enabled = p.modificar;
-            Btn_Limpiar.Enabled = p.modificar|| p.ingresar ||p.eliminar;
-
+            Btn_Limpiar.Enabled = p.modificar || p.ingresar || p.eliminar;
         }
-
 
     }
 }
-
-
-
-
