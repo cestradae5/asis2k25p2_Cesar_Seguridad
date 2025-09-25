@@ -387,7 +387,7 @@ namespace Capa_Controlador_Navegador
                 }
             }
         }
-        //======================= Habilitar y Deshabilitar todos los comboBoxes=======================
+        //======================= Habilitar y Deshabilitar todos los comboBoxes =======================
         // ======================= Pedro Ibañez =======================
         // Creacion de Metodos: Habilitar y deshabilitar ComboBoxes
         public void ActivarTodosComboBoxes(Control contenedor)
