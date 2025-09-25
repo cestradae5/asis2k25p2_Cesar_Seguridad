@@ -46,7 +46,7 @@ namespace Capa_Vista_Reporteador
                 //Configuración de conexión ODBC
                 ConnectionInfo connection = new ConnectionInfo
                 {
-                    ServerName = "db_reportes", //DNS para conexión (modificar según lo indicado)
+                    ServerName = "bd_hoteleria", //DNS para conexión (modificar según lo indicado)
                     IntegratedSecurity = true // dejar false si DSN tiene credenciales guardadas
                 };
                 void AplicarConexion(Database db)
@@ -94,7 +94,7 @@ namespace Capa_Vista_Reporteador
                 {
 
                     // Cargar automáticamente el primer reporte
-                    string primeraRuta = dt.Rows[0]["ruta_reportes"].ToString();
+                    string primeraRuta = dt.Rows[0]["Cmp_Ruta_Reporte"].ToString();
                     MostrarReporte(primeraRuta);
                 }
                 else
@@ -133,7 +133,7 @@ namespace Capa_Vista_Reporteador
                 if (dt != null && dt.Rows.Count > 0)
                 {
                     // Tomar el PRIMER reporte disponible
-                    string ruta = dt.Rows[0]["ruta_reportes"].ToString();
+                    string ruta = dt.Rows[0]["Cmp_Ruta_Reporte"].ToString();
                     MostrarReporte(ruta);
                 }
                 else
