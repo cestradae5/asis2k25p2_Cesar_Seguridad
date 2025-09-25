@@ -273,6 +273,7 @@ namespace Capa_Vista_Navegador
             Dgv_Datos.FirstDisplayedScrollingRowIndex = primeraFila;
         }
 
+        // ======================= Boton para posicionarse en el registro anterior - Fredy Reyes 0901-22-9800 =======================
         private void Btn_anterior_Click_1(object sender, EventArgs e)
         {
             if (Dgv_Datos == null || Dgv_Datos.Rows.Count == 0)
@@ -288,6 +289,7 @@ namespace Capa_Vista_Navegador
             }
         }
 
+        // ======================= Boton para posicionarse en el registro siguiente - Fredy Reyes 0901-22-9800 =======================
         private void Btn_sig_Click(object sender, EventArgs e)
         {
             if (Dgv_Datos == null || Dgv_Datos.Rows.Count == 0)
@@ -339,7 +341,7 @@ namespace Capa_Vista_Navegador
             Application.Exit();
         }
 
-        // Configuracion de data grid view
+        // ======================= Configuracion de data grid view - Fredy Reyes 0901-22-9800 =======================
         public void configurarDataGridView(ConfiguracionDataGridView configuracion)
         {
             configuracionDataGridView = configuracion;
