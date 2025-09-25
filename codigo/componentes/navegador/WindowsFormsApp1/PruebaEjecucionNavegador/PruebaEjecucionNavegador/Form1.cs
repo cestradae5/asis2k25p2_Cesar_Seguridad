@@ -15,6 +15,7 @@ namespace PruebaEjecucionNavegador
         public Form1()
         {
             InitializeComponent();
+            // ======================= Llenado de clase de configuraciones personalizadas del data grid view - Fredy Reyes 0901-22-9800 =======================
             Capa_Controlador_Navegador.ConfiguracionDataGridView config = new Capa_Controlador_Navegador.ConfiguracionDataGridView
             {
                 Ancho = 1100,

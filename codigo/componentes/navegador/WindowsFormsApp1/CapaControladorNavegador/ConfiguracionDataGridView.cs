@@ -9,6 +9,8 @@ using Capa_Modelo_Navegador;
 
 namespace Capa_Controlador_Navegador
 {
+
+    // ======================= Clase para personalizar el data grid view como el desarrollador desee - Fredy Reyes 0901-22-9800 =======================
     public class ConfiguracionDataGridView
     {
         // Configuración básica
