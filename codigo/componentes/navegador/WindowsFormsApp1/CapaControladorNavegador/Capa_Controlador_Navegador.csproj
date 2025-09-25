@@ -50,7 +50,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Capa_Modelo_Navegador">
-      <HintPath>..\CapaModeloNavegador\bin\x86\Debug\Capa_Modelo_Navegador.dll</HintPath>
+      <HintPath>..\CapaModeloNavegador\bin\Debug\Capa_Modelo_Navegador.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

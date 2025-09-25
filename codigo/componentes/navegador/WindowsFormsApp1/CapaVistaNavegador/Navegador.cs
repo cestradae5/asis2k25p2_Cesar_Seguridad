@@ -241,11 +241,12 @@ namespace Capa_Vista_Navegador
         {
             // Llamar al componente reporteadores
         }
-
+        
         private void Btn_refrescar_Click(object sender, EventArgs e)
         {
             // ======================= Pedro Ibañez =======================
-            // Creacion Metodo: vuelve a cargar los datos en el DataGridView
+            // Creacion Metodo: vuelve a cargar los datos en el DataGridView y limpiar comboBoxes
+            ctrl.LimpiarCombos(this, SAlias);
             try
             {
                 mostrarDatos(); 
