@@ -111,7 +111,7 @@ namespace CapaVista
         {
             // Cambia estos nombres exactamente como están en tu BD
             string nombreModulo = "Seguridad";
-            string nombreAplicacion ="Empleados";
+            string nombreAplicacion ="Administracion";
             aplicacionId = permisoUsuario.ObtenerIdAplicacionPorNombre(nombreAplicacion);
             moduloId = permisoUsuario.ObtenerIdModuloPorNombre(nombreModulo);
             AplicarPermisosUsuario();

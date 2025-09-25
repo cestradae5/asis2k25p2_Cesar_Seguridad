@@ -229,13 +229,16 @@ namespace CapaVista
             frm.Show();
         }
 
-        //0901-21-1115 Marcos Andres Velasquez Alcánatara
+
+        //0901-21-1115 Marcos Andres Velasquez Alcánatara -- permisos script
+        //0901-22-9663 Brandon Alexander Hernandez Salguero --  asignacion Modulos y aplicaciones
+
 
         private void ConfigurarIdsDinamicamenteYAplicarPermisos()
         {
 
-            string nombreModulo = "RHM";
-            string nombreAplicacion = "Empleados";
+            string nombreModulo = "Seguridad";
+            string nombreAplicacion = "Administracion";
             aplicacionId = permisoUsuario.ObtenerIdAplicacionPorNombre(nombreAplicacion);
             moduloId = permisoUsuario.ObtenerIdModuloPorNombre(nombreModulo);
             AplicarPermisosUsuario();
