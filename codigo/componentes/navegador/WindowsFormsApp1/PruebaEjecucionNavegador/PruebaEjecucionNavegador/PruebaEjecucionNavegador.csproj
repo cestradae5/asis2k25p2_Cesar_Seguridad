@@ -53,11 +53,14 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CapaVistaNavegador">
+      <HintPath>..\..\CapaVistaNavegador\bin\Debug\CapaVistaNavegador.dll</HintPath>
+    </Reference>
     <Reference Include="Capa_Controlador_Navegador">
-      <HintPath>..\..\CapaControladorNavegador\bin\x86\Debug\Capa_Controlador_Navegador.dll</HintPath>
+      <HintPath>..\..\CapaVistaNavegador\bin\Debug\Capa_Controlador_Navegador.dll</HintPath>
     </Reference>
     <Reference Include="Capa_Vista_Navegador">
-      <HintPath>..\..\CapaVistaNavegador\bin\x86\Debug\Capa_Vista_Navegador.dll</HintPath>
+      <HintPath>..\..\CapaVistaNavegador\bin\Debug\Capa_Vista_Navegador.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
