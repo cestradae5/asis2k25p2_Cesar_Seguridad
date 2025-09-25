@@ -21,7 +21,7 @@ namespace Capa_Modelo_Reporteador
             Conexion_Reporteador cn = new Conexion_Reporteador();
             using (OdbcConnection con = cn.conexion())
             {
-                string sql = "INSERT INTO tbl_reportes (titulo_reportes, ruta_reportes, fecha_reportes) VALUES (?,?,?)";
+                string sql = "INSERT INTO tbl_reportes (Cmp_Titulo_Reporte, Cmp_Ruta_Reporte, Cmp_Fecha_Reporte) VALUES (?,?,?)";
                 OdbcCommand cmd = new OdbcCommand(sql, con);
                 cmd.Parameters.AddWithValue("titulo", titulo);
                 cmd.Parameters.AddWithValue("ruta", ruta);
@@ -42,7 +42,7 @@ namespace Capa_Modelo_Reporteador
             Conexion_Reporteador cn = new Conexion_Reporteador();
             using (OdbcConnection con = cn.conexion())
             {
-                string sql = "UPDATE tbl_reportes SET ruta_reportes=? WHERE pk_id_reportes=?";
+                string sql = "UPDATE tbl_reportes SET Cmp_Ruta_Reporte=? WHERE Pk_Id_Reporte=?";
                 OdbcCommand cmd = new OdbcCommand(sql, con);
                 cmd.Parameters.AddWithValue("ruta", nuevaRuta);
                 cmd.Parameters.AddWithValue("id", id);
@@ -57,7 +57,7 @@ namespace Capa_Modelo_Reporteador
             Conexion_Reporteador cn = new Conexion_Reporteador();
             using (OdbcConnection con = cn.conexion())
             {
-                string sqlTitulo = "UPDATE tbl_reportes SET titulo_reportes=? WHERE pk_id_reportes=?";
+                string sqlTitulo = "UPDATE tbl_reportes SET Cmp_Titulo_Reporte=? WHERE Pk_Id_Reporte=?";
                 OdbcCommand cmdActualizar = new OdbcCommand(sqlTitulo, con);
                 cmdActualizar.Parameters.AddWithValue("", titulo);
                 cmdActualizar.Parameters.AddWithValue("", id);
@@ -77,7 +77,7 @@ namespace Capa_Modelo_Reporteador
             Conexion_Reporteador cn = new Conexion_Reporteador();
             using (OdbcConnection con = cn.conexion())
             {
-                string sql = "DELETE FROM tbl_reportes WHERE pk_id_reportes=?";
+                string sql = "DELETE FROM tbl_reportes WHERE Pk_Id_Reporte=?";
                 OdbcCommand cmd = new OdbcCommand(sql, con);
                 cmd.Parameters.AddWithValue("id", id);
                 cmd.ExecuteNonQuery();
@@ -100,7 +100,7 @@ namespace Capa_Modelo_Reporteador
                 Conexion_Reporteador cn = new Conexion_Reporteador();
                 using (OdbcConnection con = cn.conexion())
                 {
-                    string sql = "SELECT pk_id_reportes, titulo_reportes, ruta_reportes, fecha_reportes FROM tbl_reportes";
+                    string sql = "SELECT Pk_Id_Reporte, Cmp_Titulo_Reporte, Cmp_Ruta_Reporte, Cmp_Fecha_Reporte FROM tbl_reportes";
                     OdbcDataAdapter da = new OdbcDataAdapter(sql, con);
                     da.Fill(tabla);
                 }
@@ -126,15 +126,22 @@ namespace Capa_Modelo_Reporteador
             Conexion_Reporteador cn = new Conexion_Reporteador();
             using (OdbcConnection con = cn.conexion())
             {
-                string sql = "SELECT 1 FROM tbl_reportes WHERE titulo_reportes = ? LIMIT 1";
+                string sql = "SELECT 1 FROM tbl_reportes WHERE Cmp_Titulo_Reporte = ? LIMIT 1";
                 OdbcCommand cmd = new OdbcCommand(sql, con);
-                cmd.Parameters.AddWithValue("titulo_reportes", titulo);
+                cmd.Parameters.AddWithValue("Cmp_Titulo_Reporte", titulo);
 
                 object result = cmd.ExecuteScalar();
                 return result != null ? 1 : 0;
             }
         }
         //fin de codigo de Sergio Izeppi
+
+        // ==========================
+        // APLICACIÓN
+        // ==========================
+
+
+
     }
 }
 

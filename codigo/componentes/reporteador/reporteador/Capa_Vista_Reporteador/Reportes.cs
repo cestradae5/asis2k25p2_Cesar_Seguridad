@@ -78,10 +78,10 @@ namespace Capa_Vista_Reporteador
             // Opcional: cambiar los encabezados de las columnas
             if (Dgv_reportes.Columns.Count > 0)
             {
-                Dgv_reportes.Columns["pk_id_reportes"].HeaderText = "ID";
-                Dgv_reportes.Columns["titulo_reportes"].HeaderText = "Título";
-                Dgv_reportes.Columns["ruta_reportes"].HeaderText = "Ruta";
-                Dgv_reportes.Columns["fecha_reportes"].HeaderText = "Fecha";
+                Dgv_reportes.Columns["Pk_Id_Reporte"].HeaderText = "ID";
+                Dgv_reportes.Columns["Cmp_Titulo_Reporte"].HeaderText = "Título";
+                Dgv_reportes.Columns["Cmp_Ruta_Reporte"].HeaderText = "Ruta";
+                Dgv_reportes.Columns["Cmp_Fecha_Reporte"].HeaderText = "Fecha";
             }   //fin codigo Kevin Santos 0901-17-2994
 
             // Inicio código Paula Leonardo  0901-22-9580
@@ -89,6 +89,7 @@ namespace Capa_Vista_Reporteador
             Dgv_reportes.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             Dgv_reportes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             Dgv_reportes.AllowUserToAddRows = false;
+
             // Fin código Paula Leonardo  0901-22-9580
         }
 
@@ -213,7 +214,7 @@ namespace Capa_Vista_Reporteador
             //Inicio de código de: Gerber Asturias con carné: 0901-22-11992 en la fecha 13/09/2025
             if (Dgv_reportes.CurrentRow != null)
             {
-                string ruta = Dgv_reportes.CurrentRow.Cells["ruta_reportes"].Value?.ToString();
+                string ruta = Dgv_reportes.CurrentRow.Cells["Cmp_Ruta_Reporte"].Value?.ToString();
 
                 VistaDeReportes frm = new VistaDeReportes();
                 frm.MostrarReporte(ruta);
@@ -253,12 +254,13 @@ namespace Capa_Vista_Reporteador
             if (e.RowIndex >= 0)
             {
                 DataGridViewRow filaSeleccionada = Dgv_reportes.Rows[e.RowIndex];
-                string sRuta = filaSeleccionada.Cells["ruta_reportes"].Value?.ToString();
-                string sTitulo = filaSeleccionada.Cells["titulo_reportes"].Value?.ToString();
-                iCodigoRuta = Convert.ToInt32(filaSeleccionada.Cells["pk_id_reportes"].Value);
+                string sRuta = filaSeleccionada.Cells["Cmp_Ruta_Reporte"].Value?.ToString();
+                string sTitulo = filaSeleccionada.Cells["Cmp_Titulo_Reporte"].Value?.ToString();
+                iCodigoRuta = Convert.ToInt32(filaSeleccionada.Cells["Pk_Id_Reporte"].Value);
                 iCodigoFilaSeleccionada = iCodigoRuta;
                 Txt_reportes_ruta.Text = sRuta;
                 Txt_Titulo.Text = sTitulo;
+
             }
             // Fin de código de: Anderson Trigueros con carné: 0901-22-6961 en la fecha 12/09/2025
         }
