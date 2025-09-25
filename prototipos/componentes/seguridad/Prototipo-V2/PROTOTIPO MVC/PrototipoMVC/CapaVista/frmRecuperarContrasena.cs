@@ -98,7 +98,7 @@ namespace CapaVista
 
             if (cls_recuperar.fun_validar_token(iIdUsuario, sToken, out int idToken))
             {
-                string sHashNueva = SeguridadHash.HashearSHA256(sNueva);
+                string sHashNueva = Cls_SeguridadHashControlador.HashearSHA256(sNueva);
                 if (cls_recuperar.fun_cambiar_contrasena(iIdUsuario, sHashNueva, idToken))
                 {
                     MessageBox.Show("Contraseña actualizada correctamente.");

@@ -65,7 +65,7 @@
     <Compile Include="SentenciaLogin.cs" />
     <Compile Include="Cls_sentenciaRecuperarContrasena.cs" />
     <Compile Include="Cls_Perfiles.cs" />
-    <Compile Include="SentenciasModulos.cs" />
+    <Compile Include="Cls_Modulo_Sentencias.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

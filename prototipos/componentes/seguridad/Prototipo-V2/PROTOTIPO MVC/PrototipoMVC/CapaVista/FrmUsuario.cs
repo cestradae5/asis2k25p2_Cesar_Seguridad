@@ -84,7 +84,7 @@ namespace CapaVista
                 int fkIdEmpleado = selected.Id;
 
                 // Hashear la contraseña
-                string contraseñaHasheada = SeguridadHash.HashearSHA256(Txt_Contraseña.Text);
+                string contraseñaHasheada = Cls_SeguridadHashControlador.HashearSHA256(Txt_Contraseña.Text);
 
                 usuarioControlador.InsertarUsuario(
                     fkIdEmpleado,
@@ -124,7 +124,7 @@ namespace CapaVista
                 var selected = (dynamic)Cbo_Empleado.SelectedItem;
                 int fkIdEmpleado = selected.Id;
 
-                string contraseñaHasheada = SeguridadHash.HashearSHA256(Txt_Contraseña.Text);
+                string contraseñaHasheada = Cls_SeguridadHashControlador.HashearSHA256(Txt_Contraseña.Text);
 
                 usuarioControlador.ActualizarUsuario(
                     idUsuarioSeleccionado,

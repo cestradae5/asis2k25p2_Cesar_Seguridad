@@ -27,7 +27,7 @@ namespace CapaVista
         private (bool ingresar, bool consultar, bool modificar, bool eliminar, bool imprimir)? permisosActuales = null;
 
         // Instancia del controlador
-        ControladorModulos cm = new ControladorModulos();
+        Cls_ModulosControlador cm = new Cls_ModulosControlador();
 
         public frmModulo()
         {
@@ -69,7 +69,7 @@ namespace CapaVista
             string nombre = Txt_nombre.Text;
             string descripcion = Txt_descripcion.Text;
 
-            // Validar los RadioButtons -> ahora solo 1 columna estado_modulo
+            
             byte estado = (Rdb_habilitado.Checked) ? (byte)1 : (byte)0;
 
             DataRow dr = cm.BuscarModulo(id);
@@ -77,12 +77,19 @@ namespace CapaVista
 
             if (dr == null)
             {
+                // Valida  que no existe un Id repetido
+                if (cm.BuscarModulo(id) != null)
+                {
+                    MessageBox.Show("El Id ingresado ya existe. Use otro.");
+                    return;
+                }
+
                 // Insertar
                 resultado = cm.InsertarModulo(id, nombre, descripcion, estado);
             }
             else
             {
-                // Modificar
+                // Modificar 
                 resultado = cm.ModificarModulo(id, nombre, descripcion, estado);
             }
 
@@ -94,8 +101,9 @@ namespace CapaVista
                 // Registrar en Bitácora - Arón Ricardo Esquit Silva - 0901-22-13036
                 ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, 1, "Guardar módulo", true);
 
-                // ✅ Limpiar campos después de guardar
+                //Limpiar campos después de guardar
                 LimpiarCampos();
+                Txt_id.Enabled = true; // Reactivar para nuevos registros
             }
             else
             {
@@ -110,9 +118,12 @@ namespace CapaVista
             Txt_descripcion.Clear();
             Rdb_habilitado.Checked = false;
             Rdb_inabilitado.Checked = false;
+
+            Txt_id.Enabled = true; 
+
             MessageBox.Show("Campos listos para nuevo registro");
         }
-
+         // elimina un dato
         private void Btn_eliminar_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(Txt_id.Text))
@@ -143,8 +154,9 @@ namespace CapaVista
                 // Registrar en Bitácora - Arón Ricardo Esquit Silva 0901-22-13036
                 ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, 1, "Eliminar módulo", true);
 
-                // ✅ Limpiar campos después de eliminar
+                // Limpiar campos después de eliminar
                 LimpiarCampos();
+                Txt_id.Enabled = true; // Rehabilitar el Id después de eliminar
             }
             else
             {
@@ -166,7 +178,7 @@ namespace CapaVista
             DataRow dr = cm.BuscarModulo(id);
             if (dr != null)
             {
-                // Cambiar los nombres de columna para que coincidan con tu SELECT
+             
                 Txt_id.Text = dr["Pk_Id_Modulo"].ToString();
                 Txt_nombre.Text = dr["Cmp_Nombre_Modulo"].ToString();
                 Txt_descripcion.Text = dr["Cmp_Descripcion_Modulo"].ToString();
@@ -174,6 +186,9 @@ namespace CapaVista
                 bool estado = Convert.ToBoolean(dr["Cmp_Estado_Modulo"]);
                 Rdb_habilitado.Checked = estado;
                 Rdb_inabilitado.Checked = !estado;
+
+                //  Bloquear el Id para que no pueda ser modificado si esta en uso
+                Txt_id.Enabled = false;
 
                 // Limpiar el ComboBox después de buscar
                 Cbo_busqueda.SelectedIndex = -1;
@@ -184,7 +199,7 @@ namespace CapaVista
             }
         }
 
-        // ✅ Función para limpiar TextBox, RadioButtons y ComboBox
+        // limpia TextBox, RadioButtons y ComboBox
         private void LimpiarCampos()
         {
             Txt_id.Clear();

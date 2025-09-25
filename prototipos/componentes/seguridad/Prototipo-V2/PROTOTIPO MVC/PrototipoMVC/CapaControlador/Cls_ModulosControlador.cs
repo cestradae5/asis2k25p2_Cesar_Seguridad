@@ -3,9 +3,9 @@ using CapaModelo;
 
 namespace CapaControlador
 {
-    public class ControladorModulos
+    public class Cls_ModulosControlador
     {
-        SentenciasModulos snm = new SentenciasModulos();
+        Cls_Modulo_Sentencias snm = new Cls_Modulo_Sentencias();
 
         public string[] ItemsModulos()
         {

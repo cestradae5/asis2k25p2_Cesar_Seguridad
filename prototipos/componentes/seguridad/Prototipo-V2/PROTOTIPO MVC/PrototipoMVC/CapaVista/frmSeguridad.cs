@@ -18,9 +18,6 @@ namespace CapaVista
         Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador();
         private int childFormNumber = 0;
 
-        //Ruben Armando Lopez Luch
-        //0901-20-4620
-        // Enum con todos los botones del menú
         public enum MenuOpciones
         {
             Archivo,
@@ -38,19 +35,11 @@ namespace CapaVista
         public frmSeguridad()
         {
             InitializeComponent();
-
-            //Ruben Armando Lopez Luch
-            //0901-20-4620
             InicializarMenuItems();
             InicializarBotonesPorDefecto();
-
-
-            // habilitar botones segun permisos 
             HabilitarBotonesPorPermisos(Cls_UsuarioConectado.iIdUsuario);
         }
 
-        //Ruben Armando Lopez Luch
-        //0901-20-4620
         private void InicializarMenuItems()
         {
             menuItems = new Dictionary<MenuOpciones, ToolStripMenuItem>
@@ -62,12 +51,10 @@ namespace CapaVista
                 { MenuOpciones.Herramientas, herramientasToolStripMenuItem },
                 { MenuOpciones.Ayuda, ayudaToolStripMenuItem },
                 { MenuOpciones.Asignaciones, asignacionesToolStripMenuItem },
-                { MenuOpciones.Modulos, modulosToolStripMenuItem }
+                
             };
         }
 
-        //Ruben Armando Lopez Luch
-        //0901-20-4620
         public void InicializarBotonesPorDefecto()
         {
             foreach (var opcion in menuItems.Keys)
@@ -77,40 +64,31 @@ namespace CapaVista
                     case MenuOpciones.Archivo:
                     case MenuOpciones.Herramientas:
                     case MenuOpciones.Ayuda:
-                    //case MenuOpciones.Asignaciones:
-                        menuItems[opcion].Enabled = true; 
+                        menuItems[opcion].Enabled = true;
                         break;
                     default:
-                        menuItems[opcion].Enabled = false; 
+                        menuItems[opcion].Enabled = false;
                         break;
                 }
             }
         }
 
-        //Ruben Armando Lopez Luch
-        //0901-20-4620
         public void HabilitarBotonesPorPermisos(int idUsuario)
         {
-            InicializarBotonesPorDefecto(); 
-
+            InicializarBotonesPorDefecto();
             SentenciaAsignacionUsuarioAplicacion modelo = new SentenciaAsignacionUsuarioAplicacion();
             DataTable dtPermisos = modelo.ObtenerPermisosPorUsuario(idUsuario);
-
             bool tienePermisoSeguridad = dtPermisos.AsEnumerable()
                 .Any(row => row["nombre_modulo"].ToString() == "Seguridad");
-
             if (tienePermisoSeguridad)
             {
                 menuItems[MenuOpciones.Catalogos].Enabled = true;
                 menuItems[MenuOpciones.Procesos].Enabled = true;
                 menuItems[MenuOpciones.Reportes].Enabled = true;
                 menuItems[MenuOpciones.Asignaciones].Enabled = true;
-                menuItems[MenuOpciones.Modulos].Enabled = true;
             }
         }
 
-        //Ruben Armando Lopez Luch
-        //0901-20-4620
         public void HabilitarBotonesSeguridad(string modulo)
         {
             if (modulo == "Seguridad")
@@ -204,14 +182,10 @@ namespace CapaVista
 
         private void cerrarSesiónToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // Registrar en Bitácora - Arón Ricardo Esquit Silva  0901-22-13036
             ctrlBitacora.RegistrarCierreSesion(Cls_UsuarioConectado.iIdUsuario);
-
-
             frmPrincipal ventanaPrincipal = new frmPrincipal();
             ventanaPrincipal.Show();
             this.Close();
-
         }
 
         private void btn_aplicacion_Click(object sender, EventArgs e)
@@ -223,7 +197,6 @@ namespace CapaVista
         {
             frmEmpleados formEmpleado = new frmEmpleados();
             formEmpleado.Show();
-
         }
 
         private void perfilesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -243,18 +216,17 @@ namespace CapaVista
             asig_perfil.Show();
         }
 
-
         private void perfilesToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             frmPerfiles perfiles = new frmPerfiles();
             perfiles.Show();
         }
 
-        private void modulosToolStripMenuItem_Click(object sender, EventArgs e)
+        private void modulosDeCatalogoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmModulo formModulo = new frmModulo();
+            formModulo.MdiParent = this;
             formModulo.Show();
-
         }
 
         private void Btn_Aplicacion_Click_1(object sender, EventArgs e)
@@ -263,13 +235,10 @@ namespace CapaVista
             formAplicacion.Show();
         }
 
-
-        //Bitacora 
-        //Aron Ricardo Esquit Silva    0901-22-13036
         private void Btn_Bitacora_Click(object sender, EventArgs e)
         {
             Frm_Bitacora frm = new Frm_Bitacora();
-            frm.MdiParent = this;   
+            frm.MdiParent = this;
             frm.Show();
         }
 
@@ -282,12 +251,9 @@ namespace CapaVista
         private void usuariosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FrmUsuario frm = new FrmUsuario();
-
-           
             frm.Show();
         }
 
-        // 0901-20-4620 Ruben Armando Lopez Luch
         private void cambiarContraseñaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frm_cambiar_contrasena ventana = new frm_cambiar_contrasena(Cls_sesion.iUsuarioId);
@@ -298,6 +264,12 @@ namespace CapaVista
         {
             FrmPermisosPerfiles permisoperfil = new FrmPermisosPerfiles();
             permisoperfil.Show();
+        }
+
+        private void modulosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+           frmModulo modulo = new frmModulo();
+            modulo.Show();
         }
     }
 }

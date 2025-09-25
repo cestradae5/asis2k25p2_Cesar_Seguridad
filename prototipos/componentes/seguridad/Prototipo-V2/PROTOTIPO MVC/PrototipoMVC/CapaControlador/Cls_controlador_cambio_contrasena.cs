@@ -16,7 +16,7 @@ namespace CapaControlador
         public bool fun_validar_contrasena(int iIdUsuario, string sContrasenaActual)
         {
 
-            string sHashActual = SeguridadHash.HashearSHA256(sContrasenaActual);
+            string sHashActual = Cls_SeguridadHashControlador.HashearSHA256(sContrasenaActual);
             return modelo.fun_validar_contrasena_actual(iIdUsuario, sHashActual);
         }
 
@@ -24,7 +24,7 @@ namespace CapaControlador
         public bool fun_actualizar_Contrasena(int idUsuario, string nuevaContrasena)
         {
             
-            string fHashNueva = SeguridadHash.HashearSHA256(nuevaContrasena);
+            string fHashNueva = Cls_SeguridadHashControlador.HashearSHA256(nuevaContrasena);
             return modelo.fun_cambiar_contrasena(idUsuario, fHashNueva);
         }
     }
