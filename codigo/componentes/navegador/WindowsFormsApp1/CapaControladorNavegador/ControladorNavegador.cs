@@ -17,32 +17,69 @@ namespace Capa_Controlador_Navegador
         private DAOGenerico dao = new DAOGenerico();
 
         // ---------------------VALIDANDO ALIAS-----------------------------------------
+        //===================== Nuevo Método Validar Columnas =============================
+        //===================== Kevin Natareno ============================================
+        private bool ValidarColumnas(string tabla, string[] columnasEnviadas, out List<string> columnasBD)
+        {
+            columnasBD = dao.ObtenerColumnas(tabla);
+
+            // Validar cantidad
+            if (columnasEnviadas.Length != columnasBD.Count)
+            {
+                MessageBox.Show($"⚠️ La cantidad de columnas no coincide con la base de datos.\n" +
+                                $"Esperadas: {columnasBD.Count}, Enviadas: {columnasEnviadas.Length}");
+                return false;
+            }
+
+            // Validar nombres
+            var columnasFaltantes = new List<string>();
+            foreach (var c in columnasEnviadas)
+            {
+                if (!columnasBD.Contains(c, StringComparer.OrdinalIgnoreCase))
+                    columnasFaltantes.Add(c);
+            }
+
+            if (columnasFaltantes.Count > 0)
+            {
+                string msg = "⚠️ Las siguientes columnas no existen en la tabla '" + tabla + "':\n" +
+                             string.Join(", ", columnasFaltantes);
+                MessageBox.Show(msg);
+                return false;
+            }
+
+            return true;
+        }
+        //=======================================================================================================
+
 
         // Asigna alias validando tabla y columnas
         // ======================= Pedro Ibañez =======================
         // Creacion de Metodo: Asignar Alias Original, generación de Textboxes antes de las modificaciones
-        public bool AsignarAlias(string[] SAlias, Control contenedor, int startX, int startY)
+        public bool AsignarAlias(string[] SAlias, Control contenedor, int startX, int startY) //modificacion de método, ahora es tipo bool - Kevin Natareno
         {
+            // ================= Hacer las validaciones - Kevin Natareno ==================================
+            // Validar que la tabla exista
             if (!dao.ExisteTabla(SAlias[0]))
             {
                 MessageBox.Show($"❌ La tabla '{SAlias[0]}' no existe en la base de datos.");
                 return false;
             }
 
-            List<string> columnas = dao.ObtenerColumnas(SAlias[0]);
+            // Validar columnas
+            if (!ValidarColumnas(SAlias[0], SAlias.Skip(1).ToArray(), out List<string> columnasBD))
+                return false; 
+            //==============================================================================================
+
+
+            // Crear controles
             int spacingY = 30;
             int creados = 0;
 
-            for (int i = 1; i < SAlias.Length; i++)
+            List<Label> labels = new List<Label>();
+            List<ComboBox> combos = new List<ComboBox>();
+
+            foreach (var campo in SAlias.Skip(1))
             {
-                string campo = SAlias[i];
-
-                if (!columnas.Contains(campo))
-                {
-                    MessageBox.Show($"⚠️ La columna '{campo}' no existe en la tabla '{SAlias[0]}'.");
-                    return false;
-                }
-
                 Label lbl = new Label
                 {
                     Text = campo + ":",
@@ -50,39 +87,39 @@ namespace Capa_Controlador_Navegador
                     Location = new System.Drawing.Point(startX, startY + (creados * spacingY))
                 };
 
-                // creacion de Combobox hecho por Fernando Jose Cahuex Gonzalez 0901-22-14979
-                ComboBox Cbo = new ComboBox
+                ComboBox cbo = new ComboBox
                 {
                     Name = "Cbo_" + campo,
                     Width = 150,
                     Location = new System.Drawing.Point(startX + 100, startY + (creados * spacingY)),
                 };
 
-                List<string> items = sentencias.ObtenerValoresColumna(SAlias[0], campo); 
+                List<string> items = sentencias.ObtenerValoresColumna(SAlias[0], campo);
                 foreach (var item in items)
-                {
-                    Cbo.Items.Add(item);
-                }
+                    cbo.Items.Add(item);
 
-                // bloquear combobox de la PK Hecho por Fernando Jose Cahuex Gonzalez 0901-22-14979
+                // Bloquear combobox de la PK
                 if (creados == 0)
                 {
-                    Cbo.SelectedIndexChanged += (s, e) =>
+                    cbo.SelectedIndexChanged += (s, e) =>
                     {
-                        if (Cbo.SelectedIndex >= 0)
-                        {
-                            Cbo.Enabled = false;
-                        }
+                        if (cbo.SelectedIndex >= 0)
+                            cbo.Enabled = false;
                     };
                 }
 
-                contenedor.Controls.Add(Cbo);
-                contenedor.Controls.Add(lbl);
+                labels.Add(lbl);
+                combos.Add(cbo);
                 creados++;
             }
 
+            // Agregar controles al contenedor
+            foreach (var lbl in labels) contenedor.Controls.Add(lbl);
+            foreach (var cbo in combos) contenedor.Controls.Add(cbo);
+
             return creados > 0;
         }
+
 
 
         private DataGridView dgv;
@@ -91,7 +128,8 @@ namespace Capa_Controlador_Navegador
         {
             dgv = grid;
         }
-
+        //================Kevin Natareno===================================================
+        //===============Botones de mover al inicio y mover al final========================
         public void MoverAlInicio()
         {
             if (dgv != null && dgv.Rows.Count > 0)
@@ -104,15 +142,29 @@ namespace Capa_Controlador_Navegador
 
         public void MoverAlFin()
         {
-            if (dgv != null && dgv.Rows.Count > 0)
-            {
-                int ultimaFila = dgv.Rows.Count - 1;
-                dgv.ClearSelection();
-                dgv.Rows[ultimaFila].Selected = true;
-                dgv.CurrentCell = dgv.Rows[ultimaFila].Cells[0];
-            }
+            if (dgv == null || dgv.Rows.Count == 0) return;
+
+            dgv.ClearSelection();
+
+            // Última fila real
+            int ultimaFila = dgv.Rows.Count - 1;
+            if (dgv.AllowUserToAddRows)
+                ultimaFila -= 1;
+
+            if (ultimaFila < 0) return;
+
+            // Primero fijamos el CurrentCell en la primera columna visible
+            dgv.CurrentCell = dgv.Rows[ultimaFila].Cells[0];
+
+            // Ahora seleccionamos la fila
+            dgv.Rows[ultimaFila].Selected = true;
+
+            // Aseguramos que sea visible
+            dgv.FirstDisplayedScrollingRowIndex = ultimaFila;
         }
-//---------------------------------------------------------------------------------------------------------
+
+
+        //===============================================================================
 
         public void Insertar_Datos(Control contenedor, string[] SAlias)
         {
