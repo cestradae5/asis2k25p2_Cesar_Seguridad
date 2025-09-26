@@ -20,6 +20,7 @@ namespace Capa_Vista_Navegador
         public Navegador()
         {
             InitializeComponent();
+
             // Los botones se inicializan en su estado inicial, Reportes, ingresar e imprimir
             BotonesEstadoInicial();
         }
@@ -59,17 +60,8 @@ namespace Capa_Vista_Navegador
         {
             if (Dgv_Datos == null)
             {
-                Dgv_Datos = new DataGridView();
-                Dgv_Datos.Name = "Dgv_Datos";
-                Dgv_Datos.ScrollBars = ScrollBars.None;
-                Dgv_Datos.BackgroundColor = Color.White;
-                Dgv_Datos.ColumnHeadersDefaultCellStyle.Font = new Font("Rockwell", 10, FontStyle.Bold);
-                Dgv_Datos.Location = new System.Drawing.Point(10, 250);
-                Dgv_Datos.Size = new System.Drawing.Size(1100, 200);
-                Dgv_Datos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-                Dgv_Datos.DefaultCellStyle.Font = new Font("Rockwell", 10, FontStyle.Regular);
-                Dgv_Datos.ReadOnly = true; 
-                this.Controls.Add(Dgv_Datos);
+                //llama metodo de creacion DGV
+                DataGridView dgv = ctrl.CrearDataGridView();
 
                 // ======================= Stevens Cambranes = 20/09/2025 =======================
                 ctrl.AsignarDataGridView(Dgv_Datos);

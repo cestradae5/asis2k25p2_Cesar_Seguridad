@@ -14,18 +14,16 @@ namespace PruebaEjecucionNavegador
     {
         public Form1()
         {
+            this.WindowState = FormWindowState.Maximized;//tamaño completo
             InitializeComponent();
             Capa_Controlador_Navegador.Cls_ConfiguracionDataGridView config = new Capa_Controlador_Navegador.Cls_ConfiguracionDataGridView
             {
                 Ancho = 1100,
                 Alto = 200,
-                PosX = 10,
-                PosY = 250,
                 ColorFondo = Color.White,
                 TipoScrollBars = ScrollBars.Both,
                 Nombre = "dgv_empleados"
             };
-            
             string[] columnas = { "padre", "id_padre", "nombre", "apellido", "id_hijo" };
             navegador1.configurarDataGridView(config);
             navegador1.SNombreTabla = columnas[0];

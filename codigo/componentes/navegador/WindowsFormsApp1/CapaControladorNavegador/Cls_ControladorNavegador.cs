@@ -192,7 +192,7 @@ namespace Capa_Controlador_Navegador
             }
         }
 
-
+       
 
         public DataTable LlenarTabla(string tabla, string[] SAlias) 
         {
@@ -316,6 +316,36 @@ namespace Capa_Controlador_Navegador
                 cbo.Text = cell?.Value?.ToString() ?? string.Empty;
             }
         }
+
+       //======================= Pedro Ibañez ======================
+        //Modificacion de metodo: Crea DataGridView y recibe parametros para no chocar con ComboBoxes
+        public DataGridView CrearDataGridView()
+        {
+           // int PosYdgv = startY + 20; ver posiciones despues
+
+
+            DataGridView dgv = new DataGridView();
+            dgv.Name = "Dgv_Datos";
+            dgv.ScrollBars = ScrollBars.None;
+            dgv.BackgroundColor = Color.White;
+
+            // Fuente de encabezados
+            dgv.ColumnHeadersDefaultCellStyle.Font = new Font("Rockwell", 10, FontStyle.Bold);
+
+            // Fuente de celdas
+            dgv.DefaultCellStyle.Font = new Font("Rockwell", 10, FontStyle.Regular);
+
+            dgv.Location = new System.Drawing.Point(10, 250);
+            dgv.Size = new System.Drawing.Size(1100, 200);
+            dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgv.ReadOnly = true;
+
+            // Asignar al atributo privado
+            this.dgv = dgv;
+
+            return dgv; 
+        }
+
 
         // ======================= Refrescar las opciones de cada ComboBox con valores actuales de la BD = Stevens Cambranes = 20/09/2025 =======================
         public void RefrescarCombos(Control contenedor, string tabla, string[] columnas)
