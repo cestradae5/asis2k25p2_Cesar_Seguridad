@@ -16,14 +16,14 @@ namespace PrototipoPrincipal
             Application.SetCompatibleTextRenderingDefault(false);
 
             // Mostrar Splash
-            using (var splash = new CapaVista.frmSlash())
+            using (var splash = new Capa_Vista_Seguridad.frmSlash())
             {
                 splash.ShowDialog();
             }
 
             // esto muestra el Login despues
 
-            Application.Run(new CapaVista.frmLogin());
+            Application.Run(new Capa_Vista_Seguridad.frmLogin());
         }
     }
 }
