@@ -16,7 +16,7 @@ namespace Capa_Vista_Reporteador
         {
             InitializeComponent();
 
-            // 🔹 Asegurar que el CrystalReportViewer se ajuste al formulario
+            //Asegurar que el CrystalReportViewer se ajuste al formulario
             crystalReportViewer1.Dock = DockStyle.Fill;
         }
 
