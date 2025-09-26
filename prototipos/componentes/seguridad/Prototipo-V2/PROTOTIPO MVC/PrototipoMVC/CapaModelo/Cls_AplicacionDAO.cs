@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Odbc;
 
-namespace CapaModelo
+namespace Capa_Modelo_Seguridad
 {
     public class Cls_AplicacionDAO
     {
@@ -48,11 +48,11 @@ namespace CapaModelo
                 {
                     Cls_Aplicacion app = new Cls_Aplicacion
                     {
-                        PkIdAplicacion = reader.GetInt32(0),
-                        FkIdReporte = reader.IsDBNull(1) ? (int?)null : reader.GetInt32(1),
-                        NombreAplicacion = reader.GetString(2),
-                        DescripcionAplicacion = reader.GetString(3),
-                        EstadoAplicacion = reader.GetBoolean(4)
+                        iPkIdAplicacion = reader.GetInt32(0),
+                        iFkIdReporte = reader.IsDBNull(1) ? (int?)null : reader.GetInt32(1),
+                        sNombreAplicacion = reader.GetString(2),
+                        sDescripcionAplicacion = reader.GetString(3),
+                        bEstadoAplicacion = reader.GetBoolean(4)
                     };
                     lista.Add(app);
                 }
@@ -67,11 +67,11 @@ namespace CapaModelo
             {
                 OdbcCommand cmd = new OdbcCommand(SQL_INSERT, conn);
 
-                cmd.Parameters.AddWithValue("@Pk_Id_Aplicacion", app.PkIdAplicacion);
-                cmd.Parameters.AddWithValue("@Fk_Id_Reporte_Aplicacion", app.FkIdReporte.HasValue ? (object)app.FkIdReporte.Value : DBNull.Value);
-                cmd.Parameters.AddWithValue("@Cmp_Nombre_Aplicacion", app.NombreAplicacion);
-                cmd.Parameters.AddWithValue("@Cmp_Descripcion_Aplicacion", app.DescripcionAplicacion);
-                cmd.Parameters.AddWithValue("@Cmp_Estado_Aplicacion", app.EstadoAplicacion);
+                cmd.Parameters.AddWithValue("@Pk_Id_Aplicacion", app.iPkIdAplicacion);
+                cmd.Parameters.AddWithValue("@Fk_Id_Reporte_Aplicacion", app.iFkIdReporte.HasValue ? (object)app.iFkIdReporte.Value : DBNull.Value);
+                cmd.Parameters.AddWithValue("@Cmp_Nombre_Aplicacion", app.sNombreAplicacion);
+                cmd.Parameters.AddWithValue("@Cmp_Descripcion_Aplicacion", app.sDescripcionAplicacion);
+                cmd.Parameters.AddWithValue("@Cmp_Estado_Aplicacion", app.bEstadoAplicacion);
 
                 return cmd.ExecuteNonQuery();
             }
@@ -84,11 +84,11 @@ namespace CapaModelo
             {
                 OdbcCommand cmd = new OdbcCommand(SQL_UPDATE, conn);
 
-                cmd.Parameters.AddWithValue("@Fk_Id_Reporte_Aplicacion", app.FkIdReporte.HasValue ? (object)app.FkIdReporte.Value : DBNull.Value);
-                cmd.Parameters.AddWithValue("@Cmp_Nombre_Aplicacion", app.NombreAplicacion);
-                cmd.Parameters.AddWithValue("@Cmp_Descripcion_Aplicacion", app.DescripcionAplicacion);
-                cmd.Parameters.AddWithValue("@Cmp_Estado_Aplicacion", app.EstadoAplicacion);
-                cmd.Parameters.AddWithValue("@Pk_Id_Aplicacion", app.PkIdAplicacion);
+                cmd.Parameters.AddWithValue("@Fk_Id_Reporte_Aplicacion", app.iFkIdReporte.HasValue ? (object)app.iFkIdReporte.Value : DBNull.Value);
+                cmd.Parameters.AddWithValue("@Cmp_Nombre_Aplicacion", app.sNombreAplicacion);
+                cmd.Parameters.AddWithValue("@Cmp_Descripcion_Aplicacion", app.sDescripcionAplicacion);
+                cmd.Parameters.AddWithValue("@Cmp_Estado_Aplicacion", app.bEstadoAplicacion);
+                cmd.Parameters.AddWithValue("@Pk_Id_Aplicacion", app.iPkIdAplicacion);
 
                 return cmd.ExecuteNonQuery();
             }
@@ -146,11 +146,11 @@ namespace CapaModelo
                 {
                     app = new Cls_Aplicacion
                     {
-                        PkIdAplicacion = reader.GetInt32(0),
-                        FkIdReporte = reader.IsDBNull(1) ? (int?)null : reader.GetInt32(1),
-                        NombreAplicacion = reader.GetString(2),
-                        DescripcionAplicacion = reader.GetString(3),
-                        EstadoAplicacion = reader.GetBoolean(4)
+                        iPkIdAplicacion = reader.GetInt32(0),
+                        iFkIdReporte = reader.IsDBNull(1) ? (int?)null : reader.GetInt32(1),
+                        sNombreAplicacion = reader.GetString(2),
+                        sDescripcionAplicacion = reader.GetString(3),
+                        bEstadoAplicacion = reader.GetBoolean(4)
                     };
                 }
             }

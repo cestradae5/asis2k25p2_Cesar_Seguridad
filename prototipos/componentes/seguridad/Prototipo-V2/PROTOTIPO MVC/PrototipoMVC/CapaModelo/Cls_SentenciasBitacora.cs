@@ -3,7 +3,7 @@ using System;
 using System.Data;
 using System.Net;
 
-namespace CapaModelo
+namespace Capa_Modelo_Seguridad
 {
     public class Cls_SentenciasBitacora
     {

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CapaVista {
+namespace Capa_Vista_Seguridad {
     using System;
     using System.ComponentModel;
     using CrystalDecisions.Shared;
@@ -41,7 +41,7 @@ namespace CapaVista {
         
         public override string FullResourceName {
             get {
-                return "CapaVista.Reporte_usuario.rpt";
+                return "Capa_Vista_Seguridad.Reporte_usuario.rpt";
             }
             set {
                 // Do nothing

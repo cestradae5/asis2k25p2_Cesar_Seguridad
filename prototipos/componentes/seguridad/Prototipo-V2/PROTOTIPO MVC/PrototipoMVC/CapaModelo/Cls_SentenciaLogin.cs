@@ -1,7 +1,7 @@
 ﻿using System; //0901-22-2929 Pablo Jose Quiroa Martinez
 using System.Data.Odbc;
 
-namespace CapaModelo
+namespace Capa_Modelo_Seguridad
 {
     public class Cls_SentenciaLogin
     {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Data.Odbc;
 
 // 0901-20-4620 Ruben Armando Lopez Luch
-namespace CapaModelo
+namespace Capa_Modelo_Seguridad
 {
     public class Cls_usuario_cambio_contrasena
     {

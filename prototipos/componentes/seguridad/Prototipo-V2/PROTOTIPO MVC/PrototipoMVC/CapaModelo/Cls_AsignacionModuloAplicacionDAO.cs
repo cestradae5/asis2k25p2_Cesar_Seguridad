@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Data.Odbc;
 using System.Data;
 
-namespace CapaModelo
+namespace Capa_Modelo_Seguridad
 {
     public class Cls_AsignacionModuloAplicacionDAO
     {

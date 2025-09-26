@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
-using CapaControlador;
+using Capa_Controlador_Seguridad;
 
 // 0901-20-4620 Ruben Armando Lopez Luch
-namespace CapaVista
+namespace Capa_Vista_Seguridad
 {
     public partial class frm_cambiar_contrasena : Form
     {

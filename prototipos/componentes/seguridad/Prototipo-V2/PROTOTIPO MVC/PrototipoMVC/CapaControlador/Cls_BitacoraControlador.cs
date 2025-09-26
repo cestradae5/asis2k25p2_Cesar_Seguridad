@@ -5,9 +5,9 @@ using System.IO;
 using System.Text;
 using System.Drawing;
 using System.Drawing.Printing;
-using CapaModelo;
+using Capa_Modelo_Seguridad;
 
-namespace CapaControlador
+namespace Capa_Controlador_Seguridad
 {
     public class Cls_BitacoraControlador
     {

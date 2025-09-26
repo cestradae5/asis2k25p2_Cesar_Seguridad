@@ -9,10 +9,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
-using CapaControlador;
-using CapaModelo;
+using Capa_Controlador_Seguridad;
+using Capa_Modelo_Seguridad;
 
-namespace CapaVista
+namespace Capa_Vista_Seguridad
 {
     public partial class FrmAplicacion : Form
     {
@@ -62,8 +62,8 @@ namespace CapaVista
 
             // Crear fuente de autocompletado
             AutoCompleteStringCollection autoComplete = new AutoCompleteStringCollection();
-            autoComplete.AddRange(listaAplicaciones.Select(a => a.PkIdAplicacion.ToString()).ToArray());
-            autoComplete.AddRange(listaAplicaciones.Select(a => a.NombreAplicacion).ToArray());
+            autoComplete.AddRange(listaAplicaciones.Select(a => a.iPkIdAplicacion.ToString()).ToArray());
+            autoComplete.AddRange(listaAplicaciones.Select(a => a.sNombreAplicacion).ToArray());
             Cbo_buscar.AutoCompleteCustomSource = autoComplete;
 
             // Configurar display
@@ -75,8 +75,8 @@ namespace CapaVista
             {
                 Cbo_buscar.Items.Add(new
                 {
-                    Display = $"{app.PkIdAplicacion} - {app.NombreAplicacion}",
-                    Id = app.PkIdAplicacion
+                    Display = $"{app.iPkIdAplicacion} - {app.sNombreAplicacion}",
+                    Id = app.iPkIdAplicacion
                 });
             }
         }
@@ -121,7 +121,7 @@ namespace CapaVista
                 Btn_buscar.Enabled = false;        
                 Btn_nuevo.Enabled = false; 
                 Btn_modificar.Enabled = false;
-                Btn_Consultar_Asignacion.Enabled = false;
+                //Btn_Consultar_Asignacion.Enabled = false;
                 return;
             }
 
@@ -132,7 +132,7 @@ namespace CapaVista
             Btn_buscar.Enabled = p.consultar;
             Btn_nuevo.Enabled = p.ingresar;
             Btn_modificar.Enabled = p.modificar;
-            Btn_Consultar_Asignacion.Enabled = p.consultar;
+            //Btn_Consultar_Asignacion.Enabled = p.consultar;
 
         }
 
@@ -144,11 +144,11 @@ namespace CapaVista
 
         private void MostrarAplicacion(Cls_Aplicacion app)
         {
-            Txt_id_aplicacion.Text = app.PkIdAplicacion.ToString();
-            Txt_Nombre_aplicacion.Text = app.NombreAplicacion;
-            Txt_descripcion.Text = app.DescripcionAplicacion;
-            Rdb_estado_activo.Checked = app.EstadoAplicacion;
-            Rdb_inactivo.Checked = !app.EstadoAplicacion;
+            Txt_id_aplicacion.Text = app.iPkIdAplicacion.ToString();
+            Txt_Nombre_aplicacion.Text = app.sNombreAplicacion;
+            Txt_descripcion.Text = app.sDescripcionAplicacion;
+            Rdb_estado_activo.Checked = app.bEstadoAplicacion;
+            Rdb_inactivo.Checked = !app.bEstadoAplicacion;
         }
 
         private void Btn_buscar_Click(object sender, EventArgs e)
@@ -192,7 +192,7 @@ namespace CapaVista
 
                 // Obtener módulo asignado
                 Cls_AsignacionModuloAplicacionControlador asignacionCtrl = new Cls_AsignacionModuloAplicacionControlador();
-                int? idModulo = asignacionCtrl.ObtenerModuloPorAplicacion(appEncontrada.PkIdAplicacion);
+                int? idModulo = asignacionCtrl.ObtenerModuloPorAplicacion(appEncontrada.iPkIdAplicacion);
 
                 if (idModulo.HasValue)
                 {

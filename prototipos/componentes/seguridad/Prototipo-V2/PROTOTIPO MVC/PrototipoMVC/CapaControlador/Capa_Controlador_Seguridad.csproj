@@ -7,8 +7,8 @@
     <ProjectGuid>{6C9DDB46-4E24-4D18-B644-C350DADA2F05}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CapaControlador</RootNamespace>
-    <AssemblyName>CapaControlador</AssemblyName>
+    <RootNamespace>Capa_Controlador_Seguridad</RootNamespace>
+    <AssemblyName>Capa_Controlador_Seguridad</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -31,9 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CapaModelo, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\CapaModelo\bin\Debug\CapaModelo.dll</HintPath>
+    <Reference Include="Capa_Modelo_Seguridad">
+      <HintPath>..\CapaModelo\bin\Debug\Capa_Modelo_Seguridad.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Windows.Forms;
-using CapaControlador;
+using Capa_Controlador_Seguridad;
 using System.Data;
 using System.Runtime.InteropServices;
-using CapaModelo;
+using Capa_Modelo_Seguridad;
 
-namespace CapaVista
+namespace Capa_Vista_Seguridad
 {
     /* Marcos Andres Velasquez Alcántara 0901-21-1115 */
     public partial class frmasignacion_aplicacion_usuario : Form
@@ -98,7 +98,7 @@ namespace CapaVista
             dtAplicacion.Columns.Add("pk_id_aplicacion", typeof(int));
             dtAplicacion.Columns.Add("nombre_aplicacion", typeof(string));
             foreach (var app in lista)
-                dtAplicacion.Rows.Add(app.PkIdAplicacion, app.NombreAplicacion);
+                dtAplicacion.Rows.Add(app.iPkIdAplicacion, app.sNombreAplicacion);
 
             Cbo_Aplicaciones.DataSource = dtAplicacion;
             Cbo_Aplicaciones.DisplayMember = "nombre_aplicacion";

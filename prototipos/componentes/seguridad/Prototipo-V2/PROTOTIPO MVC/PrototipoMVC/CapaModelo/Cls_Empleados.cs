@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-namespace CapaModelo
+namespace Capa_Modelo_Seguridad
 {
     public class Cls_Empleado
     {

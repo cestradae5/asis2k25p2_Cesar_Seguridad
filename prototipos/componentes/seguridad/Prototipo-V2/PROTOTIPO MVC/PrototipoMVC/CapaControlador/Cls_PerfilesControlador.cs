@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using CapaModelo;
+using Capa_Modelo_Seguridad;
 //Brandon Hernandez 0901-22-9663
-namespace CapaControlador
+namespace Capa_Controlador_Seguridad
 {
     public class Cls_PerfilesControlador
     {

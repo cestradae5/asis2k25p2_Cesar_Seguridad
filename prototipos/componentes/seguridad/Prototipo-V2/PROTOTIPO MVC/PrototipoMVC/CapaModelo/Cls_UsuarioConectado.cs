@@ -1,7 +1,7 @@
 ﻿//Registrar en Bitácora - Arón Ricardo Esquit Silva - 0901-22-13036 - 12/09/2025
 using System;
 
-namespace CapaModelo
+namespace Capa_Modelo_Seguridad
 {
     public static class Cls_UsuarioConectado
     {

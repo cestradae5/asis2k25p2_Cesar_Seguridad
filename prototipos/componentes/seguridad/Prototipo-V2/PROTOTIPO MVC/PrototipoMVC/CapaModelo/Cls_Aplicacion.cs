@@ -4,26 +4,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-namespace CapaModelo
+namespace Capa_Modelo_Seguridad
 {
     public class Cls_Aplicacion
     {
-        public int PkIdAplicacion { get; set; }
-        public int? FkIdReporte { get; set; }
-        public string NombreAplicacion { get; set; }
-        public string DescripcionAplicacion { get; set; }
+        public int iPkIdAplicacion { get; set; }
+        public int? iFkIdReporte { get; set; }
+        public string sNombreAplicacion { get; set; }
+        public string sDescripcionAplicacion { get; set; }
 
-        public bool EstadoAplicacion { get; set; } // true = habilitado, false = deshabilitado
+        public bool bEstadoAplicacion { get; set; } // true = habilitado, false = deshabilitado
 
         public Cls_Aplicacion() { }
 
         public Cls_Aplicacion(int pkIdAplicacion, int? fkIdReporte, string nombreAplicacion, string descripcionAplicacion, bool estadoAplicacion)
         {
-            PkIdAplicacion = pkIdAplicacion;
-            FkIdReporte = fkIdReporte;
-            NombreAplicacion = nombreAplicacion;
-            DescripcionAplicacion = descripcionAplicacion;
-            EstadoAplicacion = estadoAplicacion;
+            iPkIdAplicacion = pkIdAplicacion;
+            iFkIdReporte = fkIdReporte;
+            sNombreAplicacion = nombreAplicacion;
+            sDescripcionAplicacion = descripcionAplicacion;
+            bEstadoAplicacion = estadoAplicacion;
         }
     }
 }

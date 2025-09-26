@@ -1,5 +1,5 @@
 ﻿
-namespace CapaVista
+namespace Capa_Vista_Seguridad
 {
     partial class Frm_Consultar_Asignacion_Modulo_Aplicacion
     {

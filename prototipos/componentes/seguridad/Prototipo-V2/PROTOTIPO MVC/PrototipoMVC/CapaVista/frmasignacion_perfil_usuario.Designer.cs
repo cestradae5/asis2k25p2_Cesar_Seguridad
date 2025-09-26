@@ -1,5 +1,5 @@
 ﻿
-namespace CapaVista
+namespace Capa_Vista_Seguridad
 {
     partial class frmasignacion_perfil_usuario
     {
@@ -193,7 +193,7 @@ namespace CapaVista
             // 
             this.Pic_Cerrar.BackColor = System.Drawing.Color.Transparent;
             this.Pic_Cerrar.Dock = System.Windows.Forms.DockStyle.Right;
-            this.Pic_Cerrar.Image = global::CapaVista.Properties.Resources.Cancel_icon_icons_com_73703;
+            this.Pic_Cerrar.Image = global::Capa_Vista_Seguridad.Properties.Resources.Cancel_icon_icons_com_73703;
             this.Pic_Cerrar.Location = new System.Drawing.Point(1100, 0);
             this.Pic_Cerrar.Name = "Pic_Cerrar";
             this.Pic_Cerrar.Size = new System.Drawing.Size(37, 44);
@@ -206,7 +206,7 @@ namespace CapaVista
             // 
             this.Btn_agregar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_agregar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_agregar.Image = global::CapaVista.Properties.Resources.add_insert_new_plus_button_icon_142943;
+            this.Btn_agregar.Image = global::Capa_Vista_Seguridad.Properties.Resources.add_insert_new_plus_button_icon_142943;
             this.Btn_agregar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Btn_agregar.Location = new System.Drawing.Point(162, 100);
             this.Btn_agregar.Margin = new System.Windows.Forms.Padding(4);
@@ -222,7 +222,7 @@ namespace CapaVista
             // 
             this.btn_finalizar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.btn_finalizar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.btn_finalizar.Image = global::CapaVista.Properties.Resources.asignar;
+            this.btn_finalizar.Image = global::Capa_Vista_Seguridad.Properties.Resources.asignar;
             this.btn_finalizar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btn_finalizar.Location = new System.Drawing.Point(319, 351);
             this.btn_finalizar.Margin = new System.Windows.Forms.Padding(4);
@@ -238,7 +238,7 @@ namespace CapaVista
             // 
             this.Btn_eliminar_asignacion.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_eliminar_asignacion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_eliminar_asignacion.Image = global::CapaVista.Properties.Resources.cancelar_32px;
+            this.Btn_eliminar_asignacion.Image = global::Capa_Vista_Seguridad.Properties.Resources.cancelar_32px;
             this.Btn_eliminar_asignacion.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Btn_eliminar_asignacion.Location = new System.Drawing.Point(319, 181);
             this.Btn_eliminar_asignacion.Margin = new System.Windows.Forms.Padding(4);
@@ -254,7 +254,7 @@ namespace CapaVista
             // 
             this.Btn_eliminar_consulta.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_eliminar_consulta.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_eliminar_consulta.Image = global::CapaVista.Properties.Resources.cancelar_32px;
+            this.Btn_eliminar_consulta.Image = global::Capa_Vista_Seguridad.Properties.Resources.cancelar_32px;
             this.Btn_eliminar_consulta.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Btn_eliminar_consulta.Location = new System.Drawing.Point(436, 171);
             this.Btn_eliminar_consulta.Margin = new System.Windows.Forms.Padding(4);

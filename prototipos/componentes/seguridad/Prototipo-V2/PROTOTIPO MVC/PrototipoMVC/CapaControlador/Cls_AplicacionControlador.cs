@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CapaModelo;
+using Capa_Modelo_Seguridad;
 
-namespace CapaControlador
+namespace Capa_Controlador_Seguridad
 {
     public class Cls_AplicacionControlador
     {
@@ -21,11 +21,11 @@ namespace CapaControlador
         {
             Cls_Aplicacion nuevaApp = new Cls_Aplicacion
             {
-                PkIdAplicacion = idAplicacion,
-                NombreAplicacion = nombre,
-                DescripcionAplicacion = descripcion,
-                EstadoAplicacion = estado,
-                FkIdReporte = idReporte
+                iPkIdAplicacion = idAplicacion,
+                sNombreAplicacion = nombre,
+                sDescripcionAplicacion = descripcion,
+                bEstadoAplicacion = estado,
+                iFkIdReporte = idReporte
             };
 
             return daoAplicacion.InsertarAplicacion(nuevaApp);
@@ -36,11 +36,11 @@ namespace CapaControlador
         {
             Cls_Aplicacion appActualizada = new Cls_Aplicacion
             {
-                PkIdAplicacion = idAplicacion,
-                NombreAplicacion = nombre,
-                DescripcionAplicacion = descripcion,
-                EstadoAplicacion = estado,
-                FkIdReporte = idReporte
+                iPkIdAplicacion = idAplicacion,
+                sNombreAplicacion = nombre,
+                sDescripcionAplicacion = descripcion,
+                bEstadoAplicacion = estado,
+                iFkIdReporte = idReporte
             };
 
             return daoAplicacion.ActualizarAplicacion(appActualizada) > 0;
@@ -63,7 +63,7 @@ namespace CapaControlador
         {
             return daoAplicacion.ObtenerAplicaciones()
                                 .FirstOrDefault(a =>
-                                    a.NombreAplicacion.Equals(nombre, StringComparison.OrdinalIgnoreCase));
+                                    a.sNombreAplicacion.Equals(nombre, StringComparison.OrdinalIgnoreCase));
         }
     }
 }

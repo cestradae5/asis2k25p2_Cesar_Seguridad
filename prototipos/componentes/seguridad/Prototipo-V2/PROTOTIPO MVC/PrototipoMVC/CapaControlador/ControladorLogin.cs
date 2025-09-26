@@ -1,9 +1,9 @@
 ﻿///Pablo Quiroa 0901-22-2929 
 using System;
 using System.Data.Odbc;
-using CapaModelo;
+using Capa_Modelo_Seguridad;
 
-namespace CapaControlador
+namespace Capa_Controlador_Seguridad
 {
     public class ControladorLogin
     {

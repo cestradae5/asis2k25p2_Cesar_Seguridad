@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using CapaControlador;
-using CapaModelo;
-namespace CapaVista
+using Capa_Controlador_Seguridad;
+using Capa_Modelo_Seguridad;
+namespace Capa_Vista_Seguridad
 {
     public partial class frmSalarioEmpleados : Form { 
 

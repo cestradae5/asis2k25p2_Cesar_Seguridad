@@ -10,7 +10,7 @@ using System.Data.Odbc;
  * 0901-22-9663
  */
 
-namespace CapaModelo
+namespace Capa_Modelo_Seguridad
 {
     public class Cls_Asignacion_Permiso_PerfilesDAO
     {

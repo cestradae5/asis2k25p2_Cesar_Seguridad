@@ -1,4 +1,4 @@
-﻿namespace CapaVista
+﻿namespace Capa_Vista_Seguridad
 {
     partial class frmEmpleados
     {
@@ -339,7 +339,7 @@
             this.Btn_cancelar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_cancelar.Font = new System.Drawing.Font("Rockwell", 9.5F);
             this.Btn_cancelar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_cancelar.Image = global::CapaVista.Properties.Resources.cancelar_32px;
+            this.Btn_cancelar.Image = global::Capa_Vista_Seguridad.Properties.Resources.cancelar_32px;
             this.Btn_cancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Btn_cancelar.Location = new System.Drawing.Point(22, 347);
             this.Btn_cancelar.Name = "Btn_cancelar";
@@ -355,7 +355,7 @@
             this.Btn_salario_empleados.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_salario_empleados.Font = new System.Drawing.Font("Rockwell", 10F);
             this.Btn_salario_empleados.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_salario_empleados.Image = global::CapaVista.Properties.Resources.dinero;
+            this.Btn_salario_empleados.Image = global::Capa_Vista_Seguridad.Properties.Resources.dinero;
             this.Btn_salario_empleados.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Btn_salario_empleados.Location = new System.Drawing.Point(22, 286);
             this.Btn_salario_empleados.Name = "Btn_salario_empleados";
@@ -371,7 +371,7 @@
             this.Btn_nuevo_empleado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_nuevo_empleado.Font = new System.Drawing.Font("Rockwell", 10F);
             this.Btn_nuevo_empleado.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_nuevo_empleado.Image = global::CapaVista.Properties.Resources.add_insert_new_plus_button_icon_142943;
+            this.Btn_nuevo_empleado.Image = global::Capa_Vista_Seguridad.Properties.Resources.add_insert_new_plus_button_icon_142943;
             this.Btn_nuevo_empleado.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Btn_nuevo_empleado.Location = new System.Drawing.Point(22, 37);
             this.Btn_nuevo_empleado.Name = "Btn_nuevo_empleado";
@@ -387,7 +387,7 @@
             this.Btn_guardar_empleado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_guardar_empleado.Font = new System.Drawing.Font("Rockwell", 10F);
             this.Btn_guardar_empleado.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_guardar_empleado.Image = global::CapaVista.Properties.Resources.savetheapplication_guardar_2958;
+            this.Btn_guardar_empleado.Image = global::Capa_Vista_Seguridad.Properties.Resources.savetheapplication_guardar_2958;
             this.Btn_guardar_empleado.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Btn_guardar_empleado.Location = new System.Drawing.Point(22, 103);
             this.Btn_guardar_empleado.Name = "Btn_guardar_empleado";
@@ -403,7 +403,7 @@
             this.Btn_eliminar_empleado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_eliminar_empleado.Font = new System.Drawing.Font("Rockwell", 10F);
             this.Btn_eliminar_empleado.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_eliminar_empleado.Image = global::CapaVista.Properties.Resources.delete_remove_trash_icon_177304;
+            this.Btn_eliminar_empleado.Image = global::Capa_Vista_Seguridad.Properties.Resources.delete_remove_trash_icon_177304;
             this.Btn_eliminar_empleado.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Btn_eliminar_empleado.Location = new System.Drawing.Point(22, 225);
             this.Btn_eliminar_empleado.Name = "Btn_eliminar_empleado";
@@ -419,7 +419,7 @@
             this.Btn_salir_empleado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_salir_empleado.Font = new System.Drawing.Font("Rockwell", 10F);
             this.Btn_salir_empleado.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_salir_empleado.Image = global::CapaVista.Properties.Resources.sign_emergency_code_sos_61_icon_icons_com_57216;
+            this.Btn_salir_empleado.Image = global::Capa_Vista_Seguridad.Properties.Resources.sign_emergency_code_sos_61_icon_icons_com_57216;
             this.Btn_salir_empleado.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Btn_salir_empleado.Location = new System.Drawing.Point(22, 405);
             this.Btn_salir_empleado.Name = "Btn_salir_empleado";
@@ -435,7 +435,7 @@
             this.Btn_modificar_empleado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_modificar_empleado.Font = new System.Drawing.Font("Rockwell", 9F);
             this.Btn_modificar_empleado.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_modificar_empleado.Image = global::CapaVista.Properties.Resources.compose_edit_modify_icon_177770;
+            this.Btn_modificar_empleado.Image = global::Capa_Vista_Seguridad.Properties.Resources.compose_edit_modify_icon_177770;
             this.Btn_modificar_empleado.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Btn_modificar_empleado.Location = new System.Drawing.Point(22, 164);
             this.Btn_modificar_empleado.Name = "Btn_modificar_empleado";
@@ -463,7 +463,7 @@
             this.Btn_buscar_empleado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_buscar_empleado.Font = new System.Drawing.Font("Rockwell", 10F);
             this.Btn_buscar_empleado.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_buscar_empleado.Image = global::CapaVista.Properties.Resources.android_search_icon_icons1;
+            this.Btn_buscar_empleado.Image = global::Capa_Vista_Seguridad.Properties.Resources.android_search_icon_icons1;
             this.Btn_buscar_empleado.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Btn_buscar_empleado.Location = new System.Drawing.Point(21, 24);
             this.Btn_buscar_empleado.Name = "Btn_buscar_empleado";
@@ -498,7 +498,7 @@
             // 
             this.Pic_Cerrar.BackColor = System.Drawing.Color.Transparent;
             this.Pic_Cerrar.Dock = System.Windows.Forms.DockStyle.Right;
-            this.Pic_Cerrar.Image = global::CapaVista.Properties.Resources.Cancel_icon_icons_com_73703;
+            this.Pic_Cerrar.Image = global::Capa_Vista_Seguridad.Properties.Resources.Cancel_icon_icons_com_73703;
             this.Pic_Cerrar.Location = new System.Drawing.Point(1009, 0);
             this.Pic_Cerrar.Name = "Pic_Cerrar";
             this.Pic_Cerrar.Size = new System.Drawing.Size(37, 44);
@@ -512,7 +512,7 @@
             this.Btn_reporte.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_reporte.Font = new System.Drawing.Font("Rockwell", 10F);
             this.Btn_reporte.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_reporte.Image = global::CapaVista.Properties.Resources.exportar;
+            this.Btn_reporte.Image = global::Capa_Vista_Seguridad.Properties.Resources.exportar;
             this.Btn_reporte.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Btn_reporte.Location = new System.Drawing.Point(813, 83);
             this.Btn_reporte.Name = "Btn_reporte";

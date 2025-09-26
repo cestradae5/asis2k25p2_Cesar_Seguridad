@@ -4,12 +4,12 @@ using System.ComponentModel;
 using System.Data;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using CapaControlador;
-using CapaModelo;
+using Capa_Controlador_Seguridad;
+using Capa_Modelo_Seguridad;
 using System.Runtime.InteropServices;
 //Brandon Alexander Hernandez Salguero - 0901-22-9663
 
-namespace CapaVista
+namespace Capa_Vista_Seguridad
 {
     public partial class FrmPermisosPerfiles : Form
     {
@@ -65,7 +65,7 @@ namespace CapaVista
 
             foreach (var app in lista)
             {
-                dtAplicacion.Rows.Add(app.PkIdAplicacion, app.NombreAplicacion);
+                dtAplicacion.Rows.Add(app.iPkIdAplicacion, app.sNombreAplicacion);
             }
 
             Cbo_aplicaciones.DataSource = dtAplicacion;
@@ -115,7 +115,7 @@ namespace CapaVista
 
                 foreach (var app in lista)
                 {
-                    dtAplicacion.Rows.Add(app.PkIdAplicacion, app.NombreAplicacion);
+                    dtAplicacion.Rows.Add(app.iPkIdAplicacion, app.sNombreAplicacion);
                 }
 
                 Cbo_aplicaciones.DataSource = dtAplicacion;

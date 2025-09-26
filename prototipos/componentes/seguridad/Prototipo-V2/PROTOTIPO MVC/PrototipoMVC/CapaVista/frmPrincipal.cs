@@ -7,10 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using CapaControlador;
+using Capa_Controlador_Seguridad;
 
 
-namespace CapaVista
+namespace Capa_Vista_Seguridad
 {
     public partial class frmPrincipal : Form
     {
