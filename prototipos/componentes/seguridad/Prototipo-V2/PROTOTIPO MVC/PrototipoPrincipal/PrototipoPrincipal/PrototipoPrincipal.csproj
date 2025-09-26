@@ -39,6 +39,9 @@
     <Reference Include="CapaVista">
       <HintPath>..\..\PrototipoMVC\CapaVista\bin\Debug\CapaVista.dll</HintPath>
     </Reference>
+    <Reference Include="Capa_Vista_Seguridad">
+      <HintPath>..\..\PrototipoMVC\CapaVista\bin\Debug\Capa_Vista_Seguridad.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
