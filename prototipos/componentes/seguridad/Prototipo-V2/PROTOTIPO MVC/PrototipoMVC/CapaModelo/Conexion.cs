@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Data.Odbc;
 
+
+//Inicio de codigo de coexion con la bd  Carlo Sosa 0901-22-1106  04/09/2025
+
 namespace Capa_Modelo_Seguridad
 {
     public class Conexion

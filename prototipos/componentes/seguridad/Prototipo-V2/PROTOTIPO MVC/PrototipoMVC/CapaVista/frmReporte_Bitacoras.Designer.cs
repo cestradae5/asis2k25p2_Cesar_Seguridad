@@ -44,6 +44,11 @@ namespace Capa_Vista_Seguridad
             this.crystalReportViewer1.ReportSource = this.Reporte_bitacoras1;
             this.crystalReportViewer1.Size = new System.Drawing.Size(800, 450);
             this.crystalReportViewer1.TabIndex = 0;
+            this.crystalReportViewer1.Load += new System.EventHandler(this.crystalReportViewer1_Load);
+            // 
+            // Reporte_bitacoras1
+            // 
+            this.Reporte_bitacoras1.InitReport += new System.EventHandler(this.Reporte_bitacoras1_InitReport);
             // 
             // frmReporte_Bitacoras
             // 

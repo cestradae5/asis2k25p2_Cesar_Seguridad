@@ -45,6 +45,10 @@ namespace Capa_Vista_Seguridad
             this.crystalReportViewer1.Size = new System.Drawing.Size(800, 450);
             this.crystalReportViewer1.TabIndex = 0;
             // 
+            // Reporte_empleado1
+            // 
+            this.Reporte_empleado1.InitReport += new System.EventHandler(this.Reporte_empleado1_InitReport);
+            // 
             // frmReporte_Empleado
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
