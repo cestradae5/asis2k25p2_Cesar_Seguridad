@@ -11,7 +11,7 @@ namespace Capa_Modelo_Seguridad
 {
     public class Cls_AsignacionModuloAplicacionDAO
     {
-        private Conexion conexion = new Conexion();
+        private Cls_Conexion conexion = new Cls_Conexion();
 
         private static readonly string SQL_INSERT =
             "INSERT INTO Tbl_Asignacion_Modulo_Aplicacion (Fk_Id_Modulo, Fk_Id_Aplicacion) VALUES (?, ?)";

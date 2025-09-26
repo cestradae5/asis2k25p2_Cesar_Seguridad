@@ -1,7 +1,7 @@
 ﻿
 namespace Capa_Vista_Seguridad
 {
-    partial class frm_cambiar_contrasena
+    partial class Frm_cambiar_contrasena
     {
         /// <summary>
         /// Required designer variable.

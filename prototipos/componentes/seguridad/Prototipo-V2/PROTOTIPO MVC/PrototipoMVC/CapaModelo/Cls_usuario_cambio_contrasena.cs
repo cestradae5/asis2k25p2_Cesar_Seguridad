@@ -10,7 +10,7 @@ namespace Capa_Modelo_Seguridad
 {
     public class Cls_usuario_cambio_contrasena
     {
-        Conexion cn = new Conexion();
+        Cls_Conexion cn = new Cls_Conexion();
 
         // Validar la contraseña actual del usuario
         public bool fun_validar_contrasena_actual(int iIdUsuario, string sContrasenaActual)

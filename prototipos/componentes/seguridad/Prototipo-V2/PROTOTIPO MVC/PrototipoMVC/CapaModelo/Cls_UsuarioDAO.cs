@@ -7,7 +7,7 @@ namespace Capa_Modelo_Seguridad
 {
     public class Cls_UsuarioDAO
     {
-        private Conexion conexion = new Conexion();
+        private Cls_Conexion conexion = new Cls_Conexion();
 
         private static readonly string SQL_SELECT = @"
             SELECT Pk_Id_Usuario, Fk_Id_Empleado, Cmp_Nombre_Usuario, Cmp_Contrasena_Usuario,
@@ -58,15 +58,15 @@ namespace Capa_Modelo_Seguridad
                 {
                     Cls_Usuario usr = new Cls_Usuario
                     {
-                        PkIdUsuario = reader.GetInt32(0),
-                        FkIdEmpleado = reader.GetInt32(1),
-                        NombreUsuario = reader.GetString(2),
-                        ContrasenaUsuario = reader.GetString(3),
-                        ContadorIntentosFallidos = reader.GetInt32(4),
-                        EstadoUsuario = reader.GetBoolean(5),
-                        FechaCreacion = reader.GetDateTime(6),
-                        UltimoCambioContrasena = reader.GetDateTime(7),
-                        PidioCambioContrasena = reader.GetBoolean(8)
+                        iPkIdUsuario = reader.GetInt32(0),
+                        iFkIdEmpleado = reader.GetInt32(1),
+                        sNombreUsuario = reader.GetString(2),
+                        sContrasenaUsuario = reader.GetString(3),
+                        iContadorIntentosFallidos = reader.GetInt32(4),
+                        bEstadoUsuario = reader.GetBoolean(5),
+                        dFechaCreacion = reader.GetDateTime(6),
+                        dUltimoCambioContrasena = reader.GetDateTime(7),
+                        bPidioCambioContrasena = reader.GetBoolean(8)
                     };
                     lista.Add(usr);
                 }
@@ -80,14 +80,14 @@ namespace Capa_Modelo_Seguridad
             {
                 OdbcCommand cmd = new OdbcCommand(SQL_INSERT, conn);
 
-                cmd.Parameters.AddWithValue("@Fk_Id_Empleado", usr.FkIdEmpleado);
-                cmd.Parameters.AddWithValue("@Cmp_Nombre_Usuario", usr.NombreUsuario);
-                cmd.Parameters.AddWithValue("@Cmp_Contrasena_Usuario", usr.ContrasenaUsuario);
-                cmd.Parameters.AddWithValue("@Cmp_Intentos_Fallidos_Usuario", usr.ContadorIntentosFallidos);
-                cmd.Parameters.AddWithValue("@Cmp_Estado_Usuario", usr.EstadoUsuario);
-                cmd.Parameters.AddWithValue("@Cmp_FechaCreacion_Usuario", usr.FechaCreacion);
-                cmd.Parameters.AddWithValue("@Cmp_Ultimo_Cambio_Contrasenea", usr.UltimoCambioContrasena);
-                cmd.Parameters.AddWithValue("@Cmp_Pidio_Cambio_Contrasenea", usr.PidioCambioContrasena);
+                cmd.Parameters.AddWithValue("@Fk_Id_Empleado", usr.iFkIdEmpleado);
+                cmd.Parameters.AddWithValue("@Cmp_Nombre_Usuario", usr.sNombreUsuario);
+                cmd.Parameters.AddWithValue("@Cmp_Contrasena_Usuario", usr.sContrasenaUsuario);
+                cmd.Parameters.AddWithValue("@Cmp_Intentos_Fallidos_Usuario", usr.iContadorIntentosFallidos);
+                cmd.Parameters.AddWithValue("@Cmp_Estado_Usuario", usr.bEstadoUsuario);
+                cmd.Parameters.AddWithValue("@Cmp_FechaCreacion_Usuario", usr.dFechaCreacion);
+                cmd.Parameters.AddWithValue("@Cmp_Ultimo_Cambio_Contrasenea", usr.dUltimoCambioContrasena);
+                cmd.Parameters.AddWithValue("@Cmp_Pidio_Cambio_Contrasenea", usr.bPidioCambioContrasena);
 
                 return cmd.ExecuteNonQuery();
             }
@@ -99,15 +99,15 @@ namespace Capa_Modelo_Seguridad
             {
                 OdbcCommand cmd = new OdbcCommand(SQL_UPDATE, conn);
 
-                cmd.Parameters.AddWithValue("@Fk_Id_Empleado", usr.FkIdEmpleado);
-                cmd.Parameters.AddWithValue("@Cmp_Nombre_Usuario", usr.NombreUsuario);
-                cmd.Parameters.AddWithValue("@Cmp_Contrasena_Usuario", usr.ContrasenaUsuario);
-                cmd.Parameters.AddWithValue("@Cmp_Intentos_Fallidos_Usuario", usr.ContadorIntentosFallidos);
-                cmd.Parameters.AddWithValue("@Cmp_Estado_Usuario", usr.EstadoUsuario);
-                cmd.Parameters.AddWithValue("@Cmp_FechaCreacion_Usuario", usr.FechaCreacion);
-                cmd.Parameters.AddWithValue("@Cmp_Ultimo_Cambio_Contrasenea", usr.UltimoCambioContrasena);
-                cmd.Parameters.AddWithValue("@Cmp_Pidio_Cambio_Contrasenea", usr.PidioCambioContrasena);
-                cmd.Parameters.AddWithValue("@Pk_Id_Usuario", usr.PkIdUsuario);
+                cmd.Parameters.AddWithValue("@Fk_Id_Empleado", usr.iFkIdEmpleado);
+                cmd.Parameters.AddWithValue("@Cmp_Nombre_Usuario", usr.sNombreUsuario);
+                cmd.Parameters.AddWithValue("@Cmp_Contrasena_Usuario", usr.sContrasenaUsuario);
+                cmd.Parameters.AddWithValue("@Cmp_Intentos_Fallidos_Usuario", usr.iContadorIntentosFallidos);
+                cmd.Parameters.AddWithValue("@Cmp_Estado_Usuario", usr.bEstadoUsuario);
+                cmd.Parameters.AddWithValue("@Cmp_FechaCreacion_Usuario", usr.dFechaCreacion);
+                cmd.Parameters.AddWithValue("@Cmp_Ultimo_Cambio_Contrasenea", usr.dUltimoCambioContrasena);
+                cmd.Parameters.AddWithValue("@Cmp_Pidio_Cambio_Contrasenea", usr.bPidioCambioContrasena);
+                cmd.Parameters.AddWithValue("@Pk_Id_Usuario", usr.iPkIdUsuario);
 
                 return cmd.ExecuteNonQuery();
             }
@@ -136,15 +136,15 @@ namespace Capa_Modelo_Seguridad
                 {
                     usr = new Cls_Usuario
                     {
-                        PkIdUsuario = reader.GetInt32(0),
-                        FkIdEmpleado = reader.GetInt32(1),
-                        NombreUsuario = reader.GetString(2),
-                        ContrasenaUsuario = reader.GetString(3),
-                        ContadorIntentosFallidos = reader.GetInt32(4),
-                        EstadoUsuario = reader.GetBoolean(5),
-                        FechaCreacion = reader.GetDateTime(6),
-                        UltimoCambioContrasena = reader.GetDateTime(7),
-                        PidioCambioContrasena = reader.GetBoolean(8)
+                        iPkIdUsuario = reader.GetInt32(0),
+                        iFkIdEmpleado = reader.GetInt32(1),
+                        sNombreUsuario = reader.GetString(2),
+                        sContrasenaUsuario = reader.GetString(3),
+                        iContadorIntentosFallidos = reader.GetInt32(4),
+                        bEstadoUsuario = reader.GetBoolean(5),
+                        dFechaCreacion = reader.GetDateTime(6),
+                        dUltimoCambioContrasena = reader.GetDateTime(7),
+                        bPidioCambioContrasena = reader.GetBoolean(8)
                     };
                 }
             }

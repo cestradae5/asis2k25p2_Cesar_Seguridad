@@ -7,7 +7,7 @@ namespace Capa_Modelo_Seguridad
 {
     public class Cls_EmpleadoDAO
     {
-        private Conexion conexion = new Conexion();
+        private Cls_Conexion conexion = new Cls_Conexion();
 
         // Consultas SQL
         private static readonly string SQL_SELECT = @"

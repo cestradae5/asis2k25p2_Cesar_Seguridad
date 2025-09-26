@@ -22,14 +22,14 @@ namespace Capa_Controlador_Seguridad
         {
             Cls_Usuario nuevoUsuario = new Cls_Usuario
             {
-                FkIdEmpleado = fkIdEmpleado,
-                NombreUsuario = nombreUsuario,
-                ContrasenaUsuario = contrasena,
-                ContadorIntentosFallidos = intentosFallidos,
-                EstadoUsuario = estado,
-                FechaCreacion = fechaCreacion,
-                UltimoCambioContrasena = ultimoCambio,
-                PidioCambioContrasena = pidioCambio
+                iFkIdEmpleado = fkIdEmpleado,
+                sNombreUsuario = nombreUsuario,
+                sContrasenaUsuario = contrasena,
+                iContadorIntentosFallidos = intentosFallidos,
+                bEstadoUsuario = estado,
+                dFechaCreacion = fechaCreacion,
+                dUltimoCambioContrasena = ultimoCambio,
+                bPidioCambioContrasena = pidioCambio
             };
 
             daoUsuario.InsertarUsuario(nuevoUsuario);
@@ -42,15 +42,15 @@ namespace Capa_Controlador_Seguridad
         {
             Cls_Usuario usuarioActualizado = new Cls_Usuario
             {
-                PkIdUsuario = idUsuario,
-                FkIdEmpleado = fkIdEmpleado,
-                NombreUsuario = nombreUsuario,
-                ContrasenaUsuario = contrasena,
-                ContadorIntentosFallidos = intentosFallidos,
-                EstadoUsuario = estado,
-                FechaCreacion = fechaCreacion,
-                UltimoCambioContrasena = ultimoCambio,
-                PidioCambioContrasena = pidioCambio
+                iPkIdUsuario = idUsuario,
+                iFkIdEmpleado = fkIdEmpleado,
+                sNombreUsuario = nombreUsuario,
+                sContrasenaUsuario = contrasena,
+                iContadorIntentosFallidos = intentosFallidos,
+                bEstadoUsuario = estado,
+                dFechaCreacion = fechaCreacion,
+                dUltimoCambioContrasena = ultimoCambio,
+                bPidioCambioContrasena = pidioCambio
             };
 
             daoUsuario.ActualizarUsuario(usuarioActualizado);

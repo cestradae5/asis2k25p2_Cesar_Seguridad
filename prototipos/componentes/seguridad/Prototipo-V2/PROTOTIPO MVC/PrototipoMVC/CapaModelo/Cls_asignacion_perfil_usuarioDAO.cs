@@ -13,7 +13,7 @@ namespace Capa_Modelo_Seguridad
                 (Fk_Id_Usuario, Fk_Id_Perfil)
             VALUES (?, ?)";
 
-        private Conexion conexion = new Conexion();
+        private Cls_Conexion conexion = new Cls_Conexion();
 
         public DataTable datObtenerUsuarios()
         {

@@ -57,47 +57,47 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cls_sesion.cs" />
-    <Compile Include="FrmPermisosPerfiles.cs">
+    <Compile Include="Frm_PermisosPerfiles.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmPermisosPerfiles.Designer.cs">
-      <DependentUpon>FrmPermisosPerfiles.cs</DependentUpon>
+    <Compile Include="Frm_PermisosPerfiles.Designer.cs">
+      <DependentUpon>Frm_PermisosPerfiles.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmReporte_aplicacion.cs">
+    <Compile Include="Frm_Reporte_aplicacion.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmReporte_aplicacion.Designer.cs">
-      <DependentUpon>frmReporte_aplicacion.cs</DependentUpon>
+    <Compile Include="Frm_Reporte_aplicacion.Designer.cs">
+      <DependentUpon>Frm_Reporte_aplicacion.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmReporte_Bitacoras.cs">
+    <Compile Include="Frm_Reporte_Bitacoras.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmReporte_Bitacoras.Designer.cs">
-      <DependentUpon>frmReporte_Bitacoras.cs</DependentUpon>
+    <Compile Include="Frm_Reporte_Bitacoras.Designer.cs">
+      <DependentUpon>Frm_Reporte_Bitacoras.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmReporte_Empleado.cs">
+    <Compile Include="Frm_Reporte_Empleado.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmReporte_Empleado.Designer.cs">
-      <DependentUpon>frmReporte_Empleado.cs</DependentUpon>
+    <Compile Include="Frm_Reporte_Empleado.Designer.cs">
+      <DependentUpon>Frm_Reporte_Empleado.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmReporte_modulos.cs">
+    <Compile Include="Frm_Reporte_modulos.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmReporte_modulos.Designer.cs">
-      <DependentUpon>frmReporte_modulos.cs</DependentUpon>
+    <Compile Include="Frm_Reporte_modulos.Designer.cs">
+      <DependentUpon>Frm_Reporte_modulos.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmReporte_perfiles.cs">
+    <Compile Include="Frm_Reporte_perfiles.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmReporte_perfiles.Designer.cs">
-      <DependentUpon>frmReporte_perfiles.cs</DependentUpon>
+    <Compile Include="Frm_Reporte_perfiles.Designer.cs">
+      <DependentUpon>Frm_Reporte_perfiles.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmReporte_Usuario.cs">
+    <Compile Include="Frm_Reporte_Usuario.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmReporte_Usuario.Designer.cs">
-      <DependentUpon>FrmReporte_Usuario.cs</DependentUpon>
+    <Compile Include="Frm_Reporte_Usuario.Designer.cs">
+      <DependentUpon>Frm_Reporte_Usuario.cs</DependentUpon>
     </Compile>
     <Compile Include="Frm_Aplicacion.cs">
       <SubType>Form</SubType>
@@ -105,77 +105,77 @@
     <Compile Include="Frm_Aplicacion.Designer.cs">
       <DependentUpon>Frm_Aplicacion.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmasignacion_aplicacion_usuario.cs">
+    <Compile Include="Frm_asignacion_aplicacion_usuario.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmasignacion_aplicacion_usuario.designer.cs">
-      <DependentUpon>frmasignacion_aplicacion_usuario.cs</DependentUpon>
+    <Compile Include="Frm_asignacion_aplicacion_usuario.designer.cs">
+      <DependentUpon>Frm_asignacion_aplicacion_usuario.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmasignacion_perfil_usuario.cs">
+    <Compile Include="Frm_asignacion_perfil_usuario.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmasignacion_perfil_usuario.designer.cs">
-      <DependentUpon>frmasignacion_perfil_usuario.cs</DependentUpon>
+    <Compile Include="Frm_asignacion_perfil_usuario.designer.cs">
+      <DependentUpon>Frm_asignacion_perfil_usuario.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmEmpleados.cs">
+    <Compile Include="Frm_Empleados.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmEmpleados.Designer.cs">
-      <DependentUpon>frmEmpleados.cs</DependentUpon>
+    <Compile Include="Frm_Empleados.Designer.cs">
+      <DependentUpon>Frm_Empleados.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmLogin.cs">
+    <Compile Include="Frm_Login.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmLogin.Designer.cs">
-      <DependentUpon>frmLogin.cs</DependentUpon>
+    <Compile Include="Frm_Login.Designer.cs">
+      <DependentUpon>Frm_Login.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmModulo.cs">
+    <Compile Include="Frm_Modulo.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmModulo.Designer.cs">
-      <DependentUpon>frmModulo.cs</DependentUpon>
+    <Compile Include="Frm_Modulo.Designer.cs">
+      <DependentUpon>Frm_Modulo.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmPerfiles.cs">
+    <Compile Include="Frm_Perfiles.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmPerfiles.designer.cs">
-      <DependentUpon>frmPerfiles.cs</DependentUpon>
+    <Compile Include="Frm_Perfiles.designer.cs">
+      <DependentUpon>Frm_Perfiles.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmPrincipal.cs">
+    <Compile Include="Frm_Principal.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmPrincipal.Designer.cs">
-      <DependentUpon>frmPrincipal.cs</DependentUpon>
+    <Compile Include="Frm_Principal.Designer.cs">
+      <DependentUpon>Frm_Principal.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmRecuperarContrasena.cs">
+    <Compile Include="Frm_RecuperarContrasena.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmRecuperarContrasena.Designer.cs">
-      <DependentUpon>frmRecuperarContrasena.cs</DependentUpon>
+    <Compile Include="Frm_RecuperarContrasena.Designer.cs">
+      <DependentUpon>Frm_RecuperarContrasena.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmSalarioEmpleados.cs">
+    <Compile Include="Frm_SalarioEmpleados.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmSalarioEmpleados.Designer.cs">
-      <DependentUpon>frmSalarioEmpleados.cs</DependentUpon>
+    <Compile Include="Frm_SalarioEmpleados.Designer.cs">
+      <DependentUpon>Frm_SalarioEmpleados.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmSeguridad.cs">
+    <Compile Include="Frm_Seguridad.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmSeguridad.Designer.cs">
-      <DependentUpon>frmSeguridad.cs</DependentUpon>
+    <Compile Include="Frm_Seguridad.Designer.cs">
+      <DependentUpon>Frm_Seguridad.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmSlash.cs">
+    <Compile Include="Frm_Slash.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmSlash.Designer.cs">
-      <DependentUpon>frmSlash.cs</DependentUpon>
+    <Compile Include="Frm_Slash.Designer.cs">
+      <DependentUpon>Frm_Slash.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmUsuario.cs">
+    <Compile Include="Frm_Usuario.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmUsuario.Designer.cs">
-      <DependentUpon>FrmUsuario.cs</DependentUpon>
+    <Compile Include="Frm_Usuario.Designer.cs">
+      <DependentUpon>Frm_Usuario.cs</DependentUpon>
     </Compile>
     <Compile Include="Frm_Bitacora.cs">
       <SubType>Form</SubType>
@@ -183,11 +183,11 @@
     <Compile Include="Frm_Bitacora.Designer.cs">
       <DependentUpon>Frm_Bitacora.cs</DependentUpon>
     </Compile>
-    <Compile Include="frm_cambiar_contrasena.cs">
+    <Compile Include="Frm_cambiar_contrasena.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frm_cambiar_contrasena.Designer.cs">
-      <DependentUpon>frm_cambiar_contrasena.cs</DependentUpon>
+    <Compile Include="Frm_cambiar_contrasena.Designer.cs">
+      <DependentUpon>Frm_cambiar_contrasena.cs</DependentUpon>
     </Compile>
     <Compile Include="Frm_Consultar_Asignacion_Modulo_Aplicacion.cs">
       <SubType>Form</SubType>
@@ -239,71 +239,71 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="FrmPermisosPerfiles.resx">
-      <DependentUpon>FrmPermisosPerfiles.cs</DependentUpon>
+    <EmbeddedResource Include="Frm_PermisosPerfiles.resx">
+      <DependentUpon>Frm_PermisosPerfiles.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmReporte_aplicacion.resx">
-      <DependentUpon>frmReporte_aplicacion.cs</DependentUpon>
+    <EmbeddedResource Include="Frm_Reporte_aplicacion.resx">
+      <DependentUpon>Frm_Reporte_aplicacion.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmReporte_Bitacoras.resx">
-      <DependentUpon>frmReporte_Bitacoras.cs</DependentUpon>
+    <EmbeddedResource Include="Frm_Reporte_Bitacoras.resx">
+      <DependentUpon>Frm_Reporte_Bitacoras.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmReporte_Empleado.resx">
-      <DependentUpon>frmReporte_Empleado.cs</DependentUpon>
+    <EmbeddedResource Include="Frm_Reporte_Empleado.resx">
+      <DependentUpon>Frm_Reporte_Empleado.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmReporte_modulos.resx">
-      <DependentUpon>frmReporte_modulos.cs</DependentUpon>
+    <EmbeddedResource Include="Frm_Reporte_modulos.resx">
+      <DependentUpon>Frm_Reporte_modulos.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmReporte_perfiles.resx">
-      <DependentUpon>frmReporte_perfiles.cs</DependentUpon>
+    <EmbeddedResource Include="Frm_Reporte_perfiles.resx">
+      <DependentUpon>Frm_Reporte_perfiles.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmReporte_Usuario.resx">
-      <DependentUpon>FrmReporte_Usuario.cs</DependentUpon>
+    <EmbeddedResource Include="Frm_Reporte_Usuario.resx">
+      <DependentUpon>Frm_Reporte_Usuario.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Frm_Aplicacion.resx">
       <DependentUpon>Frm_Aplicacion.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmasignacion_aplicacion_usuario.resx">
-      <DependentUpon>frmasignacion_aplicacion_usuario.cs</DependentUpon>
+    <EmbeddedResource Include="Frm_asignacion_aplicacion_usuario.resx">
+      <DependentUpon>Frm_asignacion_aplicacion_usuario.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmasignacion_perfil_usuario.resx">
-      <DependentUpon>frmasignacion_perfil_usuario.cs</DependentUpon>
+    <EmbeddedResource Include="Frm_asignacion_perfil_usuario.resx">
+      <DependentUpon>Frm_asignacion_perfil_usuario.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmEmpleados.resx">
-      <DependentUpon>frmEmpleados.cs</DependentUpon>
+    <EmbeddedResource Include="Frm_Empleados.resx">
+      <DependentUpon>Frm_Empleados.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmLogin.resx">
-      <DependentUpon>frmLogin.cs</DependentUpon>
+    <EmbeddedResource Include="Frm_Login.resx">
+      <DependentUpon>Frm_Login.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmModulo.resx">
-      <DependentUpon>frmModulo.cs</DependentUpon>
+    <EmbeddedResource Include="Frm_Modulo.resx">
+      <DependentUpon>Frm_Modulo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmPerfiles.resx">
-      <DependentUpon>frmPerfiles.cs</DependentUpon>
+    <EmbeddedResource Include="Frm_Perfiles.resx">
+      <DependentUpon>Frm_Perfiles.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmPrincipal.resx">
-      <DependentUpon>frmPrincipal.cs</DependentUpon>
+    <EmbeddedResource Include="Frm_Principal.resx">
+      <DependentUpon>Frm_Principal.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmRecuperarContrasena.resx">
-      <DependentUpon>frmRecuperarContrasena.cs</DependentUpon>
+    <EmbeddedResource Include="Frm_RecuperarContrasena.resx">
+      <DependentUpon>Frm_RecuperarContrasena.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmSalarioEmpleados.resx">
-      <DependentUpon>frmSalarioEmpleados.cs</DependentUpon>
+    <EmbeddedResource Include="Frm_SalarioEmpleados.resx">
+      <DependentUpon>Frm_SalarioEmpleados.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmSeguridad.resx">
-      <DependentUpon>frmSeguridad.cs</DependentUpon>
+    <EmbeddedResource Include="Frm_Seguridad.resx">
+      <DependentUpon>Frm_Seguridad.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmSlash.resx">
-      <DependentUpon>frmSlash.cs</DependentUpon>
+    <EmbeddedResource Include="Frm_Slash.resx">
+      <DependentUpon>Frm_Slash.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmUsuario.resx">
-      <DependentUpon>FrmUsuario.cs</DependentUpon>
+    <EmbeddedResource Include="Frm_Usuario.resx">
+      <DependentUpon>Frm_Usuario.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Frm_Bitacora.resx">
       <DependentUpon>Frm_Bitacora.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frm_cambiar_contrasena.resx">
-      <DependentUpon>frm_cambiar_contrasena.cs</DependentUpon>
+    <EmbeddedResource Include="Frm_cambiar_contrasena.resx">
+      <DependentUpon>Frm_cambiar_contrasena.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Frm_Consultar_Asignacion_Modulo_Aplicacion.resx">
       <DependentUpon>Frm_Consultar_Asignacion_Modulo_Aplicacion.cs</DependentUpon>

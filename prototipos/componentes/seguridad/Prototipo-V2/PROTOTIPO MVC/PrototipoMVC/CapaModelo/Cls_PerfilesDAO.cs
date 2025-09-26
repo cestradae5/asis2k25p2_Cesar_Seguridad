@@ -35,7 +35,7 @@ namespace Capa_Modelo_Seguridad
             WHERE Pk_Id_Perfil = ?";
 
         // Clase de conexión
-        private Conexion conexion = new Conexion();
+        private Cls_Conexion conexion = new Cls_Conexion();
 
         public List<Cls_Perfiles> lisObtenerPerfiles()
         {

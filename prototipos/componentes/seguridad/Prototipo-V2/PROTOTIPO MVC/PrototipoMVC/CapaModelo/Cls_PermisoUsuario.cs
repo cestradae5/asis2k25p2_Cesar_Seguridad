@@ -5,7 +5,7 @@ namespace Capa_Modelo_Seguridad
 {
     public class Cls_PermisoUsuario
     {
-        private Conexion conexion = new Conexion();
+        private Cls_Conexion conexion = new Cls_Conexion();
 
         /// <summary>
         /// Obtiene los permisos de un usuario para una aplicación y módulo específicos.

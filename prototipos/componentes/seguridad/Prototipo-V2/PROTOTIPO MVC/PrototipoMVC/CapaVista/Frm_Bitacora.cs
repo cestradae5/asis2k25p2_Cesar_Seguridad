@@ -236,7 +236,7 @@ namespace Capa_Vista_Seguridad
 
         private void button1_Click(object sender, EventArgs e)
         {
-            frmReporte_Bitacoras frm = new frmReporte_Bitacoras();
+            Frm_Reporte_Bitacoras frm = new Frm_Reporte_Bitacoras();
             frm.Show();
         }
 

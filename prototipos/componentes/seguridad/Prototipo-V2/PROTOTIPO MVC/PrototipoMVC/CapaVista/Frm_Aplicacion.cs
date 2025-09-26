@@ -39,6 +39,7 @@ namespace Capa_Vista_Seguridad
 
             ConfigurarIdsDinamicamenteYAplicarPermisos();
         }
+
         private void RecargarTodo()
         {
             LimpiarCampos();
@@ -277,7 +278,7 @@ namespace Capa_Vista_Seguridad
 
         private void Btn_guardar_Click(object sender, EventArgs e)
         {
-            //Validar ID de aplicación
+            // Validar ID de aplicación
             if (!int.TryParse(Txt_id_aplicacion.Text, out int idAplicacion))
             {
                 MessageBox.Show("Ingrese un ID válido.");
@@ -288,12 +289,32 @@ namespace Capa_Vista_Seguridad
             string descripcion = Txt_descripcion.Text.Trim();
             bool estado = Rdb_estado_activo.Checked;
 
+            // Validar que los TextBox obligatorios no estén vacíos
+            if (string.IsNullOrWhiteSpace(Txt_Nombre_aplicacion.Text))
+            {
+                MessageBox.Show("Debe ingresar el nombre de la aplicación.");
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(Txt_descripcion.Text))
+            {
+                MessageBox.Show("Debe ingresar la descripción de la aplicación.");
+                return;
+            }
+
+            // Validar que los ComboBox no estén vacíos
+            if (Cbo_id_modulo.SelectedItem == null || string.IsNullOrWhiteSpace(Cbo_id_modulo.Text))
+            {
+                MessageBox.Show("Debe seleccionar un módulo en el ComboBox de módulos.");
+                return;
+            }
+
+            // Validar si el ID ya existe
             if (controlador.BuscarAplicacionPorId(idAplicacion) != null)
             {
                 MessageBox.Show("El ID ya existe, por favor ingrese otro.");
                 return;
             }
-
 
             // Guardar aplicación 
             int resultadoApp = controlador.InsertarAplicacion(idAplicacion, nombre, descripcion, estado, null);
@@ -305,12 +326,6 @@ namespace Capa_Vista_Seguridad
             }
 
             // Obtener ID de módulo
-            if (Cbo_id_modulo.SelectedItem == null)
-            {
-                MessageBox.Show("Seleccione un módulo para la asignación.");
-                return;
-            }
-
             int idModulo = Convert.ToInt32(((dynamic)Cbo_id_modulo.SelectedItem).Id);
 
             // Guardar asignación 
@@ -326,10 +341,11 @@ namespace Capa_Vista_Seguridad
             MessageBox.Show("Aplicación y asignación guardadas correctamente.");
             LimpiarCampos();
 
-            // Registrar en Bitácora Arón Ricardo Esquit Silva   0901-22-13036
-            ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, 1, "Modificar aplicación", true);
+            // Registrar en Bitácora
+            ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, 1, "Guardar aplicación", true);
             RecargarTodo();
         }
+
 
         private void LimpiarCampos()
         {

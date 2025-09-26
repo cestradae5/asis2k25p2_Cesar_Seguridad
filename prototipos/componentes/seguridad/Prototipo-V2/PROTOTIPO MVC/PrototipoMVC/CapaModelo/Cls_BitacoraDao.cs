@@ -8,7 +8,7 @@ namespace Capa_Modelo_Seguridad
     public class Cls_BitacoraDao
     {
         // Objeto de conexión a la base de datos
-        private readonly Conexion ctrlConexion = new Conexion();
+        private readonly Cls_Conexion ctrlConexion = new Cls_Conexion();
 
         // Para SELECT
         public DataTable EjecutarConsulta(string sSql)

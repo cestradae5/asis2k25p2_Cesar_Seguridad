@@ -6,14 +6,14 @@ using Capa_Controlador_Seguridad;
 // 0901-20-4620 Ruben Armando Lopez Luch
 namespace Capa_Vista_Seguridad
 {
-    public partial class frm_cambiar_contrasena : Form
+    public partial class Frm_cambiar_contrasena : Form
     {
         Cls_BitacoraControlador bit = new Cls_BitacoraControlador(); //Bitacora
         private Cls_controlador_cambio_contrasena controlador = new Cls_controlador_cambio_contrasena();
         private int iIdUsuario;
 
         // 0901-20-4620 Ruben Armando Lopez Luch
-        public frm_cambiar_contrasena(int iIdUsuarioActual)
+        public Frm_cambiar_contrasena(int iIdUsuarioActual)
         {
             InitializeComponent();
             iIdUsuario = iIdUsuarioActual;

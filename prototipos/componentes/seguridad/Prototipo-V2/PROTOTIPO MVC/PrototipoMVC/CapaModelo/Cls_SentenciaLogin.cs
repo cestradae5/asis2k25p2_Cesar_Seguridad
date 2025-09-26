@@ -5,7 +5,7 @@ namespace Capa_Modelo_Seguridad
 {
     public class Cls_SentenciaLogin
     {
-        Conexion conexion = new Conexion();
+        Cls_Conexion conexion = new Cls_Conexion();
 
         // Validar login
         public OdbcDataReader validarLogin(string usuario)
