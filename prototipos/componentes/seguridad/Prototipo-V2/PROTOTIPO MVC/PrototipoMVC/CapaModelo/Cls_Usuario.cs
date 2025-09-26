@@ -1,7 +1,7 @@
 ﻿// Pablo Quiroa 0901-22-2929
 using System;
 
-namespace CapaModelo
+namespace Capa_Modelo_Seguridad
 {
     public class Cls_Usuario
     {

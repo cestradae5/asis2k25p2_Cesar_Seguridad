@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CapaModelo;
+using Capa_Modelo_Seguridad;
 
 // 0901-20-4620 Ruben Armando Lopez Luch
-namespace CapaControlador
+namespace Capa_Controlador_Seguridad
 {
     public class Cls_controlador_cambio_contrasena
     {

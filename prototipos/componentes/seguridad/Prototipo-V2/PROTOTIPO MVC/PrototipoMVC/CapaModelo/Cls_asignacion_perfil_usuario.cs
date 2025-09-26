@@ -3,7 +3,7 @@
  * 0901-22-9663
  */
 
-namespace CapaModelo
+namespace Capa_Modelo_Seguridad
 {
     public class Cls_asignacion_perfil_usuario
     {

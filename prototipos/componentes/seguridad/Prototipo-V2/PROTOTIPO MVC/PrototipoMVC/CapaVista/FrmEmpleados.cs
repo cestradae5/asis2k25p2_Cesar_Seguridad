@@ -8,10 +8,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
-using CapaControlador;
-using CapaModelo;
+using Capa_Controlador_Seguridad;
+using Capa_Modelo_Seguridad;
 //Ernesto David Samayoa Jocol - 0901-22-3415 --  Formulario Estandarizado
-namespace CapaVista
+namespace Capa_Vista_Seguridad
 {
     public partial class frmEmpleados : Form
     {

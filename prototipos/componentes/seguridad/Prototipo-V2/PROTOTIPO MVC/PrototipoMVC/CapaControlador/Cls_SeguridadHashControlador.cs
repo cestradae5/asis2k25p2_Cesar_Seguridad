@@ -2,7 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace CapaControlador
+namespace Capa_Controlador_Seguridad
 {
     public static class Cls_SeguridadHashControlador
     {

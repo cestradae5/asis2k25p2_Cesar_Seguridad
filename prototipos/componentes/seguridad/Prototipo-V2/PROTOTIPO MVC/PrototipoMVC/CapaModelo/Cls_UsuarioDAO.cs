@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Odbc;
 
-namespace CapaModelo
+namespace Capa_Modelo_Seguridad
 {
     public class Cls_UsuarioDAO
     {

@@ -1,8 +1,8 @@
 ﻿//Brandon Alexander Hernandez Salguero - 0901-22-9663
 using System.Data;
-using CapaModelo;
+using Capa_Modelo_Seguridad;
 
-namespace CapaControlador
+namespace Capa_Controlador_Seguridad
 {
     public class Cls_Asignacion_Permiso_PerfilControador
     {

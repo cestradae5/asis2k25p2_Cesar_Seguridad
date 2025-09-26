@@ -3,10 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
-using CapaControlador;
-using CapaModelo;
+using Capa_Controlador_Seguridad;
+using Capa_Modelo_Seguridad;
 
-namespace CapaVista
+namespace Capa_Vista_Seguridad
 {
     public partial class FrmUsuario : Form
     {

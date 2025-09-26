@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 
 
-namespace CapaModelo
+namespace Capa_Modelo_Seguridad
 {
     /* Brandon Alexander Hernandez Salguero
      * 0901-22-9663

@@ -1,5 +1,5 @@
 ﻿
-namespace CapaVista
+namespace Capa_Vista_Seguridad
 {
     partial class FrmPermisosPerfiles
     {
@@ -78,7 +78,7 @@ namespace CapaVista
             this.Btn_agregar.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonShadow;
             this.Btn_agregar.Font = new System.Drawing.Font("Rockwell", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Btn_agregar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_agregar.Image = global::CapaVista.Properties.Resources.add_insert_new_plus_button_icon_142943;
+            this.Btn_agregar.Image = global::Capa_Vista_Seguridad.Properties.Resources.add_insert_new_plus_button_icon_142943;
             this.Btn_agregar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Btn_agregar.Location = new System.Drawing.Point(612, 45);
             this.Btn_agregar.Name = "Btn_agregar";
@@ -162,7 +162,7 @@ namespace CapaVista
             this.Btn_quitar.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonShadow;
             this.Btn_quitar.Font = new System.Drawing.Font("Rockwell", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Btn_quitar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_quitar.Image = global::CapaVista.Properties.Resources.delete_remove_trash_icon_177304;
+            this.Btn_quitar.Image = global::Capa_Vista_Seguridad.Properties.Resources.delete_remove_trash_icon_177304;
             this.Btn_quitar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Btn_quitar.Location = new System.Drawing.Point(641, 259);
             this.Btn_quitar.Name = "Btn_quitar";
@@ -179,7 +179,7 @@ namespace CapaVista
             this.Btn_insertar.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonShadow;
             this.Btn_insertar.Font = new System.Drawing.Font("Rockwell", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Btn_insertar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_insertar.Image = global::CapaVista.Properties.Resources.add_insert_new_plus_button_icon_142943;
+            this.Btn_insertar.Image = global::Capa_Vista_Seguridad.Properties.Resources.add_insert_new_plus_button_icon_142943;
             this.Btn_insertar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Btn_insertar.Location = new System.Drawing.Point(641, 317);
             this.Btn_insertar.Name = "Btn_insertar";
@@ -196,7 +196,7 @@ namespace CapaVista
             this.Btn_salir.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonShadow;
             this.Btn_salir.Font = new System.Drawing.Font("Rockwell", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Btn_salir.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_salir.Image = global::CapaVista.Properties.Resources.sign_emergency_code_sos_61_icon_icons_com_57216;
+            this.Btn_salir.Image = global::Capa_Vista_Seguridad.Properties.Resources.sign_emergency_code_sos_61_icon_icons_com_57216;
             this.Btn_salir.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Btn_salir.Location = new System.Drawing.Point(641, 385);
             this.Btn_salir.Name = "Btn_salir";

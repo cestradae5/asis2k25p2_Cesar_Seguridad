@@ -1,4 +1,4 @@
-﻿namespace CapaVista
+﻿namespace Capa_Vista_Seguridad
 {
     partial class frmreporte_aplicacion
     {
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.crystalReportViewer1 = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
-            this.Reporte_aplicacion1 = new CapaVista.Reporte_aplicacion();
+            this.Reporte_aplicacion1 = new Capa_Vista_Seguridad.Reporte_aplicacion();
             this.SuspendLayout();
             // 
             // crystalReportViewer1

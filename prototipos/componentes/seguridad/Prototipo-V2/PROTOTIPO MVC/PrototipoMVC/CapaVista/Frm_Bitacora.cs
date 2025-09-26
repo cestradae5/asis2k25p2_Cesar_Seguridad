@@ -4,10 +4,10 @@ using System.Data;
 using System.Drawing.Printing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using CapaControlador;
-using CapaModelo;
+using Capa_Controlador_Seguridad;
+using Capa_Modelo_Seguridad;
 
-namespace CapaVista
+namespace Capa_Vista_Seguridad
 {
     public partial class Frm_Bitacora : Form
     {

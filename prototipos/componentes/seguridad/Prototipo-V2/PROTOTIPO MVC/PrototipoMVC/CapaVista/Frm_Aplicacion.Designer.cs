@@ -1,5 +1,5 @@
 ﻿
-namespace CapaVista
+namespace Capa_Vista_Seguridad
 {
     partial class FrmAplicacion
     {
@@ -46,7 +46,6 @@ namespace CapaVista
             this.Rdb_inactivo = new System.Windows.Forms.RadioButton();
             this.Rdb_estado_activo = new System.Windows.Forms.RadioButton();
             this.Lbl_mantenimiento_aplicacion = new System.Windows.Forms.Label();
-            this.Btn_Consultar_Asignacion = new System.Windows.Forms.Button();
             this.Pnl_Superior = new System.Windows.Forms.Panel();
             this.Pic_Cerrar = new System.Windows.Forms.PictureBox();
             this.Btn_guardar = new System.Windows.Forms.Button();
@@ -65,7 +64,7 @@ namespace CapaVista
             // 
             this.Btn_salir.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_salir.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_salir.Image = global::CapaVista.Properties.Resources.sign_emergency_code_sos_61_icon_icons_com_57216;
+            this.Btn_salir.Image = global::Capa_Vista_Seguridad.Properties.Resources.sign_emergency_code_sos_61_icon_icons_com_57216;
             this.Btn_salir.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Btn_salir.Location = new System.Drawing.Point(963, 504);
             this.Btn_salir.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
@@ -84,7 +83,7 @@ namespace CapaVista
             this.Cbo_buscar.Location = new System.Drawing.Point(193, 32);
             this.Cbo_buscar.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.Cbo_buscar.Name = "Cbo_buscar";
-            this.Cbo_buscar.Size = new System.Drawing.Size(407, 28);
+            this.Cbo_buscar.Size = new System.Drawing.Size(407, 33);
             this.Cbo_buscar.TabIndex = 6;
             // 
             // Txt_id_aplicacion
@@ -93,7 +92,7 @@ namespace CapaVista
             this.Txt_id_aplicacion.Location = new System.Drawing.Point(299, 39);
             this.Txt_id_aplicacion.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.Txt_id_aplicacion.Name = "Txt_id_aplicacion";
-            this.Txt_id_aplicacion.Size = new System.Drawing.Size(535, 29);
+            this.Txt_id_aplicacion.Size = new System.Drawing.Size(535, 33);
             this.Txt_id_aplicacion.TabIndex = 7;
             // 
             // Gpb_buscar_aplicacion
@@ -115,7 +114,7 @@ namespace CapaVista
             this.Btn_buscar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_buscar.Font = new System.Drawing.Font("Rockwell", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Btn_buscar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_buscar.Image = global::CapaVista.Properties.Resources.android_search_icon_icons1;
+            this.Btn_buscar.Image = global::Capa_Vista_Seguridad.Properties.Resources.android_search_icon_icons1;
             this.Btn_buscar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Btn_buscar.Location = new System.Drawing.Point(20, 26);
             this.Btn_buscar.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
@@ -134,7 +133,7 @@ namespace CapaVista
             this.Lbl_id_aplicacion.Location = new System.Drawing.Point(49, 42);
             this.Lbl_id_aplicacion.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.Lbl_id_aplicacion.Name = "Lbl_id_aplicacion";
-            this.Lbl_id_aplicacion.Size = new System.Drawing.Size(114, 20);
+            this.Lbl_id_aplicacion.Size = new System.Drawing.Size(134, 22);
             this.Lbl_id_aplicacion.TabIndex = 9;
             this.Lbl_id_aplicacion.Text = "ID Aplicacion";
             // 
@@ -145,7 +144,7 @@ namespace CapaVista
             this.Lbl_id_modulo.Location = new System.Drawing.Point(49, 101);
             this.Lbl_id_modulo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.Lbl_id_modulo.Name = "Lbl_id_modulo";
-            this.Lbl_id_modulo.Size = new System.Drawing.Size(90, 20);
+            this.Lbl_id_modulo.Size = new System.Drawing.Size(106, 22);
             this.Lbl_id_modulo.TabIndex = 10;
             this.Lbl_id_modulo.Text = "ID Modulo";
             // 
@@ -156,7 +155,7 @@ namespace CapaVista
             this.Lbl_nombre_aplicacion.Location = new System.Drawing.Point(48, 165);
             this.Lbl_nombre_aplicacion.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.Lbl_nombre_aplicacion.Name = "Lbl_nombre_aplicacion";
-            this.Lbl_nombre_aplicacion.Size = new System.Drawing.Size(161, 20);
+            this.Lbl_nombre_aplicacion.Size = new System.Drawing.Size(187, 22);
             this.Lbl_nombre_aplicacion.TabIndex = 11;
             this.Lbl_nombre_aplicacion.Text = "Nombre Aplicacion";
             // 
@@ -167,7 +166,7 @@ namespace CapaVista
             this.Lbl_descripcion.Location = new System.Drawing.Point(48, 218);
             this.Lbl_descripcion.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.Lbl_descripcion.Name = "Lbl_descripcion";
-            this.Lbl_descripcion.Size = new System.Drawing.Size(104, 20);
+            this.Lbl_descripcion.Size = new System.Drawing.Size(120, 22);
             this.Lbl_descripcion.TabIndex = 12;
             this.Lbl_descripcion.Text = "Descripcion";
             // 
@@ -177,7 +176,7 @@ namespace CapaVista
             this.Txt_Nombre_aplicacion.Location = new System.Drawing.Point(299, 163);
             this.Txt_Nombre_aplicacion.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.Txt_Nombre_aplicacion.Name = "Txt_Nombre_aplicacion";
-            this.Txt_Nombre_aplicacion.Size = new System.Drawing.Size(535, 29);
+            this.Txt_Nombre_aplicacion.Size = new System.Drawing.Size(535, 33);
             this.Txt_Nombre_aplicacion.TabIndex = 14;
             // 
             // Txt_descripcion
@@ -186,7 +185,7 @@ namespace CapaVista
             this.Txt_descripcion.Location = new System.Drawing.Point(299, 213);
             this.Txt_descripcion.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.Txt_descripcion.Name = "Txt_descripcion";
-            this.Txt_descripcion.Size = new System.Drawing.Size(535, 29);
+            this.Txt_descripcion.Size = new System.Drawing.Size(535, 33);
             this.Txt_descripcion.TabIndex = 15;
             // 
             // Gbp_datos_aplicacion
@@ -215,7 +214,7 @@ namespace CapaVista
             this.Cbo_id_modulo.FormattingEnabled = true;
             this.Cbo_id_modulo.Location = new System.Drawing.Point(299, 100);
             this.Cbo_id_modulo.Name = "Cbo_id_modulo";
-            this.Cbo_id_modulo.Size = new System.Drawing.Size(534, 28);
+            this.Cbo_id_modulo.Size = new System.Drawing.Size(534, 33);
             this.Cbo_id_modulo.TabIndex = 16;
             // 
             // Gbp_estado_aplicacion
@@ -239,7 +238,7 @@ namespace CapaVista
             this.Rdb_inactivo.Location = new System.Drawing.Point(361, 28);
             this.Rdb_inactivo.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.Rdb_inactivo.Name = "Rdb_inactivo";
-            this.Rdb_inactivo.Size = new System.Drawing.Size(92, 24);
+            this.Rdb_inactivo.Size = new System.Drawing.Size(107, 26);
             this.Rdb_inactivo.TabIndex = 1;
             this.Rdb_inactivo.TabStop = true;
             this.Rdb_inactivo.Text = "Inactivo";
@@ -252,7 +251,7 @@ namespace CapaVista
             this.Rdb_estado_activo.Location = new System.Drawing.Point(87, 28);
             this.Rdb_estado_activo.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.Rdb_estado_activo.Name = "Rdb_estado_activo";
-            this.Rdb_estado_activo.Size = new System.Drawing.Size(80, 24);
+            this.Rdb_estado_activo.Size = new System.Drawing.Size(93, 26);
             this.Rdb_estado_activo.TabIndex = 0;
             this.Rdb_estado_activo.TabStop = true;
             this.Rdb_estado_activo.Text = "Activo";
@@ -265,24 +264,9 @@ namespace CapaVista
             this.Lbl_mantenimiento_aplicacion.Location = new System.Drawing.Point(742, 118);
             this.Lbl_mantenimiento_aplicacion.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.Lbl_mantenimiento_aplicacion.Name = "Lbl_mantenimiento_aplicacion";
-            this.Lbl_mantenimiento_aplicacion.Size = new System.Drawing.Size(422, 35);
+            this.Lbl_mantenimiento_aplicacion.Size = new System.Drawing.Size(512, 41);
             this.Lbl_mantenimiento_aplicacion.TabIndex = 18;
             this.Lbl_mantenimiento_aplicacion.Text = "Mantenimiento de Aplicación";
-            // 
-            // Btn_Consultar_Asignacion
-            // 
-            this.Btn_Consultar_Asignacion.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
-            this.Btn_Consultar_Asignacion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_Consultar_Asignacion.Image = global::CapaVista.Properties.Resources.android_search_icon_icons1;
-            this.Btn_Consultar_Asignacion.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Btn_Consultar_Asignacion.Location = new System.Drawing.Point(1108, 290);
-            this.Btn_Consultar_Asignacion.Name = "Btn_Consultar_Asignacion";
-            this.Btn_Consultar_Asignacion.Size = new System.Drawing.Size(146, 76);
-            this.Btn_Consultar_Asignacion.TabIndex = 19;
-            this.Btn_Consultar_Asignacion.Text = "Consultar Asignaciones";
-            this.Btn_Consultar_Asignacion.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Btn_Consultar_Asignacion.UseVisualStyleBackColor = false;
-            this.Btn_Consultar_Asignacion.Click += new System.EventHandler(this.Btn_Consultar_Asignacion_Click);
             // 
             // Pnl_Superior
             // 
@@ -299,7 +283,7 @@ namespace CapaVista
             // 
             this.Pic_Cerrar.BackColor = System.Drawing.Color.Transparent;
             this.Pic_Cerrar.Dock = System.Windows.Forms.DockStyle.Right;
-            this.Pic_Cerrar.Image = global::CapaVista.Properties.Resources.Cancel_icon_icons_com_73703;
+            this.Pic_Cerrar.Image = global::Capa_Vista_Seguridad.Properties.Resources.Cancel_icon_icons_com_73703;
             this.Pic_Cerrar.Location = new System.Drawing.Point(1240, 0);
             this.Pic_Cerrar.Name = "Pic_Cerrar";
             this.Pic_Cerrar.Size = new System.Drawing.Size(37, 44);
@@ -312,7 +296,7 @@ namespace CapaVista
             // 
             this.Btn_guardar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_guardar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_guardar.Image = global::CapaVista.Properties.Resources.savetheapplication_guardar_2958;
+            this.Btn_guardar.Image = global::Capa_Vista_Seguridad.Properties.Resources.savetheapplication_guardar_2958;
             this.Btn_guardar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Btn_guardar.Location = new System.Drawing.Point(963, 258);
             this.Btn_guardar.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
@@ -328,7 +312,7 @@ namespace CapaVista
             // 
             this.Btn_eliminar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_eliminar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_eliminar.Image = global::CapaVista.Properties.Resources.delete_remove_trash_icon_177304;
+            this.Btn_eliminar.Image = global::Capa_Vista_Seguridad.Properties.Resources.delete_remove_trash_icon_177304;
             this.Btn_eliminar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Btn_eliminar.Location = new System.Drawing.Point(963, 398);
             this.Btn_eliminar.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
@@ -344,7 +328,7 @@ namespace CapaVista
             // 
             this.Btn_modificar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_modificar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_modificar.Image = global::CapaVista.Properties.Resources.compose_edit_modify_icon_177770;
+            this.Btn_modificar.Image = global::Capa_Vista_Seguridad.Properties.Resources.compose_edit_modify_icon_177770;
             this.Btn_modificar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Btn_modificar.Location = new System.Drawing.Point(963, 329);
             this.Btn_modificar.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
@@ -360,7 +344,7 @@ namespace CapaVista
             // 
             this.Btn_nuevo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_nuevo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_nuevo.Image = global::CapaVista.Properties.Resources.add_insert_new_plus_button_icon_142943;
+            this.Btn_nuevo.Image = global::Capa_Vista_Seguridad.Properties.Resources.add_insert_new_plus_button_icon_142943;
             this.Btn_nuevo.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Btn_nuevo.Location = new System.Drawing.Point(963, 180);
             this.Btn_nuevo.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
@@ -376,7 +360,7 @@ namespace CapaVista
             // 
             this.Btn_reporte.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_reporte.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_reporte.Image = global::CapaVista.Properties.Resources.exportar;
+            this.Btn_reporte.Image = global::Capa_Vista_Seguridad.Properties.Resources.exportar;
             this.Btn_reporte.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Btn_reporte.Location = new System.Drawing.Point(1108, 398);
             this.Btn_reporte.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
@@ -390,13 +374,12 @@ namespace CapaVista
             // 
             // FrmAplicacion
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 22F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(185)))), ((int)(((byte)(185)))));
             this.ClientSize = new System.Drawing.Size(1277, 617);
             this.Controls.Add(this.Btn_reporte);
             this.Controls.Add(this.Pnl_Superior);
-            this.Controls.Add(this.Btn_Consultar_Asignacion);
             this.Controls.Add(this.Btn_guardar);
             this.Controls.Add(this.Lbl_mantenimiento_aplicacion);
             this.Controls.Add(this.Gbp_estado_aplicacion);
@@ -449,7 +432,6 @@ namespace CapaVista
         private System.Windows.Forms.RadioButton Rdb_estado_activo;
         private System.Windows.Forms.Label Lbl_mantenimiento_aplicacion;
         private System.Windows.Forms.ComboBox Cbo_id_modulo;
-        private System.Windows.Forms.Button Btn_Consultar_Asignacion;
         private System.Windows.Forms.Panel Pnl_Superior;
         private System.Windows.Forms.PictureBox Pic_Cerrar;
         private System.Windows.Forms.Button Btn_reporte;

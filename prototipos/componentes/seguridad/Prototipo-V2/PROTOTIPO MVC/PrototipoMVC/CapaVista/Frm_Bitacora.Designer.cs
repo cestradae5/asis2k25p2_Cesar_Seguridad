@@ -1,5 +1,5 @@
 ﻿
-namespace CapaVista
+namespace Capa_Vista_Seguridad
 {
     partial class Frm_Bitacora
     {
@@ -170,7 +170,7 @@ namespace CapaVista
             // 
             this.Pic_Cerrar.BackColor = System.Drawing.Color.Transparent;
             this.Pic_Cerrar.Dock = System.Windows.Forms.DockStyle.Right;
-            this.Pic_Cerrar.Image = global::CapaVista.Properties.Resources.Cancel_icon_icons_com_73703;
+            this.Pic_Cerrar.Image = global::Capa_Vista_Seguridad.Properties.Resources.Cancel_icon_icons_com_73703;
             this.Pic_Cerrar.Location = new System.Drawing.Point(1293, 0);
             this.Pic_Cerrar.Name = "Pic_Cerrar";
             this.Pic_Cerrar.Size = new System.Drawing.Size(37, 44);
@@ -184,7 +184,7 @@ namespace CapaVista
             this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.button1.Font = new System.Drawing.Font("Rockwell", 10F);
             this.button1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.button1.Image = global::CapaVista.Properties.Resources.exportar;
+            this.button1.Image = global::Capa_Vista_Seguridad.Properties.Resources.exportar;
             this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.button1.Location = new System.Drawing.Point(1162, 457);
             this.button1.Name = "button1";
@@ -202,7 +202,7 @@ namespace CapaVista
             this.Btn_Imprimir.FlatAppearance.BorderSize = 0;
             this.Btn_Imprimir.Font = new System.Drawing.Font("Rockwell", 10F);
             this.Btn_Imprimir.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_Imprimir.Image = global::CapaVista.Properties.Resources.print_black_printer_tool_symbol_icon_icons_com_54467;
+            this.Btn_Imprimir.Image = global::Capa_Vista_Seguridad.Properties.Resources.print_black_printer_tool_symbol_icon_icons_com_54467;
             this.Btn_Imprimir.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Btn_Imprimir.Location = new System.Drawing.Point(1026, 356);
             this.Btn_Imprimir.Name = "Btn_Imprimir";
@@ -218,7 +218,7 @@ namespace CapaVista
             this.Btn_Salir.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_Salir.Font = new System.Drawing.Font("Rockwell", 10F);
             this.Btn_Salir.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_Salir.Image = global::CapaVista.Properties.Resources.sign_emergency_code_sos_61_icon_icons_com_57216;
+            this.Btn_Salir.Image = global::Capa_Vista_Seguridad.Properties.Resources.sign_emergency_code_sos_61_icon_icons_com_57216;
             this.Btn_Salir.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Btn_Salir.Location = new System.Drawing.Point(1026, 457);
             this.Btn_Salir.Name = "Btn_Salir";
@@ -234,7 +234,7 @@ namespace CapaVista
             this.Btn_BuscarUsuario.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_BuscarUsuario.Font = new System.Drawing.Font("Rockwell", 10F);
             this.Btn_BuscarUsuario.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_BuscarUsuario.Image = global::CapaVista.Properties.Resources.android_search_icon_icons1;
+            this.Btn_BuscarUsuario.Image = global::Capa_Vista_Seguridad.Properties.Resources.android_search_icon_icons1;
             this.Btn_BuscarUsuario.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Btn_BuscarUsuario.Location = new System.Drawing.Point(679, 51);
             this.Btn_BuscarUsuario.Name = "Btn_BuscarUsuario";
@@ -250,7 +250,7 @@ namespace CapaVista
             this.Btn_BuscarRango.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_BuscarRango.Font = new System.Drawing.Font("Rockwell", 10F);
             this.Btn_BuscarRango.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_BuscarRango.Image = global::CapaVista.Properties.Resources.android_search_icon_icons1;
+            this.Btn_BuscarRango.Image = global::Capa_Vista_Seguridad.Properties.Resources.android_search_icon_icons1;
             this.Btn_BuscarRango.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Btn_BuscarRango.Location = new System.Drawing.Point(996, 51);
             this.Btn_BuscarRango.Name = "Btn_BuscarRango";
@@ -266,7 +266,7 @@ namespace CapaVista
             this.Btn_BuscarFecha.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_BuscarFecha.Font = new System.Drawing.Font("Rockwell", 10F);
             this.Btn_BuscarFecha.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_BuscarFecha.Image = global::CapaVista.Properties.Resources.android_search_icon_icons1;
+            this.Btn_BuscarFecha.Image = global::Capa_Vista_Seguridad.Properties.Resources.android_search_icon_icons1;
             this.Btn_BuscarFecha.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Btn_BuscarFecha.Location = new System.Drawing.Point(407, 50);
             this.Btn_BuscarFecha.Name = "Btn_BuscarFecha";
@@ -282,7 +282,7 @@ namespace CapaVista
             this.Btn_Exportar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_Exportar.Font = new System.Drawing.Font("Rockwell", 10F);
             this.Btn_Exportar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_Exportar.Image = global::CapaVista.Properties.Resources.exportar;
+            this.Btn_Exportar.Image = global::Capa_Vista_Seguridad.Properties.Resources.exportar;
             this.Btn_Exportar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Btn_Exportar.Location = new System.Drawing.Point(235, 51);
             this.Btn_Exportar.Name = "Btn_Exportar";
@@ -298,7 +298,7 @@ namespace CapaVista
             this.Btn_Consultar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_Consultar.Font = new System.Drawing.Font("Rockwell", 10F);
             this.Btn_Consultar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_Consultar.Image = global::CapaVista.Properties.Resources.android_search_icon_icons_com_50501;
+            this.Btn_Consultar.Image = global::Capa_Vista_Seguridad.Properties.Resources.android_search_icon_icons_com_50501;
             this.Btn_Consultar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Btn_Consultar.Location = new System.Drawing.Point(12, 51);
             this.Btn_Consultar.Name = "Btn_Consultar";

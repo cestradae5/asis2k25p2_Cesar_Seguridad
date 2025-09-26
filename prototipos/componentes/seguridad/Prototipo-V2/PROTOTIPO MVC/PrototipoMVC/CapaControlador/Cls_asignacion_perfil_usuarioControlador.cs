@@ -1,10 +1,10 @@
 ﻿using System.Data;
-using CapaModelo;
+using Capa_Modelo_Seguridad;
 /* Brandon Alexander Hernandez Salguero
  * 0901-22-9663
  */
 
-namespace CapaControlador
+namespace Capa_Controlador_Seguridad
 {
     public class Cls_asignacion_perfil_usuarioControlador
     {

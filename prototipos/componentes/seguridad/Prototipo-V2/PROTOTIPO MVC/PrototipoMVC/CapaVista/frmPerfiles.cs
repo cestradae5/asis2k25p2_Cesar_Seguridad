@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
-using CapaControlador;
-using CapaModelo;
+using Capa_Controlador_Seguridad;
+using Capa_Modelo_Seguridad;
 
 //Brandon Alexander Hernandez Salguero 0901-22-9663
-namespace CapaVista
+namespace Capa_Vista_Seguridad
 {
     public partial class frmPerfiles : Form
     {

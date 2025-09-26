@@ -1,5 +1,5 @@
 ﻿
-namespace CapaVista
+namespace Capa_Vista_Seguridad
 {
     partial class FrmUsuario
     {
@@ -211,7 +211,7 @@ namespace CapaVista
             // 
             this.Pic_Cerrar.BackColor = System.Drawing.Color.Transparent;
             this.Pic_Cerrar.Dock = System.Windows.Forms.DockStyle.Right;
-            this.Pic_Cerrar.Image = global::CapaVista.Properties.Resources.cancel_77947;
+            this.Pic_Cerrar.Image = global::Capa_Vista_Seguridad.Properties.Resources.cancel_77947;
             this.Pic_Cerrar.Location = new System.Drawing.Point(786, 0);
             this.Pic_Cerrar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Pic_Cerrar.Name = "Pic_Cerrar";

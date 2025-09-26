@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace CapaVista
+namespace Capa_Vista_Seguridad
 {
     public partial class frmReporte_Bitacoras : Form
     {

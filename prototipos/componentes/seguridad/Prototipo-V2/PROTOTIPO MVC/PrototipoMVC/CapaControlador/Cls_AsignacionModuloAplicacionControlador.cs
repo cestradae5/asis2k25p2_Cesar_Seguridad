@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CapaModelo;
+using Capa_Modelo_Seguridad;
 using System.Data;
 
 
 
-namespace CapaControlador
+namespace Capa_Controlador_Seguridad
 {
     public class Cls_AsignacionModuloAplicacionControlador
     {

@@ -1,10 +1,10 @@
 ﻿using System; //0901-22-2929 Pablo Jose Quiroa Martinez
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
-using CapaControlador;
+using Capa_Controlador_Seguridad;
 
 
-namespace CapaVista
+namespace Capa_Vista_Seguridad
 {
     public partial class frmLogin : Form
     {

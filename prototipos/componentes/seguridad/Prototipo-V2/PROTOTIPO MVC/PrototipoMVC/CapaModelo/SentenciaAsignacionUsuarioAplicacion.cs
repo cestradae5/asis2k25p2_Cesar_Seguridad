@@ -2,7 +2,7 @@
 using System.Data;
 using System.Data.Odbc;
 
-namespace CapaModelo
+namespace Capa_Modelo_Seguridad
 {
     /* Marcos Andres Velásquez Alcántara 0901-22-1115 */
     public class SentenciaAsignacionUsuarioAplicacion
