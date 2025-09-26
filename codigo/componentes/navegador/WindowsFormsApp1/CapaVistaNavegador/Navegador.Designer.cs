@@ -256,7 +256,6 @@ namespace Capa_Vista_Navegador
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
             this.Controls.Add(this.flowLayoutPanel1);
             this.Name = "Navegador";
             this.Size = new System.Drawing.Size(1180, 488);
