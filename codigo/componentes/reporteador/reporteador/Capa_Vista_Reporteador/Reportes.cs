@@ -106,55 +106,37 @@ namespace Capa_Vista_Reporteador
         private void Btn_guardar_Click(object sender, EventArgs e)
         {
             // Inicio de código de: Cesar Santizo con carné: 0901-22-5215 en la fecha de: 12/09/2025
+            //modificación por Bárbara Saldaña 0901-22-9136 --> 26/09/2025
             try
             {
                 string sTitulo = Txt_Titulo.Text.Trim();
                 string sRuta = Txt_reportes_ruta.Text.Trim();
-                DateTime fecha = DateTime.Now;
 
-                // Validar que el título no esté vacío
                 if (string.IsNullOrWhiteSpace(sTitulo))
                 {
-                    MessageBox.Show("No se pudo guardar el reporte porque falta ingresar el título.",
-                                    "Error al Guardar",
-                                    MessageBoxButtons.OK,
-                                    MessageBoxIcon.Error);
-                    return; // sale sin guardar
+                    MessageBox.Show("Debe ingresar un título para el reporte.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
 
-                int iExistencia = verificarRegistroExistente(sTitulo);
-                if (iExistencia == 1)
+                int existe = controlador.verificartitulo(sTitulo);
+                if (existe == 1)
                 {
-                    MessageBox.Show("Ya existe un registro con el mismo título.",
-                                    "Duplicado",
-                                    MessageBoxButtons.OK,
-                                    MessageBoxIcon.Warning);
+                    MessageBox.Show("Ya existe un reporte con el mismo título.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
-                else if (iExistencia == 0)
-                {
-                    controlador.GuardarReporte(sTitulo, sRuta, fecha);
-                    MessageBox.Show("Reporte Guardado Correctamente.",
-                                    "Éxito",
-                                    MessageBoxButtons.OK,
-                                    MessageBoxIcon.Information);
-
-                    ActualizarGrid();
-
-                    // Limpieza de campos
-                    Txt_reportes_ruta.Clear(); // Inicio de código de: Cesar Santizo con carné: 0901-22-5215 en la fecha de: 24/09/2025
-                    Txt_Titulo.Clear();        // Fin de código de: Cesar Santizo con carné: 0901-22-5215 en la fecha de: 24/09/2025
-                }
+                controlador.GuardarReporte(sTitulo, sRuta, DateTime.Now);
+                MessageBox.Show("Reporte guardado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                ActualizarGrid();
+                Txt_Titulo.Clear();
+                Txt_reportes_ruta.Clear();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al guardar: " + ex.Message,
-                                "Error",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Error);
+                MessageBox.Show("Error al guardar: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            // Fin de código de: Cesar Santizo con carné: 0901-22-5215 en la fecha de: 12/09/2025
+            // Fin de código de: Cesar Santizo con carné: 0901-22-5215 en la fecha de: 26/09/2025
+            //fin modificacion del código por Bárbara Saldaña 0901-22-9136 --> 26/09/2025
         }
-
 
         private void Btn_modificar_Click(object sender, EventArgs e)
         {
@@ -179,8 +161,6 @@ namespace Capa_Vista_Reporteador
             // Fin de código de: Anderson Trigueros con carné: 0901-22-6961 en la fecha 12/09/2025
 
         }
-
-
 
         private void Btn_eliminar_Click(object sender, EventArgs e)
         {

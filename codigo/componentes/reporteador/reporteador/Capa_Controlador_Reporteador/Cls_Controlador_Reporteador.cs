@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO; //Barbara Saldaña --> 26/09/2025
 using System.Data; //Paula Leonardo
 using Capa_Modelo_Reporteador; //Paula Leonardo
 
@@ -20,6 +21,7 @@ namespace Capa_Controlador_Reporteador
         // fin de código de: Paula Leonardo con carné: 0901-22-9580 en la fecha de: 11/09/2025
 
 
+
         // ==========================
         // Métodos de creación
         // ==========================
@@ -28,18 +30,17 @@ namespace Capa_Controlador_Reporteador
         public void GuardarReporte(string sTitulo, String sRuta, DateTime dFecha)
         {
             sentencias.InsertarReporte(sTitulo, sRuta, dFecha);
-        }
+            }
         // fin de código de: Paula Leonardo con carné: 0901-22-9580 en la fecha de: 11/09/2025
-
 
         // ==========================
         // Métodos de modificación
         // ==========================
 
         // Inicio de código de: Paula Leonardo con carné: 0901-22-9580 en la fecha de: 11/09/2025
-        public void ModificarRuta(int id, String sNuevaruta)
+        public void ModificarRuta(int id, string sNuevaRuta)
         {
-            sentencias.ModificarRuta(id, sNuevaruta);
+            sentencias.ModificarRuta(id, sNuevaRuta);
         }
         // fin de código de: Paula Leonardo con carné: 0901-22-9580 en la fecha de: 11/09/2025
 
@@ -62,7 +63,6 @@ namespace Capa_Controlador_Reporteador
         }
         //fin codigo Sergio
 
-
         // ==========================
         // Métodos de consulta
         // ==========================
@@ -81,7 +81,6 @@ namespace Capa_Controlador_Reporteador
             return iResultado;
         }
         //fin codigo Sergio
-
 
         // ==========================
         // Métodos de aplicación
