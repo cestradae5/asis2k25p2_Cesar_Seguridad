@@ -33,10 +33,5 @@ namespace PruebaEjecucionNavegador
             navegador1.mostrarDatos();
         }
 
-        private void Btn_Siguiente_Click(object sender, EventArgs e)
-        {
-            Form2 frm = new Form2();  // Crear una nueva instancia de Form2
-            frm.Show();
-        }
     }
 }
