@@ -15,7 +15,7 @@ namespace Capa_Vista_Navegador
         public string[] SAlias { get; set; }
         public string SNombreTabla { get; set; } // Nueva propiedad para el nombre de la tabla
 
-        public ConfiguracionDataGridView configuracionDataGridView;
+        public Cls_ConfiguracionDataGridView configuracionDataGridView;
 
         public Navegador()
         {
@@ -46,7 +46,7 @@ namespace Capa_Vista_Navegador
             }
         }
 
-        ControladorNavegador ctrl = new ControladorNavegador();
+        Cls_ControladorNavegador ctrl = new Cls_ControladorNavegador();
 
         // parte del datagridview con la funcion del boton imprimir
 
@@ -143,7 +143,7 @@ namespace Capa_Vista_Navegador
 
         private void Btn_guardar_Click_1(object sender, EventArgs e)
         {
-            ControladorNavegador ctrl = new ControladorNavegador();
+            Cls_ControladorNavegador ctrl = new Cls_ControladorNavegador();
             ctrl.Insertar_Datos(this, SAlias);
 
             // Recarga despues de insertar = Stevens Cambranes
@@ -320,7 +320,7 @@ namespace Capa_Vista_Navegador
         }
 
         // ======================= Configuracion de data grid view - Fredy Reyes 0901-22-9800 =======================
-        public void configurarDataGridView(ConfiguracionDataGridView configuracion)
+        public void configurarDataGridView(Cls_ConfiguracionDataGridView configuracion)
         {
             configuracionDataGridView = configuracion;
 
