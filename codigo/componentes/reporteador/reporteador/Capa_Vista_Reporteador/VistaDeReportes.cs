@@ -10,7 +10,7 @@ namespace Capa_Vista_Reporteador
 {
     public partial class VistaDeReportes : Form
     {
-        Controlador_Reporteador controlador = new Controlador_Reporteador();
+        Cls_Controlador_Reporteador controlador = new Cls_Controlador_Reporteador();
 
         public VistaDeReportes()
         {

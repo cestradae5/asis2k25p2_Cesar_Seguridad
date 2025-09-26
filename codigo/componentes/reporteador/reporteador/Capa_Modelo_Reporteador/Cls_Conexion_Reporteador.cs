@@ -7,7 +7,7 @@ using System.Data.Odbc; // Paula Leonardo
 
 namespace Capa_Modelo_Reporteador
 {
-    class Conexion_Reporteador //Paula Leonardo
+    class Cls_Conexion_Reporteador //Paula Leonardo
     {
         //Método de creación de la conexion via ODBC
         

@@ -30,7 +30,7 @@ namespace Capa_Vista_Reporteador
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Reportes));
-            this.Txt_reportes = new System.Windows.Forms.Label();
+            this.Lbl_reportes = new System.Windows.Forms.Label();
             this.Dgv_reportes = new System.Windows.Forms.DataGridView();
             this.Txt_reportes_ruta = new System.Windows.Forms.TextBox();
             this.Btn_guardar = new System.Windows.Forms.Button();
@@ -44,16 +44,17 @@ namespace Capa_Vista_Reporteador
             ((System.ComponentModel.ISupportInitialize)(this.Dgv_reportes)).BeginInit();
             this.SuspendLayout();
             // 
-            // Txt_reportes
+            // Lbl_reportes
             // 
-            this.Txt_reportes.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.Txt_reportes.AutoSize = true;
-            this.Txt_reportes.Font = new System.Drawing.Font("Rockwell", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Txt_reportes.Location = new System.Drawing.Point(400, 36);
-            this.Txt_reportes.Name = "Txt_reportes";
-            this.Txt_reportes.Size = new System.Drawing.Size(148, 38);
-            this.Txt_reportes.TabIndex = 1;
-            this.Txt_reportes.Text = "Reportes";
+            this.Lbl_reportes.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.Lbl_reportes.AutoSize = true;
+            this.Lbl_reportes.Font = new System.Drawing.Font("Rockwell", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Lbl_reportes.Location = new System.Drawing.Point(400, 36);
+            this.Lbl_reportes.Name = "Lbl_reportes";
+            this.Lbl_reportes.Size = new System.Drawing.Size(148, 38);
+            this.Lbl_reportes.TabIndex = 1;
+            this.Lbl_reportes.Text = "Reportes";
+            this.Lbl_reportes.Click += new System.EventHandler(this.Lbl_reportes_Click);
             // 
             // Dgv_reportes
             // 
@@ -200,7 +201,7 @@ namespace Capa_Vista_Reporteador
             this.Controls.Add(this.Btn_guardar);
             this.Controls.Add(this.Txt_reportes_ruta);
             this.Controls.Add(this.Dgv_reportes);
-            this.Controls.Add(this.Txt_reportes);
+            this.Controls.Add(this.Lbl_reportes);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
@@ -217,7 +218,7 @@ namespace Capa_Vista_Reporteador
 
         #endregion
 
-        private System.Windows.Forms.Label Txt_reportes;
+        private System.Windows.Forms.Label Lbl_reportes;
         private System.Windows.Forms.DataGridView Dgv_reportes;
         private System.Windows.Forms.TextBox Txt_reportes_ruta;
         private System.Windows.Forms.Button Btn_guardar;
