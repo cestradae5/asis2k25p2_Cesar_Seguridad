@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+//Inicio de Reporte de bitacora  Carlo Sosa 0901-22-1106  22/09/2025
+
 namespace Capa_Vista_Seguridad
 {
     public partial class frmReporte_Bitacoras : Form
@@ -15,6 +17,16 @@ namespace Capa_Vista_Seguridad
         public frmReporte_Bitacoras()
         {
             InitializeComponent();
+        }
+
+        private void crystalReportViewer1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Reporte_bitacoras1_InitReport(object sender, EventArgs e)
+        {
+
         }
     }
 }

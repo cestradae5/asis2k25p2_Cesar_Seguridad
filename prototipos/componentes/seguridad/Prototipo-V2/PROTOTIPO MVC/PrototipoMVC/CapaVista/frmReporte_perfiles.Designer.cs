@@ -44,6 +44,10 @@
             this.crystalReportViewer1.Size = new System.Drawing.Size(800, 450);
             this.crystalReportViewer1.TabIndex = 0;
             // 
+            // Reporte_perfiles1
+            // 
+            this.Reporte_perfiles1.InitReport += new System.EventHandler(this.Reporte_perfiles1_InitReport);
+            // 
             // frmreporte_perfiles
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
