@@ -17,7 +17,7 @@ namespace Capa_Vista_Reporteador
         // ==========================
         // Variables globales
         // ==========================
-        Controlador_Reporteador controlador = new Controlador_Reporteador();
+        Cls_Controlador_Reporteador controlador = new Cls_Controlador_Reporteador();
         private int iCodigoRuta = -1;
         private int iCodigoFilaSeleccionada = 0;
 
@@ -108,12 +108,12 @@ namespace Capa_Vista_Reporteador
             // Inicio de código de: Cesar Santizo con carné: 0901-22-5215 en la fecha de: 12/09/2025
             try
             {
-                string titulo = Txt_Titulo.Text.Trim();
-                string ruta = Txt_reportes_ruta.Text.Trim();
+                string sTitulo = Txt_Titulo.Text.Trim();
+                string sRuta = Txt_reportes_ruta.Text.Trim();
                 DateTime fecha = DateTime.Now;
 
                 // Validar que el título no esté vacío
-                if (string.IsNullOrWhiteSpace(titulo))
+                if (string.IsNullOrWhiteSpace(sTitulo))
                 {
                     MessageBox.Show("No se pudo guardar el reporte porque falta ingresar el título.",
                                     "Error al Guardar",
@@ -122,7 +122,7 @@ namespace Capa_Vista_Reporteador
                     return; // sale sin guardar
                 }
 
-                int iExistencia = verificarRegistroExistente(titulo);
+                int iExistencia = verificarRegistroExistente(sTitulo);
                 if (iExistencia == 1)
                 {
                     MessageBox.Show("Ya existe un registro con el mismo título.",
@@ -132,7 +132,7 @@ namespace Capa_Vista_Reporteador
                 }
                 else if (iExistencia == 0)
                 {
-                    controlador.GuardarReporte(titulo, ruta, fecha);
+                    controlador.GuardarReporte(sTitulo, sRuta, fecha);
                     MessageBox.Show("Reporte Guardado Correctamente.",
                                     "Éxito",
                                     MessageBoxButtons.OK,
@@ -286,6 +286,11 @@ namespace Capa_Vista_Reporteador
         private void Btn_Navegador_Click(object sender, EventArgs e)
         {
             reporteAplicacion(100);
+        }
+
+        private void Lbl_reportes_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -9,14 +9,14 @@ using Capa_Modelo_Reporteador; //Paula Leonardo
 namespace Capa_Controlador_Reporteador
 {
     //Clase Publica
-    public class Controlador_Reporteador
+    public class Cls_Controlador_Reporteador
     {
         // ==========================
         // Variables globales
         // ==========================
 
         // Inicio de código de: Paula Leonardo con carné: 0901-22-9580 en la fecha de: 11/09/2025
-        Sentencias_Reporteador sentencias = new Sentencias_Reporteador();
+        Cls_Sentencias_Reporteador sentencias = new Cls_Sentencias_Reporteador();
         // fin de código de: Paula Leonardo con carné: 0901-22-9580 en la fecha de: 11/09/2025
 
 
@@ -25,9 +25,9 @@ namespace Capa_Controlador_Reporteador
         // ==========================
 
         // Inicio de código de: Paula Leonardo con carné: 0901-22-9580 en la fecha de: 11/09/2025
-        public void GuardarReporte(string titulo, String ruta, DateTime fecha)
+        public void GuardarReporte(string sTitulo, String sRuta, DateTime dFecha)
         {
-            sentencias.InsertarReporte(titulo, ruta, fecha);
+            sentencias.InsertarReporte(sTitulo, sRuta, dFecha);
         }
         // fin de código de: Paula Leonardo con carné: 0901-22-9580 en la fecha de: 11/09/2025
 
@@ -37,16 +37,16 @@ namespace Capa_Controlador_Reporteador
         // ==========================
 
         // Inicio de código de: Paula Leonardo con carné: 0901-22-9580 en la fecha de: 11/09/2025
-        public void ModificarRuta(int id, String nuevaruta)
+        public void ModificarRuta(int id, String sNuevaruta)
         {
-            sentencias.ModificarRuta(id, nuevaruta);
+            sentencias.ModificarRuta(id, sNuevaruta);
         }
         // fin de código de: Paula Leonardo con carné: 0901-22-9580 en la fecha de: 11/09/2025
 
         // Inicio de código de: Anderson Trigueros con carné: 0901-22-6961 en la fecha de 23/09/2025
-        public void ModificarTitulo(int id, String tituloNuevo)
+        public void ModificarTitulo(int id, String sTituloNuevo)
         {
-            sentencias.ModificarTitulo(id, tituloNuevo);
+            sentencias.ModificarTitulo(id, sTituloNuevo);
         }
         // Fin de código de: Anderson Trigueros con carné: 0901-22-6961 en la fecha de: 23/09/2025
 
@@ -75,9 +75,9 @@ namespace Capa_Controlador_Reporteador
         //fin codigo Sergio
 
         //inicio codigo Sergio Izeppi 0901-22-8946 en la fecha 16/09/2025
-        public int verificartitulo(string titulo)
+        public int verificartitulo(string sTitulo)
         {
-            int iResultado = sentencias.verificarExistencia(titulo);
+            int iResultado = sentencias.verificarExistencia(sTitulo);
             return iResultado;
         }
         //fin codigo Sergio
