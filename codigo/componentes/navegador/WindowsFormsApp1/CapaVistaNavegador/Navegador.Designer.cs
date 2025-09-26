@@ -72,18 +72,20 @@ namespace Capa_Vista_Navegador
             // 
             // Btn_ingresar
             // 
+            this.Btn_ingresar.Font = new System.Drawing.Font("Rockwell", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Btn_ingresar.Image = ((System.Drawing.Image)(resources.GetObject("Btn_ingresar.Image")));
             this.Btn_ingresar.Location = new System.Drawing.Point(3, 3);
             this.Btn_ingresar.Name = "Btn_ingresar";
             this.Btn_ingresar.Size = new System.Drawing.Size(74, 87);
             this.Btn_ingresar.TabIndex = 0;
-            this.Btn_ingresar.Text = "ingresar";
+            this.Btn_ingresar.Text = "Ingresar";
             this.Btn_ingresar.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.Btn_ingresar.UseVisualStyleBackColor = true;
             this.Btn_ingresar.Click += new System.EventHandler(this.Btn_ingresar_Click);
             // 
             // Btn_modificar
             // 
+            this.Btn_modificar.Font = new System.Drawing.Font("Rockwell", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Btn_modificar.Image = ((System.Drawing.Image)(resources.GetObject("Btn_modificar.Image")));
             this.Btn_modificar.Location = new System.Drawing.Point(83, 3);
             this.Btn_modificar.Name = "Btn_modificar";
@@ -96,6 +98,7 @@ namespace Capa_Vista_Navegador
             // 
             // Btn_guardar
             // 
+            this.Btn_guardar.Font = new System.Drawing.Font("Rockwell", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Btn_guardar.Image = ((System.Drawing.Image)(resources.GetObject("Btn_guardar.Image")));
             this.Btn_guardar.Location = new System.Drawing.Point(163, 3);
             this.Btn_guardar.Name = "Btn_guardar";
@@ -108,6 +111,7 @@ namespace Capa_Vista_Navegador
             // 
             // Btn_cancelar
             // 
+            this.Btn_cancelar.Font = new System.Drawing.Font("Rockwell", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Btn_cancelar.Image = ((System.Drawing.Image)(resources.GetObject("Btn_cancelar.Image")));
             this.Btn_cancelar.Location = new System.Drawing.Point(243, 3);
             this.Btn_cancelar.Name = "Btn_cancelar";
@@ -120,6 +124,7 @@ namespace Capa_Vista_Navegador
             // 
             // Btn_eliminar
             // 
+            this.Btn_eliminar.Font = new System.Drawing.Font("Rockwell", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Btn_eliminar.Image = ((System.Drawing.Image)(resources.GetObject("Btn_eliminar.Image")));
             this.Btn_eliminar.Location = new System.Drawing.Point(323, 3);
             this.Btn_eliminar.Name = "Btn_eliminar";
@@ -132,6 +137,7 @@ namespace Capa_Vista_Navegador
             // 
             // Btn_consultar
             // 
+            this.Btn_consultar.Font = new System.Drawing.Font("Rockwell", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Btn_consultar.Image = ((System.Drawing.Image)(resources.GetObject("Btn_consultar.Image")));
             this.Btn_consultar.Location = new System.Drawing.Point(403, 3);
             this.Btn_consultar.Name = "Btn_consultar";
@@ -144,6 +150,7 @@ namespace Capa_Vista_Navegador
             // 
             // Btn_imprimir
             // 
+            this.Btn_imprimir.Font = new System.Drawing.Font("Rockwell", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Btn_imprimir.Image = ((System.Drawing.Image)(resources.GetObject("Btn_imprimir.Image")));
             this.Btn_imprimir.Location = new System.Drawing.Point(483, 3);
             this.Btn_imprimir.Name = "Btn_imprimir";
@@ -156,6 +163,7 @@ namespace Capa_Vista_Navegador
             // 
             // Btn_refrescar
             // 
+            this.Btn_refrescar.Font = new System.Drawing.Font("Rockwell", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Btn_refrescar.Image = ((System.Drawing.Image)(resources.GetObject("Btn_refrescar.Image")));
             this.Btn_refrescar.Location = new System.Drawing.Point(563, 3);
             this.Btn_refrescar.Name = "Btn_refrescar";
@@ -168,6 +176,7 @@ namespace Capa_Vista_Navegador
             // 
             // Btn_inicio
             // 
+            this.Btn_inicio.Font = new System.Drawing.Font("Rockwell", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Btn_inicio.Image = ((System.Drawing.Image)(resources.GetObject("Btn_inicio.Image")));
             this.Btn_inicio.Location = new System.Drawing.Point(643, 3);
             this.Btn_inicio.Name = "Btn_inicio";
@@ -180,6 +189,7 @@ namespace Capa_Vista_Navegador
             // 
             // Btn_anterior
             // 
+            this.Btn_anterior.Font = new System.Drawing.Font("Rockwell", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Btn_anterior.Image = ((System.Drawing.Image)(resources.GetObject("Btn_anterior.Image")));
             this.Btn_anterior.Location = new System.Drawing.Point(723, 3);
             this.Btn_anterior.Name = "Btn_anterior";
@@ -192,6 +202,7 @@ namespace Capa_Vista_Navegador
             // 
             // Btn_sig
             // 
+            this.Btn_sig.Font = new System.Drawing.Font("Rockwell", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Btn_sig.Image = ((System.Drawing.Image)(resources.GetObject("Btn_sig.Image")));
             this.Btn_sig.Location = new System.Drawing.Point(803, 3);
             this.Btn_sig.Name = "Btn_sig";
@@ -204,6 +215,7 @@ namespace Capa_Vista_Navegador
             // 
             // Btn_fin
             // 
+            this.Btn_fin.Font = new System.Drawing.Font("Rockwell", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Btn_fin.Image = ((System.Drawing.Image)(resources.GetObject("Btn_fin.Image")));
             this.Btn_fin.Location = new System.Drawing.Point(883, 3);
             this.Btn_fin.Name = "Btn_fin";
@@ -216,6 +228,7 @@ namespace Capa_Vista_Navegador
             // 
             // Btn_ayuda
             // 
+            this.Btn_ayuda.Font = new System.Drawing.Font("Rockwell", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Btn_ayuda.Image = ((System.Drawing.Image)(resources.GetObject("Btn_ayuda.Image")));
             this.Btn_ayuda.Location = new System.Drawing.Point(963, 3);
             this.Btn_ayuda.Name = "Btn_ayuda";
@@ -228,6 +241,7 @@ namespace Capa_Vista_Navegador
             // 
             // Btn_salir
             // 
+            this.Btn_salir.Font = new System.Drawing.Font("Rockwell", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Btn_salir.Image = ((System.Drawing.Image)(resources.GetObject("Btn_salir.Image")));
             this.Btn_salir.Location = new System.Drawing.Point(1043, 3);
             this.Btn_salir.Name = "Btn_salir";
@@ -242,6 +256,7 @@ namespace Capa_Vista_Navegador
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.Controls.Add(this.flowLayoutPanel1);
             this.Name = "Navegador";
             this.Size = new System.Drawing.Size(1180, 488);

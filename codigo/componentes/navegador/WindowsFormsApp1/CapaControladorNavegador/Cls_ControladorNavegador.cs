@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.AxHost;
+using System.Drawing;
 using Capa_Modelo_Navegador;
 
 namespace Capa_Controlador_Navegador
@@ -41,7 +42,7 @@ namespace Capa_Controlador_Navegador
 
             if (columnasFaltantes.Count > 0)
             {
-                string msg = "⚠️ Las siguientes columnas no existen en la tabla '" + tabla + "':\n" +
+                string msg = "⚠ Las siguientes columnas no existen en la tabla '" + tabla + "':\n" +
                              string.Join(", ", columnasFaltantes);
                 MessageBox.Show(msg);
                 return false;
@@ -82,14 +83,16 @@ namespace Capa_Controlador_Navegador
             {
                 Label lbl = new Label
                 {
+                    Font = new Font("Rockwell", 10, FontStyle.Bold),
                     Text = campo + ":",
-                    AutoSize = true,
+                    AutoSize = false,
                     Location = new System.Drawing.Point(startX, startY + (creados * spacingY))
                 };
 
                 ComboBox cbo = new ComboBox
                 {
                     Name = "Cbo_" + campo,
+                    Font = new Font("Rockwell", 10, FontStyle.Regular),
                     Width = 150,
                     Location = new System.Drawing.Point(startX + 100, startY + (creados * spacingY)),
                 };

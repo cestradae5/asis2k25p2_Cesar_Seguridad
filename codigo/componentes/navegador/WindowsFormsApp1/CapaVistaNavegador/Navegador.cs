@@ -63,10 +63,11 @@ namespace Capa_Vista_Navegador
                 Dgv_Datos.Name = "Dgv_Datos";
                 Dgv_Datos.ScrollBars = ScrollBars.None;
                 Dgv_Datos.BackgroundColor = Color.White;
-                Dgv_Datos.ColumnHeadersDefaultCellStyle.Font = new Font("Microsoft Sans Serif", 9, FontStyle.Bold);
+                Dgv_Datos.ColumnHeadersDefaultCellStyle.Font = new Font("Rockwell", 10, FontStyle.Bold);
                 Dgv_Datos.Location = new System.Drawing.Point(10, 250);
                 Dgv_Datos.Size = new System.Drawing.Size(1100, 200);
                 Dgv_Datos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                Dgv_Datos.DefaultCellStyle.Font = new Font("Rockwell", 10, FontStyle.Regular);
                 Dgv_Datos.ReadOnly = true; 
                 this.Controls.Add(Dgv_Datos);
 
