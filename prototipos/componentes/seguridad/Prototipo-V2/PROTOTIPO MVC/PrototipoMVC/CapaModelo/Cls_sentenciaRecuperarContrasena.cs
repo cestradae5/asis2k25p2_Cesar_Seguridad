@@ -10,7 +10,7 @@ namespace Capa_Modelo_Seguridad
 {
     public class ClsModeloRecuperarContrasena
     {
-        private Conexion cn = new Conexion();
+        private Cls_Conexion cn = new Cls_Conexion();
 
         // 0901-20-4620 Ruben Armando Lopez Luch
         public int fun_obtener_IdUsuario(string sNombreUsuario)

@@ -7,7 +7,7 @@ namespace Capa_Modelo_Seguridad
 {
     public class Cls_Modulo_Sentencias
     {
-        Conexion conexion = new Conexion();
+        Cls_Conexion conexion = new Cls_Conexion();
 
         public string[] LlenarComboModulos()
         {

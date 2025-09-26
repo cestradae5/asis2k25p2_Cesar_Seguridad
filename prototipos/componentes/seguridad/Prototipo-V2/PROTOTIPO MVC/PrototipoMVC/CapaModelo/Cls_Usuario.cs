@@ -5,15 +5,15 @@ namespace Capa_Modelo_Seguridad
 {
     public class Cls_Usuario
     {
-        public int PkIdUsuario { get; set; }
-        public int FkIdEmpleado { get; set; }
-        public string NombreUsuario { get; set; }
-        public string ContrasenaUsuario { get; set; }
-        public int ContadorIntentosFallidos { get; set; }
-        public bool EstadoUsuario { get; set; }
-        public DateTime FechaCreacion { get; set; }
-        public DateTime UltimoCambioContrasena { get; set; }
-        public bool PidioCambioContrasena { get; set; }
+        public int iPkIdUsuario { get; set; }
+        public int iFkIdEmpleado { get; set; }
+        public string sNombreUsuario { get; set; }
+        public string sContrasenaUsuario { get; set; }
+        public int iContadorIntentosFallidos { get; set; }
+        public bool bEstadoUsuario { get; set; }
+        public DateTime dFechaCreacion { get; set; }
+        public DateTime dUltimoCambioContrasena { get; set; }
+        public bool bPidioCambioContrasena { get; set; }
 
         public Cls_Usuario() { }
 
@@ -29,15 +29,15 @@ namespace Capa_Modelo_Seguridad
             bool pidioCambioContrasena
         )
         {
-            PkIdUsuario = pkIdUsuario;
-            FkIdEmpleado = fkIdEmpleado;
-            NombreUsuario = nombreUsuario;
-            ContrasenaUsuario = contrasenaUsuario;
-            ContadorIntentosFallidos = contadorIntentosFallidos;
-            EstadoUsuario = estadoUsuario;
-            FechaCreacion = fechaCreacion;
-            UltimoCambioContrasena = ultimoCambioContrasena;
-            PidioCambioContrasena = pidioCambioContrasena;
+            iPkIdUsuario = pkIdUsuario;
+            iFkIdEmpleado = fkIdEmpleado;
+            sNombreUsuario = nombreUsuario;
+            sContrasenaUsuario = contrasenaUsuario;
+            iContadorIntentosFallidos = contadorIntentosFallidos;
+            bEstadoUsuario = estadoUsuario;
+            dFechaCreacion = fechaCreacion;
+            dUltimoCambioContrasena = ultimoCambioContrasena;
+            bPidioCambioContrasena = pidioCambioContrasena;
         }
     }
 }

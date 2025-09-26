@@ -54,8 +54,8 @@
     <Compile Include="Cls_controlador_cambio_contrasena.cs" />
     <Compile Include="Cls_PerfilesControlador.cs" />
     <Compile Include="Cls_UsuarioControlador.cs" />
-    <Compile Include="ControladorAsignacionUsuarioAplicacion.cs" />
-    <Compile Include="ControladorLogin.cs" />
+    <Compile Include="Cls_ControladorAsignacionUsuarioAplicacion.cs" />
+    <Compile Include="Cls_ControladorLogin.cs" />
     <Compile Include="Cls_EmpleadosControlador.cs" />
     <Compile Include="Cls_ModulosControlador.cs" />
     <Compile Include="Cls_controladorRecuperarContrasena.cs" />

@@ -14,7 +14,7 @@ namespace Capa_Modelo_Seguridad
 {
     public class Cls_Asignacion_Permiso_PerfilesDAO
     {
-        private Conexion conexion = new Conexion();
+        private Cls_Conexion conexion = new Cls_Conexion();
 
         public DataTable datObtenerPerfiles()
         {
