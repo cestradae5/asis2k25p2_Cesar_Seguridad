@@ -150,9 +150,9 @@ namespace Capa_Modelo_Reporteador
                 string sql = $@"SELECT R.Cmp_Ruta_Reporte
                                 FROM Tbl_Aplicacion A
                                 JOIN Tbl_Reportes R ON A.Fk_Id_Reporte_Aplicacion = R.Pk_Id_Reporte
-                                WHERE A.Pk_Id_Aplicacion = @idAplicacion";
+                                WHERE A.Pk_Id_Aplicacion = ?";
                 OdbcCommand cmd = new OdbcCommand(sql, con);
-                cmd.Parameters.AddWithValue("@idAplicacion", idAplicacion);
+                cmd.Parameters.AddWithValue("idAplicacion", idAplicacion);
                 object resultadoConsulta = cmd.ExecuteScalar();
                 if (resultadoConsulta != DBNull.Value && resultadoConsulta != null)
                 {

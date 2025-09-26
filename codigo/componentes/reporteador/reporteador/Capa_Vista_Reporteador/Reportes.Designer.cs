@@ -40,6 +40,7 @@ namespace Capa_Vista_Reporteador
             this.Btn_ruta_reporte = new System.Windows.Forms.Button();
             this.Txt_Titulo = new System.Windows.Forms.TextBox();
             this.Lbl_Titulo = new System.Windows.Forms.Label();
+            this.Btn_Navegador = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.Dgv_reportes)).BeginInit();
             this.SuspendLayout();
             // 
@@ -173,12 +174,23 @@ namespace Capa_Vista_Reporteador
             this.Lbl_Titulo.TabIndex = 10;
             this.Lbl_Titulo.Text = "Título";
             // 
+            // Btn_Navegador
+            // 
+            this.Btn_Navegador.Location = new System.Drawing.Point(626, 33);
+            this.Btn_Navegador.Name = "Btn_Navegador";
+            this.Btn_Navegador.Size = new System.Drawing.Size(265, 40);
+            this.Btn_Navegador.TabIndex = 11;
+            this.Btn_Navegador.Text = "Navegador";
+            this.Btn_Navegador.UseVisualStyleBackColor = true;
+            this.Btn_Navegador.Click += new System.EventHandler(this.Btn_Navegador_Click);
+            // 
             // Reportes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(931, 474);
+            this.Controls.Add(this.Btn_Navegador);
             this.Controls.Add(this.Lbl_Titulo);
             this.Controls.Add(this.Txt_Titulo);
             this.Controls.Add(this.Btn_ruta_reporte);
@@ -215,5 +227,6 @@ namespace Capa_Vista_Reporteador
         private System.Windows.Forms.Button Btn_ruta_reporte;
         private System.Windows.Forms.TextBox Txt_Titulo;
         private System.Windows.Forms.Label Lbl_Titulo;
+        private System.Windows.Forms.Button Btn_Navegador;
     }
 }

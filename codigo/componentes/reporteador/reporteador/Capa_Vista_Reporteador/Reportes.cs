@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -268,6 +269,23 @@ namespace Capa_Vista_Reporteador
         private void Dgv_reportes_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        //Método que debe llamar navegador//
+        private void reporteAplicacion(int idAplicacion)
+        {
+            //Inicio de código de: Anderson Trigueros con carné: 0901-22-6961 en la fecha 25/09/2025
+            string sRuta = controlador.ConsultarReporteAplicacion(idAplicacion);
+            VistaDeReportes frm = new VistaDeReportes();
+            frm.MostrarReporte(sRuta);
+            // Mostrarlo como ventana aparte //Paula Leonardo
+            frm.Show();
+            // Fin de código de: Anderson Trigueros con carné: 0901-22-6961 en la fecha 25/09/2025
+        }
+
+        private void Btn_Navegador_Click(object sender, EventArgs e)
+        {
+            reporteAplicacion(100);
         }
     }
 }
