@@ -83,6 +83,14 @@ namespace Capa_Vista_Seguridad
             string sNueva = Txt_nueva_contrasena.Text.Trim();
             string sConfirmar = Txt_confirmar_contrasena.Text.Trim();
 
+            // 🚨 Validación de campos vacíos
+            if (string.IsNullOrEmpty(sNueva) || string.IsNullOrEmpty(sConfirmar))
+            {
+                MessageBox.Show("Debe ingresar la nueva contraseña y confirmarla.");
+                return;
+            }
+
+            // 🚨 Validación de coincidencia
             if (sNueva != sConfirmar)
             {
                 MessageBox.Show("Las contraseñas no coinciden.");
@@ -103,13 +111,26 @@ namespace Capa_Vista_Seguridad
                 {
                     MessageBox.Show("Contraseña actualizada correctamente.");
 
-                    // Registrar en Bitácora Arón Ricardo Esquit Silva   0901-22-13036
+                    // Registrar en Bitácora
                     Cls_BitacoraControlador bit = new Cls_BitacoraControlador();
-                    bit.RegistrarAccion(iIdUsuario,0, "Recuperar contraseña", true);
+                    bit.RegistrarAccion(iIdUsuario, 0, "Recuperar contraseña", true);
+
+
+                    // limpia campos despues de guardar
+                    Txt_usuario.Clear();
+                    Txt_Mostrar_Token.Clear();
+                    Txt_Verificar_Token.Clear();
+                    Txt_nueva_contrasena.Clear();
+                    Txt_confirmar_contrasena.Clear();
+
+                    // Desabilita los botones despues de guardar cambios
+                    Txt_nueva_contrasena.Enabled = false;
+                    Txt_confirmar_contrasena.Enabled = false;
+                    Btn_Guardar.Enabled = false;
                 }
                 else
                 {
-                    MessageBox.Show("Error al actualizar la contraseña. Revisa la consola para detalles.");
+                    MessageBox.Show("Error al actualizar la contraseña.");
                 }
             }
             else
