@@ -1,7 +1,7 @@
 ﻿
 namespace Capa_Vista_Reporteador
 {
-    partial class VistaDeReportes
+    partial class Frm_VistaDeReportes
     {
         /// <summary>
         /// Required designer variable.

@@ -1,7 +1,7 @@
 ﻿
 namespace Capa_Vista_Reporteador
 {
-    partial class Reportes
+    partial class Frm_Reportes
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@ namespace Capa_Vista_Reporteador
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Reportes));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Frm_Reportes));
             this.Lbl_reportes = new System.Windows.Forms.Label();
             this.Dgv_reportes = new System.Windows.Forms.DataGridView();
             this.Txt_reportes_ruta = new System.Windows.Forms.TextBox();

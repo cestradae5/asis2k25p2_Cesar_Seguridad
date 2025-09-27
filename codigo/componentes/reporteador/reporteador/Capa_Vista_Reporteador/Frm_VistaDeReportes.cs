@@ -8,18 +8,18 @@ using Capa_Controlador_Reporteador;
 
 namespace Capa_Vista_Reporteador
 {
-    public partial class VistaDeReportes : Form
+    public partial class Frm_VistaDeReportes : Form
     {
         Cls_Controlador_Reporteador controlador = new Cls_Controlador_Reporteador();
 
         public int IdReporte { get; private set; }
 
-        public VistaDeReportes(int idReporte) : this()
+        public Frm_VistaDeReportes(int idReporte) : this()
         {
             IdReporte = idReporte;
         }
 
-        public VistaDeReportes()
+        public Frm_VistaDeReportes()
         {
             InitializeComponent();
             IdReporte = IdReporte;
