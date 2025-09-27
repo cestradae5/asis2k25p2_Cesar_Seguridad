@@ -17,11 +17,11 @@ namespace Capa_Vista_Seguridad
 
         private Cls_PermisoUsuario permisoUsuario = new Cls_PermisoUsuario();
 
-        private int moduloId = -1;
-        private int aplicacionId = -1;
+        private int iModuloId = -1;
+        private int iAplicacionId = -1;
 
         // Tupla para los permisos actuales
-        private (bool ingresar, bool consultar, bool modificar, bool eliminar, bool imprimir)? permisosActuales = null;
+        private (bool bIngresar, bool bConsultar, bool bModificar, bool bEliminar, bool bImprimir)? permisosActuales = null;
 
         public Frm_asignacion_aplicacion_usuario()
         {
@@ -31,17 +31,17 @@ namespace Capa_Vista_Seguridad
 
         private void frmAsignacion_aplicacion_usuario_Load(object sender, EventArgs e)
         {
-            
+
             DataTable dtUsuarios = controlador.ObtenerUsuarios();
             Cbo_Usuarios.DataSource = dtUsuarios;
             Cbo_Usuarios.DisplayMember = "nombre_usuario";   // Debe coincidir con el SELECT del modelo
             Cbo_Usuarios.ValueMember = "pk_id_usuario";
             Cbo_Usuarios.SelectedIndex = -1;
 
-            
+
             DataTable dtModulos = controlador.ObtenerModulos();
             Cbo_Modulos.DataSource = dtModulos;
-            Cbo_Modulos.DisplayMember = "nombre_modulo";    
+            Cbo_Modulos.DisplayMember = "nombre_modulo";
             Cbo_Modulos.ValueMember = "pk_id_modulo";
             Cbo_Modulos.SelectedIndex = -1;
 
@@ -50,7 +50,8 @@ namespace Capa_Vista_Seguridad
 
             InicializarDataGridView();
 
-            ConfigurarIdsDinamicamenteYAplicarPermisos();
+            fun_ConfigurarIdsDinamicamenteYAplicarPermisos();
+            Dgv_Permisos.CellBeginEdit += Dgv_Permisos_CellBeginEdit;
         }
 
         //Ruben Armando Lopez Luch
@@ -84,7 +85,7 @@ namespace Capa_Vista_Seguridad
             Dgv_Permisos.Columns.Add(new DataGridViewCheckBoxColumn() { Name = "Eliminar", HeaderText = "Eliminar" });
             Dgv_Permisos.Columns.Add(new DataGridViewCheckBoxColumn() { Name = "Imprimir", HeaderText = "Imprimir" });
 
-            
+
             Dgv_Permisos.Columns.Add("IdUsuario", "IdUsuario");
             Dgv_Permisos.Columns["IdUsuario"].Visible = false;
             Dgv_Permisos.Columns.Add("IdModulo", "IdModulo");
@@ -106,33 +107,33 @@ namespace Capa_Vista_Seguridad
             Cbo_Aplicaciones.SelectedIndex = -1;
         }
 
-        
-        private void ConfigurarIdsDinamicamenteYAplicarPermisos()
+
+        private void fun_ConfigurarIdsDinamicamenteYAplicarPermisos()
         {
-            
+
             string nombreModulo = "Seguridad";
-            string nombreAplicacion ="Administracion";
-            aplicacionId = permisoUsuario.ObtenerIdAplicacionPorNombre(nombreAplicacion);
-            moduloId = permisoUsuario.ObtenerIdModuloPorNombre(nombreModulo);
-            AplicarPermisosUsuario();
+            string nombreAplicacion = "Administracion";
+            iAplicacionId = permisoUsuario.ObtenerIdAplicacionPorNombre(nombreAplicacion);
+            iModuloId = permisoUsuario.ObtenerIdModuloPorNombre(nombreModulo);
+            fun_AplicarPermisosUsuario();
         }
 
-        private void AplicarPermisosUsuario()
+        private void fun_AplicarPermisosUsuario()
         {
             int usuarioId = Cls_sesion.iUsuarioId; // Usuario logueado
-            if (aplicacionId == -1 || moduloId == -1)
+            if (iAplicacionId == -1 || iModuloId == -1)
             {
                 permisosActuales = null;
-                ActualizarEstadoBotonesSegunPermisos();
+                fun_ActualizarEstadoBotonesSegunPermisos();
                 return;
             }
-            var permisos = permisoUsuario.ConsultarPermisos(usuarioId, aplicacionId, moduloId);
+            var permisos = permisoUsuario.ConsultarPermisos(usuarioId, iAplicacionId, iModuloId);
             permisosActuales = permisos;
-            ActualizarEstadoBotonesSegunPermisos();
+            fun_ActualizarEstadoBotonesSegunPermisos();
         }
 
         // Centraliza el habilitado/deshabilitado de botones según permisos y estado de navegación
-        private void ActualizarEstadoBotonesSegunPermisos(bool empleadoCargado = false)
+        private void fun_ActualizarEstadoBotonesSegunPermisos(bool empleadoCargado = false)
         {
             if (!permisosActuales.HasValue)
             {
@@ -145,10 +146,10 @@ namespace Capa_Vista_Seguridad
 
             var p = permisosActuales.Value;
 
-            Btn_Buscar.Enabled = p.consultar;      
-            Btn_agregar.Enabled = p.ingresar;      
-            Btn_quitar.Enabled =  p.modificar; 
-            Btn_finalizar.Enabled =  p.ingresar || p.modificar;
+            Btn_Buscar.Enabled = p.bConsultar;
+            Btn_agregar.Enabled = p.bIngresar;
+            Btn_quitar.Enabled = p.bModificar;
+            Btn_finalizar.Enabled = p.bIngresar || p.bModificar;
         }
 
         // Pablo Quiroa 0901-22-2929
@@ -196,12 +197,16 @@ namespace Capa_Vista_Seguridad
             Cbo_Aplicaciones.SelectedIndex = -1;
         }
 
-     
+
         private void Btn_finalizar_Click(object sender, EventArgs e)
+
         {
-            if (Dgv_Permisos.Rows.Count == 0)
+            // Validacion de usuario y plaicacion antes de insertar datos
+            if (Cbo_Usuarios.SelectedIndex == -1 || Cbo_Aplicaciones.SelectedIndex == -1)
+
+
             {
-                MessageBox.Show("No hay registros para insertar.");
+                MessageBox.Show("Debe seleccionar un usuario y una aplicación antes de insertar.");
                 return;
             }
 
@@ -244,7 +249,7 @@ namespace Capa_Vista_Seguridad
             Dgv_Permisos.Rows.Clear();
         }
 
-       
+
         private void Btn_quitar_Click(object sender, EventArgs e)
         {
             if (Dgv_Permisos.CurrentRow != null && !Dgv_Permisos.CurrentRow.IsNewRow)
@@ -259,12 +264,35 @@ namespace Capa_Vista_Seguridad
             }
         }
 
-        
+
+        // validacion de usuario y aplicacion antes de poder selecionar los permisos
+        private void Dgv_Permisos_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            // Verificar si la celda es un checkbox
+            if (Dgv_Permisos.Columns[e.ColumnIndex] is DataGridViewCheckBoxColumn)
+            {
+                var row = Dgv_Permisos.Rows[e.RowIndex];
+
+                // Validar con los IDs ocultos (mejor que con texto)
+                var idUsuario = row.Cells["IdUsuario"].Value?.ToString();
+                var idAplicacion = row.Cells["IdAplicacion"].Value?.ToString();
+
+                // Si no hay usuario o aplicación, cancelar edición
+                if (string.IsNullOrWhiteSpace(idUsuario) || string.IsNullOrWhiteSpace(idAplicacion))
+                {
+                    e.Cancel = true;
+                    MessageBox.Show("Debe seleccionar un usuario y una aplicación antes de marcar permisos.");
+                }
+            }
+        }
+
+
+
         private void Btn_salir_Click(object sender, EventArgs e) => this.Close();
 
         private void Dgv_Permisos_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
 
-        
+
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HTCAPTION = 0x2;
 
@@ -324,7 +352,7 @@ namespace Capa_Vista_Seguridad
         }
     }
 
-        
 
-    }
+
+}
 

@@ -17,18 +17,18 @@ namespace Capa_Vista_Seguridad
         // permisos 0901-21-1115 Marcos Andres Velásquez Alcántara
         private Cls_PermisoUsuario permisoUsuario = new Cls_PermisoUsuario();
 
-        private int moduloId = -1;
-        private int aplicacionId = -1;
+        private int iModuloId = -1;
+        private int iAplicacionId = -1;
 
         // Tupla para los permisos actuales
-        private (bool ingresar, bool consultar, bool modificar, bool eliminar, bool imprimir)? permisosActuales = null;
+        private (bool bIngresar, bool bConsultar, bool bModificar, bool bEliminar, bool bImprimir)? permisosActuales = null;
 
         public Frm_Bitacora()
         {
             InitializeComponent();
             CargarUsuariosEnCombo(); // carga usuarios al abrir
             OcultarFiltros();        // opcional
-            ConfigurarIdsDinamicamenteYAplicarPermisos();
+            fun_ConfigurarIdsDinamicamenteYAplicarPermisos();
             CargarEnGrid(ctrlBitacora.MostrarBitacora()); //Mostrar toda la bitacora al inicio
         }
 
@@ -246,32 +246,32 @@ namespace Capa_Vista_Seguridad
         //0901-22-9663 Brandon Alexander Hernandez Salguero --  asignacion Modulos y aplicaciones
 
 
-        private void ConfigurarIdsDinamicamenteYAplicarPermisos()
+        private void fun_ConfigurarIdsDinamicamenteYAplicarPermisos()
         {
             // Cambia estos nombres exactamente como están en tu BD
             string nombreModulo = "Seguridad";
             string nombreAplicacion = "Administracion";
-            aplicacionId = permisoUsuario.ObtenerIdAplicacionPorNombre(nombreAplicacion);
-            moduloId = permisoUsuario.ObtenerIdModuloPorNombre(nombreModulo);
-            AplicarPermisosUsuario();
+            iAplicacionId = permisoUsuario.ObtenerIdAplicacionPorNombre(nombreAplicacion);
+            iModuloId = permisoUsuario.ObtenerIdModuloPorNombre(nombreModulo);
+            fun_AplicarPermisosUsuario();
         }
 
-        private void AplicarPermisosUsuario()
+        private void fun_AplicarPermisosUsuario()
         {
             int usuarioId = Cls_sesion.iUsuarioId; // Usuario logueado
-            if (aplicacionId == -1 || moduloId == -1)
+            if (iAplicacionId == -1 || iModuloId == -1)
             {
                 permisosActuales = null;
-                ActualizarEstadoBotonesSegunPermisos();
+                fun_ActualizarEstadoBotonesSegunPermisos();
                 return;
             }
-            var permisos = permisoUsuario.ConsultarPermisos(usuarioId, aplicacionId, moduloId);
+            var permisos = permisoUsuario.ConsultarPermisos(usuarioId, iAplicacionId, iModuloId);
             permisosActuales = permisos;
-            ActualizarEstadoBotonesSegunPermisos();
+            fun_ActualizarEstadoBotonesSegunPermisos();
         }
 
         // Centraliza el habilitado/deshabilitado de botones según permisos y estado de navegación
-        private void ActualizarEstadoBotonesSegunPermisos(bool empleadoCargado = false)
+        private void fun_ActualizarEstadoBotonesSegunPermisos(bool empleadoCargado = false)
         {
             if (!permisosActuales.HasValue)
             {
@@ -289,13 +289,13 @@ namespace Capa_Vista_Seguridad
 
             var p = permisosActuales.Value;
 
-            Btn_Consultar.Enabled = p.consultar;
-            Btn_Exportar.Enabled = p.imprimir;
-            Btn_BuscarFecha.Enabled = p.consultar;
-            Btn_BuscarUsuario.Enabled = p.consultar;
-            Btn_BuscarRango.Enabled = p.consultar;
-            Btn_Imprimir.Enabled = p.consultar;
-            button1.Enabled = p.consultar;
+            Btn_Consultar.Enabled = p.bConsultar;
+            Btn_Exportar.Enabled = p.bImprimir;
+            Btn_BuscarFecha.Enabled = p.bConsultar;
+            Btn_BuscarUsuario.Enabled = p.bConsultar;
+            Btn_BuscarRango.Enabled = p.bConsultar;
+            Btn_Imprimir.Enabled = p.bConsultar;
+            button1.Enabled = p.bConsultar;
 
 
         }
