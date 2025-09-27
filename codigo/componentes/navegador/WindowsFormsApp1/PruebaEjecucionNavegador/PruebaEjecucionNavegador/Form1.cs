@@ -25,12 +25,13 @@ namespace PruebaEjecucionNavegador
                 Nombre = "dgv_empleados"
             };
             string[] columnas = {
-                        "tbl_aplicacion",            
-                        "Pk_Id_Aplicacion",
-                        "Fk_Id_Reporte_Aplicacion",
-                        "Cmp_Nombre_Aplicacion",
-                        "Cmp_Descripcion_Aplicacion",
-                        "Cmp_Estado_Aplicacion"
+                        "padre", "id_padre", "nombre", "apellido", "id_hijo"
+                        //"tbl_aplicacion",            
+                        //"Pk_Id_Aplicacion",
+                        //"Fk_Id_Reporte_Aplicacion",
+                        //"Cmp_Nombre_Aplicacion",
+                        //"Cmp_Descripcion_Aplicacion",
+                        //"Cmp_Estado_Aplicacion"
                     };
             //int id_aplicacion = 100;
 
