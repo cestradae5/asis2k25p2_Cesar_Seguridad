@@ -20,6 +20,8 @@ namespace Capa_Vista_Reporteador
         Cls_Controlador_Reporteador controlador = new Cls_Controlador_Reporteador();
         private int iCodigoRuta = -1;
         private int iCodigoFilaSeleccionada = 0;
+        private string sRuta = "";
+        private string sTitulo = "";
 
         // ==========================
         // Constructor
@@ -171,8 +173,8 @@ namespace Capa_Vista_Reporteador
         {  //modificacion Sergio Izeppi 09101-22-8946 en la fecha 26/09/2025
             try
             {
-                string sTitulo = Txt_Titulo.Text.Trim();
-                string sRuta = Txt_reportes_ruta.Text.Trim();
+                string sCampoTitulo = Txt_Titulo.Text.Trim();
+                string sCampoRuta = Txt_reportes_ruta.Text.Trim();
                 DateTime fecha = DateTime.Now;
             //fin parte de la modificacion
                 //Inicio de código de: Anderson Trigueros con carné: 0901-22-6961 en la fecha 12/09/2025
@@ -181,39 +183,59 @@ namespace Capa_Vista_Reporteador
                 MessageBox.Show("Seleccione primero la ruta que desea modificar de la tabla.");
                 return;
             }
-            if (!string.IsNullOrWhiteSpace(Txt_reportes_ruta.Text))
-            {
-                string sRutaModificada = Txt_reportes_ruta.Text;
-                modificarRuta(sRutaModificada);
-            }
-            if (!string.IsNullOrWhiteSpace(Txt_Titulo.Text))
-            {
-                //inicio codigo para validar titulo con el boton modificar Sergio Izeppi:0901-22-8946 en la fecha 26/09/2025
-                int iExistencia = verificarRegistroExistente(sTitulo);
-                if (iExistencia == 1)
+
+                if (sCampoTitulo != sTitulo)
                 {
-                    MessageBox.Show("Ya existe un registro con el mismo título.",
-                                    "Duplicado",
-                                    MessageBoxButtons.OK,
-                                    MessageBoxIcon.Warning);
+                    if (!string.IsNullOrWhiteSpace(Txt_Titulo.Text))
+                    {
+                        //inicio codigo para validar titulo con el boton modificar Sergio Izeppi:0901-22-8946 en la fecha 26/09/2025
+                        int iExistencia = verificarRegistroExistente(sCampoTitulo);
+                        if (iExistencia == 1)
+                        {
+                            MessageBox.Show("Ya existe un registro con el mismo título.",
+                                            "Duplicado",
+                                            MessageBoxButtons.OK,
+                                            MessageBoxIcon.Warning);
+                        }
+                        else if (iExistencia == 0)
+                        {
+
+                            string sTituloNuevo = Txt_Titulo.Text;
+                            modificarTitulo(sTituloNuevo);
+                            if (sCampoRuta != sRuta)
+                            {
+                                string sRutaModificada = Txt_reportes_ruta.Text;
+                                modificarRuta(sRutaModificada);
+                            }
+                            MessageBox.Show("Registro actualizado Correctamente.",
+                                            "Éxito",
+                                            MessageBoxButtons.OK,
+                                            MessageBoxIcon.Information);
+                        }
+                        //fin codigo Sergio Izeppi en la fecha 26/09/2025
+                        // Fin de código de: Anderson Trigueros con carné: 0901-22-6961 en la fecha 12/09/2025
+                    }
+                
                 }
-                else if (iExistencia == 0)
+                else
                 {
-                    string sTituloNuevo = Txt_Titulo.Text;
-                    modificarTitulo(sTituloNuevo);
-                    MessageBox.Show("Registro actualizado Correctamente.",
-                                    "Éxito",
-                                    MessageBoxButtons.OK,
-                                    MessageBoxIcon.Information);
+                    if (sCampoRuta != sRuta)
+                    {
+                        string sRutaModificada = Txt_reportes_ruta.Text;
+                        modificarRuta(sRutaModificada);
+                        MessageBox.Show("Registro actualizado Correctamente.",
+                                           "Éxito",
+                                           MessageBoxButtons.OK,
+                                           MessageBoxIcon.Information);
+                    }
                 }
-                //fin codigo Sergio Izeppi en la fecha 26/09/2025
+
                 Txt_reportes_ruta.Clear();
                 Txt_Titulo.Clear();
-                // Fin de código de: Anderson Trigueros con carné: 0901-22-6961 en la fecha 12/09/2025
+                sTitulo = "";
+                sRuta = "";
+
             }
-
-
-        }
             catch (Exception ex)
             {
                 MessageBox.Show("Error al guardar: " + ex.Message,
@@ -296,8 +318,8 @@ private void Btn_eliminar_Click(object sender, EventArgs e)
             if (e.RowIndex >= 0)
             {
                 DataGridViewRow filaSeleccionada = Dgv_reportes.Rows[e.RowIndex];
-                string sRuta = filaSeleccionada.Cells["Cmp_Ruta_Reporte"].Value?.ToString();
-                string sTitulo = filaSeleccionada.Cells["Cmp_Titulo_Reporte"].Value?.ToString();
+                sRuta = filaSeleccionada.Cells["Cmp_Ruta_Reporte"].Value?.ToString();
+                sTitulo = filaSeleccionada.Cells["Cmp_Titulo_Reporte"].Value?.ToString();
                 iCodigoRuta = Convert.ToInt32(filaSeleccionada.Cells["Pk_Id_Reporte"].Value);
                 iCodigoFilaSeleccionada = iCodigoRuta;
                 Txt_reportes_ruta.Text = sRuta;

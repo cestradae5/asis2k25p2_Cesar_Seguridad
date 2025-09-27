@@ -79,6 +79,7 @@ namespace Capa_Vista_Reporteador
             this.Txt_reportes_ruta.Location = new System.Drawing.Point(25, 129);
             this.Txt_reportes_ruta.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Txt_reportes_ruta.Name = "Txt_reportes_ruta";
+            this.Txt_reportes_ruta.ReadOnly = true;
             this.Txt_reportes_ruta.Size = new System.Drawing.Size(582, 22);
             this.Txt_reportes_ruta.TabIndex = 3;
             this.Txt_reportes_ruta.TextChanged += new System.EventHandler(this.Txt_reportes_ruta_TextChanged);
