@@ -1,73 +1,132 @@
-﻿//Pablo Quiroa 0901-22-2929 
+﻿// Pablo Quiroa 0901-22-2929
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Capa_Modelo_Seguridad;
 
 namespace Capa_Controlador_Seguridad
 {
     public class Cls_UsuarioControlador
     {
-        private Cls_UsuarioDAO daoUsuario = new Cls_UsuarioDAO();
+        // Variables globales
+        private Cls_UsuarioDAO gDaoUsuario = new Cls_UsuarioDAO();
 
-
+        // Obtener todos los usuarios
         public List<Cls_Usuario> ObtenerTodosLosUsuarios()
         {
-            return daoUsuario.ObtenerUsuarios();
+            return gDaoUsuario.ObtenerUsuarios();
         }
 
-
-        public void InsertarUsuario(int fkIdEmpleado, string nombreUsuario, string contrasena,
-                                    int intentosFallidos, bool estado, DateTime fechaCreacion,
-                                    DateTime ultimoCambio, bool pidioCambio)
+        // Insertar nuevo usuario
+        public (bool bExito, string sMensaje) InsertarUsuario(int pFkIdEmpleado, string pNombreUsuario, string pContrasena, string pConfirmarContrasena)
         {
-            Cls_Usuario nuevoUsuario = new Cls_Usuario
+            // Validaciones
+            if (pFkIdEmpleado <= 0)
+                return (false, "Debe seleccionar un empleado válido.");
+
+            if (string.IsNullOrWhiteSpace(pNombreUsuario))
+                return (false, "El nombre de usuario no puede estar vacío.");
+
+            if (string.IsNullOrWhiteSpace(pContrasena) || string.IsNullOrWhiteSpace(pConfirmarContrasena))
+                return (false, "La contraseña y su confirmación no pueden estar vacías.");
+
+            if (pContrasena != pConfirmarContrasena)
+                return (false, "Las contraseñas no coinciden.");
+
+            if (gDaoUsuario.ObtenerUsuarios().Any(u => u.sNombreUsuario.Equals(pNombreUsuario, StringComparison.OrdinalIgnoreCase)))
+                return (false, "Ya existe un usuario con ese nombre.");
+
+            // Crear usuario
+            Cls_Usuario gNuevoUsuario = new Cls_Usuario
             {
-                iFkIdEmpleado = fkIdEmpleado,
-                sNombreUsuario = nombreUsuario,
-                sContrasenaUsuario = contrasena,
-                iContadorIntentosFallidos = intentosFallidos,
-                bEstadoUsuario = estado,
-                dFechaCreacion = fechaCreacion,
-                dUltimoCambioContrasena = ultimoCambio,
-                bPidioCambioContrasena = pidioCambio
+                iFkIdEmpleado = pFkIdEmpleado,
+                sNombreUsuario = pNombreUsuario,
+                sContrasenaUsuario = Cls_SeguridadHashControlador.HashearSHA256(pContrasena),
+                iContadorIntentosFallidos = 0,
+                bEstadoUsuario = true,
+                dFechaCreacion = DateTime.Now,
+                dUltimoCambioContrasena = DateTime.Now,
+                bPidioCambioContrasena = false
             };
 
-            daoUsuario.InsertarUsuario(nuevoUsuario);
+            try
+            {
+                gDaoUsuario.InsertarUsuario(gNuevoUsuario);
+                return (true, "Usuario insertado correctamente.");
+            }
+            catch (Exception ex)
+            {
+                return (false, "Error al insertar usuario: " + ex.Message);
+            }
         }
 
-
-        public bool ActualizarUsuario(int idUsuario, int fkIdEmpleado, string nombreUsuario, string contrasena,
-                                      int intentosFallidos, bool estado, DateTime fechaCreacion,
-                                      DateTime ultimoCambio, bool pidioCambio)
+        // Actualizar usuario existente
+        public (bool bExito, string sMensaje) ActualizarUsuario(int pIdUsuario, int pFkIdEmpleado, string pNombreUsuario, string pContrasena, string pConfirmarContrasena)
         {
-            Cls_Usuario usuarioActualizado = new Cls_Usuario
+            // Validaciones
+            if (pIdUsuario <= 0)
+                return (false, "Seleccione un usuario válido.");
+
+            if (pFkIdEmpleado <= 0)
+                return (false, "Debe seleccionar un empleado válido.");
+
+            if (string.IsNullOrWhiteSpace(pNombreUsuario))
+                return (false, "El nombre de usuario no puede estar vacío.");
+
+            if (string.IsNullOrWhiteSpace(pContrasena) || string.IsNullOrWhiteSpace(pConfirmarContrasena))
+                return (false, "La contraseña y su confirmación no pueden estar vacías.");
+
+            if (pContrasena != pConfirmarContrasena)
+                return (false, "Las contraseñas no coinciden.");
+
+            if (gDaoUsuario.ObtenerUsuarios().Any(u => u.sNombreUsuario.Equals(pNombreUsuario, StringComparison.OrdinalIgnoreCase) && u.iPkIdUsuario != pIdUsuario))
+                return (false, "Ya existe otro usuario con ese nombre.");
+
+            // Actualizar usuario
+            Cls_Usuario gUsuarioActualizado = new Cls_Usuario
             {
-                iPkIdUsuario = idUsuario,
-                iFkIdEmpleado = fkIdEmpleado,
-                sNombreUsuario = nombreUsuario,
-                sContrasenaUsuario = contrasena,
-                iContadorIntentosFallidos = intentosFallidos,
-                bEstadoUsuario = estado,
-                dFechaCreacion = fechaCreacion,
-                dUltimoCambioContrasena = ultimoCambio,
-                bPidioCambioContrasena = pidioCambio
+                iPkIdUsuario = pIdUsuario,
+                iFkIdEmpleado = pFkIdEmpleado,
+                sNombreUsuario = pNombreUsuario,
+                sContrasenaUsuario = Cls_SeguridadHashControlador.HashearSHA256(pContrasena),
+                iContadorIntentosFallidos = 0,
+                bEstadoUsuario = true,
+                dFechaCreacion = DateTime.Now,
+                dUltimoCambioContrasena = DateTime.Now,
+                bPidioCambioContrasena = false
             };
 
-            daoUsuario.ActualizarUsuario(usuarioActualizado);
-            return true;
+            try
+            {
+                gDaoUsuario.ActualizarUsuario(gUsuarioActualizado);
+                return (true, "Usuario actualizado correctamente.");
+            }
+            catch (Exception ex)
+            {
+                return (false, "Error al actualizar usuario: " + ex.Message);
+            }
+        }
+
+        // Borrar usuario
+        public bool BorrarUsuario(int pIdUsuario)
+        {
+            if (pIdUsuario <= 0) return false;
+
+            try
+            {
+                return gDaoUsuario.BorrarUsuario(pIdUsuario) > 0;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
 
-        public bool BorrarUsuario(int idUsuario)
+        public Cls_Usuario BuscarUsuarioPorId(int pIdUsuario)
         {
-            return daoUsuario.BorrarUsuario(idUsuario) > 0;
-        }
-
-
-        public Cls_Usuario BuscarUsuarioPorId(int idUsuario)
-        {
-            return daoUsuario.Query(idUsuario);
+            if (pIdUsuario <= 0) return null;
+            return gDaoUsuario.Query(pIdUsuario);
         }
     }
 }
-
