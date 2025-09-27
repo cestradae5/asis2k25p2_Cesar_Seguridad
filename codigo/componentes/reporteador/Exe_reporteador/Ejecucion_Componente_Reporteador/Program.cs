@@ -16,7 +16,7 @@ namespace Ejecucion_Componente_Reporteador
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Capa_Vista_Reporteador.Reportes());
+            Application.Run(new Capa_Vista_Reporteador.Frm_Reportes());
         }
     }
 }
