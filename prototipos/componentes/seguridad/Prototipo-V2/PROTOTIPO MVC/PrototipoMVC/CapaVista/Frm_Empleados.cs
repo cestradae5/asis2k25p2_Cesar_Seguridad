@@ -265,46 +265,60 @@ namespace Capa_Vista_Seguridad
                 MessageBox.Show("No tienes permisos para guardar empleados.", "Permiso denegado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
+            //Validación de campos vacíos
+            if (!ValidarCampos())
+                return; 
+
             try
             {
+                // Validaciones de tipo
                 if (!int.TryParse(Txt_id_empleado.Text, out int idEmpleado))
                 {
-                    MessageBox.Show("ID no válido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("El ID debe ser un número entero válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
+
                 if (!long.TryParse(Txt_dpi_empleados.Text, out long dpi))
                 {
-                    MessageBox.Show("DPI no válido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("El DPI debe ser un número válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
+
                 if (!long.TryParse(Txt_nit_empleados.Text, out long nit))
                 {
-                    MessageBox.Show("NIT no válido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("El NIT debe ser un número válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                if (!DateTime.TryParse(Txt_fechaNac_empleado.Text, out DateTime fechaNacimiento))
+
+                if (!DateTime.TryParse(Txt_fechaNac_empleado.Text, out DateTime fechaNac))
                 {
-                    MessageBox.Show("Fecha de nacimiento no válida", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("La fecha de nacimiento no es válida.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                if (!DateTime.TryParse(Txt_fechaContra_empleado.Text, out DateTime fechaContratacion))
+
+                if (!DateTime.TryParse(Txt_fechaContra_empleado.Text, out DateTime fechaContra))
                 {
-                    MessageBox.Show("Fecha de contratación no válida", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("La fecha de contratación no es válida.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
+
+                // Crear empleado
                 var emp = new Cls_Empleado
                 {
                     iPkIdEmpleado = idEmpleado,
-                    sNombresEmpleado = Txt_nombre_empleado.Text,
-                    sApellidosEmpleado = Txt_apellido_empleado.Text,
+                    sNombresEmpleado = Txt_nombre_empleado.Text.Trim(),
+                    sApellidosEmpleado = Txt_apellido_empleado.Text.Trim(),
                     lDpiEmpleado = dpi,
                     lNitEmpleado = nit,
-                    sCorreoEmpleado = Txt_correo_empleado.Text,
-                    sTelefonoEmpleado = Txt_telefono_empleado.Text,
+                    sCorreoEmpleado = Txt_correo_empleado.Text.Trim(),
+                    sTelefonoEmpleado = Txt_telefono_empleado.Text.Trim(),
                     bGeneroEmpleado = Rdb_masculino_empleado.Checked,
-                    dFechaNacimientoEmpleado = fechaNacimiento,
-                    dFechaContratacionEmpleado = fechaContratacion
+                    dFechaNacimientoEmpleado = fechaNac,
+                    dFechaContratacionEmpleado = fechaContra
                 };
+
+                // Insertar
                 controlador.func_InsertarEmpleado(
                     emp.iPkIdEmpleado,
                     emp.sNombresEmpleado,
@@ -317,8 +331,10 @@ namespace Capa_Vista_Seguridad
                     emp.dFechaNacimientoEmpleado,
                     emp.dFechaContratacionEmpleado
                 );
+
                 MessageBox.Show("Empleado guardado correctamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 ctrlBitacora.RegistrarAccion(Cls_sesion.iUsuarioId, iAplicacionId, "Guardar empleado", true);
+
                 fun_CargarEmpleados();
                 fun_ConfigurarComboBoxEmpleados();
                 fun_LimpiarCampos();
@@ -327,7 +343,29 @@ namespace Capa_Vista_Seguridad
             {
                 MessageBox.Show("Error al guardar empleado: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
             fun_ConfiguracionInicial();
+        }
+
+        private bool ValidarCampos()
+        {
+            if (string.IsNullOrWhiteSpace(Txt_id_empleado.Text) ||
+                string.IsNullOrWhiteSpace(Txt_nombre_empleado.Text) ||  
+                string.IsNullOrWhiteSpace(Txt_apellido_empleado.Text) || 
+                string.IsNullOrWhiteSpace(Txt_dpi_empleados.Text) ||
+                string.IsNullOrWhiteSpace(Txt_nit_empleados.Text) ||
+                string.IsNullOrWhiteSpace(Txt_correo_empleado.Text) ||
+                string.IsNullOrWhiteSpace(Txt_telefono_empleado.Text) ||
+                string.IsNullOrWhiteSpace(Txt_fechaNac_empleado.Text) ||
+                string.IsNullOrWhiteSpace(Txt_fechaContra_empleado.Text) ||
+                (!Rdb_masculino_empleado.Checked && !Rdb_femenino_empleado.Checked))
+            {
+                MessageBox.Show("Debe llenar todos los campos antes de guardar.",
+                    "Campos requeridos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            return true;
         }
 
         private void fun_LimpiarCampos()
