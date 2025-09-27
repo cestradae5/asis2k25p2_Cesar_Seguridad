@@ -48,10 +48,10 @@ namespace Capa_Vista_Reporteador
             // 
             this.Lbl_reportes.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.Lbl_reportes.AutoSize = true;
-            this.Lbl_reportes.Font = new System.Drawing.Font("Rockwell", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Lbl_reportes.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Lbl_reportes.Location = new System.Drawing.Point(400, 36);
             this.Lbl_reportes.Name = "Lbl_reportes";
-            this.Lbl_reportes.Size = new System.Drawing.Size(148, 38);
+            this.Lbl_reportes.Size = new System.Drawing.Size(144, 36);
             this.Lbl_reportes.TabIndex = 1;
             this.Lbl_reportes.Text = "Reportes";
             this.Lbl_reportes.Click += new System.EventHandler(this.Lbl_reportes_Click);
@@ -87,7 +87,7 @@ namespace Capa_Vista_Reporteador
             // Btn_guardar
             // 
             this.Btn_guardar.BackColor = System.Drawing.Color.White;
-            this.Btn_guardar.Font = new System.Drawing.Font("Rockwell", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Btn_guardar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Btn_guardar.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.Btn_guardar.Image = ((System.Drawing.Image)(resources.GetObject("Btn_guardar.Image")));
             this.Btn_guardar.Location = new System.Drawing.Point(25, 201);
@@ -101,7 +101,7 @@ namespace Capa_Vista_Reporteador
             // Btn_eliminar
             // 
             this.Btn_eliminar.BackColor = System.Drawing.Color.White;
-            this.Btn_eliminar.Font = new System.Drawing.Font("Rockwell", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Btn_eliminar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Btn_eliminar.Image = ((System.Drawing.Image)(resources.GetObject("Btn_eliminar.Image")));
             this.Btn_eliminar.Location = new System.Drawing.Point(84, 201);
             this.Btn_eliminar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -114,7 +114,7 @@ namespace Capa_Vista_Reporteador
             // Btn_modificar
             // 
             this.Btn_modificar.BackColor = System.Drawing.Color.White;
-            this.Btn_modificar.Font = new System.Drawing.Font("Rockwell", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Btn_modificar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Btn_modificar.Image = ((System.Drawing.Image)(resources.GetObject("Btn_modificar.Image")));
             this.Btn_modificar.Location = new System.Drawing.Point(143, 201);
             this.Btn_modificar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -129,7 +129,7 @@ namespace Capa_Vista_Reporteador
             this.Btn_ver_reporte.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Btn_ver_reporte.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.Btn_ver_reporte.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Btn_ver_reporte.Font = new System.Drawing.Font("Rockwell", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Btn_ver_reporte.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Btn_ver_reporte.ForeColor = System.Drawing.Color.White;
             this.Btn_ver_reporte.Location = new System.Drawing.Point(620, 166);
             this.Btn_ver_reporte.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -145,7 +145,7 @@ namespace Capa_Vista_Reporteador
             this.Btn_ruta_reporte.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Btn_ruta_reporte.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.Btn_ruta_reporte.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Btn_ruta_reporte.Font = new System.Drawing.Font("Rockwell", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Btn_ruta_reporte.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Btn_ruta_reporte.ForeColor = System.Drawing.Color.White;
             this.Btn_ruta_reporte.Location = new System.Drawing.Point(620, 123);
             this.Btn_ruta_reporte.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -168,10 +168,10 @@ namespace Capa_Vista_Reporteador
             // Lbl_Titulo
             // 
             this.Lbl_Titulo.AutoSize = true;
-            this.Lbl_Titulo.Font = new System.Drawing.Font("Rockwell", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Lbl_Titulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Lbl_Titulo.Location = new System.Drawing.Point(20, 166);
             this.Lbl_Titulo.Name = "Lbl_Titulo";
-            this.Lbl_Titulo.Size = new System.Drawing.Size(75, 27);
+            this.Lbl_Titulo.Size = new System.Drawing.Size(74, 29);
             this.Lbl_Titulo.TabIndex = 10;
             this.Lbl_Titulo.Text = "Título";
             // 
@@ -204,7 +204,7 @@ namespace Capa_Vista_Reporteador
             this.Controls.Add(this.Lbl_reportes);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "Reportes";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Reportes";

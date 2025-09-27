@@ -189,6 +189,7 @@ namespace Capa_Vista_Reporteador
             // Fin de código de: Anderson Trigueros con carné: 0901-22-6961 en la fecha 12/09/2025
         }
 
+
         private void Btn_ver_reporte_Click(object sender, EventArgs e)
         {
             // Instancia para ver reportes //Paula Leonardo 
@@ -196,10 +197,28 @@ namespace Capa_Vista_Reporteador
             if (Dgv_reportes.CurrentRow != null)
             {
                 string ruta = Dgv_reportes.CurrentRow.Cells["Cmp_Ruta_Reporte"].Value?.ToString();
+                int idReporte = Convert.ToInt32(Dgv_reportes.CurrentRow.Cells["Pk_Id_Reporte"].Value);
 
-                VistaDeReportes frm = new VistaDeReportes();
+
+
+                // inicio de modificación del código por bárbara saldaña 0901-22-9136 --> 28/09/2025
+
+                // Buscar si ya existe un formulario de VistaDeReportes
+                var frmExistente = Application.OpenForms.Cast<Form>()
+                    .OfType<VistaDeReportes>()
+                    .FirstOrDefault(f => f.IdReporte == idReporte);
+
+                if (frmExistente != null)
+                {
+                    // Si ya existe → traerlo al frente
+                    frmExistente.BringToFront();
+                    frmExistente.WindowState = FormWindowState.Normal;
+                    return;
+                }
+
+                // Si no existe, creamos uno nuevo
+                VistaDeReportes frm = new VistaDeReportes(idReporte);
                 frm.MostrarReporte(ruta);
-                // Mostrarlo como ventana aparte //Paula Leonardo
                 frm.Show();
             }
             else
@@ -207,7 +226,10 @@ namespace Capa_Vista_Reporteador
                 MessageBox.Show("Seleccione un reporte de la tabla primero");
             }
         }
+
+        //Fin de la modificacion del código por barbara saldañan 0901-22-9136 --> 27/09/2025
         //Fin de código de: Gerber Asturias con carné: 0901-22-11992 en la fecha 13/09/2025
+
 
         private void Btn_ruta_reporte_Click(object sender, EventArgs e)
         {
