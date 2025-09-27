@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Manual de Usuario - Consultas Inteligentes (HTML)</title>
+  <link rel="stylesheet" href="CSS/style.css">
+</head>
+<body>
+  <div class="wrap">
+    <!-- Portada -->
+    <div class="page" id="p1">
+      <div class="header-card">
+        <div class="logo-cell">
+          <img src="IMAGENES/Logo.jpg" alt="Logo QUANTUM">
+        </div>
+
+        <!-- Fila 1 -->
+        <div class="cell cell-nombre">
+          <span class="label">Nombre:</span>
+          <div class="value strong">Manual de Usuario para Consultas Inteligentes</div>
+        </div>
+        <div class="cell cell-codigo">
+          <span class="label">Código:</span>
+          <div class="value strong">CN-01</div>
+        </div>
+
+        <!-- Fila 2 -->
+        <div class="cell cell-rige">
+          <span class="label">Rige a partir de:</span>
+          <div class="value">23-09-2025</div>
+        </div>
+        <div class="cell cell-version">
+          <span class="label">Versión:</span>
+          <div class="value">1.1</div>
+        </div>
+        <div class="cell cell-pagina">
+          <span class="label">Página</span>
+          <div class="value"><span class="strong">1</span> de <span class="strong">13</span></div>
+        </div>
+      </div>
+
+      <h1 class="titulo-portada">Manual de Usuario para Consultas Inteligentes</h1>
+      <p class="subtitulo-portada">Componente de Consultas</p>
+    </div>
+
+    <!-- Carátula centrada -->
+    <img class="center-img" src="IMAGENES/Caratula.jpg" alt="Caratula QUANTUM">
+
+    <hr class="page-sep">
+
+    <!-- Página 2: Contenido -->
+    <div class="page" id="p2">
+      <h2>Contenido</h2>
+      <ol class="toc">
+        <li>Introducción</li>
+        <li>Presentación</li>
+        <li>Antecedentes del sistema</li>
+        <li>Objetivos del Sistema</li>
+        <li>Generalidades del Sistema</li>
+        <li>Validaciones y Manejo de Errores</li>
+        <li>Contingencia y Soporte Técnico</li>
+        <li>Control de Versiones</li>
+      </ol>
+    </div>
+
+    <hr class="page-sep">
+
+    <!-- Página 3: Introducción -->
+    <div class="page" id="p3">
+      <h2>Introducción</h2>
+      <p>Este manual tiene como objetivo orientar al usuario en el uso del Sistema de Consultas SQL, el cual permite realizar consultas simples y compuestas de manera rápida y segura.</p>
+      <p>El sistema facilita la obtención de información sin necesidad de conocimientos avanzados en SQL, y a la vez ofrece la opción de crear consultas personalizadas. Además, incluye validaciones que notifican al usuario cuando una consulta está mal escrita o cuando se intenta acceder a una tabla inexistente, garantizando así un manejo correcto de la información.</p>
+    </div>
+
+    <hr class="page-sep">
+
+    <!-- Página 4: Presentación / Antecedentes -->
+    <div class="page" id="p4">
+      <h2>Presentación</h2>
+      <h2>Antecedentes del sistema</h2>
+      <p>En el contexto de la gestión de información, las consultas a bases de datos son fundamentales para obtener datos de manera rápida y precisa. Sin embargo, para usuarios que no dominan el lenguaje SQL, construir consultas puede resultar complejo.</p>
+      <p>El sistema de Módulo de Consultas SQL surge como una solución práctica que permite a los usuarios crear, ejecutar, editar y eliminar consultas de forma intuitiva mediante una interfaz gráfica. Este módulo combina la flexibilidad del lenguaje SQL con una interfaz sencilla que facilita tanto consultas simples como consultas más avanzadas con condiciones, uniones y ordenamientos.</p>
+      <p>Este sistema se integra dentro de un entorno académico/práctico, buscando demostrar la aplicación de herramientas de programación, diseño de interfaces y administración de bases de datos para resolver necesidades reales de interacción con la información.</p>
+    </div>
+
+    <hr class="page-sep">
+
+    <!-- Página 5: Objetivos del Sistema -->
+    <div class="page" id="p5">
+      <h2>Objetivos del Sistema</h2>
+      <h3>Objetivo General</h3>
+      <ul>
+        <li>Facilitar la creación, ejecución y administración de consultas SQL mediante una interfaz gráfica que no requiera conocimientos avanzados del lenguaje SQL.</li>
+      </ul>
+      <h3>Objetivos Específicos</h3>
+      <ul>
+        <li>Permitir la creación de consultas simples y compuestas, seleccionando tablas, campos, condiciones y ordenamientos de manera guiada.</li>
+        <li>Ofrecer un mecanismo para guardar y reutilizar consultas en la base de datos.</li>
+        <li>Proporcionar opciones para editar consultas existentes de manera sencilla y flexible.</li>
+        <li>Implementar funcionalidades para buscar y eliminar consultas registradas, manteniendo una gestión completa de las mismas.</li>
+        <li>Brindar un entorno amigable para que los usuarios puedan visualizar y exportar resultados de forma rápida y confiable.</li>
+      </ul>
+    </div>
+
+    <hr class="page-sep">
+
+    <!-- Página 6: Generalidades del Sistema (Pantalla Principal) -->
+    <div class="page" id="p6">
+      <h2>Generalidades del Sistema</h2>
+      <h3>Pantalla Principal</h3>
+      <p><strong>Descripción:</strong> Pantalla de bienvenida. Desde aquí el usuario elige el tipo de consulta que quiere realizar o accede a la ayuda del sistema.</p>
+      <img class="center-img center-frame" src="IMAGENES/Formulario_Principal.jpg" alt="Formulario_Principal">
+      <div class="figure">
+        <h4 style="margin:0 0 6px">Botones</h4>
+        <ul>
+          <li><span>Consultas Simples</span> (flecha azul) → Sirve para hacer consultas básicas seleccionando tablas y campos.</li>
+          <li><span>Consulta Compleja</span> (flecha amarilla) → Sirve para hacer consultas avanzadas con condiciones, filtros y ordenamientos.</li>
+          <li><span>Ayuda</span> (flecha negra) → Sirve para mostrar la guía de uso del sistema.</li>
+          <li><span>Cerrar</span> (flecha roja) → Sirve para salir del programa.</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr class="page-sep">
+
+    <!-- Página 7: Consultas Simples -->
+    <div class="page" id="p7">
+      <h2>Consultas Simples</h2>
+      <p>Este módulo permite al usuario crear y ejecutar consultas básicas a la base de datos.</p>
+      <ul>
+        <li>Está pensado para seleccionar directamente una tabla (Query) y obtener sus datos sin necesidad de escribir SQL manualmente.</li>
+        <li>El sistema genera automáticamente la sentencia en <em>Cadena Generada</em>.</li>
+        <li>El usuario puede elegir cómo ordenar los resultados (ASC o DESC) y luego ejecutar la consulta para ver la información en el área de resultados (zona gris).</li>
+        <li>Además, el usuario puede guardar la consulta para utilizarla posteriormente.</li>
+      </ul>
+      <img class="center-img center-frame" src="IMAGENES/Consulta_Simple.jpg" alt="Consulta_Simple">
+    </div>
+
+    <hr class="page-sep">
+
+    <!-- Página 8: Botones (Consultas Simples) -->
+    <div class="page" id="p8">
+      <h2>Botones (Consultas Simples)</h2>
+      <ul>
+        <li><strong>Nombre de la tabla (desplegable)</strong> – (flecha verde): Permite elegir la tabla sobre la cual se realizará la consulta. En este caso está seleccionada <em>empleados</em>.</li>
+        <li><strong>Nombre de empleado (campo de texto)</strong> – (flecha amarilla): Campo opcional para escribir el nombre (o parte del nombre) de un empleado y filtrar los resultados.</li>
+        <li><strong>Ordenamiento ASC / DESC (opciones de radio)</strong> – (flecha naranja): Define el orden en que se mostrarán los resultados:
+          <ul>
+            <li>ASC → ascendente.</li>
+            <li>DESC → descendente.</li>
+          </ul>
+        </li>
+        <li><strong>Botón “Buscar” (ícono de lupa)</strong> – (flecha azul): Ejecuta la consulta con los parámetros seleccionados (tabla, nombre de empleado, orden) y muestra los resultados en la tabla de la parte inferior.</li>
+        <li><strong>Tabla de resultados</strong> – (flecha morada): Muestra la información obtenida de la base de datos.</li>
+        <li><strong>Botón “Consulta Compleja”</strong> – (flecha roja): Lleva al usuario al módulo de Consultas Compuestas, donde puede escribir SQL avanzado o aplicar filtros más complejos.</li>
+      </ul>
+    </div>
+
+    <hr class="page-sep">
+
+    <!-- Página 9: Consulta Compleja -->
+    <div class="page" id="p9">
+      <h2>Consulta Compleja</h2>
+      <p>Este módulo permite al usuario crear y ejecutar consultas avanzadas a la base de datos.</p>
+      <ul>
+        <li>A diferencia de la consulta simple, aquí se pueden construir sentencias SQL personalizadas en la <strong>Consola de SQL</strong>.</li>
+        <li>Permite trabajar con múltiples condiciones, filtros y operadores lógicos.</li>
+        <li>Ofrece la posibilidad de ordenar resultados (ASC/DESC).</li>
+        <li>Incluye opciones para <em>guardar</em>, <em>editar</em> y <em>eliminar</em> consultas previamente definidas.</li>
+        <li>Muestra en el área de resultados la salida completa de la consulta ejecutada.</li>
+      </ul>
+      <img class="center-img center-frame" src="IMAGENES/Consulta_Compleja.jpg" alt="Consulta_Compleja">
+    </div>
+
+    <hr class="page-sep">
+
+    <!-- Página 11: Validaciones y Manejo de Errores -->
+    <div class="page" id="p11">
+      <h2>Validaciones y Manejo de Errores</h2>
+      <ol>
+        <li>
+          <strong>Validación de consultas SQL.</strong>
+          <p>Cuando el usuario escribe una sentencia en la Consola de SQL (Consulta Compleja) y esta contiene errores de sintaxis o comandos inválidos, el sistema: <br>Detecta el error de la ejecución.
+             <br> Muestra un mensaje claro de advertencia indicando que la consulta está mal construida. <br> No ejecuta la consulta hasta que el usuario la corrija. <br> Ejemplo: si se escribe SELEC * FROM clientes en lugar de SELECT * FROM clientes, el sistema notificará que hay un error en la instrucción.</p>
+        </li>
+        <li>
+          <strong>Búsqueda de tablas inexistentes.</strong>
+          <p>En los apartados de Consultas Simples y Consultas Compuestas, cuando el usuario intenta buscar o ejecutar una consulta sobre una tabla que no existe en la base de datos:
+            <br> El sistema valida la existencia de la tabla antes de continuar. <br> Si la tabla no existe, muestra un mensaje de error informativo (ej. “La tabla seleccionada no existe en la base de datos”).
+            <br> No se ejecuta la consulta para evitar resultados vacíos o caídas del sistema.</p>
+        </li>
+        <li>
+          <strong>Beneficios para el usuario.</strong>
+          <ul>
+            <li>El sistema guía al usuario en caso de equivocaciones.</li>
+            <li>Evita que consultas inválidas o referencias a tablas inexistentes interrumpan el flujo.</li>
+            <li>Los mensajes de error son claros y específicos.</li>
+          </ul>
+        </li>
+      </ol>
+    </div>
+
+    <hr class="page-sep">
+
+    <!-- Página 12: Contingencia y Soporte Técnico -->
+    <div class="page" id="p12">
+      <h2>Contingencia y Soporte Técnico</h2>
+      <table class="table" aria-label="Soporte técnico">
+        <thead><tr><th>Nombre</th><th>Teléfono</th><th>Correo</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Richard Anthony De León Milian</td>
+            <td>4949-8131</td>
+            <td><a href="mailto:rdeleonm15@miumg.edu.gt">rdeleonm15@miumg.edu.gt</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <hr class="page-sep">
+
+  </div>
+</body>
+</html>
