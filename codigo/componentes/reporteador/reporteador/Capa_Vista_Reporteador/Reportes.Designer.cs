@@ -193,7 +193,6 @@ namespace Capa_Vista_Reporteador
             this.Controls.Add(this.Lbl_reportes);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.MinimizeBox = false;
             this.Name = "Reportes";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Reportes";

@@ -52,9 +52,9 @@ namespace Capa_Vista_Reporteador
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(832, 503);
             this.Controls.Add(this.crystalReportViewer1);
-            this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(850, 550);
             this.Name = "VistaDeReportes";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "VistaDeReportes";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.ResumeLayout(false);
