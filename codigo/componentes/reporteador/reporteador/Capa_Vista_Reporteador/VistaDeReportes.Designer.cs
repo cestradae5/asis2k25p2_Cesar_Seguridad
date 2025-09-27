@@ -42,7 +42,7 @@ namespace Capa_Vista_Reporteador
             this.crystalReportViewer1.Cursor = System.Windows.Forms.Cursors.Default;
             this.crystalReportViewer1.Location = new System.Drawing.Point(0, 0);
             this.crystalReportViewer1.Name = "crystalReportViewer1";
-            this.crystalReportViewer1.Size = new System.Drawing.Size(800, 450);
+            this.crystalReportViewer1.Size = new System.Drawing.Size(832, 503);
             this.crystalReportViewer1.TabIndex = 0;
             this.crystalReportViewer1.Load += new System.EventHandler(this.crystalReportViewer1_Load);
             // 
@@ -50,8 +50,10 @@ namespace Capa_Vista_Reporteador
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(832, 503);
             this.Controls.Add(this.crystalReportViewer1);
+            this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(850, 550);
             this.Name = "VistaDeReportes";
             this.Text = "VistaDeReportes";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;

@@ -12,10 +12,17 @@ namespace Capa_Vista_Reporteador
     {
         Cls_Controlador_Reporteador controlador = new Cls_Controlador_Reporteador();
 
+        public int IdReporte { get; private set; }
+
+        public VistaDeReportes(int idReporte) : this()
+        {
+            IdReporte = idReporte;
+        }
+
         public VistaDeReportes()
         {
             InitializeComponent();
-
+            IdReporte = IdReporte;
             //Asegurar que el CrystalReportViewer se ajuste al formulario
             crystalReportViewer1.Dock = DockStyle.Fill;
         }
