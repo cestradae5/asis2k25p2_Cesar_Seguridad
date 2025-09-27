@@ -31,31 +31,53 @@ namespace Capa_Vista_Seguridad
             string sNueva = Txt_nueva_contrasena.Text.Trim();
             string sConfirmar = Txt_confirmar_contrasena.Text.Trim();
 
-            if (sNueva != sConfirmar)
+            // Validar campos vacíos
+            if (string.IsNullOrEmpty(sActual))
             {
-                MessageBox.Show("Las contraseñas nuevas no coinciden.",
-                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Debe ingresar la contraseña actual.",
+                                "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
+            if (string.IsNullOrEmpty(sNueva) || string.IsNullOrEmpty(sConfirmar))
+            {
+                MessageBox.Show("Debe ingresar y confirmar la nueva contraseña.",
+                                "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Validar coincidencia de nuevas contraseñas
+            if (sNueva != sConfirmar)
+            {
+                MessageBox.Show("La nueva contraseña y su confirmación no coinciden.",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Validar contraseña actual
             if (!controlador.fun_validar_contrasena(iIdUsuario, sActual))
             {
                 MessageBox.Show("La contraseña actual es incorrecta.",
-                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
+            // Intentar actualizar
             bool bExito = controlador.fun_actualizar_Contrasena(iIdUsuario, sNueva);
             if (bExito)
             {
                 MessageBox.Show("Contraseña cambiada correctamente.",
                                 "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                // Registrar en Bitácora Arón Ricardo Esquit Silva   0901-22-13036
+                // Registrar en Bitácora
                 bit.RegistrarAccion(iIdUsuario, 0, "Cambio de contraseña", true);
 
+                // Limpiar campos
+                Txt_contrasena_actual.Clear();
+                Txt_nueva_contrasena.Clear();
+                Txt_confirmar_contrasena.Clear();
 
-                this.Close();
+                
             }
             else
             {
