@@ -2,122 +2,144 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Odbc;
-using System.Text;
+using System.IO;
+using System.Linq;
+using System.Xml.Linq;
 
 namespace Capa_Modelo_Componente_Consultas
 {
     // Nelson José Godinez Mendez 0901-22-3550 22/09/2025
-    public class ColumnaInfo
-    {
-        public string Nombre { get; set; }
-        public string Tipo { get; set; } 
-    }
-
-    public class UserQuery { public string Name { get; set; } public string Sql { get; set; } public override string ToString() => Name; }
-
-
-    // Acceso a datos 
     public class Sentencias
     {
+        private readonly string _dsn;
         private readonly string _db;
-        private readonly Conexion _cx;
+        private readonly string _connStr;
+        private readonly string _filePathXml;
 
-        public Sentencias(Conexion cx, string databaseName)
+        public Sentencias(string dsn, string db)
         {
-            _cx = cx ?? throw new ArgumentNullException(nameof(cx));
-            _db = databaseName ?? throw new ArgumentNullException(nameof(databaseName));
+            if (dsn == null) throw new ArgumentNullException(nameof(dsn));
+            if (db == null) throw new ArgumentNullException(nameof(db));
+
+            _dsn = dsn;
+            _db = db;
+            _connStr = "DSN=" + _dsn + ";DATABASE=" + _db + ";";
+            _filePathXml = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "consultas.xml");
         }
 
-        public List<string> ObtenerNombresTablas()
+        private OdbcConnection CreateConn()
         {
-            var tablas = new List<string>();
-            const string sql = @"
-                SELECT TABLE_NAME
-                FROM INFORMATION_SCHEMA.TABLES
-                WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_SCHEMA = ?
-                ORDER BY TABLE_NAME;";
-
-            var cn = _cx.Abrir();
-            using (var cmd = new OdbcCommand(sql, cn))
-            {
-                cmd.Parameters.AddWithValue("@p1", _db);
-                using (var rd = cmd.ExecuteReader())
-                {
-                    while (rd.Read()) tablas.Add(rd.GetString(0));
-                }
-            }
-            return tablas;
+            return new OdbcConnection(_connStr);
         }
 
-        public List<ColumnaInfo> ObtenerColumnas(string tabla)
+        public DataTable EjecutarConsulta(string sql)
         {
-            var cols = new List<ColumnaInfo>();
-            const string sql = @"
-                SELECT COLUMN_NAME, DATA_TYPE
-                FROM INFORMATION_SCHEMA.COLUMNS
-                WHERE TABLE_SCHEMA=? AND TABLE_NAME=?
-                ORDER BY ORDINAL_POSITION;";
-
-            var cn = _cx.Abrir();
-            using (var cmd = new OdbcCommand(sql, cn))
+            using (var cn = CreateConn())
             {
-                cmd.Parameters.AddWithValue("@p1", _db);
-                cmd.Parameters.AddWithValue("@p2", tabla);
-                using (var rd = cmd.ExecuteReader())
+                using (var da = new OdbcDataAdapter(sql, cn))
                 {
-                    while (rd.Read())
-                    {
-                        cols.Add(new ColumnaInfo
-                        {
-                            Nombre = rd.GetString(0),
-                            Tipo = rd.GetString(1)
-                        });
-                    }
+                    var dt = new DataTable();
+                    da.Fill(dt);
+                    return dt;
                 }
             }
-            return cols;
+        }
+
+        public List<string> ObtenerTablas()
+        {
+            string sql = "SELECT table_name FROM INFORMATION_SCHEMA.TABLES " +
+                         "WHERE table_schema='" + _db + "' ORDER BY table_name;";
+            using (var cn = CreateConn())
+            using (var cmd = new OdbcCommand(sql, cn))
+            {
+                cn.Open();
+                var list = new List<string>();
+                using (var r = cmd.ExecuteReader())
+                {
+                    while (r.Read()) list.Add(r.GetString(0));
+                }
+                return list;
+            }
+        }
+
+        public List<(string Name, string DataType)> ObtenerColumnasTipadas(string tabla)
+        {
+            string sql = "SELECT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS " +
+                         "WHERE TABLE_SCHEMA='" + _db + "' AND TABLE_NAME='" + tabla + "' " +
+                         "ORDER BY ORDINAL_POSITION;";
+            using (var cn = CreateConn())
+            using (var cmd = new OdbcCommand(sql, cn))
+            {
+                cn.Open();
+                var list = new List<(string, string)>();
+                using (var r = cmd.ExecuteReader())
+                {
+                    while (r.Read()) list.Add((r.GetString(0), r.GetString(1)));
+                }
+                return list;
+            }
+        }
+
+        public List<string> ObtenerColumnas(string tabla)
+        {
+            var tipadas = ObtenerColumnasTipadas(tabla);
+            var res = new List<string>(tipadas.Count);
+            foreach (var t in tipadas) res.Add(t.Name);
+            return res;
         }
         // ----------------------------------------------------------------------------------------- //
 
-        // Realizado por: Bryan Raul Ramirez Lopez 0901-21-8202 22/09/2025
-        public DataTable ConsultarTablaOrdenada(string tabla, bool asc, List<ColumnaInfo> columnas)
+        // ---------- Persistencia de consultas Realizado por: Bryan Raul Ramirez Lopez 0901-21-8202 22/09/2025
+
+        private XDocument LoadXml()
         {
-            if (columnas == null || columnas.Count == 0) return new DataTable();
-
-            var selectCols = new List<string>(columnas.Count);
-            foreach (var c in columnas)
+            if (!File.Exists(_filePathXml))
             {
-                if (string.Equals(c.Tipo, "time", StringComparison.OrdinalIgnoreCase))
-                    selectCols.Add("CAST(`" + c.Nombre + "` AS CHAR(10)) AS `" + c.Nombre + "`");
-                else
-                    selectCols.Add("`" + c.Nombre + "`");
+                var docNew = new XDocument(new XElement("consultas"));
+                docNew.Save(_filePathXml);
             }
-
-            string order = asc ? "ASC" : "DESC";
-            string firstCol = columnas[0].Nombre;
-            string sql = "SELECT " + string.Join(", ", selectCols) +
-                         " FROM `" + _db + "`.`" + tabla + "` ORDER BY `" + firstCol + "` " + order + ";";
-
-            var cn = _cx.Abrir(); 
-            using (var da = new OdbcDataAdapter())
-            {
-                da.SelectCommand = new OdbcCommand(sql, cn); 
-                var dt = new DataTable();
-                da.Fill(dt);
-                return dt;
-            }
+            return XDocument.Load(_filePathXml);
         }
 
-        public DataTable EjecutarSelect(string sql)
+        public List<KeyValuePair<string, string>> ListarConsultasPlano()
         {
-            var cn = _cx.Abrir(); 
-            using (var da = new OdbcDataAdapter())
-            {
-                da.SelectCommand = new OdbcCommand(sql, cn);
-                var dt = new DataTable();
-                da.Fill(dt);
-                return dt;
-            }
+            var doc = LoadXml();
+            var root = doc.Root ?? new XElement("consultas");
+            return root.Elements("consulta")
+                       .Select(x => new KeyValuePair<string, string>(
+                           (string)x.Attribute("name") ?? "",
+                           (string)x.Element("sql") ?? ""))
+                       .ToList();
+        }
+
+        public void GuardarConsulta(string name, string sql)
+        {
+            var doc = LoadXml();
+            var root = doc.Root ?? new XElement("consultas");
+
+            var existing = root.Elements("consulta")
+                               .FirstOrDefault(x => (string)x.Attribute("name") == name);
+            if (existing != null) existing.Remove();
+
+            root.Add(new XElement("consulta",
+                        new XAttribute("name", name),
+                        new XElement("sql", sql)));
+            doc.Save(_filePathXml);
+        }
+
+        public bool EliminarConsulta(string name)
+        {
+            var doc = LoadXml();
+            var root = doc.Root;
+            if (root == null) return false;
+
+            var el = root.Elements("consulta")
+                         .FirstOrDefault(x => (string)x.Attribute("name") == name);
+            if (el == null) return false;
+
+            el.Remove();
+            doc.Save(_filePathXml);
+            return true;
         }
     }
 }
