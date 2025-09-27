@@ -29,31 +29,38 @@ namespace PruebaEjecucionNavegador
         /// </summary>
         private void InitializeComponent()
         {
-            this.navegador1 = new CapaVistaNavegador.Navegador();
+            this.navegador1 = new Capa_Vista_Navegador.Navegador();
             this.SuspendLayout();
             // 
             // navegador1
             // 
-            this.navegador1.Location = new System.Drawing.Point(13, 13);
+            this.navegador1.AutoSize = true;
+            this.navegador1.IPkId_Aplicacion = 0;
+            this.navegador1.Location = new System.Drawing.Point(12, 12);
             this.navegador1.Name = "navegador1";
-            this.navegador1.Size = new System.Drawing.Size(1180, 488);
+            this.navegador1.SAlias = null;
+            this.navegador1.Size = new System.Drawing.Size(1177, 573);
+            this.navegador1.SNombreTabla = null;
             this.navegador1.TabIndex = 0;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1143, 488);
+            this.ClientSize = new System.Drawing.Size(1207, 628);
+            this.ControlBox = false;
             this.Controls.Add(this.navegador1);
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private CapaVistaNavegador.Navegador navegador1;
+        private Capa_Vista_Navegador.Navegador navegador1;
     }
 }
 

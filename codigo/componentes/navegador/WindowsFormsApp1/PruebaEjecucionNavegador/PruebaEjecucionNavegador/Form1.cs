@@ -15,8 +15,32 @@ namespace PruebaEjecucionNavegador
         public Form1()
         {
             InitializeComponent();
-            navegador1.alias = new string[] { "pacientes", "id_paciente", "nombre", "apellido" };
+            //parametros para navegador
+            Capa_Controlador_Navegador.Cls_ConfiguracionDataGridView config = new Capa_Controlador_Navegador.Cls_ConfiguracionDataGridView
+            {
+                Ancho = 1100,
+                Alto = 200,
+                ColorFondo = Color.White,
+                TipoScrollBars = ScrollBars.Both,
+                Nombre = "dgv_empleados"
+            };
+            string[] columnas = {
+                        "padre", "id_padre", "nombre", "apellido", "id_hijo"
+                        //"tbl_aplicacion",            
+                        //"Pk_Id_Aplicacion",
+                        //"Fk_Id_Reporte_Aplicacion",
+                        //"Cmp_Nombre_Aplicacion",
+                        //"Cmp_Descripcion_Aplicacion",
+                        //"Cmp_Estado_Aplicacion"
+                    };
+            //int id_aplicacion = 100;
+
+            //navegador1.IPkId_Aplicacion = id_aplicacion;
+            navegador1.configurarDataGridView(config);
+            navegador1.SNombreTabla = columnas[0];
+            navegador1.SAlias = columnas;
             navegador1.mostrarDatos();
         }
+
     }
 }
