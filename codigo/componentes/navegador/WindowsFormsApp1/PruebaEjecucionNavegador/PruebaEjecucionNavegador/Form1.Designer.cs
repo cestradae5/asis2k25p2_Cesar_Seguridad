@@ -35,7 +35,8 @@ namespace PruebaEjecucionNavegador
             // navegador1
             // 
             this.navegador1.AutoSize = true;
-            this.navegador1.Location = new System.Drawing.Point(387, 98);
+            this.navegador1.IPkId_Aplicacion = 0;
+            this.navegador1.Location = new System.Drawing.Point(12, 12);
             this.navegador1.Name = "navegador1";
             this.navegador1.SAlias = null;
             this.navegador1.Size = new System.Drawing.Size(1177, 573);
@@ -46,7 +47,7 @@ namespace PruebaEjecucionNavegador
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1813, 650);
+            this.ClientSize = new System.Drawing.Size(1207, 628);
             this.ControlBox = false;
             this.Controls.Add(this.navegador1);
             this.Name = "Form1";

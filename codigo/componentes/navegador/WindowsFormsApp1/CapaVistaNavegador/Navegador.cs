@@ -8,11 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Capa_Controlador_Navegador;
+//using Capa_Vista_Reporteador;
+
 namespace Capa_Vista_Navegador
 {
     public partial class Navegador : UserControl
     {
         public string[] SAlias { get; set; }
+        public int IPkId_Aplicacion { get; set; }
         public string SNombreTabla { get; set; } // Nueva propiedad para el nombre de la tabla
 
         public Cls_ConfiguracionDataGridView configuracionDataGridView;
@@ -209,7 +212,8 @@ namespace Capa_Vista_Navegador
 
         private void Btn_imprimir_Click_1(object sender, EventArgs e)
         {
-            // Llamar al componente reporteadores
+           // Reportes rpt = new Reportes();
+            //rpt.reporteAplicacion(IPkId_Aplicacion);
         }
         
         private void Btn_refrescar_Click(object sender, EventArgs e)
