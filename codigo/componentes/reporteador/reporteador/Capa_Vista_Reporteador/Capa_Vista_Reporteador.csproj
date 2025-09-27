@@ -60,17 +60,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Reportes.cs">
+    <Compile Include="Frm_Reportes.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Reportes.Designer.cs">
-      <DependentUpon>Reportes.cs</DependentUpon>
+    <Compile Include="Frm_Reportes.Designer.cs">
+      <DependentUpon>Frm_Reportes.cs</DependentUpon>
     </Compile>
-    <Compile Include="VistaDeReportes.cs">
+    <Compile Include="Frm_VistaDeReportes.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="VistaDeReportes.Designer.cs">
-      <DependentUpon>VistaDeReportes.cs</DependentUpon>
+    <Compile Include="Frm_VistaDeReportes.Designer.cs">
+      <DependentUpon>Frm_VistaDeReportes.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -78,11 +78,11 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reportes.resx">
-      <DependentUpon>Reportes.cs</DependentUpon>
+    <EmbeddedResource Include="Frm_Reportes.resx">
+      <DependentUpon>Frm_Reportes.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="VistaDeReportes.resx">
-      <DependentUpon>VistaDeReportes.cs</DependentUpon>
+    <EmbeddedResource Include="Frm_VistaDeReportes.resx">
+      <DependentUpon>Frm_VistaDeReportes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

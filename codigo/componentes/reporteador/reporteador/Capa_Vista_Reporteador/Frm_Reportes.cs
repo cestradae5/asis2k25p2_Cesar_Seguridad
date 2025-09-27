@@ -12,7 +12,7 @@ using Capa_Controlador_Reporteador;
 
 namespace Capa_Vista_Reporteador
 {
-    public partial class Reportes : Form
+    public partial class Frm_Reportes : Form
     {
         // ==========================
         // Variables globales
@@ -26,7 +26,7 @@ namespace Capa_Vista_Reporteador
         // ==========================
         // Constructor
         // ==========================
-        public Reportes()
+        public Frm_Reportes()
         {
             InitializeComponent();
         }
@@ -288,7 +288,7 @@ private void Btn_eliminar_Click(object sender, EventArgs e)
 
                 // Buscar si ya existe un formulario de VistaDeReportes
                 var frmExistente = Application.OpenForms.Cast<Form>()
-                    .OfType<VistaDeReportes>()
+                    .OfType<Frm_VistaDeReportes>()
                     .FirstOrDefault(f => f.IdReporte == idReporte);
 
                 if (frmExistente != null)
@@ -300,7 +300,7 @@ private void Btn_eliminar_Click(object sender, EventArgs e)
                 }
 
                 // Si no existe, creamos uno nuevo
-                VistaDeReportes frm = new VistaDeReportes(idReporte);
+                Frm_VistaDeReportes frm = new Frm_VistaDeReportes(idReporte);
                 frm.MostrarReporte(ruta);
                 frm.Show();
             }
@@ -361,7 +361,7 @@ private void Btn_eliminar_Click(object sender, EventArgs e)
         {
             //Inicio de código de: Anderson Trigueros con carné: 0901-22-6961 en la fecha 25/09/2025
             string sRuta = controlador.ConsultarReporteAplicacion(idAplicacion);
-            VistaDeReportes frm = new VistaDeReportes();
+            Frm_VistaDeReportes frm = new Frm_VistaDeReportes();
             frm.MostrarReporte(sRuta);
             // Mostrarlo como ventana aparte //Paula Leonardo
             frm.Show();
