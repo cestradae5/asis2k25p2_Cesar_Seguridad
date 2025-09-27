@@ -41,8 +41,8 @@ namespace Capa_Vista_Seguridad
         private void fun_ConfigurarIdsDinamicamenteYAplicarPermisos()
         {
 
-            string nombreModulo = "RHM";
-            string nombreAplicacion = "Empleados";
+            string nombreModulo = "Seguridad";
+            string nombreAplicacion = "Administracion";
             aplicacionId = permisoUsuario.ObtenerIdAplicacionPorNombre(nombreAplicacion);
             moduloId = permisoUsuario.ObtenerIdModuloPorNombre(nombreModulo);
             fun_AplicarPermisosUsuario();
