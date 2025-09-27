@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Globalization;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Capa_Controlador_Consultas;
@@ -18,61 +19,11 @@ namespace Capa_Vista_Componente_Consultas
         private Controlador _controlador;
         private string _tablaActual = null;
 
-
         private readonly List<string> _partesWhere = new List<string>();
         private readonly List<string> _partesGroupOrder = new List<string>();
         // Rellena los dos bloques visibles de UI a partir de las condiciones parseadas Nelson Jose Godinez Mendez 0901-22-3550 09/26/2025
-        private void RellenarUIDesdeConds(
-            IEnumerable<(string Conector, string Campo, string Operador, string Valor1, string Valor2)> conds)
-        {
-            int idx = 0;
-            foreach (var c in conds)
-            {
-                var campo = NormalizeCol(c.Campo);
-
-                if (idx == 0)
-                {
-                    SafeSelectColumn(Cbo_CampoCond, campo);
-                    Txt_ValorCond.Text = c.Operador == "LIKE"
-                        ? Unquote(c.Valor1).Trim('%')
-                        : Unquote(c.Valor1);
-                }
-                else if (idx == 1)
-                {
-                    SafeSelectColumn(Cbo_CampoComp, campo);
-                    SetComboSelectedItem(Cbo_TipoComparador, c.Operador);
-
-                    if (c.Operador == "BETWEEN")
-                    {
-                        EnsureBetweenControls();
-                        Txt_ValorComp.Visible = false;
-                        Lbl_ValorCompMin.Visible = Txt_ValorCompMin.Visible = true;
-                        Lbl_ValorCompMax.Visible = Txt_ValorCompMax.Visible = true;
-                        Txt_ValorCompMin.Text = Unquote(c.Valor1);
-                        Txt_ValorCompMax.Text = Unquote(c.Valor2);
-                    }
-                    else
-                    {
-                        Txt_ValorComp.Text = c.Operador == "LIKE"
-                            ? Unquote(c.Valor1).Trim('%')
-                            : Unquote(c.Valor1);
-                    }
-
-                    SetComboSelectedItem(Cbo_OperadorLogico,
-                        string.IsNullOrEmpty(c.Conector) ? "AND" : c.Conector);
-                }
-                else break; // sólo mostramos 2 en UI
-                idx++;
-            }
-
-            if (idx > 0) Chk_AgregarCondiciones.Checked = true;
-            ToggleBetweenControls();
-        }
-
         private bool _cargandoDesdeSql = false;
-        // Guarda la última SQL generada, sin mostrarla en la UI
         private string _sqlActual = string.Empty;
-
 
         // BETWEEN dinámico
         private TextBox Txt_ValorCompMin;
@@ -84,20 +35,26 @@ namespace Capa_Vista_Componente_Consultas
         {
             InitializeComponent();
 
-            this.KeyPreview = true;
-            this.KeyDown += (s, e) => { if (e.Control && e.KeyCode == Keys.L) { LimpiarTodo(); e.Handled = true; } };
-            Txt_CadenaGenerada.Visible = false;   // <- oculta la caja
-            Txt_CadenaGenerada.TabStop = false;   // <- que no reciba foco con Tab
+            KeyPreview = true;
+            KeyDown += delegate (object s, KeyEventArgs e)
+            {
+                if (e.Control && e.KeyCode == Keys.L) { LimpiarTodo(); e.Handled = true; }
+            };
+
+            // Oculta la caja de SQL generada en UI
+            Txt_CadenaGenerada.Visible = false;
+            Txt_CadenaGenerada.TabStop = false;
+
             if (LicenseManager.UsageMode == LicenseUsageMode.Designtime) return;
             CargarEventos();
         }
 
         private void CargarEventos()
         {
-            this.Load += Frm_Consulta_Compleja_Load;
+            Load += Frm_Consulta_Compleja_Load;
 
-            // Tabla
-            Cbo_Tabla.SelectedIndexChanged += (s, e) =>
+            // Cambio de tabla
+            Cbo_Tabla.SelectedIndexChanged += delegate
             {
                 _tablaActual = Cbo_Tabla.SelectedItem == null ? null : Cbo_Tabla.SelectedItem.ToString();
                 CargarColumnas(_tablaActual);
@@ -107,17 +64,32 @@ namespace Capa_Vista_Componente_Consultas
                     LimpiarCondiciones();
                     Txt_CadenaGenerada.Clear();
                 }
-
                 PrevisualizarTabla(_tablaActual);
             };
 
-            // Buscar (refresh preview)
-            // Radios ASC/DES sincronizan combo
-            Rdb_Asc.CheckedChanged += (s, e) => { if (Rdb_Asc.Checked) Cbo_Ordenamiento.SelectedItem = "ASC"; };
-            Rdb_Des.CheckedChanged += (s, e) => { if (Rdb_Des.Checked) Cbo_Ordenamiento.SelectedItem = "DESC"; };
+            // Buscar/Refrescar preview
+            {
+                var t = Cbo_Tabla.SelectedItem == null ? null : Cbo_Tabla.SelectedItem.ToString();
+                PrevisualizarTabla(t);
+            };
 
-            // ---- Lógica Bryan Raul Ramirez Lopez 0901-21-8202 26/09/2025
-            Btn_AgregarCond.Click += (s, e) =>
+            // Radios ASC/DES  actualizan dirección y la pieza ORDER BY
+            Rdb_Asc.CheckedChanged += delegate { if (Rdb_Asc.Checked) SincronizarOrdenConRadios(); };
+            Rdb_Des.CheckedChanged += delegate { if (Rdb_Des.Checked) SincronizarOrdenConRadios(); };
+
+            // Si el usuario cambia el combo de dirección, sincronizamos radios y pieza
+            Cbo_Ordenamiento.SelectedIndexChanged += delegate
+            {
+                if (Cbo_Ordenamiento.SelectedItem == null) return;
+                string v = Cbo_Ordenamiento.SelectedItem.ToString();
+                if (string.Equals(v, "ASC", StringComparison.OrdinalIgnoreCase)) Rdb_Asc.Checked = true;
+                else if (string.Equals(v, "DESC", StringComparison.OrdinalIgnoreCase)) Rdb_Des.Checked = true;
+                SincronizarOrdenConRadios();
+            };
+
+
+            // // ---- Lógica Nelson Jose Godínez Méndez 0901-22-3550 26/09/2025
+            Btn_AgregarCond.Click += delegate
             {
                 if (!Chk_AgregarCondiciones.Checked) return;
                 if (Cbo_CampoCond.SelectedItem == null) { MessageBox.Show("Selecciona un campo."); return; }
@@ -125,22 +97,21 @@ namespace Capa_Vista_Componente_Consultas
                 var val = Txt_ValorCond.Text.Trim();
                 if (val.Length == 0) { MessageBox.Show("Ingresa un valor."); return; }
 
-                var operador = _partesWhere.Count == 0 ? null
-                               : (GetComboValor(Cbo_OperadorLogico) ?? "AND");
+                var operador = _partesWhere.Count == 0 ? null : (GetComboValor(Cbo_OperadorLogico) ?? "AND");
 
                 var campo = Cbo_CampoCond.SelectedItem.ToString();
                 string rhs = decimal.TryParse(val, NumberStyles.Any, CultureInfo.InvariantCulture, out var num)
                              ? num.ToString(CultureInfo.InvariantCulture)
-                             : $"'{Esc(val)}'";
+                             : "'" + Esc(val) + "'";
 
-                var pieza = $"`{campo}` = {rhs}";
+                var pieza = "`" + campo + "` = " + rhs;
                 AgregarWhere(pieza, operador);
             };
 
-            // ---- Comparación Nelson Jose Godinez Mendez 0901-22-3550 26/09/2025
-            Cbo_TipoComparador.SelectedIndexChanged += (s, e) => ToggleBetweenControls();
+            // ---- Comparación
+            Cbo_TipoComparador.SelectedIndexChanged += delegate { ToggleBetweenControls(); };
 
-            Btn_AgregarComp.Click += (s, e) =>
+            Btn_AgregarComp.Click += delegate
             {
                 if (!Chk_AgregarCondiciones.Checked) return;
                 if (Cbo_CampoComp.SelectedItem == null || Cbo_TipoComparador.SelectedItem == null)
@@ -154,54 +125,49 @@ namespace Capa_Vista_Componente_Consultas
                 switch (sel)
                 {
                     case "BETWEEN":
-                        {
-                            EnsureBetweenControls();
-                            var minRaw = (Txt_ValorCompMin.Text ?? "").Trim();
-                            var maxRaw = (Txt_ValorCompMax.Text ?? "").Trim();
-                            if (minRaw.Length == 0 || maxRaw.Length == 0)
-                            { MessageBox.Show("Completa Mín. y Máx."); return; }
+                        EnsureBetweenControls();
+                        var minRaw = (Txt_ValorCompMin.Text ?? "").Trim();
+                        var maxRaw = (Txt_ValorCompMax.Text ?? "").Trim();
+                        if (minRaw.Length == 0 || maxRaw.Length == 0)
+                        { MessageBox.Show("Completa Mín. y Máx."); return; }
 
-                            string left = TryNumOrQuoted(minRaw);
-                            string right = TryNumOrQuoted(maxRaw);
-                            pieza = $"`{campo}` BETWEEN {left} AND {right}";
-                            break;
-                        }
+                        string left = TryNumOrQuoted(minRaw);
+                        string right = TryNumOrQuoted(maxRaw);
+                        pieza = "`" + campo + "` BETWEEN " + left + " AND " + right;
+                        break;
 
                     case "LIKE":
                         if (Txt_ValorComp.TextLength == 0) { MessageBox.Show("Ingresa un valor."); return; }
-                        pieza = $"`{campo}` LIKE '%{Esc(Txt_ValorComp.Text)}%'";
+                        pieza = "`" + campo + "` LIKE '%" + Esc(Txt_ValorComp.Text) + "%'";
                         break;
 
                     case "LIKE_START":
                         if (Txt_ValorComp.TextLength == 0) { MessageBox.Show("Ingresa un valor."); return; }
-                        pieza = $"`{campo}` LIKE '{Esc(Txt_ValorComp.Text)}%'";
+                        pieza = "`" + campo + "` LIKE '" + Esc(Txt_ValorComp.Text) + "%'";
                         break;
 
                     case "LIKE_END":
                         if (Txt_ValorComp.TextLength == 0) { MessageBox.Show("Ingresa un valor."); return; }
-                        pieza = $"`{campo}` LIKE '%{Esc(Txt_ValorComp.Text)}'";
+                        pieza = "`" + campo + "` LIKE '%" + Esc(Txt_ValorComp.Text) + "'";
                         break;
 
                     case "IS NULL":
                     case "IS NOT NULL":
-                        pieza = $"`{campo}` {sel}";
+                        pieza = "`" + campo + "` " + sel;
                         break;
 
                     default:
                         if (Txt_ValorComp.TextLength == 0) { MessageBox.Show("Ingresa un valor."); return; }
-                        pieza = $"`{campo}` {sel} {TryNumOrQuoted(Txt_ValorComp.Text)}";
+                        pieza = "`" + campo + "` " + sel + " " + TryNumOrQuoted(Txt_ValorComp.Text);
                         break;
                 }
 
-                string conector = _partesWhere.Count == 0
-                    ? null
-                    : (GetComboValor(Cbo_OperadorLogico) ?? "AND");
-
+                string conector = _partesWhere.Count == 0 ? null : (GetComboValor(Cbo_OperadorLogico) ?? "AND");
                 AgregarWhere(pieza, conector);
             };
 
-            // ---- Agrupar / Ordenar Diego Fernando Saquil Gramajo 0901-22-4103 26/09/2025
-            Btn_AgregarOrden.Click += (s, e) =>
+            // ---- Agrupar/Ordenar Bryan Raul Ramirez Lopez 0901-21-8202 26/09/2025
+            Btn_AgregarOrden.Click += delegate
             {
                 if (Cbo_AgruparOrdenar.SelectedItem == null || Cbo_CampoOrdenar.SelectedItem == null)
                 { MessageBox.Show("Selecciona modo y campo."); return; }
@@ -210,24 +176,25 @@ namespace Capa_Vista_Componente_Consultas
                 string campo = Cbo_CampoOrdenar.SelectedItem.ToString();
 
                 if (modo == "GROUP BY")
-                    _partesGroupOrder.Add($"GROUP BY `{campo}`");
+                    _partesGroupOrder.Add("GROUP BY `" + campo + "`");
                 else
                 {
                     string ord = Cbo_Ordenamiento.SelectedItem == null
                         ? (Rdb_Asc.Checked ? "ASC" : "DESC")
                         : Cbo_Ordenamiento.SelectedItem.ToString();
-                    _partesGroupOrder.Add($"ORDER BY `{campo}` {ord}");
+
+                    _partesGroupOrder.Add("ORDER BY `" + campo + "` " + ord);
                 }
             };
 
-            // ---- Ejecutar ---- Juan Carlos Sandoval Quej 0901-22-4170 26/09/2025
-            Btn_Ejecutar.Click += (s, e) =>
+            // ---- Ejecutar  Juan Carlos Sandoval Quej 0901-22-4170 26/09/2025
+            Btn_Ejecutar.Click += delegate
             {
                 var sql = string.IsNullOrWhiteSpace(_sqlActual)
                     ? _controlador.ConstruirSql(_tablaActual, Chk_AgregarCondiciones.Checked, _partesWhere, _partesGroupOrder)
                     : _sqlActual;
 
-                _sqlActual = sql; // guardamos lo que se ejecuta
+                _sqlActual = sql; // persistimos
 
                 sql = _controlador.ReescribirSelectSeguroSiHayTime(DB, _tablaActual, sql);
 
@@ -241,13 +208,14 @@ namespace Capa_Vista_Componente_Consultas
                     MessageBox.Show("Error al ejecutar:\n" + ex.Message);
                 }
             };
-            // ---- Limpiar ----
-            Btn_Limpiar.Click += (s, e) => LimpiarTodo();
 
-            // ---- Consultas guardadas ---- Juan Carlos Sandoval Quej 0901-22-4170 26/09/2025
-            Btn_AgregarConsulta.Click += (s, e) => GuardarConsultaAuto();
+            // ---- Limpiar
+            Btn_Limpiar.Click += delegate { LimpiarTodo(); };
 
-            Btn_EditarConsulta.Click += (s, e) =>
+            // ---- Consultas guardadas Diego Fernando Saquil Gramajo 0901-22-4103 26/09/2025
+            Btn_AgregarConsulta.Click += delegate { GuardarConsultaAuto(); };
+
+            Btn_EditarConsulta.Click += delegate
             {
                 if (Lst_ConsultasGuardadas.SelectedItem == null) { MessageBox.Show("Selecciona una consulta."); return; }
                 var sql = Lst_ConsultasGuardadas.SelectedValue as string ?? "";
@@ -255,12 +223,12 @@ namespace Capa_Vista_Componente_Consultas
                 CargarConsultaDesdeSql(sql);
             };
 
-            Btn_EliminarConsulta.Click += (s, e) =>
+            Btn_EliminarConsulta.Click += delegate
             {
                 if (Lst_ConsultasGuardadas.SelectedItem == null) { MessageBox.Show("Selecciona una consulta."); return; }
                 string nombre = Lst_ConsultasGuardadas.GetItemText(Lst_ConsultasGuardadas.SelectedItem);
 
-                if (MessageBox.Show($"¿Eliminar \"{nombre}\"?", "Confirmación",
+                if (MessageBox.Show("¿Eliminar \"" + nombre + "\"?", "Confirmación",
                     MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                 {
                     if (_controlador.EliminarConsulta(nombre))
@@ -273,15 +241,15 @@ namespace Capa_Vista_Componente_Consultas
                 }
             };
 
-            // Al seleccionar, mostrar SQL en la caja
-            Lst_ConsultasGuardadas.SelectedIndexChanged += (s, e) =>
+            // Seleccionar consulta -> mostrar SQL (solo interno; la caja está oculta)
+            Lst_ConsultasGuardadas.SelectedIndexChanged += delegate
             {
                 var sql = Lst_ConsultasGuardadas.SelectedValue as string;
                 if (sql != null) Txt_CadenaGenerada.Text = sql;
             };
 
             // Doble click: cargar y ejecutar
-            Lst_ConsultasGuardadas.DoubleClick += (s, e) =>
+            Lst_ConsultasGuardadas.DoubleClick += delegate
             {
                 var sql = Lst_ConsultasGuardadas.SelectedValue as string;
                 if (!string.IsNullOrEmpty(sql))
@@ -300,30 +268,34 @@ namespace Capa_Vista_Componente_Consultas
 
             CargarTablas();
 
-            // Combos fijos Nelson Jose Godinez Mendez 0901-22-3550 26/09/2025
+            // Combos fijos
             if (Cbo_OperadorLogico.DataSource == null)
+            {
                 Cbo_OperadorLogico.DataSource = new List<ComboItem> {
-                    new ComboItem("Y (AND)", "AND"),
-                    new ComboItem("O (OR)", "OR")
+                    new ComboItem("Y (AND)","AND"),
+                    new ComboItem("O (OR)","OR")
                 };
+            }
             Cbo_OperadorLogico.DisplayMember = "Texto";
             Cbo_OperadorLogico.ValueMember = "Valor";
 
             if (Cbo_TipoComparador.DataSource == null)
+            {
                 Cbo_TipoComparador.DataSource = new List<ComboItem> {
-                    new ComboItem("Igual (=)",              "="),
-                    new ComboItem("Distinto (≠)",           "<>"),
-                    new ComboItem("Mayor (>)",              ">"),
-                    new ComboItem("Menor (<)",              "<"),
-                    new ComboItem("Mayor o igual (≥)",      ">="),
-                    new ComboItem("Menor o igual (≤)",      "<="),
-                    new ComboItem("Contiene",               "LIKE"),
-                    new ComboItem("Comienza con",           "LIKE_START"),
-                    new ComboItem("Termina con",            "LIKE_END"),
-                    new ComboItem("Entre",                  "BETWEEN"),
-                    new ComboItem("Es nulo",                "IS NULL"),
-                    new ComboItem("No es nulo",             "IS NOT NULL")
+                    new ComboItem("Igual (=)","="),
+                    new ComboItem("Distinto (≠)","<>"),
+                    new ComboItem("Mayor (>)",">"),
+                    new ComboItem("Menor (<)","<"),
+                    new ComboItem("Mayor o igual (≥)",">="),
+                    new ComboItem("Menor o igual (≤)","<="),
+                    new ComboItem("Contiene","LIKE"),
+                    new ComboItem("Comienza con","LIKE_START"),
+                    new ComboItem("Termina con","LIKE_END"),
+                    new ComboItem("Entre","BETWEEN"),
+                    new ComboItem("Es nulo","IS NULL"),
+                    new ComboItem("No es nulo","IS NOT NULL")
                 };
+            }
             Cbo_TipoComparador.DisplayMember = "Texto";
             Cbo_TipoComparador.ValueMember = "Valor";
 
@@ -340,13 +312,14 @@ namespace Capa_Vista_Componente_Consultas
             ToggleBetweenControls();
         }
 
-        // --------- Helpers de datos Nelson Jose Godinez Mendez 0901 - 22 -3550 26/09/2025
+        // ----------------- Datos / Metadata Juan Carlos Sandoval Quej 0901-22-4170 26/09/2025
         private void CargarTablas()
         {
             try
             {
                 Cbo_Tabla.Items.Clear();
-                foreach (var t in _controlador.ObtenerTablas()) Cbo_Tabla.Items.Add(t);
+                var tabs = _controlador.ObtenerTablas();
+                foreach (var t in tabs) Cbo_Tabla.Items.Add(t);
                 if (Cbo_Tabla.Items.Count > 0) Cbo_Tabla.SelectedIndex = 0;
             }
             catch (Exception ex)
@@ -355,6 +328,52 @@ namespace Capa_Vista_Componente_Consultas
             }
         }
 
+        private void SincronizarOrdenConRadios()
+        {
+            // Dirección elegida
+            string dir = Rdb_Asc.Checked ? "ASC" : "DESC";
+
+            // Asegura items en el combo
+            if (Cbo_Ordenamiento.Items.Count == 0)
+                Cbo_Ordenamiento.Items.AddRange(new object[] { "ASC", "DESC" });
+
+            Cbo_Ordenamiento.SelectedItem = dir;
+
+            // Busca la última pieza ORDER BY
+            int idx = -1;
+            for (int i = _partesGroupOrder.Count - 1; i >= 0; i--)
+            {
+                if (_partesGroupOrder[i].StartsWith("ORDER BY ", StringComparison.OrdinalIgnoreCase))
+                { idx = i; break; }
+            }
+
+            if (idx >= 0)
+            {
+                // Mantiene la columna existente si es posible
+                string pieza = _partesGroupOrder[idx]; // "ORDER BY `col` DIR"
+                string col = null;
+                var m = Regex.Match(pieza, @"ORDER\s+BY\s+`?(?<c>[^`\s]+)`?", RegexOptions.IgnoreCase);
+                if (m.Success) col = m.Groups["c"].Value;
+
+                if (string.IsNullOrEmpty(col) && Cbo_CampoOrdenar.SelectedItem != null)
+                    col = Cbo_CampoOrdenar.SelectedItem.ToString();
+
+                if (!string.IsNullOrEmpty(col))
+                    _partesGroupOrder[idx] = "ORDER BY `" + NormalizeCol(col) + "` " + dir;
+            }
+            else
+            {
+                // Si no hay ORDER BY y el usuario está en modo ORDER BY con un campo, lo creamos
+                if (Cbo_AgruparOrdenar.SelectedItem != null &&
+                    string.Equals(Cbo_AgruparOrdenar.SelectedItem.ToString(), "ORDER BY", StringComparison.OrdinalIgnoreCase) &&
+                    Cbo_CampoOrdenar.SelectedItem != null)
+                {
+                    string col2 = Cbo_CampoOrdenar.SelectedItem.ToString();
+                    _partesGroupOrder.Add("ORDER BY `" + NormalizeCol(col2) + "` " + dir);
+                }
+            }
+        }
+        //Ayudas Nelson Jose Godinez Mendez 0901-22-3550 26/09/2025
         private void CargarColumnas(string tabla)
         {
             Cbo_CampoCond.Items.Clear();
@@ -363,14 +382,15 @@ namespace Capa_Vista_Componente_Consultas
 
             if (string.IsNullOrEmpty(tabla)) return;
 
-            foreach (var c in _controlador.ObtenerColumnas(tabla))
+            var cols = _controlador.ObtenerColumnas(tabla);
+            foreach (var c in cols)
             {
                 Cbo_CampoCond.Items.Add(c);
                 Cbo_CampoComp.Items.Add(c);
                 Cbo_CampoOrdenar.Items.Add(c);
             }
         }
-        // Quita backticks/comillas y prefijo (db.tbl.col o e.col -> col)
+
         private static string NormalizeCol(string s)
         {
             if (string.IsNullOrWhiteSpace(s)) return s;
@@ -380,38 +400,34 @@ namespace Capa_Vista_Componente_Consultas
             return s;
         }
 
-        // Selección tolerante en combos de columnas
         private void SetComboSelectedItemLoose(ComboBox cb, string value)
         {
             value = NormalizeCol(value);
             if (string.IsNullOrEmpty(value)) { cb.SelectedIndex = -1; return; }
 
-            // Sin DataSource
             if (cb.DataSource == null)
             {
                 for (int i = 0; i < cb.Items.Count; i++)
                 {
-                    var txt = NormalizeCol(cb.Items[i]?.ToString());
+                    var txt = NormalizeCol(cb.Items[i] == null ? null : cb.Items[i].ToString());
                     if (string.Equals(txt, value, StringComparison.OrdinalIgnoreCase))
                     { cb.SelectedIndex = i; return; }
                 }
-                // fallback
                 cb.Items.Add(value);
                 cb.SelectedItem = value;
                 return;
             }
 
-            // Con DataSource
             var enumerable = cb.DataSource as System.Collections.IEnumerable;
             int idx = 0;
             foreach (var it in enumerable)
             {
-                string txt = it?.ToString();
+                string txt = it == null ? null : it.ToString();
                 if (!string.IsNullOrEmpty(cb.DisplayMember))
                 {
-                    var p = it?.GetType().GetProperty(cb.DisplayMember);
-                    var v = p?.GetValue(it, null);
-                    txt = v?.ToString();
+                    var p = it.GetType().GetProperty(cb.DisplayMember);
+                    var v = p == null ? null : p.GetValue(it, null);
+                    txt = v == null ? null : v.ToString();
                 }
                 txt = NormalizeCol(txt);
                 if (string.Equals(txt, value, StringComparison.OrdinalIgnoreCase))
@@ -419,11 +435,9 @@ namespace Capa_Vista_Componente_Consultas
                 idx++;
             }
 
-          
-            try { cb.SelectedValue = value; } catch { /* ignore */ }
+            try { cb.SelectedValue = value; } catch { }
         }
 
-        // Por si el combo aún no tiene items, fuerza agregar y luego selecciona
         private void SafeSelectColumn(ComboBox cb, string col)
         {
             if ((cb.Items.Count == 0) && cb.DataSource == null)
@@ -436,7 +450,7 @@ namespace Capa_Vista_Componente_Consultas
             if (string.IsNullOrEmpty(tabla)) { Dgv_Preview.DataSource = null; return; }
             try
             {
-                var sql = $"SELECT * FROM `{tabla}` LIMIT 50;";
+                var sql = "SELECT * FROM `" + tabla + "` LIMIT 50;";
                 sql = _controlador.ReescribirSelectSeguroSiHayTime(DB, tabla, sql);
                 var dt = _controlador.EjecutarConsulta(sql);
                 Dgv_Preview.DataSource = dt;
@@ -447,7 +461,7 @@ namespace Capa_Vista_Componente_Consultas
             }
         }
 
-        // --------- Estado y limpieza ---------- Bryan Raul Ramirez Lopez 0901-21-8202
+        // ----------------- Estado/Limpieza Bryan Raul Ramirez Lopez 0901-21-8202
         private void LimpiarCondiciones()
         {
             _partesWhere.Clear();
@@ -461,8 +475,8 @@ namespace Capa_Vista_Componente_Consultas
             Cbo_CampoComp.SelectedItem = null;
             Txt_ValorComp.Clear();
 
-            Txt_ValorCompMin?.Clear();
-            Txt_ValorCompMax?.Clear();
+            if (Txt_ValorCompMin != null) Txt_ValorCompMin.Clear();
+            if (Txt_ValorCompMax != null) Txt_ValorCompMax.Clear();
 
             Cbo_AgruparOrdenar.SelectedItem = null;
             Cbo_CampoOrdenar.SelectedItem = null;
@@ -481,7 +495,7 @@ namespace Capa_Vista_Componente_Consultas
                 PrevisualizarTabla(_tablaActual);
         }
 
-        // --------- WHERE building / BETWEEN UI ---------- Diego Fernando Saquil Gramajo 0901-22-4103
+        // ----------------- WHERE building / BETWEEN UI ----------------- Diego Fernando Saquil Gramajo 0901-22-4103
         private void AgregarWhere(string pieza, string operador)
         {
             if (_partesWhere.Count == 0 || string.IsNullOrEmpty(operador)) _partesWhere.Add(pieza);
@@ -532,21 +546,22 @@ namespace Capa_Vista_Componente_Consultas
             bool isBetween = v == "BETWEEN";
 
             Txt_ValorComp.Visible = !noValue && !isBetween;
-            Lbl_ValorCompMin.Visible = Txt_ValorCompMin.Visible = isBetween;
-            Lbl_ValorCompMax.Visible = Txt_ValorCompMax.Visible = isBetween;
+            Lbl_ValorCompMin.Visible = (isBetween);
+            Lbl_ValorCompMax.Visible = (isBetween);
+            Txt_ValorCompMin.Visible = (isBetween);
+            Txt_ValorCompMax.Visible = (isBetween);
 
             if (noValue)
             {
                 Txt_ValorComp.Clear();
-                Txt_ValorCompMin.Clear();
-                Txt_ValorCompMax.Clear();
+                if (Txt_ValorCompMin != null) Txt_ValorCompMin.Clear();
+                if (Txt_ValorCompMax != null) Txt_ValorCompMax.Clear();
             }
         }
 
-        // --------- Consultas guardadas ----------  Diego Fernando Saquil Gramajo 0901-22-4103 26/09/2025
+        // ----------------- Guardar/Listar consultas Juan Carlos Sandoval Quej 0901-22-4170 26/09/2025
         private void GuardarConsultaAuto()
         {
-            // Usa la SQL en memoria o constrúyela si aún no existe
             string sql = string.IsNullOrWhiteSpace(_sqlActual)
                 ? _controlador.ConstruirSql(_tablaActual, Chk_AgregarCondiciones.Checked, _partesWhere, _partesGroupOrder)
                 : _sqlActual;
@@ -557,24 +572,25 @@ namespace Capa_Vista_Componente_Consultas
                 return;
             }
 
-            _sqlActual = sql; // persistimos lo que realmente vamos a guardar
+            _sqlActual = sql;
 
             var baseName = string.IsNullOrEmpty(_tablaActual) ? "consulta" : _tablaActual;
-            var name = $"{baseName}_{DateTime.Now:yyyyMMdd_HHmmss}";
+            var name = baseName + "_" + DateTime.Now.ToString("yyyyMMdd_HHmmss");
 
             try
             {
-                var existentes = _controlador.ListarConsultasPlano()
-                                             .Select(kv => kv.Key)
-                                             .ToHashSet(StringComparer.OrdinalIgnoreCase);
+                var existentes = new HashSet<string>(
+                    _controlador.ListarConsultasPlano().Select(kv => kv.Key),
+                    StringComparer.OrdinalIgnoreCase);
+
                 var unique = name; int i = 1;
-                while (existentes.Contains(unique)) unique = $"{name}_{i++}";
+                while (existentes.Contains(unique)) unique = name + "_" + (i++).ToString();
 
                 _controlador.GuardarConsulta(unique, sql);
                 CargarConsultasGuardadas();
 
-                // Seleccionar la recién guardada
-                if (Lst_ConsultasGuardadas.DataSource is List<KeyValuePair<string, string>> lista)
+                var lista = Lst_ConsultasGuardadas.DataSource as List<KeyValuePair<string, string>>;
+                if (lista != null)
                 {
                     int idx = lista.FindIndex(kv => string.Equals(kv.Key, unique, StringComparison.OrdinalIgnoreCase));
                     if (idx >= 0) Lst_ConsultasGuardadas.SelectedIndex = idx;
@@ -587,57 +603,54 @@ namespace Capa_Vista_Componente_Consultas
                 MessageBox.Show("No se pudo guardar la consulta.\n" + ex.Message);
             }
         }
+
         private void CargarConsultasGuardadas()
         {
             try
             {
-                var items = _controlador.ListarConsultasPlano(); // List<KeyValuePair<string,string>>
+                var items = _controlador.ListarConsultasPlano();
                 Lst_ConsultasGuardadas.DataSource = null;
                 Lst_ConsultasGuardadas.DisplayMember = "Key";
                 Lst_ConsultasGuardadas.ValueMember = "Value";
                 Lst_ConsultasGuardadas.DataSource = items;
             }
-            catch {  }
+            catch { }
         }
 
-        // --------- Editar: SQL -> UI ---------- Nelson Jose Godinez Mendez 0901-22-3550 26/09/2025
+        // ----------------- Editar: SQL -> UI Bryan Raul Ramirez Lopez 0901-21-8202
         private void CargarConsultaDesdeSql(string sql)
         {
             LimpiarCondiciones();
             Chk_AgregarCondiciones.Checked = false;
 
-            // --- Tabla ---
+            // Tabla
             var mTable = Regex.Match(sql, @"FROM\s+`?(?<t>[^`\s]+)`?", RegexOptions.IgnoreCase);
             if (mTable.Success)
             {
                 var t = mTable.Groups["t"].Value;
                 _cargandoDesdeSql = true;
 
-                // Selecciona la tabla (lanza SelectedIndexChanged)
                 SetComboSelectedItem(Cbo_Tabla, t);
-
-                // Asegura columnas ya mismo (por si el evento aún no corrió)
                 CargarColumnas(t);
 
                 _cargandoDesdeSql = false;
                 _tablaActual = t;
             }
 
-            // --- WHERE parseado (de tu Controlador) ---
+            // WHERE parseado (del Controlador)
             var conds = _controlador.ParsearWhere(sql);
 
-            // --- GROUP BY ---
+            // GROUP BY
             var mGroup = Regex.Match(sql, @"GROUP\s+BY\s+`?(?<g>[^`\s]+)`?", RegexOptions.IgnoreCase);
             if (mGroup.Success)
             {
                 var col = mGroup.Groups["g"].Value;
                 SetComboSelectedItem(Cbo_AgruparOrdenar, "GROUP BY");
-                // Selección tolerante
-                this.BeginInvoke(new Action(() => SafeSelectColumn(Cbo_CampoOrdenar, col)));
-                _partesGroupOrder.Add($"GROUP BY `{NormalizeCol(col)}`");
+                BeginInvoke(new Action(delegate { SafeSelectColumn(Cbo_CampoOrdenar, col); }));
+                _partesGroupOrder.Add("GROUP BY `" + NormalizeCol(col) + "`");
             }
 
-            // --- ORDER BY ---
+            // ORDER BY
             var mOrder = Regex.Match(sql, @"ORDER\s+BY\s+`?(?<c>[^`\s]+)`?(?:\s+(?<dir>ASC|DESC))?", RegexOptions.IgnoreCase);
             if (mOrder.Success)
             {
@@ -645,10 +658,10 @@ namespace Capa_Vista_Componente_Consultas
                 var dir = mOrder.Groups["dir"].Success ? mOrder.Groups["dir"].Value.ToUpperInvariant() : "ASC";
                 SetComboSelectedItem(Cbo_AgruparOrdenar, "ORDER BY");
 
-                this.BeginInvoke(new Action(() => SafeSelectColumn(Cbo_CampoOrdenar, col)));
+                BeginInvoke(new Action(delegate { SafeSelectColumn(Cbo_CampoOrdenar, col); }));
                 SetComboSelectedItem(Cbo_Ordenamiento, dir);
 
-                _partesGroupOrder.Add($"ORDER BY `{NormalizeCol(col)}` {dir}");
+                _partesGroupOrder.Add("ORDER BY `" + NormalizeCol(col) + "` " + dir);
                 if (dir == "ASC") Rdb_Asc.Checked = true; else Rdb_Des.Checked = true;
             }
 
@@ -660,27 +673,78 @@ namespace Capa_Vista_Componente_Consultas
                 _partesGroupOrder
             );
 
-            // >>> Espera a que todos los combos hayan terminado de enlazar y PINTA UI
-            this.BeginInvoke(new Action(() => RellenarUIDesdeConds(conds)));
+            // PINTAR UI cuando combos ya estén listos
+            BeginInvoke(new Action(delegate { RellenarUIDesdeConds(conds); }));
         }
 
-        // --------- Utils ---------- Bryan Raul Ramirez Lopez 0901-21-8202 26/09/2025
+        // Rellena UI a partir de condiciones parseadas (máx 2)
+        private void RellenarUIDesdeConds(IEnumerable<(string Conector, string Campo, string Operador, string Valor1, string Valor2)> conds)
+        {
+            int idx = 0;
+            foreach (var c in conds)
+            {
+                var campo = NormalizeCol(c.Campo);
+
+                if (idx == 0)
+                {
+                    SafeSelectColumn(Cbo_CampoCond, campo);
+                    Txt_ValorCond.Text = c.Operador == "LIKE"
+                        ? Unquote(c.Valor1).Trim('%')
+                        : Unquote(c.Valor1);
+                }
+                else if (idx == 1)
+                {
+                    SafeSelectColumn(Cbo_CampoComp, campo);
+                    SetComboSelectedItem(Cbo_TipoComparador, c.Operador);
+
+                    if (c.Operador == "BETWEEN")
+                    {
+                        EnsureBetweenControls();
+                        Txt_ValorComp.Visible = false;
+                        Lbl_ValorCompMin.Visible = Txt_ValorCompMin.Visible = true;
+                        Lbl_ValorCompMax.Visible = Txt_ValorCompMax.Visible = true;
+                        Txt_ValorCompMin.Text = Unquote(c.Valor1);
+                        Txt_ValorCompMax.Text = Unquote(c.Valor2);
+                    }
+                    else
+                    {
+                        Txt_ValorComp.Text = c.Operador == "LIKE"
+                            ? Unquote(c.Valor1).Trim('%')
+                            : Unquote(c.Valor1);
+                    }
+
+                    SetComboSelectedItem(Cbo_OperadorLogico,
+                        string.IsNullOrEmpty(c.Conector) ? "AND" : c.Conector);
+                }
+                else break; // solo 2 en UI
+                idx++;
+            }
+
+            if (idx > 0) Chk_AgregarCondiciones.Checked = true;
+            ToggleBetweenControls();
+        }
+
+        // ----------------- Utils Diego Fernando Saquil Gramajo 0901-22-4103
         private class ComboItem
         {
             public string Texto { get; set; }
             public string Valor { get; set; }
             public ComboItem(string texto, string valor) { Texto = texto; Valor = valor; }
-            public override string ToString() => Texto;
+            public override string ToString() { return Texto; }
         }
 
-        private static string Esc(string s) => (s ?? string.Empty).Replace("'", "''");
+        private static string Esc(string s)
+        {
+            return (s ?? string.Empty).Replace("'", "''");
+        }
 
         private static string TryNumOrQuoted(string raw)
         {
             raw = (raw ?? "").Trim();
-            if (decimal.TryParse(raw, NumberStyles.Any, CultureInfo.InvariantCulture, out var num))
+            decimal num;
+            if (decimal.TryParse(raw, NumberStyles.Any, CultureInfo.InvariantCulture, out num))
                 return num.ToString(CultureInfo.InvariantCulture);
-            return $"'{Esc(raw)}'";
+            return "'" + Esc(raw) + "'";
         }
 
         private static string Unquote(string s)
@@ -695,7 +759,8 @@ namespace Capa_Vista_Componente_Consultas
         private static string GetComboValor(ComboBox cb)
         {
             if (cb == null || cb.SelectedItem == null) return null;
-            if (cb.SelectedItem is ComboItem ci) return ci.Valor;
+            var ci = cb.SelectedItem as ComboItem;
+            if (ci != null) return ci.Valor;
             return cb.SelectedItem.ToString();
         }
 
@@ -704,8 +769,8 @@ namespace Capa_Vista_Componente_Consultas
             if (obj == null) return null;
             if (string.IsNullOrEmpty(propName)) return obj.ToString();
             var p = obj.GetType().GetProperty(propName);
-            var v = p?.GetValue(obj, null);
-            return v?.ToString();
+            var v = p == null ? null : p.GetValue(obj, null);
+            return v == null ? null : v.ToString();
         }
 
         private void SetComboSelectedItem(ComboBox cb, string value)
@@ -720,7 +785,8 @@ namespace Capa_Vista_Componente_Consultas
                     int i = 0;
                     foreach (var it in enumerable)
                     {
-                        if (it is ComboItem ci)
+                        var ci = it as ComboItem;
+                        if (ci != null)
                         {
                             if (string.Equals(ci.Valor, value, StringComparison.OrdinalIgnoreCase) ||
                                 string.Equals(ci.Texto, value, StringComparison.OrdinalIgnoreCase))
@@ -736,7 +802,7 @@ namespace Capa_Vista_Componente_Consultas
                         i++;
                     }
                 }
-                try { cb.SelectedValue = value; } catch { /* ignore */ }
+                try { cb.SelectedValue = value; } catch { }
                 return;
             }
 
@@ -746,8 +812,10 @@ namespace Capa_Vista_Componente_Consultas
 
             cb.Items.Add(value);
             cb.SelectedItem = value;
+            Rdb_Asc.Checked = true;
+            SincronizarOrdenConRadios();
         }
-//Diego Fernando Saquil Gramajo 0901 - 22 -4103 26/09/2025
+        //Diego Fernando Saquil Gramajo 0901 - 22 -4103 26/09/2025
         private void Btn_Regreso_Click(object sender, EventArgs e)
         {
             Frm_Principal inicio = new Frm_Principal();

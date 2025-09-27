@@ -13,7 +13,7 @@ namespace Capa_Vista_Componente_Consultas
         private System.ComponentModel.IContainer components = null;
 
         // ===== Declaraciones de controles =====
-        private Label lblNombreTabla;
+        private Label Lbl_NombreTabla;
         private ComboBox Cbo_Tabla;
 
         private GroupBox Gpb_Orden;
@@ -68,7 +68,7 @@ namespace Capa_Vista_Componente_Consultas
 
         private void InitializeComponent()
         {
-            this.lblNombreTabla = new System.Windows.Forms.Label();
+            this.Lbl_NombreTabla = new System.Windows.Forms.Label();
             this.Cbo_Tabla = new System.Windows.Forms.ComboBox();
             this.Gpb_Orden = new System.Windows.Forms.GroupBox();
             this.Rdb_Asc = new System.Windows.Forms.RadioButton();
@@ -119,15 +119,15 @@ namespace Capa_Vista_Componente_Consultas
             this.Gpb_Ordenar.SuspendLayout();
             this.SuspendLayout();
             // 
-            // lblNombreTabla
+            // Lbl_NombreTabla
             // 
-            this.lblNombreTabla.AutoSize = true;
-            this.lblNombreTabla.Font = new System.Drawing.Font("Rockwell", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNombreTabla.Location = new System.Drawing.Point(23, 22);
-            this.lblNombreTabla.Name = "lblNombreTabla";
-            this.lblNombreTabla.Size = new System.Drawing.Size(333, 46);
-            this.lblNombreTabla.TabIndex = 0;
-            this.lblNombreTabla.Text = "Nombre de tabla";
+            this.Lbl_NombreTabla.AutoSize = true;
+            this.Lbl_NombreTabla.Font = new System.Drawing.Font("Rockwell", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Lbl_NombreTabla.Location = new System.Drawing.Point(23, 22);
+            this.Lbl_NombreTabla.Name = "Lbl_NombreTabla";
+            this.Lbl_NombreTabla.Size = new System.Drawing.Size(263, 36);
+            this.Lbl_NombreTabla.TabIndex = 0;
+            this.Lbl_NombreTabla.Text = "Nombre de tabla";
             // 
             // Cbo_Tabla
             // 
@@ -135,7 +135,7 @@ namespace Capa_Vista_Componente_Consultas
             this.Cbo_Tabla.Location = new System.Drawing.Point(379, 34);
             this.Cbo_Tabla.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Cbo_Tabla.Name = "Cbo_Tabla";
-            this.Cbo_Tabla.Size = new System.Drawing.Size(396, 27);
+            this.Cbo_Tabla.Size = new System.Drawing.Size(396, 24);
             this.Cbo_Tabla.TabIndex = 1;
             // 
             // Gpb_Orden
@@ -158,7 +158,7 @@ namespace Capa_Vista_Componente_Consultas
             this.Rdb_Asc.Location = new System.Drawing.Point(14, 22);
             this.Rdb_Asc.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Rdb_Asc.Name = "Rdb_Asc";
-            this.Rdb_Asc.Size = new System.Drawing.Size(64, 24);
+            this.Rdb_Asc.Size = new System.Drawing.Size(52, 20);
             this.Rdb_Asc.TabIndex = 0;
             this.Rdb_Asc.TabStop = true;
             this.Rdb_Asc.Text = "ASC";
@@ -169,7 +169,7 @@ namespace Capa_Vista_Componente_Consultas
             this.Rdb_Des.Location = new System.Drawing.Point(93, 22);
             this.Rdb_Des.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Rdb_Des.Name = "Rdb_Des";
-            this.Rdb_Des.Size = new System.Drawing.Size(62, 24);
+            this.Rdb_Des.Size = new System.Drawing.Size(50, 20);
             this.Rdb_Des.TabIndex = 1;
             this.Rdb_Des.Text = "DES";
             // 
@@ -207,11 +207,11 @@ namespace Capa_Vista_Componente_Consultas
             // 
             // Lst_ConsultasGuardadas
             // 
-            this.Lst_ConsultasGuardadas.ItemHeight = 19;
+            this.Lst_ConsultasGuardadas.ItemHeight = 16;
             this.Lst_ConsultasGuardadas.Location = new System.Drawing.Point(19, 30);
             this.Lst_ConsultasGuardadas.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Lst_ConsultasGuardadas.Name = "Lst_ConsultasGuardadas";
-            this.Lst_ConsultasGuardadas.Size = new System.Drawing.Size(347, 194);
+            this.Lst_ConsultasGuardadas.Size = new System.Drawing.Size(347, 180);
             this.Lst_ConsultasGuardadas.TabIndex = 0;
             // 
             // Btn_AgregarConsulta
@@ -264,7 +264,7 @@ namespace Capa_Vista_Componente_Consultas
             this.Chk_AgregarCondiciones.Location = new System.Drawing.Point(19, 27);
             this.Chk_AgregarCondiciones.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Chk_AgregarCondiciones.Name = "Chk_AgregarCondiciones";
-            this.Chk_AgregarCondiciones.Size = new System.Drawing.Size(200, 24);
+            this.Chk_AgregarCondiciones.Size = new System.Drawing.Size(151, 20);
             this.Chk_AgregarCondiciones.TabIndex = 0;
             this.Chk_AgregarCondiciones.Text = "Agregar Condiciones";
             // 
@@ -291,7 +291,7 @@ namespace Capa_Vista_Componente_Consultas
             this.Lbl_OpLogico.AutoSize = true;
             this.Lbl_OpLogico.Location = new System.Drawing.Point(14, 32);
             this.Lbl_OpLogico.Name = "Lbl_OpLogico";
-            this.Lbl_OpLogico.Size = new System.Drawing.Size(143, 20);
+            this.Lbl_OpLogico.Size = new System.Drawing.Size(107, 16);
             this.Lbl_OpLogico.TabIndex = 0;
             this.Lbl_OpLogico.Text = "Operador Lógico";
             // 
@@ -304,7 +304,7 @@ namespace Capa_Vista_Componente_Consultas
             this.Cbo_OperadorLogico.Location = new System.Drawing.Point(163, 27);
             this.Cbo_OperadorLogico.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Cbo_OperadorLogico.Name = "Cbo_OperadorLogico";
-            this.Cbo_OperadorLogico.Size = new System.Drawing.Size(221, 27);
+            this.Cbo_OperadorLogico.Size = new System.Drawing.Size(221, 24);
             this.Cbo_OperadorLogico.TabIndex = 1;
             // 
             // Lbl_CampoCond
@@ -312,7 +312,7 @@ namespace Capa_Vista_Componente_Consultas
             this.Lbl_CampoCond.AutoSize = true;
             this.Lbl_CampoCond.Location = new System.Drawing.Point(14, 66);
             this.Lbl_CampoCond.Name = "Lbl_CampoCond";
-            this.Lbl_CampoCond.Size = new System.Drawing.Size(66, 20);
+            this.Lbl_CampoCond.Size = new System.Drawing.Size(51, 16);
             this.Lbl_CampoCond.TabIndex = 2;
             this.Lbl_CampoCond.Text = "Campo";
             // 
@@ -322,7 +322,7 @@ namespace Capa_Vista_Componente_Consultas
             this.Cbo_CampoCond.Location = new System.Drawing.Point(163, 62);
             this.Cbo_CampoCond.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Cbo_CampoCond.Name = "Cbo_CampoCond";
-            this.Cbo_CampoCond.Size = new System.Drawing.Size(221, 27);
+            this.Cbo_CampoCond.Size = new System.Drawing.Size(221, 24);
             this.Cbo_CampoCond.TabIndex = 3;
             // 
             // Lbl_ValorCond
@@ -330,7 +330,7 @@ namespace Capa_Vista_Componente_Consultas
             this.Lbl_ValorCond.AutoSize = true;
             this.Lbl_ValorCond.Location = new System.Drawing.Point(14, 101);
             this.Lbl_ValorCond.Name = "Lbl_ValorCond";
-            this.Lbl_ValorCond.Size = new System.Drawing.Size(52, 20);
+            this.Lbl_ValorCond.Size = new System.Drawing.Size(39, 16);
             this.Lbl_ValorCond.TabIndex = 4;
             this.Lbl_ValorCond.Text = "Valor";
             // 
@@ -340,7 +340,7 @@ namespace Capa_Vista_Componente_Consultas
             this.Txt_ValorCond.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Txt_ValorCond.MaxLength = 100;
             this.Txt_ValorCond.Name = "Txt_ValorCond";
-            this.Txt_ValorCond.Size = new System.Drawing.Size(174, 27);
+            this.Txt_ValorCond.Size = new System.Drawing.Size(174, 23);
             this.Txt_ValorCond.TabIndex = 5;
             // 
             // Btn_AgregarCond
@@ -375,7 +375,7 @@ namespace Capa_Vista_Componente_Consultas
             this.Lbl_TipoComp.AutoSize = true;
             this.Lbl_TipoComp.Location = new System.Drawing.Point(14, 32);
             this.Lbl_TipoComp.Name = "Lbl_TipoComp";
-            this.Lbl_TipoComp.Size = new System.Drawing.Size(148, 20);
+            this.Lbl_TipoComp.Size = new System.Drawing.Size(111, 16);
             this.Lbl_TipoComp.TabIndex = 0;
             this.Lbl_TipoComp.Text = "Tipo Comparador";
             // 
@@ -394,7 +394,7 @@ namespace Capa_Vista_Componente_Consultas
             this.Cbo_TipoComparador.Location = new System.Drawing.Point(163, 27);
             this.Cbo_TipoComparador.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Cbo_TipoComparador.Name = "Cbo_TipoComparador";
-            this.Cbo_TipoComparador.Size = new System.Drawing.Size(221, 27);
+            this.Cbo_TipoComparador.Size = new System.Drawing.Size(221, 24);
             this.Cbo_TipoComparador.TabIndex = 1;
             // 
             // Lbl_CampoComp
@@ -402,7 +402,7 @@ namespace Capa_Vista_Componente_Consultas
             this.Lbl_CampoComp.AutoSize = true;
             this.Lbl_CampoComp.Location = new System.Drawing.Point(14, 66);
             this.Lbl_CampoComp.Name = "Lbl_CampoComp";
-            this.Lbl_CampoComp.Size = new System.Drawing.Size(66, 20);
+            this.Lbl_CampoComp.Size = new System.Drawing.Size(51, 16);
             this.Lbl_CampoComp.TabIndex = 2;
             this.Lbl_CampoComp.Text = "Campo";
             // 
@@ -412,7 +412,7 @@ namespace Capa_Vista_Componente_Consultas
             this.Cbo_CampoComp.Location = new System.Drawing.Point(163, 62);
             this.Cbo_CampoComp.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Cbo_CampoComp.Name = "Cbo_CampoComp";
-            this.Cbo_CampoComp.Size = new System.Drawing.Size(221, 27);
+            this.Cbo_CampoComp.Size = new System.Drawing.Size(221, 24);
             this.Cbo_CampoComp.TabIndex = 3;
             // 
             // Lbl_ValorComp
@@ -420,7 +420,7 @@ namespace Capa_Vista_Componente_Consultas
             this.Lbl_ValorComp.AutoSize = true;
             this.Lbl_ValorComp.Location = new System.Drawing.Point(14, 101);
             this.Lbl_ValorComp.Name = "Lbl_ValorComp";
-            this.Lbl_ValorComp.Size = new System.Drawing.Size(52, 20);
+            this.Lbl_ValorComp.Size = new System.Drawing.Size(39, 16);
             this.Lbl_ValorComp.TabIndex = 4;
             this.Lbl_ValorComp.Text = "Valor";
             // 
@@ -430,7 +430,7 @@ namespace Capa_Vista_Componente_Consultas
             this.Txt_ValorComp.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Txt_ValorComp.MaxLength = 100;
             this.Txt_ValorComp.Name = "Txt_ValorComp";
-            this.Txt_ValorComp.Size = new System.Drawing.Size(174, 27);
+            this.Txt_ValorComp.Size = new System.Drawing.Size(174, 23);
             this.Txt_ValorComp.TabIndex = 5;
             // 
             // Btn_AgregarComp
@@ -465,7 +465,7 @@ namespace Capa_Vista_Componente_Consultas
             this.Lbl_AgruparOrdenar.AutoSize = true;
             this.Lbl_AgruparOrdenar.Location = new System.Drawing.Point(14, 20);
             this.Lbl_AgruparOrdenar.Name = "Lbl_AgruparOrdenar";
-            this.Lbl_AgruparOrdenar.Size = new System.Drawing.Size(148, 20);
+            this.Lbl_AgruparOrdenar.Size = new System.Drawing.Size(112, 16);
             this.Lbl_AgruparOrdenar.TabIndex = 0;
             this.Lbl_AgruparOrdenar.Text = "Agrupar/Ordenar";
             // 
@@ -478,7 +478,7 @@ namespace Capa_Vista_Componente_Consultas
             this.Cbo_AgruparOrdenar.Location = new System.Drawing.Point(140, 15);
             this.Cbo_AgruparOrdenar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Cbo_AgruparOrdenar.Name = "Cbo_AgruparOrdenar";
-            this.Cbo_AgruparOrdenar.Size = new System.Drawing.Size(128, 27);
+            this.Cbo_AgruparOrdenar.Size = new System.Drawing.Size(128, 24);
             this.Cbo_AgruparOrdenar.TabIndex = 1;
             // 
             // Lbl_CampoOrdenar
@@ -486,7 +486,7 @@ namespace Capa_Vista_Componente_Consultas
             this.Lbl_CampoOrdenar.AutoSize = true;
             this.Lbl_CampoOrdenar.Location = new System.Drawing.Point(280, 20);
             this.Lbl_CampoOrdenar.Name = "Lbl_CampoOrdenar";
-            this.Lbl_CampoOrdenar.Size = new System.Drawing.Size(66, 20);
+            this.Lbl_CampoOrdenar.Size = new System.Drawing.Size(51, 16);
             this.Lbl_CampoOrdenar.TabIndex = 2;
             this.Lbl_CampoOrdenar.Text = "Campo";
             // 
@@ -496,7 +496,7 @@ namespace Capa_Vista_Componente_Consultas
             this.Cbo_CampoOrdenar.Location = new System.Drawing.Point(338, 15);
             this.Cbo_CampoOrdenar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Cbo_CampoOrdenar.Name = "Cbo_CampoOrdenar";
-            this.Cbo_CampoOrdenar.Size = new System.Drawing.Size(198, 27);
+            this.Cbo_CampoOrdenar.Size = new System.Drawing.Size(198, 24);
             this.Cbo_CampoOrdenar.TabIndex = 3;
             // 
             // Lbl_Ordenamiento
@@ -504,7 +504,7 @@ namespace Capa_Vista_Componente_Consultas
             this.Lbl_Ordenamiento.AutoSize = true;
             this.Lbl_Ordenamiento.Location = new System.Drawing.Point(542, 20);
             this.Lbl_Ordenamiento.Name = "Lbl_Ordenamiento";
-            this.Lbl_Ordenamiento.Size = new System.Drawing.Size(124, 20);
+            this.Lbl_Ordenamiento.Size = new System.Drawing.Size(91, 16);
             this.Lbl_Ordenamiento.TabIndex = 4;
             this.Lbl_Ordenamiento.Text = "Ordenamiento";
             // 
@@ -517,7 +517,7 @@ namespace Capa_Vista_Componente_Consultas
             this.Cbo_Ordenamiento.Location = new System.Drawing.Point(653, 15);
             this.Cbo_Ordenamiento.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Cbo_Ordenamiento.Name = "Cbo_Ordenamiento";
-            this.Cbo_Ordenamiento.Size = new System.Drawing.Size(93, 27);
+            this.Cbo_Ordenamiento.Size = new System.Drawing.Size(93, 24);
             this.Cbo_Ordenamiento.TabIndex = 5;
             // 
             // Btn_AgregarOrden
@@ -554,7 +554,7 @@ namespace Capa_Vista_Componente_Consultas
             this.Txt_CadenaGenerada.Location = new System.Drawing.Point(28, 665);
             this.Txt_CadenaGenerada.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Txt_CadenaGenerada.Name = "Txt_CadenaGenerada";
-            this.Txt_CadenaGenerada.Size = new System.Drawing.Size(653, 27);
+            this.Txt_CadenaGenerada.Size = new System.Drawing.Size(653, 23);
             this.Txt_CadenaGenerada.TabIndex = 7;
             // 
             // Btn_Generar
@@ -579,12 +579,12 @@ namespace Capa_Vista_Componente_Consultas
             // 
             // Frm_Consulta_Compleja
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(248)))));
             this.ClientSize = new System.Drawing.Size(1342, 788);
             this.Controls.Add(this.Btn_Regreso);
-            this.Controls.Add(this.lblNombreTabla);
+            this.Controls.Add(this.Lbl_NombreTabla);
             this.Controls.Add(this.Cbo_Tabla);
             this.Controls.Add(this.Gpb_Orden);
             this.Controls.Add(this.Dgv_Preview);
