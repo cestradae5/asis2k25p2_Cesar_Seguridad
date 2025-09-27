@@ -20,20 +20,13 @@ namespace Capa_Vista_Seguridad
         Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador(); // Bitacora
 
 
-        // permisos 0901-21-1115 Marcos Andres Velásquez Alcántara
-        private Cls_PermisoUsuario permisoUsuario = new Cls_PermisoUsuario();
-
-        private int moduloId = -1;
-        private int aplicacionId = -1;
-
-        // Tupla para los permisos actuales
-        private (bool ingresar, bool consultar, bool modificar, bool eliminar, bool imprimir)? permisosActuales = null;
+      
 
 
         public Frm_PermisosPerfiles()
         {
             InitializeComponent();
-            ConfigurarIdsDinamicamenteYAplicarPermisos();
+            fun_ConfigurarIdsDinamicamenteYAplicarPermisos();
             
         }
 
@@ -269,11 +262,11 @@ namespace Capa_Vista_Seguridad
 
         private List<(int moduloId, int aplicacionId)> gParesModuloAplicacion = new List<(int, int)>();
 
-        private Dictionary<(int moduloId, int aplicacionId), (bool bIngresar, bool bConsultar, bool bModificar, bool bEliminar, bool bImprimir)> gPermisosPorModuloApp
+        private Dictionary<(int iModuloId, int iAplicacionId), (bool bIngresar, bool bConsultar, bool bModificar, bool bEliminar, bool bImprimir)> gPermisosPorModuloApp
             = new Dictionary<(int, int), (bool, bool, bool, bool, bool)>();
 
 
-        private void ConfigurarIdsDinamicamenteYAplicarPermisos()
+        private void fun_ConfigurarIdsDinamicamenteYAplicarPermisos()
         {
             int usuarioId = Cls_sesion.iUsuarioId;
 
@@ -295,10 +288,10 @@ namespace Capa_Vista_Seguridad
                 }
             }
 
-            AplicarPermisosUsuario(usuarioId);
+            fun_AplicarPermisosUsuario(usuarioId);
         }
 
-        private void AplicarPermisosUsuario(int usuarioId)
+        private void fun_AplicarPermisosUsuario(int usuarioId)
         {
             foreach (var (moduloId, aplicacionId) in gParesModuloAplicacion)
             {
@@ -310,10 +303,10 @@ namespace Capa_Vista_Seguridad
                 }
             }
 
-            CombinarPermisosYActualizarBotones();
+            fun_CombinarPermisosYActualizarBotones();
         }
 
-        private void CombinarPermisosYActualizarBotones()
+        private void fun_CombinarPermisosYActualizarBotones()
         {
             bool bIngresar = false;
             bool bConsultar = false;
