@@ -38,7 +38,6 @@ namespace Capa_Vista_Seguridad
             this.Cbo_Empleado = new System.Windows.Forms.ComboBox();
             this.Btn_Nuevo = new System.Windows.Forms.Button();
             this.Btn_Guardar = new System.Windows.Forms.Button();
-            this.Btn_Modificar = new System.Windows.Forms.Button();
             this.Btn_Limpiar = new System.Windows.Forms.Button();
             this.Btn_Salir = new System.Windows.Forms.Button();
             this.Pnl_Superior = new System.Windows.Forms.Panel();
@@ -98,7 +97,7 @@ namespace Capa_Vista_Seguridad
             // 
             this.Txt_Nombre.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(236)))), ((int)(((byte)(238)))));
             this.Txt_Nombre.Location = new System.Drawing.Point(214, 206);
-            this.Txt_Nombre.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Txt_Nombre.Margin = new System.Windows.Forms.Padding(4);
             this.Txt_Nombre.Name = "Txt_Nombre";
             this.Txt_Nombre.Size = new System.Drawing.Size(309, 27);
             this.Txt_Nombre.TabIndex = 4;
@@ -108,7 +107,7 @@ namespace Capa_Vista_Seguridad
             // 
             this.Txt_Contraseña.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(236)))), ((int)(((byte)(238)))));
             this.Txt_Contraseña.Location = new System.Drawing.Point(214, 262);
-            this.Txt_Contraseña.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Txt_Contraseña.Margin = new System.Windows.Forms.Padding(4);
             this.Txt_Contraseña.Name = "Txt_Contraseña";
             this.Txt_Contraseña.Size = new System.Drawing.Size(309, 27);
             this.Txt_Contraseña.TabIndex = 5;
@@ -119,7 +118,7 @@ namespace Capa_Vista_Seguridad
             this.Cbo_Empleado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(236)))), ((int)(((byte)(238)))));
             this.Cbo_Empleado.FormattingEnabled = true;
             this.Cbo_Empleado.Location = new System.Drawing.Point(214, 155);
-            this.Cbo_Empleado.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Cbo_Empleado.Margin = new System.Windows.Forms.Padding(4);
             this.Cbo_Empleado.Name = "Cbo_Empleado";
             this.Cbo_Empleado.Size = new System.Drawing.Size(309, 28);
             this.Cbo_Empleado.TabIndex = 6;
@@ -130,8 +129,8 @@ namespace Capa_Vista_Seguridad
             this.Btn_Nuevo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_Nuevo.Font = new System.Drawing.Font("Rockwell", 10F);
             this.Btn_Nuevo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_Nuevo.Location = new System.Drawing.Point(622, 142);
-            this.Btn_Nuevo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Btn_Nuevo.Location = new System.Drawing.Point(662, 143);
+            this.Btn_Nuevo.Margin = new System.Windows.Forms.Padding(4);
             this.Btn_Nuevo.Name = "Btn_Nuevo";
             this.Btn_Nuevo.Size = new System.Drawing.Size(142, 50);
             this.Btn_Nuevo.TabIndex = 7;
@@ -144,8 +143,8 @@ namespace Capa_Vista_Seguridad
             this.Btn_Guardar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_Guardar.Font = new System.Drawing.Font("Rockwell", 10F);
             this.Btn_Guardar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_Guardar.Location = new System.Drawing.Point(622, 200);
-            this.Btn_Guardar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Btn_Guardar.Location = new System.Drawing.Point(662, 200);
+            this.Btn_Guardar.Margin = new System.Windows.Forms.Padding(4);
             this.Btn_Guardar.Name = "Btn_Guardar";
             this.Btn_Guardar.Size = new System.Drawing.Size(142, 51);
             this.Btn_Guardar.TabIndex = 8;
@@ -153,27 +152,13 @@ namespace Capa_Vista_Seguridad
             this.Btn_Guardar.UseVisualStyleBackColor = false;
             this.Btn_Guardar.Click += new System.EventHandler(this.Btn_Guardar_Click);
             // 
-            // Btn_Modificar
-            // 
-            this.Btn_Modificar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
-            this.Btn_Modificar.Font = new System.Drawing.Font("Rockwell", 10F);
-            this.Btn_Modificar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_Modificar.Location = new System.Drawing.Point(622, 259);
-            this.Btn_Modificar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.Btn_Modificar.Name = "Btn_Modificar";
-            this.Btn_Modificar.Size = new System.Drawing.Size(142, 49);
-            this.Btn_Modificar.TabIndex = 9;
-            this.Btn_Modificar.Text = "Modificar";
-            this.Btn_Modificar.UseVisualStyleBackColor = false;
-            this.Btn_Modificar.Click += new System.EventHandler(this.Btn_Modificar_Click);
-            // 
             // Btn_Limpiar
             // 
             this.Btn_Limpiar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_Limpiar.Font = new System.Drawing.Font("Rockwell", 10F);
             this.Btn_Limpiar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_Limpiar.Location = new System.Drawing.Point(622, 315);
-            this.Btn_Limpiar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Btn_Limpiar.Location = new System.Drawing.Point(662, 259);
+            this.Btn_Limpiar.Margin = new System.Windows.Forms.Padding(4);
             this.Btn_Limpiar.Name = "Btn_Limpiar";
             this.Btn_Limpiar.Size = new System.Drawing.Size(142, 54);
             this.Btn_Limpiar.TabIndex = 10;
@@ -186,8 +171,8 @@ namespace Capa_Vista_Seguridad
             this.Btn_Salir.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_Salir.Font = new System.Drawing.Font("Rockwell", 10F);
             this.Btn_Salir.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_Salir.Location = new System.Drawing.Point(622, 376);
-            this.Btn_Salir.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Btn_Salir.Location = new System.Drawing.Point(662, 321);
+            this.Btn_Salir.Margin = new System.Windows.Forms.Padding(4);
             this.Btn_Salir.Name = "Btn_Salir";
             this.Btn_Salir.Size = new System.Drawing.Size(142, 54);
             this.Btn_Salir.TabIndex = 11;
@@ -201,7 +186,7 @@ namespace Capa_Vista_Seguridad
             this.Pnl_Superior.Controls.Add(this.Pic_Cerrar);
             this.Pnl_Superior.Dock = System.Windows.Forms.DockStyle.Top;
             this.Pnl_Superior.Location = new System.Drawing.Point(0, 0);
-            this.Pnl_Superior.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Pnl_Superior.Margin = new System.Windows.Forms.Padding(4);
             this.Pnl_Superior.Name = "Pnl_Superior";
             this.Pnl_Superior.Size = new System.Drawing.Size(832, 55);
             this.Pnl_Superior.TabIndex = 95;
@@ -213,7 +198,7 @@ namespace Capa_Vista_Seguridad
             this.Pic_Cerrar.Dock = System.Windows.Forms.DockStyle.Right;
             this.Pic_Cerrar.Image = global::Capa_Vista_Seguridad.Properties.Resources.cancel_77947;
             this.Pic_Cerrar.Location = new System.Drawing.Point(786, 0);
-            this.Pic_Cerrar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Pic_Cerrar.Margin = new System.Windows.Forms.Padding(4);
             this.Pic_Cerrar.Name = "Pic_Cerrar";
             this.Pic_Cerrar.Size = new System.Drawing.Size(46, 55);
             this.Pic_Cerrar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -226,8 +211,8 @@ namespace Capa_Vista_Seguridad
             this.Btn_reporte.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_reporte.Font = new System.Drawing.Font("Rockwell", 10F);
             this.Btn_reporte.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_reporte.Location = new System.Drawing.Point(622, 85);
-            this.Btn_reporte.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Btn_reporte.Location = new System.Drawing.Point(662, 85);
+            this.Btn_reporte.Margin = new System.Windows.Forms.Padding(4);
             this.Btn_reporte.Name = "Btn_reporte";
             this.Btn_reporte.Size = new System.Drawing.Size(142, 50);
             this.Btn_reporte.TabIndex = 96;
@@ -253,7 +238,7 @@ namespace Capa_Vista_Seguridad
             this.Txt_ConfirmarContraseña.TabIndex = 98;
             this.Txt_ConfirmarContraseña.TextChanged += new System.EventHandler(this.Txt_ConfirmarContraseña_TextChanged);
             // 
-            // FrmUsuario
+            // Frm_Usuario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -265,7 +250,6 @@ namespace Capa_Vista_Seguridad
             this.Controls.Add(this.Pnl_Superior);
             this.Controls.Add(this.Btn_Salir);
             this.Controls.Add(this.Btn_Limpiar);
-            this.Controls.Add(this.Btn_Modificar);
             this.Controls.Add(this.Btn_Guardar);
             this.Controls.Add(this.Btn_Nuevo);
             this.Controls.Add(this.Cbo_Empleado);
@@ -277,8 +261,8 @@ namespace Capa_Vista_Seguridad
             this.Controls.Add(this.lbl_Crear_Usuario);
             this.Font = new System.Drawing.Font("Rockwell", 10F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.Name = "FrmUsuario";
+            this.Margin = new System.Windows.Forms.Padding(4);
+            this.Name = "Frm_Usuario";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FrmUsuario";
             this.Pnl_Superior.ResumeLayout(false);
@@ -299,7 +283,6 @@ namespace Capa_Vista_Seguridad
         private System.Windows.Forms.ComboBox Cbo_Empleado;
         private System.Windows.Forms.Button Btn_Nuevo;
         private System.Windows.Forms.Button Btn_Guardar;
-        private System.Windows.Forms.Button Btn_Modificar;
         private System.Windows.Forms.Button Btn_Limpiar;
         private System.Windows.Forms.Button Btn_Salir;
         private System.Windows.Forms.Panel Pnl_Superior;

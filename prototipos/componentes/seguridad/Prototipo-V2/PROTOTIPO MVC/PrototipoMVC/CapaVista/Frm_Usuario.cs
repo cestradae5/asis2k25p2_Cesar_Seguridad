@@ -1,4 +1,4 @@
-﻿//Pablo Quiroa 0901-22-2929
+﻿// Pablo Quiroa 0901-22-2929
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -10,48 +10,44 @@ namespace Capa_Vista_Seguridad
 {
     public partial class Frm_Usuario : Form
     {
-        Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador();
-        private Cls_UsuarioControlador usuarioControlador = new Cls_UsuarioControlador();
-        private Cls_EmpleadoControlador empleadoControlador = new Cls_EmpleadoControlador();
-        private List<Cls_Empleado> listaEmpleados = new List<Cls_Empleado>();
-        private int idUsuarioSeleccionado = 0;
+        // Variables globales del formulario
+        private Cls_UsuarioControlador gClsUsuarioControlador = new Cls_UsuarioControlador();
+        private Cls_EmpleadoControlador gClsEmpleadoControlador = new Cls_EmpleadoControlador();
+        private List<Cls_Empleado> gLstEmpleados = new List<Cls_Empleado>();
+        private int iIdUsuarioSeleccionado = 0;
 
-        private Cls_PermisoUsuario permisoUsuario = new Cls_PermisoUsuario();
-        private int moduloId = -1;
-        private int aplicacionId = -1;
-        private (bool ingresar, bool consultar, bool modificar, bool eliminar, bool imprimir)? permisosActuales = null;
 
         public Frm_Usuario()
         {
             InitializeComponent();
-
             Txt_Contraseña.UseSystemPasswordChar = true;
             Txt_ConfirmarContraseña.UseSystemPasswordChar = true;
 
             CargarEmpleados();
             ConfigurarComboBoxEmpleados();
             ConfiguracionInicial();
-            ConfigurarIdsDinamicamenteYAplicarPermisos();
         }
+
 
         private void ConfiguracionInicial()
         {
             Btn_Guardar.Enabled = false;
-            Btn_Modificar.Enabled = false;
             Btn_Nuevo.Enabled = true;
         }
 
+        // Cargamos los empleados desde el controlador
         private void CargarEmpleados()
         {
-            listaEmpleados = empleadoControlador.ObtenerTodosLosEmpleados();
+            gLstEmpleados = gClsEmpleadoControlador.ObtenerTodosLosEmpleados();
         }
 
+        // Configuramos ComboBox de empleados
         private void ConfigurarComboBoxEmpleados()
         {
             Cbo_Empleado.DisplayMember = "Display";
             Cbo_Empleado.ValueMember = "Id";
 
-            foreach (var emp in listaEmpleados)
+            foreach (var emp in gLstEmpleados)
             {
                 Cbo_Empleado.Items.Add(new
                 {
@@ -61,118 +57,66 @@ namespace Capa_Vista_Seguridad
             }
         }
 
+        // Botón Nuevo
         private void Btn_Nuevo_Click(object sender, EventArgs e)
         {
             LimpiarCampos();
-            Btn_Guardar.Enabled = false;
-            Btn_Modificar.Enabled = false;
-            idUsuarioSeleccionado = 0;
+            Btn_Guardar.Enabled = true;
+            iIdUsuarioSeleccionado = 0;
         }
 
+        // Botón Guardar
         private void Btn_Guardar_Click(object sender, EventArgs e)
         {
-            try
+            if (Cbo_Empleado.SelectedItem == null)
             {
-
-                if (Txt_Contraseña.Text != Txt_ConfirmarContraseña.Text)
-                {
-                    MessageBox.Show("Las contraseñas no coinciden", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
-                if (Cbo_Empleado.SelectedItem == null)
-                {
-                    MessageBox.Show("Debe seleccionar un empleado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
-                var selected = (dynamic)Cbo_Empleado.SelectedItem;
-                int fkIdEmpleado = selected.Id;
-
-                string contraseñaHasheada = Cls_SeguridadHashControlador.HashearSHA256(Txt_Contraseña.Text);
-
-                usuarioControlador.InsertarUsuario(
-                    fkIdEmpleado,
-                    Txt_Nombre.Text,
-                    contraseñaHasheada,
-                    0,
-                    true,
-                    DateTime.Now,
-                    DateTime.Now,
-                    false
-                );
-
-                MessageBox.Show("Usuario creado correctamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, 1, "Guardar usuario", true);
-
-                LimpiarCampos();
-                ConfiguracionInicial();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al guardar usuario: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void Btn_Modificar_Click(object sender, EventArgs e)
-        {
-            if (idUsuarioSeleccionado == 0)
-            {
-                MessageBox.Show("Seleccione primero un usuario para modificar");
+                MessageBox.Show("Seleccione un empleado primero.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            try
+            var selected = (dynamic)Cbo_Empleado.SelectedItem;
+            int iFkIdEmpleado = selected.Id;
+
+            var resultado = gClsUsuarioControlador.InsertarUsuario(
+                iFkIdEmpleado,
+                Txt_Nombre.Text,
+                Txt_Contraseña.Text,
+                Txt_ConfirmarContraseña.Text
+            );
+
+            MessageBox.Show(resultado.sMensaje,
+                            resultado.bExito ? "Éxito" : "Error",
+                            MessageBoxButtons.OK,
+                            resultado.bExito ? MessageBoxIcon.Information : MessageBoxIcon.Error);
+
+            if (resultado.bExito)
             {
-
-                if (Txt_Contraseña.Text != Txt_ConfirmarContraseña.Text)
-                {
-                    MessageBox.Show("Las contraseñas no coinciden", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
-                var selected = (dynamic)Cbo_Empleado.SelectedItem;
-                int fkIdEmpleado = selected.Id;
-
-                string contraseñaHasheada = Cls_SeguridadHashControlador.HashearSHA256(Txt_Contraseña.Text);
-
-                usuarioControlador.ActualizarUsuario(
-                    idUsuarioSeleccionado,
-                    fkIdEmpleado,
-                    Txt_Nombre.Text,
-                    contraseñaHasheada,
-                    0,
-                    true,
-                    DateTime.Now,
-                    DateTime.Now,
-                    false
-                );
-
-                MessageBox.Show("Usuario modificado correctamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, 1, "Modificar usuario", true);
-
                 LimpiarCampos();
                 ConfiguracionInicial();
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al modificar usuario: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
 
+        // Botón Limpiar
         private void Btn_Limpiar_Click(object sender, EventArgs e)
         {
             LimpiarCampos();
             ConfiguracionInicial();
         }
 
+        // Botón Salir
         private void Btn_Salir_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
+        // Botón Reporte
+        private void Btn_reporte_Click(object sender, EventArgs e)
+        {
+            frmReporte_Usuario frm = new frmReporte_Usuario();
+            frm.Show();
+        }
+
+        // Limpiar campos del formulario
         private void LimpiarCampos()
         {
             Cbo_Empleado.SelectedIndex = -1;
@@ -180,35 +124,10 @@ namespace Capa_Vista_Seguridad
             Txt_Contraseña.Clear();
             Txt_ConfirmarContraseña.Clear();
             Txt_ConfirmarContraseña.BackColor = System.Drawing.Color.White;
-            idUsuarioSeleccionado = 0;
+            iIdUsuarioSeleccionado = 0;
         }
 
-
-        private void Txt_Nombre_TextChanged(object sender, EventArgs e) => ValidarCampos();
-        private void Txt_Contraseña_TextChanged(object sender, EventArgs e) => ValidarCampos();
-        private void Txt_ConfirmarContraseña_TextChanged(object sender, EventArgs e) => ValidarCampos();
-        private void Cbo_Empleado_SelectedIndexChanged(object sender, EventArgs e) => ValidarCampos();
-
-        private void ValidarCampos()
-        {
-            bool camposLlenos =
-                Cbo_Empleado.SelectedItem != null &&
-                !string.IsNullOrWhiteSpace(Txt_Nombre.Text) &&
-                !string.IsNullOrWhiteSpace(Txt_Contraseña.Text) &&
-                !string.IsNullOrWhiteSpace(Txt_ConfirmarContraseña.Text);
-
-            bool contraseñasCoinciden = Txt_Contraseña.Text == Txt_ConfirmarContraseña.Text;
-
-            Btn_Guardar.Enabled = camposLlenos && contraseñasCoinciden;
-
-
-            Txt_ConfirmarContraseña.BackColor =
-                (!contraseñasCoinciden && Txt_ConfirmarContraseña.Text.Length > 0)
-                ? System.Drawing.Color.LightCoral
-                : System.Drawing.Color.White;
-        }
-
-        // Panel superior
+        // Panel superior para mover la ventana
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HTCAPTION = 0x2;
 
@@ -217,11 +136,6 @@ namespace Capa_Vista_Seguridad
 
         [DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
-
-        private void Pic_Cerrar_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
 
         private void Pnl_Superior_MouseDown(object sender, MouseEventArgs e)
         {
@@ -232,54 +146,35 @@ namespace Capa_Vista_Seguridad
             }
         }
 
-        private void Btn_reporte_Click(object sender, EventArgs e)
+        private void Pic_Cerrar_Click(object sender, EventArgs e)
         {
-            frmReporte_Usuario frm = new frmReporte_Usuario();
-            frm.Show();
+            this.Close();
         }
 
-        private void ConfigurarIdsDinamicamenteYAplicarPermisos()
+        // Eventos para validar campos y habilitar botones
+        private void Txt_Nombre_TextChanged(object sender, EventArgs e) => ValidarCampos();
+        private void Txt_Contraseña_TextChanged(object sender, EventArgs e) => ValidarCampos();
+        private void Txt_ConfirmarContraseña_TextChanged(object sender, EventArgs e) => ValidarCampos();
+        private void Cbo_Empleado_SelectedIndexChanged(object sender, EventArgs e) => ValidarCampos();
+
+        private void ValidarCampos()
         {
-            string nombreModulo = "Seguridad";
-            string nombreAplicacion = "Administracion";
-            aplicacionId = permisoUsuario.ObtenerIdAplicacionPorNombre(nombreAplicacion);
-            moduloId = permisoUsuario.ObtenerIdModuloPorNombre(nombreModulo);
-            AplicarPermisosUsuario();
+            bool bCamposLlenos =
+                Cbo_Empleado.SelectedItem != null &&
+                !string.IsNullOrWhiteSpace(Txt_Nombre.Text) &&
+                !string.IsNullOrWhiteSpace(Txt_Contraseña.Text) &&
+                !string.IsNullOrWhiteSpace(Txt_ConfirmarContraseña.Text);
+
+            bool bContrasenasCoinciden = Txt_Contraseña.Text == Txt_ConfirmarContraseña.Text;
+
+            Btn_Guardar.Enabled = bCamposLlenos && bContrasenasCoinciden;
+
+            Txt_ConfirmarContraseña.BackColor =
+                (!bContrasenasCoinciden && Txt_ConfirmarContraseña.Text.Length > 0)
+                ? System.Drawing.Color.LightCoral
+                : System.Drawing.Color.White;
         }
 
-        private void AplicarPermisosUsuario()
-        {
-            int usuarioId = Cls_sesion.iUsuarioId;
-            if (aplicacionId == -1 || moduloId == -1)
-            {
-                permisosActuales = null;
-                ActualizarEstadoBotonesSegunPermisos();
-                return;
-            }
-            var permisos = permisoUsuario.ConsultarPermisos(usuarioId, aplicacionId, moduloId);
-            permisosActuales = permisos;
-            ActualizarEstadoBotonesSegunPermisos();
-        }
-
-        private void ActualizarEstadoBotonesSegunPermisos(bool empleadoCargado = false)
-        {
-            if (!permisosActuales.HasValue)
-            {
-                Btn_Nuevo.Enabled = false;
-                Btn_reporte.Enabled = false;
-                Btn_Guardar.Enabled = false;
-                Btn_Modificar.Enabled = false;
-                Btn_Limpiar.Enabled = false;
-                return;
-            }
-
-            var p = permisosActuales.Value;
-            Btn_Nuevo.Enabled = p.ingresar;
-            Btn_reporte.Enabled = p.imprimir || p.consultar;
-            Btn_Guardar.Enabled = p.ingresar || p.modificar;
-            Btn_Modificar.Enabled = p.modificar;
-            Btn_Limpiar.Enabled = p.modificar || p.ingresar || p.eliminar;
-        }
 
     }
 }
