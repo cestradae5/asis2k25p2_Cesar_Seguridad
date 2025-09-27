@@ -41,19 +41,9 @@ namespace Capa_Vista_Seguridad
             InicializarMenuItems();
             fun_inicializar_botones_por_defecto();
             fun_habilitar_botones_por_permisos(Cls_UsuarioConectado.iIdUsuario);
-            this.FormClosing += Frm_Seguridad_FormClosing;
+            
         }
-        private void Frm_Seguridad_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            // Si el cierre fue con el botón "X" o cualquier otra forma
-            if (e.CloseReason == CloseReason.UserClosing)
-            {
-                // Registrar cierre en bitácora si aplica
-                ctrlBitacora.RegistrarCierreSesion(Cls_UsuarioConectado.iIdUsuario);
-
-                Application.Exit();
-            }
-        }
+       
         //Ruben Armando Lopez Luch
         //0901-20-4620
         private void InicializarMenuItems()

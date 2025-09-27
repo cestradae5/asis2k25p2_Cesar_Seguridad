@@ -21,14 +21,7 @@ namespace Capa_Vista_Seguridad
         private List<Cls_Aplicacion> listaAplicaciones = new List<Cls_Aplicacion>();
 
 
-        private Cls_PermisoUsuario permisoUsuario = new Cls_PermisoUsuario();
-
-        private int moduloId = -1;
-        private int aplicacionId = -1;
-
-        // Tupla para los permisos actuales
-        private (bool ingresar, bool consultar, bool modificar, bool eliminar, bool imprimir)? permisosActuales = null;
-
+       
 
         public FrmAplicacion()
         {
@@ -88,54 +81,7 @@ namespace Capa_Vista_Seguridad
 
 
 
-        private void ConfigurarIdsDinamicamenteYAplicarPermisos()
-        {
-            
-            string nombreModulo = "Seguridad";
-            string nombreAplicacion = "Administracion";
-            aplicacionId = permisoUsuario.ObtenerIdAplicacionPorNombre(nombreAplicacion);
-            moduloId = permisoUsuario.ObtenerIdModuloPorNombre(nombreModulo);
-            AplicarPermisosUsuario();
-        }
-
-        private void AplicarPermisosUsuario()
-        {
-            int usuarioId = Cls_sesion.iUsuarioId; // Usuario logueado
-            if (aplicacionId == -1 || moduloId == -1)
-            {
-                permisosActuales = null;
-                ActualizarEstadoBotonesSegunPermisos();
-                return;
-            }
-            var permisos = permisoUsuario.ConsultarPermisos(usuarioId, aplicacionId, moduloId);
-            permisosActuales = permisos;
-            ActualizarEstadoBotonesSegunPermisos();
-        }
-
-        // Centraliza el habilitado/deshabilitado de botones según permisos y estado de navegación
-        private void ActualizarEstadoBotonesSegunPermisos(bool empleadoCargado = false)
-        {
-            if (!permisosActuales.HasValue)
-            {
-                Btn_reporte.Enabled = false;       
-                Btn_eliminar.Enabled = false;      
-                Btn_buscar.Enabled = false;        
-                Btn_nuevo.Enabled = false; 
-                Btn_modificar.Enabled = false;
-                //Btn_Consultar_Asignacion.Enabled = false;
-                return;
-            }
-
-            var p = permisosActuales.Value;
-
-            Btn_reporte.Enabled = p.imprimir;
-            Btn_eliminar.Enabled = p.eliminar;
-            Btn_buscar.Enabled = p.consultar;
-            Btn_nuevo.Enabled = p.ingresar;
-            Btn_modificar.Enabled = p.modificar;
-            //Btn_Consultar_Asignacion.Enabled = p.consultar;
-
-        }
+       
 
 
 
@@ -417,5 +363,83 @@ namespace Capa_Vista_Seguridad
             frmreporte_aplicacion frm = new frmreporte_aplicacion();
             frm.Show();
         }
+
+
+        //Marcos Andres Velásquez Alcántara
+        //Carnet: 0901-21-1115
+
+        private Cls_PermisoUsuario gPermisoUsuario = new Cls_PermisoUsuario();
+
+        private List<(int moduloId, int aplicacionId)> gParesModuloAplicacion = new List<(int, int)>();
+
+        private Dictionary<(int moduloId, int aplicacionId), (bool bIngresar, bool bConsultar, bool bModificar, bool bEliminar, bool bImprimir)> gPermisosPorModuloApp
+            = new Dictionary<(int, int), (bool, bool, bool, bool, bool)>();
+
+
+        private void ConfigurarIdsDinamicamenteYAplicarPermisos()
+        {
+            int usuarioId = Cls_sesion.iUsuarioId;
+
+            var sParesNombres = new List<(string sModulo, string sAplicacion)>
+    {
+        ("Seguridad", "Empleado"),
+        ("Seguridad", "Empleados"),
+        ("Seguridad", "Gestion de empleado"),
+        ("Seguridad", "Administracion"),
+    };
+
+            foreach (var (sNombreModulo, sNombreAplicacion) in sParesNombres)
+            {
+                int idModulo = gPermisoUsuario.ObtenerIdModuloPorNombre(sNombreModulo);
+                int idAplicacion = gPermisoUsuario.ObtenerIdAplicacionPorNombre(sNombreAplicacion);
+
+                if (idModulo != -1 && idAplicacion != -1)
+                {
+                    gParesModuloAplicacion.Add((idModulo, idAplicacion));
+                }
+            }
+
+            AplicarPermisosUsuario(usuarioId);
+        }
+
+        private void AplicarPermisosUsuario(int usuarioId)
+        {
+            foreach (var (moduloId, aplicacionId) in gParesModuloAplicacion)
+            {
+                var bPermisos = gPermisoUsuario.ConsultarPermisos(usuarioId, aplicacionId, moduloId);
+
+                if (bPermisos != null)
+                {
+                    gPermisosPorModuloApp[(moduloId, aplicacionId)] = bPermisos.Value;
+                }
+            }
+
+            CombinarPermisosYActualizarBotones();
+        }
+
+        private void CombinarPermisosYActualizarBotones()
+        {
+            bool bIngresar = false, bConsultar = false, bModificar = false, bEliminar = false;
+
+            foreach (var bPermiso in gPermisosPorModuloApp.Values)
+            {
+                bIngresar |= bPermiso.bIngresar;
+                bConsultar |= bPermiso.bConsultar;
+                bModificar |= bPermiso.bModificar;
+                bEliminar |= bPermiso.bEliminar;
+            }
+
+          
+
+
+
+            Btn_eliminar.Enabled = bEliminar;
+            Btn_buscar.Enabled = bConsultar;
+            Btn_nuevo.Enabled = bIngresar;
+            Btn_modificar.Enabled = bModificar;
+        }
+
+
+
     }
 }
