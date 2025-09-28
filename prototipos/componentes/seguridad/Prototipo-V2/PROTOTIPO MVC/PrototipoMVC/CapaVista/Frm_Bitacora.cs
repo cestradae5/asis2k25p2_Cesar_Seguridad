@@ -249,10 +249,10 @@ namespace Capa_Vista_Seguridad
         private void fun_ConfigurarIdsDinamicamenteYAplicarPermisos()
         {
             // Cambia estos nombres exactamente como están en tu BD
-            string nombreModulo = "Seguridad";
-            string nombreAplicacion = "Administracion";
-            iAplicacionId = permisoUsuario.ObtenerIdAplicacionPorNombre(nombreAplicacion);
-            iModuloId = permisoUsuario.ObtenerIdModuloPorNombre(nombreModulo);
+            string sNombreModulo = "Seguridad";
+            string sNombreAplicacion = "Administracion";
+            iAplicacionId = permisoUsuario.ObtenerIdAplicacionPorNombre(sNombreAplicacion);
+            iModuloId = permisoUsuario.ObtenerIdModuloPorNombre(sNombreModulo);
             fun_AplicarPermisosUsuario();
         }
 
