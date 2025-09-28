@@ -87,13 +87,30 @@ namespace Capa_Modelo_Seguridad
             }
         }
 
-        public bool bEliminarPerfil(int pk_Id_Perfil)
+        public bool bEliminarPerfil(int pk_Id_Perfil, out string mensajeError)
         {
-            using (OdbcConnection conn = conexion.conexion())
+            mensajeError = "";
+            try
             {
-                OdbcCommand cmd = new OdbcCommand(SQL_DELETE, conn);
-                cmd.Parameters.AddWithValue("@Pk_Id_Perfil", pk_Id_Perfil);
-                return cmd.ExecuteNonQuery() > 0;
+                using (OdbcConnection conn = conexion.conexion())
+                {
+                    OdbcCommand cmd = new OdbcCommand(SQL_DELETE, conn);
+                    cmd.Parameters.AddWithValue("@Pk_Id_Perfil", pk_Id_Perfil);
+                    return cmd.ExecuteNonQuery() > 0;
+                }
+            }
+            catch (OdbcException ex)
+            {
+                // Detectar error de llave foránea (MySQL y ODBC suelen tener este texto)
+                if (ex.Message.Contains("a foreign key constraint fails"))
+                {
+                    mensajeError = "No es posible eliminar el perfil porque está vinculado a uno o más usuarios.";
+                }
+                else
+                {
+                    mensajeError = "Error al eliminar el perfil: " + ex.Message;
+                }
+                return false;
             }
         }
 

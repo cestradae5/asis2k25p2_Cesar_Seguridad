@@ -6,21 +6,29 @@ using Capa_Modelo_Seguridad;
 
 namespace Capa_Controlador_Seguridad
 {
+   
     public class Cls_asignacion_perfil_usuarioControlador
     {
         Cls_asignacion_perfil_usuarioDAO DAO = new Cls_asignacion_perfil_usuarioDAO();
 
+      
         public DataTable datObtenerUsuarios()
         {
             return DAO.datObtenerUsuarios();
         }
 
+       
+        /// Obtiene la lista de perfiles (para llenar combo en la vista).
+     
         public DataTable datObtenerPerfiles()
         {
             return DAO.datObtenerPerfiles();
         }
 
-        public bool bInsertar(int id_usuario, int id_perfil)
+
+        /// Inserta la relación usuario-perfil. Devuelve true si se pudo insertar,
+  
+        public bool bInsertar(int id_usuario, int id_perfil, out string mensajeError)
         {
             Cls_asignacion_perfil_usuario nuevaRelacion = new Cls_asignacion_perfil_usuario
             {
@@ -28,7 +36,8 @@ namespace Capa_Controlador_Seguridad
                 Fk_Id_Perfil = id_perfil,
             };
 
-            return DAO.bInsertar(nuevaRelacion);
+            // Llama al método DAO que maneja el error y retorna el mensaje personalizado
+            return DAO.bInsertar(nuevaRelacion, out mensajeError);
         }
     }
 }

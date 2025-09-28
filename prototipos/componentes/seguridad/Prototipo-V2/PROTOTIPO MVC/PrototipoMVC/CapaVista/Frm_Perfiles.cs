@@ -249,20 +249,21 @@ namespace Capa_Vista_Seguridad
                 return;
             }
 
-            bool exito = controlador.bBorrarPerfil(id);
+            string mensajeError;
+            bool exito = controlador.bBorrarPerfil(id, out mensajeError);
 
             if (exito)
             {
                 MessageBox.Show("Perfil eliminado");
-
                 // Registrar en Bitácora - Arón Ricardo Esquit Silva 0901-22-13036
                 ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, 1, "Eliminar perfil", true);
             }
             else
             {
-                MessageBox.Show("Error al eliminar perfil");
+                MessageBox.Show(mensajeError, "Error al eliminar perfil", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
+            //regresa a la configuracion inicial
             fun_CargarPerfiles();
             Cbo_perfiles.Items.Clear();
             fun_ConfigurarComboBoxPerfiles();

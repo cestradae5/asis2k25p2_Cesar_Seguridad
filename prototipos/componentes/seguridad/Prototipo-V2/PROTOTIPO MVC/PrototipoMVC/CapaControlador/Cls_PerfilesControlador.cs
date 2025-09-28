@@ -44,11 +44,11 @@ namespace Capa_Controlador_Seguridad
         }
 
         // Eliminar perfil por ID
-        public bool bBorrarPerfil(int idPerfil)
+        public bool bBorrarPerfil(int idPerfil, out string mensajeError)
         {
-            return daoPerfil.bEliminarPerfil(idPerfil);
+            // Declarar la variable out antes de llamar al método
+            return daoPerfil.bEliminarPerfil(idPerfil, out mensajeError);
         }
-
         // Buscar perfil por ID
         public Cls_Perfiles BuscarPerfilPorId(int idPerfil)
         {
