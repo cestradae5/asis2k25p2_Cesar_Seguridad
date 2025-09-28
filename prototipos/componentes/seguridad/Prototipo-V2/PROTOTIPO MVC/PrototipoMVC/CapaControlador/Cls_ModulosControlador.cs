@@ -11,38 +11,38 @@ namespace Capa_Controlador_Seguridad
         {
             return snm.LlenarComboModulos();
         }
-
+        // Retorna toda la información de los módulos de la base de datos
         public DataTable ObtenerModulos()
         {
             return snm.ObtenerModulos();
         }
-
-        public DataRow BuscarModulo(int idModulo)
+        // Método para buscar un módulo específico por su Id
+        public DataRow BuscarModulo(int Pk_Id_Modulo)
         {
-            return snm.BuscarModuloPorId(idModulo);
+            return snm.BuscarModuloPorId(Pk_Id_Modulo);
         }
-
-        public bool EliminarModulo(int id)
+        // Método para eliminar un módulo por su Id
+        public bool EliminarModulo(int Pk_Id_Modulo)
         {
-            int filas = snm.EliminarModulo(id);
+            int filas = snm.EliminarModulo(Pk_Id_Modulo);
             return filas > 0;
         }
-
-        public bool InsertarModulo(int id, string nombre, string descripcion, byte estado)
+        // Método para insertar un nuevo módulo en la base de datos
+        public bool InsertarModulo(int Pk_Id_Modulo, string Cmp_Nombre_Modulo, string Cmp_Descripcion_Modulo, byte Cmp_Estado_Modulo)
         {
-            int filas = snm.InsertarModulo(id, nombre, descripcion, estado);
+            int filas = snm.InsertarModulo(Pk_Id_Modulo, Cmp_Nombre_Modulo, Cmp_Descripcion_Modulo, Cmp_Estado_Modulo);
             return filas > 0;
         }
-
-        public bool ModificarModulo(int id, string nombre, string descripcion, byte estado)
+        // Método para modificar un módulo existente
+        public bool ModificarModulo(int Pk_Id_Modulo, string Cmp_Nombre_Modulo, string Cmp_Descripcion_Modulo, byte Cmp_Estado_Modulo)
         {
-            int filas = snm.ModificarModulo(id, nombre, descripcion, estado);
+            int filas = snm.ModificarModulo(Pk_Id_Modulo, Cmp_Nombre_Modulo, Cmp_Descripcion_Modulo, Cmp_Estado_Modulo);
             return filas > 0;
         }
-
-        public bool ModuloEnUso(int id)
+        // Método que verifica si un módulo está siendo utilizado
+        public bool ModuloEnUso(int Pk_Id_Modulo)
         {
-            return snm.ModuloEnUso(id);
+            return snm.ModuloEnUso(Pk_Id_Modulo);
         }
 
     }
