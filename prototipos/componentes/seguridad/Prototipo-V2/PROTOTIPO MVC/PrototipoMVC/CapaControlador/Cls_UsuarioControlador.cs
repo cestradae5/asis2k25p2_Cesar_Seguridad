@@ -8,7 +8,7 @@ namespace Capa_Controlador_Seguridad
 {
     public class Cls_UsuarioControlador
     {
-        // Variables globales
+        // Variable global para DAO
         private Cls_UsuarioDAO gDaoUsuario = new Cls_UsuarioDAO();
 
         // Obtener todos los usuarios
@@ -18,25 +18,17 @@ namespace Capa_Controlador_Seguridad
         }
 
         // Insertar nuevo usuario
-        public (bool bExito, string sMensaje) InsertarUsuario(int pFkIdEmpleado, string pNombreUsuario, string pContrasena, string pConfirmarContrasena)
+        public (bool bExito, string sMensaje) InsertarUsuario(
+            int pFkIdEmpleado,
+            string pNombreUsuario,
+            string pContrasena,
+            string pConfirmarContrasena)
         {
-            // Validaciones
-            if (pFkIdEmpleado <= 0)
-                return (false, "Debe seleccionar un empleado válido.");
+            // Validaciones básicas
+            var validar = ValidarCamposUsuario(0, pFkIdEmpleado, pNombreUsuario, pContrasena, pConfirmarContrasena);
+            if (!validar.bExito) return validar;
 
-            if (string.IsNullOrWhiteSpace(pNombreUsuario))
-                return (false, "El nombre de usuario no puede estar vacío.");
-
-            if (string.IsNullOrWhiteSpace(pContrasena) || string.IsNullOrWhiteSpace(pConfirmarContrasena))
-                return (false, "La contraseña y su confirmación no pueden estar vacías.");
-
-            if (pContrasena != pConfirmarContrasena)
-                return (false, "Las contraseñas no coinciden.");
-
-            if (gDaoUsuario.ObtenerUsuarios().Any(u => u.sNombreUsuario.Equals(pNombreUsuario, StringComparison.OrdinalIgnoreCase)))
-                return (false, "Ya existe un usuario con ese nombre.");
-
-            // Crear usuario
+            // Crear objeto usuario
             Cls_Usuario gNuevoUsuario = new Cls_Usuario
             {
                 iFkIdEmpleado = pFkIdEmpleado,
@@ -61,28 +53,17 @@ namespace Capa_Controlador_Seguridad
         }
 
         // Actualizar usuario existente
-        public (bool bExito, string sMensaje) ActualizarUsuario(int pIdUsuario, int pFkIdEmpleado, string pNombreUsuario, string pContrasena, string pConfirmarContrasena)
+        public (bool bExito, string sMensaje) ActualizarUsuario(
+            int pIdUsuario,
+            int pFkIdEmpleado,
+            string pNombreUsuario,
+            string pContrasena,
+            string pConfirmarContrasena)
         {
             // Validaciones
-            if (pIdUsuario <= 0)
-                return (false, "Seleccione un usuario válido.");
+            var validar = ValidarCamposUsuario(pIdUsuario, pFkIdEmpleado, pNombreUsuario, pContrasena, pConfirmarContrasena);
+            if (!validar.bExito) return validar;
 
-            if (pFkIdEmpleado <= 0)
-                return (false, "Debe seleccionar un empleado válido.");
-
-            if (string.IsNullOrWhiteSpace(pNombreUsuario))
-                return (false, "El nombre de usuario no puede estar vacío.");
-
-            if (string.IsNullOrWhiteSpace(pContrasena) || string.IsNullOrWhiteSpace(pConfirmarContrasena))
-                return (false, "La contraseña y su confirmación no pueden estar vacías.");
-
-            if (pContrasena != pConfirmarContrasena)
-                return (false, "Las contraseñas no coinciden.");
-
-            if (gDaoUsuario.ObtenerUsuarios().Any(u => u.sNombreUsuario.Equals(pNombreUsuario, StringComparison.OrdinalIgnoreCase) && u.iPkIdUsuario != pIdUsuario))
-                return (false, "Ya existe otro usuario con ese nombre.");
-
-            // Actualizar usuario
             Cls_Usuario gUsuarioActualizado = new Cls_Usuario
             {
                 iPkIdUsuario = pIdUsuario,
@@ -111,7 +92,6 @@ namespace Capa_Controlador_Seguridad
         public bool BorrarUsuario(int pIdUsuario)
         {
             if (pIdUsuario <= 0) return false;
-
             try
             {
                 return gDaoUsuario.BorrarUsuario(pIdUsuario) > 0;
@@ -122,11 +102,41 @@ namespace Capa_Controlador_Seguridad
             }
         }
 
-
+        // Buscar usuario por ID
         public Cls_Usuario BuscarUsuarioPorId(int pIdUsuario)
         {
             if (pIdUsuario <= 0) return null;
             return gDaoUsuario.Query(pIdUsuario);
+        }
+
+        // Validaciones comunes para insertar y actualizar
+        private (bool bExito, string sMensaje) ValidarCamposUsuario(
+            int pIdUsuario,
+            int pFkIdEmpleado,
+            string pNombreUsuario,
+            string pContrasena,
+            string pConfirmarContrasena)
+        {
+            if (pFkIdEmpleado <= 0)
+                return (false, "Debe seleccionar un empleado válido.");
+
+            if (string.IsNullOrWhiteSpace(pNombreUsuario))
+                return (false, "El nombre de usuario no puede estar vacío.");
+
+            if (string.IsNullOrWhiteSpace(pContrasena) || string.IsNullOrWhiteSpace(pConfirmarContrasena))
+                return (false, "La contraseña y su confirmación no pueden estar vacías.");
+
+            if (pContrasena != pConfirmarContrasena)
+                return (false, "Las contraseñas no coinciden.");
+
+            bool existeNombre = gDaoUsuario.ObtenerUsuarios()
+                .Any(u => u.sNombreUsuario.Equals(pNombreUsuario, StringComparison.OrdinalIgnoreCase) &&
+                          (pIdUsuario == 0 || u.iPkIdUsuario != pIdUsuario));
+
+            if (existeNombre)
+                return (false, "Ya existe un usuario con ese nombre.");
+
+            return (true, string.Empty);
         }
     }
 }

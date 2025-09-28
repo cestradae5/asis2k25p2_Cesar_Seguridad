@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using Capa_Controlador_Seguridad;
-using Capa_Modelo_Seguridad;
 
 namespace Capa_Vista_Seguridad
 {
@@ -13,9 +12,9 @@ namespace Capa_Vista_Seguridad
         // Variables globales del formulario
         private Cls_UsuarioControlador gClsUsuarioControlador = new Cls_UsuarioControlador();
         private Cls_EmpleadoControlador gClsEmpleadoControlador = new Cls_EmpleadoControlador();
-        private List<Cls_Empleado> gLstEmpleados = new List<Cls_Empleado>();
+        private List<string> gLstEmpleadosDisplay = new List<string>();
+        private List<int> gLstEmpleadosIds = new List<int>();
         private int iIdUsuarioSeleccionado = 0;
-
 
         public Frm_Usuario()
         {
@@ -28,36 +27,34 @@ namespace Capa_Vista_Seguridad
             ConfiguracionInicial();
         }
 
-
         private void ConfiguracionInicial()
         {
             Btn_Guardar.Enabled = false;
             Btn_Nuevo.Enabled = true;
         }
 
-        // Cargamos los empleados desde el controlador
         private void CargarEmpleados()
         {
-            gLstEmpleados = gClsEmpleadoControlador.ObtenerTodosLosEmpleados();
-        }
+            var lstEmpleados = gClsEmpleadoControlador.ObtenerTodosLosEmpleados();
+            gLstEmpleadosDisplay.Clear();
+            gLstEmpleadosIds.Clear();
 
-        // Configuramos ComboBox de empleados
-        private void ConfigurarComboBoxEmpleados()
-        {
-            Cbo_Empleado.DisplayMember = "Display";
-            Cbo_Empleado.ValueMember = "Id";
-
-            foreach (var emp in gLstEmpleados)
+            foreach (var emp in lstEmpleados)
             {
-                Cbo_Empleado.Items.Add(new
-                {
-                    Display = $"{emp.iPkIdEmpleado} - {emp.sNombresEmpleado} {emp.sApellidosEmpleado}",
-                    Id = emp.iPkIdEmpleado
-                });
+                gLstEmpleadosDisplay.Add($"{emp.iPkIdEmpleado} - {emp.sNombresEmpleado} {emp.sApellidosEmpleado}");
+                gLstEmpleadosIds.Add(emp.iPkIdEmpleado);
             }
         }
 
-        // Botón Nuevo
+        private void ConfigurarComboBoxEmpleados()
+        {
+            Cbo_Empleado.Items.Clear();
+            for (int i = 0; i < gLstEmpleadosDisplay.Count; i++)
+            {
+                Cbo_Empleado.Items.Add(gLstEmpleadosDisplay[i]);
+            }
+        }
+
         private void Btn_Nuevo_Click(object sender, EventArgs e)
         {
             LimpiarCampos();
@@ -65,17 +62,15 @@ namespace Capa_Vista_Seguridad
             iIdUsuarioSeleccionado = 0;
         }
 
-        // Botón Guardar
         private void Btn_Guardar_Click(object sender, EventArgs e)
         {
-            if (Cbo_Empleado.SelectedItem == null)
+            if (Cbo_Empleado.SelectedIndex < 0)
             {
                 MessageBox.Show("Seleccione un empleado primero.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            var selected = (dynamic)Cbo_Empleado.SelectedItem;
-            int iFkIdEmpleado = selected.Id;
+            int iFkIdEmpleado = gLstEmpleadosIds[Cbo_Empleado.SelectedIndex];
 
             var resultado = gClsUsuarioControlador.InsertarUsuario(
                 iFkIdEmpleado,
@@ -96,27 +91,23 @@ namespace Capa_Vista_Seguridad
             }
         }
 
-        // Botón Limpiar
         private void Btn_Limpiar_Click(object sender, EventArgs e)
         {
             LimpiarCampos();
             ConfiguracionInicial();
         }
 
-        // Botón Salir
         private void Btn_Salir_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        // Botón Reporte
         private void Btn_reporte_Click(object sender, EventArgs e)
         {
             frmReporte_Usuario frm = new frmReporte_Usuario();
             frm.Show();
         }
 
-        // Limpiar campos del formulario
         private void LimpiarCampos()
         {
             Cbo_Empleado.SelectedIndex = -1;
@@ -151,7 +142,6 @@ namespace Capa_Vista_Seguridad
             this.Close();
         }
 
-        // Eventos para validar campos y habilitar botones
         private void Txt_Nombre_TextChanged(object sender, EventArgs e) => ValidarCampos();
         private void Txt_Contraseña_TextChanged(object sender, EventArgs e) => ValidarCampos();
         private void Txt_ConfirmarContraseña_TextChanged(object sender, EventArgs e) => ValidarCampos();
@@ -160,7 +150,7 @@ namespace Capa_Vista_Seguridad
         private void ValidarCampos()
         {
             bool bCamposLlenos =
-                Cbo_Empleado.SelectedItem != null &&
+                Cbo_Empleado.SelectedIndex >= 0 &&
                 !string.IsNullOrWhiteSpace(Txt_Nombre.Text) &&
                 !string.IsNullOrWhiteSpace(Txt_Contraseña.Text) &&
                 !string.IsNullOrWhiteSpace(Txt_ConfirmarContraseña.Text);
