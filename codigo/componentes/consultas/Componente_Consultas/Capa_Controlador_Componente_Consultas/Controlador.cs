@@ -30,11 +30,6 @@ namespace Capa_Controlador_Consultas
             _m = new Sentencias(dsn, db); // crea un objeto Sentencias con DSN y BD
         }
 
-<<<<<<< Updated upstream
-        // Pasarela a Modelo Nelson José Godinez Mendez 0901-22-3550 22/09/2025
-=======
-        // Pasarela a Modelo Nelson Jose Godinez Mendez 0901-22-3550 22/09/2025
->>>>>>> Stashed changes
         public DataTable EjecutarConsulta(string sql) { return _m.EjecutarConsulta(sql); }
         public List<string> ObtenerTablas() { return _m.ObtenerTablas(); }
         public List<string> ObtenerColumnas(string tabla) { return _m.ObtenerColumnas(tabla); }
