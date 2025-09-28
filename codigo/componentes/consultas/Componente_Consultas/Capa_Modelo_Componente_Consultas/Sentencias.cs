@@ -89,7 +89,7 @@ namespace Capa_Modelo_Componente_Consultas
         }
         // ----------------------------------------------------------------------------------------- //
 
-        // ---------- Persistencia de consultas Realizado por: Bryan Raul Ramirez Lopez 0901-21-8202 22/09/2025
+        // -------- Persistencias de consultas Realizado por: Bryan Raul Ramirez Lopez 0901-21-8202 22/09/2025
 
         private XDocument LoadXml()
         {
