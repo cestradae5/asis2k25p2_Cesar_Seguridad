@@ -312,34 +312,43 @@ namespace Capa_Vista_Componente_Consultas
             ToggleBetweenControls();
         }
 
-        // ----------------- Datos / Metadata Juan Carlos Sandoval Quej 0901-22-4170 26/09/2025
+        // ----------------- Datos: Juan Carlos Sandoval Quej 0901-22-4170 26/09/2025
         private void CargarTablas()
         {
             try
             {
+                // Limpia el combo de tablas antes de volver a llenarlo
                 Cbo_Tabla.Items.Clear();
+
+                // Le pide al controlador la lista de tablas disponibles en la BD
                 var tabs = _controlador.ObtenerTablas();
+
+                // Agrega cada nombre de tabla al combo
                 foreach (var t in tabs) Cbo_Tabla.Items.Add(t);
+
+                // Si hay al menos una tabla, selecciona la primera por defecto
                 if (Cbo_Tabla.Items.Count > 0) Cbo_Tabla.SelectedIndex = 0;
             }
             catch (Exception ex)
             {
+                // Si falla (por ejemplo, no hay conexión), muestra el error
                 MessageBox.Show("No se pudieron obtener las tablas.\n" + ex.Message);
             }
         }
 
         private void SincronizarOrdenConRadios()
         {
-            // Dirección elegida
+            // Lee qué radiobutton está marcado: si es ASC lo usa, si no, utiliza DESC
             string dir = Rdb_Asc.Checked ? "ASC" : "DESC";
 
-            // Asegura items en el combo
+            // Asegura que el combo de orden contenga las dos opciones
             if (Cbo_Ordenamiento.Items.Count == 0)
                 Cbo_Ordenamiento.Items.AddRange(new object[] { "ASC", "DESC" });
 
+            // Refleja en el combo la dirección elegida en los radios
             Cbo_Ordenamiento.SelectedItem = dir;
 
-            // Busca la última pieza ORDER BY
+            // Busca, de atrás hacia adelante, si ya existe una pieza "ORDER BY" en la lista
             int idx = -1;
             for (int i = _partesGroupOrder.Count - 1; i >= 0; i--)
             {
@@ -349,21 +358,26 @@ namespace Capa_Vista_Componente_Consultas
 
             if (idx >= 0)
             {
-                // Mantiene la columna existente si es posible
-                string pieza = _partesGroupOrder[idx]; // "ORDER BY `col` DIR"
+                string pieza = _partesGroupOrder[idx];
+
+                // Extrae el nombre de la columna después de "ORDER BY".
+                // El Regex busca la palabra después de ORDER BY.
                 string col = null;
                 var m = Regex.Match(pieza, @"ORDER\s+BY\s+`?(?<c>[^`\s]+)`?", RegexOptions.IgnoreCase);
                 if (m.Success) col = m.Groups["c"].Value;
 
+                // Si no se pudo leer la columna, intenta usar la elegida en el combo de campo a ordenar
                 if (string.IsNullOrEmpty(col) && Cbo_CampoOrdenar.SelectedItem != null)
                     col = Cbo_CampoOrdenar.SelectedItem.ToString();
 
+                // Si tenemos columna, reconstruye la pieza con la nueva dirección.
                 if (!string.IsNullOrEmpty(col))
                     _partesGroupOrder[idx] = "ORDER BY `" + NormalizeCol(col) + "` " + dir;
             }
             else
             {
-                // Si no hay ORDER BY y el usuario está en modo ORDER BY con un campo, lo creamos
+                // No existe ORDER BY aún.
+                // Si el usuario está en modo "ORDER BY" y ya eligió un campo, creamos la pieza desde cero.
                 if (Cbo_AgruparOrdenar.SelectedItem != null &&
                     string.Equals(Cbo_AgruparOrdenar.SelectedItem.ToString(), "ORDER BY", StringComparison.OrdinalIgnoreCase) &&
                     Cbo_CampoOrdenar.SelectedItem != null)
@@ -373,6 +387,7 @@ namespace Capa_Vista_Componente_Consultas
                 }
             }
         }
+
         //Ayudas Nelson Jose Godinez Mendez 0901-22-3550 26/09/2025
         private void CargarColumnas(string tabla)
         {
@@ -562,33 +577,48 @@ namespace Capa_Vista_Componente_Consultas
         // ----------------- Guardar/Listar consultas Juan Carlos Sandoval Quej 0901-22-4170 26/09/2025
         private void GuardarConsultaAuto()
         {
+            // Si no hay una consulta lista (_sqlActual vacío),
+            // entonces se construye una nueva usando la tabla, condiciones y filtros.
+            // Si ya hay una consulta, se usa esa.
             string sql = string.IsNullOrWhiteSpace(_sqlActual)
                 ? _controlador.ConstruirSql(_tablaActual, Chk_AgregarCondiciones.Checked, _partesWhere, _partesGroupOrder)
                 : _sqlActual;
 
+            // Si después de eso sigue sin haber consulta, avisa al usuario y se detiene.
             if (string.IsNullOrWhiteSpace(sql))
             {
                 MessageBox.Show("Genera la consulta primero.");
                 return;
             }
 
+            // Guardamos el SQL definitivo en la variable
             _sqlActual = sql;
 
+            // El nombre base será la tabla seleccionada o "consulta" si no hay tabla
             var baseName = string.IsNullOrEmpty(_tablaActual) ? "consulta" : _tablaActual;
+
+            // Al nombre base se le añade la fecha y hora para que sea único
             var name = baseName + "_" + DateTime.Now.ToString("yyyyMMdd_HHmmss");
 
             try
             {
+                // Se obtiene la lista de nombres de consultas ya guardadas
                 var existentes = new HashSet<string>(
                     _controlador.ListarConsultasPlano().Select(kv => kv.Key),
                     StringComparer.OrdinalIgnoreCase);
 
+                // Se verifica si el nombre generado ya existe
+                // Si existe, se le agrega _1, _2, etc. hasta que sea único
                 var unique = name; int i = 1;
                 while (existentes.Contains(unique)) unique = name + "_" + (i++).ToString();
 
+                // Se guarda la consulta en el controlador
                 _controlador.GuardarConsulta(unique, sql);
+
+                // Se actualiza la lista de consultas guardadas en pantalla
                 CargarConsultasGuardadas();
 
+                // Intenta seleccionar en el ListBox la consulta recién guardada
                 var lista = Lst_ConsultasGuardadas.DataSource as List<KeyValuePair<string, string>>;
                 if (lista != null)
                 {
@@ -596,10 +626,12 @@ namespace Capa_Vista_Componente_Consultas
                     if (idx >= 0) Lst_ConsultasGuardadas.SelectedIndex = idx;
                 }
 
+                // Mensaje de confirmación
                 MessageBox.Show("Consulta guardada.");
             }
             catch (Exception ex)
             {
+                // Si hay algún error, se muestra el mensaje de error
                 MessageBox.Show("No se pudo guardar la consulta.\n" + ex.Message);
             }
         }
@@ -608,13 +640,16 @@ namespace Capa_Vista_Componente_Consultas
         {
             try
             {
+                // Pide al controlador todas las consultas guardadas
                 var items = _controlador.ListarConsultasPlano();
+
+                // Limpia la lista en pantalla y la vuelve a cargar con los nuevos datos
                 Lst_ConsultasGuardadas.DataSource = null;
-                Lst_ConsultasGuardadas.DisplayMember = "Key";
-                Lst_ConsultasGuardadas.ValueMember = "Value";
+                Lst_ConsultasGuardadas.DisplayMember = "Key";   // Lo que se muestra (nombre de la consulta)
+                Lst_ConsultasGuardadas.ValueMember = "Value";   // Lo que devuelva
                 Lst_ConsultasGuardadas.DataSource = items;
             }
-            catch { }
+            catch { /* Si algo falla, simplemente lo ignora */ }
         }
 
         // ----------------- Editar: SQL -> UI Bryan Raul Ramirez Lopez 0901-21-8202

@@ -11,20 +11,30 @@ namespace Capa_Controlador_Consultas
     //Juan Carlos Sandoval Quej 0901-22-4170 22/09/2025
     public class Controlador
     {
+        // Referencia al modelo (clase Sentencias) que se encarga de hablar con la base de datos
         private readonly Sentencias _m;
+        // Nombre de la base de datos con la que vamos a trabajar
         private readonly string _db;
 
+        // Caché para guardar las columnas de cada tabla con su nombre y tipo de dato
+        // Esto evita tener que consultar a la base de datos cada vez
         private readonly Dictionary<string, List<(string Name, string DataType)>> _colsCache =
             new Dictionary<string, List<(string Name, string DataType)>>(StringComparer.OrdinalIgnoreCase);
 
+        // Constructor: recibe un DSN (nombre de la conexión ODBC) y el nombre de la base de datos
         public Controlador(string dsn, string db)
         {
+            // Si no se pasa nombre de base de datos, lanza un error
             if (db == null) throw new ArgumentNullException(nameof(db));
-            _db = db;
-            _m = new Sentencias(dsn, db);
+            _db = db; // guarda el nombre de la BD
+            _m = new Sentencias(dsn, db); // crea un objeto Sentencias con DSN y BD
         }
 
+<<<<<<< Updated upstream
         // Pasarela a Modelo Nelson José Godinez Mendez 0901-22-3550 22/09/2025
+=======
+        // Pasarela a Modelo Nelson Jose Godinez Mendez 0901-22-3550 22/09/2025
+>>>>>>> Stashed changes
         public DataTable EjecutarConsulta(string sql) { return _m.EjecutarConsulta(sql); }
         public List<string> ObtenerTablas() { return _m.ObtenerTablas(); }
         public List<string> ObtenerColumnas(string tabla) { return _m.ObtenerColumnas(tabla); }
