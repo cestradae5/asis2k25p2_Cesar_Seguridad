@@ -24,7 +24,7 @@ namespace Capa_Controlador_Consultas
             _m = new Sentencias(dsn, db);
         }
 
-        // Pasarela a Modelo
+        // Pasarela a Modelo Nelson José Godinez Mendez 0901-22-3550 22/09/2025
         public DataTable EjecutarConsulta(string sql) { return _m.EjecutarConsulta(sql); }
         public List<string> ObtenerTablas() { return _m.ObtenerTablas(); }
         public List<string> ObtenerColumnas(string tabla) { return _m.ObtenerColumnas(tabla); }
