@@ -121,17 +121,28 @@ namespace Capa_Vista_Seguridad
             int guardados = 0;
             foreach (var asignacion in asignacionesPendientes)
             {
-                if (controlador.bInsertar(asignacion.Fk_Id_Usuario, asignacion.Fk_Id_Perfil))
+                string mensajeError; // Variable para el mensaje de error personalizado
+                                     // Llama al controlador, que retorna true si se guardó, false si hubo error (duplicado, etc)
+                bool ok = controlador.bInsertar(asignacion.Fk_Id_Usuario, asignacion.Fk_Id_Perfil, out mensajeError);
+
+                if (ok)
+                {
                     guardados++;
+                }
+                else
+                {
+                    // Muestra el mensaje personalizado si hubo error (por ejemplo, relación duplicada)
+                    MessageBox.Show(mensajeError, "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
+
             MessageBox.Show($"Se guardaron {guardados} asignaciones correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
             asignacionesPendientes.Clear();
             fun_RefrescarAsignacionesPendientes();
 
-            // Registrar en Bitácora - Arón Ricardo Esquit Silva  0901-22-13036
+            // Registrar en Bitácora (si lo usas)
             ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, 1, "Asignación Perfil a Usuario - Guardar", true);
         }
-
 
         private void Btn_eliminar_asignacion_Click_1(object sender, EventArgs e)
         {
