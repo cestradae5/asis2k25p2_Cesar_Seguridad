@@ -110,11 +110,11 @@ namespace Capa_Vista_Seguridad
 
         private void fun_ConfigurarIdsDinamicamenteYAplicarPermisos()
         {
-
-            string nombreModulo = "Seguridad";
-            string nombreAplicacion = "Administracion";
-            iAplicacionId = permisoUsuario.ObtenerIdAplicacionPorNombre(nombreAplicacion);
-            iModuloId = permisoUsuario.ObtenerIdModuloPorNombre(nombreModulo);
+            //Nombre existentes en la base de datos 
+            string sNombreModulo = "Seguridad";
+            string sNombreAplicacion = "Administracion";
+            iAplicacionId = permisoUsuario.ObtenerIdAplicacionPorNombre(sNombreAplicacion);
+            iModuloId = permisoUsuario.ObtenerIdModuloPorNombre(sNombreModulo);
             fun_AplicarPermisosUsuario();
         }
 
@@ -197,7 +197,7 @@ namespace Capa_Vista_Seguridad
             Cbo_Aplicaciones.SelectedIndex = -1;
         }
 
-
+        //0901-21-1115 Marcos Andres Velásquez Alcántara
         private void Btn_finalizar_Click(object sender, EventArgs e)
 
         {
