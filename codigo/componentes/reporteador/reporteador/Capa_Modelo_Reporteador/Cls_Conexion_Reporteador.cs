@@ -7,12 +7,13 @@ using System.Data.Odbc; // Paula Leonardo
 
 namespace Capa_Modelo_Reporteador
 {
-    class Conexion_Reporteador //Paula Leonardo
+    class Cls_Conexion_Reporteador //Paula Leonardo
     {
         //Método de creación de la conexion via ODBC
+        
         public OdbcConnection conexion()
         {
-            OdbcConnection conn = new OdbcConnection("db_reportes");
+            OdbcConnection conn = new OdbcConnection("Dsn=bd_hoteleria");
             try
             {
                 conn.Open();
@@ -36,5 +37,6 @@ namespace Capa_Modelo_Reporteador
                 Console.WriteLine("No Conectó");
             }
         }
+       
     }
 }

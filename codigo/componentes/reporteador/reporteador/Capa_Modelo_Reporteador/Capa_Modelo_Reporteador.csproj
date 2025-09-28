@@ -41,9 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Conexion_Reporteador.cs" />
+    <Compile Include="Cls_Conexion_Reporteador.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Sentencias_Reporteador.cs" />
+    <Compile Include="Cls_Sentencias_Reporteador.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
