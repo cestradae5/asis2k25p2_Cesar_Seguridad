@@ -287,5 +287,13 @@ namespace Capa_Vista_Seguridad
 
         private void btn_aplicacion_Click(object sender, EventArgs e) { }
         private void asignacionesToolStripMenuItem_Click(object sender, EventArgs e) { }
+
+        private void asignacionDeAplicacionAPerfilesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CerrarFormulariosHijos();
+            Frm_PermisosPerfiles asig_app_user = new Frm_PermisosPerfiles();
+            asig_app_user.MdiParent = this;
+            asig_app_user.Show();
+        }
     }
 }

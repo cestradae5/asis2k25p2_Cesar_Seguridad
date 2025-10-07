@@ -26,7 +26,7 @@ namespace Capa_Vista_Seguridad
         public Frm_PermisosPerfiles()
         {
             InitializeComponent();
-            fun_ConfigurarIdsDinamicamenteYAplicarPermisos();
+            //fun_ConfigurarIdsDinamicamenteYAplicarPermisos();
             
         }
 
@@ -48,23 +48,6 @@ namespace Capa_Vista_Seguridad
             Dgv_Permisos.Columns["IdModulo"].Visible = false;
             Dgv_Permisos.Columns.Add("IdAplicacion", "IdAplicacion");
             Dgv_Permisos.Columns["IdAplicacion"].Visible = false;
-
-            // Obtener lista de aplicaciones
-            var lista = appControlador.ObtenerTodasLasAplicaciones();
-
-            DataTable dtAplicacion = new DataTable();
-            dtAplicacion.Columns.Add("pk_id_aplicacion", typeof(int));
-            dtAplicacion.Columns.Add("nombre_aplicacion", typeof(string));
-
-            foreach (var app in lista)
-            {
-                dtAplicacion.Rows.Add(app.iPkIdAplicacion, app.sNombreAplicacion);
-            }
-
-            Cbo_aplicaciones.DataSource = dtAplicacion;
-            Cbo_aplicaciones.DisplayMember = "Cmp_Nombre_Aplicacion";
-            Cbo_aplicaciones.ValueMember = "Pk_Id_Aplicacion";
-            Cbo_aplicaciones.SelectedIndex = -1;
         }
 
         private void Btn_salir_Click(object sender, EventArgs e)
@@ -74,6 +57,13 @@ namespace Capa_Vista_Seguridad
 
         private void FrmPermisosPerfiles_Load(object sender, EventArgs e)
         {
+            // Llenar ComboBox Perfiles
+            DataTable dtPerfiles = controlador.datObtenerPerfiles();
+            Cbo_perfiles.DataSource = dtPerfiles;
+            Cbo_perfiles.DisplayMember = "Cmp_Puesto_Perfil";
+            Cbo_perfiles.ValueMember = "Pk_Id_Perfil";
+            Cbo_perfiles.SelectedIndex = -1;
+
             // Llenar ComboBox Modulos
             DataTable dtModulos = controlador.datObtenerModulos();
             Cbo_Modulos.DataSource = dtModulos;
@@ -81,40 +71,70 @@ namespace Capa_Vista_Seguridad
             Cbo_Modulos.ValueMember = "Pk_Id_Modulo";
             Cbo_Modulos.SelectedIndex = -1;
 
-            dtPerfiles = controlador.datObtenerPerfiles();
-            Cbo_perfiles.DataSource = dtPerfiles.Copy();
-            Cbo_perfiles.DisplayMember = "Cmp_Puesto_Perfil";
-            Cbo_perfiles.ValueMember = "Pk_Id_Perfil";
-            Cbo_perfiles.SelectedIndex = -1;
-
-            dtAplicacione = controlador.datObtenerAplicaciones();
-            Cbo_aplicaciones.DataSource = dtAplicacione.Copy();
-            Cbo_aplicaciones.DisplayMember = "nombre_aplicacion";
-            Cbo_aplicaciones.ValueMember = "pk_id_aplicacion";
-            Cbo_aplicaciones.SelectedIndex = -1;
+            // Cambiar el evento a SelectedIndexChanged en lugar de SelectionChangeCommitted
+            Cbo_Modulos.SelectedIndexChanged += Cbo_Modulos_SelectedIndexChanged;
 
             InicializarDataGridView();
         }
 
-        private void Cbo_Modulos_SelectionChangeCommitted(object sender, EventArgs e)
+        // Nuevo método para el evento SelectedIndexChanged
+        private void Cbo_Modulos_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // El mismo código que tenías en SelectionChangeCommitted
+            Cbo_aplicaciones.DataSource = null;
+
             if (Cbo_Modulos.SelectedValue != null)
             {
-                var lista = appControlador.ObtenerTodasLasAplicaciones();
+                int idModulo = Convert.ToInt32(Cbo_Modulos.SelectedValue);
+                DataTable dtAplicacionFiltrada = controlador.datObtenerAplicacionesPorModulo(idModulo);
 
-                DataTable dtAplicacion = new DataTable();
-                dtAplicacion.Columns.Add("pk_id_aplicacion", typeof(int));
-                dtAplicacion.Columns.Add("nombre_aplicacion", typeof(string));
-
-                foreach (var app in lista)
-                {
-                    dtAplicacion.Rows.Add(app.iPkIdAplicacion, app.sNombreAplicacion);
-                }
-
-                Cbo_aplicaciones.DataSource = dtAplicacion;
-                Cbo_aplicaciones.DisplayMember = "nombre_aplicacion";
-                Cbo_aplicaciones.ValueMember = "pk_id_aplicacion";
+                Cbo_aplicaciones.DataSource = dtAplicacionFiltrada;
+                Cbo_aplicaciones.DisplayMember = "Cmp_Nombre_Aplicacion";
+                Cbo_aplicaciones.ValueMember = "Pk_Id_Aplicacion";
                 Cbo_aplicaciones.SelectedIndex = -1;
+            }
+        }
+
+
+
+        private void Cbo_Modulos_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            Cbo_aplicaciones.DataSource = null;
+            Cbo_aplicaciones.Items.Clear();
+
+            if (Cbo_Modulos.SelectedValue != null && Cbo_Modulos.SelectedValue.ToString() != "")
+            {
+                try
+                {
+                    int idModulo = Convert.ToInt32(Cbo_Modulos.SelectedValue);
+
+                    // Mensaje de depuración
+                    Console.WriteLine($"Buscando aplicaciones para módulo ID: {idModulo}");
+
+                    DataTable dtAplicacionFiltrada = controlador.datObtenerAplicacionesPorModulo(idModulo);
+
+                    // Mostrar información de depuración
+                    MessageBox.Show($"Se encontraron {dtAplicacionFiltrada.Rows.Count} aplicaciones para el módulo seleccionado.",
+                                  "Depuración", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    if (dtAplicacionFiltrada.Rows.Count > 0)
+                    {
+                        Cbo_aplicaciones.DataSource = dtAplicacionFiltrada;
+                        Cbo_aplicaciones.DisplayMember = "Cmp_Nombre_Aplicacion";
+                        Cbo_aplicaciones.ValueMember = "Pk_Id_Aplicacion";
+                        Cbo_aplicaciones.SelectedIndex = 0;
+                    }
+                    else
+                    {
+                        MessageBox.Show("No se encontraron aplicaciones para este módulo.",
+                                      "Información", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error al cargar aplicaciones: {ex.Message}",
+                                  "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -258,77 +278,77 @@ namespace Capa_Vista_Seguridad
         //Marcos Andres Velásquez Alcántara
         //Carnet: 0901-21-1115
 
-        private Cls_PermisoUsuario gPermisoUsuario = new Cls_PermisoUsuario();
+    //    private Cls_PermisoUsuario gPermisoUsuario = new Cls_PermisoUsuario();
 
-        private List<(int moduloId, int aplicacionId)> gParesModuloAplicacion = new List<(int, int)>();
+    //    private List<(int moduloId, int aplicacionId)> gParesModuloAplicacion = new List<(int, int)>();
 
-        private Dictionary<(int iModuloId, int iAplicacionId), (bool bIngresar, bool bConsultar, bool bModificar, bool bEliminar, bool bImprimir)> gPermisosPorModuloApp
-            = new Dictionary<(int, int), (bool, bool, bool, bool, bool)>();
+    //    private Dictionary<(int iModuloId, int iAplicacionId), (bool bIngresar, bool bConsultar, bool bModificar, bool bEliminar, bool bImprimir)> gPermisosPorModuloApp
+    //        = new Dictionary<(int, int), (bool, bool, bool, bool, bool)>();
 
 
-        private void fun_ConfigurarIdsDinamicamenteYAplicarPermisos()
-        {
-            int usuarioId = Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario;
+    //    private void fun_ConfigurarIdsDinamicamenteYAplicarPermisos()
+    //    {
+    //        int usuarioId = Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario;
 
-            var sParesNombres = new List<(string sModulo, string sAplicacion)>
-    {
+    //        var sParesNombres = new List<(string sModulo, string sAplicacion)>
+    //{
         
-        ("Seguridad", "Gestion de empleado"),
-        ("Seguridad", "Administracion"),
-    };
+    //    ("Seguridad", "Gestion de empleado"),
+    //    ("Seguridad", "Administracion"),
+    //};
 
-            foreach (var (sNombreModulo, sNombreAplicacion) in sParesNombres)
-            {
-                int idModulo = gPermisoUsuario.ObtenerIdModuloPorNombre(sNombreModulo);
-                int idAplicacion = gPermisoUsuario.ObtenerIdAplicacionPorNombre(sNombreAplicacion);
+    //        foreach (var (sNombreModulo, sNombreAplicacion) in sParesNombres)
+    //        {
+    //            int idModulo = gPermisoUsuario.ObtenerIdModuloPorNombre(sNombreModulo);
+    //            int idAplicacion = gPermisoUsuario.ObtenerIdAplicacionPorNombre(sNombreAplicacion);
 
-                if (idModulo != -1 && idAplicacion != -1)
-                {
-                    gParesModuloAplicacion.Add((idModulo, idAplicacion));
-                }
-            }
+    //            if (idModulo != -1 && idAplicacion != -1)
+    //            {
+    //                gParesModuloAplicacion.Add((idModulo, idAplicacion));
+    //            }
+    //        }
 
-            fun_AplicarPermisosUsuario(usuarioId);
-        }
+    //        fun_AplicarPermisosUsuario(usuarioId);
+    //    }
 
-        private void fun_AplicarPermisosUsuario(int usuarioId)
-        {
-            foreach (var (moduloId, aplicacionId) in gParesModuloAplicacion)
-            {
-                var bPermisos = gPermisoUsuario.ConsultarPermisos(usuarioId, aplicacionId, moduloId);
+    //    private void fun_AplicarPermisosUsuario(int usuarioId)
+    //    {
+    //        foreach (var (moduloId, aplicacionId) in gParesModuloAplicacion)
+    //        {
+    //            var bPermisos = gPermisoUsuario.ConsultarPermisos(usuarioId, aplicacionId, moduloId);
 
-                if (bPermisos != null)
-                {
-                    gPermisosPorModuloApp[(moduloId, aplicacionId)] = bPermisos.Value;
-                }
-            }
+    //            if (bPermisos != null)
+    //            {
+    //                gPermisosPorModuloApp[(moduloId, aplicacionId)] = bPermisos.Value;
+    //            }
+    //        }
 
-            fun_CombinarPermisosYActualizarBotones();
-        }
+    //        fun_CombinarPermisosYActualizarBotones();
+    //    }
 
-        private void fun_CombinarPermisosYActualizarBotones()
-        {
-            bool bIngresar = false;
-            bool bConsultar = false;
-            bool bModificar = false;
-            bool bEliminar = false;
+    //    private void fun_CombinarPermisosYActualizarBotones()
+    //    {
+    //        bool bIngresar = false;
+    //        bool bConsultar = false;
+    //        bool bModificar = false;
+    //        bool bEliminar = false;
 
-            foreach (var bPermiso in gPermisosPorModuloApp.Values)
-            {
-                bIngresar |= bPermiso.bIngresar;
-                bConsultar |= bPermiso.bConsultar;
-                bModificar |= bPermiso.bModificar;
-                bEliminar |= bPermiso.bEliminar;
-            }
+    //        foreach (var bPermiso in gPermisosPorModuloApp.Values)
+    //        {
+    //            bIngresar |= bPermiso.bIngresar;
+    //            bConsultar |= bPermiso.bConsultar;
+    //            bModificar |= bPermiso.bModificar;
+    //            bEliminar |= bPermiso.bEliminar;
+    //        }
 
            
 
 
-            Btn_agregar.Enabled = bIngresar;
-            Btn_quitar.Enabled = bEliminar;
-            Btn_insertar.Enabled = bIngresar;
+    //        Btn_agregar.Enabled = bIngresar;
+    //        Btn_quitar.Enabled = bEliminar;
+    //        Btn_insertar.Enabled = bIngresar;
 
-        }
+    //    }
 
 
 

@@ -42,7 +42,10 @@ namespace Capa_Controlador_Seguridad
                                                         ingresar, consultar, modificar, eliminar, imprimir);
         }
 
-       
+        public DataTable datObtenerAplicacionesPorModulo(int idModulo)
+        {
+            return DAO.datObtenerAplicacionesPorModulo(idModulo);
+        }
 
     }
 
