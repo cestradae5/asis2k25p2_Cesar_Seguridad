@@ -6,7 +6,6 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Capa_Controlador_Seguridad;
 using Capa_Modelo_Seguridad;
-using System.Runtime.InteropServices;
 //Brandon Alexander Hernandez Salguero - 0901-22-9663
 
 namespace Capa_Vista_Seguridad
@@ -19,15 +18,9 @@ namespace Capa_Vista_Seguridad
         private DataTable dtAplicacione;
         Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador(); // Bitacora
 
-
-      
-
-
         public Frm_PermisosPerfiles()
         {
             InitializeComponent();
-            //fun_ConfigurarIdsDinamicamenteYAplicarPermisos();
-            
         }
 
         private void InicializarDataGridView()
@@ -71,19 +64,20 @@ namespace Capa_Vista_Seguridad
             Cbo_Modulos.ValueMember = "Pk_Id_Modulo";
             Cbo_Modulos.SelectedIndex = -1;
 
-            // Cambiar el evento a SelectedIndexChanged en lugar de SelectionChangeCommitted
             Cbo_Modulos.SelectedIndexChanged += Cbo_Modulos_SelectedIndexChanged;
 
             InicializarDataGridView();
+
+            // Suscribir eventos de validación
+            Dgv_Permisos.CellBeginEdit += Dgv_Permisos_CellBeginEdit;
+            Dgv_Permisos.CellClick += Dgv_Permisos_CellClick; // <--- NUEVO EVENTO
         }
 
-        // Nuevo método para el evento SelectedIndexChanged
         private void Cbo_Modulos_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // El mismo código que tenías en SelectionChangeCommitted
             Cbo_aplicaciones.DataSource = null;
 
-            if (Cbo_Modulos.SelectedValue != null)
+            if (Cbo_Modulos.SelectedValue != null && !(Cbo_Modulos.SelectedValue is DataRowView))
             {
                 int idModulo = Convert.ToInt32(Cbo_Modulos.SelectedValue);
                 DataTable dtAplicacionFiltrada = controlador.datObtenerAplicacionesPorModulo(idModulo);
@@ -93,48 +87,9 @@ namespace Capa_Vista_Seguridad
                 Cbo_aplicaciones.ValueMember = "Pk_Id_Aplicacion";
                 Cbo_aplicaciones.SelectedIndex = -1;
             }
-        }
-
-
-
-        private void Cbo_Modulos_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            Cbo_aplicaciones.DataSource = null;
-            Cbo_aplicaciones.Items.Clear();
-
-            if (Cbo_Modulos.SelectedValue != null && Cbo_Modulos.SelectedValue.ToString() != "")
+            else
             {
-                try
-                {
-                    int idModulo = Convert.ToInt32(Cbo_Modulos.SelectedValue);
-
-                    // Mensaje de depuración
-                    Console.WriteLine($"Buscando aplicaciones para módulo ID: {idModulo}");
-
-                    DataTable dtAplicacionFiltrada = controlador.datObtenerAplicacionesPorModulo(idModulo);
-
-                    // Mostrar información de depuración
-                    MessageBox.Show($"Se encontraron {dtAplicacionFiltrada.Rows.Count} aplicaciones para el módulo seleccionado.",
-                                  "Depuración", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                    if (dtAplicacionFiltrada.Rows.Count > 0)
-                    {
-                        Cbo_aplicaciones.DataSource = dtAplicacionFiltrada;
-                        Cbo_aplicaciones.DisplayMember = "Cmp_Nombre_Aplicacion";
-                        Cbo_aplicaciones.ValueMember = "Pk_Id_Aplicacion";
-                        Cbo_aplicaciones.SelectedIndex = 0;
-                    }
-                    else
-                    {
-                        MessageBox.Show("No se encontraron aplicaciones para este módulo.",
-                                      "Información", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error al cargar aplicaciones: {ex.Message}",
-                                  "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                Cbo_aplicaciones.DataSource = null;
             }
         }
 
@@ -142,7 +97,7 @@ namespace Capa_Vista_Seguridad
         {
             if (Cbo_perfiles.SelectedIndex == -1 || Cbo_Modulos.SelectedIndex == -1 || Cbo_aplicaciones.SelectedIndex == -1)
             {
-                MessageBox.Show("Seleccione Perfil, Módulo y Aplicación.");
+                MessageBox.Show("Seleccione Perfil, Módulo y Aplicación.", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -171,86 +126,115 @@ namespace Capa_Vista_Seguridad
                 Dgv_Permisos.Rows.Add(
                     perfilNombre,
                     aplicacionNombre,
-                    false, // Ingresar
-                    false, // Consultar
-                    false, // Modificar
-                    false, // Eliminar
-                    false, // Imprimir
+                    false, false, false, false, false, // Permisos iniciales
                     idPerfil,
                     idModulo,
                     idAplicacion
                 );
 
-                //Registrar en Bitácora - Arón Ricardo Esquit Silva - 0901-22-13036
                 ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, idAplicacion, "Asignación Permisos Perfil - Agregar", true);
-
             }
             else
             {
-                MessageBox.Show("Este Perfil ya tiene la aplicación asignada, solo modifique los permisos.");
+                MessageBox.Show("Este Perfil ya tiene la aplicación asignada, solo modifique los permisos.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
         private void Btn_insertar_Click(object sender, EventArgs e)
         {
-            if (Dgv_Permisos.Rows.Count == 0)
+            if (Dgv_Permisos.Rows.Count <= 1 && Dgv_Permisos.AllowUserToAddRows)
             {
-                MessageBox.Show("No hay registros para insertar.");
+                MessageBox.Show("Debe agregar al menos un registro de asignación para insertar o actualizar.", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
             int insertados = 0;
             int actualizados = 0;
 
-            foreach (DataGridViewRow row in Dgv_Permisos.Rows) //FIX: DataGridViewRow, no DataGriedview
+            foreach (DataGridViewRow row in Dgv_Permisos.Rows)
             {
                 if (row.IsNewRow) continue;
+
                 int iperfil = Convert.ToInt32(row.Cells["IdPerfil"].Value);
                 int imodulo = Convert.ToInt32(row.Cells["IdModulo"].Value);
                 int iaplicacion = Convert.ToInt32(row.Cells["IdAplicacion"].Value);
-                bool ingresar = Convert.ToBoolean(row.Cells["Ingresar"].Value ?? false); // FIX: Cells y Value están con mayúsculas
+                bool ingresar = Convert.ToBoolean(row.Cells["Ingresar"].Value ?? false);
                 bool consultar = Convert.ToBoolean(row.Cells["Consultar"].Value ?? false);
                 bool modificar = Convert.ToBoolean(row.Cells["Modificar"].Value ?? false);
                 bool eliminar = Convert.ToBoolean(row.Cells["Eliminar"].Value ?? false);
                 bool imprimir = Convert.ToBoolean(row.Cells["Imprimir"].Value ?? false);
 
-                // FIX: Llamada del método y parámetros
                 if (controlador.bExistePermisoPerfil(iperfil, imodulo, iaplicacion))
                 {
                     controlador.iActualizarPermisoPerfilAplicacion(iperfil, imodulo, iaplicacion, ingresar, consultar, modificar, eliminar, imprimir);
                     actualizados++;
+                    ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, iaplicacion, "Asignación aplicación a perfil - Actualizar", true);
                 }
                 else
                 {
                     controlador.iInsertarPermisoPerfilAplicacion(iperfil, imodulo, iaplicacion, ingresar, consultar, modificar, eliminar, imprimir);
                     insertados++;
+                    ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, iaplicacion, "Asignación aplicación a perfil - Insertar", true);
                 }
-
-                //Registrar en Bitácora - Arón Ricardo Esquit Silva - 0901-22-13036
-                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, iaplicacion, "Asignación aplicación a perfil - Insertar", true);
-
-
             }
-            MessageBox.Show($"Se insertaron {insertados} registros y se actualizaron {actualizados} registros correctamente.");
+            MessageBox.Show($"Se insertaron {insertados} registros y se actualizaron {actualizados} registros correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
             Dgv_Permisos.Rows.Clear();
         }
 
         private void Btn_quitar_Click(object sender, EventArgs e)
         {
-            if (Dgv_Permisos.CurrentRow != null && !Dgv_Permisos.CurrentRow.IsNewRow) // FIX: Sintaxis
+            if (Dgv_Permisos.CurrentRow != null && !Dgv_Permisos.CurrentRow.IsNewRow)
             {
                 int idaplicacion = Convert.ToInt32(Dgv_Permisos.CurrentRow.Cells["IdAplicacion"].Value);
-                //Registrar en Bitácora - Arón Ricardo Esquit Silva - 0901 -22-13036
                 ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, idaplicacion, "Asignación Perfil a Usuario - Quitar", true);
-
                 Dgv_Permisos.Rows.Remove(Dgv_Permisos.CurrentRow);
             }
             else
             {
-                MessageBox.Show("Seleccione una fila para quitar.");
+                MessageBox.Show("Seleccione una fila para quitar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-
         }
-        private void Dgv_Permisos_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
+
+        // ✅ NUEVA FUNCIÓN: Detecta clics en celdas sin perfil ni aplicación
+        private void Dgv_Permisos_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // Validar que no sea encabezado o fila nueva
+            if (e.RowIndex < 0) return;
+            var row = Dgv_Permisos.Rows[e.RowIndex];
+
+            var idPerfil = row.Cells["IdPerfil"].Value?.ToString();
+            var idAplicacion = row.Cells["IdAplicacion"].Value?.ToString();
+
+            if (string.IsNullOrWhiteSpace(idPerfil) || string.IsNullOrWhiteSpace(idAplicacion))
+            {
+                MessageBox.Show("No tiene aplicación y perfil seleccionado.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        // Validación antes de editar celdas tipo checkbox
+        private void Dgv_Permisos_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            if (Dgv_Permisos.Columns[e.ColumnIndex] is DataGridViewCheckBoxColumn)
+            {
+                var row = Dgv_Permisos.Rows[e.RowIndex];
+
+                if (row.IsNewRow)
+                {
+                    e.Cancel = true;
+                    MessageBox.Show("No tiene aplicación y perfil seleccionado.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                var idPerfil = row.Cells["IdPerfil"].Value?.ToString();
+                var idAplicacion = row.Cells["IdAplicacion"].Value?.ToString();
+
+                if (string.IsNullOrWhiteSpace(idPerfil) || string.IsNullOrWhiteSpace(idAplicacion))
+                {
+                    e.Cancel = true;
+                    MessageBox.Show("No tiene aplicación y perfil seleccionado.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+        }
 
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HTCAPTION = 0x2;
@@ -274,149 +258,49 @@ namespace Capa_Vista_Seguridad
 
         private void Btn_Buscar_Click(object sender, EventArgs e)
         {
-            // 1. Validación: Asegurar que se ha seleccionado un perfil
             if (Cbo_perfiles.SelectedIndex == -1 || Cbo_perfiles.SelectedValue == null)
             {
                 MessageBox.Show("Seleccione un perfil para buscar sus permisos.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Asegurar que la grilla esté inicializada antes de cargar
             InicializarDataGridView();
-            Dgv_Permisos.Rows.Clear(); // Limpiar el DataGridView antes de cargar nuevos datos
+            Dgv_Permisos.Rows.Clear();
 
             try
             {
                 int idPerfil = Convert.ToInt32(Cbo_perfiles.SelectedValue);
-
-                // Llamada al nuevo método del controlador
                 DataTable dtPermisos = controlador.datObtenerPermisosPorPerfil(idPerfil);
 
                 if (dtPermisos.Rows.Count > 0)
                 {
                     foreach (DataRow row in dtPermisos.Rows)
                     {
-                        // Se agregan los datos a la fila, asegurándose que las columnas 
-                        // coincidan con las de InicializarDataGridView()
                         Dgv_Permisos.Rows.Add(
-                            // Columnas visibles: Perfil, Aplicacion
                             row["nombre_perfil"].ToString(),
                             row["nombre_aplicacion"].ToString(),
-
-                            // CheckBox columns: Ingresar, Consultar, Modificar, Eliminar, Imprimir
                             Convert.ToBoolean(row["ingresar_permiso_aplicacion_perfil"]),
                             Convert.ToBoolean(row["consultar_permiso_aplicacion_perfil"]),
                             Convert.ToBoolean(row["modificar_permiso_aplicacion_perfil"]),
                             Convert.ToBoolean(row["eliminar_permiso_aplicacion_perfil"]),
                             Convert.ToBoolean(row["imprimir_permiso_aplicacion_perfil"]),
-
-                            // Columnas ocultas (IDs)
                             row["fk_id_perfil"],
                             row["fk_id_modulo"],
                             row["fk_id_aplicacion"]
                         );
                     }
-
-                    // Bitácora - Registrar la consulta
-                    // Nota: Se usa 0 como ID de aplicación ya que es una consulta de permisos general en el formulario
-                    ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario,
-                                                 0, // ID de la aplicación de este formulario
-                                                 "Permisos Perfil - Consulta", true);
-
-                    MessageBox.Show($"Permisos cargados correctamente. Se encontraron {dtPermisos.Rows.Count} registros.",
-                                    "Búsqueda exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 0, "Permisos Perfil - Consulta", true);
+                    MessageBox.Show($"Permisos cargados correctamente. Se encontraron {dtPermisos.Rows.Count} registros.", "Búsqueda exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    MessageBox.Show("El perfil seleccionado no tiene permisos asignados.",
-                                    "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("El perfil seleccionado no tiene permisos asignados.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ocurrió un error al cargar los permisos: {ex.Message}",
-                                "Error de Búsqueda", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Dgv_Permisos.Rows.Clear();
+                MessageBox.Show($"Error al cargar permisos: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-
-
-
-        //Marcos Andres Velásquez Alcántara
-        //Carnet: 0901-21-1115
-
-        //    private Cls_PermisoUsuario gPermisoUsuario = new Cls_PermisoUsuario();
-
-        //    private List<(int moduloId, int aplicacionId)> gParesModuloAplicacion = new List<(int, int)>();
-
-        //    private Dictionary<(int iModuloId, int iAplicacionId), (bool bIngresar, bool bConsultar, bool bModificar, bool bEliminar, bool bImprimir)> gPermisosPorModuloApp
-        //        = new Dictionary<(int, int), (bool, bool, bool, bool, bool)>();
-
-
-        //    private void fun_ConfigurarIdsDinamicamenteYAplicarPermisos()
-        //    {
-        //        int usuarioId = Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario;
-
-        //        var sParesNombres = new List<(string sModulo, string sAplicacion)>
-        //{
-
-        //    ("Seguridad", "Gestion de empleado"),
-        //    ("Seguridad", "Administracion"),
-        //};
-
-        //        foreach (var (sNombreModulo, sNombreAplicacion) in sParesNombres)
-        //        {
-        //            int idModulo = gPermisoUsuario.ObtenerIdModuloPorNombre(sNombreModulo);
-        //            int idAplicacion = gPermisoUsuario.ObtenerIdAplicacionPorNombre(sNombreAplicacion);
-
-        //            if (idModulo != -1 && idAplicacion != -1)
-        //            {
-        //                gParesModuloAplicacion.Add((idModulo, idAplicacion));
-        //            }
-        //        }
-
-        //        fun_AplicarPermisosUsuario(usuarioId);
-        //    }
-
-        //    private void fun_AplicarPermisosUsuario(int usuarioId)
-        //    {
-        //        foreach (var (moduloId, aplicacionId) in gParesModuloAplicacion)
-        //        {
-        //            var bPermisos = gPermisoUsuario.ConsultarPermisos(usuarioId, aplicacionId, moduloId);
-
-        //            if (bPermisos != null)
-        //            {
-        //                gPermisosPorModuloApp[(moduloId, aplicacionId)] = bPermisos.Value;
-        //            }
-        //        }
-
-        //        fun_CombinarPermisosYActualizarBotones();
-        //    }
-
-        //    private void fun_CombinarPermisosYActualizarBotones()
-        //    {
-        //        bool bIngresar = false;
-        //        bool bConsultar = false;
-        //        bool bModificar = false;
-        //        bool bEliminar = false;
-
-        //        foreach (var bPermiso in gPermisosPorModuloApp.Values)
-        //        {
-        //            bIngresar |= bPermiso.bIngresar;
-        //            bConsultar |= bPermiso.bConsultar;
-        //            bModificar |= bPermiso.bModificar;
-        //            bEliminar |= bPermiso.bEliminar;
-        //        }
-
-
-
-
-        //        Btn_agregar.Enabled = bIngresar;
-        //        Btn_quitar.Enabled = bEliminar;
-        //        Btn_insertar.Enabled = bIngresar;
-
-        //    }
     }
-
 }
