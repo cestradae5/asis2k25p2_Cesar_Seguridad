@@ -27,6 +27,7 @@ namespace Capa_Vista_Seguridad
         {
             InitializeComponent();
             this.Load += frmAsignacion_aplicacion_usuario_Load;
+            Cbo_Modulos.SelectedIndexChanged += Cbo_Modulos_SelectedIndexChanged;
         }
 
         private void frmAsignacion_aplicacion_usuario_Load(object sender, EventArgs e)
@@ -45,8 +46,9 @@ namespace Capa_Vista_Seguridad
             Cbo_Modulos.ValueMember = "pk_id_modulo";
             Cbo_Modulos.SelectedIndex = -1;
 
-            CargarUsuarios();
+            CargarUsuarios(); 
             CargarModulos();
+            
 
             InicializarDataGridView();
 
@@ -74,6 +76,45 @@ namespace Capa_Vista_Seguridad
             Cbo_Modulos.SelectedIndex = -1;
         }
         // fin -> Ruben Armando Lopez Luch
+
+
+        private void Cbo_Modulos_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Evita ejecutar mientras el combo está vacío o cargándose
+            if (Cbo_Modulos.SelectedValue == null || Cbo_Modulos.SelectedValue is DataRowView)
+            {
+                Cbo_Aplicaciones.DataSource = null;
+                return;
+            }
+
+            try
+            {
+                int idModulo = Convert.ToInt32(Cbo_Modulos.SelectedValue);
+
+                DataTable dtApps = controlador.ObtenerAplicacionesPorModulo(idModulo);
+
+                if (dtApps != null && dtApps.Rows.Count > 0)
+                {
+                    Cbo_Aplicaciones.DataSource = dtApps;
+                    Cbo_Aplicaciones.DisplayMember = "nombre_aplicacion";
+                    Cbo_Aplicaciones.ValueMember = "Pk_Id_Aplicacion";
+                    Cbo_Aplicaciones.SelectedIndex = -1;
+                }
+                else
+                {
+                    Cbo_Aplicaciones.DataSource = null;
+                    MessageBox.Show("Este módulo no tiene aplicaciones activas.",
+                        "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al cargar aplicaciones del módulo: {ex.Message}",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
         private void InicializarDataGridView()
         {
             Dgv_Permisos.Columns.Clear();
@@ -203,7 +244,7 @@ namespace Capa_Vista_Seguridad
 
         {
             // Validacion de usuario y plaicacion antes de insertar datos
-            if (Cbo_Usuarios.SelectedIndex == -1 || Cbo_Aplicaciones.SelectedIndex == -1)
+            if (Dgv_Permisos.Rows.Count <= 1)
 
 
             {
@@ -350,6 +391,11 @@ namespace Capa_Vista_Seguridad
             {
                 MessageBox.Show("El usuario no tiene permisos asignados.");
             }
+        }
+
+        private void Cbo_Aplicaciones_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 

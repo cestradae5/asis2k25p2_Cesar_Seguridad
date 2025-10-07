@@ -102,6 +102,7 @@ namespace Capa_Vista_Seguridad
             this.Cbo_Aplicaciones.Name = "Cbo_Aplicaciones";
             this.Cbo_Aplicaciones.Size = new System.Drawing.Size(172, 24);
             this.Cbo_Aplicaciones.TabIndex = 4;
+            this.Cbo_Aplicaciones.SelectedIndexChanged += new System.EventHandler(this.Cbo_Aplicaciones_SelectedIndexChanged);
             // 
             // Cbo_Modulos
             // 
@@ -251,7 +252,7 @@ namespace Capa_Vista_Seguridad
             this.Btn_Buscar.UseVisualStyleBackColor = false;
             this.Btn_Buscar.Click += new System.EventHandler(this.Btn_Buscar_Click);
             // 
-            // frmasignacion_aplicacion_usuario
+            // Frm_asignacion_aplicacion_usuario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -266,7 +267,7 @@ namespace Capa_Vista_Seguridad
             this.Controls.Add(this.Gbp_datos);
             this.Controls.Add(this.Lbl_titulo);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "frmasignacion_aplicacion_usuario";
+            this.Name = "Frm_asignacion_aplicacion_usuario";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Asignacion de Aplicación a Usuario";
             this.Gbp_datos.ResumeLayout(false);
