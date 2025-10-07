@@ -15,13 +15,13 @@ namespace Capa_Vista_Seguridad
         Cls_ControladorAsignacionUsuarioAplicacion controlador = new Cls_ControladorAsignacionUsuarioAplicacion();
         Cls_SentenciasBitacora bitacora = new Cls_SentenciasBitacora();
 
-        private Cls_PermisoUsuario permisoUsuario = new Cls_PermisoUsuario();
+       /* private Cls_PermisoUsuario permisoUsuario = new Cls_PermisoUsuario();
 
         private int iModuloId = -1;
         private int iAplicacionId = -1;
 
         // Tupla para los permisos actuales
-        private (bool bIngresar, bool bConsultar, bool bModificar, bool bEliminar, bool bImprimir)? permisosActuales = null;
+        private (bool bIngresar, bool bConsultar, bool bModificar, bool bEliminar, bool bImprimir)? permisosActuales = null;*/
 
         public Frm_asignacion_aplicacion_usuario()
         {
@@ -50,7 +50,7 @@ namespace Capa_Vista_Seguridad
 
             InicializarDataGridView();
 
-            fun_ConfigurarIdsDinamicamenteYAplicarPermisos();
+            /*fun_ConfigurarIdsDinamicamenteYAplicarPermisos();*/
             Dgv_Permisos.CellBeginEdit += Dgv_Permisos_CellBeginEdit;
         }
 
@@ -107,7 +107,7 @@ namespace Capa_Vista_Seguridad
             Cbo_Aplicaciones.SelectedIndex = -1;
         }
 
-
+        /*
         private void fun_ConfigurarIdsDinamicamenteYAplicarPermisos()
         {
             //Nombre existentes en la base de datos 
@@ -151,7 +151,7 @@ namespace Capa_Vista_Seguridad
             Btn_quitar.Enabled = p.bModificar;
             Btn_finalizar.Enabled = p.bIngresar || p.bModificar;
         }
-
+        */
         // Pablo Quiroa 0901-22-2929
         private void Btn_agregar_Click_1(object sender, EventArgs e)
         {
