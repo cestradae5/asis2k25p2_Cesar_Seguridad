@@ -166,5 +166,42 @@ namespace Capa_Modelo_Seguridad
 
             return filasAfectadas;
         }
+
+        // Dentro de la clase Cls_Asignacion_Permiso_PerfilesDAO
+        public DataTable datObtenerAplicacionesPorModulo(int idModulo)
+        {
+            DataTable dt = new DataTable();
+            // Consulta JOIN entre Tbl_Aplicacion y Tbl_Asignacion_Modulo_Aplicacion
+            string query = @"
+        SELECT a.Pk_Id_Aplicacion, 
+        a.Cmp_Nombre_Aplicacion 
+        FROM Tbl_Aplicacion a
+        INNER JOIN Tbl_Asignacion_Modulo_Aplicacion ma 
+        ON a.Pk_Id_Aplicacion = ma.Fk_Id_Aplicacion
+        WHERE a.Cmp_Estado_Aplicacion = 1 
+        AND ma.Fk_Id_Modulo = ?";
+
+            try
+            {
+                using (OdbcConnection conn = conexion.conexion())
+                {
+                    using (OdbcCommand cmd = new OdbcCommand(query, conn))
+                    {
+                        // Agregamos el parámetro del módulo para el WHERE
+                        cmd.Parameters.AddWithValue("?", idModulo);
+                        using (OdbcDataAdapter da = new OdbcDataAdapter(cmd))
+                        {
+                            da.Fill(dt);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Manejo de error
+                Console.WriteLine("Error al obtener aplicaciones por módulo: " + ex.Message);
+            }
+            return dt;
+        }
     }
 }
