@@ -56,10 +56,9 @@ namespace Capa_Controlador_Navegador
         // Asigna alias validando tabla y columnas
         // ======================= Pedro Ibañez =======================
         // Creacion de Metodo: Asignar Alias Original, generación de Textboxes antes de las modificaciones
-        public bool AsignarAlias(string[] SAlias, Control contenedor, int startX, int startY) //modificacion de método, ahora es tipo bool - Kevin Natareno
+        public bool AsignarAlias(string[] SAlias, Control contenedor, int startX, int startY, int maxPorFila = 4)
         {
-            // ================= Hacer las validaciones - Kevin Natareno ==================================
-            // Validar que la tabla exista
+            // Validar tabla
             if (!dao.ExisteTabla(SAlias[0]))
             {
                 MessageBox.Show($"❌ La tabla '{SAlias[0]}' no existe en la base de datos.");
@@ -68,40 +67,60 @@ namespace Capa_Controlador_Navegador
 
             // Validar columnas
             if (!ValidarColumnas(SAlias[0], SAlias.Skip(1).ToArray(), out List<string> columnasBD))
-                return false; 
-            //==============================================================================================
+                return false;
 
-
-            // Crear controles
-            int spacingY = 30;
+            // Configuración inicial
+            int spacingX = 300; // espacio horizontal entre controles
+            int spacingY = 40;  // espacio vertical entre filas
             int creados = 0;
 
             List<Label> labels = new List<Label>();
             List<ComboBox> combos = new List<ComboBox>();
 
+            int fila = 0;
+            int columna = 0;
+
             foreach (var campo in SAlias.Skip(1))
             {
+                // Calcular posición base
+                int posX = startX + (columna * spacingX);
+                int posY = startY + (fila * spacingY);
+
+                // Crear Label
                 Label lbl = new Label
                 {
                     Font = new Font("Rockwell", 10, FontStyle.Bold),
                     Text = campo + ":",
-                    AutoSize = false,
-                    Location = new System.Drawing.Point(startX, startY + (creados * spacingY))
+                    AutoSize = true,
+                    Location = new Point(posX, posY)
                 };
+
+                // Medir ancho del texto
+                Size textSize = TextRenderer.MeasureText(lbl.Text, lbl.Font);
+
+                // Calcular la posición X para el ComboBox justo después del Label
+                int comboX = lbl.Location.X + textSize.Width + 5; // margen de 5 px
 
                 ComboBox cbo = new ComboBox
                 {
                     Name = "Cbo_" + campo,
                     Font = new Font("Rockwell", 10, FontStyle.Regular),
                     Width = 150,
-                    Location = new System.Drawing.Point(startX + 100, startY + (creados * spacingY)),
+                    Location = new Point(comboX, posY)
                 };
 
-                List<string> items = sentencias.ObtenerValoresColumna(SAlias[0], campo);
-                foreach (var item in items)
-                    cbo.Items.Add(item);
+                // Agregar items al ComboBox
+                try
+                {
+                    List<string> items = sentencias.ObtenerValoresColumna(SAlias[0], campo);
+                    cbo.Items.AddRange(items.ToArray());
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error al cargar {campo}: {ex.Message}");
+                }
 
-                // Bloquear combobox de la PK
+                // Bloquear PK
                 if (creados == 0)
                 {
                     cbo.SelectedIndexChanged += (s, e) =>
@@ -111,9 +130,22 @@ namespace Capa_Controlador_Navegador
                     };
                 }
 
+                // Agregar a listas
                 labels.Add(lbl);
                 combos.Add(cbo);
                 creados++;
+
+                // Avanzar a la siguiente columna
+                columna++;
+
+                // Calcular siguiente posición X considerando el ancho real del Label y ComboBox
+                spacingX = textSize.Width + cbo.Width + 40; // 40 = espacio entre controles
+
+                if (columna >= maxPorFila)
+                {
+                    columna = 0;
+                    fila++;
+                }
             }
 
             // Agregar controles al contenedor
@@ -122,7 +154,6 @@ namespace Capa_Controlador_Navegador
 
             return creados > 0;
         }
-
 
 
         private DataGridView dgv;

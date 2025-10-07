@@ -129,6 +129,30 @@ namespace Capa_Vista_Navegador
             Btn_fin.Enabled = false;
         }
 
+        // public void BotonesEstadoCRUD(
+        // bool ingresar,
+        // bool modificar,
+        // bool guardar,
+        // bool eliminar,
+        // bool consultar,
+        // bool imprimir)
+        //    {
+        //        Btn_ingresar.Enabled = ingresar;
+        //        Btn_modificar.Enabled = modificar;
+        //        Btn_guardar.Enabled = guardar;
+        //        Btn_eliminar.Enabled = eliminar;
+        //        Btn_consultar.Enabled = consultar;
+        //        Btn_imprimir.Enabled = imprimir;
+        //        Btn_cancelar.Enabled = true;
+       //         Btn_refrescar.Enabled = true;
+       //         Btn_inicio.Enabled = true;
+       //         Btn_anterior.Enabled = true;
+      //          Btn_sig.Enabled = true;
+       //         Btn_fin.Enabled = true;
+        //    }
+
+
+
         private void Btn_cancelar_Click_1(object sender, EventArgs e)
         {
             BotonesEstadoInicial();
