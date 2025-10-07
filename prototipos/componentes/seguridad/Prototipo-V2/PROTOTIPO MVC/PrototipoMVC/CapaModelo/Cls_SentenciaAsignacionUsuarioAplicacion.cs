@@ -43,10 +43,14 @@ namespace Capa_Modelo_Seguridad
         public DataTable ObtenerAplicacionesPorModulo(int idModulo)
         {
             DataTable dt = new DataTable();
-            string query = @"SELECT Pk_Id_Aplicacion, 
-                                    Cmp_Nombre_Aplicacion AS nombre_aplicacion
-                             FROM Tbl_Aplicacion 
-                             WHERE Cmp_Estado_Aplicacion = 1 AND Fk_Id_Modulo = ?";
+            string query = @"
+        SELECT a.Pk_Id_Aplicacion, 
+               a.Cmp_Nombre_Aplicacion AS nombre_aplicacion
+        FROM Tbl_Aplicacion a
+        INNER JOIN Tbl_Asignacion_Modulo_Aplicacion ma 
+            ON a.Pk_Id_Aplicacion = ma.Fk_Id_Aplicacion
+        WHERE a.Cmp_Estado_Aplicacion = 1 
+          AND ma.Fk_Id_Modulo = ?";
 
             using (OdbcConnection conn = conexion.conexion())
             using (OdbcCommand cmd = new OdbcCommand(query, conn))
@@ -121,10 +125,11 @@ namespace Capa_Modelo_Seguridad
             string query = @"INSERT INTO Tbl_Permiso_Usuario_Aplicacion
                              (Fk_Id_Usuario, Fk_Id_Modulo, Fk_Id_Aplicacion,
                               Cmp_Ingresar_Permiso_Aplicacion_Usuario,
-                              Cmp_Consultar_Permiso_Aplicacion_Usuario,
-                              Cmp_Modificar_Permiso_Aplicacion_Usuario,
-                              Cmp_Eliminar_Permiso_Aplicacion_Usuario,
-                              Cmp_Imprimir_Permiso_Aplicacion_Usuario)
+                                Cmp_Consultar_Permiso_Aplicacion_Usuario,
+                                Cmp_Modificar_Permiso_Aplicacion_Usuario,
+                                Cmp_Eliminar_Permiso_Aplicacion_Usuario,
+                                Cmp_Imprimir_Permiso_Aplicacion_Usuario)
+                              
                              VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
             using (OdbcConnection conn = conexion.conexion())
@@ -133,11 +138,11 @@ namespace Capa_Modelo_Seguridad
                 cmdInsertar.Parameters.AddWithValue("?", idUsuario);
                 cmdInsertar.Parameters.AddWithValue("?", idModulo);
                 cmdInsertar.Parameters.AddWithValue("?", idAplicacion);
-                cmdInsertar.Parameters.AddWithValue("?", ingresar);
-                cmdInsertar.Parameters.AddWithValue("?", consultar);
-                cmdInsertar.Parameters.AddWithValue("?", modificar);
-                cmdInsertar.Parameters.AddWithValue("?", eliminar);
-                cmdInsertar.Parameters.AddWithValue("?", imprimir);
+                cmdInsertar.Parameters.AddWithValue("?", (byte)(ingresar ? 1 : 0));
+                cmdInsertar.Parameters.AddWithValue("?", (byte)(consultar ? 1 : 0));
+                cmdInsertar.Parameters.AddWithValue("?", (byte)(modificar ? 1 : 0));
+                cmdInsertar.Parameters.AddWithValue("?", (byte)(eliminar ? 1 : 0));
+                cmdInsertar.Parameters.AddWithValue("?", (byte)(imprimir ? 1 : 0));
 
                 filasAfectadas = cmdInsertar.ExecuteNonQuery();
             }
