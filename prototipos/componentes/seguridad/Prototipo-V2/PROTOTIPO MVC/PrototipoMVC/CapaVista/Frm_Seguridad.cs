@@ -14,7 +14,7 @@ namespace Capa_Vista_Seguridad
 {
     public partial class Frm_Seguridad : Form
     {
-        Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador();
+        Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador();  //Controlador de Bitacora
         private int iIChildFormNumber = 0;
 
         public enum MenuOpciones
@@ -36,7 +36,7 @@ namespace Capa_Vista_Seguridad
             InitializeComponent();
             InicializarMenuItems();
             fun_inicializar_botones_por_defecto();
-            fun_habilitar_botones_por_permisos(Cls_UsuarioConectado.iIdUsuario);
+            fun_habilitar_botones_por_permisos(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario);
         }
 
         private void InicializarMenuItems()
@@ -214,7 +214,7 @@ namespace Capa_Vista_Seguridad
 
         private void cambiarContraseñaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Frm_cambiar_contrasena ventana = new Frm_cambiar_contrasena(Cls_sesion.iUsuarioId);
+            Frm_cambiar_contrasena ventana = new Frm_cambiar_contrasena(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario);
             ventana.Show();
         }
 
@@ -280,7 +280,6 @@ namespace Capa_Vista_Seguridad
 
         private void cerrarSesiónToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ctrlBitacora.RegistrarCierreSesion(Cls_UsuarioConectado.iIdUsuario);
             Frm_Principal ventanaPrincipal = new Frm_Principal();
             ventanaPrincipal.Show();
             this.Close();

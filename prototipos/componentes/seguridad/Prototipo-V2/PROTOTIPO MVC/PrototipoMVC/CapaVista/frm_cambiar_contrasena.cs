@@ -146,7 +146,7 @@ namespace Capa_Vista_Seguridad
 
         private void fun_AplicarPermisosUsuario()
         {
-            int usuarioId = Cls_sesion.iUsuarioId; // Usuario logueado
+            int usuarioId = Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario; // Usuario logueado
             if (iAplicacionId == -1 || iModuloId == -1)
             {
                 permisosActuales = null;

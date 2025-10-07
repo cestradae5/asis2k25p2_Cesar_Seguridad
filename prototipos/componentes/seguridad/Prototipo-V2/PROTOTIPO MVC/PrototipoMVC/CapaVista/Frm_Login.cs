@@ -58,10 +58,14 @@ namespace Capa_Vista_Seguridad
             if (loginExitoso)
             {
                 // Guardar datos de sesión
-                Cls_sesion.iUsuarioId = idUsuario;
-                Cls_sesion.sNombreUsuario = usuario;
+                Cls_UsuarioConectado.iIdUsuario = idUsuario;
+                Cls_UsuarioConectado.sNombreUsuario = usuario;
 
-                // Registrar en bitácora //Aron Ricardo Esquit Silva   0901-22-13036
+                // Guardar datos del usuario conectado
+                Cls_UsuarioConectado.IniciarSesion(idUsuario, usuario);
+
+
+                // Registrar inicio en bitácora
                 ctrlBitacora.RegistrarInicioSesion(idUsuario);
 
 

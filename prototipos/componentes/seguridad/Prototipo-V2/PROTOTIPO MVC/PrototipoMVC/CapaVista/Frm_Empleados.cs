@@ -50,7 +50,7 @@ namespace Capa_Vista_Seguridad
 
         private void fun_AplicarPermisosUsuario()
         {
-            int usuarioId = Cls_sesion.iUsuarioId; // Usuario logueado
+            int usuarioId = Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario; // Usuario logueado
             if (iAplicacionId == -1 || iModuloId == -1)
             {
                 permisosActuales = null;
@@ -224,7 +224,7 @@ namespace Capa_Vista_Seguridad
                 DateTime.Parse(Txt_fechaContra_empleado.Text)
             );
             MessageBox.Show(exito ? "Empleado modificado correctamente" : "Error al modificar empleado");
-            ctrlBitacora.RegistrarAccion(Cls_sesion.iUsuarioId, iAplicacionId, "Modificar empleado", true);
+            ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, iAplicacionId, "Modificar empleado", true);
             func_CargarEmpleados();
             fun_ConfigurarComboBoxEmpleados();
             fun_LimpiarCampos();
@@ -245,7 +245,7 @@ namespace Capa_Vista_Seguridad
             }
             bool exito = controlador.func_BorrarEmpleado(id);
             MessageBox.Show(exito ? "Empleado eliminado" : "Error al eliminar");
-            ctrlBitacora.RegistrarAccion(Cls_sesion.iUsuarioId, iAplicacionId, "Eliminar empleado", true);
+            ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, iAplicacionId, "Eliminar empleado", true);
             func_CargarEmpleados();
             fun_ConfigurarComboBoxEmpleados();
             fun_LimpiarCampos();
@@ -333,7 +333,7 @@ namespace Capa_Vista_Seguridad
                 );
 
                 MessageBox.Show("Empleado guardado correctamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                ctrlBitacora.RegistrarAccion(Cls_sesion.iUsuarioId, iAplicacionId, "Guardar empleado", true);
+                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, iAplicacionId, "Guardar empleado", true);
 
                 fun_CargarEmpleados();
                 fun_ConfigurarComboBoxEmpleados();

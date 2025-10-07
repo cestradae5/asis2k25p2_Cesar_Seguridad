@@ -14,6 +14,7 @@ namespace Capa_Vista_Seguridad
 {
     public partial class Frm_Principal : Form
     {
+        Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador(); //Controlador de bitacora
         private int childFormNumber = 0;
         private Cls_ControladorAsignacionUsuarioAplicacion ctrlSeguridad;
 
@@ -75,6 +76,8 @@ namespace Capa_Vista_Seguridad
 
         private void ExitToolsStripMenuItem_Click(object sender, EventArgs e)
         {
+            // Registrar en bitácora //Aron Ricardo Esquit Silva   0901-22-13036
+            ctrlBitacora.RegistrarCierreSesion(Cls_UsuarioConectado.iIdUsuario);
             Frm_Login ventana = new Frm_Login();
             ventana.Show();
             this.Hide();
@@ -140,7 +143,7 @@ namespace Capa_Vista_Seguridad
 
         private void frmPrincipal_Load(object sender, EventArgs e)
         {
-            fun_activar_menus_por_permiso(Cls_sesion.iUsuarioId);
+            fun_activar_menus_por_permiso(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario);
         }
     }
 }

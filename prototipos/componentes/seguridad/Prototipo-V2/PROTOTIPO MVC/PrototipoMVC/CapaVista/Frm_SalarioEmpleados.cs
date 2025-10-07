@@ -38,7 +38,7 @@ namespace Capa_Vista_Seguridad
 
         private void ConfigurarIdsDinamicamenteYAplicarPermisos()
         {
-            int usuarioId = Cls_sesion.iUsuarioId;
+            int usuarioId = Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario;
 
             var sParesNombres = new List<(string sModulo, string sAplicacion)>
     {

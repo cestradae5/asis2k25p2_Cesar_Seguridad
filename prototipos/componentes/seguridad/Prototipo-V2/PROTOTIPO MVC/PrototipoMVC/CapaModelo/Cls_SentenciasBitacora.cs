@@ -127,10 +127,11 @@ namespace Capa_Modelo_Seguridad
         public DataTable ObtenerUsuarios()
         {
             string sSql = @"
-                SELECT Pk_Id_Usuario, Cmp_Nombre_Usuario
+                SELECT Pk_Id_Usuario AS id,
+                       Cmp_Nombre_Usuario AS usuario
                 FROM Tbl_Usuario
-                WHERE Cmp_Estado_Usuario <> 'Bloqueado';";
-
+                WHERE Cmp_Estado_Usuario = 1
+                ORDER BY Cmp_Nombre_Usuario;";
             return ctrlBitacoraDao.EjecutarConsulta(sSql);
         }
 

@@ -1,6 +1,9 @@
 ﻿//Registrar en Bitácora - Arón Ricardo Esquit Silva - 0901-22-13036 - 12/09/2025
 using System;
 using System.Data;
+using System.IO;
+using System.Text;
+using System.Drawing;
 using System.Drawing.Printing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
@@ -15,7 +18,7 @@ namespace Capa_Vista_Seguridad
         private readonly Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador();
 
         // permisos 0901-21-1115 Marcos Andres Velásquez Alcántara
-        private Cls_PermisoUsuario permisoUsuario = new Cls_PermisoUsuario();
+        private Cls_PermisoUsuario permisoUsuario = new Cls_PermisoUsuario(); //Esto llama a modelo, no va aquí
 
         private int iModuloId = -1;
         private int iAplicacionId = -1;
@@ -29,7 +32,7 @@ namespace Capa_Vista_Seguridad
             CargarUsuariosEnCombo(); // carga usuarios al abrir
             OcultarFiltros();        // opcional
             fun_ConfigurarIdsDinamicamenteYAplicarPermisos();
-            CargarEnGrid(ctrlBitacora.MostrarBitacora()); //Mostrar toda la bitacora al inicio
+            CargarEnGrid(ctrlBitacora.MostrarBitacora()); //Mostrar toda la bitácora al inicio
         }
 
         //Mostrar en pantalla
@@ -58,7 +61,7 @@ namespace Capa_Vista_Seguridad
             }
         }
 
-        //No mostrar las barras hasta precionar los botones
+        //No mostrar las barras hasta presionar los botones
         private void OcultarFiltros()
         {
             Lbl_PrimeraFecha.Visible = false;
@@ -80,23 +83,31 @@ namespace Capa_Vista_Seguridad
 
         private void Btn_Maximizar_Click(object sender, EventArgs e)
         {
-            if (WindowState == FormWindowState.Normal)
-                WindowState = FormWindowState.Maximized;
-            else
-                WindowState = FormWindowState.Normal;
+            WindowState = (WindowState == FormWindowState.Normal)
+                ? FormWindowState.Maximized
+                : FormWindowState.Normal;
         }
 
         private void Btn_Minimizar_Click(object sender, EventArgs e) => WindowState = FormWindowState.Minimized;
 
-        // Comandos de la vista
-        private void Btn_Consultar_Click(object sender, EventArgs e) =>
+        // Consultar toda la bitácora
+        private void Btn_Consultar_Click(object sender, EventArgs e)
+        {
             CargarEnGrid(ctrlBitacora.MostrarBitacora());
+        }
 
         //Exportar
         private void Btn_Exportar_Click(object sender, EventArgs e)
         {
             try
             {
+                DataTable dt = (DataTable)Dgv_Bitacora.DataSource;
+                if (dt == null || dt.Rows.Count == 0)
+                {
+                    MessageBox.Show("No hay datos para exportar.", "Exportar", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
                 SaveFileDialog sfd = new SaveFileDialog
                 {
                     Filter = "CSV Files (*.csv)|*.csv",
@@ -106,7 +117,7 @@ namespace Capa_Vista_Seguridad
 
                 if (sfd.ShowDialog() == DialogResult.OK)
                 {
-                    ctrlBitacora.ExportarCsv(sfd.FileName);
+                    ExportarCsv(dt, sfd.FileName);
                     MessageBox.Show("Bitácora exportada correctamente.",
                                     "Exportar",
                                     MessageBoxButtons.OK,
@@ -122,12 +133,44 @@ namespace Capa_Vista_Seguridad
             }
         }
 
+        private void ExportarCsv(DataTable dt, string ruta)
+        {
+            var sb = new StringBuilder();
+
+            for (int i = 0; i < dt.Columns.Count; i++)
+            {
+                if (i > 0) sb.Append(',');
+                sb.Append(dt.Columns[i].ColumnName);
+            }
+            sb.AppendLine();
+
+            foreach (DataRow row in dt.Rows)
+            {
+                for (int i = 0; i < dt.Columns.Count; i++)
+                {
+                    if (i > 0) sb.Append(',');
+                    sb.Append(row[i]?.ToString().Replace(",", " "));
+                }
+                sb.AppendLine();
+            }
+
+            File.WriteAllText(ruta, sb.ToString(), Encoding.UTF8);
+        }
+
         //Imprimir
         private void Btn_Imprimir_Click(object sender, EventArgs e)
         {
             try
             {
-                PrintDocument doc = ctrlBitacora.CrearDocumentoImpresion();
+                DataTable dt = (DataTable)Dgv_Bitacora.DataSource;
+                if (dt == null || dt.Rows.Count == 0)
+                {
+                    MessageBox.Show("No hay datos para imprimir.", "Imprimir", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                PrintDocument doc = new PrintDocument();
+                doc.PrintPage += (s, ev) => DibujarBitacora(ev, dt);
                 PrintPreviewDialog preview = new PrintPreviewDialog { Document = doc };
                 preview.ShowDialog();
             }
@@ -137,6 +180,47 @@ namespace Capa_Vista_Seguridad
                                 "Error",
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Error);
+            }
+        }
+
+        private void DibujarBitacora(PrintPageEventArgs e, DataTable dt)
+        {
+            Graphics g = e.Graphics;
+            Font fontHeader = new Font("Segoe UI", 10, FontStyle.Bold);
+            Font fontCell = new Font("Segoe UI", 9);
+            int x = 50;
+            int y = 100;
+            int rowH = 25;
+
+            g.DrawString("Bitácora", new Font("Segoe UI", 14, FontStyle.Bold), Brushes.Black, x, y - 50);
+            g.DrawString(DateTime.Now.ToString("yyyy-MM-dd HH:mm"), fontCell, Brushes.Black, x + 600, y - 40);
+
+            foreach (DataColumn col in dt.Columns)
+            {
+                g.DrawString(col.ColumnName.ToUpper(), fontHeader, Brushes.Black, x, y);
+                x += 120;
+            }
+
+            y += rowH;
+            x = 50;
+
+            foreach (DataRow row in dt.Rows)
+            {
+                foreach (var item in row.ItemArray)
+                {
+                    string texto = item?.ToString() ?? "";
+                    g.DrawString(texto, fontCell, Brushes.Black, x, y);
+                    x += 120;
+                }
+
+                x = 50;
+                y += rowH;
+
+                if (y > e.MarginBounds.Bottom - rowH)
+                {
+                    e.HasMorePages = true;
+                    return;
+                }
             }
         }
 
@@ -157,23 +241,18 @@ namespace Capa_Vista_Seguridad
             CargarEnGrid(ctrlBitacora.BuscarPorRango(Dtp_PrimeraFecha.Value, Dtp_SegundaFecha.Value));
         }
 
-        //Muestra la barra de fecha
         private void Btn_BuscarFecha_Click(object sender, EventArgs e)
         {
             OcultarFiltros();
-
             Lbl_FechaEspecifica.Visible = true;
             Dtp_FechaEspecifica.Visible = true;
             Btn_Imprimir.Visible = true;
-
             CargarEnGrid(ctrlBitacora.BuscarPorFecha(Dtp_FechaEspecifica.Value));
         }
 
-        //Botos para buscar usuari0
         private void Btn_BuscarUsuario_Click(object sender, EventArgs e)
         {
             OcultarFiltros();
-
             Lbl_Usuario.Visible = true;
             Cbo_Usuario.Visible = true;
             Btn_Imprimir.Visible = true;
@@ -185,7 +264,7 @@ namespace Capa_Vista_Seguridad
             }
         }
 
-        //Buscar por fecha especifica
+        // Eventos de cambio de fecha
         private void Dtp_FechaEspecifica_ValueChanged(object sender, EventArgs e)
         {
             if (Dtp_FechaEspecifica.Visible)
@@ -204,11 +283,9 @@ namespace Capa_Vista_Seguridad
                 CargarEnGrid(ctrlBitacora.BuscarPorRango(Dtp_PrimeraFecha.Value, Dtp_SegundaFecha.Value));
         }
 
-        //Filtrar por usuario seleccionado
         private void Cbo_Usuario_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (!Cbo_Usuario.Visible || Cbo_Usuario.SelectedValue == null) return;
-
             if (int.TryParse(Cbo_Usuario.SelectedValue.ToString(), out int idUsuario))
                 CargarEnGrid(ctrlBitacora.BuscarPorUsuario(idUsuario));
         }
@@ -217,11 +294,8 @@ namespace Capa_Vista_Seguridad
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HTCAPTION = 0x2;
 
-        [DllImport("user32.dll")]
-        public static extern bool ReleaseCapture();
-
-        [DllImport("user32.dll")]
-        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+        [DllImport("user32.dll")] public static extern bool ReleaseCapture();
+        [DllImport("user32.dll")] public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
 
         private void Pnl_Superior_MouseDown(object sender, MouseEventArgs e)
         {
@@ -240,15 +314,9 @@ namespace Capa_Vista_Seguridad
             frm.Show();
         }
 
-
-
-        //0901-21-1115 Marcos Andres Velasquez Alcánatara -- permisos script
-        //0901-22-9663 Brandon Alexander Hernandez Salguero --  asignacion Modulos y aplicaciones
-
-
+        //Permisos de compañeros
         private void fun_ConfigurarIdsDinamicamenteYAplicarPermisos()
         {
-            // Cambia estos nombres exactamente como están en tu BD
             string sNombreModulo = "Seguridad";
             string sNombreAplicacion = "Administracion";
             iAplicacionId = permisoUsuario.ObtenerIdAplicacionPorNombre(sNombreAplicacion);
@@ -258,7 +326,7 @@ namespace Capa_Vista_Seguridad
 
         private void fun_AplicarPermisosUsuario()
         {
-            int usuarioId = Cls_sesion.iUsuarioId; // Usuario logueado
+            int usuarioId = Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario; // Usuario logueado
             if (iAplicacionId == -1 || iModuloId == -1)
             {
                 permisosActuales = null;
@@ -270,7 +338,6 @@ namespace Capa_Vista_Seguridad
             fun_ActualizarEstadoBotonesSegunPermisos();
         }
 
-        // Centraliza el habilitado/deshabilitado de botones según permisos y estado de navegación
         private void fun_ActualizarEstadoBotonesSegunPermisos(bool empleadoCargado = false)
         {
             if (!permisosActuales.HasValue)
@@ -282,13 +349,10 @@ namespace Capa_Vista_Seguridad
                 Btn_BuscarRango.Enabled = false;
                 Btn_Imprimir.Enabled = false;
                 button1.Enabled = false;
-
-
                 return;
             }
 
             var p = permisosActuales.Value;
-
             Btn_Consultar.Enabled = p.bConsultar;
             Btn_Exportar.Enabled = p.bImprimir;
             Btn_BuscarFecha.Enabled = p.bConsultar;
@@ -296,10 +360,6 @@ namespace Capa_Vista_Seguridad
             Btn_BuscarRango.Enabled = p.bConsultar;
             Btn_Imprimir.Enabled = p.bConsultar;
             button1.Enabled = p.bConsultar;
-
-
         }
-
-
     }
 }

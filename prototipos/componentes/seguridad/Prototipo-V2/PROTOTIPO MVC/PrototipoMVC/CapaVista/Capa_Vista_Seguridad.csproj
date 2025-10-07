@@ -56,7 +56,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cls_sesion.cs" />
     <Compile Include="Frm_PermisosPerfiles.cs">
       <SubType>Form</SubType>
     </Compile>
