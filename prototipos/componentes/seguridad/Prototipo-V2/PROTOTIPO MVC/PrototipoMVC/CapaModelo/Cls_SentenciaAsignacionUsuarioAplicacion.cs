@@ -118,19 +118,18 @@ namespace Capa_Modelo_Seguridad
 
         // Insertar permisos de usuario por aplicación
         public int InsertarPermisoUsuarioAplicacion(int idUsuario, int idModulo, int idAplicacion,
-                                                    bool ingresar, bool consultar, bool modificar,
-                                                    bool eliminar, bool imprimir)
+                                            bool ingresar, bool consultar, bool modificar,
+                                            bool eliminar, bool imprimir)
         {
             int filasAfectadas = 0;
             string query = @"INSERT INTO Tbl_Permiso_Usuario_Aplicacion
-                             (Fk_Id_Usuario, Fk_Id_Modulo, Fk_Id_Aplicacion,
-                              Cmp_Ingresar_Permiso_Aplicacion_Usuario,
-                                Cmp_Consultar_Permiso_Aplicacion_Usuario,
-                                Cmp_Modificar_Permiso_Aplicacion_Usuario,
-                                Cmp_Eliminar_Permiso_Aplicacion_Usuario,
-                                Cmp_Imprimir_Permiso_Aplicacion_Usuario)
-                              
-                             VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                     (Fk_Id_Usuario, Fk_Id_Modulo, Fk_Id_Aplicacion,
+                      Cmp_Ingresar_Permiso_Aplicacion_Usuario,
+                      Cmp_Consultar_Permiso_Aplicacion_Usuario,
+                      Cmp_Modificar_Permiso_Aplicacion_Usuario,
+                      Cmp_Eliminar_Permiso_Aplicacion_Usuario,
+                      Cmp_Imprimir_Permiso_Aplicacion_Usuario)
+                     VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
             using (OdbcConnection conn = conexion.conexion())
             using (OdbcCommand cmdInsertar = new OdbcCommand(query, conn))
@@ -138,16 +137,17 @@ namespace Capa_Modelo_Seguridad
                 cmdInsertar.Parameters.AddWithValue("?", idUsuario);
                 cmdInsertar.Parameters.AddWithValue("?", idModulo);
                 cmdInsertar.Parameters.AddWithValue("?", idAplicacion);
-                cmdInsertar.Parameters.AddWithValue("?", (byte)(ingresar ? 1 : 0));
-                cmdInsertar.Parameters.AddWithValue("?", (byte)(consultar ? 1 : 0));
-                cmdInsertar.Parameters.AddWithValue("?", (byte)(modificar ? 1 : 0));
-                cmdInsertar.Parameters.AddWithValue("?", (byte)(eliminar ? 1 : 0));
-                cmdInsertar.Parameters.AddWithValue("?", (byte)(imprimir ? 1 : 0));
+                cmdInsertar.Parameters.AddWithValue("?", ingresar);
+                cmdInsertar.Parameters.AddWithValue("?", consultar);
+                cmdInsertar.Parameters.AddWithValue("?", modificar);
+                cmdInsertar.Parameters.AddWithValue("?", eliminar);
+                cmdInsertar.Parameters.AddWithValue("?", imprimir);
 
                 filasAfectadas = cmdInsertar.ExecuteNonQuery();
             }
             return filasAfectadas;
         }
+
 
         // Actualizar permisos de usuario por aplicación
         public int ActualizarPermisoUsuarioAplicacion(int idUsuario, int idModulo, int idAplicacion,
