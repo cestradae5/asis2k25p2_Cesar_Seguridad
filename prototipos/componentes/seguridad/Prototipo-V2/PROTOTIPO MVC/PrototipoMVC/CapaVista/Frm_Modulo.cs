@@ -86,7 +86,7 @@ namespace Capa_Vista_Seguridad
             {
                 MessageBox.Show("Guardado correctamente!");
                 CargarComboBox(); // Refresca combo
-                ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, 1, "Guardar módulo", true); // Registra en bitácora
+                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 1, "Guardar módulo", true); // Registra en bitácora
                 LimpiarCampos();
                 Txt_id.Enabled = true;
             }
@@ -136,7 +136,7 @@ namespace Capa_Vista_Seguridad
             {
                 MessageBox.Show("Módulo eliminado correctamente.");
                 CargarComboBox();
-                ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, 1, "Eliminar módulo", true); // Bitácora
+                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 1, "Eliminar módulo", true); // Bitácora
                 LimpiarCampos();
                 Txt_id.Enabled = true;
             }
@@ -240,7 +240,7 @@ namespace Capa_Vista_Seguridad
 
         private void ConfigurarIdsDinamicamenteYAplicarPermisos()
         {
-            int usuarioId = Cls_sesion.iUsuarioId;
+            int usuarioId = Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario;
 
             // Lista de módulos y aplicaciones donde se aplicarán permisos
             var sParesNombres = new List<(string sModulo, string sAplicacion)>

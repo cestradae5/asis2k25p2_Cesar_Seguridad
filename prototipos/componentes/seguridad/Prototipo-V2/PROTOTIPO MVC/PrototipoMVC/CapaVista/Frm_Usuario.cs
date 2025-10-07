@@ -15,6 +15,7 @@ namespace Capa_Vista_Seguridad
         private List<string> gLstEmpleadosDisplay = new List<string>();
         private List<int> gLstEmpleadosIds = new List<int>();
         private int iIdUsuarioSeleccionado = 0;
+        Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador(); //Bitacora
 
         public Frm_Usuario()
         {
@@ -86,6 +87,8 @@ namespace Capa_Vista_Seguridad
 
             if (resultado.bExito)
             {
+                //Registrar en Bitácora - Arón Ricardo Esquit Silva 0901-22-13036
+                ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, 1, "Guardo nuevo usuario", true);
                 LimpiarCampos();
                 ConfiguracionInicial();
             }

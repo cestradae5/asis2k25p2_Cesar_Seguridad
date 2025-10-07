@@ -104,10 +104,10 @@ namespace Capa_Modelo_Seguridad
                     try
                     {
                         // 1. Eliminar registros dependientes en tbl_ASIGNACION_MODULO_APLICACION
-                        string sqlDeleteDependientes = "DELETE FROM tbl_ASIGNACION_MODULO_APLICACION WHERE fk_id_aplicacion = ?";
+                        string sqlDeleteDependientes = "DELETE FROM Tbl_Asignacion_Modulo_Aplicacion WHERE Fk_Id_Aplicacion = ?";
                         using (OdbcCommand cmdDependientes = new OdbcCommand(sqlDeleteDependientes, conn, transaction))
                         {
-                            cmdDependientes.Parameters.AddWithValue("@fk_id_aplicacion", idAplicacion);
+                            cmdDependientes.Parameters.AddWithValue("@Fk_Id_Aplicacion", idAplicacion);
                             cmdDependientes.ExecuteNonQuery();
                         }
 

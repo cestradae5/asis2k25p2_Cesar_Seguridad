@@ -181,8 +181,7 @@ namespace Capa_Vista_Seguridad
             if (exito)
             {
                 //Registrar en Bitácora - Arón Ricardo Esquit Silva 0901-22-13036
-                ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, 1, "Eliminar aplicación", true);
-
+                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 1, "Eliminar aplicación", true);
             }
             RecargarTodo();
         }
@@ -208,7 +207,7 @@ namespace Capa_Vista_Seguridad
             // Registrar en Bitácora Arón Ricardo Esquit Silva   0901-22-13036
             if (exito)
             {
-                ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, 1, "Modificar aplicación", true);
+                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 1, "Modificar aplicación", true);
             }
             RecargarTodo();
         }
@@ -288,7 +287,7 @@ namespace Capa_Vista_Seguridad
             LimpiarCampos();
 
             // Registrar en Bitácora
-            ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, 1, "Guardar aplicación", true);
+            ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 1, "Guardar aplicación", true);
             RecargarTodo();
         }
 
@@ -378,7 +377,7 @@ namespace Capa_Vista_Seguridad
 
         private void fun_ConfigurarIdsDinamicamenteYAplicarPermisos()
         {
-            int usuarioId = Cls_sesion.iUsuarioId;
+            int usuarioId = Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario;
 
             var sParesNombres = new List<(string sModulo, string sAplicacion)>
     {

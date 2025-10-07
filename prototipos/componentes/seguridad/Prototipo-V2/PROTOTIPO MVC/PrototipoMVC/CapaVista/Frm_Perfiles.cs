@@ -121,7 +121,7 @@ namespace Capa_Vista_Seguridad
                     MessageBox.Show("Perfil guardado correctamente");
 
                     // Registrar en Bitácora - Arón Ricardo Esquit Silva 0901-22-13036
-                    ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, 1, "Guardar perfil", true);
+                    ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 1, "Guardar perfil", true);
 
                 }
                 else
@@ -170,7 +170,7 @@ namespace Capa_Vista_Seguridad
                 MessageBox.Show("Perfil modificado correctamente");
 
                 // Registrar en Bitácora - Arón Ricardo Esquit Silva 0901-22-13036
-                ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, 1, "Modificar perfil", true);
+                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 1, "Modificar perfil", true);
             }
             else
             {
@@ -256,7 +256,7 @@ namespace Capa_Vista_Seguridad
             {
                 MessageBox.Show("Perfil eliminado");
                 // Registrar en Bitácora - Arón Ricardo Esquit Silva 0901-22-13036
-                ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, 1, "Eliminar perfil", true);
+                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 1, "Eliminar perfil", true);
             }
             else
             {
@@ -315,7 +315,7 @@ namespace Capa_Vista_Seguridad
 
         private void fun_ConfigurarIdsDinamicamenteYAplicarPermisos()
         {
-            int usuarioId = Cls_sesion.iUsuarioId;
+            int usuarioId = Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario;
 
             var sParesNombres = new List<(string sModulo, string sAplicacion)>
     {

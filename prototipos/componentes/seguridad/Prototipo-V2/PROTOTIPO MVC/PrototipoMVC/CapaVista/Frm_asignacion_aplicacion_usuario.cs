@@ -120,7 +120,7 @@ namespace Capa_Vista_Seguridad
 
         private void fun_AplicarPermisosUsuario()
         {
-            int usuarioId = Cls_sesion.iUsuarioId; // Usuario logueado
+            int usuarioId = Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario; // Usuario logueado
             if (iAplicacionId == -1 || iModuloId == -1)
             {
                 permisosActuales = null;
@@ -185,7 +185,8 @@ namespace Capa_Vista_Seguridad
             if (!existe)
             {
                 Dgv_Permisos.Rows.Add(usuario, aplicacion, false, false, false, false, false, idUsuario, idModulo, idAplicacion);
-                bitacora.InsertarBitacora(Cls_sesion.iUsuarioId, idAplicacion, "Asignación Aplicación a Usuario - Agregar", true);
+                //Bitacora Aron Ricardo Esquit Silva 0901-22-13036
+                bitacora.InsertarBitacora(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, idAplicacion, "Asignación Aplicación a Usuario - Agregar", true);
             }
             else
             {
@@ -233,7 +234,7 @@ namespace Capa_Vista_Seguridad
                                                               ingresar, consultar, modificar,
                                                               eliminar, imprimir);
                     actualizados++;
-                    bitacora.InsertarBitacora(Cls_sesion.iUsuarioId, idAplicacion, "Asignación Aplicación a Usuario - Actualizar", true);
+                    bitacora.InsertarBitacora(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, idAplicacion, "Asignación Aplicación a Usuario - Actualizar", true);
                 }
                 else
                 {
@@ -241,7 +242,7 @@ namespace Capa_Vista_Seguridad
                                                             ingresar, consultar, modificar,
                                                             eliminar, imprimir);
                     insertados++;
-                    bitacora.InsertarBitacora(Cls_sesion.iUsuarioId, idAplicacion, "Asignación Aplicación a Usuario - Insertar", true);
+                    bitacora.InsertarBitacora(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, idAplicacion, "Asignación Aplicación a Usuario - Insertar", true);
                 }
             }
 
@@ -255,7 +256,7 @@ namespace Capa_Vista_Seguridad
             if (Dgv_Permisos.CurrentRow != null && !Dgv_Permisos.CurrentRow.IsNewRow)
             {
                 int idAplicacion = Convert.ToInt32(Dgv_Permisos.CurrentRow.Cells["IdAplicacion"].Value);
-                bitacora.InsertarBitacora(Cls_sesion.iUsuarioId, idAplicacion, "Asignación Aplicación a Usuario - Quitar", true);
+                bitacora.InsertarBitacora(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, idAplicacion, "Asignación Aplicación a Usuario - Quitar", true);
                 Dgv_Permisos.Rows.Remove(Dgv_Permisos.CurrentRow);
             }
             else

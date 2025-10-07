@@ -100,7 +100,7 @@ namespace Capa_Vista_Seguridad
             fun_RefrescarAsignacionesPendientes();
 
             // Registrar en Bitácora -Arón Ricardo Esquit Silva  0901 - 22 - 13036
-            ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, 1, "Asignación Perfil a Usuario - Agregar", true);
+            ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 1, "Asignación Perfil a Usuario - Agregar", true);
         }
 
         private void fun_RefrescarAsignacionesPendientes()
@@ -141,7 +141,7 @@ namespace Capa_Vista_Seguridad
             fun_RefrescarAsignacionesPendientes();
 
             // Registrar en Bitácora (si lo usas)
-            ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, 1, "Asignación Perfil a Usuario - Guardar", true);
+            ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 1, "Asignación Perfil a Usuario - Guardar", true);
         }
 
         private void Btn_eliminar_asignacion_Click_1(object sender, EventArgs e)
@@ -171,7 +171,7 @@ namespace Capa_Vista_Seguridad
                     fun_RefrescarAsignacionesPendientes();
 
                     // Registrar en Bitácora - Arón Ricardo Esquit Silva  0901-22-13036
-                    ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, 1, "Asignación Perfil a Usuario - Eliminar", true);
+                    ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 1, "Asignación Perfil a Usuario - Eliminar", true);
                 }
             }
         }
@@ -220,7 +220,7 @@ namespace Capa_Vista_Seguridad
 
         private void fun_ConfigurarIdsDinamicamenteYAplicarPermisos()
         {
-            int usuarioId = Cls_sesion.iUsuarioId;
+            int usuarioId = Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario;
 
             var sParesNombres = new List<(string sModulo, string sAplicacion)>
     {
