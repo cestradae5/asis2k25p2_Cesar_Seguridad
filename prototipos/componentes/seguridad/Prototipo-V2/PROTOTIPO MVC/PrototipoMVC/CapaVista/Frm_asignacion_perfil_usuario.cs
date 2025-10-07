@@ -17,6 +17,7 @@ namespace Capa_Vista_Seguridad
         Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador(); // Bitacora
         Cls_asignacion_perfil_usuarioControlador controlador = new Cls_asignacion_perfil_usuarioControlador();
         Cls_asignacion_perfil_usuarioDAO modelo = new Cls_asignacion_perfil_usuarioDAO();
+       
         private List<Cls_asignacion_perfil_usuario> asignacionesPendientes = new List<Cls_asignacion_perfil_usuario>();
 
         // DataTables para lookup de nombres
@@ -29,7 +30,7 @@ namespace Capa_Vista_Seguridad
         public Frm_asignacion_perfil_usuario()
         {
             InitializeComponent();
-            fun_ConfigurarIdsDinamicamenteYAplicarPermisos();
+            /*fun_ConfigurarIdsDinamicamenteYAplicarPermisos();*/
         }
 
         private void frmasignacion_perfil_usuario_Load(object sender, EventArgs e)

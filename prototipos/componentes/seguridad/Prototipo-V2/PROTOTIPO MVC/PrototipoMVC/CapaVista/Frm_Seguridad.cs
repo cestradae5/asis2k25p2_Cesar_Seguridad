@@ -35,8 +35,8 @@ namespace Capa_Vista_Seguridad
         {
             InitializeComponent();
             InicializarMenuItems();
-            fun_inicializar_botones_por_defecto();
-            fun_habilitar_botones_por_permisos(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario);
+           /* fun_inicializar_botones_por_defecto();*/
+          /*  fun_habilitar_botones_por_permisos(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario);*/
         }
 
         private void InicializarMenuItems()
@@ -86,7 +86,7 @@ namespace Capa_Vista_Seguridad
                 menuItems[MenuOpciones.Asignaciones].Enabled = true;
             }
         }
-
+        /*
         public void fun_babilitar_botones_seguridad(string sModulo)
         {
             if (sModulo == "Seguridad")
@@ -101,7 +101,7 @@ namespace Capa_Vista_Seguridad
             {
                 fun_inicializar_botones_por_defecto();
             }
-        }
+        }*/
 
         // NUEVO MÉTODO PARA CERRAR HIJOS
         //Brandon Alexander Hernandez Salguero  0901-22-9663
