@@ -47,6 +47,11 @@ namespace Capa_Controlador_Seguridad
             return DAO.datObtenerAplicacionesPorModulo(idModulo);
         }
 
+        public DataTable datObtenerPermisosPorPerfil(int idPerfil)
+        {
+            return DAO.datObtenerPermisosPorPerfil(idPerfil);
+        }
+
     }
 
 }

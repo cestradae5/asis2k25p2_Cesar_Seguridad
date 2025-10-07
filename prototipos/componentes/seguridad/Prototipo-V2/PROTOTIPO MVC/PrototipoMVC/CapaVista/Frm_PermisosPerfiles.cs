@@ -272,91 +272,151 @@ namespace Capa_Vista_Seguridad
             }
         }
 
+        private void Btn_Buscar_Click(object sender, EventArgs e)
+        {
+            // 1. Validación: Asegurar que se ha seleccionado un perfil
+            if (Cbo_perfiles.SelectedIndex == -1 || Cbo_perfiles.SelectedValue == null)
+            {
+                MessageBox.Show("Seleccione un perfil para buscar sus permisos.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Asegurar que la grilla esté inicializada antes de cargar
+            InicializarDataGridView();
+            Dgv_Permisos.Rows.Clear(); // Limpiar el DataGridView antes de cargar nuevos datos
+
+            try
+            {
+                int idPerfil = Convert.ToInt32(Cbo_perfiles.SelectedValue);
+
+                // Llamada al nuevo método del controlador
+                DataTable dtPermisos = controlador.datObtenerPermisosPorPerfil(idPerfil);
+
+                if (dtPermisos.Rows.Count > 0)
+                {
+                    foreach (DataRow row in dtPermisos.Rows)
+                    {
+                        // Se agregan los datos a la fila, asegurándose que las columnas 
+                        // coincidan con las de InicializarDataGridView()
+                        Dgv_Permisos.Rows.Add(
+                            // Columnas visibles: Perfil, Aplicacion
+                            row["nombre_perfil"].ToString(),
+                            row["nombre_aplicacion"].ToString(),
+
+                            // CheckBox columns: Ingresar, Consultar, Modificar, Eliminar, Imprimir
+                            Convert.ToBoolean(row["ingresar_permiso_aplicacion_perfil"]),
+                            Convert.ToBoolean(row["consultar_permiso_aplicacion_perfil"]),
+                            Convert.ToBoolean(row["modificar_permiso_aplicacion_perfil"]),
+                            Convert.ToBoolean(row["eliminar_permiso_aplicacion_perfil"]),
+                            Convert.ToBoolean(row["imprimir_permiso_aplicacion_perfil"]),
+
+                            // Columnas ocultas (IDs)
+                            row["fk_id_perfil"],
+                            row["fk_id_modulo"],
+                            row["fk_id_aplicacion"]
+                        );
+                    }
+
+                    // Bitácora - Registrar la consulta
+                    // Nota: Se usa 0 como ID de aplicación ya que es una consulta de permisos general en el formulario
+                    ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario,
+                                                 0, // ID de la aplicación de este formulario
+                                                 "Permisos Perfil - Consulta", true);
+
+                    MessageBox.Show($"Permisos cargados correctamente. Se encontraron {dtPermisos.Rows.Count} registros.",
+                                    "Búsqueda exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("El perfil seleccionado no tiene permisos asignados.",
+                                    "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ocurrió un error al cargar los permisos: {ex.Message}",
+                                "Error de Búsqueda", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Dgv_Permisos.Rows.Clear();
+            }
+        }
+
 
 
 
         //Marcos Andres Velásquez Alcántara
         //Carnet: 0901-21-1115
 
-    //    private Cls_PermisoUsuario gPermisoUsuario = new Cls_PermisoUsuario();
+        //    private Cls_PermisoUsuario gPermisoUsuario = new Cls_PermisoUsuario();
 
-    //    private List<(int moduloId, int aplicacionId)> gParesModuloAplicacion = new List<(int, int)>();
+        //    private List<(int moduloId, int aplicacionId)> gParesModuloAplicacion = new List<(int, int)>();
 
-    //    private Dictionary<(int iModuloId, int iAplicacionId), (bool bIngresar, bool bConsultar, bool bModificar, bool bEliminar, bool bImprimir)> gPermisosPorModuloApp
-    //        = new Dictionary<(int, int), (bool, bool, bool, bool, bool)>();
-
-
-    //    private void fun_ConfigurarIdsDinamicamenteYAplicarPermisos()
-    //    {
-    //        int usuarioId = Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario;
-
-    //        var sParesNombres = new List<(string sModulo, string sAplicacion)>
-    //{
-        
-    //    ("Seguridad", "Gestion de empleado"),
-    //    ("Seguridad", "Administracion"),
-    //};
-
-    //        foreach (var (sNombreModulo, sNombreAplicacion) in sParesNombres)
-    //        {
-    //            int idModulo = gPermisoUsuario.ObtenerIdModuloPorNombre(sNombreModulo);
-    //            int idAplicacion = gPermisoUsuario.ObtenerIdAplicacionPorNombre(sNombreAplicacion);
-
-    //            if (idModulo != -1 && idAplicacion != -1)
-    //            {
-    //                gParesModuloAplicacion.Add((idModulo, idAplicacion));
-    //            }
-    //        }
-
-    //        fun_AplicarPermisosUsuario(usuarioId);
-    //    }
-
-    //    private void fun_AplicarPermisosUsuario(int usuarioId)
-    //    {
-    //        foreach (var (moduloId, aplicacionId) in gParesModuloAplicacion)
-    //        {
-    //            var bPermisos = gPermisoUsuario.ConsultarPermisos(usuarioId, aplicacionId, moduloId);
-
-    //            if (bPermisos != null)
-    //            {
-    //                gPermisosPorModuloApp[(moduloId, aplicacionId)] = bPermisos.Value;
-    //            }
-    //        }
-
-    //        fun_CombinarPermisosYActualizarBotones();
-    //    }
-
-    //    private void fun_CombinarPermisosYActualizarBotones()
-    //    {
-    //        bool bIngresar = false;
-    //        bool bConsultar = false;
-    //        bool bModificar = false;
-    //        bool bEliminar = false;
-
-    //        foreach (var bPermiso in gPermisosPorModuloApp.Values)
-    //        {
-    //            bIngresar |= bPermiso.bIngresar;
-    //            bConsultar |= bPermiso.bConsultar;
-    //            bModificar |= bPermiso.bModificar;
-    //            bEliminar |= bPermiso.bEliminar;
-    //        }
-
-           
+        //    private Dictionary<(int iModuloId, int iAplicacionId), (bool bIngresar, bool bConsultar, bool bModificar, bool bEliminar, bool bImprimir)> gPermisosPorModuloApp
+        //        = new Dictionary<(int, int), (bool, bool, bool, bool, bool)>();
 
 
-    //        Btn_agregar.Enabled = bIngresar;
-    //        Btn_quitar.Enabled = bEliminar;
-    //        Btn_insertar.Enabled = bIngresar;
+        //    private void fun_ConfigurarIdsDinamicamenteYAplicarPermisos()
+        //    {
+        //        int usuarioId = Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario;
 
-    //    }
+        //        var sParesNombres = new List<(string sModulo, string sAplicacion)>
+        //{
+
+        //    ("Seguridad", "Gestion de empleado"),
+        //    ("Seguridad", "Administracion"),
+        //};
+
+        //        foreach (var (sNombreModulo, sNombreAplicacion) in sParesNombres)
+        //        {
+        //            int idModulo = gPermisoUsuario.ObtenerIdModuloPorNombre(sNombreModulo);
+        //            int idAplicacion = gPermisoUsuario.ObtenerIdAplicacionPorNombre(sNombreAplicacion);
+
+        //            if (idModulo != -1 && idAplicacion != -1)
+        //            {
+        //                gParesModuloAplicacion.Add((idModulo, idAplicacion));
+        //            }
+        //        }
+
+        //        fun_AplicarPermisosUsuario(usuarioId);
+        //    }
+
+        //    private void fun_AplicarPermisosUsuario(int usuarioId)
+        //    {
+        //        foreach (var (moduloId, aplicacionId) in gParesModuloAplicacion)
+        //        {
+        //            var bPermisos = gPermisoUsuario.ConsultarPermisos(usuarioId, aplicacionId, moduloId);
+
+        //            if (bPermisos != null)
+        //            {
+        //                gPermisosPorModuloApp[(moduloId, aplicacionId)] = bPermisos.Value;
+        //            }
+        //        }
+
+        //        fun_CombinarPermisosYActualizarBotones();
+        //    }
+
+        //    private void fun_CombinarPermisosYActualizarBotones()
+        //    {
+        //        bool bIngresar = false;
+        //        bool bConsultar = false;
+        //        bool bModificar = false;
+        //        bool bEliminar = false;
+
+        //        foreach (var bPermiso in gPermisosPorModuloApp.Values)
+        //        {
+        //            bIngresar |= bPermiso.bIngresar;
+        //            bConsultar |= bPermiso.bConsultar;
+        //            bModificar |= bPermiso.bModificar;
+        //            bEliminar |= bPermiso.bEliminar;
+        //        }
 
 
 
 
+        //        Btn_agregar.Enabled = bIngresar;
+        //        Btn_quitar.Enabled = bEliminar;
+        //        Btn_insertar.Enabled = bIngresar;
 
-
-
-
+        //    }
     }
 
 }
