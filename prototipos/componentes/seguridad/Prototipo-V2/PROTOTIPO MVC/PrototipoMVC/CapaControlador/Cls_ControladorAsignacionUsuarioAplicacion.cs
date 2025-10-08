@@ -69,13 +69,13 @@ namespace Capa_Controlador_Seguridad
             DataRow row = dt.Rows[0];
             return new Cls_Permiso_Aplicacion_Usuario
             {
-                IdUsuario = idUsuario,
-                IdAplicacion = idAplicacion,
-                Ingresar = Convert.ToBoolean(row["ingresar"]),
-                Consultar = Convert.ToBoolean(row["consultar"]),
-                Modificar = Convert.ToBoolean(row["modificar"]),
-                Eliminar = Convert.ToBoolean(row["eliminar"]),
-                Imprimir = Convert.ToBoolean(row["imprimir"])
+                Fk_Id_Usuario = idUsuario,
+                FK_Id_Aplicacion = idAplicacion,
+                Cmp_Ingresar_Permiso_Aplicacion_Usuario = Convert.ToBoolean(row["ingresar"]),
+               Cmp_Consultar_Permiso_Aplicacion_Usuario = Convert.ToBoolean(row["consultar"]),
+               Cmp_Modificar_Permiso_Aplicacion_Usuario = Convert.ToBoolean(row["modificar"]),
+                Cmp_Eliminar_Permiso_Aplicacion_Usuario = Convert.ToBoolean(row["eliminar"]),
+                Cmp_Imprimir_Permiso_Aplicacion_Usuario = Convert.ToBoolean(row["imprimir"])
             };
         }
     }
