@@ -26,9 +26,6 @@ namespace Capa_Vista_Seguridad
             }
         }
 
-        private void txtUsuario_TextChanged(object sender, EventArgs e) { }
-
-        private void txtContrasena_TextChanged(object sender, EventArgs e) { }
 
         private void chkMostrarContrasena_CheckedChanged(object sender, EventArgs e)
         {
@@ -49,26 +46,23 @@ namespace Capa_Vista_Seguridad
         {
             string usuario = txtUsuario.Text.Trim();
             string contrasena = txtContrasena.Text.Trim();
+            string nombreUsuarioReal = "";
 
             string mensaje;
-            bool loginExitoso = cn.autenticarUsuario(usuario, contrasena, out mensaje, out int idUsuario);
+            bool loginExitoso = cn.autenticarUsuario(usuario, contrasena, out mensaje, out int idUsuario, out nombreUsuarioReal);
 
             MessageBox.Show(mensaje);
 
             if (loginExitoso)
             {
-                // Guardar datos de sesión
+                // Guardar sesión del usuario conectado (nombre real + ID)
                 Cls_UsuarioConectado.iIdUsuario = idUsuario;
-                Cls_UsuarioConectado.sNombreUsuario = usuario;
-
-                // Guardar datos del usuario conectado
-                Cls_UsuarioConectado.IniciarSesion(idUsuario, usuario);
-
+                Cls_UsuarioConectado.sNombreUsuario = nombreUsuarioReal;
 
                 // Registrar inicio en bitácora
                 ctrlBitacora.RegistrarInicioSesion(idUsuario);
 
-
+                // Abrir Frm_Principal sin pasar parámetros
                 Frm_Principal menu = new Frm_Principal();
                 menu.Show();
                 this.Hide();

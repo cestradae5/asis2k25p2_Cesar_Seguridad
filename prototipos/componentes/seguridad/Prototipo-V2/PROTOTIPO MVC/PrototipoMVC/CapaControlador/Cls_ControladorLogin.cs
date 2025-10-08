@@ -12,16 +12,17 @@ namespace Capa_Controlador_Seguridad
        
      
       
-        public bool autenticarUsuario(string usuario, string contrasena, out string mensaje, out int idUsuario)
+        public bool autenticarUsuario(string usuario, string contrasena, out string mensaje, out int idUsuario, out string nombreUsuarioReal)
         {
             idUsuario = 0;
+            nombreUsuarioReal = "";
             mensaje = "";
             OdbcDataReader reader = sl.validarLogin(usuario);
 
             if (reader != null && reader.Read())
             {
                 idUsuario = reader.GetInt32(0);
-                string nombreUsuario = reader.GetString(1);
+                nombreUsuarioReal = reader.GetString(1);
                 string contrasenaBD = reader.GetString(2);
                 int intentosFallidos = reader.GetInt32(3);
                 string estado = reader.GetString(4);
@@ -40,7 +41,7 @@ namespace Capa_Controlador_Seguridad
                 {
                    
                     sl.actualizarIntentos(idUsuario, 0);
-                    mensaje = "Bienvenido " + nombreUsuario;
+                    mensaje = "Bienvenido " + nombreUsuarioReal;
                     return true;
                 }
                 else

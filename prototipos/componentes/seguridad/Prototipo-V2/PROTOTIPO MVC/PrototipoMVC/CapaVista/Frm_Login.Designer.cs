@@ -127,7 +127,6 @@ namespace Capa_Vista_Seguridad
             this.txtContrasena.Size = new System.Drawing.Size(213, 27);
             this.txtContrasena.TabIndex = 25;
             this.txtContrasena.UseSystemPasswordChar = true;
-            this.txtContrasena.TextChanged += new System.EventHandler(this.txtContrasena_TextChanged);
             // 
             // txtUsuario
             // 
@@ -138,7 +137,6 @@ namespace Capa_Vista_Seguridad
             this.txtUsuario.Name = "txtUsuario";
             this.txtUsuario.Size = new System.Drawing.Size(213, 27);
             this.txtUsuario.TabIndex = 24;
-            this.txtUsuario.TextChanged += new System.EventHandler(this.txtUsuario_TextChanged);
             // 
             // Pnl_Superior
             // 
