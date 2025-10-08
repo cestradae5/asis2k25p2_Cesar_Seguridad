@@ -32,7 +32,7 @@ namespace Capa_Vista_Seguridad
             fun_CargarEmpleados();
             fun_ConfigurarComboBoxEmpleados();
             fun_ConfiguracionInicial();
-            fun_ConfigurarIdsDinamicamenteYAplicarPermisos();
+           // fun_ConfigurarIdsDinamicamenteYAplicarPermisos();
         }
         //Brandon Alexander Hernandez Salguero 0901-22-9663 --Permisos 
         /// <summary>
