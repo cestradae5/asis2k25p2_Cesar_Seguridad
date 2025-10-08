@@ -25,7 +25,7 @@ namespace Capa_Vista_Seguridad
 
             CargarEmpleados();
             ConfigurarComboBoxEmpleados();
-            ConfiguracionInicial();
+            
         }
 
         private void ConfiguracionInicial()

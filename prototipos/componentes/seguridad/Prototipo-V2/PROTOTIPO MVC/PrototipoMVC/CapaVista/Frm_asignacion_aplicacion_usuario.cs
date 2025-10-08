@@ -15,13 +15,7 @@ namespace Capa_Vista_Seguridad
         Cls_ControladorAsignacionUsuarioAplicacion controlador = new Cls_ControladorAsignacionUsuarioAplicacion();
         Cls_SentenciasBitacora bitacora = new Cls_SentenciasBitacora();
 
-       /* private Cls_PermisoUsuario permisoUsuario = new Cls_PermisoUsuario();
-
-        private int iModuloId = -1;
-        private int iAplicacionId = -1;
-
-        // Tupla para los permisos actuales
-        private (bool bIngresar, bool bConsultar, bool bModificar, bool bEliminar, bool bImprimir)? permisosActuales = null;*/
+       
 
         public Frm_asignacion_aplicacion_usuario()
         {
@@ -118,23 +112,63 @@ namespace Capa_Vista_Seguridad
         private void InicializarDataGridView()
         {
             Dgv_Permisos.Columns.Clear();
-            Dgv_Permisos.Columns.Add("Usuario", "Usuario");
-            Dgv_Permisos.Columns.Add("Aplicacion", "Aplicación");
-            Dgv_Permisos.Columns.Add(new DataGridViewCheckBoxColumn() { Name = "Ingresar", HeaderText = "Ingresar" });
-            Dgv_Permisos.Columns.Add(new DataGridViewCheckBoxColumn() { Name = "Consultar", HeaderText = "Consultar" });
-            Dgv_Permisos.Columns.Add(new DataGridViewCheckBoxColumn() { Name = "Modificar", HeaderText = "Modificar" });
-            Dgv_Permisos.Columns.Add(new DataGridViewCheckBoxColumn() { Name = "Eliminar", HeaderText = "Eliminar" });
-            Dgv_Permisos.Columns.Add(new DataGridViewCheckBoxColumn() { Name = "Imprimir", HeaderText = "Imprimir" });
+            Dgv_Permisos.AllowUserToAddRows = false;
+            Dgv_Permisos.AllowUserToDeleteRows = true;
+            Dgv_Permisos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            Dgv_Permisos.EditMode = DataGridViewEditMode.EditOnEnter; // Solo se puede editar celdas editables (como checkboxes)
 
+            // Columnas visibles
+            var colUsuario = new DataGridViewTextBoxColumn()
+            {
+                Name = "Usuario",
+                HeaderText = "Usuario",
+                ReadOnly = true // Bloquea edición
+            };
+            var colAplicacion = new DataGridViewTextBoxColumn()
+            {
+                Name = "Aplicacion",
+                HeaderText = "Aplicación",
+                ReadOnly = true // Bloquea edición
+            };
+            var colIngresar = new DataGridViewCheckBoxColumn() { Name = "Ingresar", HeaderText = "Ingresar" };
+            var colConsultar = new DataGridViewCheckBoxColumn() { Name = "Consultar", HeaderText = "Consultar" };
+            var colModificar = new DataGridViewCheckBoxColumn() { Name = "Modificar", HeaderText = "Modificar" };
+            var colEliminar = new DataGridViewCheckBoxColumn() { Name = "Eliminar", HeaderText = "Eliminar" };
+            var colImprimir = new DataGridViewCheckBoxColumn() { Name = "Imprimir", HeaderText = "Imprimir" };
 
-            Dgv_Permisos.Columns.Add("IdUsuario", "IdUsuario");
-            Dgv_Permisos.Columns["IdUsuario"].Visible = false;
-            Dgv_Permisos.Columns.Add("IdModulo", "IdModulo");
-            Dgv_Permisos.Columns["IdModulo"].Visible = false;
-            Dgv_Permisos.Columns.Add("IdAplicacion", "IdAplicacion");
-            Dgv_Permisos.Columns["IdAplicacion"].Visible = false;
+            // Columnas ocultas
+            var colIdUsuario = new DataGridViewTextBoxColumn() { Name = "IdUsuario", Visible = false };
+            var colIdModulo = new DataGridViewTextBoxColumn() { Name = "IdModulo", Visible = false };
+            var colIdAplicacion = new DataGridViewTextBoxColumn() { Name = "IdAplicacion", Visible = false };
 
-            // Aplicaciones
+            // Agregar columnas
+            Dgv_Permisos.Columns.AddRange(new DataGridViewColumn[]
+            {
+        colUsuario, colAplicacion, colIngresar, colConsultar,
+        colModificar, colEliminar, colImprimir,
+        colIdUsuario, colIdModulo, colIdAplicacion
+            });
+
+            // Impedir edición por teclado en columnas bloqueadas
+            Dgv_Permisos.KeyPress += (s, e) =>
+            {
+                if (Dgv_Permisos.CurrentCell != null)
+                {
+                    string colName = Dgv_Permisos.Columns[Dgv_Permisos.CurrentCell.ColumnIndex].Name;
+                    if (colName == "Usuario" || colName == "Aplicacion")
+                        e.Handled = true; // Bloquea teclas
+                }
+            };
+
+            // Impedir edición con doble clic
+            Dgv_Permisos.CellBeginEdit += (s, e) =>
+            {
+                string colName = Dgv_Permisos.Columns[e.ColumnIndex].Name;
+                if (colName == "Usuario" || colName == "Aplicacion")
+                    e.Cancel = true;
+            };
+
+            // Cargar aplicaciones en el combo
             var lista = appControlador.ObtenerTodasLasAplicaciones();
             DataTable dtAplicacion = new DataTable();
             dtAplicacion.Columns.Add("pk_id_aplicacion", typeof(int));
@@ -148,52 +182,7 @@ namespace Capa_Vista_Seguridad
             Cbo_Aplicaciones.SelectedIndex = -1;
         }
 
-        /*
-        private void fun_ConfigurarIdsDinamicamenteYAplicarPermisos()
-        {
-            //Nombre existentes en la base de datos 
-            string sNombreModulo = "Seguridad";
-            string sNombreAplicacion = "Administracion";
-            iAplicacionId = permisoUsuario.ObtenerIdAplicacionPorNombre(sNombreAplicacion);
-            iModuloId = permisoUsuario.ObtenerIdModuloPorNombre(sNombreModulo);
-            fun_AplicarPermisosUsuario();
-        }
 
-        private void fun_AplicarPermisosUsuario()
-        {
-            int usuarioId = Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario; // Usuario logueado
-            if (iAplicacionId == -1 || iModuloId == -1)
-            {
-                permisosActuales = null;
-                fun_ActualizarEstadoBotonesSegunPermisos();
-                return;
-            }
-            var permisos = permisoUsuario.ConsultarPermisos(usuarioId, iAplicacionId, iModuloId);
-            permisosActuales = permisos;
-            fun_ActualizarEstadoBotonesSegunPermisos();
-        }
-
-        // Centraliza el habilitado/deshabilitado de botones según permisos y estado de navegación
-        private void fun_ActualizarEstadoBotonesSegunPermisos(bool empleadoCargado = false)
-        {
-            if (!permisosActuales.HasValue)
-            {
-                Btn_agregar.Enabled = false;        // Botón "Agregar"
-                Btn_quitar.Enabled = false;      // Botón "Modificar
-                Btn_Buscar.Enabled = false;         // Botón "Buscar"
-                Btn_finalizar.Enabled = false;        // Botón "Guardar"
-                return;
-            }
-
-            var p = permisosActuales.Value;
-
-            Btn_Buscar.Enabled = p.bConsultar;
-            Btn_agregar.Enabled = p.bIngresar;
-            Btn_quitar.Enabled = p.bModificar;
-            Btn_finalizar.Enabled = p.bIngresar || p.bModificar;
-        }
-        */
-        // Pablo Quiroa 0901-22-2929
         private void Btn_agregar_Click_1(object sender, EventArgs e)
         {
             if (Cbo_Usuarios.SelectedIndex == -1 || Cbo_Modulos.SelectedIndex == -1 || Cbo_Aplicaciones.SelectedIndex == -1)
@@ -244,7 +233,7 @@ namespace Capa_Vista_Seguridad
 
         {
             // Validacion de usuario y plaicacion antes de insertar datos
-            if (Dgv_Permisos.Rows.Count <= 1)
+            if (Dgv_Permisos.Rows.Count == 0)
 
 
             {
@@ -296,15 +285,53 @@ namespace Capa_Vista_Seguridad
         {
             if (Dgv_Permisos.CurrentRow != null && !Dgv_Permisos.CurrentRow.IsNewRow)
             {
-                int idAplicacion = Convert.ToInt32(Dgv_Permisos.CurrentRow.Cells["IdAplicacion"].Value);
-                bitacora.InsertarBitacora(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, idAplicacion, "Asignación Aplicación a Usuario - Quitar", true);
-                Dgv_Permisos.Rows.Remove(Dgv_Permisos.CurrentRow);
+                // Mostrar mensaje de confirmación
+                DialogResult resultado = MessageBox.Show(
+                    "¿Está seguro de quitar el registro seleccionado?",
+                    "Confirmar eliminación",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                );
+
+                // Si el usuario confirma, eliminar el registro
+                if (resultado == DialogResult.Yes)
+                {
+                    int idAplicacion = Convert.ToInt32(Dgv_Permisos.CurrentRow.Cells["IdAplicacion"].Value);
+
+                    // Registrar en bitácora
+                    bitacora.InsertarBitacora(
+                        Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario,
+                        idAplicacion,
+                        "Asignación Aplicación a Usuario - Quitar",
+                        true
+                    );
+
+                    // Eliminar la fila del DataGridView
+                    Dgv_Permisos.Rows.Remove(Dgv_Permisos.CurrentRow);
+
+                    MessageBox.Show("Se ha quitadocorrectamente.",
+                                    "Información",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Information);
+                }
+                else
+                {
+                    // Si el usuario presiona "No"
+                    MessageBox.Show("Operación cancelada.",
+                                    "Información",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Information);
+                }
             }
             else
             {
-                MessageBox.Show("Seleccione una fila para quitar.");
+                MessageBox.Show("Seleccione una fila para quitar.",
+                                "Advertencia",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning);
             }
         }
+
 
 
         // validacion de usuario y aplicacion antes de poder selecionar los permisos
