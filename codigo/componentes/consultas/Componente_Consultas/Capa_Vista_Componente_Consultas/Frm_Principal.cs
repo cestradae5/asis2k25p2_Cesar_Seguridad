@@ -36,7 +36,7 @@ namespace Capa_Vista_Componente_Consultas
             }
         }
 
-
+        // Se agrega el path específico ubicado en bin/debug de ayudas para que aparezcan - Realizado por Nelson Godínez 0901-22-3550 07/10/2025
         private void btn_Ayuda_Click(object sender, EventArgs e)
         {
             string chmPath = Path.Combine(Application.StartupPath, "Ayuda_Consultas", "AyudaConsultaAS2.chm");

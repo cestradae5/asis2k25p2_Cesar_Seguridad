@@ -17,9 +17,8 @@ namespace Capa_Controlador_Consultas
         private readonly string _db;
         // Caché para guardar las columnas de cada tabla con su nombre y tipo de dato
         // Esto evita tener que consultar a la base de datos cada vez
-        private readonly Dictionary<string, List<(string Name, string DataType)>> _colsCache =
         private readonly Dictionary<string, List<(string Name, string DataType)>> scolsCache =
-            new Dictionary<string, List<(string Name, string DataType)>>(StringComparer.OrdinalIgnoreCase);
+        new Dictionary<string, List<(string Name, string DataType)>>(StringComparer.OrdinalIgnoreCase);
 
         // Constructor: recibe un DSN (nombre de la conexión ODBC) y el nombre de la base de datos
         public Controlador(string dsn, string db)

@@ -18,7 +18,7 @@ namespace Capa_Vista_Componente_Consultas
 
         private Controlador oControlador;
         private string sTablaActual = null;
-
+        //Se estandarizó variables realizado por Nelson Godínez 0901-22-3550 07/10/2025
         private readonly List<string> lstPartesWhere = new List<string>();
         private readonly List<string> lstPartesGroupOrder = new List<string>();
         // Rellena los dos bloques visibles de UI a partir de las condiciones parseadas Nelson Jose Godinez Mendez 0901-22-3550 09/26/2025
@@ -319,15 +319,7 @@ namespace Capa_Vista_Componente_Consultas
             {
                 // Limpia el combo de tablas antes de volver a llenarlo
                 Cbo_Tabla.Items.Clear();
-<<<<<<< HEAD
-
-                // Le pide al controlador la lista de tablas disponibles en la BD
-                var tabs = _controlador.ObtenerTablas();
-
-                // Agrega cada nombre de tabla al combo
-=======
                 var tabs = oControlador.ObtenerTablas();
->>>>>>> 10d8686 (Modificando interfaz adaptativa, estandarizando variables y arreglando botón de ayudas)
                 foreach (var t in tabs) Cbo_Tabla.Items.Add(t);
 
                 // Si hay al menos una tabla, selecciona la primera por defecto
@@ -362,15 +354,7 @@ namespace Capa_Vista_Componente_Consultas
 
             if (idx >= 0)
             {
-<<<<<<< HEAD
-                string pieza = _partesGroupOrder[idx];
-
-                // Extrae el nombre de la columna después de "ORDER BY".
-                // El Regex busca la palabra después de ORDER BY.
-=======
-                // Mantiene la columna existente si es posible
                 string pieza = lstPartesGroupOrder[idx]; // "ORDER BY `col` DIR"
->>>>>>> 10d8686 (Modificando interfaz adaptativa, estandarizando variables y arreglando botón de ayudas)
                 string col = null;
                 var m = Regex.Match(pieza, @"ORDER\s+BY\s+`?(?<c>[^`\s]+)`?", RegexOptions.IgnoreCase);
                 if (m.Success) col = m.Groups["c"].Value;
@@ -586,18 +570,9 @@ namespace Capa_Vista_Componente_Consultas
         // ----------------- Guardar/Listar consultas Juan Carlos Sandoval Quej 0901-22-4170 26/09/2025
         private void GuardarConsultaAuto()
         {
-<<<<<<< HEAD
-            // Si no hay una consulta lista (_sqlActual vacío),
-            // entonces se construye una nueva usando la tabla, condiciones y filtros.
-            // Si ya hay una consulta, se usa esa.
-            string sql = string.IsNullOrWhiteSpace(_sqlActual)
-                ? _controlador.ConstruirSql(_tablaActual, Chk_AgregarCondiciones.Checked, _partesWhere, _partesGroupOrder)
-                : _sqlActual;
-=======
             string sql = string.IsNullOrWhiteSpace(sSqlActual)
                 ? oControlador.ConstruirSql(sTablaActual, Chk_AgregarCondiciones.Checked, lstPartesWhere, lstPartesGroupOrder)
                 : sSqlActual;
->>>>>>> 10d8686 (Modificando interfaz adaptativa, estandarizando variables y arreglando botón de ayudas)
 
             // Si después de eso sigue sin haber consulta, avisa al usuario y se detiene.
             if (string.IsNullOrWhiteSpace(sql))
@@ -605,20 +580,9 @@ namespace Capa_Vista_Componente_Consultas
                 MessageBox.Show("Genera la consulta primero.");
                 return;
             }
-
-<<<<<<< HEAD
-            // Guardamos el SQL definitivo en la variable
-            _sqlActual = sql;
-
-            // El nombre base será la tabla seleccionada o "consulta" si no hay tabla
-            var baseName = string.IsNullOrEmpty(_tablaActual) ? "consulta" : _tablaActual;
-
-            // Al nombre base se le añade la fecha y hora para que sea único
-=======
             sSqlActual = sql;
 
             var baseName = string.IsNullOrEmpty(sTablaActual) ? "consulta" : sTablaActual;
->>>>>>> 10d8686 (Modificando interfaz adaptativa, estandarizando variables y arreglando botón de ayudas)
             var name = baseName + "_" + DateTime.Now.ToString("yyyyMMdd_HHmmss");
 
             try
@@ -632,15 +596,8 @@ namespace Capa_Vista_Componente_Consultas
                 // Si existe, se le agrega _1, _2, etc. hasta que sea único
                 var unique = name; int i = 1;
                 while (existentes.Contains(unique)) unique = name + "_" + (i++).ToString();
-
-<<<<<<< HEAD
-                // Se guarda la consulta en el controlador
-                _controlador.GuardarConsulta(unique, sql);
-
-                // Se actualiza la lista de consultas guardadas en pantalla
-=======
                 oControlador.GuardarConsulta(unique, sql);
->>>>>>> 10d8686 (Modificando interfaz adaptativa, estandarizando variables y arreglando botón de ayudas)
+
                 CargarConsultasGuardadas();
 
                 // Intenta seleccionar en el ListBox la consulta recién guardada
@@ -665,14 +622,7 @@ namespace Capa_Vista_Componente_Consultas
         {
             try
             {
-<<<<<<< HEAD
-                // Pide al controlador todas las consultas guardadas
-                var items = _controlador.ListarConsultasPlano();
-
-                // Limpia la lista en pantalla y la vuelve a cargar con los nuevos datos
-=======
                 var items = oControlador.ListarConsultasPlano();
->>>>>>> 10d8686 (Modificando interfaz adaptativa, estandarizando variables y arreglando botón de ayudas)
                 Lst_ConsultasGuardadas.DataSource = null;
                 Lst_ConsultasGuardadas.DisplayMember = "Key";   // Lo que se muestra (nombre de la consulta)
                 Lst_ConsultasGuardadas.ValueMember = "Value";   // Lo que devuelva
