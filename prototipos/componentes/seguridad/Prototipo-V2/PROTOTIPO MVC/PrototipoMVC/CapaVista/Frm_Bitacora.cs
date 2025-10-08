@@ -17,21 +17,14 @@ namespace Capa_Vista_Seguridad
         // Controlador (puente con la capa modelo)
         private readonly Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador();
 
-        // permisos 0901-21-1115 Marcos Andres Velásquez Alcántara
-        private Cls_PermisoUsuario permisoUsuario = new Cls_PermisoUsuario(); //Esto llama a modelo, no va aquí
-
-        private int iModuloId = -1;
-        private int iAplicacionId = -1;
-
-        // Tupla para los permisos actuales
-        private (bool bIngresar, bool bConsultar, bool bModificar, bool bEliminar, bool bImprimir)? permisosActuales = null;
+     
 
         public Frm_Bitacora()
         {
             InitializeComponent();
             CargarUsuariosEnCombo(); // carga usuarios al abrir
             OcultarFiltros();        // opcional
-           // fun_ConfigurarIdsDinamicamenteYAplicarPermisos();
+     
             CargarEnGrid(ctrlBitacora.MostrarBitacora()); //Mostrar toda la bitácora al inicio
         }
 
@@ -314,52 +307,7 @@ namespace Capa_Vista_Seguridad
             frm.Show();
         }
 
-        //Permisos de compañeros
-        private void fun_ConfigurarIdsDinamicamenteYAplicarPermisos()
-        {
-            string sNombreModulo = "Seguridad";
-            string sNombreAplicacion = "Administracion";
-            iAplicacionId = permisoUsuario.ObtenerIdAplicacionPorNombre(sNombreAplicacion);
-            iModuloId = permisoUsuario.ObtenerIdModuloPorNombre(sNombreModulo);
-            fun_AplicarPermisosUsuario();
-        }
-
-        private void fun_AplicarPermisosUsuario()
-        {
-            int usuarioId = Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario; // Usuario logueado
-            if (iAplicacionId == -1 || iModuloId == -1)
-            {
-                permisosActuales = null;
-                fun_ActualizarEstadoBotonesSegunPermisos();
-                return;
-            }
-            var permisos = permisoUsuario.ConsultarPermisos(usuarioId, iAplicacionId, iModuloId);
-            permisosActuales = permisos;
-            fun_ActualizarEstadoBotonesSegunPermisos();
-        }
-
-        private void fun_ActualizarEstadoBotonesSegunPermisos(bool empleadoCargado = false)
-        {
-            if (!permisosActuales.HasValue)
-            {
-                Btn_Consultar.Enabled = false;
-                Btn_Exportar.Enabled = false;
-                Btn_BuscarFecha.Enabled = false;
-                Btn_BuscarUsuario.Enabled = false;
-                Btn_BuscarRango.Enabled = false;
-                Btn_Imprimir.Enabled = false;
-                button1.Enabled = false;
-                return;
-            }
-
-            var p = permisosActuales.Value;
-            Btn_Consultar.Enabled = p.bConsultar;
-            Btn_Exportar.Enabled = p.bImprimir;
-            Btn_BuscarFecha.Enabled = p.bConsultar;
-            Btn_BuscarUsuario.Enabled = p.bConsultar;
-            Btn_BuscarRango.Enabled = p.bConsultar;
-            Btn_Imprimir.Enabled = p.bConsultar;
-            button1.Enabled = p.bConsultar;
-        }
+        
+      
     }
 }

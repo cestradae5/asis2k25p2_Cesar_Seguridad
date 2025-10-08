@@ -32,12 +32,10 @@ namespace Capa_Vista_Seguridad
             fun_CargarEmpleados();
             fun_ConfigurarComboBoxEmpleados();
             fun_ConfiguracionInicial();
-           // fun_ConfigurarIdsDinamicamenteYAplicarPermisos();
+           
         }
         //Brandon Alexander Hernandez Salguero 0901-22-9663 --Permisos 
-        /// <summary>
-        /// Consulta los IDs de módulo y aplicación por nombre y aplica los permisos del usuario logueado.
-        /// </summary>  
+      
         private void fun_ConfigurarIdsDinamicamenteYAplicarPermisos()
         {
 
@@ -65,27 +63,9 @@ namespace Capa_Vista_Seguridad
         // Centraliza el habilitado/deshabilitado de botones según permisos y estado de navegación
         private void fun_ActualizarEstadoBotonesSegunPermisos(bool empleadoCargado = false)
         {
-            if (!permisosActuales.HasValue)
-            {
-                Btn_guardar_empleado.Enabled = false;
-                Btn_modificar_empleado.Enabled = false;
-                Btn_eliminar_empleado.Enabled = false;
-                Btn_nuevo_empleado.Enabled = false;
-                Btn_buscar_empleado.Enabled = false;
-                Btn_reporte.Enabled = false;
-                
+           
 
-
-                return;
-            }
-
-            var p = permisosActuales.Value;
-            Btn_buscar_empleado.Enabled = p.bConsultar;
-            Btn_nuevo_empleado.Enabled = p.bIngresar;
-            Btn_guardar_empleado.Enabled = p.bModificar || p.bIngresar;
-            Btn_modificar_empleado.Enabled =  p.bModificar;
-            Btn_eliminar_empleado.Enabled = p.bIngresar || p.bModificar;
-            Btn_reporte.Enabled = p.bImprimir;
+           
         }
 
         private void fun_ConfiguracionInicial()
