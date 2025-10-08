@@ -1,4 +1,6 @@
 ﻿using System.Data;
+using System;
+
 using Capa_Modelo_Seguridad;
 /* Brandon Alexander Hernandez Salguero
  * 0901-22-9663
@@ -39,5 +41,12 @@ namespace Capa_Controlador_Seguridad
             // Llama al método DAO que maneja el error y retorna el mensaje personalizado
             return DAO.bInsertar(nuevaRelacion, out mensajeError);
         }
+
+       
+
+        
     }
+
+
+
 }
