@@ -16,6 +16,9 @@ namespace Capa_Modelo_Seguridad
     {
         private Cls_Conexion conexion = new Cls_Conexion();
 
+        
+
+
         public DataTable datObtenerPerfiles()
         {
             DataTable dt = new DataTable();
@@ -249,6 +252,35 @@ namespace Capa_Modelo_Seguridad
             {
                 Console.WriteLine("Error al obtener permisos por perfil: " + ex.Message);
                 // Si hay un error, el DataTable estará vacío.
+            }
+            return dt;
+        }
+
+        /*Carlo Sosa 0901-22-1106
+         */
+
+        public DataTable ObtenerPermisosPerfilAplicacion(int idPerfil, int idAplicacion)
+        {
+            DataTable dt = new DataTable();
+            string query = @"SELECT 
+                        Cmp_Ingresar_Permisos_Aplicacion_Perfil AS ingresar,
+                        Cmp_Consultar_Permisos_Aplicacion_Perfil AS consultar,
+                        Cmp_Modificar_Permisos_Aplicacion_Perfil AS modificar,
+                        Cmp_Eliminar_Permisos_Aplicacion_Perfil AS eliminar,
+                        Cmp_Imprimir_Permisos_Aplicacion_Perfil AS imprimir
+                    FROM Tbl_Permisos_Aplicacion_Perfil
+                    WHERE Fk_Id_Perfil = ? AND Fk_Id_Aplicacion = ?";
+
+            using (OdbcConnection conn = conexion.conexion())
+            using (OdbcCommand cmd = new OdbcCommand(query, conn))
+            {
+                cmd.Parameters.AddWithValue("@idPerfil", idPerfil);
+                cmd.Parameters.AddWithValue("@idAplicacion", idAplicacion);
+
+                using (OdbcDataAdapter adapter = new OdbcDataAdapter(cmd))
+                {
+                    adapter.Fill(dt);
+                }
             }
             return dt;
         }
