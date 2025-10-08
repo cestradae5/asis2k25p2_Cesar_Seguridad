@@ -1,8 +1,4 @@
-﻿// Designer completo y autocontenido del formulario Consulta_Compleja
-// Incluye el botón "Agregar" dentro de grpConsultas y asegura el orden correcto
-// de creación → configuración → Controls.Add. Compatible con C# 7.3.
-
-using System;
+﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -123,7 +119,7 @@ namespace Capa_Vista_Componente_Consultas
             // 
             this.Lbl_NombreTabla.AutoSize = true;
             this.Lbl_NombreTabla.Font = new System.Drawing.Font("Rockwell", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Lbl_NombreTabla.Location = new System.Drawing.Point(216, 40);
+            this.Lbl_NombreTabla.Location = new System.Drawing.Point(53, 44);
             this.Lbl_NombreTabla.Name = "Lbl_NombreTabla";
             this.Lbl_NombreTabla.Size = new System.Drawing.Size(201, 27);
             this.Lbl_NombreTabla.TabIndex = 0;
@@ -132,7 +128,7 @@ namespace Capa_Vista_Componente_Consultas
             // Cbo_Tabla
             // 
             this.Cbo_Tabla.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.Cbo_Tabla.Location = new System.Drawing.Point(482, 40);
+            this.Cbo_Tabla.Location = new System.Drawing.Point(279, 47);
             this.Cbo_Tabla.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Cbo_Tabla.Name = "Cbo_Tabla";
             this.Cbo_Tabla.Size = new System.Drawing.Size(396, 24);
@@ -140,9 +136,10 @@ namespace Capa_Vista_Componente_Consultas
             // 
             // Gpb_Orden
             // 
+            this.Gpb_Orden.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Gpb_Orden.Controls.Add(this.Rdb_Asc);
             this.Gpb_Orden.Controls.Add(this.Rdb_Des);
-            this.Gpb_Orden.Location = new System.Drawing.Point(1087, 22);
+            this.Gpb_Orden.Location = new System.Drawing.Point(892, 17);
             this.Gpb_Orden.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Gpb_Orden.Name = "Gpb_Orden";
             this.Gpb_Orden.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -177,16 +174,17 @@ namespace Capa_Vista_Componente_Consultas
             // 
             this.Dgv_Preview.AllowUserToAddRows = false;
             this.Dgv_Preview.AllowUserToDeleteRows = false;
-            this.Dgv_Preview.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.Dgv_Preview.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Dgv_Preview.BackgroundColor = System.Drawing.Color.Gainsboro;
             this.Dgv_Preview.ColumnHeadersHeight = 29;
-            this.Dgv_Preview.Location = new System.Drawing.Point(221, 84);
+            this.Dgv_Preview.Location = new System.Drawing.Point(58, 84);
             this.Dgv_Preview.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Dgv_Preview.Name = "Dgv_Preview";
             this.Dgv_Preview.ReadOnly = true;
             this.Dgv_Preview.RowHeadersWidth = 51;
-            this.Dgv_Preview.Size = new System.Drawing.Size(1064, 246);
+            this.Dgv_Preview.Size = new System.Drawing.Size(694, 246);
             this.Dgv_Preview.TabIndex = 4;
             // 
             // Gbp_Consultas
@@ -196,7 +194,7 @@ namespace Capa_Vista_Componente_Consultas
             this.Gbp_Consultas.Controls.Add(this.Btn_AgregarConsulta);
             this.Gbp_Consultas.Controls.Add(this.Btn_EditarConsulta);
             this.Gbp_Consultas.Controls.Add(this.Btn_EliminarConsulta);
-            this.Gbp_Consultas.Location = new System.Drawing.Point(1470, 44);
+            this.Gbp_Consultas.Location = new System.Drawing.Point(822, 75);
             this.Gbp_Consultas.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Gbp_Consultas.Name = "Gbp_Consultas";
             this.Gbp_Consultas.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -243,17 +241,16 @@ namespace Capa_Vista_Componente_Consultas
             // 
             // Gpb_Condiciones
             // 
-            this.Gpb_Condiciones.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Gpb_Condiciones.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.Gpb_Condiciones.Controls.Add(this.Chk_AgregarCondiciones);
             this.Gpb_Condiciones.Controls.Add(this.Gpb_Logica);
             this.Gpb_Condiciones.Controls.Add(this.Gpb_Comparacion);
             this.Gpb_Condiciones.Controls.Add(this.Gpb_Ordenar);
-            this.Gpb_Condiciones.Location = new System.Drawing.Point(221, 371);
+            this.Gpb_Condiciones.Location = new System.Drawing.Point(58, 391);
             this.Gpb_Condiciones.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Gpb_Condiciones.Name = "Gpb_Condiciones";
             this.Gpb_Condiciones.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.Gpb_Condiciones.Size = new System.Drawing.Size(1010, 271);
+            this.Gpb_Condiciones.Size = new System.Drawing.Size(994, 271);
             this.Gpb_Condiciones.TabIndex = 6;
             this.Gpb_Condiciones.TabStop = false;
             this.Gpb_Condiciones.Text = "Condiciones - Consulta Compleja";
@@ -531,7 +528,8 @@ namespace Capa_Vista_Componente_Consultas
             // 
             // Btn_Ejecutar
             // 
-            this.Btn_Ejecutar.Location = new System.Drawing.Point(788, 710);
+            this.Btn_Ejecutar.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.Btn_Ejecutar.Location = new System.Drawing.Point(489, 682);
             this.Btn_Ejecutar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Btn_Ejecutar.Name = "Btn_Ejecutar";
             this.Btn_Ejecutar.Size = new System.Drawing.Size(124, 34);
@@ -540,7 +538,8 @@ namespace Capa_Vista_Componente_Consultas
             // 
             // Btn_Limpiar
             // 
-            this.Btn_Limpiar.Location = new System.Drawing.Point(1213, 710);
+            this.Btn_Limpiar.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.Btn_Limpiar.Location = new System.Drawing.Point(751, 682);
             this.Btn_Limpiar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Btn_Limpiar.Name = "Btn_Limpiar";
             this.Btn_Limpiar.Size = new System.Drawing.Size(93, 34);
@@ -551,15 +550,16 @@ namespace Capa_Vista_Componente_Consultas
             // 
             this.Txt_CadenaGenerada.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.Txt_CadenaGenerada.Location = new System.Drawing.Point(279, 752);
+            this.Txt_CadenaGenerada.Location = new System.Drawing.Point(257, 724);
             this.Txt_CadenaGenerada.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Txt_CadenaGenerada.Name = "Txt_CadenaGenerada";
-            this.Txt_CadenaGenerada.Size = new System.Drawing.Size(1235, 23);
+            this.Txt_CadenaGenerada.Size = new System.Drawing.Size(587, 23);
             this.Txt_CadenaGenerada.TabIndex = 7;
             // 
             // Btn_Generar
             // 
-            this.Btn_Generar.Location = new System.Drawing.Point(400, 710);
+            this.Btn_Generar.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.Btn_Generar.Location = new System.Drawing.Point(257, 682);
             this.Btn_Generar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Btn_Generar.Name = "Btn_Generar";
             this.Btn_Generar.Size = new System.Drawing.Size(93, 34);
@@ -568,7 +568,8 @@ namespace Capa_Vista_Componente_Consultas
             // 
             // Btn_Regreso
             // 
-            this.Btn_Regreso.Location = new System.Drawing.Point(1838, 0);
+            this.Btn_Regreso.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.Btn_Regreso.Location = new System.Drawing.Point(1186, 1);
             this.Btn_Regreso.Margin = new System.Windows.Forms.Padding(4);
             this.Btn_Regreso.Name = "Btn_Regreso";
             this.Btn_Regreso.Size = new System.Drawing.Size(95, 28);
@@ -582,7 +583,7 @@ namespace Capa_Vista_Componente_Consultas
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(248)))));
-            this.ClientSize = new System.Drawing.Size(1924, 788);
+            this.ClientSize = new System.Drawing.Size(1276, 788);
             this.Controls.Add(this.Btn_Regreso);
             this.Controls.Add(this.Lbl_NombreTabla);
             this.Controls.Add(this.Cbo_Tabla);

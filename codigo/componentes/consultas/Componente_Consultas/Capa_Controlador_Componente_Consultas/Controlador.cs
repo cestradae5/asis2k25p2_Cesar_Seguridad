@@ -15,11 +15,10 @@ namespace Capa_Controlador_Consultas
         private readonly Sentencias _m;
         // Nombre de la base de datos con la que vamos a trabajar
         private readonly string _db;
-
         // Caché para guardar las columnas de cada tabla con su nombre y tipo de dato
         // Esto evita tener que consultar a la base de datos cada vez
-        private readonly Dictionary<string, List<(string Name, string DataType)>> _colsCache =
-            new Dictionary<string, List<(string Name, string DataType)>>(StringComparer.OrdinalIgnoreCase);
+        private readonly Dictionary<string, List<(string Name, string DataType)>> scolsCache =
+        new Dictionary<string, List<(string Name, string DataType)>>(StringComparer.OrdinalIgnoreCase);
 
         // Constructor: recibe un DSN (nombre de la conexión ODBC) y el nombre de la base de datos
         public Controlador(string dsn, string db)
@@ -40,10 +39,10 @@ namespace Capa_Controlador_Consultas
         public List<(string Name, string DataType)> ObtenerColumnasTipadas(string tabla)
         {
             List<(string, string)> list;
-            if (!_colsCache.TryGetValue(tabla, out list))
+            if (!scolsCache.TryGetValue(tabla, out list))
             {
                 list = _m.ObtenerColumnasTipadas(tabla);
-                _colsCache[tabla] = list;
+                scolsCache[tabla] = list;
             }
             return list;
         }

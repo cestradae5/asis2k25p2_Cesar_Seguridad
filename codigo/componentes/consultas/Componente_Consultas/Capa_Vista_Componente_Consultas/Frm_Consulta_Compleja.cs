@@ -13,17 +13,17 @@ namespace Capa_Vista_Componente_Consultas
 {
     public partial class Frm_Consulta_Compleja : Form
     {
-        private const string DSN = "Prueba1";
-        public const string DB = "controlempleados";
+        private const string sDsn = "Prueba1";
+        public const string sDB = "controlempleados";
 
-        private Controlador _controlador;
-        private string _tablaActual = null;
-
-        private readonly List<string> _partesWhere = new List<string>();
-        private readonly List<string> _partesGroupOrder = new List<string>();
+        private Controlador oControlador;
+        private string sTablaActual = null;
+        //Se estandarizó variables realizado por Nelson Godínez 0901-22-3550 07/10/2025
+        private readonly List<string> lstPartesWhere = new List<string>();
+        private readonly List<string> lstPartesGroupOrder = new List<string>();
         // Rellena los dos bloques visibles de UI a partir de las condiciones parseadas Nelson Jose Godinez Mendez 0901-22-3550 09/26/2025
-        private bool _cargandoDesdeSql = false;
-        private string _sqlActual = string.Empty;
+        private bool bCargandoDesdeSql = false;
+        private string sSqlActual = string.Empty;
 
         // BETWEEN dinámico
         private TextBox Txt_ValorCompMin;
@@ -56,15 +56,15 @@ namespace Capa_Vista_Componente_Consultas
             // Cambio de tabla
             Cbo_Tabla.SelectedIndexChanged += delegate
             {
-                _tablaActual = Cbo_Tabla.SelectedItem == null ? null : Cbo_Tabla.SelectedItem.ToString();
-                CargarColumnas(_tablaActual);
+                sTablaActual = Cbo_Tabla.SelectedItem == null ? null : Cbo_Tabla.SelectedItem.ToString();
+                CargarColumnas(sTablaActual);
 
-                if (!_cargandoDesdeSql)
+                if (!bCargandoDesdeSql)
                 {
                     LimpiarCondiciones();
                     Txt_CadenaGenerada.Clear();
                 }
-                PrevisualizarTabla(_tablaActual);
+                PrevisualizarTabla(sTablaActual);
             };
 
             // Buscar/Refrescar preview
@@ -97,7 +97,7 @@ namespace Capa_Vista_Componente_Consultas
                 var val = Txt_ValorCond.Text.Trim();
                 if (val.Length == 0) { MessageBox.Show("Ingresa un valor."); return; }
 
-                var operador = _partesWhere.Count == 0 ? null : (GetComboValor(Cbo_OperadorLogico) ?? "AND");
+                var operador = lstPartesWhere.Count == 0 ? null : (GetComboValor(Cbo_OperadorLogico) ?? "AND");
 
                 var campo = Cbo_CampoCond.SelectedItem.ToString();
                 string rhs = decimal.TryParse(val, NumberStyles.Any, CultureInfo.InvariantCulture, out var num)
@@ -162,7 +162,7 @@ namespace Capa_Vista_Componente_Consultas
                         break;
                 }
 
-                string conector = _partesWhere.Count == 0 ? null : (GetComboValor(Cbo_OperadorLogico) ?? "AND");
+                string conector = lstPartesWhere.Count == 0 ? null : (GetComboValor(Cbo_OperadorLogico) ?? "AND");
                 AgregarWhere(pieza, conector);
             };
 
@@ -176,31 +176,31 @@ namespace Capa_Vista_Componente_Consultas
                 string campo = Cbo_CampoOrdenar.SelectedItem.ToString();
 
                 if (modo == "GROUP BY")
-                    _partesGroupOrder.Add("GROUP BY `" + campo + "`");
+                    lstPartesGroupOrder.Add("GROUP BY `" + campo + "`");
                 else
                 {
                     string ord = Cbo_Ordenamiento.SelectedItem == null
                         ? (Rdb_Asc.Checked ? "ASC" : "DESC")
                         : Cbo_Ordenamiento.SelectedItem.ToString();
 
-                    _partesGroupOrder.Add("ORDER BY `" + campo + "` " + ord);
+                    lstPartesGroupOrder.Add("ORDER BY `" + campo + "` " + ord);
                 }
             };
 
             // ---- Ejecutar  Juan Carlos Sandoval Quej 0901-22-4170 26/09/2025
             Btn_Ejecutar.Click += delegate
             {
-                var sql = string.IsNullOrWhiteSpace(_sqlActual)
-                    ? _controlador.ConstruirSql(_tablaActual, Chk_AgregarCondiciones.Checked, _partesWhere, _partesGroupOrder)
-                    : _sqlActual;
+                var sql = string.IsNullOrWhiteSpace(sSqlActual)
+                    ? oControlador.ConstruirSql(sTablaActual, Chk_AgregarCondiciones.Checked, lstPartesWhere, lstPartesGroupOrder)
+                    : sSqlActual;
 
-                _sqlActual = sql; // persistimos
+                sSqlActual = sql; // persistimos
 
-                sql = _controlador.ReescribirSelectSeguroSiHayTime(DB, _tablaActual, sql);
+                sql = oControlador.ReescribirSelectSeguroSiHayTime(sDB, sTablaActual, sql);
 
                 try
                 {
-                    var dt = _controlador.EjecutarConsulta(sql);
+                    var dt = oControlador.EjecutarConsulta(sql);
                     Dgv_Preview.DataSource = dt;
                 }
                 catch (Exception ex)
@@ -231,7 +231,7 @@ namespace Capa_Vista_Componente_Consultas
                 if (MessageBox.Show("¿Eliminar \"" + nombre + "\"?", "Confirmación",
                     MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                 {
-                    if (_controlador.EliminarConsulta(nombre))
+                    if (oControlador.EliminarConsulta(nombre))
                     {
                         CargarConsultasGuardadas();
                         Txt_CadenaGenerada.Clear();
@@ -264,7 +264,7 @@ namespace Capa_Vista_Componente_Consultas
         {
             if (LicenseManager.UsageMode == LicenseUsageMode.Designtime) return;
 
-            _controlador = new Controlador(DSN, DB);
+            oControlador = new Controlador(sDsn, sDB);
 
             CargarTablas();
 
@@ -319,11 +319,7 @@ namespace Capa_Vista_Componente_Consultas
             {
                 // Limpia el combo de tablas antes de volver a llenarlo
                 Cbo_Tabla.Items.Clear();
-
-                // Le pide al controlador la lista de tablas disponibles en la BD
-                var tabs = _controlador.ObtenerTablas();
-
-                // Agrega cada nombre de tabla al combo
+                var tabs = oControlador.ObtenerTablas();
                 foreach (var t in tabs) Cbo_Tabla.Items.Add(t);
 
                 // Si hay al menos una tabla, selecciona la primera por defecto
@@ -350,18 +346,15 @@ namespace Capa_Vista_Componente_Consultas
 
             // Busca, de atrás hacia adelante, si ya existe una pieza "ORDER BY" en la lista
             int idx = -1;
-            for (int i = _partesGroupOrder.Count - 1; i >= 0; i--)
+            for (int i = lstPartesGroupOrder.Count - 1; i >= 0; i--)
             {
-                if (_partesGroupOrder[i].StartsWith("ORDER BY ", StringComparison.OrdinalIgnoreCase))
+                if (lstPartesGroupOrder[i].StartsWith("ORDER BY ", StringComparison.OrdinalIgnoreCase))
                 { idx = i; break; }
             }
 
             if (idx >= 0)
             {
-                string pieza = _partesGroupOrder[idx];
-
-                // Extrae el nombre de la columna después de "ORDER BY".
-                // El Regex busca la palabra después de ORDER BY.
+                string pieza = lstPartesGroupOrder[idx]; // "ORDER BY `col` DIR"
                 string col = null;
                 var m = Regex.Match(pieza, @"ORDER\s+BY\s+`?(?<c>[^`\s]+)`?", RegexOptions.IgnoreCase);
                 if (m.Success) col = m.Groups["c"].Value;
@@ -372,7 +365,7 @@ namespace Capa_Vista_Componente_Consultas
 
                 // Si tenemos columna, reconstruye la pieza con la nueva dirección.
                 if (!string.IsNullOrEmpty(col))
-                    _partesGroupOrder[idx] = "ORDER BY `" + NormalizeCol(col) + "` " + dir;
+                    lstPartesGroupOrder[idx] = "ORDER BY `" + NormalizeCol(col) + "` " + dir;
             }
             else
             {
@@ -383,7 +376,7 @@ namespace Capa_Vista_Componente_Consultas
                     Cbo_CampoOrdenar.SelectedItem != null)
                 {
                     string col2 = Cbo_CampoOrdenar.SelectedItem.ToString();
-                    _partesGroupOrder.Add("ORDER BY `" + NormalizeCol(col2) + "` " + dir);
+                    lstPartesGroupOrder.Add("ORDER BY `" + NormalizeCol(col2) + "` " + dir);
                 }
             }
         }
@@ -397,7 +390,7 @@ namespace Capa_Vista_Componente_Consultas
 
             if (string.IsNullOrEmpty(tabla)) return;
 
-            var cols = _controlador.ObtenerColumnas(tabla);
+            var cols = oControlador.ObtenerColumnas(tabla);
             foreach (var c in cols)
             {
                 Cbo_CampoCond.Items.Add(c);
@@ -466,8 +459,8 @@ namespace Capa_Vista_Componente_Consultas
             try
             {
                 var sql = "SELECT * FROM `" + tabla + "` LIMIT 50;";
-                sql = _controlador.ReescribirSelectSeguroSiHayTime(DB, tabla, sql);
-                var dt = _controlador.EjecutarConsulta(sql);
+                sql = oControlador.ReescribirSelectSeguroSiHayTime(sDB, tabla, sql);
+                var dt = oControlador.EjecutarConsulta(sql);
                 Dgv_Preview.DataSource = dt;
             }
             catch (Exception ex)
@@ -479,8 +472,8 @@ namespace Capa_Vista_Componente_Consultas
         // ----------------- Estado/Limpieza Bryan Raul Ramirez Lopez 0901-21-8202
         private void LimpiarCondiciones()
         {
-            _partesWhere.Clear();
-            _partesGroupOrder.Clear();
+            lstPartesWhere.Clear();
+            lstPartesGroupOrder.Clear();
 
             Cbo_OperadorLogico.SelectedItem = null;
             Cbo_CampoCond.SelectedItem = null;
@@ -506,15 +499,15 @@ namespace Capa_Vista_Componente_Consultas
             Txt_CadenaGenerada.Clear();
             Rdb_Asc.Checked = true;
 
-            if (!string.IsNullOrEmpty(_tablaActual))
-                PrevisualizarTabla(_tablaActual);
+            if (!string.IsNullOrEmpty(sTablaActual))
+                PrevisualizarTabla(sTablaActual);
         }
 
         // ----------------- WHERE building / BETWEEN UI ----------------- Diego Fernando Saquil Gramajo 0901-22-4103
         private void AgregarWhere(string pieza, string operador)
         {
-            if (_partesWhere.Count == 0 || string.IsNullOrEmpty(operador)) _partesWhere.Add(pieza);
-            else _partesWhere.Add(operador + " " + pieza);
+            if (lstPartesWhere.Count == 0 || string.IsNullOrEmpty(operador)) lstPartesWhere.Add(pieza);
+            else lstPartesWhere.Add(operador + " " + pieza);
         }
 
         private void EnsureBetweenControls()
@@ -577,12 +570,9 @@ namespace Capa_Vista_Componente_Consultas
         // ----------------- Guardar/Listar consultas Juan Carlos Sandoval Quej 0901-22-4170 26/09/2025
         private void GuardarConsultaAuto()
         {
-            // Si no hay una consulta lista (_sqlActual vacío),
-            // entonces se construye una nueva usando la tabla, condiciones y filtros.
-            // Si ya hay una consulta, se usa esa.
-            string sql = string.IsNullOrWhiteSpace(_sqlActual)
-                ? _controlador.ConstruirSql(_tablaActual, Chk_AgregarCondiciones.Checked, _partesWhere, _partesGroupOrder)
-                : _sqlActual;
+            string sql = string.IsNullOrWhiteSpace(sSqlActual)
+                ? oControlador.ConstruirSql(sTablaActual, Chk_AgregarCondiciones.Checked, lstPartesWhere, lstPartesGroupOrder)
+                : sSqlActual;
 
             // Si después de eso sigue sin haber consulta, avisa al usuario y se detiene.
             if (string.IsNullOrWhiteSpace(sql))
@@ -590,32 +580,24 @@ namespace Capa_Vista_Componente_Consultas
                 MessageBox.Show("Genera la consulta primero.");
                 return;
             }
+            sSqlActual = sql;
 
-            // Guardamos el SQL definitivo en la variable
-            _sqlActual = sql;
-
-            // El nombre base será la tabla seleccionada o "consulta" si no hay tabla
-            var baseName = string.IsNullOrEmpty(_tablaActual) ? "consulta" : _tablaActual;
-
-            // Al nombre base se le añade la fecha y hora para que sea único
+            var baseName = string.IsNullOrEmpty(sTablaActual) ? "consulta" : sTablaActual;
             var name = baseName + "_" + DateTime.Now.ToString("yyyyMMdd_HHmmss");
 
             try
             {
                 // Se obtiene la lista de nombres de consultas ya guardadas
                 var existentes = new HashSet<string>(
-                    _controlador.ListarConsultasPlano().Select(kv => kv.Key),
+                    oControlador.ListarConsultasPlano().Select(kv => kv.Key),
                     StringComparer.OrdinalIgnoreCase);
 
                 // Se verifica si el nombre generado ya existe
                 // Si existe, se le agrega _1, _2, etc. hasta que sea único
                 var unique = name; int i = 1;
                 while (existentes.Contains(unique)) unique = name + "_" + (i++).ToString();
+                oControlador.GuardarConsulta(unique, sql);
 
-                // Se guarda la consulta en el controlador
-                _controlador.GuardarConsulta(unique, sql);
-
-                // Se actualiza la lista de consultas guardadas en pantalla
                 CargarConsultasGuardadas();
 
                 // Intenta seleccionar en el ListBox la consulta recién guardada
@@ -640,10 +622,7 @@ namespace Capa_Vista_Componente_Consultas
         {
             try
             {
-                // Pide al controlador todas las consultas guardadas
-                var items = _controlador.ListarConsultasPlano();
-
-                // Limpia la lista en pantalla y la vuelve a cargar con los nuevos datos
+                var items = oControlador.ListarConsultasPlano();
                 Lst_ConsultasGuardadas.DataSource = null;
                 Lst_ConsultasGuardadas.DisplayMember = "Key";   // Lo que se muestra (nombre de la consulta)
                 Lst_ConsultasGuardadas.ValueMember = "Value";   // Lo que devuelva
@@ -663,17 +642,17 @@ namespace Capa_Vista_Componente_Consultas
             if (mTable.Success)
             {
                 var t = mTable.Groups["t"].Value;
-                _cargandoDesdeSql = true;
+                bCargandoDesdeSql = true;
 
                 SetComboSelectedItem(Cbo_Tabla, t);
                 CargarColumnas(t);
 
-                _cargandoDesdeSql = false;
-                _tablaActual = t;
+                bCargandoDesdeSql = false;
+                sTablaActual = t;
             }
 
             // WHERE parseado (del Controlador)
-            var conds = _controlador.ParsearWhere(sql);
+            var conds = oControlador.ParsearWhere(sql);
 
             // GROUP BY
             var mGroup = Regex.Match(sql, @"GROUP\s+BY\s+`?(?<g>[^`\s]+)`?", RegexOptions.IgnoreCase);
@@ -682,7 +661,7 @@ namespace Capa_Vista_Componente_Consultas
                 var col = mGroup.Groups["g"].Value;
                 SetComboSelectedItem(Cbo_AgruparOrdenar, "GROUP BY");
                 BeginInvoke(new Action(delegate { SafeSelectColumn(Cbo_CampoOrdenar, col); }));
-                _partesGroupOrder.Add("GROUP BY `" + NormalizeCol(col) + "`");
+                lstPartesGroupOrder.Add("GROUP BY `" + NormalizeCol(col) + "`");
             }
 
             // ORDER BY
@@ -696,16 +675,16 @@ namespace Capa_Vista_Componente_Consultas
                 BeginInvoke(new Action(delegate { SafeSelectColumn(Cbo_CampoOrdenar, col); }));
                 SetComboSelectedItem(Cbo_Ordenamiento, dir);
 
-                _partesGroupOrder.Add("ORDER BY `" + NormalizeCol(col) + "` " + dir);
+                lstPartesGroupOrder.Add("ORDER BY `" + NormalizeCol(col) + "` " + dir);
                 if (dir == "ASC") Rdb_Asc.Checked = true; else Rdb_Des.Checked = true;
             }
 
             // Refresca SQL en memoria
-            _sqlActual = _controlador.ConstruirSql(
-                _tablaActual,
+            sSqlActual = oControlador.ConstruirSql(
+                sTablaActual,
                 Chk_AgregarCondiciones.Checked,
-                _partesWhere,
-                _partesGroupOrder
+                lstPartesWhere,
+                lstPartesGroupOrder
             );
 
             // PINTAR UI cuando combos ya estén listos
