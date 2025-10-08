@@ -14,6 +14,9 @@ namespace Capa_Modelo_Seguridad
         // Estado de login: true = conectado, false = desconectado
         public static bool bLoginEstado { get; set; }
 
+        //obtener idaplicacion -- Brandon Alexander Hernandez Salguero
+        public static int iIdAplicacion { get; set; }
+
         // Método para establecer datos al iniciar sesión
         public static void IniciarSesion(int idUsuario, string nombreUsuario)
         {
@@ -27,5 +30,7 @@ namespace Capa_Modelo_Seguridad
         {
             bLoginEstado = false;
         }
+
+
     }
 }
