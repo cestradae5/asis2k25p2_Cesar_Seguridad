@@ -54,6 +54,7 @@
     <Compile Include="Cls_EmpleadosDAO.cs" />
     <Compile Include="Cls_PerfilesDAO.cs" />
     <Compile Include="Cls_PermisoUsuario.cs" />
+    <Compile Include="Cls_Permiso_Aplicacion_Usuario.cs" />
     <Compile Include="Cls_SentenciasBitacora.cs" />
     <Compile Include="Cls_Usuario.cs" />
     <Compile Include="Cls_UsuarioConectado.cs" />

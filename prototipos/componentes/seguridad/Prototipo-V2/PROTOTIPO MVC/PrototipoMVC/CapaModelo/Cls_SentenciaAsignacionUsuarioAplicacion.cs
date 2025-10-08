@@ -8,6 +8,32 @@ namespace Capa_Modelo_Seguridad
     public class Cls_SentenciaAsignacionUsuarioAplicacion
     {
         Cls_Conexion conexion = new Cls_Conexion();
+            //consulta para pasar obtener aplicacion y sus permisos  --> Brandon Hernandez 0901-22-9663
+        public DataTable ObtenerPermisosUsuarioAplicacion(int idUsuario, int idAplicacion)
+        {
+            DataTable dt = new DataTable();
+            string query = @"SELECT 
+                        Cmp_Ingresar_Permiso_Aplicacion_Usuario AS ingresar,
+                        Cmp_Consultar_Permiso_Aplicacion_Usuario AS consultar,
+                        Cmp_Modificar_Permiso_Aplicacion_Usuario AS modificar,
+                        Cmp_Eliminar_Permiso_Aplicacion_Usuario AS eliminar,
+                        Cmp_Imprimir_Permiso_Aplicacion_Usuario AS imprimir
+                    FROM Tbl_Permiso_Usuario_Aplicacion
+                    WHERE Fk_Id_Usuario = ? AND Fk_Id_Aplicacion = ?";
+
+            using (OdbcConnection conn = conexion.conexion())
+            using (OdbcCommand cmd = new OdbcCommand(query, conn))
+            {
+                cmd.Parameters.AddWithValue("@idUsuario", idUsuario);
+                cmd.Parameters.AddWithValue("@idAplicacion", idAplicacion);
+
+                using (OdbcDataAdapter adapter = new OdbcDataAdapter(cmd))
+                {
+                    adapter.Fill(dt);
+                }
+            }
+            return dt;
+        }
 
         // Obtener todos los usuarios
         public DataTable ObtenerUsuarios()
@@ -149,7 +175,7 @@ namespace Capa_Modelo_Seguridad
         }
 
 
-        // Actualizar permisos de usuario por aplicación
+        // Actualizar permisos de usuario por aplicación 
         public int ActualizarPermisoUsuarioAplicacion(int idUsuario, int idModulo, int idAplicacion,
                                                       bool ingresar, bool consultar, bool modificar,
                                                       bool eliminar, bool imprimir)
@@ -206,5 +232,10 @@ namespace Capa_Modelo_Seguridad
         }
 
         // fin -> Ruben Armando Lopez Luch
+
+
+
+      
     }
 }
+

@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using Capa_Modelo_Seguridad;
+using System;
 
 namespace Capa_Controlador_Seguridad
 {
@@ -26,7 +27,7 @@ namespace Capa_Controlador_Seguridad
             return model.ObtenerAplicacionesPorModulo(idModulo);
         }
 
-        
+
         public DataTable ObtenerPermisosPorUsuario(int idUsuario)
         {
             return model.ObtenerPermisosPorUsuario(idUsuario);
@@ -52,6 +53,31 @@ namespace Capa_Controlador_Seguridad
         }
 
         // fin -> Ruben Armando Lopez lUch
+
+        // Método para obtener los permisos del usuario y aplicación actualmente conectados -> Brandon Hernandez  0901-22-9663
+
+        public Cls_Permiso_Aplicacion_Usuario ObtenerPermisosAplicacionUsuarioConectado(int idAplicacion)
+        {
+            int idUsuario = Cls_UsuarioConectado.iIdUsuario;
+            
+
+            DataTable dt = model.ObtenerPermisosUsuarioAplicacion(idUsuario, idAplicacion);
+
+            if (dt.Rows.Count == 0)
+                return null; // o retorna un objeto con todos los permisos en false
+
+            DataRow row = dt.Rows[0];
+            return new Cls_Permiso_Aplicacion_Usuario
+            {
+                IdUsuario = idUsuario,
+                IdAplicacion = idAplicacion,
+                Ingresar = Convert.ToBoolean(row["ingresar"]),
+                Consultar = Convert.ToBoolean(row["consultar"]),
+                Modificar = Convert.ToBoolean(row["modificar"]),
+                Eliminar = Convert.ToBoolean(row["eliminar"]),
+                Imprimir = Convert.ToBoolean(row["imprimir"])
+            };
+        }
     }
 }
 

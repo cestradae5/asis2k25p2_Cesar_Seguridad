@@ -14,6 +14,8 @@ namespace Capa_Controlador_Seguridad
         //Estado de login: true = conectado, false = desconectado
         public static bool bLoginEstado { get; set; }
 
+        //public static int iIdAplicacion { get; set; }
+
         public static void IniciarSesion(int idUsuario, string nombreUsuario)
         {
             iIdUsuario = idUsuario;
@@ -25,5 +27,11 @@ namespace Capa_Controlador_Seguridad
         {
             bLoginEstado = false;
         }
+       /* public static void SeleccionarAplicacion(int idAplicacion)
+        {
+            iIdAplicacion = idAplicacion;
+        }
+       */
+
     }
 }
