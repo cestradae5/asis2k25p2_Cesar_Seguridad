@@ -25,7 +25,7 @@ namespace Capa_Vista_Seguridad
             fun_ConfigurarComboBoxPerfiles();
             fun_ConfigurarComboBoxTipoPerfil();
             fun_Configuracioninicial();
-            fun_ConfigurarIdsDinamicamenteYAplicarPermisos();
+           /* fun_ConfigurarIdsDinamicamenteYAplicarPermisos();*/
         }
 
         private void fun_Configuracioninicial()
@@ -305,6 +305,8 @@ namespace Capa_Vista_Seguridad
         //Marcos Andres Velásquez Alcántara
         //Carnet: 0901-21-1115
 
+        /*
+
         private Cls_PermisoUsuario gPermisoUsuario = new Cls_PermisoUsuario();
 
         private List<(int iModuloId, int iAplicacionId)> gParesModuloAplicacion = new List<(int, int)>();
@@ -379,7 +381,7 @@ namespace Capa_Vista_Seguridad
             Btn_Eliminar.Enabled = bEliminar;
             Btn_cancelar.Enabled = bEliminar || bConsultar;
         }
-
+        */
 
 
        

@@ -21,13 +21,13 @@ namespace Capa_Vista_Seguridad
         public Frm_SalarioEmpleados()
         {
             InitializeComponent();
-            ConfigurarIdsDinamicamenteYAplicarPermisos();
+            /*ConfigurarIdsDinamicamenteYAplicarPermisos();*/
             
         }
 
         //Marcos Andres Velásquez Alcántara
         //Carnet: 0901-21-1115
-
+        /*
         private Cls_PermisoUsuario gPermisoUsuario = new Cls_PermisoUsuario();
 
         private List<(int moduloId, int aplicacionId)> gParesModuloAplicacion = new List<(int, int)>();
@@ -96,7 +96,7 @@ namespace Capa_Vista_Seguridad
             Btn_guardar_salario.Enabled = bIngresar;
             Btn_modificar_salario.Enabled = bModificar;
             Btn_eliminar_salario.Enabled = bEliminar;
-        }
+        }*/
 
 
     }

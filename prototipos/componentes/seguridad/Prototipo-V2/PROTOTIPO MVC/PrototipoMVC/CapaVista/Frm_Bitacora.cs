@@ -31,7 +31,7 @@ namespace Capa_Vista_Seguridad
             InitializeComponent();
             CargarUsuariosEnCombo(); // carga usuarios al abrir
             OcultarFiltros();        // opcional
-            fun_ConfigurarIdsDinamicamenteYAplicarPermisos();
+           // fun_ConfigurarIdsDinamicamenteYAplicarPermisos();
             CargarEnGrid(ctrlBitacora.MostrarBitacora()); //Mostrar toda la bitácora al inicio
         }
 

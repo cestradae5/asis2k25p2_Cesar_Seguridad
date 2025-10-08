@@ -211,6 +211,8 @@ namespace Capa_Vista_Seguridad
         //Marcos Andres Velásquez Alcántara
         //Carnet: 0901-21-1115
 
+        /*
+
         private Cls_PermisoUsuario gPermisoUsuario = new Cls_PermisoUsuario();
 
         private List<(int iModuloId, int iAplicacionId)> gParesModuloAplicacion = new List<(int, int)>();
@@ -285,7 +287,7 @@ namespace Capa_Vista_Seguridad
 
 
         }
-
+        */
 
 
       

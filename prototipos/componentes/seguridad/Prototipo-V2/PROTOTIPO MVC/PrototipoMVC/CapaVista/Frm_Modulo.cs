@@ -23,7 +23,7 @@ namespace Capa_Vista_Seguridad
         public Frm_Modulo()
         {
             InitializeComponent();
-            ConfigurarIdsDinamicamenteYAplicarPermisos(); // Configura permisos del usuario al abrir el formulario
+           // ConfigurarIdsDinamicamenteYAplicarPermisos(); // Configura permisos del usuario al abrir el formulario
         }
 
         private void frmModulo_Load(object sender, EventArgs e)
@@ -231,6 +231,8 @@ namespace Capa_Vista_Seguridad
         }
 
         // ==== Manejo de permisos de usuario ====
+
+        /*
         private Cls_PermisoUsuario gPermisoUsuario = new Cls_PermisoUsuario();
 
         private List<(int moduloId, int aplicacionId)> gParesModuloAplicacion = new List<(int, int)>();
@@ -302,6 +304,6 @@ namespace Capa_Vista_Seguridad
             Btn_guardar.Enabled = bIngresar;
             Btn_eliminar.Enabled = bEliminar;
             Btn_nuevo.Enabled = bIngresar;
-        }
+        }*/
     }
 }
