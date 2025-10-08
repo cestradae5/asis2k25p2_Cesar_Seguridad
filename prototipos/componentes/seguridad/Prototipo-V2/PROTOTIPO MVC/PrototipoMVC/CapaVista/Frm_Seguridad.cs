@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Capa_Modelo_Seguridad;
 using Capa_Controlador_Seguridad;
 
 namespace Capa_Vista_Seguridad
@@ -15,6 +14,7 @@ namespace Capa_Vista_Seguridad
     public partial class Frm_Seguridad : Form
     {
         Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador();  //Controlador de Bitacora
+        private Cls_ControladorAsignacionUsuarioAplicacion controladorPermisos = new Cls_ControladorAsignacionUsuarioAplicacion();
         private int iIChildFormNumber = 0;
 
         public enum MenuOpciones
@@ -35,8 +35,8 @@ namespace Capa_Vista_Seguridad
         {
             InitializeComponent();
             InicializarMenuItems();
-           /* fun_inicializar_botones_por_defecto();*/
-          /*  fun_habilitar_botones_por_permisos(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario);*/
+            fun_inicializar_botones_por_defecto();
+            fun_habilitar_botones_por_permisos(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario);
         }
 
         private void InicializarMenuItems()
@@ -50,6 +50,7 @@ namespace Capa_Vista_Seguridad
                 { MenuOpciones.Herramientas, herramientasToolStripMenuItem },
                 { MenuOpciones.Ayuda, ayudaToolStripMenuItem },
                 { MenuOpciones.Asignaciones, asignacionesToolStripMenuItem },
+                { MenuOpciones.Modulos, modulosToolStripMenuItem }
             };
         }
 
@@ -73,35 +74,67 @@ namespace Capa_Vista_Seguridad
 
         public void fun_habilitar_botones_por_permisos(int iIdUsuario)
         {
+            // Inicializar todo deshabilitado
             fun_inicializar_botones_por_defecto();
-            Cls_SentenciaAsignacionUsuarioAplicacion modelo = new Cls_SentenciaAsignacionUsuarioAplicacion();
-            DataTable dtPermisos = modelo.ObtenerPermisosPorUsuario(iIdUsuario);
-            bool bTienePermisoSeguridad = dtPermisos.AsEnumerable()
-                .Any(row => row["nombre_modulo"].ToString() == "Seguridad");
-            if (bTienePermisoSeguridad)
+
+            // Obtener permisos desde el Controlador
+            DataTable dtPermisos = controladorPermisos.ObtenerPermisosPorUsuario(iIdUsuario);
+
+            // Diccionarios de idAplicacion -> submenú
+            Dictionary<int, ToolStripMenuItem> mapaCatalogos = new Dictionary<int, ToolStripMenuItem>
             {
-                menuItems[MenuOpciones.Catalogos].Enabled = true;
-                menuItems[MenuOpciones.Procesos].Enabled = true;
-                menuItems[MenuOpciones.Reportes].Enabled = true;
-                menuItems[MenuOpciones.Asignaciones].Enabled = true;
+                {301, empleadosToolStripMenuItem1},
+                {302, usuariosToolStripMenuItem},
+                {303, perfilesToolStripMenuItem},
+                {304, modulosToolStripMenuItem}
+            };
+
+            Dictionary<int, ToolStripMenuItem> mapaProcesos = new Dictionary<int, ToolStripMenuItem>
+            {
+                {305, Btn_Aplicacion}
+            };
+
+            Dictionary<int, ToolStripMenuItem> mapaAsignaciones = new Dictionary<int, ToolStripMenuItem>
+            {
+                {306, asignacionDeAplicacionAUsuarioToolStripMenuItem},
+                {307, asignacionDeAplicacionAPerfilesToolStripMenuItem},
+                {308, asignacionPerfilesToolStripMenuItem}
+            };
+
+            // Inicializar submenús deshabilitados
+            foreach (var sub in mapaCatalogos.Values) sub.Enabled = false;
+            foreach (var sub in mapaProcesos.Values) sub.Enabled = false;
+            foreach (var sub in mapaAsignaciones.Values) sub.Enabled = false;
+
+            // Recorrer permisos
+            foreach (DataRow row in dtPermisos.Rows)
+            {
+                int idModulo = Convert.ToInt32(row["fk_id_modulo"]);
+                int idAplicacion = Convert.ToInt32(row["fk_id_aplicacion"]);
+
+                // Solo idModulo = 4 y idAplicacion 301-308
+                if (idModulo == 4 && idAplicacion >= 301 && idAplicacion <= 308)
+                {
+                    if (mapaCatalogos.ContainsKey(idAplicacion))
+                        mapaCatalogos[idAplicacion].Enabled = true;
+
+                    if (mapaProcesos.ContainsKey(idAplicacion))
+                        mapaProcesos[idAplicacion].Enabled = true;
+
+                    if (mapaAsignaciones.ContainsKey(idAplicacion))
+                        mapaAsignaciones[idAplicacion].Enabled = true;
+                }
             }
-        }
-        /*
-        public void fun_babilitar_botones_seguridad(string sModulo)
-        {
-            if (sModulo == "Seguridad")
-            {
-                menuItems[MenuOpciones.Catalogos].Enabled = true;
-                menuItems[MenuOpciones.Procesos].Enabled = true;
-                menuItems[MenuOpciones.Reportes].Enabled = true;
-                menuItems[MenuOpciones.Asignaciones].Enabled = true;
+
+            // Habilitar menús principales solo si algún submenú está habilitado
+            if (mapaCatalogos.Values.Any(m => m.Enabled)) menuItems[MenuOpciones.Catalogos].Enabled = true;
+            if (mapaProcesos.Values.Any(m => m.Enabled)) menuItems[MenuOpciones.Procesos].Enabled = true;
+            if (mapaAsignaciones.Values.Any(m => m.Enabled)) menuItems[MenuOpciones.Asignaciones].Enabled = true;
+
+            // Modulos siempre habilitar si tiene algún permiso del módulo 4
+            if (mapaCatalogos.ContainsKey(304) && mapaCatalogos[304].Enabled)
                 menuItems[MenuOpciones.Modulos].Enabled = true;
-            }
-            else
-            {
-                fun_inicializar_botones_por_defecto();
-            }
-        }*/
+        }
 
         // NUEVO MÉTODO PARA CERRAR HIJOS
         //Brandon Alexander Hernandez Salguero  0901-22-9663
@@ -295,5 +328,6 @@ namespace Capa_Vista_Seguridad
             asig_app_user.MdiParent = this;
             asig_app_user.Show();
         }
+
     }
 }

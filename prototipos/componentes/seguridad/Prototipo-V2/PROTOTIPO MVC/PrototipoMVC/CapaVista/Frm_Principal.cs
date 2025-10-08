@@ -18,12 +18,27 @@ namespace Capa_Vista_Seguridad
         private int childFormNumber = 0;
         private Cls_ControladorAsignacionUsuarioAplicacion ctrlSeguridad;
 
+        private int iIdUsuario;
+        private string sNombreUsuario;
+
         public Frm_Principal()
         {
             InitializeComponent();
             ctrlSeguridad = new Cls_ControladorAsignacionUsuarioAplicacion();
             this.Load += frmPrincipal_Load;
         }
+
+        public Frm_Principal(string nombreUsuario, int idUsuario)
+        {
+            InitializeComponent();
+            ctrlSeguridad = new Cls_ControladorAsignacionUsuarioAplicacion();
+
+            sNombreUsuario = nombreUsuario;
+            iIdUsuario = idUsuario;
+
+            this.Load += frmPrincipal_Load;
+        }
+
 
         // Ruben Armando Lopez Luch
         // 0901-20-4620
@@ -143,7 +158,15 @@ namespace Capa_Vista_Seguridad
 
         private void frmPrincipal_Load(object sender, EventArgs e)
         {
-            fun_activar_menus_por_permiso(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario);
+
+            // Mostrar usuario conectado en StatusStrip usando la clase estática Cls_UsuarioConectado
+            // Esto asegura que siempre se muestre el nombre correcto del usuario real
+            toolStripStatusLabel1.Text = $"Estado: Conectado | Usuario: {Cls_UsuarioConectado.sNombreUsuario}";
+
+            // Activar menús según permisos del usuario
+            fun_activar_menus_por_permiso(Cls_UsuarioConectado.iIdUsuario);
         }
+
     }
+
 }

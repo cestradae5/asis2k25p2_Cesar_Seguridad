@@ -33,6 +33,12 @@ namespace Capa_Controlador_Seguridad
             return model.ObtenerPermisosPorUsuario(idUsuario);
         }
 
+        public DataTable ObtenerPermisosPorUsuarioYModulo(int idUsuario, int idModulo)
+        {
+            return model.fun_bbtener_permisos_por_usuario_modulo(idUsuario, idModulo);
+        }
+
+
         // Insertar permisos de usuario por aplicación
         public bool InsertarPermisoUsuarioAplicacion(int idUsuario, int idModulo, int idAplicacion,
                                                      bool ingresar, bool consultar, bool modificar,
@@ -47,10 +53,10 @@ namespace Capa_Controlador_Seguridad
 
         //Ruben Armando Lopez lUch
         //0901-20-4620
-        public DataTable fun_obtener_permisos_por_usuario_modulo(int iIdUsuario, int iModulo)
-        {
-            return model.fun_bbtener_permisos_por_usuario_modulo(iIdUsuario, iModulo);
-        }
+        //public DataTable fun_obtener_permisos_por_usuario_modulo(int iIdUsuario, int iModulo)
+        //{
+        //    return model.fun_bbtener_permisos_por_usuario_modulo(iIdUsuario, iModulo);
+        //}
 
         // fin -> Ruben Armando Lopez lUch
 
