@@ -31,6 +31,8 @@ namespace Capa_Vista_Seguridad
 
         private Dictionary<MenuOpciones, ToolStripMenuItem> menuItems;
 
+
+
         public Frm_Seguridad()
         {
             InitializeComponent();
@@ -46,7 +48,6 @@ namespace Capa_Vista_Seguridad
                 { MenuOpciones.Archivo, archivoToolStripMenuItem },
                 { MenuOpciones.Catalogos, catálogosToolStripMenuItem },
                 { MenuOpciones.Procesos, procesosToolStripMenuItem },
-                { MenuOpciones.Reportes, reportesToolStripMenuItem },
                 { MenuOpciones.Herramientas, herramientasToolStripMenuItem },
                 { MenuOpciones.Ayuda, ayudaToolStripMenuItem },
                 { MenuOpciones.Asignaciones, asignacionesToolStripMenuItem },
@@ -86,12 +87,13 @@ namespace Capa_Vista_Seguridad
                 {301, empleadosToolStripMenuItem1},
                 {302, usuariosToolStripMenuItem},
                 {303, perfilesToolStripMenuItem},
-                {304, modulosToolStripMenuItem}
+                {304, modulosToolStripMenuItem},
+                {305, Btn_Aplicacion}
             };
 
             Dictionary<int, ToolStripMenuItem> mapaProcesos = new Dictionary<int, ToolStripMenuItem>
             {
-                {305, Btn_Aplicacion}
+                {306, asignacionDeAplicacionAUsuarioToolStripMenuItem}
             };
 
             Dictionary<int, ToolStripMenuItem> mapaAsignaciones = new Dictionary<int, ToolStripMenuItem>
