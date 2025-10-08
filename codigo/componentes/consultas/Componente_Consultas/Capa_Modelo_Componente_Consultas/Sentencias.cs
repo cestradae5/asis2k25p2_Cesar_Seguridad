@@ -11,9 +11,9 @@ namespace Capa_Modelo_Componente_Consultas
     // Nelson José Godinez Mendez 0901-22-3550 22/09/2025
     public class Sentencias
     {
-        private readonly string _dsn;
-        private readonly string _db;
-        private readonly string _connStr;
+        private readonly string sDsn;
+        private readonly string sDB;
+        private readonly string sConexionSTR;
         private readonly string _filePathXml;
 
         public Sentencias(string dsn, string db)
@@ -21,15 +21,15 @@ namespace Capa_Modelo_Componente_Consultas
             if (dsn == null) throw new ArgumentNullException(nameof(dsn));
             if (db == null) throw new ArgumentNullException(nameof(db));
 
-            _dsn = dsn;
-            _db = db;
-            _connStr = "DSN=" + _dsn + ";DATABASE=" + _db + ";";
+            sDsn = dsn;
+            sDB = db;
+            sConexionSTR = "DSN=" + sDsn + ";DATABASE=" + sDB + ";";
             _filePathXml = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "consultas.xml");
         }
 
         private OdbcConnection CreateConn()
         {
-            return new OdbcConnection(_connStr);
+            return new OdbcConnection(sConexionSTR);
         }
 
         public DataTable EjecutarConsulta(string sql)
@@ -48,7 +48,7 @@ namespace Capa_Modelo_Componente_Consultas
         public List<string> ObtenerTablas()
         {
             string sql = "SELECT table_name FROM INFORMATION_SCHEMA.TABLES " +
-                         "WHERE table_schema='" + _db + "' ORDER BY table_name;";
+                         "WHERE table_schema='" + sDB + "' ORDER BY table_name;";
             using (var cn = CreateConn())
             using (var cmd = new OdbcCommand(sql, cn))
             {
@@ -65,7 +65,7 @@ namespace Capa_Modelo_Componente_Consultas
         public List<(string Name, string DataType)> ObtenerColumnasTipadas(string tabla)
         {
             string sql = "SELECT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS " +
-                         "WHERE TABLE_SCHEMA='" + _db + "' AND TABLE_NAME='" + tabla + "' " +
+                         "WHERE TABLE_SCHEMA='" + sDB + "' AND TABLE_NAME='" + tabla + "' " +
                          "ORDER BY ORDINAL_POSITION;";
             using (var cn = CreateConn())
             using (var cmd = new OdbcCommand(sql, cn))

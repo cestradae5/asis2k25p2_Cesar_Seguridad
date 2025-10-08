@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
-
+using System.IO;
 namespace Capa_Vista_Componente_Consultas
 {
 
@@ -10,6 +10,7 @@ namespace Capa_Vista_Componente_Consultas
         public Frm_Principal()
         {
             InitializeComponent();
+
         }
 
 
@@ -35,13 +36,21 @@ namespace Capa_Vista_Componente_Consultas
             }
         }
 
-       
+
         private void btn_Ayuda_Click(object sender, EventArgs e)
         {
-            Help.ShowHelp(this, "Ayuda_Consultas/AyudaConsultaAS2.chm", "Consultas.html");
+            string chmPath = Path.Combine(Application.StartupPath, "Ayuda_Consultas", "AyudaConsultaAS2.chm");
+
+            if (!File.Exists(chmPath))
+            {
+                MessageBox.Show("No se encontró el archivo de ayuda:\n" + chmPath,
+                    "Ayuda", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            Help.ShowHelp(this, chmPath, HelpNavigator.TableOfContents);
         }
 
-       
+
         private void btn_Cerrar_Click(object sender, EventArgs e)
         {
             Application.Exit();
