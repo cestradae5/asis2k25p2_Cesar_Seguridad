@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Capa_Controlador_Navegador;
-//using Capa_Vista_Reporteador;
+using Capa_Vista_Reporteador;
 
 namespace Capa_Vista_Navegador
 {
@@ -236,8 +236,8 @@ namespace Capa_Vista_Navegador
 
         private void Btn_imprimir_Click_1(object sender, EventArgs e)
         {
-           // Reportes rpt = new Reportes();
-            //rpt.reporteAplicacion(IPkId_Aplicacion);
+           Frm_Reportes rpt = new Frm_Reportes();
+           rpt.reporteAplicacion(IPkId_Aplicacion);
         }
         
         private void Btn_refrescar_Click(object sender, EventArgs e)

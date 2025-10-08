@@ -24,18 +24,17 @@ namespace PruebaEjecucionNavegador
                 TipoScrollBars = ScrollBars.Both,
                 Nombre = "dgv_empleados"
             };
-            string[] columnas = {
-                        "padre", "id_padre", "nombre", "apellido", "id_hijo"
-                        //"tbl_aplicacion",            
-                        //"Pk_Id_Aplicacion",
-                        //"Fk_Id_Reporte_Aplicacion",
-                        //"Cmp_Nombre_Aplicacion",
-                        //"Cmp_Descripcion_Aplicacion",
-                        //"Cmp_Estado_Aplicacion"
-                    };
-            //int id_aplicacion = 100;
-
-            //navegador1.IPkId_Aplicacion = id_aplicacion;
+      
+                string[] columnas = {
+                    "tbl_reportes",
+                    "Pk_Id_Reporte",
+                    "Cmp_Titulo_Reporte",
+                    "Cmp_Ruta_Reporte",
+                    "Cmp_Fecha_Reporte"
+                };
+        
+            int id_aplicacion = 100;
+            navegador1.IPkId_Aplicacion = id_aplicacion;
             navegador1.configurarDataGridView(config);
             navegador1.SNombreTabla = columnas[0];
             navegador1.SAlias = columnas;

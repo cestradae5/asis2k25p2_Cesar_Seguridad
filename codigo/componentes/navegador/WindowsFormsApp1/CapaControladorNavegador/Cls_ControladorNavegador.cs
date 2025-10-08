@@ -27,7 +27,7 @@ namespace Capa_Controlador_Navegador
             // Validar cantidad
             if (columnasEnviadas.Length != columnasBD.Count)
             {
-                MessageBox.Show($"⚠️ La cantidad de columnas no coincide con la base de datos.\n" +
+                MessageBox.Show($" La cantidad de columnas no coincide con la base de datos.\n" +
                                 $"Esperadas: {columnasBD.Count}, Enviadas: {columnasEnviadas.Length}");
                 return false;
             }
@@ -42,7 +42,7 @@ namespace Capa_Controlador_Navegador
 
             if (columnasFaltantes.Count > 0)
             {
-                string msg = "⚠ Las siguientes columnas no existen en la tabla '" + tabla + "':\n" +
+                string msg = " Las siguientes columnas no existen en la tabla '" + tabla + "':\n" +
                              string.Join(", ", columnasFaltantes);
                 MessageBox.Show(msg);
                 return false;
@@ -56,12 +56,12 @@ namespace Capa_Controlador_Navegador
         // Asigna alias validando tabla y columnas
         // ======================= Pedro Ibañez =======================
         // Creacion de Metodo: Asignar Alias Original, generación de Textboxes antes de las modificaciones
-        public bool AsignarAlias(string[] SAlias, Control contenedor, int startX, int startY, int maxPorFila = 4)
+        public bool AsignarAlias(string[] SAlias, Control contenedor, int startX, int startY, int maxPorFila = 3)
         {
             // Validar tabla
             if (!dao.ExisteTabla(SAlias[0]))
             {
-                MessageBox.Show($"❌ La tabla '{SAlias[0]}' no existe en la base de datos.");
+                MessageBox.Show($" La tabla '{SAlias[0]}' no existe en la base de datos.");
                 return false;
             }
 
@@ -191,31 +191,30 @@ namespace Capa_Controlador_Navegador
 
         public void Insertar_Datos(Control contenedor, string[] SAlias)
         {
-            string[] SValores = new string[SAlias.Length - 1]; // crea el arreglo con tamaño necesario para evitar errores
+            string[] SValores = new string[SAlias.Length - 1];
 
             Cls_DAOGenerico dao = new Cls_DAOGenerico();
+
             try
             {
+                //  VALIDACIÓN: comprobar que ningún ComboBox esté vacío
                 for (int i = 1; i < SAlias.Length; i++)
                 {
-                    // Buscar el TextBox con nombre dinámico
-                    ComboBox Cbo = contenedor.Controls.OfType<ComboBox>().FirstOrDefault(t => t.Name == "Cbo_" + SAlias[i]);
+                    ComboBox Cbo = contenedor.Controls.OfType<ComboBox>()
+                                        .FirstOrDefault(t => t.Name == "Cbo_" + SAlias[i]);
 
-                    if (Cbo != null)
+                    if (Cbo == null || string.IsNullOrWhiteSpace(Cbo.Text))
                     {
-                        SValores[i - 1] = Cbo.Text; // Guardar el texto en la posición correspondiente
+                        MessageBox.Show($" El campo '{SAlias[i]}' no puede estar vacío.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return; // detener la inserción
                     }
-                    else
-                    {
-                        SValores[i - 1] = null; // Si no existe el textbox, poner null
-                    }
+
+                    SValores[i - 1] = Cbo.Text;
                 }
 
-                MessageBox.Show("Valores: " + string.Join(", ", SValores));
-
+                // Si pasa la validación, proceder a insertar
                 dao.InsertarDatos(SAlias, SValores);
-
-                MessageBox.Show("Datos insertados correctamente.");
+                MessageBox.Show(" Datos insertados correctamente.");
             }
             catch (Exception ex)
             {
@@ -223,7 +222,8 @@ namespace Capa_Controlador_Navegador
             }
         }
 
-       
+
+
 
         public DataTable LlenarTabla(string tabla, string[] SAlias) 
         {
@@ -279,17 +279,24 @@ namespace Capa_Controlador_Navegador
                 return;
             }
 
-            object pkValor = cboPK.Text; // llega como texto; ODBC hará la conversión
+            object pkValor = cboPK.Text;
             string[] campos = SAlias.Skip(2).ToArray();
             object[] SValores = new object[campos.Length];
 
+            //  VALIDACIÓN: comprobar que ningún ComboBox esté vacío
             for (int i = 0; i < campos.Length; i++)
             {
                 string campo = campos[i];
                 ComboBox cboCampo = contenedor.Controls.OfType<ComboBox>()
-                    .FirstOrDefault(t => t.Name == "Cbo_" + campo);
+                                        .FirstOrDefault(t => t.Name == "Cbo_" + campo);
 
-                SValores[i] = (cboCampo != null) ? (object)cboCampo.Text : null;
+                if (cboCampo == null || string.IsNullOrWhiteSpace(cboCampo.Text))
+                {
+                    MessageBox.Show($" El campo '{campo}' no puede estar vacío.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return; // detener actualización
+                }
+
+                SValores[i] = cboCampo.Text;
             }
 
             try
