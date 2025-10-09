@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Capa_Controlador_Navegador;
-using Capa_Vista_Reporteador;
+// using Capa_Vista_Reporteador;
 
 namespace Capa_Vista_Navegador
 {
@@ -236,8 +236,8 @@ namespace Capa_Vista_Navegador
 
         private void Btn_imprimir_Click_1(object sender, EventArgs e)
         {
-           Frm_Reportes rpt = new Frm_Reportes();
-           rpt.reporteAplicacion(IPkId_Aplicacion);
+           //Frm_Reportes rpt = new Frm_Reportes();
+           //rpt.reporteAplicacion(IPkId_Aplicacion);
         }
         
         private void Btn_refrescar_Click(object sender, EventArgs e)
@@ -331,7 +331,16 @@ namespace Capa_Vista_Navegador
 
         private void Btn_ayuda_Click(object sender, EventArgs e)
         {
-
+            // ======================= Btn Ayuda = Stevens Cambranes = 8/10/2025 =======================
+            try
+            {
+                // este archivo se metio directamente en el ejecutable -> bin > debug > y la carpeta tendria que aparecer con los HTML
+                Help.ShowHelp(this, "ManualNavegador/Ayuda_Navegador.chm", "Manual_De_Usuario_Navegador.html");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al abrir la ayuda: " + ex.Message);
+            }
         }
 
         // ======================= Salir/Exit = Fernando Miranda = 20/09/2025 =======================
