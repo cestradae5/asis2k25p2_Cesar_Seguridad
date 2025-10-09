@@ -136,9 +136,9 @@ namespace Capa_Modelo_Seguridad
             }
         }
 
-        public int iActualizarPermisoPerfilAplicacion(int idPerfil, int idModulo, int idAplicacion,
-                                             bool ingresar, bool consultar, bool modificar,
-                                             bool eliminar, bool imprimir)
+        public int iActualizarPermisoPerfilAplicacion(int iIdPerfil, int iIdModulo, int iIdAplicacion,
+                                             bool bIngresar, bool bConsultar, bool bModificar,
+                                             bool bEliminar, bool bImprimir)
         {
             int filasAfectadas = 0;
 
@@ -154,14 +154,14 @@ namespace Capa_Modelo_Seguridad
             {
                 using (OdbcCommand cmd = new OdbcCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("?", ingresar);
-                    cmd.Parameters.AddWithValue("?", consultar);
-                    cmd.Parameters.AddWithValue("?", modificar);
-                    cmd.Parameters.AddWithValue("?", eliminar);
-                    cmd.Parameters.AddWithValue("?", imprimir);
-                    cmd.Parameters.AddWithValue("?", idPerfil);
-                    cmd.Parameters.AddWithValue("?", idModulo);
-                    cmd.Parameters.AddWithValue("?", idAplicacion);
+                    cmd.Parameters.AddWithValue("?", bIngresar);
+                    cmd.Parameters.AddWithValue("?", bConsultar);
+                    cmd.Parameters.AddWithValue("?", bModificar);
+                    cmd.Parameters.AddWithValue("?", bEliminar);
+                    cmd.Parameters.AddWithValue("?", bImprimir);
+                    cmd.Parameters.AddWithValue("?", iIdPerfil);
+                    cmd.Parameters.AddWithValue("?", iIdModulo);
+                    cmd.Parameters.AddWithValue("?", iIdAplicacion);
 
                     filasAfectadas = cmd.ExecuteNonQuery();
                 }
@@ -171,7 +171,7 @@ namespace Capa_Modelo_Seguridad
         }
 
         // Dentro de la clase Cls_Asignacion_Permiso_PerfilesDAO
-        public DataTable datObtenerAplicacionesPorModulo(int idModulo)
+        public DataTable datObtenerAplicacionesPorModulo(int iIdModulo)
         {
             DataTable dt = new DataTable();
             // Consulta JOIN entre Tbl_Aplicacion y Tbl_Asignacion_Modulo_Aplicacion
@@ -191,7 +191,7 @@ namespace Capa_Modelo_Seguridad
                     using (OdbcCommand cmd = new OdbcCommand(query, conn))
                     {
                         // Agregamos el parámetro del módulo para el WHERE
-                        cmd.Parameters.AddWithValue("?", idModulo);
+                        cmd.Parameters.AddWithValue("?", iIdModulo);
                         using (OdbcDataAdapter da = new OdbcDataAdapter(cmd))
                         {
                             da.Fill(dt);
@@ -207,7 +207,7 @@ namespace Capa_Modelo_Seguridad
             return dt;
         }
         // Dentro de la clase Cls_Asignacion_Permiso_PerfilesDAO
-        public DataTable datObtenerPermisosPorPerfil(int idPerfil)
+        public DataTable datObtenerPermisosPorPerfil(int iIdPerfil)
         {
             DataTable dt = new DataTable();
 
@@ -240,7 +240,7 @@ namespace Capa_Modelo_Seguridad
                     using (OdbcCommand cmd = new OdbcCommand(query, conn))
                     {
                         // Parámetro para el WHERE
-                        cmd.Parameters.AddWithValue("?", idPerfil);
+                        cmd.Parameters.AddWithValue("?", iIdPerfil);
                         using (OdbcDataAdapter da = new OdbcDataAdapter(cmd))
                         {
                             da.Fill(dt);
@@ -259,7 +259,7 @@ namespace Capa_Modelo_Seguridad
         /*Carlo Sosa 0901-22-1106
          */
 
-        public DataTable ObtenerPermisosPerfilAplicacion(int idPerfil, int idAplicacion)
+        public DataTable ObtenerPermisosPerfilAplicacion(int iIdPerfil, int iIdAplicacion)
         {
             DataTable dt = new DataTable();
             string query = @"SELECT 
@@ -274,8 +274,8 @@ namespace Capa_Modelo_Seguridad
             using (OdbcConnection conn = conexion.conexion())
             using (OdbcCommand cmd = new OdbcCommand(query, conn))
             {
-                cmd.Parameters.AddWithValue("@idPerfil", idPerfil);
-                cmd.Parameters.AddWithValue("@idAplicacion", idAplicacion);
+                cmd.Parameters.AddWithValue("@idPerfil", iIdPerfil);
+                cmd.Parameters.AddWithValue("@idAplicacion", iIdAplicacion);
 
                 using (OdbcDataAdapter adapter = new OdbcDataAdapter(cmd))
                 {

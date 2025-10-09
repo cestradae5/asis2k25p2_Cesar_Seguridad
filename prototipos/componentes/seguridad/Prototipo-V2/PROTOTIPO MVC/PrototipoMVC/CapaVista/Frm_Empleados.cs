@@ -18,13 +18,6 @@ namespace Capa_Vista_Seguridad
         Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador(); // Bitácora
         private Cls_EmpleadoControlador controlador = new Cls_EmpleadoControlador();
         private List<Cls_Empleado> listaEmpleados = new List<Cls_Empleado>();
-        private Cls_PermisoUsuario permisoUsuario = new Cls_PermisoUsuario();
-
-        private int iModuloId = -1;
-        private int iAplicacionId = -1;
-
-        // Tupla para los permisos actuales
-        private (bool bIngresar, bool bConsultar, bool bModificar, bool bEliminar, bool bImprimir)? permisosActuales = null;
 
         public Frm_Empleados()
         {
@@ -32,45 +25,14 @@ namespace Capa_Vista_Seguridad
             fun_CargarEmpleados();
             fun_ConfigurarComboBoxEmpleados();
             fun_ConfiguracionInicial();
-           
-        }
-        //Brandon Alexander Hernandez Salguero 0901-22-9663 --Permisos 
-      
-        private void fun_ConfigurarIdsDinamicamenteYAplicarPermisos()
-        {
-
-            string sNombreModulo = "Seguridad";
-            string sNombreAplicacion = "Administracion";
-            iAplicacionId = permisoUsuario.ObtenerIdAplicacionPorNombre(sNombreAplicacion);
-            iModuloId = permisoUsuario.ObtenerIdModuloPorNombre(sNombreModulo);
-            fun_AplicarPermisosUsuario();
-        }
-
-        private void fun_AplicarPermisosUsuario()
-        {
-            int usuarioId = Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario; // Usuario logueado
-            if (iAplicacionId == -1 || iModuloId == -1)
-            {
-                permisosActuales = null;
-                fun_ActualizarEstadoBotonesSegunPermisos();
-                return;
-            }
-            var permisos = permisoUsuario.ConsultarPermisos(usuarioId, iAplicacionId, iModuloId);
-            permisosActuales = permisos;
-            fun_ActualizarEstadoBotonesSegunPermisos();
-        }
-
-        // Centraliza el habilitado/deshabilitado de botones según permisos y estado de navegación
-        private void fun_ActualizarEstadoBotonesSegunPermisos(bool empleadoCargado = false)
-        {
-           
-
-           
         }
 
         private void fun_ConfiguracionInicial()
         {
-            fun_ActualizarEstadoBotonesSegunPermisos(empleadoCargado: false);
+            Btn_guardar_empleado.Enabled = false;
+            Btn_modificar_empleado.Enabled = false;
+            Btn_eliminar_empleado.Enabled = false;
+            Btn_nuevo_empleado.Enabled = true;
             Btn_cancelar.Enabled = true;
             Txt_id_empleado.Enabled = false;
         }
@@ -154,23 +116,20 @@ namespace Capa_Vista_Seguridad
             if (empEncontrado != null)
             {
                 fun_MostrarEmpleado(empEncontrado);
-                fun_ActualizarEstadoBotonesSegunPermisos(empleadoCargado: true);
+                Btn_modificar_empleado.Enabled = true;
+                Btn_eliminar_empleado.Enabled = true;
+                Btn_guardar_empleado.Enabled = false;
             }
             else
             {
                 MessageBox.Show("Empleado no encontrado");
                 fun_LimpiarCampos();
-                fun_ActualizarEstadoBotonesSegunPermisos(empleadoCargado: false);
+                fun_ConfiguracionInicial();
             }
         }
 
         private void Btn_nuevo_empleado_Click(object sender, EventArgs e)
         {
-            if (!permisosActuales.HasValue || !permisosActuales.Value.bIngresar)
-            {
-                MessageBox.Show("No tienes permisos para agregar nuevos empleados.", "Permiso denegado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
             fun_LimpiarCampos();
             Btn_guardar_empleado.Enabled = true;
             Btn_modificar_empleado.Enabled = false;
@@ -180,11 +139,6 @@ namespace Capa_Vista_Seguridad
 
         private void Btn_modificar_empleado_Click(object sender, EventArgs e)
         {
-            if (!permisosActuales.HasValue || !permisosActuales.Value.bModificar)
-            {
-                MessageBox.Show("No tienes permisos para modificar empleados.", "Permiso denegado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
             int id;
             if (!int.TryParse(Txt_id_empleado.Text, out id))
             {
@@ -204,20 +158,15 @@ namespace Capa_Vista_Seguridad
                 DateTime.Parse(Txt_fechaContra_empleado.Text)
             );
             MessageBox.Show(exito ? "Empleado modificado correctamente" : "Error al modificar empleado");
-            ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, iAplicacionId, "Modificar empleado", true);
+            ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 0, "Modificar empleado", true);
             func_CargarEmpleados();
             fun_ConfigurarComboBoxEmpleados();
             fun_LimpiarCampos();
-            fun_ActualizarEstadoBotonesSegunPermisos(empleadoCargado: false);
+            fun_ConfiguracionInicial();
         }
 
         private void Btn_eliminar_empleado_Click(object sender, EventArgs e)
         {
-            if (!permisosActuales.HasValue || !permisosActuales.Value.bEliminar)
-            {
-                MessageBox.Show("No tienes permisos para eliminar empleados.", "Permiso denegado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
             if (!int.TryParse(Txt_id_empleado.Text, out int id))
             {
                 MessageBox.Show("ID no válido");
@@ -225,7 +174,7 @@ namespace Capa_Vista_Seguridad
             }
             bool exito = controlador.func_BorrarEmpleado(id);
             MessageBox.Show(exito ? "Empleado eliminado" : "Error al eliminar");
-            ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, iAplicacionId, "Eliminar empleado", true);
+            ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 0, "Eliminar empleado", true);
             func_CargarEmpleados();
             fun_ConfigurarComboBoxEmpleados();
             fun_LimpiarCampos();
@@ -240,15 +189,9 @@ namespace Capa_Vista_Seguridad
 
         private void Btn_guardar_empleado_Click(object sender, EventArgs e)
         {
-            if (!permisosActuales.HasValue || !permisosActuales.Value.bIngresar)
-            {
-                MessageBox.Show("No tienes permisos para guardar empleados.", "Permiso denegado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
             //Validación de campos vacíos
             if (!ValidarCampos())
-                return; 
+                return;
 
             try
             {
@@ -313,7 +256,7 @@ namespace Capa_Vista_Seguridad
                 );
 
                 MessageBox.Show("Empleado guardado correctamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, iAplicacionId, "Guardar empleado", true);
+                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 0, "Guardar empleado", true);
 
                 fun_CargarEmpleados();
                 fun_ConfigurarComboBoxEmpleados();
@@ -330,8 +273,8 @@ namespace Capa_Vista_Seguridad
         private bool ValidarCampos()
         {
             if (string.IsNullOrWhiteSpace(Txt_id_empleado.Text) ||
-                string.IsNullOrWhiteSpace(Txt_nombre_empleado.Text) ||  
-                string.IsNullOrWhiteSpace(Txt_apellido_empleado.Text) || 
+                string.IsNullOrWhiteSpace(Txt_nombre_empleado.Text) ||
+                string.IsNullOrWhiteSpace(Txt_apellido_empleado.Text) ||
                 string.IsNullOrWhiteSpace(Txt_dpi_empleados.Text) ||
                 string.IsNullOrWhiteSpace(Txt_nit_empleados.Text) ||
                 string.IsNullOrWhiteSpace(Txt_correo_empleado.Text) ||
