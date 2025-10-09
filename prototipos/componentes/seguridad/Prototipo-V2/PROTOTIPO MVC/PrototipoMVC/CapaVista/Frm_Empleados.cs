@@ -19,6 +19,24 @@ namespace Capa_Vista_Seguridad
         private Cls_EmpleadoControlador controlador = new Cls_EmpleadoControlador();
         private List<Cls_Empleado> listaEmpleados = new List<Cls_Empleado>();
 
+    //Nuevo agregado Ernesto David Samayoa Jocol 0901-22-3415
+    //Instancia estática única del formulario
+    private static Frm_Empleados instancia = null;
+
+        //Método para obtener o crear la instancia
+        public static Frm_Empleados fun_ObtenerInstancia()
+        {
+            if (instancia == null || instancia.IsDisposed)
+            {
+                instancia = new Frm_Empleados();
+            }
+            else
+            {
+                instancia.BringToFront(); // Si ya está abierta, la trae al frente
+            }
+            return instancia;
+        }
+
         public Frm_Empleados()
         {
             InitializeComponent();
