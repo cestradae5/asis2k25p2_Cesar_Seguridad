@@ -37,14 +37,9 @@ namespace Capa_Vista_Seguridad
             Txt_id_empleado.Enabled = false;
         }
 
-        private void func_CargarEmpleados()
-        {
-            listaEmpleados = controlador.ObtenerTodosLosEmpleados();
-        }
-
         private void fun_CargarEmpleados()
         {
-            listaEmpleados = controlador.ObtenerTodosLosEmpleados();
+            listaEmpleados = controlador.fun_ObtenerTodosLosEmpleados();
         }
 
         private void fun_ConfigurarComboBoxEmpleados()
@@ -145,7 +140,7 @@ namespace Capa_Vista_Seguridad
                 MessageBox.Show("Ingrese un ID válido para modificar.");
                 return;
             }
-            bool exito = controlador.func_ActualizarEmpleado(
+            bool exito = controlador.fun_ActualizarEmpleado(
                 id,
                 Txt_nombre_empleado.Text,
                 Txt_apellido_empleado.Text,
@@ -159,7 +154,7 @@ namespace Capa_Vista_Seguridad
             );
             MessageBox.Show(exito ? "Empleado modificado correctamente" : "Error al modificar empleado");
             ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 0, "Modificar empleado", true);
-            func_CargarEmpleados();
+            fun_CargarEmpleados();
             fun_ConfigurarComboBoxEmpleados();
             fun_LimpiarCampos();
             fun_ConfiguracionInicial();
@@ -172,10 +167,10 @@ namespace Capa_Vista_Seguridad
                 MessageBox.Show("ID no válido");
                 return;
             }
-            bool exito = controlador.func_BorrarEmpleado(id);
+            bool exito = controlador.fun_BorrarEmpleado(id);
             MessageBox.Show(exito ? "Empleado eliminado" : "Error al eliminar");
             ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 0, "Eliminar empleado", true);
-            func_CargarEmpleados();
+            fun_CargarEmpleados();
             fun_ConfigurarComboBoxEmpleados();
             fun_LimpiarCampos();
             fun_ConfiguracionInicial();
@@ -242,7 +237,7 @@ namespace Capa_Vista_Seguridad
                 };
 
                 // Insertar
-                controlador.func_InsertarEmpleado(
+                controlador.fun_InsertarEmpleado(
                     emp.iPkIdEmpleado,
                     emp.sNombresEmpleado,
                     emp.sApellidosEmpleado,
@@ -308,7 +303,7 @@ namespace Capa_Vista_Seguridad
 
         private void Btn_salario_empleados_Click(object sender, EventArgs e)
         {
-            Frm_SalarioEmpleados formSalarioEmpleado = new Frm_SalarioEmpleados();
+            Frm_Salario_Empleados formSalarioEmpleado = new Frm_Salario_Empleados();
             formSalarioEmpleado.Show();
         }
 

@@ -152,11 +152,11 @@
     <Compile Include="Frm_RecuperarContrasena.Designer.cs">
       <DependentUpon>Frm_RecuperarContrasena.cs</DependentUpon>
     </Compile>
-    <Compile Include="Frm_SalarioEmpleados.cs">
+    <Compile Include="Frm_Salario_Empleados.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Frm_SalarioEmpleados.Designer.cs">
-      <DependentUpon>Frm_SalarioEmpleados.cs</DependentUpon>
+    <Compile Include="Frm_Salario_Empleados.Designer.cs">
+      <DependentUpon>Frm_Salario_Empleados.cs</DependentUpon>
     </Compile>
     <Compile Include="Frm_Seguridad.cs">
       <SubType>Form</SubType>
@@ -286,8 +286,8 @@
     <EmbeddedResource Include="Frm_RecuperarContrasena.resx">
       <DependentUpon>Frm_RecuperarContrasena.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Frm_SalarioEmpleados.resx">
-      <DependentUpon>Frm_SalarioEmpleados.cs</DependentUpon>
+    <EmbeddedResource Include="Frm_Salario_Empleados.resx">
+      <DependentUpon>Frm_Salario_Empleados.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Frm_Seguridad.resx">
       <DependentUpon>Frm_Seguridad.cs</DependentUpon>

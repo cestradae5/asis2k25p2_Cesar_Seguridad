@@ -11,18 +11,23 @@ using Capa_Controlador_Seguridad;
 using Capa_Modelo_Seguridad;
 namespace Capa_Vista_Seguridad
 {
-    public partial class Frm_SalarioEmpleados : Form { 
+    public partial class Frm_Salario_Empleados : Form { 
 
         
 
 
 
     
-        public Frm_SalarioEmpleados()
+        public Frm_Salario_Empleados()
         {
             InitializeComponent();
             /*ConfigurarIdsDinamicamenteYAplicarPermisos();*/
             
+        }
+
+        private void Btn_salir_salario_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
         //Marcos Andres Velásquez Alcántara

@@ -13,13 +13,13 @@ namespace Capa_Controlador_Seguridad
         private Cls_EmpleadoDAO daoEmpleado = new Cls_EmpleadoDAO();
 
         // Obtener todos los empleados
-        public List<Cls_Empleado> ObtenerTodosLosEmpleados()
+        public List<Cls_Empleado> fun_ObtenerTodosLosEmpleados()
         {
-            return daoEmpleado.ObtenerEmpleados();
+            return daoEmpleado.fun_ObtenerEmpleados();
         }
 
         // Insertar un nuevo empleado
-        public void func_InsertarEmpleado(int idEmpleado, string nombres, string apellidos, long dpi, long nit,
+        public void fun_InsertarEmpleado(int idEmpleado, string nombres, string apellidos, long dpi, long nit,
                                      string correo, string telefono, bool genero, DateTime fechaNacimiento, DateTime fechaContratacion)
         {
             Cls_Empleado nuevoEmpleado = new Cls_Empleado
@@ -36,11 +36,11 @@ namespace Capa_Controlador_Seguridad
                 dFechaContratacionEmpleado = fechaContratacion
             };
 
-            daoEmpleado.func_InsertarEmpleado(nuevoEmpleado);
+            daoEmpleado.fun_InsertarEmpleado(nuevoEmpleado);
         }
 
         // Actualizar empleado existente
-        public bool func_ActualizarEmpleado(int idEmpleado, string nombres, string apellidos, long dpi, long nit,
+        public bool fun_ActualizarEmpleado(int idEmpleado, string nombres, string apellidos, long dpi, long nit,
                                        string correo, string telefono, bool genero, DateTime fechaNacimiento, DateTime fechaContratacion)
         {
             Cls_Empleado empleadoActualizado = new Cls_Empleado
@@ -57,18 +57,18 @@ namespace Capa_Controlador_Seguridad
                 dFechaContratacionEmpleado = fechaContratacion
             };
 
-            daoEmpleado.func_ActualizarEmpleado(empleadoActualizado);
+            daoEmpleado.fun_ActualizarEmpleado(empleadoActualizado);
             return true;
         }
 
         // Eliminar empleado por ID
-        public bool func_BorrarEmpleado(int idEmpleado)
+        public bool fun_BorrarEmpleado(int idEmpleado)
         {
-            return daoEmpleado.func_BorrarEmpleado(idEmpleado) > 0;
+            return daoEmpleado.fun_BorrarEmpleado(idEmpleado) > 0;
         }
 
         // Buscar empleado por ID
-        public Cls_Empleado func_BuscarEmpleadoPorId(int idEmpleado)
+        public Cls_Empleado fun_BuscarEmpleadoPorId(int idEmpleado)
         {
             return daoEmpleado.Query(idEmpleado);
         }
