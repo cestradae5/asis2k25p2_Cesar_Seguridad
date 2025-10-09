@@ -83,11 +83,11 @@ namespace Capa_Vista_Componente_Consultas
             // 
             this.lbl_Bienvenida.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lbl_Bienvenida.AutoSize = true;
-            this.lbl_Bienvenida.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_Bienvenida.Font = new System.Drawing.Font("Rockwell", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_Bienvenida.Location = new System.Drawing.Point(476, 16);
             this.lbl_Bienvenida.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbl_Bienvenida.Name = "lbl_Bienvenida";
-            this.lbl_Bienvenida.Size = new System.Drawing.Size(177, 29);
+            this.lbl_Bienvenida.Size = new System.Drawing.Size(184, 29);
             this.lbl_Bienvenida.TabIndex = 3;
             this.lbl_Bienvenida.Text = "BIENVENIDO!";
             // 
@@ -108,11 +108,11 @@ namespace Capa_Vista_Componente_Consultas
             // 
             this.lbl_Instrucciones.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lbl_Instrucciones.AutoSize = true;
-            this.lbl_Instrucciones.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_Instrucciones.Font = new System.Drawing.Font("Rockwell", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_Instrucciones.Location = new System.Drawing.Point(421, 54);
             this.lbl_Instrucciones.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbl_Instrucciones.Name = "lbl_Instrucciones";
-            this.lbl_Instrucciones.Size = new System.Drawing.Size(288, 18);
+            this.lbl_Instrucciones.Size = new System.Drawing.Size(305, 17);
             this.lbl_Instrucciones.TabIndex = 5;
             this.lbl_Instrucciones.Text = "Por favor, selecciona una de las opciones.";
             // 

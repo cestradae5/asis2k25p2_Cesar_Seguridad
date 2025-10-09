@@ -89,139 +89,153 @@ namespace Capa_Vista_Componente_Consultas
 
 
             // // ---- Lógica Nelson Jose Godínez Méndez 0901-22-3550 26/09/2025
-            Btn_AgregarCond.Click += delegate
+            Btn_AgregarCond.Click += (s, e) =>
             {
-                if (!Chk_AgregarCondiciones.Checked) return;
-                if (Cbo_CampoCond.SelectedItem == null) { MessageBox.Show("Selecciona un campo."); return; }
+                string sMsg; Control oFoco;
+                if (!ValidarLogicaParaAgregar(out sMsg, out oFoco))
+                { MostrarError(sMsg, oFoco); return; }
 
-                var val = Txt_ValorCond.Text.Trim();
-                if (val.Length == 0) { MessageBox.Show("Ingresa un valor."); return; }
+                var sVal = Txt_ValorCond.Text.Trim();
+                var sOperador = lstPartesWhere.Count == 0 ? null : (GetComboValor(Cbo_OperadorLogico) ?? "AND");
+                var sCampo = Cbo_CampoCond.SelectedItem.ToString();
 
-                var operador = lstPartesWhere.Count == 0 ? null : (GetComboValor(Cbo_OperadorLogico) ?? "AND");
+                string sRhs;
+                decimal deNum;
+                if (decimal.TryParse(sVal, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out deNum))
+                    sRhs = deNum.ToString(System.Globalization.CultureInfo.InvariantCulture);
+                else
+                    sRhs = "'" + Esc(sVal) + "'";
 
-                var campo = Cbo_CampoCond.SelectedItem.ToString();
-                string rhs = decimal.TryParse(val, NumberStyles.Any, CultureInfo.InvariantCulture, out var num)
-                             ? num.ToString(CultureInfo.InvariantCulture)
-                             : "'" + Esc(val) + "'";
-
-                var pieza = "`" + campo + "` = " + rhs;
-                AgregarWhere(pieza, operador);
+                var sPieza = "`" + sCampo + "` = " + sRhs;
+                AgregarWhere(sPieza, sOperador);
             };
-
             // ---- Comparación
             Cbo_TipoComparador.SelectedIndexChanged += delegate { ToggleBetweenControls(); };
 
-            Btn_AgregarComp.Click += delegate
+            Btn_AgregarComp.Click += (s, e) =>
             {
-                if (!Chk_AgregarCondiciones.Checked) return;
-                if (Cbo_CampoComp.SelectedItem == null || Cbo_TipoComparador.SelectedItem == null)
-                { MessageBox.Show("Selecciona campo y comparador."); return; }
+                string sMsg; Control oFoco;
+                if (!ValidarComparacionParaAgregar(out sMsg, out oFoco))
+                { MostrarError(sMsg, oFoco); return; }
 
-                var campo = Cbo_CampoComp.SelectedItem.ToString();
-                var sel = GetComboValor(Cbo_TipoComparador) ?? "=";
+                var sCampo = Cbo_CampoComp.SelectedItem.ToString();
+                var sSel = GetComboValor(Cbo_TipoComparador) ?? "=";
+                string sPieza = null;
 
-                string pieza;
-
-                switch (sel)
+                if (sSel == "BETWEEN")
                 {
-                    case "BETWEEN":
-                        EnsureBetweenControls();
-                        var minRaw = (Txt_ValorCompMin.Text ?? "").Trim();
-                        var maxRaw = (Txt_ValorCompMax.Text ?? "").Trim();
-                        if (minRaw.Length == 0 || maxRaw.Length == 0)
-                        { MessageBox.Show("Completa Mín. y Máx."); return; }
-
-                        string left = TryNumOrQuoted(minRaw);
-                        string right = TryNumOrQuoted(maxRaw);
-                        pieza = "`" + campo + "` BETWEEN " + left + " AND " + right;
-                        break;
-
-                    case "LIKE":
-                        if (Txt_ValorComp.TextLength == 0) { MessageBox.Show("Ingresa un valor."); return; }
-                        pieza = "`" + campo + "` LIKE '%" + Esc(Txt_ValorComp.Text) + "%'";
-                        break;
-
-                    case "LIKE_START":
-                        if (Txt_ValorComp.TextLength == 0) { MessageBox.Show("Ingresa un valor."); return; }
-                        pieza = "`" + campo + "` LIKE '" + Esc(Txt_ValorComp.Text) + "%'";
-                        break;
-
-                    case "LIKE_END":
-                        if (Txt_ValorComp.TextLength == 0) { MessageBox.Show("Ingresa un valor."); return; }
-                        pieza = "`" + campo + "` LIKE '%" + Esc(Txt_ValorComp.Text) + "'";
-                        break;
-
-                    case "IS NULL":
-                    case "IS NOT NULL":
-                        pieza = "`" + campo + "` " + sel;
-                        break;
-
-                    default:
-                        if (Txt_ValorComp.TextLength == 0) { MessageBox.Show("Ingresa un valor."); return; }
-                        pieza = "`" + campo + "` " + sel + " " + TryNumOrQuoted(Txt_ValorComp.Text);
-                        break;
+                    string sLeft = TryNumOrQuoted(Txt_ValorCompMin.Text);
+                    string sRight = TryNumOrQuoted(Txt_ValorCompMax.Text);
+                    sPieza = "`" + sCampo + "` BETWEEN " + sLeft + " AND " + sRight;
                 }
-
-                string conector = lstPartesWhere.Count == 0 ? null : (GetComboValor(Cbo_OperadorLogico) ?? "AND");
-                AgregarWhere(pieza, conector);
-            };
-
-            // ---- Agrupar/Ordenar Bryan Raul Ramirez Lopez 0901-21-8202 26/09/2025
-            Btn_AgregarOrden.Click += delegate
-            {
-                if (Cbo_AgruparOrdenar.SelectedItem == null || Cbo_CampoOrdenar.SelectedItem == null)
-                { MessageBox.Show("Selecciona modo y campo."); return; }
-
-                string modo = Cbo_AgruparOrdenar.SelectedItem.ToString();
-                string campo = Cbo_CampoOrdenar.SelectedItem.ToString();
-
-                if (modo == "GROUP BY")
-                    lstPartesGroupOrder.Add("GROUP BY `" + campo + "`");
+                else if (sSel == "IS NULL" || sSel == "IS NOT NULL")
+                {
+                    sPieza = "`" + sCampo + "` " + sSel;
+                }
+                else if (sSel == "LIKE")
+                {
+                    sPieza = "`" + sCampo + "` LIKE '%" + Esc(Txt_ValorComp.Text) + "%'";
+                }
+                else if (sSel == "LIKE_START")
+                {
+                    sPieza = "`" + sCampo + "` LIKE '" + Esc(Txt_ValorComp.Text) + "%'";
+                }
+                else if (sSel == "LIKE_END")
+                {
+                    sPieza = "`" + sCampo + "` LIKE '%" + Esc(Txt_ValorComp.Text) + "'";
+                }
                 else
                 {
-                    string ord = Cbo_Ordenamiento.SelectedItem == null
+                    sPieza = "`" + sCampo + "` " + sSel + " " + TryNumOrQuoted(Txt_ValorComp.Text);
+                }
+
+                string sCon = lstPartesWhere.Count == 0 ? null : (GetComboValor(Cbo_OperadorLogico) ?? "AND");
+                AgregarWhere(sPieza, sCon);
+            };
+
+
+            // ---- Agrupar/Ordenar Bryan Raul Ramirez Lopez 0901-21-8202 26/09/2025
+            Btn_AgregarOrden.Click += (s, e) =>
+            {
+                string sMsg; Control oFoco;
+                if (!ValidarOrdenParaAgregar(out sMsg, out oFoco))
+                { MostrarError(sMsg, oFoco); return; }
+
+                string sModo = Cbo_AgruparOrdenar.SelectedItem.ToString();
+                string sCampo = Cbo_CampoOrdenar.SelectedItem.ToString();
+
+                if (string.Equals(sModo, "GROUP BY", StringComparison.OrdinalIgnoreCase))
+                {
+                    lstPartesGroupOrder.Add("GROUP BY `" + sCampo + "`");
+                }
+                else
+                {
+                    string sOrd = Cbo_Ordenamiento.SelectedItem == null
                         ? (Rdb_Asc.Checked ? "ASC" : "DESC")
                         : Cbo_Ordenamiento.SelectedItem.ToString();
-
-                    lstPartesGroupOrder.Add("ORDER BY `" + campo + "` " + ord);
+                    lstPartesGroupOrder.Add("ORDER BY `" + sCampo + "` " + sOrd);
                 }
             };
 
+
             // ---- Ejecutar  Juan Carlos Sandoval Quej 0901-22-4170 26/09/2025
-            Btn_Ejecutar.Click += delegate
+            Btn_Ejecutar.Click += (s, e) =>
             {
-                var sql = string.IsNullOrWhiteSpace(sSqlActual)
+                string sMsg; Control oFoco;
+                if (!ValidarParaGenerarEjecutar(out sMsg, out oFoco))
+                { MostrarError(sMsg, oFoco); return; }
+
+                // Usa la última SQL válida o construye una nueva
+                string sSql = string.IsNullOrWhiteSpace(sSqlActual)
                     ? oControlador.ConstruirSql(sTablaActual, Chk_AgregarCondiciones.Checked, lstPartesWhere, lstPartesGroupOrder)
                     : sSqlActual;
 
-                sSqlActual = sql; // persistimos
-
-                sql = oControlador.ReescribirSelectSeguroSiHayTime(sDB, sTablaActual, sql);
+                // Reescritura segura por campos TIME (tu lógica actual)
+                sSql = oControlador.ReescribirSelectSeguroSiHayTime(sDB, sTablaActual, sSql);
 
                 try
                 {
-                    var dt = oControlador.EjecutarConsulta(sql);
+                    var dt = oControlador.EjecutarConsulta(sSql);
                     Dgv_Preview.DataSource = dt;
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error al ejecutar:\n" + ex.Message);
+                    MostrarError("Error al ejecutar:\n" + ex.Message, null);
                 }
             };
+
 
             // ---- Limpiar
             Btn_Limpiar.Click += delegate { LimpiarTodo(); };
 
             // ---- Consultas guardadas Diego Fernando Saquil Gramajo 0901-22-4103 26/09/2025
-            Btn_AgregarConsulta.Click += delegate { GuardarConsultaAuto(); };
-
-            Btn_EditarConsulta.Click += delegate
+            Btn_AgregarConsulta.Click += (s, e) =>
             {
-                if (Lst_ConsultasGuardadas.SelectedItem == null) { MessageBox.Show("Selecciona una consulta."); return; }
-                var sql = Lst_ConsultasGuardadas.SelectedValue as string ?? "";
-                if (string.IsNullOrWhiteSpace(sql)) return;
-                CargarConsultaDesdeSql(sql);
+                string sMsg; Control oFoco;
+                if (!ValidarParaGuardarEditar(out sMsg, out oFoco))
+                { MostrarError(sMsg, oFoco); return; }
+
+                GuardarConsultaAuto(); // tu lógica actual
             };
+
+
+            Btn_EditarConsulta.Click += (s, e) =>
+            {
+                if (Lst_ConsultasGuardadas.SelectedItem == null)
+                { MostrarError("Selecciona una consulta para editar.", Lst_ConsultasGuardadas); return; }
+
+                var sSql = Lst_ConsultasGuardadas.SelectedValue as string ?? "";
+                if (string.IsNullOrWhiteSpace(sSql))
+                { MostrarError("La consulta seleccionada no tiene SQL asociado.", Lst_ConsultasGuardadas); return; }
+
+                // Si quieres bloquear edición si hay campos incompletos actualmente en la UI:
+                string sMsg; Control oFoco;
+                if (!ValidarParaGuardarEditar(out sMsg, out oFoco))
+                { MostrarError("Completa o limpia los campos antes de editar otra consulta.\n\n" + sMsg, oFoco); return; }
+
+                CargarConsultaDesdeSql(sSql);
+            };
+
 
             Btn_EliminarConsulta.Click += delegate
             {
@@ -258,6 +272,28 @@ namespace Capa_Vista_Componente_Consultas
                     Btn_Ejecutar.PerformClick();
                 }
             };
+
+            Btn_Generar.Click += (s, e) =>
+            {
+                string sMsg; Control oFoco;
+                if (!ValidarParaGenerarEjecutar(out sMsg, out oFoco))
+                { MostrarError(sMsg, oFoco); return; }
+
+                // Construye y guarda en memoria (no hace falta mostrarla si ocultaste la caja)
+                string sSql = oControlador.ConstruirSql(
+                    sTablaActual,
+                    Chk_AgregarCondiciones.Checked,
+                    lstPartesWhere,
+                    lstPartesGroupOrder);
+
+                sSqlActual = sSql;       // persistimos la SQL preparada
+                                         // Si quieres ver la SQL en una caja oculta, puedes asignarla:
+                                         // Txt_CadenaGenerada.Text = sSql;
+
+                MessageBox.Show("Consulta generada.", "OK",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            };
+
         }
 
         private void Frm_Consulta_Compleja_Load(object sender, EventArgs e)
@@ -616,6 +652,14 @@ namespace Capa_Vista_Componente_Consultas
                 // Si hay algún error, se muestra el mensaje de error
                 MessageBox.Show("No se pudo guardar la consulta.\n" + ex.Message);
             }
+            // --- BLOQUEO DE GUARDADO EN VACÍO ---
+            string sMsg; Control oFoco;
+            if (!ValidarParaGenerarEjecutar(out sMsg, out oFoco))
+            {
+                MostrarError("No se puede guardar: " + sMsg, oFoco);
+                return;
+            }
+
         }
 
         private void CargarConsultasGuardadas()
@@ -829,6 +873,197 @@ namespace Capa_Vista_Componente_Consultas
             Rdb_Asc.Checked = true;
             SincronizarOrdenConRadios();
         }
+
+        // ---------- VALIDACIONES ----------
+        private void MostrarError(string sMsg, Control oFoco)
+        {
+            MessageBox.Show(sMsg, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            if (oFoco != null) oFoco.Focus();
+        }
+
+        // Para valores BETWEEN: ambas cajas visibles -> ambas deben tener texto
+        private bool ValidarBetweenVisibleYCompleto(out string sMsg, out Control oFoco)
+        {
+            sMsg = null; oFoco = null;
+
+            if (Txt_ValorComp != null && Txt_ValorCompMax != null &&
+                Txt_ValorCompMin.Visible && Txt_ValorCompMax.Visible)
+            {
+                if (Txt_ValorCompMin.TextLength == 0)
+                { sMsg = "Ingresa el valor mínimo."; oFoco = Txt_ValorCompMin; return false; }
+                if (Txt_ValorComp.TextLength == 0)
+                { sMsg = "Ingresa el valor máximo."; oFoco = Txt_ValorCompMax; return false; }
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Valida antes de AGREGAR la condición LÓGICA (= operador fijo '=').
+        /// </summary>
+        private bool ValidarLogicaParaAgregar(out string sMsg, out Control oFoco)
+        {
+            sMsg = null; oFoco = null;
+
+            if (!Chk_AgregarCondiciones.Checked)
+            { sMsg = "Activa 'Agregar condiciones'."; oFoco = Chk_AgregarCondiciones; return false; }
+
+            if (Cbo_CampoCond.SelectedItem == null)
+            { sMsg = "Selecciona el campo en Lógica."; oFoco = Cbo_CampoCond; return false; }
+
+            if (Txt_ValorCond.TextLength == 0)
+            { sMsg = "Ingresa el valor en Lógica."; oFoco = Txt_ValorCond; return false; }
+
+            // Si ya hay piezas where, debe existir conector (AND/OR)
+            if (lstPartesWhere.Count > 0 && Cbo_OperadorLogico.SelectedItem == null)
+            { sMsg = "Selecciona el Operador Lógico (AND/OR)."; oFoco = Cbo_OperadorLogico; return false; }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Valida antes de AGREGAR la COMPARACIÓN (operador elegido).
+        /// </summary>
+        private bool ValidarComparacionParaAgregar(out string sMsg, out Control oFoco)
+        {
+            sMsg = null; oFoco = null;
+
+            if (!Chk_AgregarCondiciones.Checked)
+            { sMsg = "Activa 'Agregar condiciones'."; oFoco = Chk_AgregarCondiciones; return false; }
+
+            if (Cbo_CampoComp.SelectedItem == null)
+            { sMsg = "Selecciona el campo en Comparación."; oFoco = Cbo_CampoComp; return false; }
+
+            if (Cbo_TipoComparador.SelectedItem == null)
+            { sMsg = "Selecciona el Tipo Comparador."; oFoco = Cbo_TipoComparador; return false; }
+
+            string sOp = GetComboValor(Cbo_TipoComparador) ?? "=";
+
+            if (sOp == "BETWEEN")
+            {
+                if (!ValidarBetweenVisibleYCompleto(out sMsg, out oFoco)) return false;
+            }
+            else if (sOp == "IS NULL" || sOp == "IS NOT NULL")
+            {
+                // no requiere valor
+            }
+            else
+            {
+                // LIKE / LIKE_START / LIKE_END / = <> > < >= <= requieren valor
+                if (Txt_ValorComp.Visible && Txt_ValorComp.TextLength == 0)
+                { sMsg = "Ingresa el valor para la comparación."; oFoco = Txt_ValorComp; return false; }
+            }
+
+            if (lstPartesWhere.Count > 0 && Cbo_OperadorLogico.SelectedItem == null)
+            { sMsg = "Selecciona el Operador Lógico (AND/OR)."; oFoco = Cbo_OperadorLogico; return false; }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Valida antes de AGREGAR agrupar/ordenar.
+        /// </summary>
+        private bool ValidarOrdenParaAgregar(out string sMsg, out Control oFoco)
+        {
+            sMsg = null; oFoco = null;
+
+            if (Cbo_AgruparOrdenar.SelectedItem == null)
+            { sMsg = "Selecciona si deseas 'GROUP BY' u 'ORDER BY'."; oFoco = Cbo_AgruparOrdenar; return false; }
+
+            if (Cbo_CampoOrdenar.SelectedItem == null)
+            { sMsg = "Selecciona el campo para agrupar/ordenar."; oFoco = Cbo_CampoOrdenar; return false; }
+
+            if (string.Equals(Cbo_AgruparOrdenar.SelectedItem.ToString(), "ORDER BY", StringComparison.OrdinalIgnoreCase))
+            {
+                if (Cbo_Ordenamiento.SelectedItem == null)
+                { sMsg = "Selecciona el sentido de ordenamiento (ASC/DESC)."; oFoco = Cbo_Ordenamiento; return false; }
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Valida el formulario para GUARDAR/EDITAR consulta.
+        /// - Debe haber tabla.
+        /// - Si 'Agregar condiciones' está activo, debe existir al menos una pieza o estar todo completo para poder construirla.
+        /// - Si hay modo GROUP/ORDER elegido, que esté completo.
+        /// </summary>
+        private bool ValidarParaGuardarEditar(out string sMsg, out Control oFoco)
+        {
+            sMsg = null; oFoco = null;
+
+            if (Cbo_Tabla.SelectedItem == null)
+            { sMsg = "Selecciona una tabla."; oFoco = Cbo_Tabla; return false; }
+
+            if (Chk_AgregarCondiciones.Checked)
+            {
+                // Si no hay nada agregado y el usuario empezó a escribir, bloqueamos si está incompleto…
+                bool bHayAlgoEscritoLogica = (Cbo_CampoCond.SelectedItem != null || Txt_ValorCond.TextLength > 0);
+                bool bHayAlgoEscritoComp =
+                    (Cbo_CampoComp.SelectedItem != null || Cbo_TipoComparador.SelectedItem != null ||
+                     (Txt_ValorComp.Visible && Txt_ValorComp.TextLength > 0) ||
+                     (Txt_ValorCompMin != null && Txt_ValorCompMin.Visible && Txt_ValorCompMin.TextLength > 0) ||
+                     (Txt_ValorCompMax != null && Txt_ValorCompMax.Visible && Txt_ValorCompMax.TextLength > 0));
+
+                if (lstPartesWhere.Count == 0 && (bHayAlgoEscritoLogica || bHayAlgoEscritoComp))
+                {
+                    // Valida ambos bloques según corresponda
+                    string sTmp; Control oTmp;
+
+                    // Si hay algo en lógica -> validar lógica
+                    if (bHayAlgoEscritoLogica && !ValidarLogicaParaAgregar(out sTmp, out oTmp))
+                    { sMsg = sTmp; oFoco = oTmp; return false; }
+
+                    // Si hay algo en comp -> validar comp
+                    if (bHayAlgoEscritoComp && !ValidarComparacionParaAgregar(out sTmp, out oTmp))
+                    { sMsg = sTmp; oFoco = oTmp; return false; }
+                }
+            }
+
+            if (Cbo_AgruparOrdenar.SelectedItem != null)
+            {
+                string sTmp; Control oTmp;
+                if (!ValidarOrdenParaAgregar(out sTmp, out oTmp))
+                { sMsg = sTmp; oFoco = oTmp; return false; }
+            }
+
+            return true;
+        }
+
+        // La SQL resultante es un SELECT * FROM `tabla`; sin filtros ni group/order
+        private bool EsSelectVacio(string sSql, string sTabla)
+        {
+            if (string.IsNullOrEmpty(sSql) || string.IsNullOrEmpty(sTabla)) return true;
+
+            string sPat = @"^\s*SELECT\s+\*\s+FROM\s+`?" + Regex.Escape(sTabla) + @"`?\s*;\s*$";
+            return Regex.IsMatch(sSql, sPat, RegexOptions.IgnoreCase);
+        }
+
+        // Valida todo lo necesario para GENERAR/EJECUTAR evita "select vacío"
+        private bool ValidarParaGenerarEjecutar(out string sMsg, out Control oFoco)
+        {
+            sMsg = null; oFoco = null;
+
+            // Reutiliza la validación general (tabla, bloques incompletos, order incompleto…)
+            if (!ValidarParaGuardarEditar(out sMsg, out oFoco))
+                return false;
+
+            // Construimos lo que se generaría
+            string sSqlPreview = oControlador.ConstruirSql(
+                sTablaActual,
+                Chk_AgregarCondiciones.Checked,
+                lstPartesWhere,
+                lstPartesGroupOrder);
+
+            if (EsSelectVacio(sSqlPreview, sTablaActual))
+            {
+                sMsg = "No hay nada que generar/ejecutar.\n" +
+                       "Añade condiciones, agrupamiento u ordenamiento.";
+                oFoco = Chk_AgregarCondiciones;
+                return false;
+            }
+
+            return true;
+        }
+
         //Diego Fernando Saquil Gramajo 0901 - 22 -4103 26/09/2025
         private void Btn_Regreso_Click(object sender, EventArgs e)
         {

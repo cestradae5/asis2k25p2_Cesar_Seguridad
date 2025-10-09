@@ -529,20 +529,20 @@ namespace Capa_Vista_Componente_Consultas
             // Btn_Ejecutar
             // 
             this.Btn_Ejecutar.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.Btn_Ejecutar.Location = new System.Drawing.Point(489, 682);
+            this.Btn_Ejecutar.Location = new System.Drawing.Point(472, 670);
             this.Btn_Ejecutar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Btn_Ejecutar.Name = "Btn_Ejecutar";
-            this.Btn_Ejecutar.Size = new System.Drawing.Size(124, 34);
+            this.Btn_Ejecutar.Size = new System.Drawing.Size(141, 74);
             this.Btn_Ejecutar.TabIndex = 9;
             this.Btn_Ejecutar.Text = "Ejecutar SQL";
             // 
             // Btn_Limpiar
             // 
             this.Btn_Limpiar.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.Btn_Limpiar.Location = new System.Drawing.Point(751, 682);
+            this.Btn_Limpiar.Location = new System.Drawing.Point(740, 670);
             this.Btn_Limpiar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Btn_Limpiar.Name = "Btn_Limpiar";
-            this.Btn_Limpiar.Size = new System.Drawing.Size(93, 34);
+            this.Btn_Limpiar.Size = new System.Drawing.Size(132, 74);
             this.Btn_Limpiar.TabIndex = 10;
             this.Btn_Limpiar.Text = "Limpiar";
             // 
@@ -550,7 +550,7 @@ namespace Capa_Vista_Componente_Consultas
             // 
             this.Txt_CadenaGenerada.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.Txt_CadenaGenerada.Location = new System.Drawing.Point(257, 724);
+            this.Txt_CadenaGenerada.Location = new System.Drawing.Point(257, 752);
             this.Txt_CadenaGenerada.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Txt_CadenaGenerada.Name = "Txt_CadenaGenerada";
             this.Txt_CadenaGenerada.Size = new System.Drawing.Size(587, 23);
@@ -559,10 +559,10 @@ namespace Capa_Vista_Componente_Consultas
             // Btn_Generar
             // 
             this.Btn_Generar.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.Btn_Generar.Location = new System.Drawing.Point(257, 682);
+            this.Btn_Generar.Location = new System.Drawing.Point(257, 670);
             this.Btn_Generar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Btn_Generar.Name = "Btn_Generar";
-            this.Btn_Generar.Size = new System.Drawing.Size(93, 34);
+            this.Btn_Generar.Size = new System.Drawing.Size(128, 74);
             this.Btn_Generar.TabIndex = 8;
             this.Btn_Generar.Text = "Generar";
             // 
