@@ -21,17 +21,17 @@ namespace Capa_Vista_Seguridad
         private List<Cls_Aplicacion> listaAplicaciones = new List<Cls_Aplicacion>();
 
 
-       
 
+        
         public FrmAplicacion()
         {
             InitializeComponent();
+
             CargarAplicaciones();
             ConfigurarComboBox();
             CargarComboModulos();
-
-            
         }
+
 
         private void RecargarTodo()
         {
@@ -173,44 +173,135 @@ namespace Capa_Vista_Seguridad
                 return;
             }
 
-            bool exito = controlador.BorrarAplicacion(id);
-            MessageBox.Show(exito ? "Aplicación eliminada" : "Error al eliminar");
-            LimpiarCampos();
-
-            // Registrar en Bitácora Arón Ricardo Esquit Silva   0901-22-13036
-            if (exito)
+            // 1. Verificar si la aplicación tiene relaciones (llaves foráneas)
+            if (controlador.TieneRelaciones(id))
             {
-                //Registrar en Bitácora - Arón Ricardo Esquit Silva 0901-22-13036
-                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 1, "Eliminar aplicación", true);
+                // 1.1 Mostrar el mensaje de error solicitado
+                MessageBox.Show(
+                    "**Imposible Eliminar.** Esta aplicación se encuentra relacionada con uno o más módulos o permisos, lo que afectaría la integridad referencial del sistema. Por favor, inspeccione primero las relaciones (asignaciones) de la aplicación.",
+                    "Error de Integridad de Datos",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+
+                // Registrar el intento fallido en Bitácora
+                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 1, "Fallido Eliminacion: App con relaciones", false);
+
+                return; // Detiene la eliminación
             }
-            RecargarTodo();
+
+            // 2. Preguntar confirmación antes de eliminar (Buena práctica)
+            DialogResult confirmacion = MessageBox.Show(
+                $"¿Está seguro que desea eliminar la aplicación con ID: {id}? Esta acción es permanente.",
+                "Confirmar Eliminación",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question
+            );
+
+            if (confirmacion == DialogResult.Yes)
+            {
+                // 3. Proceder a eliminar
+                bool exito = controlador.BorrarAplicacion(id);
+
+                if (exito)
+                {
+                    MessageBox.Show(" Aplicación eliminada exitosamente.");
+                    // Registrar en Bitácora
+                    ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 1, "Eliminar aplicación", true);
+                }
+                else
+                {
+                    MessageBox.Show("❌ Error al eliminar la aplicación. Puede que no exista o haya un problema de base de datos.");
+                    // Registrar en Bitácora de error
+                    ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 1, "Error en el intento de eliminar aplicación", false);
+                }
+
+                LimpiarCampos();
+                RecargarTodo();
+            }
         }
 
         private void Btn_modificar_Click(object sender, EventArgs e)
         {
+            //  Validar que el ID sea válido
             if (!int.TryParse(Txt_id_aplicacion.Text, out int id))
             {
                 MessageBox.Show("Ingrese un ID válido para modificar.");
                 return;
             }
 
-            bool exito = controlador.ActualizarAplicacion(
-                id,
-                Txt_Nombre_aplicacion.Text,
-                Txt_descripcion.Text,
-                Rdb_estado_activo.Checked,
-                null
-            );
+            string nombre = Txt_Nombre_aplicacion.Text.Trim();
+            string descripcion = Txt_descripcion.Text.Trim();
+            bool estado = Rdb_estado_activo.Checked;
 
-            MessageBox.Show(exito ? "Aplicación modificada" : "Error al modificar");
+            //  Validar campos vacíos
+            if (string.IsNullOrWhiteSpace(nombre))
+            {
+                MessageBox.Show("Debe ingresar el nombre de la aplicación.");
+                Txt_Nombre_aplicacion.Focus();
+                return;
+            }
 
-            // Registrar en Bitácora Arón Ricardo Esquit Silva   0901-22-13036
+            if (string.IsNullOrWhiteSpace(descripcion))
+            {
+                MessageBox.Show("Debe ingresar la descripción de la aplicación.");
+                Txt_descripcion.Focus();
+                return;
+            }
+
+            //  Validar longitud máxima de texto (ajusta si tu BD usa otros límites)
+            if (nombre.Length > 50)
+            {
+                MessageBox.Show("Cadena muy larga o se pasó del número de caracteres permitidos en el campo 'Nombre de aplicación' (máx. 50).");
+                Txt_Nombre_aplicacion.Focus();
+                return;
+            }
+
+            if (descripcion.Length > 255)
+            {
+                MessageBox.Show("Cadena muy larga o se pasó del número de caracteres permitidos en el campo 'Descripción' (máx. 255).");
+                Txt_descripcion.Focus();
+                return;
+            }
+
+            //  Validar que se haya seleccionado un módulo (opcional, según tu lógica)
+            if (Cbo_id_modulo.SelectedItem == null || string.IsNullOrWhiteSpace(Cbo_id_modulo.Text))
+            {
+                MessageBox.Show("Debe seleccionar un módulo en el ComboBox de módulos.");
+                return;
+            }
+
+            //  Confirmar que el ID exista antes de modificar
+            var appExistente = controlador.BuscarAplicacionPorId(id);
+            if (appExistente == null)
+            {
+                MessageBox.Show("No existe una aplicación con ese ID para modificar.");
+                return;
+            }
+
+            //  Ejecutar la modificación
+            bool exito = controlador.ActualizarAplicacion(id, nombre, descripcion, estado, null);
+
             if (exito)
             {
-                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 1, "Modificar aplicación", true);
+                MessageBox.Show("Aplicación modificada correctamente.");
+
+                // Registrar en bitácora
+                ctrlBitacora.RegistrarAccion(
+                    Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario,
+                    1,
+                    "Modificar aplicación",
+                    true
+                );
+
+                RecargarTodo();
             }
-            RecargarTodo();
+            else
+            {
+                MessageBox.Show("Error al modificar la aplicación. Verifique los datos ingresados.");
+            }
         }
+
 
         private void Btn_nuevo_Click(object sender, EventArgs e)
         {
@@ -223,7 +314,7 @@ namespace Capa_Vista_Seguridad
 
         private void Btn_guardar_Click(object sender, EventArgs e)
         {
-            // Validar ID de aplicación
+            // Validar que el ID sea numérico
             if (!int.TryParse(Txt_id_aplicacion.Text, out int idAplicacion))
             {
                 MessageBox.Show("Ingrese un ID válido.");
@@ -234,20 +325,38 @@ namespace Capa_Vista_Seguridad
             string descripcion = Txt_descripcion.Text.Trim();
             bool estado = Rdb_estado_activo.Checked;
 
-            // Validar que los TextBox obligatorios no estén vacíos
-            if (string.IsNullOrWhiteSpace(Txt_Nombre_aplicacion.Text))
+            // Validar campos vacíos
+            if (string.IsNullOrWhiteSpace(nombre))
             {
                 MessageBox.Show("Debe ingresar el nombre de la aplicación.");
+                Txt_Nombre_aplicacion.Focus();
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(Txt_descripcion.Text))
+            if (string.IsNullOrWhiteSpace(descripcion))
             {
                 MessageBox.Show("Debe ingresar la descripción de la aplicación.");
+                Txt_descripcion.Focus();
                 return;
             }
 
-            // Validar que los ComboBox no estén vacíos
+            //  Validar longitud máxima de los textos
+            // Puedes ajustar los valores según tu base de datos
+            if (nombre.Length > 50)
+            {
+                MessageBox.Show("Cadena muy larga o se pasó del número de caracteres permitidos en el campo 'Nombre de aplicación' (máx. 50).");
+                Txt_Nombre_aplicacion.Focus();
+                return;
+            }
+
+            if (descripcion.Length > 255)
+            {
+                MessageBox.Show("Cadena muy larga o se pasó del número de caracteres permitidos en el campo 'Descripción' (máx. 255).");
+                Txt_descripcion.Focus();
+                return;
+            }
+
+            //  Validar que se haya seleccionado un módulo
             if (Cbo_id_modulo.SelectedItem == null || string.IsNullOrWhiteSpace(Cbo_id_modulo.Text))
             {
                 MessageBox.Show("Debe seleccionar un módulo en el ComboBox de módulos.");
@@ -261,7 +370,7 @@ namespace Capa_Vista_Seguridad
                 return;
             }
 
-            // Guardar aplicación 
+            //  Guardar aplicación
             int resultadoApp = controlador.InsertarAplicacion(idAplicacion, nombre, descripcion, estado, null);
 
             if (resultadoApp <= 0)
@@ -270,10 +379,10 @@ namespace Capa_Vista_Seguridad
                 return;
             }
 
-            // Obtener ID de módulo
+            //  Obtener ID del módulo seleccionado
             int idModulo = Convert.ToInt32(((dynamic)Cbo_id_modulo.SelectedItem).Id);
 
-            // Guardar asignación 
+            //  Guardar asignación
             Cls_AsignacionModuloAplicacionControlador asignacionCtrl = new Cls_AsignacionModuloAplicacionControlador();
             bool asignacionGuardada = asignacionCtrl.GuardarAsignacion(idModulo, idAplicacion);
 
@@ -286,10 +395,11 @@ namespace Capa_Vista_Seguridad
             MessageBox.Show("Aplicación y asignación guardadas correctamente.");
             LimpiarCampos();
 
-            // Registrar en Bitácora
+            //  Registrar en bitácora
             ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 1, "Guardar aplicación", true);
             RecargarTodo();
         }
+
 
 
         private void LimpiarCampos()
@@ -350,11 +460,11 @@ namespace Capa_Vista_Seguridad
 
         private void Pnl_Superior_MouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
-            {
-                ReleaseCapture(); // Libera el mouse
-                SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0); // Simula arrastre
-            }
+            //if (e.Button == MouseButtons.Left)
+            //{
+            //    ReleaseCapture(); // Libera el mouse
+            //    SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0); // Simula arrastre
+            //}
         }
 
         private void Btn_reporte_Click(object sender, EventArgs e)

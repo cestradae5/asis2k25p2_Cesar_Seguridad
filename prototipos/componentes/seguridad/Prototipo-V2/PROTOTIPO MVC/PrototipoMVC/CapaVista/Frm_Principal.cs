@@ -26,6 +26,16 @@ namespace Capa_Vista_Seguridad
             InitializeComponent();
             ctrlSeguridad = new Cls_ControladorAsignacionUsuarioAplicacion();
             this.Load += frmPrincipal_Load;
+            // Suscribirse al evento FormClosing
+            this.FormClosing += Frm_principal_FormClosing;
+        }
+        private void Frm_principal_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // Confirmación opcional
+
+            // Cierra toda la aplicación
+            Application.Exit();
+
         }
 
         public Frm_Principal(string nombreUsuario, int idUsuario)
