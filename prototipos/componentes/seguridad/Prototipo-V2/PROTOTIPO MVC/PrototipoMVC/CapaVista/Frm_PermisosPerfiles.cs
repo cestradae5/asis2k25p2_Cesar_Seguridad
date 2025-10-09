@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Drawing;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Capa_Controlador_Seguridad;
@@ -14,18 +16,19 @@ namespace Capa_Vista_Seguridad
     {
         Cls_AplicacionControlador appControlador = new Cls_AplicacionControlador();
         Cls_Asignacion_Permiso_PerfilControador controlador = new Cls_Asignacion_Permiso_PerfilControador();
-        private DataTable dtPerfiles;
-        private DataTable dtAplicacione;
         Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador(); // Bitacora
 
         public Frm_PermisosPerfiles()
         {
             InitializeComponent();
+            Dgv_Permisos.AllowUserToAddRows = false;
         }
 
         private void InicializarDataGridView()
         {
             Dgv_Permisos.Columns.Clear();
+            Dgv_Permisos.Rows.Clear();
+
             Dgv_Permisos.Columns.Add("Perfil", "Perfil");
             Dgv_Permisos.Columns.Add("Aplicacion", "Aplicación");
             Dgv_Permisos.Columns.Add(new DataGridViewCheckBoxColumn() { Name = "Ingresar", HeaderText = "Ingresar" });
@@ -65,17 +68,18 @@ namespace Capa_Vista_Seguridad
             Cbo_Modulos.SelectedIndex = -1;
 
             Cbo_Modulos.SelectedIndexChanged += Cbo_Modulos_SelectedIndexChanged;
-
+            Cbo_aplicaciones.DataSource = null;
+            Cbo_aplicaciones.Items.Clear();
             InicializarDataGridView();
 
-            // Suscribir eventos de validación
             Dgv_Permisos.CellBeginEdit += Dgv_Permisos_CellBeginEdit;
-            Dgv_Permisos.CellClick += Dgv_Permisos_CellClick; // <--- NUEVO EVENTO
+            Dgv_Permisos.CellClick += Dgv_Permisos_CellClick;
         }
 
         private void Cbo_Modulos_SelectedIndexChanged(object sender, EventArgs e)
         {
             Cbo_aplicaciones.DataSource = null;
+            Cbo_aplicaciones.Items.Clear();
 
             if (Cbo_Modulos.SelectedValue != null && !(Cbo_Modulos.SelectedValue is DataRowView))
             {
@@ -90,6 +94,7 @@ namespace Capa_Vista_Seguridad
             else
             {
                 Cbo_aplicaciones.DataSource = null;
+                Cbo_aplicaciones.Items.Clear();
             }
         }
 
@@ -107,6 +112,7 @@ namespace Capa_Vista_Seguridad
             int idAplicacion = Convert.ToInt32(Cbo_aplicaciones.SelectedValue);
             int idModulo = Convert.ToInt32(Cbo_Modulos.SelectedValue);
 
+            // Verifica si ya existe la fila (evita duplicados)
             bool existe = false;
             foreach (DataGridViewRow row in Dgv_Permisos.Rows)
             {
@@ -142,7 +148,7 @@ namespace Capa_Vista_Seguridad
 
         private void Btn_insertar_Click(object sender, EventArgs e)
         {
-            if (Dgv_Permisos.Rows.Count <= 1 && Dgv_Permisos.AllowUserToAddRows)
+            if (Dgv_Permisos.Rows.Count == 0 || (Dgv_Permisos.Rows.Count == 1 && Dgv_Permisos.AllowUserToAddRows && Dgv_Permisos.Rows[0].IsNewRow))
             {
                 MessageBox.Show("Debe agregar al menos un registro de asignación para insertar o actualizar.", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -195,7 +201,6 @@ namespace Capa_Vista_Seguridad
             }
         }
 
-        // ✅ NUEVA FUNCIÓN: Detecta clics en celdas sin perfil ni aplicación
         private void Dgv_Permisos_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             // Validar que no sea encabezado o fila nueva
@@ -211,7 +216,6 @@ namespace Capa_Vista_Seguridad
             }
         }
 
-        // Validación antes de editar celdas tipo checkbox
         private void Dgv_Permisos_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         {
             if (Dgv_Permisos.Columns[e.ColumnIndex] is DataGridViewCheckBoxColumn)
@@ -265,7 +269,6 @@ namespace Capa_Vista_Seguridad
             }
 
             InicializarDataGridView();
-            Dgv_Permisos.Rows.Clear();
 
             try
             {

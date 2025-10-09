@@ -15,17 +15,13 @@ namespace Capa_Vista_Seguridad
         private Cls_PerfilesControlador controlador = new Cls_PerfilesControlador();
         private List<Cls_Perfiles> listaPerfiles = new List<Cls_Perfiles>();
 
-
-        
-
         public Frm_Perfiles()
         {
             InitializeComponent();
             fun_CargarPerfiles();
             fun_ConfigurarComboBoxPerfiles();
             fun_ConfigurarComboBoxTipoPerfil();
-            
-          
+            fun_Configuracioninicial();
         }
 
         private void fun_Configuracioninicial()
@@ -37,6 +33,7 @@ namespace Capa_Vista_Seguridad
             Btn_cancelar.Enabled = true;
             Btn_modificar.Enabled = false;
         }
+
         private void fun_CargarPerfiles()
         {
             listaPerfiles = controlador.listObtenerTodosLosPerfiles();
@@ -91,6 +88,7 @@ namespace Capa_Vista_Seguridad
             Btn_nuevo.Enabled = false;
             Btn_guardar.Enabled = true;
             Btn_modificar.Enabled = false;
+            Btn_Eliminar.Enabled = false;
             Txt_idperfil.Enabled = false;
         }
 
@@ -119,10 +117,7 @@ namespace Capa_Vista_Seguridad
                 if (exito)
                 {
                     MessageBox.Show("Perfil guardado correctamente");
-
-                    // Registrar en Bitácora - Arón Ricardo Esquit Silva 0901-22-13036
                     ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 1, "Guardar perfil", true);
-
                 }
                 else
                 {
@@ -168,8 +163,6 @@ namespace Capa_Vista_Seguridad
             if (exito)
             {
                 MessageBox.Show("Perfil modificado correctamente");
-
-                // Registrar en Bitácora - Arón Ricardo Esquit Silva 0901-22-13036
                 ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 1, "Modificar perfil", true);
             }
             else
@@ -180,6 +173,7 @@ namespace Capa_Vista_Seguridad
             fun_CargarPerfiles();
             fun_ConfigurarComboBoxPerfiles();
             fun_LimpiarCampos();
+            fun_Configuracioninicial();
         }
 
         private void Btn_cancelar_Click(object sender, EventArgs e)
@@ -255,7 +249,6 @@ namespace Capa_Vista_Seguridad
             if (exito)
             {
                 MessageBox.Show("Perfil eliminado");
-                // Registrar en Bitácora - Arón Ricardo Esquit Silva 0901-22-13036
                 ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 1, "Eliminar perfil", true);
             }
             else
@@ -263,7 +256,6 @@ namespace Capa_Vista_Seguridad
                 MessageBox.Show(mensajeError, "Error al eliminar perfil", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            //regresa a la configuracion inicial
             fun_CargarPerfiles();
             Cbo_perfiles.Items.Clear();
             fun_ConfigurarComboBoxPerfiles();
@@ -272,8 +264,6 @@ namespace Capa_Vista_Seguridad
         }
 
         // Panel superior
-        //0901-20-4620 Ruben Armando Lopez Luch
-
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HTCAPTION = 0x2;
 
@@ -301,14 +291,5 @@ namespace Capa_Vista_Seguridad
             frmreporte_perfiles frm = new frmreporte_perfiles();
             frm.Show();
         }
-
-       
-
-       
-
-        
-
-
-
     }
 }
