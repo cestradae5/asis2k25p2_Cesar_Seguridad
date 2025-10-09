@@ -334,6 +334,7 @@ namespace Capa_Vista_Navegador
             // ======================= Btn Ayuda = Stevens Cambranes = 8/10/2025 =======================
             try
             {
+                // este archivo se metio directamente en el ejecutable -> bin > debug > y la carpeta tendria que aparecer con los HTML
                 Help.ShowHelp(this, "ManualNavegador/Ayuda_Navegador.chm", "Manual_De_Usuario_Navegador.html");
             }
             catch (Exception ex)
