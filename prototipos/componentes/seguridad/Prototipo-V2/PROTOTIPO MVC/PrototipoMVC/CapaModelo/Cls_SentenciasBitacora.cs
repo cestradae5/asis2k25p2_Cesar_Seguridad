@@ -138,7 +138,7 @@ namespace Capa_Modelo_Seguridad
         //Insert de acciones
         public void InsertarBitacora(int iIdUsuario, int iIdAplicacion, string sAccion, bool bEstadoLogin)
         {
-            string sIdApp = (iIdAplicacion == 0) ? "NULL" : iIdAplicacion.ToString();
+            string sIdApp = (iIdAplicacion == 0) ? "null" : iIdAplicacion.ToString();
 
             string sSql = $@"
                 INSERT INTO Tbl_Bitacora

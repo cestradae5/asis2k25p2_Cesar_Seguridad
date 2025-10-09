@@ -31,11 +31,17 @@ namespace Capa_Vista_Seguridad
         }
         private void Frm_principal_FormClosing(object sender, FormClosingEventArgs e)
         {
-            // Confirmación opcional
+            //// Preguntar si realmente desea cerrar la app
+            //DialogResult result = MessageBox.Show(
+            //    "¿Desea cerrar la aplicación?",
+            //    "Confirmar salida",
+            //    MessageBoxButtons.YesNo,
+            //    MessageBoxIcon.Question);
 
-            // Cierra toda la aplicación
-            Application.Exit();
-
+            //if (result == DialogResult.No)
+            //{
+            //    e.Cancel = true; // Cancela el cierre
+            //}
         }
 
         public Frm_Principal(string nombreUsuario, int idUsuario)
@@ -101,11 +107,17 @@ namespace Capa_Vista_Seguridad
 
         private void ExitToolsStripMenuItem_Click(object sender, EventArgs e)
         {
-            // Registrar en bitácora //Aron Ricardo Esquit Silva   0901-22-13036
+            // Registrar en bitácora
             ctrlBitacora.RegistrarCierreSesion(Cls_UsuarioConectado.iIdUsuario);
+
+            // Crear y mostrar el formulario de login
             Frm_Login ventana = new Frm_Login();
             ventana.Show();
-            this.Hide();
+
+            // Cerrar el formulario principal actual
+            this.Hide(); // Oculta el formulario actual antes de cerrar
+            this.Close(); // Cierra el formulario principal
+
         }
 
         private void CutToolStripMenuItem_Click(object sender, EventArgs e)

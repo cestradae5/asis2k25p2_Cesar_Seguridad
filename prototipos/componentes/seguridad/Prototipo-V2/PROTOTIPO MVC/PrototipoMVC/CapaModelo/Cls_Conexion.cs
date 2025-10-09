@@ -11,7 +11,7 @@ namespace Capa_Modelo_Seguridad
         // Devuelve la cadena de conexión ODBC
         public string ObtenerCadenaConexion()
         {
-            return "Dsn=hotel_San_Carlos";
+            return "Dsn=practica";
         }
 
         // Abre y retorna una nueva conexión ODBC

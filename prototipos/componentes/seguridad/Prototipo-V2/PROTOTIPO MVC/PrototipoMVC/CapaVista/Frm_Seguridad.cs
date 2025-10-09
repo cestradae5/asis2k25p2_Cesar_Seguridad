@@ -45,10 +45,10 @@ namespace Capa_Vista_Seguridad
         }
         private void Frm_Seguridad_FormClosing(object sender, FormClosingEventArgs e)
         {
-            // Confirmación opcional
-
-                // Cierra toda la aplicación
-                Application.Exit();
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                Application.Exit(); // Cierra todo el programa
+            }
 
         }
 
@@ -338,7 +338,6 @@ namespace Capa_Vista_Seguridad
         {
             Frm_Principal ventanaPrincipal = new Frm_Principal();
             ventanaPrincipal.Show();
-            this.Close();
         }
 
         private void btn_aplicacion_Click(object sender, EventArgs e) { }
