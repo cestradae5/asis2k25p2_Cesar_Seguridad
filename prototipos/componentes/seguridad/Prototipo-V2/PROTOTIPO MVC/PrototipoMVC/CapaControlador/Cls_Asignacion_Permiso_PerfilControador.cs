@@ -23,42 +23,44 @@ namespace Capa_Controlador_Seguridad
             return DAO.datObtenerAplicaciones();
         }
 
-         public bool bExistePermisoPerfil(int idPerfil, int idModulo, int idAplicacion)
+         public bool bExistePermisoPerfil(int IidPerfil, int IidModulo, int IidAplicacion)
             {
-                return DAO.bExistePermisoPerfil(idPerfil, idModulo, idAplicacion);
+                return DAO.bExistePermisoPerfil(IidPerfil, IidModulo, IidAplicacion);
             }
-        
-        public int iActualizarPermisoPerfilAplicacion(int idPerfil, int idModulo, int idAplicacion,
-                                                      bool ingresar, bool consultar, bool modificar,
-                                                      bool eliminar, bool imprimir)
-        {
-            return DAO.iActualizarPermisoPerfilAplicacion(idPerfil, idModulo, idAplicacion,
-                                                            ingresar, consultar, modificar,
-                                                            eliminar, imprimir);
-        }
-        public int iInsertarPermisoPerfilAplicacion(int idPerfil, int idModulo, int idAplicacion,
-                                                    bool ingresar, bool consultar, bool modificar,
-                                                    bool eliminar, bool imprimir)
-        {
-            return DAO.iInsertarPermisoPerfilAplicacion(idPerfil, idModulo, idAplicacion,
-                                                        ingresar, consultar, modificar, eliminar, imprimir);
-        }
 
-        public DataTable datObtenerAplicacionesPorModulo(int idModulo)
+        public int iActualizarPermisoPerfilAplicacion(int iIdPerfil, int iIdModulo, int iIdAplicacion,
+                                                     bool bIngresar, bool bConsultar, bool bModificar,
+                                                     bool bEliminar, bool bImprimir)
         {
-            return DAO.datObtenerAplicacionesPorModulo(idModulo);
+            return DAO.iActualizarPermisoPerfilAplicacion(iIdPerfil, iIdModulo, iIdAplicacion,
+                                                             bIngresar, bConsultar, bModificar,
+                                                             bEliminar, bImprimir);
+        }
+        public int iInsertarPermisoPerfilAplicacion(int iIdPerfil, int iIdModulo, int iIdAplicacion,
+                                                    bool bIngresar, bool bConsultar, bool bModificar,
+                                                    bool bEliminar, bool bImprimir)
+        {
+            return DAO.iInsertarPermisoPerfilAplicacion(iIdPerfil, iIdModulo, iIdAplicacion,
+                                                           bIngresar, bConsultar, bModificar, bEliminar, bImprimir);
         }
 
-        public DataTable datObtenerPermisosPorPerfil(int idPerfil)
+        public DataTable datObtenerAplicacionesPorModulo(int iIdModulo)
         {
-            return DAO.datObtenerPermisosPorPerfil(idPerfil);
+            return DAO.datObtenerAplicacionesPorModulo(iIdModulo);
         }
 
+        public DataTable datObtenerPermisosPorPerfil(int iIdPerfil)
+        {
+            return DAO.datObtenerPermisosPorPerfil(iIdPerfil);
+        }
+    }
+}
 
-        /*Carlo Sosa 0901-22-1106
-         */
 
-        public class Cls_ControladorAsignacionPerfilAplicacion
+/*Carlo Sosa 0901-22-1106
+ */
+
+public class Cls_ControladorAsignacionPerfilAplicacion
         {
             Cls_Asignacion_Permiso_PerfilesDAO DAO = new Cls_Asignacion_Permiso_PerfilesDAO();
 
@@ -83,8 +85,8 @@ namespace Capa_Controlador_Seguridad
                 };
             }
         }
-        }
+        
 
-    }
+    
 
 

@@ -30,16 +30,16 @@ namespace Capa_Controlador_Seguridad
 
         /// Inserta la relación usuario-perfil. Devuelve true si se pudo insertar,
   
-        public bool bInsertar(int id_usuario, int id_perfil, out string mensajeError)
+        public bool bInsertar(int iId_usuario, int iId_perfil, out string smensajeError)
         {
             Cls_asignacion_perfil_usuario nuevaRelacion = new Cls_asignacion_perfil_usuario
             {
-                Fk_Id_Usuario = id_usuario,
-                Fk_Id_Perfil = id_perfil,
+                Fk_Id_Usuario = iId_usuario,
+                Fk_Id_Perfil = iId_perfil,
             };
 
             // Llama al método DAO que maneja el error y retorna el mensaje personalizado
-            return DAO.bInsertar(nuevaRelacion, out mensajeError);
+            return DAO.bInsertar(nuevaRelacion, out smensajeError);
         }
 
        
