@@ -420,6 +420,7 @@ namespace Capa_Vista_Seguridad
         {
             Frm_Consultar_Asignacion_Modulo_Aplicacion consulta = new Frm_Consultar_Asignacion_Modulo_Aplicacion();
             consulta.ShowDialog();
+            this.Close();
         }
 
         private void CargarComboModulos()
@@ -471,6 +472,7 @@ namespace Capa_Vista_Seguridad
         {
             frmreporte_aplicacion frm = new frmreporte_aplicacion();
             frm.Show();
+            this.Close();
         }
 
 
