@@ -36,7 +36,7 @@ namespace Capa_Vista_Seguridad
 
         private void CargarEmpleados()
         {
-            var lstEmpleados = gClsEmpleadoControlador.ObtenerTodosLosEmpleados();
+            var lstEmpleados = gClsEmpleadoControlador.fun_ObtenerTodosLosEmpleados();
             gLstEmpleadosDisplay.Clear();
             gLstEmpleadosIds.Clear();
 

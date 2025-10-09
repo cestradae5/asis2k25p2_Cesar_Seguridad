@@ -51,7 +51,7 @@ namespace Capa_Modelo_Seguridad
         // --------------------------
         // Obtener todos los empleados
         // --------------------------
-        public List<Cls_Empleado> ObtenerEmpleados()
+        public List<Cls_Empleado> fun_ObtenerEmpleados()
         {
             List<Cls_Empleado> lista = new List<Cls_Empleado>();
             using (OdbcConnection conn = conexion.conexion())
@@ -83,7 +83,7 @@ namespace Capa_Modelo_Seguridad
         // --------------------------
         // Insertar un nuevo empleado
         // --------------------------
-        public int func_InsertarEmpleado(Cls_Empleado emp)
+        public int fun_InsertarEmpleado(Cls_Empleado emp)
         {
             using (OdbcConnection conn = conexion.conexion())
             {
@@ -107,7 +107,7 @@ namespace Capa_Modelo_Seguridad
         // --------------------------
         // Actualizar empleado existente
         // --------------------------
-        public int func_ActualizarEmpleado(Cls_Empleado emp)
+        public int fun_ActualizarEmpleado(Cls_Empleado emp)
         {
             using (OdbcConnection conn = conexion.conexion())
             {
@@ -131,7 +131,7 @@ namespace Capa_Modelo_Seguridad
         // --------------------------
         // Borrar un empleado por ID
         // --------------------------
-        public int func_BorrarEmpleado(int idEmpleado)
+        public int fun_BorrarEmpleado(int idEmpleado)
         {
             using (OdbcConnection conn = conexion.conexion())
             {
