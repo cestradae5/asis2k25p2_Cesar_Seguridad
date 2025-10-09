@@ -203,7 +203,7 @@ namespace Capa_Vista_Seguridad
         private void Btn_guardar_empleado_Click(object sender, EventArgs e)
         {
             //Validación de campos vacíos
-            if (!ValidarCampos())
+            if (!fun_ValidarCampos())
                 return;
 
             try
@@ -283,7 +283,7 @@ namespace Capa_Vista_Seguridad
             fun_ConfiguracionInicial();
         }
 
-        private bool ValidarCampos()
+        private bool fun_ValidarCampos()
         {
             if (string.IsNullOrWhiteSpace(Txt_id_empleado.Text) ||
                 string.IsNullOrWhiteSpace(Txt_nombre_empleado.Text) ||
