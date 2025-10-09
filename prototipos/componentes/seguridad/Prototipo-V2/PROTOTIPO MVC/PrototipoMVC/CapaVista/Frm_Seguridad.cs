@@ -39,7 +39,19 @@ namespace Capa_Vista_Seguridad
             InicializarMenuItems();
             fun_inicializar_botones_por_defecto();
             fun_habilitar_botones_por_permisos(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario);
+
+            // Suscribirse al evento FormClosing
+            this.FormClosing += Frm_Seguridad_FormClosing;
         }
+        private void Frm_Seguridad_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // Confirmación opcional
+
+                // Cierra toda la aplicación
+                Application.Exit();
+
+        }
+
 
         private void InicializarMenuItems()
         {

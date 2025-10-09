@@ -14,24 +14,24 @@ namespace Capa_Controlador_Seguridad
     {
         private Cls_AsignacionModuloAplicacionDAO dao = new Cls_AsignacionModuloAplicacionDAO();
 
-        public bool GuardarAsignacion(int idModulo, int idAplicacion)
+        public bool GuardarAsignacion(int iIdModulo, int iIdAplicacion)
         {
-            if (dao.ExisteAsignacion(idModulo, idAplicacion))
+            if (dao.ExisteAsignacion(iIdModulo, iIdAplicacion))
                 return false;
 
-            return dao.InsertarAsignacion(idModulo, idAplicacion) > 0;
+            return dao.InsertarAsignacion(iIdModulo, iIdAplicacion) > 0;
         }
 
         public DataTable ObtenerAsignaciones()
         {
             return dao.ObtenerAsignaciones();
         }
-        public int? ObtenerModuloPorAplicacion(int idAplicacion)
+        public int? ObtenerModuloPorAplicacion(int iIdAplicacion)
         {
             DataTable dt = dao.ObtenerAsignaciones();
 
             var fila = dt.AsEnumerable()
-                        .FirstOrDefault(r => Convert.ToInt32(r["fk_id_aplicacion"]) == idAplicacion);
+                        .FirstOrDefault(r => Convert.ToInt32(r["fk_id_aplicacion"]) == iIdAplicacion);
 
             if (fila != null)
                 return Convert.ToInt32(fila["fk_id_modulo"]);

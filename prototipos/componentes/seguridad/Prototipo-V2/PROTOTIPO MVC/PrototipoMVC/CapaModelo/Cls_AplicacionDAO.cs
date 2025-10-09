@@ -35,8 +35,11 @@ namespace Capa_Modelo_Seguridad
             FROM Tbl_Aplicacion 
             WHERE Pk_Id_Aplicacion = ?";
 
-        // Obtener todas las aplicaciones
-        public List<Cls_Aplicacion> ObtenerAplicaciones()
+        // ===============================================================
+        // FUNCIÓN: fun_obtener_aplicaciones
+        // Descripción: Retorna una lista con todas las aplicaciones registradas.
+        // ===============================================================
+        public List<Cls_Aplicacion> fun_ObtenerAplicaciones()
         {
             List<Cls_Aplicacion> lista = new List<Cls_Aplicacion>();
             using (OdbcConnection conn = conexion.conexion())
@@ -60,8 +63,11 @@ namespace Capa_Modelo_Seguridad
             return lista;
         }
 
-        // Insertar una nueva aplicación
-        public int InsertarAplicacion(Cls_Aplicacion app)
+        // ===============================================================
+        // PROCEDIMIENTO: pro_insertar_aplicacion
+        // Descripción: Inserta una nueva aplicación en la tabla Tbl_Aplicacion.
+        // ===============================================================
+        public int pro_InsertarAplicacion(Cls_Aplicacion app)
         {
             using (OdbcConnection conn = conexion.conexion())
             {
@@ -77,8 +83,11 @@ namespace Capa_Modelo_Seguridad
             }
         }
 
-        // Actualizar aplicación
-        public int ActualizarAplicacion(Cls_Aplicacion app)
+        // ===============================================================
+        // PROCEDIMIENTO: pro_actualizar_aplicacion
+        // Descripción: Actualiza una aplicación existente en la base de datos.
+        // ===============================================================
+        public int pro_ActualizarAplicacion(Cls_Aplicacion app)
         {
             using (OdbcConnection conn = conexion.conexion())
             {
@@ -94,46 +103,30 @@ namespace Capa_Modelo_Seguridad
             }
         }
 
-        // Borrar aplicación y sus dependencias
-        public int BorrarAplicacion(int idAplicacion)
+        // ===============================================================
+        // PROCEDIMIENTO: pro_borrar_aplicacion
+        // Descripción: Elimina una aplicación y sus dependencias en Tbl_Asignacion_Modulo_Aplicacion.
+        // ===============================================================
+        public int pro_BorrarAplicacion(int idAplicacion)
         {
             using (OdbcConnection conn = conexion.conexion())
             {
-                using (OdbcTransaction transaction = conn.BeginTransaction())
+                // NO USAMOS TRANSACCIÓN NI BORRAMOS DEPENDENCIAS AQUÍ,
+                // ya que la verificación se hace en la capa superior (Vista).
+                using (OdbcCommand cmd = new OdbcCommand(SQL_DELETE, conn)) // Solo borra la aplicación
                 {
-                    try
-                    {
-                        // 1. Eliminar registros dependientes en tbl_ASIGNACION_MODULO_APLICACION
-                        string sqlDeleteDependientes = "DELETE FROM Tbl_Asignacion_Modulo_Aplicacion WHERE Fk_Id_Aplicacion = ?";
-                        using (OdbcCommand cmdDependientes = new OdbcCommand(sqlDeleteDependientes, conn, transaction))
-                        {
-                            cmdDependientes.Parameters.AddWithValue("@Fk_Id_Aplicacion", idAplicacion);
-                            cmdDependientes.ExecuteNonQuery();
-                        }
-
-                        // 2. Eliminar registro en Tbl_Aplicacion
-                        using (OdbcCommand cmd = new OdbcCommand(SQL_DELETE, conn, transaction))
-                        {
-                            cmd.Parameters.AddWithValue("@Pk_Id_Aplicacion", idAplicacion);
-                            int result = cmd.ExecuteNonQuery();
-
-                            // 3. Confirmar cambios
-                            transaction.Commit();
-                            return result;
-                        }
-                    }
-                    catch
-                    {
-                        // Si algo falla, revertimos todo
-                        transaction.Rollback();
-                        throw;
-                    }
+                    cmd.Parameters.AddWithValue("@Pk_Id_Aplicacion", idAplicacion);
+                    int result = cmd.ExecuteNonQuery();
+                    return result;
                 }
             }
         }
 
-        // Buscar una aplicación por ID
-        public Cls_Aplicacion Query(int idAplicacion)
+        // ===============================================================
+        // FUNCIÓN: fun_buscar_aplicacion
+        // Descripción: Devuelve una aplicación específica por su ID.
+        // ===============================================================
+        public Cls_Aplicacion fun_buscar_aplicacion(int idAplicacion)
         {
             Cls_Aplicacion app = null;
             using (OdbcConnection conn = conexion.conexion())
@@ -155,6 +148,38 @@ namespace Capa_Modelo_Seguridad
                 }
             }
             return app;
+        }
+        // ===============================================================
+        // FUNCIÓN: fun_VerificarRelaciones
+        // Descripción: Verifica si la aplicación tiene asignaciones activas (llaves foráneas).
+        // ===============================================================
+        public bool fun_VerificarRelaciones(int idAplicacion)
+        {
+            // Consulta para contar cuántos registros existen en la tabla de asignaciones 
+            // donde la aplicación sea una llave foránea.
+            string SQL_CHECK_RELATIONS = "SELECT COUNT(*) FROM Tbl_Asignacion_Modulo_Aplicacion WHERE Fk_Id_Aplicacion = ?";
+
+            using (OdbcConnection conn = conexion.conexion())
+            {
+                OdbcCommand cmd = new OdbcCommand(SQL_CHECK_RELATIONS, conn);
+                cmd.Parameters.AddWithValue("@Fk_Id_Aplicacion", idAplicacion);
+
+                try
+                {
+                    // Ejecuta la consulta y obtiene el resultado
+                    int count = Convert.ToInt32(cmd.ExecuteScalar());
+
+                    // Si el conteo es mayor que 0, significa que existen relaciones.
+                    return count > 0;
+                }
+                catch (Exception ex)
+                {
+                    // En caso de error (ej. conexión), asumimos que hay riesgo
+                    // y lanzamos para manejo superior o retornamos true para bloquear.
+                    Console.WriteLine("Error al verificar relaciones: " + ex.Message);
+                    return true;
+                }
+            }
         }
     }
 }

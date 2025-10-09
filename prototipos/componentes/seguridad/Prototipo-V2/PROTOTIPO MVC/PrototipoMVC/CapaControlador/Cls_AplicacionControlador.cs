@@ -14,56 +14,61 @@ namespace Capa_Controlador_Seguridad
 
         public List<Cls_Aplicacion> ObtenerTodasLasAplicaciones()
         {
-            return daoAplicacion.ObtenerAplicaciones();
+            return daoAplicacion.fun_ObtenerAplicaciones();
         }
 
-        public int InsertarAplicacion(int idAplicacion, string nombre, string descripcion, bool estado, int? idReporte = null)
+        public int InsertarAplicacion(int idAplicacion, string sNombre, string sDescripcion, bool bEstado, int? iIdReporte = null)
         {
             Cls_Aplicacion nuevaApp = new Cls_Aplicacion
             {
                 iPkIdAplicacion = idAplicacion,
-                sNombreAplicacion = nombre,
-                sDescripcionAplicacion = descripcion,
-                bEstadoAplicacion = estado,
-                iFkIdReporte = idReporte
+                sNombreAplicacion = sNombre,
+                sDescripcionAplicacion = sDescripcion,
+                bEstadoAplicacion = bEstado,
+                iFkIdReporte = iIdReporte
             };
 
-            return daoAplicacion.InsertarAplicacion(nuevaApp);
+            return daoAplicacion.pro_InsertarAplicacion(nuevaApp);
         }
 
         // Actualizar aplicación existente
-        public bool ActualizarAplicacion(int idAplicacion, string nombre, string descripcion, bool estado, int? idReporte = null)
+        public bool ActualizarAplicacion(int idAplicacion, string sNombre, string sDescripcion, bool bEstado, int? iIdReporte = null)
         {
             Cls_Aplicacion appActualizada = new Cls_Aplicacion
             {
                 iPkIdAplicacion = idAplicacion,
-                sNombreAplicacion = nombre,
-                sDescripcionAplicacion = descripcion,
-                bEstadoAplicacion = estado,
-                iFkIdReporte = idReporte
+                sNombreAplicacion = sNombre,
+                sDescripcionAplicacion = sDescripcion,
+                bEstadoAplicacion = bEstado,
+                iFkIdReporte = iIdReporte
             };
 
-            return daoAplicacion.ActualizarAplicacion(appActualizada) > 0;
+            return daoAplicacion.pro_ActualizarAplicacion(appActualizada) > 0;
         }
 
         // Eliminar aplicación por ID
-        public bool BorrarAplicacion(int idAplicacion)
+        public bool BorrarAplicacion(int iIdAplicacion)
         {
-            return daoAplicacion.BorrarAplicacion(idAplicacion) > 0;
+            return daoAplicacion.pro_BorrarAplicacion(iIdAplicacion) > 0;
         }
 
         // Buscar aplicación por ID
-        public Cls_Aplicacion BuscarAplicacionPorId(int idAplicacion)
+        public Cls_Aplicacion BuscarAplicacionPorId(int iIdAplicacion)
         {
-            return daoAplicacion.Query(idAplicacion);
+            return daoAplicacion.fun_buscar_aplicacion(iIdAplicacion);
         }
 
-        // Buscar aplicación por nombre
-        public Cls_Aplicacion BuscarAplicacionPorNombre(string nombre)
+        // Buscar aplicación por sNombre
+        public Cls_Aplicacion BuscarAplicacionPorNombre(string sNombre)
         {
-            return daoAplicacion.ObtenerAplicaciones()
+            return daoAplicacion.fun_ObtenerAplicaciones()
                                 .FirstOrDefault(a =>
-                                    a.sNombreAplicacion.Equals(nombre, StringComparison.OrdinalIgnoreCase));
+                                    a.sNombreAplicacion.Equals(sNombre, StringComparison.OrdinalIgnoreCase));
+        }
+        // Verificar si la aplicación tiene relaciones de llave foránea
+        public bool TieneRelaciones(int iIdAplicacion)
+        {
+            return daoAplicacion.fun_VerificarRelaciones(iIdAplicacion);
         }
     }
 }
