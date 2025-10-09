@@ -255,8 +255,17 @@ namespace Capa_Vista_Seguridad
         // Los formularios que NO son MDI (ShowDialog) NO necesitan cerrar hijos.
         private void Btn_Aplicacion_Click_1(object sender, EventArgs e)
         {
+            // 1. Cierra todos los formularios hijos MDI existentes (incluyendo Frm_Modulo si está abierto)
+            CerrarFormulariosHijos();
+
+            // 2. Crea la nueva instancia del formulario
             FrmAplicacion formAplicacion = new FrmAplicacion();
-            formAplicacion.ShowDialog();
+
+            // 3. Establece el formulario de Seguridad (this) como el padre MDI
+            formAplicacion.MdiParent = this;
+
+            // 4. Muestra el formulario como un hijo MDI
+            formAplicacion.Show();
         }
 
         private void cambiarContraseñaToolStripMenuItem_Click(object sender, EventArgs e)
