@@ -57,6 +57,8 @@ namespace Capa_Vista_Reporteador
             // 
             // Dgv_reportes
             // 
+            this.Dgv_reportes.AllowUserToAddRows = false;
+            this.Dgv_reportes.AllowUserToDeleteRows = false;
             this.Dgv_reportes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -64,6 +66,7 @@ namespace Capa_Vista_Reporteador
             this.Dgv_reportes.Location = new System.Drawing.Point(25, 255);
             this.Dgv_reportes.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Dgv_reportes.Name = "Dgv_reportes";
+            this.Dgv_reportes.ReadOnly = true;
             this.Dgv_reportes.RowHeadersWidth = 51;
             this.Dgv_reportes.RowTemplate.Height = 24;
             this.Dgv_reportes.Size = new System.Drawing.Size(880, 194);
@@ -175,7 +178,7 @@ namespace Capa_Vista_Reporteador
             this.Lbl_Titulo.TabIndex = 10;
             this.Lbl_Titulo.Text = "Título";
             // 
-            // Reportes
+            // Frm_Reportes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -193,7 +196,7 @@ namespace Capa_Vista_Reporteador
             this.Controls.Add(this.Lbl_reportes);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.Name = "Reportes";
+            this.Name = "Frm_Reportes";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Reportes";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
