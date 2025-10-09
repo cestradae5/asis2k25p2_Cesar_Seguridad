@@ -9,7 +9,7 @@ namespace Capa_Modelo_Navegador
 {
     public class Cls_ConexionMYSQL
     {
-        private readonly string ConexionODBC = "Dsn=Prueba1"; // DSN de odbc
+        private readonly string ConexionODBC = "Dsn=Bd_Hoteleria"; // DSN de odbc
 
         //retorna conexion cerrada para que el DAO la abra y cierre cuando sea necesario
         public OdbcConnection conexion()
@@ -25,6 +25,10 @@ namespace Capa_Modelo_Navegador
                 conn.Close();
             }
         }
+
+
     }
+
+
 }
 //======================================================================================

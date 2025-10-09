@@ -235,6 +235,50 @@ namespace Capa_Modelo_Navegador
         }
         //==========================================================================================================
 
+        //
+        //------------------------------Validaciones de Tipo de Columnas  -------------------------------------------------------
+        //============================== Pedro Ibañez =============================================================
+        public Dictionary<string, string> ObtenerTiposDeColumnas(string nombreTabla)
+        {
+            var tipos = new Dictionary<string, string>();
+            Cls_ConexionMYSQL conexion = new Cls_ConexionMYSQL();
+
+            string query = @"
+        SELECT COLUMN_NAME, DATA_TYPE
+        FROM INFORMATION_SCHEMA.COLUMNS
+        WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ?;
+    ";
+
+            using (OdbcConnection conn = conexion.conexion())
+            using (OdbcCommand cmd = new OdbcCommand(query, conn))
+            {
+                cmd.Parameters.AddWithValue("@tabla", nombreTabla);
+
+                try
+                {
+                    conn.Open();
+                    using (OdbcDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string columna = reader["COLUMN_NAME"].ToString();
+                            string tipo = reader["DATA_TYPE"].ToString().ToLower();
+                            tipos[columna] = tipo;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error al obtener tipos de columnas: " + ex.Message);
+                }
+                finally
+                {
+                    conexion.desconexion(conn);
+                }
+            }
+
+            return tipos;
+        }
 
     }
 }
