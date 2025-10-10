@@ -40,7 +40,7 @@ namespace PruebaEjecucionNavegador
                     "Cmp_Pidio_Cambio_Contrasenea"
                 };
         
-            int id_aplicacion = 100;
+            int id_aplicacion = 1;
             navegador1.IPkId_Aplicacion = id_aplicacion;
             navegador1.configurarDataGridView(config);
             navegador1.SNombreTabla = columnas[0];
