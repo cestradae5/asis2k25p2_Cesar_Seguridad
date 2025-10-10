@@ -120,7 +120,7 @@ namespace Capa_Vista_Navegador
             Btn_guardar.Enabled = false;
             Btn_cancelar.Enabled = false;
             Btn_eliminar.Enabled = false;
-            Btn_consultar.Enabled = true;
+            Btn_consultar.Enabled = false;
             Btn_imprimir.Enabled = true;
             Btn_refrescar.Enabled = false;
             Btn_inicio.Enabled = false;
@@ -170,7 +170,7 @@ namespace Capa_Vista_Navegador
             mostrarDatos();
             ctrl.RefrescarCombos(this, SAlias[0], SAlias.Skip(1).ToArray());
         }
-
+      
         // ======================= Modificar / Update = Stevens Cambranes = 20/09/2025 =======================
         private void Btn_modificar_Click(object sender, EventArgs e)
         {

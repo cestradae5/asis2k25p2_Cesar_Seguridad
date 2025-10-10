@@ -406,50 +406,70 @@ namespace Capa_Controlador_Navegador
 
 
         // ======================= Rellenar los ComboBox desde la fila seleccionada del DataGridView = Stevens Cambranes = 20/09/2025 =======================
+        // ======================= Modificacion de Metodo para rellenar ChecKBoxes Y DTP también = Pedro Ibañez = 10/10/2025 =======================
         public void RellenarCombosDesdeFila(Control contenedor, string[] SAlias, DataGridViewRow fila)
         {
             if (fila == null || SAlias == null || SAlias.Length < 2) return;
 
-            // Caso ideal: el DataSource es un DataTable (DataRowView)
+            // Intentar obtener los datos desde DataRowView (caso más común cuando el DGV está ligado a un DataTable)
             var drv = fila.DataBoundItem as DataRowView;
-            if (drv != null)
-            {
-                DataTable table = drv.Row.Table;
+            DataTable table = drv?.Row?.Table;
 
-                for (int i = 1; i < SAlias.Length; i++)
-                {
-                    string campo = SAlias[i];
-                    var cbo = contenedor.Controls.OfType<ComboBox>()
-                                 .FirstOrDefault(c => c.Name == "Cbo_" + campo);
-                    if (cbo == null) continue;
-
-                    object valor = table.Columns.Contains(campo) ? drv[campo] : null;
-                    cbo.Text = valor?.ToString() ?? string.Empty;
-                }
-                return; // listo en el caso DataRowView
-            }
-
-            // buscar columna en el grid por Name o DataPropertyName
-            var grid = fila.DataGridView;
             for (int i = 1; i < SAlias.Length; i++)
             {
                 string campo = SAlias[i];
-                var cbo = contenedor.Controls.OfType<ComboBox>()
-                             .FirstOrDefault(c => c.Name == "Cbo_" + campo);
-                if (cbo == null) continue;
+                object valor = null;
 
-                var col = grid.Columns.Cast<DataGridViewColumn>()
-                           .FirstOrDefault(c =>
-                                string.Equals(c.Name, campo, StringComparison.OrdinalIgnoreCase) ||
-                                string.Equals(c.DataPropertyName, campo, StringComparison.OrdinalIgnoreCase));
-                if (col == null) { cbo.Text = string.Empty; continue; }
+                // Obtener valor desde DataRowView
+                if (drv != null && table != null && table.Columns.Contains(campo))
+                {
+                    valor = drv[campo];
+                }
+                else
+                {
+                    // Obtener valor directamente desde el DGV si no hay DataRowView
+                    var grid = fila.DataGridView;
+                    var col = grid.Columns.Cast<DataGridViewColumn>()
+                               .FirstOrDefault(c =>
+                                    string.Equals(c.Name, campo, StringComparison.OrdinalIgnoreCase) ||
+                                    string.Equals(c.DataPropertyName, campo, StringComparison.OrdinalIgnoreCase));
+                    if (col != null)
+                        valor = fila.Cells[col.Index].Value;
+                }
 
-                var cell = fila.Cells[col.Index];
-                cbo.Text = cell?.Value?.ToString() ?? string.Empty;
+                // --- Buscar los controles en el contenedor ---
+                var cbo = contenedor.Controls.OfType<ComboBox>().FirstOrDefault(c => c.Name == "Cbo_" + campo);
+                var chk = contenedor.Controls.OfType<CheckBox>().FirstOrDefault(c => c.Name == "Chk_" + campo);
+                var dtp = contenedor.Controls.OfType<DateTimePicker>().FirstOrDefault(c => c.Name == "Dtp_" + campo);
+
+                // --- Asignar valores según el tipo de control ---
+                if (cbo != null)
+                {
+                    cbo.Text = valor?.ToString() ?? string.Empty;
+                }
+                else if (chk != null)
+                {
+                    bool estado = false;
+
+                    if (valor != null && (valor is bool || valor is int))
+                        estado = Convert.ToBoolean(valor);
+
+                    chk.Checked = estado;
+                }
+                else if (dtp != null)
+                {
+                    DateTime fecha;
+
+                    if (valor != null && DateTime.TryParse(valor.ToString(), out fecha))
+                        dtp.Value = fecha;
+                    else
+                        dtp.Value = DateTime.Now; // valor por defecto si no hay fecha válida
+                }
             }
         }
 
-       //======================= Pedro Ibañez ======================
+
+        //======================= Pedro Ibañez ======================
         //Modificacion de metodo: Crea DataGridView y recibe parametros para no chocar con ComboBoxes
         public DataGridView CrearDataGridView()
         {
@@ -525,6 +545,7 @@ namespace Capa_Controlador_Navegador
         }
 
         // ======================= Limpiar todos los ComboBox generados = Stevens Cambranes = 20/09/2025 =======================
+        // ======================= Modificacion de Metodo para limpiar ChecKBoxes también = Pedro Ibañez = 10/10/2025 =======================
         public void LimpiarCombos(Control contenedor, string[] SAlias)
         {
             if (SAlias == null || SAlias.Length < 2) return;
@@ -532,16 +553,37 @@ namespace Capa_Controlador_Navegador
             for (int i = 1; i < SAlias.Length; i++)
             {
                 string campo = SAlias[i];
+
+                // Buscar ComboBox con el prefijo Cbo_
                 var cbo = contenedor.Controls.OfType<ComboBox>()
                              .FirstOrDefault(c => c.Name == "Cbo_" + campo);
 
                 if (cbo != null)
                 {
-                    cbo.SelectedIndex = -1; // quita selección
-                    cbo.Text = string.Empty; // limpia el texto mostrado
+                    cbo.SelectedIndex = -1;   // Quita la selección
+                    cbo.Text = string.Empty;  // Limpia el texto
+                }
+
+                // Buscar CheckBox con el prefijo Chk_
+                var chk = contenedor.Controls.OfType<CheckBox>()
+                             .FirstOrDefault(c => c.Name == "Chk_" + campo);
+
+                if (chk != null)
+                {
+                    chk.Checked = false; // Reinicia el estado
+                }
+
+                // (Opcional) Buscar DateTimePicker con prefijo Dtp_
+                var dtp = contenedor.Controls.OfType<DateTimePicker>()
+                             .FirstOrDefault(c => c.Name == "Dtp_" + campo);
+
+                if (dtp != null)
+                {
+                    dtp.Value = DateTime.Now; // Restaura con la fecha actual
                 }
             }
         }
+
         //======================= Habilitar y Deshabilitar todos los comboBoxes =======================
         // ======================= Pedro Ibañez =======================
         // Creacion de Metodos: Habilitar y deshabilitar ComboBoxes
@@ -551,12 +593,28 @@ namespace Capa_Controlador_Navegador
             {
                 cbo.Enabled = true;
             }
+            foreach (var dtp in contenedor.Controls.OfType<DateTimePicker>())
+            {
+                dtp.Enabled = true;
+            }
+            foreach (var chk in contenedor.Controls.OfType<CheckBox>())
+            {
+                chk.Enabled = true;
+            }
         }
         public void DesactivarTodosComboBoxes(Control contenedor)
         {
             foreach (var cbo in contenedor.Controls.OfType<ComboBox>())
             {
                 cbo.Enabled = false;
+            }
+            foreach (var dtp in contenedor.Controls.OfType<DateTimePicker>())
+            {
+                dtp.Enabled = false;
+            }
+            foreach (var chk in contenedor.Controls.OfType<CheckBox>())
+            {
+                chk.Enabled = false;
             }
         }
         
