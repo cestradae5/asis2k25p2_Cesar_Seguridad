@@ -2,89 +2,68 @@
 using System.Data;
 using System.IO;
 using System.Windows.Forms;
-using CrystalDecisions.CrystalReports.Engine; // Gerber Asturias
-using CrystalDecisions.Shared;               // Gerber Asturias
+using CrystalDecisions.CrystalReports.Engine;
+using CrystalDecisions.Windows.Forms;
+using CrystalDecisions.Shared;
 using Capa_Controlador_Reporteador;
 
 namespace Capa_Vista_Reporteador
 {
     public partial class Frm_VistaDeReportes : Form
     {
+        // Instancia del controlador (coordina la lógica con el modelo)
         Cls_Controlador_Reporteador controlador = new Cls_Controlador_Reporteador();
 
+        // Propiedad opcional para manejar el ID del reporte
         public int IdReporte { get; private set; }
 
+        // Constructor que recibe un ID (opcional)
         public Frm_VistaDeReportes(int idReporte) : this()
         {
             IdReporte = idReporte;
         }
 
+        // Constructor base
         public Frm_VistaDeReportes()
         {
             InitializeComponent();
             IdReporte = IdReporte;
-            //Asegurar que el CrystalReportViewer se ajuste al formulario
+            // Ajusta el visor al tamaño del formulario
             crystalReportViewer1.Dock = DockStyle.Fill;
         }
 
-        //Inicio de código de: Gerber Asturias con carné: 0901-22-11992 en la fecha 13/09/2025
-        //Método para mostrar un reporte en el CrystalReportViewer
+        // ================================================================
+        // MostrarReporte: Método para mostrar un reporte en el visor
+        // ================================================================
+        // Código actualizado para cumplir MVC (ya no maneja conexión directa)
         public void MostrarReporte(string ruta)
         {
             try
             {
-                if (!File.Exists(ruta))
+                if (string.IsNullOrEmpty(ruta) || !File.Exists(ruta))
                 {
-                    MessageBox.Show("El archivo del reporte no existe: " + ruta, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("El archivo del reporte no existe o la ruta es inválida:\n" + ruta,
+                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
-                ReportDocument reporte = new ReportDocument();
-                reporte.Load(ruta);
+                // El controlador ahora se encarga de cargar y conectar el reporte
+                ReportDocument reporte = controlador.CargarReporte(ruta);
 
-                // Configuración de conexión ODBC
-                ConnectionInfo connection = new ConnectionInfo
-                {
-                    ServerName = "bd_hoteleria", // DNS ODBC configurado
-                    IntegratedSecurity = true    // Cambiar a false si usas usuario/contraseña
-                };
-
-                void AplicarConexion(Database db)
-                {
-                    foreach (Table tabla in db.Tables)
-                    {
-                        TableLogOnInfo logon = tabla.LogOnInfo;
-                        logon.ConnectionInfo = connection;
-                        tabla.ApplyLogOnInfo(logon);
-
-                        // Refrescar ubicación
-                        tabla.Location = tabla.Location;
-                    }
-                }
-
-                // Aplicar conexión al reporte principal
-                AplicarConexion(reporte.Database);
-
-                // Aplicar a los subreportes si existen
-                foreach (ReportDocument sub in reporte.Subreports)
-                {
-                    AplicarConexion(sub.Database);
-                }
-
-                // Mostrar en el visor
+                // Mostrar el reporte en el visor
                 crystalReportViewer1.ReportSource = reporte;
                 crystalReportViewer1.Refresh();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al cargar el reporte: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error al mostrar el reporte: " + ex.Message,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        //Fin de código de: Gerber Asturias con carné: 0901-22-11992 en la fecha 13/09/2025
 
-
-        //Inicio de código de: Gerber Asturias con carné: 0901-22-11992 en la fecha 13/09/2025
-        // Método para cargar y mostrar automáticamente el primer reporte
+        // ================================================================
+        // CargarPrimerReporte: carga el primer reporte disponible en la base de datos
+        // ================================================================
         private void CargarPrimerReporte()
         {
             try
@@ -93,31 +72,37 @@ namespace Capa_Vista_Reporteador
 
                 if (dt != null && dt.Rows.Count > 0)
                 {
-                    // Tomar el primer reporte de la tabla
+                    // Tomar la ruta del primer reporte de la tabla
                     string ruta = dt.Rows[0]["Cmp_Ruta_Reporte"].ToString();
+
+                    // Mostrarlo usando el método anterior
                     MostrarReporte(ruta);
                 }
                 else
                 {
-                    MessageBox.Show("No hay reportes disponibles.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("No hay reportes disponibles en la base de datos.",
+                        "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al obtener reportes: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error al obtener los reportes: " + ex.Message,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        //Fin de código de: Gerber Asturias con carné: 0901-22-11992 en la fecha 13/09/2025
 
-
-        private void VistaDeReportes_Load(object sender, EventArgs e)
+        // ================================================================
+        // Eventos del formulario
+        // ================================================================
+        private void Frm_VistaDeReportes_Load(object sender, EventArgs e)
         {
+            // Al cargar el formulario, muestra el primer reporte automáticamente
             CargarPrimerReporte();
         }
 
         private void crystalReportViewer1_Load(object sender, EventArgs e)
         {
-
+            // Evento reservado si necesitas inicializar el visor
         }
     }
 }
