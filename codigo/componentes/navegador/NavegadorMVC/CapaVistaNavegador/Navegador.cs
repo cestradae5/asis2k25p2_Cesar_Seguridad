@@ -20,6 +20,8 @@ namespace Capa_Vista_Navegador
 
         public Cls_ConfiguracionDataGridView configuracionDataGridView;
 
+        int contadorModificar = 0;
+
         public Navegador()
         {
             InitializeComponent();
@@ -99,7 +101,7 @@ namespace Capa_Vista_Navegador
         public void BotonesEstadoCRUD()
         {
             // ======================= Stevens Cambranes = 20/09/2025 =======================
-            Btn_modificar.Enabled = true;
+            Btn_modificar.Enabled = false;
             Btn_guardar.Enabled = true;
             Btn_cancelar.Enabled = true;
             Btn_eliminar.Enabled = true;
@@ -168,12 +170,14 @@ namespace Capa_Vista_Navegador
 
             // Recarga despues de insertar = Stevens Cambranes
             mostrarDatos();
-            ctrl.RefrescarCombos(this, SAlias[0], SAlias.Skip(1).ToArray());
+            ctrl.LimpiarCombos(this, SAlias);
         }
 
         // ======================= Modificar / Update = Stevens Cambranes = 20/09/2025 =======================
         private void Btn_modificar_Click(object sender, EventArgs e)
+
         {
+            contadorModificar = 2;
             ctrl.Actualizar_Datos(this, SAlias);
 
             mostrarDatos();
@@ -186,12 +190,36 @@ namespace Capa_Vista_Navegador
         private void Dgv_Datos_SelectionChanged(object sender, EventArgs e)
         {
             // ======================= Pedro Ibañez =======================
-            // Modificacion: Se hace la seleccion solo si el usuario hizo clic o usó teclado
+            // Modificación: Se hace la selección solo si el usuario hizo clic o usó teclado
             if (Control.MouseButtons == MouseButtons.None && !Dgv_Datos.Focused) return;
 
             if (Dgv_Datos?.CurrentRow == null || SAlias == null || SAlias.Length < 2) return;
+
+            // Rellenar combos con la información de la fila seleccionada
             ctrl.RellenarCombosDesdeFila(this, SAlias, Dgv_Datos.CurrentRow);
+            Btn_modificar.Enabled = true;
+
+            // Bloquear (deshabilitar) todos los ComboBox del formulario
+            DeshabilitarCombos(this);
         }
+
+        private void DeshabilitarCombos(Control parent)
+        {
+            foreach (Control ctrl in parent.Controls)
+            {
+                if (ctrl is ComboBox combo)
+                {
+                    combo.Enabled = false;
+                }
+
+                // Si hay contenedores (Panel, GroupBox, etc.)
+                if (ctrl.HasChildren)
+                {
+                    DeshabilitarCombos(ctrl);
+                }
+            }
+        }
+
         // ======================= Esta funcion es para seleccionar la fila del Dgv y Rellenar los Cbo =======================
 
         // ======================= Eliminar / Delete = Fernando Miranda = 20/09/2025 =======================

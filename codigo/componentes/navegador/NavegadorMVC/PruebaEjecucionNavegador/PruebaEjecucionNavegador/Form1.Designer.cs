@@ -36,20 +36,22 @@ namespace PruebaEjecucionNavegador
             // 
             this.navegador1.AutoSize = true;
             this.navegador1.IPkId_Aplicacion = 0;
-            this.navegador1.Location = new System.Drawing.Point(12, 12);
+            this.navegador1.Location = new System.Drawing.Point(16, 15);
+            this.navegador1.Margin = new System.Windows.Forms.Padding(5);
             this.navegador1.Name = "navegador1";
             this.navegador1.SAlias = null;
-            this.navegador1.Size = new System.Drawing.Size(1177, 573);
+            this.navegador1.Size = new System.Drawing.Size(1569, 705);
             this.navegador1.SNombreTabla = null;
             this.navegador1.TabIndex = 0;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1207, 628);
+            this.ClientSize = new System.Drawing.Size(1677, 773);
             this.ControlBox = false;
             this.Controls.Add(this.navegador1);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
