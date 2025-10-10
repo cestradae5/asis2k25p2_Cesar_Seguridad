@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Capa_Controlador_Navegador;
-// using Capa_Vista_Reporteador;
+//using Capa_Vista_Reporteador;
 
 namespace Capa_Vista_Navegador
 {
@@ -234,10 +234,19 @@ namespace Capa_Vista_Navegador
             // Llamar al componente consultas inteligentes
         }
 
+        // ======================= Pedro Ibañez =======================
+        // Creacion Metodo: crea instancia y llama metodo de reporteador  
         private void Btn_imprimir_Click_1(object sender, EventArgs e)
         {
-           //Frm_Reportes rpt = new Frm_Reportes();
-           //rpt.reporteAplicacion(IPkId_Aplicacion);
+            try
+            {
+                //Frm_Reportes rpt = new Frm_Reportes();
+                //rpt.reporteAplicacion(IPkId_Aplicacion);
+            }
+            catch
+            {
+                MessageBox.Show("Ha ocurrido un error conectando a reporteadors");
+            }
         }
         
         private void Btn_refrescar_Click(object sender, EventArgs e)
