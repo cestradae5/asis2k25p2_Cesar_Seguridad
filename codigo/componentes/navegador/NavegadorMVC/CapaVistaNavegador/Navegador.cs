@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Capa_Controlador_Navegador;
-// using Capa_Vista_Reporteador;
+//using Capa_Vista_Reporteador;
 
 namespace Capa_Vista_Navegador
 {
@@ -122,7 +122,7 @@ namespace Capa_Vista_Navegador
             Btn_guardar.Enabled = false;
             Btn_cancelar.Enabled = false;
             Btn_eliminar.Enabled = false;
-            Btn_consultar.Enabled = true;
+            Btn_consultar.Enabled = false;
             Btn_imprimir.Enabled = true;
             Btn_refrescar.Enabled = false;
             Btn_inicio.Enabled = false;
@@ -172,7 +172,7 @@ namespace Capa_Vista_Navegador
             mostrarDatos();
             ctrl.LimpiarCombos(this, SAlias);
         }
-
+      
         // ======================= Modificar / Update = Stevens Cambranes = 20/09/2025 =======================
         private void Btn_modificar_Click(object sender, EventArgs e)
 
@@ -262,10 +262,19 @@ namespace Capa_Vista_Navegador
             // Llamar al componente consultas inteligentes
         }
 
+        // ======================= Pedro Ibañez =======================
+        // Creacion Metodo: crea instancia y llama metodo de reporteador  
         private void Btn_imprimir_Click_1(object sender, EventArgs e)
         {
-           //Frm_Reportes rpt = new Frm_Reportes();
-           //rpt.reporteAplicacion(IPkId_Aplicacion);
+            try
+            {
+                //Frm_Reportes rpt = new Frm_Reportes();
+                //rpt.reporteAplicacion(IPkId_Aplicacion);
+            }
+            catch
+            {
+                MessageBox.Show("Ha ocurrido un error conectando a reporteadors");
+            }
         }
         
         private void Btn_refrescar_Click(object sender, EventArgs e)
