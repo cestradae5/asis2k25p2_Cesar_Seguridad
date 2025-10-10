@@ -268,7 +268,7 @@ namespace Capa_Modelo_Seguridad
                         Cmp_Modificar_Permisos_Aplicacion_Perfil AS modificar,
                         Cmp_Eliminar_Permisos_Aplicacion_Perfil AS eliminar,
                         Cmp_Imprimir_Permisos_Aplicacion_Perfil AS imprimir
-                    FROM Tbl_Permisos_Aplicacion_Perfil
+                    FROM  Tbl_Permiso_Perfil_Aplicacion
                     WHERE Fk_Id_Perfil = ? AND Fk_Id_Aplicacion = ?";
 
             using (OdbcConnection conn = conexion.conexion())
