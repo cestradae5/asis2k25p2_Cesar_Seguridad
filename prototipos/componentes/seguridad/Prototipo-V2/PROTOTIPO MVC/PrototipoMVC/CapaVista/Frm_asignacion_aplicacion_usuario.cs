@@ -46,7 +46,7 @@ namespace Capa_Vista_Seguridad
 
             InicializarDataGridView();
 
-            /*fun_ConfigurarIdsDinamicamenteYAplicarPermisos();*/
+            fun_AplicarPermisos();
             Dgv_Permisos.CellBeginEdit += Dgv_Permisos_CellBeginEdit;
         }
 
@@ -424,6 +424,90 @@ namespace Capa_Vista_Seguridad
         {
 
         }
+
+
+        /* 0901-21-1115 
+    Marcos Velásquez Alcántara
+        
+         Filtros de Permisos 
+         */
+
+
+        private void fun_AplicarPermisos()
+        {
+            try
+            {
+                int idUsuario = Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario;
+
+                Cls_PermisoUsuario permisoUsuario = new Cls_PermisoUsuario();
+                Cls_Asignacion_Permiso_PerfilesDAO perfilDAO = new Cls_Asignacion_Permiso_PerfilesDAO();
+
+                int IidAplicacion = permisoUsuario.ObtenerIdAplicacionPorNombre("Asig Aplicacion Usuario");
+                int IidModulo = permisoUsuario.ObtenerIdModuloPorNombre("Seguridad");
+
+                bool bIngresar = false, bConsultar = false, bModificar = false, bEliminar = false, bImprimir = false;
+
+                //  Revisar permisos or usuario + aplicación + módulo
+                var permisosUsuario = permisoUsuario.ConsultarPermisos(idUsuario, IidAplicacion, IidModulo);
+
+                if (permisosUsuario.HasValue)
+                {
+                    bIngresar = permisosUsuario.Value.ingresar;
+                    bConsultar = permisosUsuario.Value.consultar;
+                    bModificar = permisosUsuario.Value.modificar;
+                    bEliminar = permisosUsuario.Value.eliminar;
+                    bImprimir = permisosUsuario.Value.imprimir;
+                }
+
+                //  revisar ese permiso por perfil + aplicación
+                if (!bIngresar || !bConsultar || !bModificar || !bEliminar || !bImprimir)
+                {
+                    DataTable dtPerfiles = perfilDAO.datObtenerPerfiles();
+
+                    foreach (DataRow perfilRow in dtPerfiles.Rows)
+                    {
+                        int IidPerfil = Convert.ToInt32(perfilRow["Pk_Id_Perfil"]);
+                        DataTable permisosPerfil = perfilDAO.ObtenerPermisosPerfilAplicacion(IidPerfil, IidAplicacion);
+
+                        if (permisosPerfil.Rows.Count > 0)
+                        {
+                            DataRow row = permisosPerfil.Rows[0];
+
+                            // Revisar permisos por separado
+                            if (!bIngresar && Convert.ToBoolean(row["ingresar"]))
+                                bIngresar = true;
+
+                            if (!bConsultar && Convert.ToBoolean(row["consultar"]))
+                                bConsultar = true;
+
+                            if (!bModificar && Convert.ToBoolean(row["modificar"]))
+                                bModificar = true;
+
+                            if (!bEliminar && Convert.ToBoolean(row["eliminar"]))
+                                bEliminar = true;
+
+                            if (!bImprimir && Convert.ToBoolean(row["imprimir"]))
+                                bImprimir = true;
+                        }
+                    }
+                }
+
+                //   Aplicar permisos a botones
+                Btn_agregar.Enabled = bIngresar || bModificar;
+                Btn_Buscar.Enabled = bConsultar;
+                Btn_finalizar.Enabled = bModificar;
+                Btn_quitar.Enabled = bEliminar || bModificar;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al aplicar permisos: " + ex.Message);
+            }
+        }
+
+
+
+
+
     }
 
 
