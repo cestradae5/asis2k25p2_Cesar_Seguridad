@@ -8,6 +8,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Capa_Controlador_Consultas;
+using Microsoft.VisualBasic;
+
 
 namespace Capa_Vista_Componente_Consultas
 {
@@ -603,14 +605,19 @@ namespace Capa_Vista_Componente_Consultas
             }
         }
 
+
         // ----------------- Guardar/Listar consultas Juan Carlos Sandoval Quej 0901-22-4170 26/09/2025
+        // ----------------- Guardar/Listar consultas -----------------
+        // CAMBIO Nelson Godínez 0901-22-3550 (10/10/2025)
+        // - Se obliga a ingresar un nombre no vacío para guardar.
+        // - Si está vacío, se muestra alerta y NO se guarda.
+        // - Si el usuario cancela el cuadro, se aborta el guardado.
         private void GuardarConsultaAuto()
         {
             string sql = string.IsNullOrWhiteSpace(sSqlActual)
                 ? oControlador.ConstruirSql(sTablaActual, Chk_AgregarCondiciones.Checked, lstPartesWhere, lstPartesGroupOrder)
                 : sSqlActual;
 
-            // Si después de eso sigue sin haber consulta, avisa al usuario y se detiene.
             if (string.IsNullOrWhiteSpace(sql))
             {
                 MessageBox.Show("Genera la consulta primero.");
@@ -618,25 +625,51 @@ namespace Capa_Vista_Componente_Consultas
             }
             sSqlActual = sql;
 
-            var baseName = string.IsNullOrEmpty(sTablaActual) ? "consulta" : sTablaActual;
-            var name = baseName + "_" + DateTime.Now.ToString("yyyyMMdd_HHmmss");
+            // ---------- Solicitar nombre obligatorio ----------
+            string inputNombre = null;
+
+            while (true)
+            {
+                inputNombre = ShowInputBox(
+                    "Guardar consulta personalizada",
+                    "Ingresa el nombre con el que deseas guardar la consulta:"
+                );
+
+                // Si el usuario presiona Cancelar -> abortamos guardado
+                if (inputNombre == null)
+                    return;
+
+                // Limpia caracteres inválidos para nombres de archivo/clave
+                char[] invalid = System.IO.Path.GetInvalidFileNameChars();
+                inputNombre = new string(inputNombre.Where(ch => !invalid.Contains(ch)).ToArray()).Trim();
+
+                if (string.IsNullOrWhiteSpace(inputNombre))
+                {
+                    // Nombre vacío -> avisar y volver a pedir
+                    MessageBox.Show("Debes ingresar un nombre para la consulta.", "Nombre requerido",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    continue;
+                }
+
+                // Nombre válido
+                break;
+            }
 
             try
             {
-                // Se obtiene la lista de nombres de consultas ya guardadas
+                // Si el nombre ya existe, se desambigua con _1, _2, ...
                 var existentes = new HashSet<string>(
                     oControlador.ListarConsultasPlano().Select(kv => kv.Key),
                     StringComparer.OrdinalIgnoreCase);
 
-                // Se verifica si el nombre generado ya existe
-                // Si existe, se le agrega _1, _2, etc. hasta que sea único
-                var unique = name; int i = 1;
-                while (existentes.Contains(unique)) unique = name + "_" + (i++).ToString();
-                oControlador.GuardarConsulta(unique, sql);
+                string unique = inputNombre;
+                int i = 1;
+                while (existentes.Contains(unique))
+                    unique = inputNombre + "_" + (i++).ToString();
 
+                oControlador.GuardarConsulta(unique, sql);
                 CargarConsultasGuardadas();
 
-                // Intenta seleccionar en el ListBox la consulta recién guardada
                 var lista = Lst_ConsultasGuardadas.DataSource as List<KeyValuePair<string, string>>;
                 if (lista != null)
                 {
@@ -644,23 +677,64 @@ namespace Capa_Vista_Componente_Consultas
                     if (idx >= 0) Lst_ConsultasGuardadas.SelectedIndex = idx;
                 }
 
-                // Mensaje de confirmación
-                MessageBox.Show("Consulta guardada.");
+                MessageBox.Show("Consulta guardada como: " + unique, "Éxito",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                // Si hay algún error, se muestra el mensaje de error
                 MessageBox.Show("No se pudo guardar la consulta.\n" + ex.Message);
             }
-            // --- BLOQUEO DE GUARDADO EN VACÍO ---
+
+            // Validación adicional existente
             string sMsg; Control oFoco;
             if (!ValidarParaGenerarEjecutar(out sMsg, out oFoco))
             {
                 MostrarError("No se puede guardar: " + sMsg, oFoco);
                 return;
             }
-
         }
+
+
+        // -----------------------------------------------------------------------------
+        // Método auxiliar: cuadro de entrada simple sin usar Microsoft.VisualBasic
+        // Realizado por: Nelson Godínez 0901-22-3550 (10/10/2025)
+        // Devuelve el texto ingresado o null si el usuario cancela.
+        // -----------------------------------------------------------------------------
+        private static string ShowInputBox(string titulo, string mensaje)
+        {
+            using (Form form = new Form())
+            {
+                form.Text = titulo;
+                form.StartPosition = FormStartPosition.CenterParent;
+                form.FormBorderStyle = FormBorderStyle.FixedDialog;
+                form.MinimizeBox = false;
+                form.MaximizeBox = false;
+                form.ClientSize = new System.Drawing.Size(400, 140);
+                form.ShowInTaskbar = false;
+
+                Label label = new Label() { AutoSize = true, Text = mensaje };
+                label.SetBounds(10, 10, 380, 20);
+
+                TextBox textBox = new TextBox();
+                textBox.SetBounds(10, 35, 380, 25);
+
+                Button buttonOk = new Button() { Text = "Aceptar", DialogResult = DialogResult.OK };
+                buttonOk.SetBounds(210, 75, 80, 30);
+
+                Button buttonCancel = new Button() { Text = "Cancelar", DialogResult = DialogResult.Cancel };
+                buttonCancel.SetBounds(300, 75, 80, 30);
+
+                form.Controls.AddRange(new Control[] { label, textBox, buttonOk, buttonCancel });
+                form.AcceptButton = buttonOk;
+                form.CancelButton = buttonCancel;
+
+                return form.ShowDialog() == DialogResult.OK ? textBox.Text : null;
+            }
+        }
+
+
+
+
 
         private void CargarConsultasGuardadas()
         {
@@ -675,64 +749,103 @@ namespace Capa_Vista_Componente_Consultas
             catch { /* Si algo falla, simplemente lo ignora */ }
         }
 
-        // ----------------- Editar: SQL -> UI Bryan Raul Ramirez Lopez 0901-21-8202
+        // ----------------- Editar: SQL -> UI Bryan Raul Ramirez Lopez 0901-21-8202 + Nelson Godínez 0901-22-3550
         private void CargarConsultaDesdeSql(string sql)
         {
-            LimpiarCondiciones();
-            Chk_AgregarCondiciones.Checked = false;
+            bCargandoDesdeSql = true;
 
-            // Tabla
-            var mTable = Regex.Match(sql, @"FROM\s+`?(?<t>[^`\s]+)`?", RegexOptions.IgnoreCase);
-            if (mTable.Success)
+            try
             {
-                var t = mTable.Groups["t"].Value;
-                bCargandoDesdeSql = true;
+                LimpiarCondiciones();
+                Chk_AgregarCondiciones.Checked = false;
 
-                SetComboSelectedItem(Cbo_Tabla, t);
-                CargarColumnas(t);
+                // ---------------- Tabla ----------------
+                var mTable = Regex.Match(sql, @"FROM\s+`?(?<t>[^`\s]+)`?", RegexOptions.IgnoreCase);
+                if (mTable.Success)
+                {
+                    var t = mTable.Groups["t"].Value;
+                    SetComboSelectedItem(Cbo_Tabla, t);
+                    CargarColumnas(t);
+                    sTablaActual = t;
+                }
 
+                // ---------------- WHERE ----------------
+                var conds = oControlador.ParsearWhere(sql);
+
+                lstPartesWhere.Clear();
+                bool first = true;
+                foreach (var c in conds)
+                {
+                    string campo = NormalizeCol(c.Campo);
+                    string op = c.Operador?.ToUpperInvariant() ?? "=";
+
+                    string pieza;
+                    if (op == "BETWEEN")
+                    {
+                        string left = TryNumOrQuoted(Unquote(c.Valor1));
+                        string right = TryNumOrQuoted(Unquote(c.Valor2));
+                        pieza = $"`{campo}` BETWEEN {left} AND {right}";
+                    }
+                    else if (op == "IS NULL" || op == "IS NOT NULL")
+                    {
+                        pieza = $"`{campo}` {op}";
+                    }
+                    else if (op == "LIKE")
+                    {
+                        pieza = $"`{campo}` LIKE {TryNumOrQuoted(Unquote(c.Valor1))}";
+                    }
+                    else
+                    {
+                        pieza = $"`{campo}` {op} {TryNumOrQuoted(Unquote(c.Valor1))}";
+                    }
+
+                    string con = first ? null : (string.IsNullOrEmpty(c.Conector) ? "AND" : c.Conector.ToUpperInvariant());
+                    AgregarWhere(pieza, con);
+                    first = false;
+                }
+
+                if (lstPartesWhere.Count > 0)
+                    Chk_AgregarCondiciones.Checked = true;
+
+                // --------------- GROUP BY ---------------
+                var mGroup = Regex.Match(sql, @"GROUP\s+BY\s+`?(?<g>[^`\s]+)`?", RegexOptions.IgnoreCase);
+                if (mGroup.Success)
+                {
+                    var col = NormalizeCol(mGroup.Groups["g"].Value);
+                    SetComboSelectedItem(Cbo_AgruparOrdenar, "GROUP BY");
+                    SafeSelectColumn(Cbo_CampoOrdenar, col);
+                    lstPartesGroupOrder.Add($"GROUP BY `{col}`");
+                }
+
+                // --------------- ORDER BY ---------------
+                var mOrder = Regex.Match(sql, @"ORDER\s+BY\s+`?(?<c>[^`\s]+)`?(?:\s+(?<dir>ASC|DESC))?", RegexOptions.IgnoreCase);
+                if (mOrder.Success)
+                {
+                    var col = NormalizeCol(mOrder.Groups["c"].Value);
+                    var dir = mOrder.Groups["dir"].Success ? mOrder.Groups["dir"].Value.ToUpperInvariant() : "ASC";
+
+                    SetComboSelectedItem(Cbo_AgruparOrdenar, "ORDER BY");
+                    SafeSelectColumn(Cbo_CampoOrdenar, col);
+                    SetComboSelectedItem(Cbo_Ordenamiento, dir);
+
+                    lstPartesGroupOrder.Add($"ORDER BY `{col}` {dir}");
+                    if (dir == "ASC") Rdb_Asc.Checked = true; else Rdb_Des.Checked = true;
+                }
+
+                sSqlActual = oControlador.ConstruirSql(
+                    sTablaActual,
+                    Chk_AgregarCondiciones.Checked,
+                    lstPartesWhere,
+                    lstPartesGroupOrder
+                );
+
+                RellenarUIDesdeConds(conds);
+                ToggleBetweenControls();
+            }
+            finally
+            {
                 bCargandoDesdeSql = false;
-                sTablaActual = t;
             }
-
-            // WHERE parseado (del Controlador)
-            var conds = oControlador.ParsearWhere(sql);
-
-            // GROUP BY
-            var mGroup = Regex.Match(sql, @"GROUP\s+BY\s+`?(?<g>[^`\s]+)`?", RegexOptions.IgnoreCase);
-            if (mGroup.Success)
-            {
-                var col = mGroup.Groups["g"].Value;
-                SetComboSelectedItem(Cbo_AgruparOrdenar, "GROUP BY");
-                BeginInvoke(new Action(delegate { SafeSelectColumn(Cbo_CampoOrdenar, col); }));
-                lstPartesGroupOrder.Add("GROUP BY `" + NormalizeCol(col) + "`");
-            }
-
-            // ORDER BY
-            var mOrder = Regex.Match(sql, @"ORDER\s+BY\s+`?(?<c>[^`\s]+)`?(?:\s+(?<dir>ASC|DESC))?", RegexOptions.IgnoreCase);
-            if (mOrder.Success)
-            {
-                var col = mOrder.Groups["c"].Value;
-                var dir = mOrder.Groups["dir"].Success ? mOrder.Groups["dir"].Value.ToUpperInvariant() : "ASC";
-                SetComboSelectedItem(Cbo_AgruparOrdenar, "ORDER BY");
-
-                BeginInvoke(new Action(delegate { SafeSelectColumn(Cbo_CampoOrdenar, col); }));
-                SetComboSelectedItem(Cbo_Ordenamiento, dir);
-
-                lstPartesGroupOrder.Add("ORDER BY `" + NormalizeCol(col) + "` " + dir);
-                if (dir == "ASC") Rdb_Asc.Checked = true; else Rdb_Des.Checked = true;
-            }
-
-            // Refresca SQL en memoria
-            sSqlActual = oControlador.ConstruirSql(
-                sTablaActual,
-                Chk_AgregarCondiciones.Checked,
-                lstPartesWhere,
-                lstPartesGroupOrder
-            );
-
-            // PINTAR UI cuando combos ya estén listos
-            BeginInvoke(new Action(delegate { RellenarUIDesdeConds(conds); }));
         }
 
         // Rellena UI a partir de condiciones parseadas (máx 2)
@@ -882,16 +995,18 @@ namespace Capa_Vista_Componente_Consultas
         }
 
         // Para valores BETWEEN: ambas cajas visibles -> ambas deben tener texto
+        // ----------------- Validación BETWEEN (corregido por Nelson Godínez 10/10/2025)
         private bool ValidarBetweenVisibleYCompleto(out string sMsg, out Control oFoco)
         {
             sMsg = null; oFoco = null;
 
-            if (Txt_ValorComp != null && Txt_ValorCompMax != null &&
+            if (Txt_ValorCompMin != null && Txt_ValorCompMax != null &&
                 Txt_ValorCompMin.Visible && Txt_ValorCompMax.Visible)
             {
                 if (Txt_ValorCompMin.TextLength == 0)
                 { sMsg = "Ingresa el valor mínimo."; oFoco = Txt_ValorCompMin; return false; }
-                if (Txt_ValorComp.TextLength == 0)
+
+                if (Txt_ValorCompMax.TextLength == 0)
                 { sMsg = "Ingresa el valor máximo."; oFoco = Txt_ValorCompMax; return false; }
             }
             return true;

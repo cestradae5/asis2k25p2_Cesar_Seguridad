@@ -20,12 +20,12 @@ namespace Capa_Vista_Componente_Consultas
             using (var f = new Frm_Consultas())
             {
                 this.Hide();
-                f.ShowDialog(this);   
+                f.ShowDialog(this);
                 this.Show();
             }
         }
 
-        
+
         private void btn_ConsultaCompleja_Click(object sender, EventArgs e)
         {
             using (var f = new Frm_Consulta_Compleja())
@@ -39,16 +39,30 @@ namespace Capa_Vista_Componente_Consultas
         // Se agrega el path específico ubicado en bin/debug de ayudas para que aparezcan - Realizado por Nelson Godínez 0901-22-3550 07/10/2025
         private void btn_Ayuda_Click(object sender, EventArgs e)
         {
-            string chmPath = Path.Combine(Application.StartupPath, "Ayuda_Consultas", "AyudaConsultaAS2.chm");
-
-            if (!File.Exists(chmPath))
+            try
             {
-                MessageBox.Show("No se encontró el archivo de ayuda:\n" + chmPath,
-                    "Ayuda", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                // Ruta relativa exacta según tu estructura actual
+                string chmPath = Path.GetFullPath(
+                    Path.Combine(Application.StartupPath, @"..\..\..\..\Ayuda_Consultas\AyudaConsultaAS2.chm")
+                );
+
+                if (File.Exists(chmPath))
+                {
+                    Help.ShowHelp(this, chmPath, HelpNavigator.TableOfContents);
+                }
+                else
+                {
+                    MessageBox.Show("No se encontró el archivo de ayuda en:\n" + chmPath,
+                        "Ayuda", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-            Help.ShowHelp(this, chmPath, HelpNavigator.TableOfContents);
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al abrir la ayuda:\n" + ex.Message,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+
 
 
         private void btn_Cerrar_Click(object sender, EventArgs e)
