@@ -20,17 +20,24 @@ namespace PruebaEjecucionNavegador
             {
                 Ancho = 1100,
                 Alto = 200,
+                PosX = 10,
+                PosY = 300,
                 ColorFondo = Color.White,
                 TipoScrollBars = ScrollBars.Both,
                 Nombre = "dgv_empleados"
             };
       
                 string[] columnas = {
-                    "tbl_reportes",
-                    "Pk_Id_Reporte",
-                    "Cmp_Titulo_Reporte",
-                    "Cmp_Ruta_Reporte",
-                    "Cmp_Fecha_Reporte"
+                    "tbl_usuario",
+                    "Pk_Id_Usuario",
+                    "Fk_Id_Empleado",
+                    "Cmp_Nombre_Usuario",
+                    "Cmp_Contrasena_Usuario",
+                    "Cmp_Intentos_Fallidos_Usuario",
+                    "Cmp_Estado_Usuario",
+                    "Cmp_FechaCreacion_Usuario",
+                    "Cmp_Ultimo_Cambio_Contrasenea",
+                    "Cmp_Pidio_Cambio_Contrasenea"
                 };
         
             int id_aplicacion = 100;

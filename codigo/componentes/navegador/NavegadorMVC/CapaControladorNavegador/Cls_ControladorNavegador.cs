@@ -56,6 +56,7 @@ namespace Capa_Controlador_Navegador
         // Asigna alias validando tabla y columnas
         // ======================= Pedro Ibañez =======================
         // Creacion de Metodo: Asignar Alias Original, generación de Textboxes antes de las modificaciones
+        //Modificación de metodo: Validación de tipo de campo para cada dato
         public bool AsignarAlias(string[] SAlias, Control contenedor, int startX, int startY, int maxPorFila = 3)
         {
             // Validar tabla
@@ -69,6 +70,22 @@ namespace Capa_Controlador_Navegador
             if (!ValidarColumnas(SAlias[0], SAlias.Skip(1).ToArray(), out List<string> columnasBD))
                 return false;
 
+
+            // Validacion tipos de columna
+            string SnombreTabla = SAlias[0];
+            Dictionary<string, string> tiposColumnas;
+            try
+            {
+                tiposColumnas = dao.ObtenerTiposDeColumnas(SnombreTabla);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+          
+
             // Configuración inicial
             int spacingX = 300; // espacio horizontal entre controles
             int spacingY = 40;  // espacio vertical entre filas
@@ -76,17 +93,18 @@ namespace Capa_Controlador_Navegador
 
             List<Label> labels = new List<Label>();
             List<ComboBox> combos = new List<ComboBox>();
+            List<Control> controles = new List<Control>();
+
 
             int fila = 0;
             int columna = 0;
 
             foreach (var campo in SAlias.Skip(1))
             {
-                // Calcular posición base
                 int posX = startX + (columna * spacingX);
                 int posY = startY + (fila * spacingY);
 
-                // Crear Label
+                // Label
                 Label lbl = new Label
                 {
                     Font = new Font("Rockwell", 10, FontStyle.Bold),
@@ -95,51 +113,80 @@ namespace Capa_Controlador_Navegador
                     Location = new Point(posX, posY)
                 };
 
-                // Medir ancho del texto
                 Size textSize = TextRenderer.MeasureText(lbl.Text, lbl.Font);
+                int controlX = lbl.Location.X + textSize.Width + 5;
 
-                // Calcular la posición X para el ComboBox justo después del Label
-                int comboX = lbl.Location.X + textSize.Width + 5; // margen de 5 px
+                // Detectar tipo de dato
+                string tipoDato = tiposColumnas.ContainsKey(campo) ? tiposColumnas[campo] : "varchar";
+                Control controlGenerado;
 
-                ComboBox cbo = new ComboBox
+                // Según el tipo de dato, crear DateTimePicker,checkbox o ComboBox
+                if (tipoDato.Contains("date"))
                 {
-                    Name = "Cbo_" + campo,
-                    Font = new Font("Rockwell", 10, FontStyle.Regular),
-                    Width = 150,
-                    Location = new Point(comboX, posY)
-                };
-
-                // Agregar items al ComboBox
-                try
-                {
-                    List<string> items = sentencias.ObtenerValoresColumna(SAlias[0], campo);
-                    cbo.Items.AddRange(items.ToArray());
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error al cargar {campo}: {ex.Message}");
-                }
-
-                // Bloquear PK
-                if (creados == 0)
-                {
-                    cbo.SelectedIndexChanged += (s, e) =>
+                    DateTimePicker dtp = new DateTimePicker
                     {
-                        if (cbo.SelectedIndex >= 0)
-                            cbo.Enabled = false;
+                        Name = "Dtp_" + campo,
+                        Font = new Font("Rockwell", 10, FontStyle.Regular),
+                        Width = 150,
+                        Format = DateTimePickerFormat.Short,
+                        Location = new Point(controlX, posY)
                     };
+                    controlGenerado = dtp;
+                }
+                else if (tipoDato.Contains("bit") || tipoDato.Contains("tinyint"))
+                {
+                    CheckBox chk = new CheckBox
+                    {
+                        Name = "Chk_" + campo,
+                        Font = new Font("Rockwell", 10, FontStyle.Regular),
+                        Text = "Activo",
+                        AutoSize = true,
+                        Location = new Point(controlX, posY)
+                    };
+                    controlGenerado = chk;
+                }
+                else
+                {
+                    ComboBox cbo = new ComboBox
+                    {
+                        Name = "Cbo_" + campo,
+                        Font = new Font("Rockwell", 10, FontStyle.Regular),
+                        Width = 150,
+                        Location = new Point(controlX, posY)
+                    };
+
+                    try
+                    {
+                        List<string> items = sentencias.ObtenerValoresColumna(SnombreTabla, campo);
+                        cbo.Items.AddRange(items.ToArray());
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error al cargar {campo}: {ex.Message}", "Advertencia",
+                                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+
+                    // Bloquear PK
+                    if (creados == 0)
+                    {
+                        cbo.SelectedIndexChanged += (s, e) =>
+                        {
+                            if (cbo.SelectedIndex >= 0)
+                                cbo.Enabled = false;
+                        };
+                    }
+
+                    controlGenerado = cbo;
                 }
 
-                // Agregar a listas
+                // Agregar controles a listas
                 labels.Add(lbl);
-                combos.Add(cbo);
+                controles.Add(controlGenerado);
                 creados++;
 
-                // Avanzar a la siguiente columna
+                // Ajustar posiciones
                 columna++;
-
-                // Calcular siguiente posición X considerando el ancho real del Label y ComboBox
-                spacingX = textSize.Width + cbo.Width + 40; // 40 = espacio entre controles
+                spacingX = textSize.Width + controlGenerado.Width + 40;
 
                 if (columna >= maxPorFila)
                 {
@@ -148,9 +195,9 @@ namespace Capa_Controlador_Navegador
                 }
             }
 
-            // Agregar controles al contenedor
+            // Finalmente, agregar al formulario/contenedor
             foreach (var lbl in labels) contenedor.Controls.Add(lbl);
-            foreach (var cbo in combos) contenedor.Controls.Add(cbo);
+            foreach (var ctrl in controles) contenedor.Controls.Add(ctrl);
 
             return creados > 0;
         }
@@ -191,30 +238,52 @@ namespace Capa_Controlador_Navegador
 
         public void Insertar_Datos(Control contenedor, string[] SAlias)
         {
-            string[] SValores = new string[SAlias.Length - 1];
-
+            object[] SValores = new object[SAlias.Length - 1];
             Cls_DAOGenerico dao = new Cls_DAOGenerico();
 
             try
             {
-                //  VALIDACIÓN: comprobar que ningún ComboBox esté vacío
                 for (int i = 1; i < SAlias.Length; i++)
                 {
-                    ComboBox Cbo = contenedor.Controls.OfType<ComboBox>()
-                                        .FirstOrDefault(t => t.Name == "Cbo_" + SAlias[i]);
+                    string alias = SAlias[i];
+                    object valor = "";
 
-                    if (Cbo == null || string.IsNullOrWhiteSpace(Cbo.Text))
+                    // Buscar control con coincidencia por nombre
+                    var txt = contenedor.Controls.OfType<TextBox>().FirstOrDefault(t => t.Name == "Txt_" + alias);
+                    var cbo = contenedor.Controls.OfType<ComboBox>().FirstOrDefault(c => c.Name == "Cbo_" + alias);
+                    var dtp = contenedor.Controls.OfType<DateTimePicker>().FirstOrDefault(d => d.Name == "Cmp_" + alias || d.Name == "Dtp_" + alias);
+                    var chkCampo = contenedor.Controls.OfType<CheckBox>().FirstOrDefault(ch => ch.Name == "Chk_" + alias);
+
+
+                    if (txt != null)
                     {
-                        MessageBox.Show($" El campo '{SAlias[i]}' no puede estar vacío.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return; // detener la inserción
+                        valor = txt.Text;
+                    }
+                    else if (cbo != null)
+                    {
+                        valor = cbo.Text;
+                    }
+                    else if (dtp != null)
+                    {
+                        valor = dtp.Value.ToString("yyyy-MM-dd"); // formato estándar SQL
+                    }
+                    else if (chkCampo != null)
+                    {
+                        valor = chkCampo.Checked;// Guardar como 1 o 0
                     }
 
-                    SValores[i - 1] = Cbo.Text;
+                    if (valor is string s && string.IsNullOrWhiteSpace(s))
+                    {
+                        MessageBox.Show($"El campo '{alias}' no puede estar vacío.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    SValores[i - 1] = valor;
                 }
 
-                // Si pasa la validación, proceder a insertar
+                // Si pasa validación, insertar
                 dao.InsertarDatos(SAlias, SValores);
-                MessageBox.Show(" Datos insertados correctamente.");
+                MessageBox.Show("Datos insertados correctamente.");
             }
             catch (Exception ex)
             {
@@ -266,7 +335,7 @@ namespace Capa_Controlador_Navegador
         {
             if (SAlias == null || SAlias.Length < 3)
             {
-                MessageBox.Show("Alias inválido: se espera [tabla, pk, campos...]");
+                MessageBox.Show("Alias inválido: se espera [tabla, pk, campos...]", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -275,7 +344,7 @@ namespace Capa_Controlador_Navegador
 
             if (cboPK == null || string.IsNullOrWhiteSpace(cboPK.Text))
             {
-                MessageBox.Show("Seleccione un valor válido de la clave primaria.");
+                MessageBox.Show("Seleccione un valor válido de la clave primaria.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -283,33 +352,58 @@ namespace Capa_Controlador_Navegador
             string[] campos = SAlias.Skip(2).ToArray();
             object[] SValores = new object[campos.Length];
 
-            //  VALIDACIÓN: comprobar que ningún ComboBox esté vacío
-            for (int i = 0; i < campos.Length; i++)
-            {
-                string campo = campos[i];
-                ComboBox cboCampo = contenedor.Controls.OfType<ComboBox>()
-                                        .FirstOrDefault(t => t.Name == "Cbo_" + campo);
-
-                if (cboCampo == null || string.IsNullOrWhiteSpace(cboCampo.Text))
-                {
-                    MessageBox.Show($" El campo '{campo}' no puede estar vacío.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return; // detener actualización
-                }
-
-                SValores[i] = cboCampo.Text;
-            }
-
             try
             {
+                for (int i = 0; i < campos.Length; i++)
+                {
+                    string campo = campos[i];
+                    object valor = "";
+
+                    // Detectar tipo de control
+                    var cboCampo = contenedor.Controls.OfType<ComboBox>().FirstOrDefault(c => c.Name == "Cbo_" + campo);
+                    var txtCampo = contenedor.Controls.OfType<TextBox>().FirstOrDefault(t => t.Name == "Txt_" + campo);
+                    var dtpCampo = contenedor.Controls.OfType<DateTimePicker>().FirstOrDefault(d => d.Name == "Cmp_" + campo || d.Name == "Dtp_" + campo);
+                    var chkCampo = contenedor.Controls.OfType<CheckBox>().FirstOrDefault(ch => ch.Name == "Chk_" + campo);
+
+
+                    if (txtCampo != null)
+                    {
+                        valor = txtCampo.Text;
+                    }
+                    else if (cboCampo != null)
+                    {
+                        valor = cboCampo.Text;
+                    }
+                    else if (dtpCampo != null)
+                    {
+                        valor = dtpCampo.Value.ToString("yyyy-MM-dd"); // formato estándar SQL
+                    }
+                    else if (chkCampo != null)
+                    {
+                        valor = chkCampo.Checked; // TRUE=1, FALSE=0
+                    }
+
+                    // Validar que no esté vacío
+                    if (valor is string s && string.IsNullOrWhiteSpace(s))
+                    {
+                        MessageBox.Show($"El campo '{campo}' no puede estar vacío.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    SValores[i] = valor;
+                }
+
                 Cls_DAOGenerico dao = new Cls_DAOGenerico();
                 dao.ActualizarDatos(SAlias, SValores, pkValor);
-                MessageBox.Show("Registro actualizado correctamente.");
+
+                MessageBox.Show("Registro actualizado correctamente.", "Actualización", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al actualizar: " + ex.Message);
+                MessageBox.Show("Error al actualizar: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
         // ======================= Rellenar los ComboBox desde la fila seleccionada del DataGridView = Stevens Cambranes = 20/09/2025 =======================
         public void RellenarCombosDesdeFila(Control contenedor, string[] SAlias, DataGridViewRow fila)
