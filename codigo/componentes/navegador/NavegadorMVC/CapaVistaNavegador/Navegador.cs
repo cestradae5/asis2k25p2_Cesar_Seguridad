@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Capa_Controlador_Navegador;
-//using Capa_Vista_Reporteador;
+using Capa_Vista_Reporteador;
 
 namespace Capa_Vista_Navegador
 {
@@ -222,6 +222,7 @@ namespace Capa_Vista_Navegador
         private void Btn_guardar_Click_1(object sender, EventArgs e)
         {
             Cls_ControladorNavegador ctrl = new Cls_ControladorNavegador();
+            ctrl.DesactivarTodosComboBoxes(this);
             //================= SWITCH PARA CAMBIAR ENTRE INSERT Y UPDATE = KEVIN NATARENO, 11/10/2025 =====================
             switch (iContadorModificar) // Valida el contador de modificar 
             {
@@ -232,6 +233,7 @@ namespace Capa_Vista_Navegador
                     // Recarga despues de insertar = Stevens Cambranes
                     mostrarDatos();
                     ctrl.LimpiarCombos(this, SAlias); break;
+                    
 
                 case 1: // si es 1 es porque se seleccionó la opcion de modificar 
                     // Esta es la lógica que estaba en el botón modificar 
@@ -280,25 +282,10 @@ namespace Capa_Vista_Navegador
             BotonesEstadoEdicion(); // KEVIN NATARENO 11/10/2025
 
             // Bloquear (deshabilitar) todos los ComboBox del formulario
-            DeshabilitarCombos(this);
+            ctrl.DesactivarTodosComboBoxes(this);
         }
 
-        private void DeshabilitarCombos(Control parent)
-        {
-            foreach (Control ctrl in parent.Controls)
-            {
-                if (ctrl is ComboBox combo)
-                {
-                    combo.Enabled = false;
-                }
-
-                // Si hay contenedores (Panel, GroupBox, etc.)
-                if (ctrl.HasChildren)
-                {
-                    DeshabilitarCombos(ctrl);
-                }
-            }
-        }
+ 
 
         // ======================= Esta funcion es para seleccionar la fila del Dgv y Rellenar los Cbo =======================
 
@@ -348,8 +335,8 @@ namespace Capa_Vista_Navegador
         {
             try
             {
-                //Frm_Reportes rpt = new Frm_Reportes();
-                //rpt.reporteAplicacion(IPkId_Aplicacion);
+                Frm_Reportes rpt = new Frm_Reportes();
+                rpt.reporteAplicacion(IPkId_Aplicacion);
             }
             catch
             {
