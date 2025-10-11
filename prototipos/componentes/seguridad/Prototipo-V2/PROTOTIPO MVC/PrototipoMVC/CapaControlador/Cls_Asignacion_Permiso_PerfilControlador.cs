@@ -6,7 +6,7 @@ using System;
 
 namespace Capa_Controlador_Seguridad
 {
-    public class Cls_Asignacion_Permiso_PerfilControador
+    public class Cls_Asignacion_Permiso_PerfilControlador
     {
         Cls_Asignacion_Permiso_PerfilesDAO DAO = new Cls_Asignacion_Permiso_PerfilesDAO();
 
