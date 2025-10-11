@@ -28,28 +28,16 @@ namespace PruebaEjecucionNavegador
             };
 
             string[] columnas = {
-                    "tbl_usuario",
-                    "Pk_Id_Usuario",
-                    "Fk_Id_Empleado",
-                    "Cmp_Nombre_Usuario",
-                    "Cmp_Contrasena_Usuario",
-                    "Cmp_Intentos_Fallidos_Usuario",
-                    "Cmp_Estado_Usuario",
-                    "Cmp_FechaCreacion_Usuario",
-                    "Cmp_Ultimo_Cambio_Contrasenea",
-                    "Cmp_Pidio_Cambio_Contrasenea"
+                    "prueba",
+                    "Pk_Prueba",
+                    "fecha"
+
+                    
             };
 
             string[] sEtiquetas = {
-                    "Código de Usuario",
-                    "Código de Empleado",
-                    "Usuario",
-                    "Contraseña",
-                    "Intentos Fallidos",
-                    "Estado del Usuario",
-                    "Fecha de Creación",
-                    "Último Cambio de Contraseña",
-                    "Pidió Cambio de Contraseña"
+                "Pk_Prueba",
+                    "fecha",
             };
 
 
