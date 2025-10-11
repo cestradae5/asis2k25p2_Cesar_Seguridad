@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -377,8 +378,9 @@ namespace Capa_Vista_Navegador
             // ======================= Btn Ayuda = Stevens Cambranes = 8/10/2025 =======================
             try
             {
-                // este archivo se metio directamente en el ejecutable -> bin > debug > y la carpeta tendria que aparecer con los HTML
-                Help.ShowHelp(this, "ManualNavegador/Ayuda_Navegador.chm", "Manual_De_Usuario_Navegador.html");
+                string sRutaAyuda = Path.GetFullPath(Path.Combine(Application.StartupPath, @"..\..\..\..\ManualNavegador\Ayuda_Navegador.chm"));
+                // este archivo se metio directamente en el directorio CapaVistaNavegador y la carpeta tendria que aparecer con los HTML
+                Help.ShowHelp(this, sRutaAyuda, "Manual_De_Usuario_Navegador.html");
             }
             catch (Exception ex)
             {

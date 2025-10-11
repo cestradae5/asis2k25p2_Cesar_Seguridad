@@ -26,8 +26,8 @@ namespace PruebaEjecucionNavegador
                 TipoScrollBars = ScrollBars.Both,
                 Nombre = "dgv_empleados"
             };
-      
-                 string[] columnas = {
+
+            string[] columnas = {
                     "tbl_usuario",
                     "Pk_Id_Usuario",
                     "Fk_Id_Empleado",
@@ -38,9 +38,9 @@ namespace PruebaEjecucionNavegador
                     "Cmp_FechaCreacion_Usuario",
                     "Cmp_Ultimo_Cambio_Contrasenea",
                     "Cmp_Pidio_Cambio_Contrasenea"
-                };
+            };
 
-                  string[] sEtiquetas = {
+            string[] sEtiquetas = {
                     "Código de Usuario",
                     "Empleado",
                     "Nombre de Usuario",
@@ -50,7 +50,7 @@ namespace PruebaEjecucionNavegador
                     "Fecha de Creación",
                     "Último Cambio de Contraseña",
                     "Pidió Cambio de Contraseña"
-                 };
+            };
 
 
 
