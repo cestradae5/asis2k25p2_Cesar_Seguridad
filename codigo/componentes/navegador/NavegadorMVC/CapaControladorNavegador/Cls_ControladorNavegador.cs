@@ -164,7 +164,7 @@ namespace Capa_Controlador_Navegador
                 Size textSize = TextRenderer.MeasureText(lbl.Text, lbl.Font);
                 int iControlX = lbl.Location.X + textSize.Width + 10;
 
-                // 🔹 Si el label es muy largo y se sale de la columna
+                // Si el label es muy largo y se sale de la columna
                 if (iControlX + 150 > iPosX + anchoColumna)
                 {
                     iColumna = 0;
@@ -197,7 +197,6 @@ namespace Capa_Controlador_Navegador
                     {
                         Name = "Chk_" + sCampo,
                         Font = new Font("Rockwell", 10, FontStyle.Regular),
-                        Text = "Activo",
                         AutoSize = true,
                         Location = new Point(iControlX, iPosY)
                     };
@@ -273,6 +272,29 @@ namespace Capa_Controlador_Navegador
             foreach (var ctrl in lControles) contenedor.Controls.Add(ctrl);
 
             return iCreados > 0;
+        }
+
+        //================ Pedro Ibañez ===================================
+        //=============== Metodo que bloquea el pk========================
+
+        public void BloquearPK(Control contenedor, string[] SAlias)
+        {
+            // Validar parámetros mínimos: [tabla, pk, campos...]
+            if (SAlias == null || SAlias.Length < 2)
+                return;
+
+            // El nombre del campo PK está en SAlias[1]
+            string pkCampo = SAlias[1];
+
+            // Buscar el ComboBox correspondiente
+            var cboPK = contenedor.Controls.OfType<ComboBox>()
+                             .FirstOrDefault(c => c.Name == "Cbo_" + pkCampo);
+
+            // Si existe, bloquearlo
+            if (cboPK != null)
+            {
+                cboPK.Enabled = false;
+            }
         }
 
         private DataGridView dgv;
@@ -356,6 +378,7 @@ namespace Capa_Controlador_Navegador
                 // Si pasa validación, insertar
                 dao.InsertarDatos(SAlias, SValores);
                 MessageBox.Show("Datos insertados correctamente.");
+                LimpiarCombos(contenedor, SAlias);
             }
             catch (Exception ex)
             {
@@ -523,8 +546,21 @@ namespace Capa_Controlador_Navegador
                 {
                     bool estado = false;
 
-                    if (valor != null && (valor is bool || valor is int))
-                        estado = Convert.ToBoolean(valor);
+                    if (valor != null)
+                    {
+                        try
+                        {
+                            // Convierte correctamente sbyte, int, long, string, etc.
+                            estado = Convert.ToBoolean(Convert.ToInt32(valor));
+                        }
+                        catch
+                        {
+                            if (bool.TryParse(valor.ToString(), out bool parsed))
+                                estado = parsed;
+                            else
+                                estado = false;
+                        }
+                    }
 
                     chk.Checked = estado;
                 }

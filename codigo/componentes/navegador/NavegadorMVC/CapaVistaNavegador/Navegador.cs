@@ -222,7 +222,6 @@ namespace Capa_Vista_Navegador
         private void Btn_guardar_Click_1(object sender, EventArgs e)
         {
             Cls_ControladorNavegador ctrl = new Cls_ControladorNavegador();
-            ctrl.DesactivarTodosComboBoxes(this);
             //================= SWITCH PARA CAMBIAR ENTRE INSERT Y UPDATE = KEVIN NATARENO, 11/10/2025 =====================
             switch (iContadorModificar) // Valida el contador de modificar 
             {
@@ -232,17 +231,15 @@ namespace Capa_Vista_Navegador
 
                     // Recarga despues de insertar = Stevens Cambranes
                     mostrarDatos();
-                    ctrl.LimpiarCombos(this, SAlias); break;
-                    
+
+                    break;
 
                 case 1: // si es 1 es porque se seleccionó la opcion de modificar 
                     // Esta es la lógica que estaba en el botón modificar 
                     ctrl.Actualizar_Datos(this, SAlias);
                     mostrarDatos();
                     ctrl.RefrescarCombos(this, SAlias[0], SAlias.Skip(1).ToArray());
-                    ctrl.LimpiarCombos(this, SAlias);
                     iContadorModificar = 0;
-                    BotonesEstadoInicial();
                     break;
             }
             //================= SWITCH PARA CAMBIAR ENTRE INSERT Y UPDATE = KEVIN NATARENO, 11/10/2025 =====================
@@ -256,7 +253,8 @@ namespace Capa_Vista_Navegador
             //================== Cambios logica de modificar = KEVIN NATARENO, 11/10/2025=====================
             MessageBox.Show("Modo de edición");  
             Btn_guardar.Enabled = true;         
-            ctrl.ActivarTodosComboBoxes(this);  
+            ctrl.ActivarTodosComboBoxes(this);
+            ctrl.BloquearPK(this,SAlias);
             iContadorModificar = 1;
             //================== Cambios logica de modificar = KEVIN NATARENO, 11/10/2025=====================
 
@@ -349,7 +347,9 @@ namespace Capa_Vista_Navegador
             // ======================= Pedro Ibañez =======================
             // Creacion Metodo: vuelve a cargar los datos en el DataGridView y limpiar comboBoxes
             ctrl.LimpiarCombos(this, SAlias);
-            ctrl.ActivarTodosComboBoxes(this);
+            ctrl.DesactivarTodosComboBoxes(this);
+            BotonesEstadoInicial();
+            iContadorModificar = 0;
             try
             {
                 mostrarDatos(); 
