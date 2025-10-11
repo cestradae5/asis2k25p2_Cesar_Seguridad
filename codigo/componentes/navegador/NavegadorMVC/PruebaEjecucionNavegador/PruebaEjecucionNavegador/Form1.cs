@@ -22,7 +22,7 @@ namespace PruebaEjecucionNavegador
                 Alto = 200,
                 PosX = 10,
                 PosY = 300,
-                ColorFondo = Color.White,
+                ColorFondo = Color.AliceBlue,
                 TipoScrollBars = ScrollBars.Both,
                 Nombre = "dgv_empleados"
             };
@@ -42,8 +42,8 @@ namespace PruebaEjecucionNavegador
 
             string[] sEtiquetas = {
                     "Código de Usuario",
-                    "Empleado",
-                    "Nombre de Usuario",
+                    "Código de Empleado",
+                    "Usuario",
                     "Contraseña",
                     "Intentos Fallidos",
                     "Estado del Usuario",

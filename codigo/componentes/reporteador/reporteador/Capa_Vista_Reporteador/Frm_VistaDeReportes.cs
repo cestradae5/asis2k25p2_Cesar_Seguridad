@@ -45,7 +45,7 @@ namespace Capa_Vista_Reporteador
                 // Configuración de conexión ODBC
                 ConnectionInfo connection = new ConnectionInfo
                 {
-                    ServerName = "bd_hoteleria", // DNS ODBC configurado
+                    ServerName = "Bd_Hoteleria", // DNS ODBC configurado
                     IntegratedSecurity = true    // Cambiar a false si usas usuario/contraseña
                 };
 
