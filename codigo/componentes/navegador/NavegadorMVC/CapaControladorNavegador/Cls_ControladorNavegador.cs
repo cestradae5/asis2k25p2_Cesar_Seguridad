@@ -57,26 +57,26 @@ namespace Capa_Controlador_Navegador
         // ======================= Pedro Ibañez =======================
         // Creacion de Metodo: Asignar Alias Original, generación de Textboxes antes de las modificaciones
         //Modificación de metodo: Validación de tipo de campo para cada dato
-        public bool AsignarAlias(string[] SAlias, Control contenedor, int startX, int startY, int maxPorFila = 3)
+        //Modificacion de metodo: se agrego parametro para etiquetas personalizadas por el usuario. Hecho por: Kenph Luna 10/10/2025
+        public bool AsignarAlias(string[] sAlias, Control contenedor, int iStartX, int iStartY, int iMaxPorFila = 3, string[] sEtiquetasPersonalizadas = null)
         {
             // Validar tabla
-            if (!dao.ExisteTabla(SAlias[0]))
+            if (!dao.ExisteTabla(sAlias[0]))
             {
-                MessageBox.Show($" La tabla '{SAlias[0]}' no existe en la base de datos.");
+                MessageBox.Show($"La tabla '{sAlias[0]}' no existe en la base de datos.");
                 return false;
             }
 
             // Validar columnas
-            if (!ValidarColumnas(SAlias[0], SAlias.Skip(1).ToArray(), out List<string> columnasBD))
+            if (!ValidarColumnas(sAlias[0], sAlias.Skip(1).ToArray(), out List<string> columnasBD))
                 return false;
 
-
-            // Validacion tipos de columna
-            string SnombreTabla = SAlias[0];
-            Dictionary<string, string> tiposColumnas;
+            // Obtener tipos de columnas
+            string sNombreTabla = sAlias[0];
+            Dictionary<string, string> dTiposColumnas;
             try
             {
-                tiposColumnas = dao.ObtenerTiposDeColumnas(SnombreTabla);
+                dTiposColumnas = dao.ObtenerTiposDeColumnas(sNombreTabla);
             }
             catch (Exception ex)
             {
@@ -84,90 +84,147 @@ namespace Capa_Controlador_Navegador
                 return false;
             }
 
-          
-
-            // Configuración inicial
-            int spacingX = 300; // espacio horizontal entre controles
-            int spacingY = 40;  // espacio vertical entre filas
-            int creados = 0;
-
-            List<Label> labels = new List<Label>();
-            List<ComboBox> combos = new List<ComboBox>();
-            List<Control> controles = new List<Control>();
-
-
-            int fila = 0;
-            int columna = 0;
-
-            foreach (var campo in SAlias.Skip(1))
+            // Validar etiquetas personalizadas
+            if (sEtiquetasPersonalizadas != null && sEtiquetasPersonalizadas.Length != sAlias.Length - 1)
             {
-                int posX = startX + (columna * spacingX);
-                int posY = startY + (fila * spacingY);
+                MessageBox.Show("El número de etiquetas personalizadas no coincide con el número de campos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
 
-                // Label
+            // margenes de posición base
+            int iMargenSuperior = 10;
+            int iPosicionInicioY = iStartY;
+
+            // Buscar FlowLayoutPanel o botones
+            FlowLayoutPanel panelBotones = contenedor.Controls
+                .OfType<FlowLayoutPanel>()
+                .FirstOrDefault(p => p.Name.Equals("flowLayoutPanel1", StringComparison.OrdinalIgnoreCase));
+
+            if (panelBotones != null)
+            {
+                iPosicionInicioY = panelBotones.Bottom + iMargenSuperior;
+            }
+            else
+            {
+                var botones = contenedor.Controls.OfType<Button>()
+                    .Where(b => b.Name.StartsWith("Btn_"))
+                    .ToList();
+
+                if (botones.Any())
+                {
+                    iPosicionInicioY = botones.Max(b => b.Bottom) + iMargenSuperior;
+                }
+            }
+
+            // Buscar DataGridView
+            DataGridView dgv = contenedor.Controls.OfType<DataGridView>().FirstOrDefault();
+
+            int iCreados = 0;
+            List<Label> lLabels = new List<Label>();
+            List<Control> lControles = new List<Control>();
+
+            int iFila = 0;
+            int iColumna = 0;
+
+            // Medidas por control
+            int anchoColumna = 320;
+            int altoFila = 50;
+
+            for (int i = 1; i < sAlias.Length; i++)
+            {
+                string sCampo = sAlias[i];
+
+                // Determinar el texto del Label
+                string sTextoLabel;
+                if (sEtiquetasPersonalizadas != null &&
+                    (i - 1) < sEtiquetasPersonalizadas.Length &&
+                    !string.IsNullOrWhiteSpace(sEtiquetasPersonalizadas[i - 1]))
+                {
+                    sTextoLabel = sEtiquetasPersonalizadas[i - 1];
+                }
+                else
+                {
+                    sTextoLabel = sCampo.Replace("Cmp_", "").Replace("Pk_", "").Replace("Fk_", "");
+                    sTextoLabel = char.ToUpper(sTextoLabel[0]) + sTextoLabel.Substring(1);
+                }
+
+                // Calcular posición base
+                int iPosX = iStartX + (iColumna * anchoColumna);
+                int iPosY = iPosicionInicioY + (iFila * altoFila);
+
+                // Crear Label
                 Label lbl = new Label
                 {
                     Font = new Font("Rockwell", 10, FontStyle.Bold),
-                    Text = campo + ":",
+                    Text = $"{sTextoLabel}:",
                     AutoSize = true,
-                    Location = new Point(posX, posY)
+                    Location = new Point(iPosX, iPosY + 5)
                 };
 
                 Size textSize = TextRenderer.MeasureText(lbl.Text, lbl.Font);
-                int controlX = lbl.Location.X + textSize.Width + 5;
+                int iControlX = lbl.Location.X + textSize.Width + 10;
+
+                // 🔹 Si el label es muy largo y se sale de la columna
+                if (iControlX + 150 > iPosX + anchoColumna)
+                {
+                    iColumna = 0;
+                    iFila++;
+                    iPosX = iStartX;
+                    iPosY = iPosicionInicioY + (iFila * altoFila);
+                    lbl.Location = new Point(iPosX, iPosY + 5);
+                    iControlX = lbl.Location.X + textSize.Width + 10;
+                }
 
                 // Detectar tipo de dato
-                string tipoDato = tiposColumnas.ContainsKey(campo) ? tiposColumnas[campo] : "varchar";
-                Control controlGenerado;
+                string sTipoDato = dTiposColumnas.ContainsKey(sCampo) ? dTiposColumnas[sCampo] : "varchar";
+                Control cControlGenerado;
 
-                // Según el tipo de dato, crear DateTimePicker,checkbox o ComboBox
-                if (tipoDato.Contains("date"))
+                // Crear control según tipo de dato
+                if (sTipoDato.Contains("date"))
                 {
-                    DateTimePicker dtp = new DateTimePicker
+                    cControlGenerado = new DateTimePicker
                     {
-                        Name = "Dtp_" + campo,
+                        Name = "Dtp_" + sCampo,
                         Font = new Font("Rockwell", 10, FontStyle.Regular),
                         Width = 150,
                         Format = DateTimePickerFormat.Short,
-                        Location = new Point(controlX, posY)
+                        Location = new Point(iControlX, iPosY)
                     };
-                    controlGenerado = dtp;
                 }
-                else if (tipoDato.Contains("bit") || tipoDato.Contains("tinyint"))
+                else if (sTipoDato.Contains("bit") || sTipoDato.Contains("tinyint"))
                 {
-                    CheckBox chk = new CheckBox
+                    cControlGenerado = new CheckBox
                     {
-                        Name = "Chk_" + campo,
+                        Name = "Chk_" + sCampo,
                         Font = new Font("Rockwell", 10, FontStyle.Regular),
                         Text = "Activo",
                         AutoSize = true,
-                        Location = new Point(controlX, posY)
+                        Location = new Point(iControlX, iPosY)
                     };
-                    controlGenerado = chk;
                 }
                 else
                 {
                     ComboBox cbo = new ComboBox
                     {
-                        Name = "Cbo_" + campo,
+                        Name = "Cbo_" + sCampo,
                         Font = new Font("Rockwell", 10, FontStyle.Regular),
                         Width = 150,
-                        Location = new Point(controlX, posY)
+                        Location = new Point(iControlX, iPosY)
                     };
 
                     try
                     {
-                        List<string> items = sentencias.ObtenerValoresColumna(SnombreTabla, campo);
-                        cbo.Items.AddRange(items.ToArray());
+                        List<string> lItems = sentencias.ObtenerValoresColumna(sNombreTabla, sCampo);
+                        cbo.Items.AddRange(lItems.ToArray());
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show($"Error al cargar {campo}: {ex.Message}", "Advertencia",
+                        MessageBox.Show($"Error al cargar {sCampo}: {ex.Message}", "Advertencia",
                                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
 
-                    // Bloquear PK
-                    if (creados == 0)
+                    // Bloquear PK (primer campo)
+                    if (iCreados == 0)
                     {
                         cbo.SelectedIndexChanged += (s, e) =>
                         {
@@ -176,32 +233,47 @@ namespace Capa_Controlador_Navegador
                         };
                     }
 
-                    controlGenerado = cbo;
+                    cControlGenerado = cbo;
                 }
 
-                // Agregar controles a listas
-                labels.Add(lbl);
-                controles.Add(controlGenerado);
-                creados++;
+                // Agregar a listas
+                lLabels.Add(lbl);
+                lControles.Add(cControlGenerado);
+                iCreados++;
 
                 // Ajustar posiciones
-                columna++;
-                spacingX = textSize.Width + controlGenerado.Width + 40;
-
-                if (columna >= maxPorFila)
+                iColumna++;
+                if (iColumna >= iMaxPorFila)
                 {
-                    columna = 0;
-                    fila++;
+                    iColumna = 0;
+                    iFila++;
                 }
             }
 
-            // Finalmente, agregar al formulario/contenedor
-            foreach (var lbl in labels) contenedor.Controls.Add(lbl);
-            foreach (var ctrl in controles) contenedor.Controls.Add(ctrl);
+            //determina hasta donde llegan los controles
+            int iAlturaTotal = iPosicionInicioY + (iFila * altoFila) + altoFila + iMargenSuperior;
 
-            return creados > 0;
+            //empuja el dgv hacia abajo de ser necesario
+            if (dgv != null)
+            {
+                int nuevaPosY = iAlturaTotal;
+                dgv.Top = nuevaPosY;
+
+                // Ajustar tamaño del formulario si es necesario
+                int limiteInferior = dgv.Bottom + 40;
+                if (limiteInferior > contenedor.Height)
+                {
+                    contenedor.Height = limiteInferior;
+                }
+            }
+
+            // Agregar controles al contenedor
+            
+            foreach (var lbl in lLabels) contenedor.Controls.Add(lbl);
+            foreach (var ctrl in lControles) contenedor.Controls.Add(ctrl);
+
+            return iCreados > 0;
         }
-
 
         private DataGridView dgv;
 
