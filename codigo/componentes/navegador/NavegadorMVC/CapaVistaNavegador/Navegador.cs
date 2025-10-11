@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Capa_Controlador_Navegador;
-// using Capa_Vista_Reporteador;
+//using Capa_Vista_Reporteador;
 
 namespace Capa_Vista_Navegador
 {
@@ -18,6 +18,7 @@ namespace Capa_Vista_Navegador
         public string[] SAlias { get; set; }
         public int IPkId_Aplicacion { get; set; }
         public string SNombreTabla { get; set; } // Nueva propiedad para el nombre de la tabla
+        public string[] SEtiquetas { get; set; } // Nueva propiedad para las etiquetas
 
         public Cls_ConfiguracionDataGridView configuracionDataGridView;
 
@@ -27,7 +28,31 @@ namespace Capa_Vista_Navegador
 
             // Los botones se inicializan en su estado inicial, Reportes, ingresar e imprimir
             BotonesEstadoInicial();
+
+            // inicializa el evento Load
+            this.Load += new EventHandler(Navegador_Load);
         }
+
+        // carga los alias y etiquetas al iniciar el navegador
+        private void Navegador_Load(object sender, EventArgs e)
+        {
+            if (SAlias != null && SEtiquetas != null && SAlias.Length > 1)
+            {
+                try
+                {
+                    // Instancia del controlador
+                    Cls_ControladorNavegador controladorNavegador = new Cls_ControladorNavegador();
+
+                    // Genera dinámicamente los labels y combos
+                    controladorNavegador.AsignarAlias(SAlias, this, 20, 80, 3, SEtiquetas);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error al asignar alias o etiquetas: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
 
         private void Btn_ingresar_Click(object sender, EventArgs e)
         {
@@ -37,7 +62,14 @@ namespace Capa_Vista_Navegador
                 return;
             }
 
-            //Parámetros para validar 
+            
+            Btn_ingresar.Enabled = false;
+            BotonesEstadoCRUD();
+            mostrarDatos();
+            ctrl.ActivarTodosComboBoxes(this);
+            
+
+            /*//Parámetros para validar 
             string tabla = SNombreTabla;
             string[] columnas = SAlias;
 
@@ -48,7 +80,9 @@ namespace Capa_Vista_Navegador
                 BotonesEstadoCRUD();
                 mostrarDatos();
                 ctrl.ActivarTodosComboBoxes(this);
+                
             }
+            */
         }
 
         Cls_ControladorNavegador ctrl = new Cls_ControladorNavegador();
@@ -235,10 +269,19 @@ namespace Capa_Vista_Navegador
             // Llamar al componente consultas inteligentes
         }
 
+        // ======================= Pedro Ibañez =======================
+        // Creacion Metodo: crea instancia y llama metodo de reporteador  
         private void Btn_imprimir_Click_1(object sender, EventArgs e)
         {
-           //Frm_Reportes rpt = new Frm_Reportes();
-           //rpt.reporteAplicacion(IPkId_Aplicacion);
+            try
+            {
+                //Frm_Reportes rpt = new Frm_Reportes();
+                //rpt.reporteAplicacion(IPkId_Aplicacion);
+            }
+            catch
+            {
+                MessageBox.Show("Ha ocurrido un error conectando a reporteadors");
+            }
         }
         
         private void Btn_refrescar_Click(object sender, EventArgs e)
@@ -396,3 +439,4 @@ namespace Capa_Vista_Navegador
 
     }
 }
+

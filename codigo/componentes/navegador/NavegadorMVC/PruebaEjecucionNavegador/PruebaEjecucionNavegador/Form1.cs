@@ -26,8 +26,8 @@ namespace PruebaEjecucionNavegador
                 TipoScrollBars = ScrollBars.Both,
                 Nombre = "dgv_empleados"
             };
-      
-                string[] columnas = {
+
+            string[] columnas = {
                     "tbl_usuario",
                     "Pk_Id_Usuario",
                     "Fk_Id_Empleado",
@@ -38,13 +38,28 @@ namespace PruebaEjecucionNavegador
                     "Cmp_FechaCreacion_Usuario",
                     "Cmp_Ultimo_Cambio_Contrasenea",
                     "Cmp_Pidio_Cambio_Contrasenea"
-                };
-        
-            int id_aplicacion = 1;
+            };
+
+            string[] sEtiquetas = {
+                    "Código de Usuario",
+                    "Empleado",
+                    "Nombre de Usuario",
+                    "Contraseña",
+                    "Intentos Fallidos",
+                    "Estado del Usuario",
+                    "Fecha de Creación",
+                    "Último Cambio de Contraseña",
+                    "Pidió Cambio de Contraseña"
+            };
+
+
+
+            int id_aplicacion = 100;
             navegador1.IPkId_Aplicacion = id_aplicacion;
             navegador1.configurarDataGridView(config);
             navegador1.SNombreTabla = columnas[0];
             navegador1.SAlias = columnas;
+            navegador1.SEtiquetas = sEtiquetas;
             navegador1.mostrarDatos();
         }
 
