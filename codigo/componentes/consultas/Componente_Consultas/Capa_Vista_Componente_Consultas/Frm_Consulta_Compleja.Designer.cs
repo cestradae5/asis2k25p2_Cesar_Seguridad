@@ -534,7 +534,7 @@ namespace Capa_Vista_Componente_Consultas
             this.Btn_Ejecutar.Name = "Btn_Ejecutar";
             this.Btn_Ejecutar.Size = new System.Drawing.Size(141, 74);
             this.Btn_Ejecutar.TabIndex = 9;
-            this.Btn_Ejecutar.Text = "Ejecutar SQL";
+            this.Btn_Ejecutar.Text = "Ejecutar Consulta";
             // 
             // Btn_Limpiar
             // 
