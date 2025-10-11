@@ -91,8 +91,8 @@ namespace Capa_Vista_Seguridad
             Txt_nit_empleados.Text = emp.lNitEmpleado.ToString();
             Txt_correo_empleado.Text = emp.sCorreoEmpleado;
             Txt_telefono_empleado.Text = emp.sTelefonoEmpleado;
-            Txt_fechaNac_empleado.Text = emp.dFechaNacimientoEmpleado.ToString("yyyy-MM-dd");
-            Txt_fechaContra_empleado.Text = emp.dFechaContratacionEmpleado.ToString("yyyy-MM-dd");
+            Txt_fechaNac_empleado.Text = emp.dFechaNacimientoEmpleado.ToString("dd/MM/yyyy");
+            Txt_fechaContra_empleado.Text = emp.dFechaContratacionEmpleado.ToString("dd/MM/yyyy");
             Rdb_masculino_empleado.Checked = emp.bGeneroEmpleado;
             Rdb_femenino_empleado.Checked = !emp.bGeneroEmpleado;
         }
@@ -226,18 +226,23 @@ namespace Capa_Vista_Seguridad
                     MessageBox.Show("El NIT debe ser un número válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-
-                if (!DateTime.TryParse(Txt_fechaNac_empleado.Text, out DateTime fechaNac))
+                //Correción de formato de fecha Nacimiento Ernesto David Samayoa Jocol  0901-22-3415
+                if (!DateTime.TryParseExact(Txt_fechaNac_empleado.Text, "dd/MM/yyyy",
+                    System.Globalization.CultureInfo.InvariantCulture,
+                    System.Globalization.DateTimeStyles.None, out DateTime fechaNac))
                 {
-                    MessageBox.Show("La fecha de nacimiento no es válida.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("La fecha de nacimiento debe tener el formato dd/MM/yyyy.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                //Correción de formato de fecha Contratación Ernesto David Samayoa Jocol  0901-22-3415
+                if (!DateTime.TryParseExact(Txt_fechaContra_empleado.Text, "dd/MM/yyyy",
+                    System.Globalization.CultureInfo.InvariantCulture,
+                    System.Globalization.DateTimeStyles.None, out DateTime fechaContra))
+                {
+                    MessageBox.Show("La fecha de contratación debe tener el formato dd/MM/yyyy.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                if (!DateTime.TryParse(Txt_fechaContra_empleado.Text, out DateTime fechaContra))
-                {
-                    MessageBox.Show("La fecha de contratación no es válida.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
 
                 // Crear empleado
                 var emp = new Cls_Empleado
