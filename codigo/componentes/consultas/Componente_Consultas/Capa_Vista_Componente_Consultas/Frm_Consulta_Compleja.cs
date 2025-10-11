@@ -26,6 +26,15 @@ namespace Capa_Vista_Componente_Consultas
         // Rellena los dos bloques visibles de UI a partir de las condiciones parseadas Nelson Jose Godinez Mendez 0901-22-3550 09/26/2025
         private bool bCargandoDesdeSql = false;
         private string sSqlActual = string.Empty;
+        // Mapeo de qué condición del WHERE se pintó en cada bloque de UI
+        private int _idxComp = -1;   // índice en _partesWhere de la condición usada en "Comparación"
+        private int _idxLogic = -1;  // índice en _partesWhere de la condición usada en "Lógica"
+                                     // Señaliza que se está editando una consulta cargada desde SQL
+        private bool _editandoConsulta = false;
+
+        // Si el usuario cambió algo en la UI y debe presionar "Agregar" de nuevo
+        private bool _requiereAgregar = false;
+
 
         // BETWEEN dinámico
         private TextBox Txt_ValorCompMin;
@@ -79,6 +88,26 @@ namespace Capa_Vista_Componente_Consultas
             Rdb_Asc.CheckedChanged += delegate { if (Rdb_Asc.Checked) SincronizarOrdenConRadios(); };
             Rdb_Des.CheckedChanged += delegate { if (Rdb_Des.Checked) SincronizarOrdenConRadios(); };
 
+            // Cualquier cambio en estos controles marcará que hay que re-agregar:
+            Txt_ValorCond.TextChanged += MarcarRequiereAgregar;
+            Txt_ValorComp.TextChanged += MarcarRequiereAgregar;
+
+            // Si usas BETWEEN dinámico, suscríbelo tras EnsureBetweenControls()
+            EnsureBetweenControls();
+            if (Txt_ValorCompMin != null) Txt_ValorCompMin.TextChanged += MarcarRequiereAgregar;
+            if (Txt_ValorCompMax != null) Txt_ValorCompMax.TextChanged += MarcarRequiereAgregar;
+
+            Cbo_OperadorLogico.SelectedIndexChanged += MarcarRequiereAgregar;
+            Cbo_CampoCond.SelectedIndexChanged += MarcarRequiereAgregar;
+            Cbo_TipoComparador.SelectedIndexChanged += MarcarRequiereAgregar;
+            Cbo_CampoComp.SelectedIndexChanged += MarcarRequiereAgregar;
+
+            // También si cambia el agrupado/orden (opcional)
+            Cbo_AgruparOrdenar.SelectedIndexChanged += MarcarRequiereAgregar;
+            Cbo_CampoOrdenar.SelectedIndexChanged += MarcarRequiereAgregar;
+            Cbo_Ordenamiento.SelectedIndexChanged += MarcarRequiereAgregar;
+
+
             // Si el usuario cambia el combo de dirección, sincronizamos radios y pieza
             Cbo_Ordenamiento.SelectedIndexChanged += delegate
             {
@@ -93,91 +122,127 @@ namespace Capa_Vista_Componente_Consultas
             // // ---- Lógica Nelson Jose Godínez Méndez 0901-22-3550 26/09/2025
             Btn_AgregarCond.Click += (s, e) =>
             {
-                string sMsg; Control oFoco;
-                if (!ValidarLogicaParaAgregar(out sMsg, out oFoco))
-                { MostrarError(sMsg, oFoco); return; }
+                if (!Chk_AgregarCondiciones.Checked) return;
+                if (Cbo_CampoCond.SelectedItem == null) { MessageBox.Show("Selecciona un campo."); return; }
 
-                var sVal = Txt_ValorCond.Text.Trim();
-                var sOperador = lstPartesWhere.Count == 0 ? null : (GetComboValor(Cbo_OperadorLogico) ?? "AND");
-                var sCampo = Cbo_CampoCond.SelectedItem.ToString();
+                var val = Txt_ValorCond.Text.Trim();
+                if (val.Length == 0) { MessageBox.Show("Ingresa un valor."); return; }
 
-                string sRhs;
-                decimal deNum;
-                if (decimal.TryParse(sVal, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out deNum))
-                    sRhs = deNum.ToString(System.Globalization.CultureInfo.InvariantCulture);
-                else
-                    sRhs = "'" + Esc(sVal) + "'";
+                var operador = lstPartesWhere.Count == 0 ? null
+                               : (GetComboValor(Cbo_OperadorLogico) ?? "AND");
 
-                var sPieza = "`" + sCampo + "` = " + sRhs;
-                AgregarWhere(sPieza, sOperador);
+                var campo = Cbo_CampoCond.SelectedItem.ToString();
+                string rhs = decimal.TryParse(val, NumberStyles.Any, CultureInfo.InvariantCulture, out var num)
+                             ? num.ToString(CultureInfo.InvariantCulture)
+                             : $"'{Esc(val)}'";
+
+                var pieza = $"`{campo}` = {rhs}";
+                AgregarWhere(pieza, operador);
+
+                _requiereAgregar = false;
+                _editandoConsulta = false;
+
+                //  Mensaje de éxito
+                MostrarOk("Se agregó la condición correctamente.");
             };
+
             // ---- Comparación
             Cbo_TipoComparador.SelectedIndexChanged += delegate { ToggleBetweenControls(); };
 
             Btn_AgregarComp.Click += (s, e) =>
             {
-                string sMsg; Control oFoco;
-                if (!ValidarComparacionParaAgregar(out sMsg, out oFoco))
-                { MostrarError(sMsg, oFoco); return; }
+                if (!Chk_AgregarCondiciones.Checked) return;
+                if (Cbo_CampoComp.SelectedItem == null || Cbo_TipoComparador.SelectedItem == null)
+                { MessageBox.Show("Selecciona campo y comparador."); return; }
 
-                var sCampo = Cbo_CampoComp.SelectedItem.ToString();
-                var sSel = GetComboValor(Cbo_TipoComparador) ?? "=";
-                string sPieza = null;
+                var campo = Cbo_CampoComp.SelectedItem.ToString();
+                var sel = GetComboValor(Cbo_TipoComparador) ?? "=";
 
-                if (sSel == "BETWEEN")
+                string pieza;
+
+                switch (sel)
                 {
-                    string sLeft = TryNumOrQuoted(Txt_ValorCompMin.Text);
-                    string sRight = TryNumOrQuoted(Txt_ValorCompMax.Text);
-                    sPieza = "`" + sCampo + "` BETWEEN " + sLeft + " AND " + sRight;
-                }
-                else if (sSel == "IS NULL" || sSel == "IS NOT NULL")
-                {
-                    sPieza = "`" + sCampo + "` " + sSel;
-                }
-                else if (sSel == "LIKE")
-                {
-                    sPieza = "`" + sCampo + "` LIKE '%" + Esc(Txt_ValorComp.Text) + "%'";
-                }
-                else if (sSel == "LIKE_START")
-                {
-                    sPieza = "`" + sCampo + "` LIKE '" + Esc(Txt_ValorComp.Text) + "%'";
-                }
-                else if (sSel == "LIKE_END")
-                {
-                    sPieza = "`" + sCampo + "` LIKE '%" + Esc(Txt_ValorComp.Text) + "'";
-                }
-                else
-                {
-                    sPieza = "`" + sCampo + "` " + sSel + " " + TryNumOrQuoted(Txt_ValorComp.Text);
+                    case "BETWEEN":
+                        EnsureBetweenControls();
+                        var minRaw = (Txt_ValorCompMin.Text ?? "").Trim();
+                        var maxRaw = (Txt_ValorCompMax.Text ?? "").Trim();
+                        if (minRaw.Length == 0 || maxRaw.Length == 0)
+                        { MessageBox.Show("Completa Mín. y Máx."); return; }
+
+                        string left = TryNumOrQuoted(minRaw);
+                        string right = TryNumOrQuoted(maxRaw);
+                        pieza = $"`{campo}` BETWEEN {left} AND {right}";
+                        break;
+
+                    case "LIKE":
+                        if (Txt_ValorComp.TextLength == 0) { MessageBox.Show("Ingresa un valor."); return; }
+                        pieza = $"`{campo}` LIKE '%{Esc(Txt_ValorComp.Text)}%'";
+                        break;
+
+                    case "LIKE_START":
+                        if (Txt_ValorComp.TextLength == 0) { MessageBox.Show("Ingresa un valor."); return; }
+                        pieza = $"`{campo}` LIKE '{Esc(Txt_ValorComp.Text)}%'";
+                        break;
+
+                    case "LIKE_END":
+                        if (Txt_ValorComp.TextLength == 0) { MessageBox.Show("Ingresa un valor."); return; }
+                        pieza = $"`{campo}` LIKE '%{Esc(Txt_ValorComp.Text)}'";
+                        break;
+
+                    case "IS NULL":
+                    case "IS NOT NULL":
+                        pieza = $"`{campo}` {sel}";
+                        break;
+
+                    default:
+                        if (Txt_ValorComp.TextLength == 0) { MessageBox.Show("Ingresa un valor."); return; }
+                        pieza = $"`{campo}` {sel} {TryNumOrQuoted(Txt_ValorComp.Text)}";
+                        break;
                 }
 
-                string sCon = lstPartesWhere.Count == 0 ? null : (GetComboValor(Cbo_OperadorLogico) ?? "AND");
-                AgregarWhere(sPieza, sCon);
+                string conector = lstPartesWhere.Count == 0
+                    ? null
+                    : (GetComboValor(Cbo_OperadorLogico) ?? "AND");
+
+                AgregarWhere(pieza, conector);
+
+                _requiereAgregar = false;
+                _editandoConsulta = false;
+
+                //  Mensaje de éxito
+                MostrarOk("Se agregó la comparación correctamente.");
             };
+
 
 
             // ---- Agrupar/Ordenar Bryan Raul Ramirez Lopez 0901-21-8202 26/09/2025
             Btn_AgregarOrden.Click += (s, e) =>
             {
-                string sMsg; Control oFoco;
-                if (!ValidarOrdenParaAgregar(out sMsg, out oFoco))
-                { MostrarError(sMsg, oFoco); return; }
+                if (Cbo_AgruparOrdenar.SelectedItem == null || Cbo_CampoOrdenar.SelectedItem == null)
+                { MessageBox.Show("Selecciona modo y campo."); return; }
 
-                string sModo = Cbo_AgruparOrdenar.SelectedItem.ToString();
-                string sCampo = Cbo_CampoOrdenar.SelectedItem.ToString();
+                string modo = Cbo_AgruparOrdenar.SelectedItem.ToString();
+                string campo = Cbo_CampoOrdenar.SelectedItem.ToString();
 
-                if (string.Equals(sModo, "GROUP BY", StringComparison.OrdinalIgnoreCase))
+                if (modo == "GROUP BY")
                 {
-                    lstPartesGroupOrder.Add("GROUP BY `" + sCampo + "`");
+                    lstPartesGroupOrder.Add($"GROUP BY `{campo}`");
+                    MostrarOk("Se agregó el agrupamiento correctamente.");
                 }
                 else
                 {
-                    string sOrd = Cbo_Ordenamiento.SelectedItem == null
+                    string ord = Cbo_Ordenamiento.SelectedItem == null
                         ? (Rdb_Asc.Checked ? "ASC" : "DESC")
                         : Cbo_Ordenamiento.SelectedItem.ToString();
-                    lstPartesGroupOrder.Add("ORDER BY `" + sCampo + "` " + sOrd);
+
+                    lstPartesGroupOrder.Add($"ORDER BY `{campo}` {ord}");
+                    MostrarOk("Se agregó el ordenamiento correctamente.");
                 }
+
+                _requiereAgregar = false;
+                _editandoConsulta = false;
             };
+
 
 
             // ---- Ejecutar  Juan Carlos Sandoval Quej 0901-22-4170 26/09/2025
@@ -186,13 +251,25 @@ namespace Capa_Vista_Componente_Consultas
                 string sMsg; Control oFoco;
                 if (!ValidarParaGenerarEjecutar(out sMsg, out oFoco))
                 { MostrarError(sMsg, oFoco); return; }
+                if (_requiereAgregar)
+                {
+                    MessageBox.Show(
+                        "Has editado la consulta cargada.\n\n" +
+                        "Para aplicar los cambios, pulsa:\n" +
+                        "  1) «Agregar valor» (o «Agregar»),\n" +
+                        "  2) «Generar», y luego\n" +
+                        "  3) «Ejecutar».",
+                        "Cambios sin agregar",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+                // <<<<<< APLICAR CAMBIOS DE LA UI A LAS LISTAS >>>>>>
+                AplicarEdicionEnListasDesdeUI();
 
-                // Usa la última SQL válida o construye una nueva
                 string sSql = string.IsNullOrWhiteSpace(sSqlActual)
                     ? oControlador.ConstruirSql(sTablaActual, Chk_AgregarCondiciones.Checked, lstPartesWhere, lstPartesGroupOrder)
                     : sSqlActual;
 
-                // Reescritura segura por campos TIME (tu lógica actual)
                 sSql = oControlador.ReescribirSelectSeguroSiHayTime(sDB, sTablaActual, sSql);
 
                 try
@@ -280,18 +357,28 @@ namespace Capa_Vista_Componente_Consultas
                 string sMsg; Control oFoco;
                 if (!ValidarParaGenerarEjecutar(out sMsg, out oFoco))
                 { MostrarError(sMsg, oFoco); return; }
+                if (_requiereAgregar)
+                {
+                    MessageBox.Show(
+                        "Has editado la consulta cargada.\n\n" +
+                        "Para aplicar los cambios, pulsa:\n" +
+                        "  1) «Agregar valor» (o «Agregar»),\n" +
+                        "  2) «Generar», y luego\n" +
+                        "  3) «Ejecutar».",
+                        "Cambios sin agregar",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+                // <<<<<< APLICAR CAMBIOS DE LA UI A LAS LISTAS >>>>>>
+                AplicarEdicionEnListasDesdeUI();
 
-                // Construye y guarda en memoria (no hace falta mostrarla si ocultaste la caja)
                 string sSql = oControlador.ConstruirSql(
                     sTablaActual,
                     Chk_AgregarCondiciones.Checked,
                     lstPartesWhere,
                     lstPartesGroupOrder);
 
-                sSqlActual = sSql;       // persistimos la SQL preparada
-                                         // Si quieres ver la SQL en una caja oculta, puedes asignarla:
-                                         // Txt_CadenaGenerada.Text = sSql;
-
+                sSqlActual = sSql;
                 MessageBox.Show("Consulta generada.", "OK",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
             };
@@ -369,6 +456,10 @@ namespace Capa_Vista_Componente_Consultas
                 MessageBox.Show("No se pudieron obtener las tablas.\n" + ex.Message);
             }
         }
+        private void MostrarOk(string texto)
+        {
+            MessageBox.Show(texto, "Agregado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
 
         private void SincronizarOrdenConRadios()
         {
@@ -418,6 +509,10 @@ namespace Capa_Vista_Componente_Consultas
                 }
             }
         }
+        private void MarcarRequiereAgregar(object sender, EventArgs e)
+        {
+            if (_editandoConsulta) _requiereAgregar = true;
+        }
 
         //Ayudas Nelson Jose Godinez Mendez 0901-22-3550 26/09/2025
         private void CargarColumnas(string tabla)
@@ -446,44 +541,74 @@ namespace Capa_Vista_Componente_Consultas
             return s;
         }
 
+        // Selección tolerante con reintentos si aún no hay Items/DataSource cargado
         private void SetComboSelectedItemLoose(ComboBox cb, string value)
         {
             value = NormalizeCol(value);
             if (string.IsNullOrEmpty(value)) { cb.SelectedIndex = -1; return; }
 
-            if (cb.DataSource == null)
+            Func<bool> trySelect = delegate ()
             {
-                for (int i = 0; i < cb.Items.Count; i++)
+                // Sin DataSource
+                if (cb.DataSource == null)
                 {
-                    var txt = NormalizeCol(cb.Items[i] == null ? null : cb.Items[i].ToString());
-                    if (string.Equals(txt, value, StringComparison.OrdinalIgnoreCase))
-                    { cb.SelectedIndex = i; return; }
+                    for (int i = 0; i < cb.Items.Count; i++)
+                    {
+                        var txt = NormalizeCol(cb.Items[i]?.ToString());
+                        if (string.Equals(txt, value, StringComparison.OrdinalIgnoreCase))
+                        { cb.SelectedIndex = i; return true; }
+                    }
+                    if (cb.Items.Count == 0) return false; // nada aún: reintenta
+                                                           // fallback
+                    cb.Items.Add(value);
+                    cb.SelectedItem = value;
+                    return true;
                 }
-                cb.Items.Add(value);
-                cb.SelectedItem = value;
-                return;
-            }
 
-            var enumerable = cb.DataSource as System.Collections.IEnumerable;
-            int idx = 0;
-            foreach (var it in enumerable)
+                // Con DataSource
+                var enumerable = cb.DataSource as System.Collections.IEnumerable;
+                if (enumerable != null)
+                {
+                    int idx = 0;
+                    foreach (var it in enumerable)
+                    {
+                        string txt = it?.ToString();
+                        if (!string.IsNullOrEmpty(cb.DisplayMember))
+                        {
+                            var p = it?.GetType().GetProperty(cb.DisplayMember);
+                            var v = p?.GetValue(it, null);
+                            txt = v?.ToString();
+                        }
+                        txt = NormalizeCol(txt);
+                        if (string.Equals(txt, value, StringComparison.OrdinalIgnoreCase))
+                        { cb.SelectedIndex = idx; return true; }
+                        idx++;
+                    }
+                    // intenta por SelectedValue
+                    try { cb.SelectedValue = value; return true; } catch { /*ignore*/ }
+                    return false;
+                }
+                return false;
+            };
+
+            if (trySelect()) return;
+
+            // Reintenta algunas veces (p.ej., cada 25ms hasta 20 intentos)
+            int intentos = 0;
+            var t = new Timer();
+            t.Interval = 25;
+            t.Tick += (s, e) =>
             {
-                string txt = it == null ? null : it.ToString();
-                if (!string.IsNullOrEmpty(cb.DisplayMember))
+                intentos++;
+                if (trySelect() || intentos >= 20)
                 {
-                    var p = it.GetType().GetProperty(cb.DisplayMember);
-                    var v = p == null ? null : p.GetValue(it, null);
-                    txt = v == null ? null : v.ToString();
+                    var tt = (Timer)s;
+                    tt.Stop();
+                    tt.Dispose();
                 }
-                txt = NormalizeCol(txt);
-                if (string.Equals(txt, value, StringComparison.OrdinalIgnoreCase))
-                { cb.SelectedIndex = idx; return; }
-                idx++;
-            }
-
-            try { cb.SelectedValue = value; } catch { }
+            };
+            t.Start();
         }
-
         private void SafeSelectColumn(ComboBox cb, string col)
         {
             if ((cb.Items.Count == 0) && cb.DataSource == null)
@@ -506,6 +631,53 @@ namespace Capa_Vista_Componente_Consultas
                 MessageBox.Show("No se pudo cargar la tabla.\n" + ex.Message);
             }
         }
+        // Crea la pieza SIN conector: `campo` OP valor  (o BETWEEN / LIKE / IS NULL)
+        private string BuildPieza(string campo, string op, string v1, string v2)
+        {
+            if (string.IsNullOrEmpty(campo)) return null;
+            campo = NormalizeCol(campo);
+
+            if (string.Equals(op, "BETWEEN", StringComparison.OrdinalIgnoreCase))
+                return "`" + campo + "` BETWEEN " + TryNumOrQuoted(v1) + " AND " + TryNumOrQuoted(v2);
+
+            if (string.Equals(op, "IS NULL", StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(op, "IS NOT NULL", StringComparison.OrdinalIgnoreCase))
+                return "`" + campo + "` " + op;
+
+            if (string.Equals(op, "LIKE", StringComparison.OrdinalIgnoreCase))
+                return "`" + campo + "` LIKE '%" + Esc(v1 ?? "") + "%'";
+
+            if (string.Equals(op, "LIKE_START", StringComparison.OrdinalIgnoreCase))
+                return "`" + campo + "` LIKE '" + Esc(v1 ?? "") + "%'";
+
+            if (string.Equals(op, "LIKE_END", StringComparison.OrdinalIgnoreCase))
+                return "`" + campo + "` LIKE '%" + Esc(v1 ?? "") + "'";
+
+            // comparadores normales (=, <>, >, <, >=, <=)
+            return "`" + campo + "` " + op + " " + TryNumOrQuoted(v1);
+        }
+
+        // Convierte una condición parseada a PIEZA (sin conector)
+        private string BuildPiezaFromCond(string campo, string op, string v1, string v2)
+        {
+            return BuildPieza(campo, op, Unquote(v1), Unquote(v2));
+        }
+
+        // Reemplaza (o inserta) en _partesWhere un elemento aplicando conector si corresponde
+        private void SetWhereAt(int index, string pieza, string conector)
+        {
+            if (pieza == null) return;
+
+            string full = (index == 0 || string.IsNullOrEmpty(conector))
+                ? pieza
+                : (conector + " " + pieza);
+
+            if (index >= 0 && index < lstPartesWhere.Count)
+                lstPartesWhere[index] = full;
+            else if (index == lstPartesWhere.Count)
+                lstPartesWhere.Add(full);
+        }
+
 
         // ----------------- Estado/Limpieza Bryan Raul Ramirez Lopez 0901-21-8202
         private void LimpiarCondiciones()
@@ -752,6 +924,8 @@ namespace Capa_Vista_Componente_Consultas
         // ----------------- Editar: SQL -> UI Bryan Raul Ramirez Lopez 0901-21-8202 + Nelson Godínez 0901-22-3550
         private void CargarConsultaDesdeSql(string sql)
         {
+            _editandoConsulta = true;
+            _requiereAgregar = false;
             bCargandoDesdeSql = true;
 
             try
@@ -770,7 +944,19 @@ namespace Capa_Vista_Componente_Consultas
                 }
 
                 // ---------------- WHERE ----------------
-                var conds = oControlador.ParsearWhere(sql);
+                // --- WHERE parseado ---
+                var conds = oControlador.ParsearWhere(sql).ToList();
+
+                // Limpia y reconstruye _partesWhere COMPLETA según lo parseado
+                lstPartesWhere.Clear();
+                for (int i = 0; i < conds.Count; i++)
+                {
+                    var c = conds[i];
+                    string pieza = BuildPiezaFromCond(c.Campo, c.Operador, c.Valor1, c.Valor2);
+                    string con = (i == 0) ? null : (string.IsNullOrEmpty(c.Conector) ? "AND" : c.Conector);
+                    AgregarWhere(pieza, con); // tu método existente que mete conector cuando no es el 1º
+                }
+
 
                 lstPartesWhere.Clear();
                 bool first = true;
@@ -838,7 +1024,8 @@ namespace Capa_Vista_Componente_Consultas
                     lstPartesWhere,
                     lstPartesGroupOrder
                 );
-
+                // Espera a que todo haya enlazado y pinta UI
+                this.BeginInvoke(new Action(() => RellenarUIDesdeConds(conds)));
                 RellenarUIDesdeConds(conds);
                 ToggleBetweenControls();
             }
@@ -849,51 +1036,84 @@ namespace Capa_Vista_Componente_Consultas
         }
 
         // Rellena UI a partir de condiciones parseadas (máx 2)
-        private void RellenarUIDesdeConds(IEnumerable<(string Conector, string Campo, string Operador, string Valor1, string Valor2)> conds)
+        // Rellena los dos bloques visibles de UI a partir de las condiciones parseadas
+        // conds: IEnumerable<(Conector, Campo, Operador, Valor1, Valor2)>
+        private void RellenarUIDesdeConds(
+    IEnumerable<(string Conector, string Campo, string Operador, string Valor1, string Valor2)> eConds)
         {
-            int idx = 0;
-            foreach (var c in conds)
+            var arr = eConds.ToList();
+            _idxComp = -1; _idxLogic = -1;
+
+            if (arr.Count == 0)
             {
-                var campo = NormalizeCol(c.Campo);
-
-                if (idx == 0)
-                {
-                    SafeSelectColumn(Cbo_CampoCond, campo);
-                    Txt_ValorCond.Text = c.Operador == "LIKE"
-                        ? Unquote(c.Valor1).Trim('%')
-                        : Unquote(c.Valor1);
-                }
-                else if (idx == 1)
-                {
-                    SafeSelectColumn(Cbo_CampoComp, campo);
-                    SetComboSelectedItem(Cbo_TipoComparador, c.Operador);
-
-                    if (c.Operador == "BETWEEN")
-                    {
-                        EnsureBetweenControls();
-                        Txt_ValorComp.Visible = false;
-                        Lbl_ValorCompMin.Visible = Txt_ValorCompMin.Visible = true;
-                        Lbl_ValorCompMax.Visible = Txt_ValorCompMax.Visible = true;
-                        Txt_ValorCompMin.Text = Unquote(c.Valor1);
-                        Txt_ValorCompMax.Text = Unquote(c.Valor2);
-                    }
-                    else
-                    {
-                        Txt_ValorComp.Text = c.Operador == "LIKE"
-                            ? Unquote(c.Valor1).Trim('%')
-                            : Unquote(c.Valor1);
-                    }
-
-                    SetComboSelectedItem(Cbo_OperadorLogico,
-                        string.IsNullOrEmpty(c.Conector) ? "AND" : c.Conector);
-                }
-                else break; // solo 2 en UI
-                idx++;
+                Chk_AgregarCondiciones.Checked = false;
+                ToggleBetweenControls();
+                return;
             }
 
-            if (idx > 0) Chk_AgregarCondiciones.Checked = true;
+            // Elegimos COMPARACIÓN: primera que NO sea "=" (si no hay, la primera)
+            int iComp = arr.FindIndex(c => !string.Equals(c.Operador, "=", StringComparison.OrdinalIgnoreCase));
+            if (iComp < 0) iComp = 0;
+            var comp = arr[iComp];
+
+            // Elegimos LÓGICA: primera "=" distinta de comp (si existe)
+            int iLogic = arr.FindIndex(c => string.Equals(c.Operador, "=", StringComparison.OrdinalIgnoreCase));
+            if (iLogic == iComp) iLogic = arr.FindIndex(iLogic + 1, c => string.Equals(c.Operador, "=", StringComparison.OrdinalIgnoreCase));
+
+            // --- COMPARACIÓN a UI ---
+            SafeSelectColumn(Cbo_CampoComp, NormalizeCol(comp.Campo));
+            SetComboSelectedItem(Cbo_TipoComparador, comp.Operador);
+
+            if (string.Equals(comp.Operador, "BETWEEN", StringComparison.OrdinalIgnoreCase))
+            {
+                EnsureBetweenControls();
+                Txt_ValorComp.Visible = false;
+                Lbl_ValorCompMin.Visible = Txt_ValorCompMin.Visible = true;
+                Lbl_ValorCompMax.Visible = Txt_ValorCompMax.Visible = true;
+                Txt_ValorCompMin.Text = Unquote(comp.Valor1);
+                Txt_ValorCompMax.Text = Unquote(comp.Valor2);
+            }
+            else if (string.Equals(comp.Operador, "IS NULL", StringComparison.OrdinalIgnoreCase) ||
+                     string.Equals(comp.Operador, "IS NOT NULL", StringComparison.OrdinalIgnoreCase))
+            {
+                Txt_ValorComp.Clear();
+            }
+            else if (string.Equals(comp.Operador, "LIKE", StringComparison.OrdinalIgnoreCase) ||
+                     string.Equals(comp.Operador, "LIKE_START", StringComparison.OrdinalIgnoreCase) ||
+                     string.Equals(comp.Operador, "LIKE_END", StringComparison.OrdinalIgnoreCase))
+            {
+                var v = Unquote(comp.Valor1);
+                if (comp.Operador == "LIKE") v = v.Trim('%');
+                else if (comp.Operador == "LIKE_START") v = v.TrimEnd('%');
+                else if (comp.Operador == "LIKE_END") v = v.TrimStart('%');
+                Txt_ValorComp.Text = v;
+            }
+            else
+            {
+                Txt_ValorComp.Text = Unquote(comp.Valor1);
+            }
+
+            // Conector por defecto si no viene en la SQL
+            SetComboSelectedItem(Cbo_OperadorLogico, string.IsNullOrEmpty(comp.Conector) ? "AND" : comp.Conector);
+            _idxComp = iComp;
+
+            // --- LÓGICA a UI (si existe) ---
+            if (iLogic >= 0 && iLogic < arr.Count && iLogic != iComp)
+            {
+                var lg = arr[iLogic];
+                SafeSelectColumn(Cbo_CampoCond, NormalizeCol(lg.Campo));
+                Txt_ValorCond.Text = Unquote(lg.Valor1);
+                // El operador lógico ya está puesto; si no, AND por defecto
+                if (Cbo_OperadorLogico.SelectedItem == null)
+                    SetComboSelectedItem(Cbo_OperadorLogico, "AND");
+                _idxLogic = iLogic;
+            }
+
+            Chk_AgregarCondiciones.Checked = true;
             ToggleBetweenControls();
         }
+
+
 
         // ----------------- Utils Diego Fernando Saquil Gramajo 0901-22-4103
         private class ComboItem
@@ -1177,6 +1397,44 @@ namespace Capa_Vista_Componente_Consultas
             }
 
             return true;
+        }
+
+        // Sincroniza los dos bloques visibles (Lógica y Comparación) con _partesWhere
+        private void AplicarEdicionEnListasDesdeUI()
+        {
+            if (!Chk_AgregarCondiciones.Checked) return;
+
+            string conector = GetComboValor(Cbo_OperadorLogico) ?? "AND";
+
+            // --- COMPARACIÓN ---
+            if (_idxComp >= 0 && _idxComp < lstPartesWhere.Count && Cbo_CampoComp.SelectedItem != null && Cbo_TipoComparador.SelectedItem != null)
+            {
+                string campo = Cbo_CampoComp.SelectedItem.ToString();
+                string op = GetComboValor(Cbo_TipoComparador) ?? "=";
+
+                string v1 = null, v2 = null;
+                if (string.Equals(op, "BETWEEN", StringComparison.OrdinalIgnoreCase))
+                {
+                    EnsureBetweenControls();
+                    v1 = Txt_ValorCompMin == null ? null : Txt_ValorCompMin.Text;
+                    v2 = Txt_ValorCompMax == null ? null : Txt_ValorCompMax.Text;
+                }
+                else
+                {
+                    v1 = Txt_ValorComp.Text;
+                }
+
+                string pieza = BuildPieza(campo, op, v1, v2);
+                SetWhereAt(_idxComp, pieza, (_idxComp == 0) ? null : conector);
+            }
+
+            // --- LÓGICA ---
+            if (_idxLogic >= 0 && _idxLogic < lstPartesWhere.Count && Cbo_CampoCond.SelectedItem != null)
+            {
+                string campo = Cbo_CampoCond.SelectedItem.ToString();
+                string pieza = BuildPieza(campo, "=", Txt_ValorCond.Text, null);
+                SetWhereAt(_idxLogic, pieza, (_idxLogic == 0) ? null : conector);
+            }
         }
 
         //Diego Fernando Saquil Gramajo 0901 - 22 -4103 26/09/2025

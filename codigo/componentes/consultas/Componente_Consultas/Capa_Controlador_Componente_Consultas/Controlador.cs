@@ -8,9 +8,21 @@ using System.Text.RegularExpressions;
 
 namespace Capa_Controlador_Consultas
 {
+    public interface IConsultasRepo
+    {
+        List<KeyValuePair<string, string>> Listar();       // nombre -> SQL
+        void Guardar(string sNombre, string sSql);
+        bool Eliminar(string sNombre);
+    }
     //Juan Carlos Sandoval Quej 0901-22-4170 22/09/2025
     public class Controlador
     {
+        private readonly IConsultasRepo _repo;
+        public Controlador(string sDsn, string sDb, IConsultasRepo repo /*, ...*/)
+        {
+            // ...conexion...
+            _repo = repo;
+        }
         // Referencia al modelo (clase Sentencias) que se encarga de hablar con la base de datos
         private readonly Sentencias _m;
         // Nombre de la base de datos con la que vamos a trabajar
