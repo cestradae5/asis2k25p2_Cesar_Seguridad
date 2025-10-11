@@ -348,6 +348,7 @@ namespace Capa_Vista_Seguridad
             this.Pnl_Superior.Name = "Pnl_Superior";
             this.Pnl_Superior.Size = new System.Drawing.Size(1028, 44);
             this.Pnl_Superior.TabIndex = 95;
+            this.Pnl_Superior.Paint += new System.Windows.Forms.PaintEventHandler(this.Pnl_Superior_Paint);
             this.Pnl_Superior.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Pnl_Superior_MouseDown);
             // 
             // Pic_Cerrar
@@ -380,7 +381,7 @@ namespace Capa_Vista_Seguridad
             this.Btn_reporte.UseVisualStyleBackColor = false;
             this.Btn_reporte.Click += new System.EventHandler(this.Btn_reporte_Click);
             // 
-            // frmPerfiles
+            // Frm_Perfiles
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -393,7 +394,7 @@ namespace Capa_Vista_Seguridad
             this.Controls.Add(this.Gpb_buscarperfiles);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MinimizeBox = false;
-            this.Name = "frmPerfiles";
+            this.Name = "Frm_Perfiles";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Perfiles";
             this.Gpb_buscarperfiles.ResumeLayout(false);

@@ -14,8 +14,8 @@ namespace Capa_Vista_Seguridad
 {
     public partial class Frm_PermisosPerfiles : Form
     {
-        Cls_AplicacionControlador appControlador = new Cls_AplicacionControlador();
-        Cls_Asignacion_Permiso_PerfilControador controlador = new Cls_Asignacion_Permiso_PerfilControador();
+        
+        Cls_Asignacion_Permiso_PerfilControlador controlador = new Cls_Asignacion_Permiso_PerfilControlador();
         Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador(); // Bitacora
 
         public Frm_PermisosPerfiles()
@@ -240,7 +240,7 @@ namespace Capa_Vista_Seguridad
                 }
             }
         }
-
+        //Panel Superior Brandon Hernandez 0901-22-96663
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HTCAPTION = 0x2;
 
@@ -249,8 +249,6 @@ namespace Capa_Vista_Seguridad
 
         [DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
-
-        private void Pic_Cerrar_Click(object sender, EventArgs e) => this.Close();
 
         private void Pnl_Superior_MouseDown(object sender, MouseEventArgs e)
         {
@@ -393,5 +391,11 @@ namespace Capa_Vista_Seguridad
             }
         }
 
+
+        //Panel Superior Brandon Hernandez 0901-22-96663
+        private void Pic_Cerrar_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

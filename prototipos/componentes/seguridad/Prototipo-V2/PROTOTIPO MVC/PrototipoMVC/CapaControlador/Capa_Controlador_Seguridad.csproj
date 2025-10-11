@@ -47,7 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cls_asignacion_perfil_usuarioControlador.cs" />
-    <Compile Include="Cls_Asignacion_Permiso_PerfilControador.cs" />
+    <Compile Include="Cls_Asignacion_Permiso_PerfilControlador.cs" />
     <Compile Include="Cls_BitacoraControlador.cs" />
     <Compile Include="Cls_AplicacionControlador.cs" />
     <Compile Include="Cls_AsignacionModuloAplicacionControlador.cs" />

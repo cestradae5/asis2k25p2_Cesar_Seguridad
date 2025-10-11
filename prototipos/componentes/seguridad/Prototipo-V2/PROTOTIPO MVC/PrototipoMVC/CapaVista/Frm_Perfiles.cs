@@ -67,8 +67,8 @@ namespace Capa_Vista_Seguridad
         private void fun_ConfigurarComboBoxTipoPerfil()
         {
             Cbo_tipoperfil.Items.Clear();
-            Cbo_tipoperfil.Items.Add("0");
-            Cbo_tipoperfil.Items.Add("1");
+            Cbo_tipoperfil.Items.Add("0 - Cliente");
+            Cbo_tipoperfil.Items.Add("1 - Empleado");
             Cbo_tipoperfil.SelectedIndex = -1;
         }
 
@@ -105,12 +105,13 @@ namespace Capa_Vista_Seguridad
                 }
 
                 bool estado = Rdb_Habilitado.Checked;
-                int tipo;
-                if (!int.TryParse(Cbo_tipoperfil.Text, out tipo) || (tipo != 0 && tipo != 1))
+                
+                if (Cbo_tipoperfil.SelectedIndex == -1)
                 {
-                    MessageBox.Show("Tipo de perfil inválido. Debe ser 0 o 1.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Seleccione un tipo de perfil válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+                int tipo = Cbo_tipoperfil.SelectedIndex; 
 
                 bool exito = controlador.bInsertarPerfil(Txt_puesto.Text, Txt_descripcion.Text, estado, tipo);
 
@@ -151,12 +152,13 @@ namespace Capa_Vista_Seguridad
             }
 
             bool estado = Rdb_Habilitado.Checked;
-            int tipo;
-            if (!int.TryParse(Cbo_tipoperfil.Text, out tipo) || (tipo != 0 && tipo != 1))
+
+            if (Cbo_tipoperfil.SelectedIndex == -1)
             {
-                MessageBox.Show("Tipo de perfil inválido. Debe ser 0 o 1.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Seleccione un tipo de perfil válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            int tipo = Cbo_tipoperfil.SelectedIndex;
 
             bool exito = controlador.bActualizarPerfil(id, Txt_puesto.Text, Txt_descripcion.Text, estado, tipo);
 
@@ -263,6 +265,7 @@ namespace Capa_Vista_Seguridad
             fun_Configuracioninicial();
         }
 
+        //Ruben Lopez 
         // Panel superior
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HTCAPTION = 0x2;
@@ -290,6 +293,11 @@ namespace Capa_Vista_Seguridad
         {
             frmreporte_perfiles frm = new frmreporte_perfiles();
             frm.Show();
+        }
+
+        private void Pnl_Superior_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
