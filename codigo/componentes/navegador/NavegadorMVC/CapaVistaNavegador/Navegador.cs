@@ -22,7 +22,7 @@ namespace Capa_Vista_Navegador
 
         public Cls_ConfiguracionDataGridView configuracionDataGridView;
 
-        int contadorModificar = 0;
+        public int iContadorModificar = 0; //  Variable global para manejar el modo edicion, KEVIN NATARENO, 11/10/2025
 
         public Navegador()
         {
@@ -47,6 +47,7 @@ namespace Capa_Vista_Navegador
 
                     // Genera dinámicamente los labels y combos
                     controladorNavegador.AsignarAlias(SAlias, this, 20, 80, 3, SEtiquetas);
+                    ctrl.DesactivarTodosComboBoxes(this); // KEVIN NATARENO, 11/10/2025
                 }
                 catch (Exception ex)
                 {
@@ -58,6 +59,8 @@ namespace Capa_Vista_Navegador
 
         private void Btn_ingresar_Click(object sender, EventArgs e)
         {
+            ctrl.LimpiarCombos(this, SAlias); // KEVIN NATARENO, 11/10/2025
+
             if (SAlias == null || SAlias.Length < 2)
             {
                 MessageBox.Show("No se han definido los alias de la tabla.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -166,6 +169,24 @@ namespace Capa_Vista_Navegador
             Btn_fin.Enabled = false;
         }
 
+        //==================== Nuevo método para estado de botones modo edición = KEVIN NATARENO, 11/10/2025======================
+        public void BotonesEstadoEdicion()
+        {
+            Btn_ingresar.Enabled = true;
+            Btn_modificar.Enabled = true;
+           Btn_guardar.Enabled = false;
+           Btn_cancelar.Enabled = true;
+           Btn_eliminar.Enabled = true;
+            Btn_inicio.Enabled = true;
+            Btn_anterior.Enabled = true;
+            Btn_sig.Enabled = true;
+            Btn_fin.Enabled = true;
+
+        }
+        //==================== Nuevo método para estado de botones modo edición = KEVIN NATARENO, 11/10/2025======================
+
+
+
         // public void BotonesEstadoCRUD(
         // bool ingresar,
         // bool modificar,
@@ -181,11 +202,11 @@ namespace Capa_Vista_Navegador
         //        Btn_consultar.Enabled = consultar;
         //        Btn_imprimir.Enabled = imprimir;
         //        Btn_cancelar.Enabled = true;
-       //         Btn_refrescar.Enabled = true;
-       //         Btn_inicio.Enabled = true;
-       //         Btn_anterior.Enabled = true;
-      //          Btn_sig.Enabled = true;
-       //         Btn_fin.Enabled = true;
+        //         Btn_refrescar.Enabled = true;
+        //         Btn_inicio.Enabled = true;
+        //         Btn_anterior.Enabled = true;
+        //          Btn_sig.Enabled = true;
+        //         Btn_fin.Enabled = true;
         //    }
 
 
@@ -201,23 +222,46 @@ namespace Capa_Vista_Navegador
         private void Btn_guardar_Click_1(object sender, EventArgs e)
         {
             Cls_ControladorNavegador ctrl = new Cls_ControladorNavegador();
-            ctrl.Insertar_Datos(this, SAlias);
+            //================= SWITCH PARA CAMBIAR ENTRE INSERT Y UPDATE = KEVIN NATARENO, 11/10/2025 =====================
+            switch (iContadorModificar) // Valida el contador de modificar 
+            {
+                case 0: // si es 0 es porque no se presionó el boton de modificar 
+                    
+                    ctrl.Insertar_Datos(this, SAlias);
 
-            // Recarga despues de insertar = Stevens Cambranes
-            mostrarDatos();
-            ctrl.LimpiarCombos(this, SAlias);
+                    // Recarga despues de insertar = Stevens Cambranes
+                    mostrarDatos();
+                    ctrl.LimpiarCombos(this, SAlias); break;
+
+                case 1: // si es 1 es porque se seleccionó la opcion de modificar 
+                    // Esta es la lógica que estaba en el botón modificar 
+                    ctrl.Actualizar_Datos(this, SAlias);
+                    mostrarDatos();
+                    ctrl.RefrescarCombos(this, SAlias[0], SAlias.Skip(1).ToArray());
+                    ctrl.LimpiarCombos(this, SAlias);
+                    iContadorModificar = 0;
+                    BotonesEstadoInicial();
+                    break;
+            }
+            //================= SWITCH PARA CAMBIAR ENTRE INSERT Y UPDATE = KEVIN NATARENO, 11/10/2025 =====================
+
         }
-      
+
         // ======================= Modificar / Update = Stevens Cambranes = 20/09/2025 =======================
         private void Btn_modificar_Click(object sender, EventArgs e)
 
         {
-            contadorModificar = 2;
-            ctrl.Actualizar_Datos(this, SAlias);
+            //================== Cambios logica de modificar = KEVIN NATARENO, 11/10/2025=====================
+            MessageBox.Show("Modo de edición");  
+            Btn_guardar.Enabled = true;         
+            ctrl.ActivarTodosComboBoxes(this);  
+            iContadorModificar = 1;
+            //================== Cambios logica de modificar = KEVIN NATARENO, 11/10/2025=====================
 
-            mostrarDatos();
-            ctrl.RefrescarCombos(this, SAlias[0], SAlias.Skip(1).ToArray());
-            ctrl.LimpiarCombos(this, SAlias);
+            //ctrl.Actualizar_Datos(this, SAlias);
+            //mostrarDatos();
+            //ctrl.RefrescarCombos(this, SAlias[0], SAlias.Skip(1).ToArray());
+            //ctrl.LimpiarCombos(this, SAlias);
         }
         // ======================= Modificar / Update = Stevens Cambranes = 20/09/2025 =======================
 
@@ -232,7 +276,8 @@ namespace Capa_Vista_Navegador
 
             // Rellenar combos con la información de la fila seleccionada
             ctrl.RellenarCombosDesdeFila(this, SAlias, Dgv_Datos.CurrentRow);
-            Btn_modificar.Enabled = true;
+
+            BotonesEstadoEdicion(); // KEVIN NATARENO 11/10/2025
 
             // Bloquear (deshabilitar) todos los ComboBox del formulario
             DeshabilitarCombos(this);
