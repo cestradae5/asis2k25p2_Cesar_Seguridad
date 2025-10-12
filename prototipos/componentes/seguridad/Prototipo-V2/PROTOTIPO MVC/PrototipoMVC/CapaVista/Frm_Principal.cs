@@ -31,18 +31,20 @@ namespace Capa_Vista_Seguridad
         }
         private void Frm_principal_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //// Preguntar si realmente desea cerrar la app
-            //DialogResult result = MessageBox.Show(
-            //    "¿Desea cerrar la aplicación?",
-            //    "Confirmar salida",
-            //    MessageBoxButtons.YesNo,
-            //    MessageBoxIcon.Question);
+            try
+            {
+                // Registrar en bitácora cuando se cierre con la x
+                ctrlBitacora.RegistrarCierreSesion(Cls_UsuarioConectado.iIdUsuario);
+            }
+            catch
+            {
+                // Silenciar cualquier error al cerrar
+            }
 
-            //if (result == DialogResult.No)
-            //{
-            //    e.Cancel = true; // Cancela el cierre
-            //}
+            // Cierra completamente la aplicación
+            Application.Exit();
         }
+
 
         public Frm_Principal(string nombreUsuario, int idUsuario)
         {
@@ -110,14 +112,7 @@ namespace Capa_Vista_Seguridad
             // Registrar en bitácora
             ctrlBitacora.RegistrarCierreSesion(Cls_UsuarioConectado.iIdUsuario);
 
-            // Crear y mostrar el formulario de login
-            Frm_Login ventana = new Frm_Login();
-            ventana.Show();
-
-            // Cerrar el formulario principal actual
-            this.Hide(); // Oculta el formulario actual antes de cerrar
-            this.Close(); // Cierra el formulario principal
-
+            Application.Exit();
         }
 
         private void CutToolStripMenuItem_Click(object sender, EventArgs e)
