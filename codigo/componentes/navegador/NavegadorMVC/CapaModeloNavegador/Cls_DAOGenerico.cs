@@ -85,11 +85,22 @@ namespace Capa_Modelo_Navegador
 
                     // trans.Commit(); // realiza commit si sale bien
                 }
-                catch
+                catch (OdbcException ex)
+                {
+                    if (ex.Message.IndexOf("foreign key constraint fails", StringComparison.OrdinalIgnoreCase) >= 0)
+                    {
+                        throw new Exception("No se pudo insertar el registro: la llave foránea no existe o está mal referenciada.");
+                    }
+                    else
+                    {
+                        throw new Exception("Error al insertar datos: " + ex.Message);
+                    }
+                }
+                catch (Exception ex)
                 {
 
                     // trans.Rollback(); // revertir en caso que haya error
-                    throw; // lanza la excepción 
+                    throw new Exception("Error inesperado al insertar datos: " + ex.Message); // lanza la excepción 
                 }
                 // }
             } //la conexión se cierra automáticamente

@@ -125,6 +125,28 @@ namespace Capa_Vista_Navegador
             Dgv_Datos.DataBindingComplete -= Dgv_Datos_DataBindingComplete;
             Dgv_Datos.DataBindingComplete += Dgv_Datos_DataBindingComplete;
 
+            // cambiar encabezados del datagrid a los de etiqueas Fernando Cahuex 0901-22-14979 11/10/2025
+            try
+            {
+                if (SEtiquetas != null && Dgv_Datos.Columns.Count == SAlias.Length - 1)
+                {
+                    for (int i = 1; i < SAlias.Length; i++) // saltamos el nombre de la tabla
+                    {
+                        string nombreColumna = SAlias[i];
+                        string etiqueta = SEtiquetas.Length >= i ? SEtiquetas[i - 1] : nombreColumna;
+
+                        if (Dgv_Datos.Columns.Contains(nombreColumna))
+                        {
+                            Dgv_Datos.Columns[nombreColumna].HeaderText = etiqueta;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al asignar etiquetas a los encabezados: " + ex.Message);
+            }
+
         }
 
 
