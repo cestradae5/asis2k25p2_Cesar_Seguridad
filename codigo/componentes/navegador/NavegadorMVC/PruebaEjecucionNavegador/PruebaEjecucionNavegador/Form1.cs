@@ -28,16 +28,29 @@ namespace PruebaEjecucionNavegador
             };
 
             string[] columnas = {
-                    "prueba",
-                    "Pk_Prueba",
-                    "fecha"
+                    "tbl_usuario",
+                    "Pk_Id_Usuario",
+                    "Fk_Id_Empleado",
+                    "Cmp_Nombre_Usuario",
+                    "Cmp_Contrasena_Usuario",
+                    "Cmp_Intentos_Fallidos_Usuario",
+                    "Cmp_Estado_Usuario",
+                    "Cmp_FechaCreacion_Usuario",
+                    "Cmp_Ultimo_Cambio_Contrasenea",
+                    "Cmp_Pidio_Cambio_Contrasenea"
 
-                    
             };
 
             string[] sEtiquetas = {
-                "Pk_Prueba",
-                    "fecha",
+                "idusuario",
+                "idempleadp",
+                "nombre",
+                "contrasena",
+                "Intentos_Fallidos",
+                "estado",
+                "fecha_creadcion",
+                "ultimo cambio",
+                "pidio_cambio"
             };
 
 
