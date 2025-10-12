@@ -28,10 +28,10 @@ namespace Capa_Vista_Seguridad
 
         private void frmModulo_Load(object sender, EventArgs e)
         {
-            CargarComboBox(); // Llena el combo de búsqueda al cargar
+            fun_CargarComboBox(); // Llena el combo de búsqueda al cargar
         }
 
-        private void CargarComboBox()
+        private void fun_CargarComboBox()
         {
             // Limpia y vuelve a cargar los módulos en el combo
             Cbo_busqueda.Items.Clear();
@@ -58,13 +58,13 @@ namespace Capa_Vista_Seguridad
                 return;
             }
 
-            string Cmp_Nombre_Modulo = Txt_nombre.Text;
-            string Cmp_Descripcion_Modulo = Txt_descripcion.Text;
-            byte Cmp_Estado_Modulo = (Rdb_habilitado.Checked) ? (byte)1 : (byte)0;
+            string sCmp_Nombre_Modulo = Txt_nombre.Text;
+            string sCmp_Descripcion_Modulo = Txt_descripcion.Text;
+            byte btCmp_Estado_Modulo = (Rdb_habilitado.Checked) ? (byte)1 : (byte)0;
 
             // Verifica si el módulo ya existe
             DataRow dr = cm.BuscarModulo(Pk_Id_Modulo);
-            bool resultado = false;
+            bool bResultado = false;
 
             if (dr == null)
             {
@@ -74,20 +74,20 @@ namespace Capa_Vista_Seguridad
                     MessageBox.Show("El Id ingresado ya existe. Use otro.");
                     return;
                 }
-                resultado = cm.InsertarModulo(Pk_Id_Modulo, Cmp_Nombre_Modulo, Cmp_Descripcion_Modulo, Cmp_Estado_Modulo);
+                bResultado = cm.InsertarModulo(Pk_Id_Modulo, sCmp_Nombre_Modulo, sCmp_Descripcion_Modulo, btCmp_Estado_Modulo);
             }
             else
             {
                 // Si existe, lo modifica
-                resultado = cm.ModificarModulo(Pk_Id_Modulo, Cmp_Nombre_Modulo, Cmp_Descripcion_Modulo, Cmp_Estado_Modulo);
+                bResultado = cm.ModificarModulo(Pk_Id_Modulo, sCmp_Nombre_Modulo, sCmp_Descripcion_Modulo, btCmp_Estado_Modulo);
             }
 
-            if (resultado)
+            if (bResultado)
             {
                 MessageBox.Show("Guardado correctamente!");
-                CargarComboBox(); // Refresca combo
+                fun_CargarComboBox(); // Refresca combo
                 ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 1, "Guardar módulo", true); // Registra en bitácora
-                LimpiarCampos();
+                fun_LimpiarCampos();
                 Txt_id.Enabled = true;
             }
             else
@@ -131,13 +131,13 @@ namespace Capa_Vista_Seguridad
             }
 
             // Intenta eliminar
-            bool resultado = cm.EliminarModulo(Pk_Id_Modulo);
-            if (resultado)
+            bool bResultado = cm.EliminarModulo(Pk_Id_Modulo);
+            if (bResultado)
             {
                 MessageBox.Show("Módulo eliminado correctamente.");
-                CargarComboBox();
+                fun_CargarComboBox();
                 ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 1, "Eliminar módulo", true); // Bitácora
-                LimpiarCampos();
+                fun_LimpiarCampos();
                 Txt_id.Enabled = true;
             }
             else
@@ -156,8 +156,8 @@ namespace Capa_Vista_Seguridad
             }
 
             // Obtiene el Id desde el item seleccionado
-            string seleccionado = Cbo_busqueda.SelectedItem.ToString();
-            int Pk_Id_Modulo = int.Parse(seleccionado.Split('-')[0].Trim());
+            string sSeleccionado = Cbo_busqueda.SelectedItem.ToString();
+            int Pk_Id_Modulo = int.Parse(sSeleccionado.Split('-')[0].Trim());
 
             DataRow dr = cm.BuscarModulo(Pk_Id_Modulo);
             if (dr != null)
@@ -167,9 +167,9 @@ namespace Capa_Vista_Seguridad
                 Txt_nombre.Text = dr["Cmp_Nombre_Modulo"].ToString();
                 Txt_descripcion.Text = dr["Cmp_Descripcion_Modulo"].ToString();
 
-                bool estado = Convert.ToBoolean(dr["Cmp_Estado_Modulo"]);
-                Rdb_habilitado.Checked = estado;
-                Rdb_inabilitado.Checked = !estado;
+                bool bEstado = Convert.ToBoolean(dr["Cmp_Estado_Modulo"]);
+                Rdb_habilitado.Checked = bEstado;
+                Rdb_inabilitado.Checked = !bEstado;
 
                 Txt_id.Enabled = false;
                 Cbo_busqueda.SelectedIndex = -1;
@@ -180,7 +180,7 @@ namespace Capa_Vista_Seguridad
             }
         }
 
-        private void LimpiarCampos()
+        private void fun_LimpiarCampos()
         {
             // Resetea todos los campos
             Txt_id.Clear();

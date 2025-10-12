@@ -104,18 +104,18 @@ namespace Capa_Vista_Seguridad
                     return;
                 }
 
-                bool estado = Rdb_Habilitado.Checked;
+                bool bEstado = Rdb_Habilitado.Checked;
                 
                 if (Cbo_tipoperfil.SelectedIndex == -1)
                 {
                     MessageBox.Show("Seleccione un tipo de perfil válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                int tipo = Cbo_tipoperfil.SelectedIndex; 
+                int iTipo = Cbo_tipoperfil.SelectedIndex; 
 
-                bool exito = controlador.bInsertarPerfil(Txt_puesto.Text, Txt_descripcion.Text, estado, tipo);
+                bool bExito = controlador.bInsertarPerfil(Txt_puesto.Text, Txt_descripcion.Text, bEstado, iTipo);
 
-                if (exito)
+                if (bExito)
                 {
                     MessageBox.Show("Perfil guardado correctamente");
                     ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 1, "Guardar perfil", true);
@@ -158,11 +158,11 @@ namespace Capa_Vista_Seguridad
                 MessageBox.Show("Seleccione un tipo de perfil válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            int tipo = Cbo_tipoperfil.SelectedIndex;
+            int iTipo = Cbo_tipoperfil.SelectedIndex;
 
-            bool exito = controlador.bActualizarPerfil(id, Txt_puesto.Text, Txt_descripcion.Text, estado, tipo);
+            bool bExito = controlador.bActualizarPerfil(id, Txt_puesto.Text, Txt_descripcion.Text, estado, iTipo);
 
-            if (exito)
+            if (bExito)
             {
                 MessageBox.Show("Perfil modificado correctamente");
                 ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 1, "Modificar perfil", true);
@@ -245,17 +245,17 @@ namespace Capa_Vista_Seguridad
                 return;
             }
 
-            string mensajeError;
-            bool exito = controlador.bBorrarPerfil(id, out mensajeError);
+            string sMensajeError;
+            bool bExito = controlador.bBorrarPerfil(id, out sMensajeError);
 
-            if (exito)
+            if (bExito)
             {
                 MessageBox.Show("Perfil eliminado");
                 ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 1, "Eliminar perfil", true);
             }
             else
             {
-                MessageBox.Show(mensajeError, "Error al eliminar perfil", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(sMensajeError, "Error al eliminar perfil", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             fun_CargarPerfiles();
