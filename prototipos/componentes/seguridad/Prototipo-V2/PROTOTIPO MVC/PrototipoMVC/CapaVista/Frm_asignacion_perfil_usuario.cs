@@ -16,8 +16,8 @@ namespace Capa_Vista_Seguridad
     {
         Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador(); // Bitacora
         Cls_asignacion_perfil_usuarioControlador controlador = new Cls_asignacion_perfil_usuarioControlador();
-        Cls_asignacion_perfil_usuarioDAO modelo = new Cls_asignacion_perfil_usuarioDAO();
        
+        Cls_UsuarioControlador controladorUsuario = new Cls_UsuarioControlador();
         private List<Cls_asignacion_perfil_usuario> asignacionesPendientes = new List<Cls_asignacion_perfil_usuario>();
 
         // DataTables para lookup de nombres
@@ -71,7 +71,7 @@ namespace Capa_Vista_Seguridad
                     idUsuario = Convert.ToInt32(Cbo_usuario.SelectedValue);
                 }
 
-                DataTable dt = modelo.datObtenerPerfilesPorUsuario(idUsuario);
+                DataTable dt =controlador.datObtenerPerfilesPorUsuario(idUsuario);
                 Dgv_consulta.DataSource = dt;
             }
             else
@@ -79,7 +79,7 @@ namespace Capa_Vista_Seguridad
                 Dgv_consulta.DataSource = null;
             }
         }
-
+        //0901-22-9663 Brandon Hernandez 12/10/2025
         private void Btn_agregar_Click(object sender, EventArgs e)
         {
             if (Cbo_usuarios2.SelectedIndex == -1 || Cbo_perfil.SelectedIndex == -1)
@@ -91,6 +91,15 @@ namespace Capa_Vista_Seguridad
             int idUsuario = Convert.ToInt32(Cbo_usuarios2.SelectedValue);
             int idPerfil = Convert.ToInt32(Cbo_perfil.SelectedValue);
 
+            // --- NUEVO: Verifica si el usuario ya tiene un perfil ---
+
+            int perfilAsignado = controladorUsuario.ObtenerIdPerfilDeUsuario(idUsuario); // Debe retornar 0 si no tiene perfil
+
+            if (perfilAsignado != 0)
+            {
+                MessageBox.Show($"Este usuario ya está asignado a un perfil {perfilAsignado}.", "Asignación existente", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
 
             if (asignacionesPendientes.Any(x => x.Fk_Id_Usuario == idUsuario && x.Fk_Id_Perfil == idPerfil))
             {
@@ -101,7 +110,7 @@ namespace Capa_Vista_Seguridad
             asignacionesPendientes.Add(new Cls_asignacion_perfil_usuario(idUsuario, idPerfil));
             fun_RefrescarAsignacionesPendientes();
 
-            // Registrar en Bitácora -Arón Ricardo Esquit Silva  0901 - 22 - 13036
+            // Registrar en Bitácora -Arón Ricardo Esquit Silva  0901-22-13036
             ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 1, "Asignación Perfil a Usuario - Agregar", true);
         }
 

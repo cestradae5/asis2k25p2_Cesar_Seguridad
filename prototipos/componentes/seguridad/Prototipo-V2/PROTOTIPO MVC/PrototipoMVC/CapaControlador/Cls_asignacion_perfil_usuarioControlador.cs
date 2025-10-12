@@ -41,10 +41,15 @@ namespace Capa_Controlador_Seguridad
             // Llama al método DAO que maneja el error y retorna el mensaje personalizado
             return DAO.bInsertar(nuevaRelacion, out smensajeError);
         }
+        //0901-22-9663 Brandon Hernandez 12/10/2025
+        public DataTable datObtenerPerfilesPorUsuario(int iIdUsuario)
+        {
+            return DAO.datObtenerPerfilesPorUsuario(iIdUsuario);
+        }
 
-       
 
-        
+
+
     }
 
 

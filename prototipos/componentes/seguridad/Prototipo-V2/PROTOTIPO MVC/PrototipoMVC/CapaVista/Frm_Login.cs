@@ -72,7 +72,7 @@ namespace Capa_Vista_Seguridad
 
                 // Guardar sesión
                 Cls_UsuarioConectado.IniciarSesion(iIdUsuario, sNombreUsuarioReal, iIdPerfil);
-                MessageBox.Show("Perfil asignado: " + iIdPerfil);
+                
 
                 // Registrar inicio en bitácora
                 ctrlBitacora.RegistrarInicioSesion(iIdUsuario);
