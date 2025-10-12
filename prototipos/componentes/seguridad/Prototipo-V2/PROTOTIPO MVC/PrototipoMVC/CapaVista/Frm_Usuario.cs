@@ -4,46 +4,66 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using Capa_Controlador_Seguridad;
+using Capa_Modelo_Seguridad;
 
 namespace Capa_Vista_Seguridad
 {
     public partial class Frm_Usuario : Form
     {
-        // Variables globales del formulario
+        
+        // VARIABLES GLOBALES
+        
         private Cls_UsuarioControlador gClsUsuarioControlador = new Cls_UsuarioControlador();
         private Cls_EmpleadoControlador gClsEmpleadoControlador = new Cls_EmpleadoControlador();
+        private Cls_BitacoraControlador gCtrlBitacora = new Cls_BitacoraControlador(); // se puede mantener aunque ya no lo uses aquí
+
         private List<string> gLstEmpleadosDisplay = new List<string>();
         private List<int> gLstEmpleadosIds = new List<int>();
-        private int iIdUsuarioSeleccionado = 0;
-        Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador(); //Bitacora
+        private List<string> gLstUsuariosDisplay = new List<string>();
+        private List<int> gLstUsuariosIds = new List<int>();
 
+        private int iIdUsuarioSeleccionado = 0;
+
+      
+        // CONSTRUCTOR
+        
         public Frm_Usuario()
         {
             InitializeComponent();
+
             Txt_Contraseña.UseSystemPasswordChar = true;
             Txt_ConfirmarContraseña.UseSystemPasswordChar = true;
 
             CargarEmpleados();
             ConfigurarComboBoxEmpleados();
-            
+
+            CargarUsuarios();
+            ConfigurarComboBoxUsuarios();
+
+            ConfiguracionInicial();
         }
 
+        
+        // CONFIGURACION INICIAL
+        
         private void ConfiguracionInicial()
         {
             Btn_Guardar.Enabled = false;
-            Btn_Nuevo.Enabled = true;
         }
 
+       
+        // CARGA DE DATOS
+        
         private void CargarEmpleados()
         {
             var lstEmpleados = gClsEmpleadoControlador.fun_ObtenerTodosLosEmpleados();
             gLstEmpleadosDisplay.Clear();
             gLstEmpleadosIds.Clear();
 
-            foreach (var emp in lstEmpleados)
+            foreach (var gEmp in lstEmpleados)
             {
-                gLstEmpleadosDisplay.Add($"{emp.iPkIdEmpleado} - {emp.sNombresEmpleado} {emp.sApellidosEmpleado}");
-                gLstEmpleadosIds.Add(emp.iPkIdEmpleado);
+                gLstEmpleadosDisplay.Add($"{gEmp.iPkIdEmpleado} - {gEmp.sNombresEmpleado} {gEmp.sApellidosEmpleado}");
+                gLstEmpleadosIds.Add(gEmp.iPkIdEmpleado);
             }
         }
 
@@ -56,13 +76,30 @@ namespace Capa_Vista_Seguridad
             }
         }
 
-        private void Btn_Nuevo_Click(object sender, EventArgs e)
+        private void CargarUsuarios()
         {
-            LimpiarCampos();
-            Btn_Guardar.Enabled = true;
-            iIdUsuarioSeleccionado = 0;
+            var lstUsuarios = gClsUsuarioControlador.ObtenerTodosLosUsuarios();
+            gLstUsuariosDisplay.Clear();
+            gLstUsuariosIds.Clear();
+
+            foreach (var gUsr in lstUsuarios)
+            {
+                gLstUsuariosDisplay.Add($"{gUsr.iPkIdUsuario} - {gUsr.sNombreUsuario}");
+                gLstUsuariosIds.Add(gUsr.iPkIdUsuario);
+            }
         }
 
+        private void ConfigurarComboBoxUsuarios()
+        {
+            Cbo_Usuarios.Items.Clear();
+            for (int i = 0; i < gLstUsuariosDisplay.Count; i++)
+            {
+                Cbo_Usuarios.Items.Add(gLstUsuariosDisplay[i]);
+            }
+        }
+
+       
+        
         private void Btn_Guardar_Click(object sender, EventArgs e)
         {
             if (Cbo_Empleado.SelectedIndex < 0)
@@ -73,24 +110,26 @@ namespace Capa_Vista_Seguridad
 
             int iFkIdEmpleado = gLstEmpleadosIds[Cbo_Empleado.SelectedIndex];
 
-            var resultado = gClsUsuarioControlador.InsertarUsuario(
+            // Llamada al controlador (el controlador ahora hace validaciones y registra bitácora internamente)
+            var gResultado = gClsUsuarioControlador.InsertarUsuario(
                 iFkIdEmpleado,
                 Txt_Nombre.Text,
                 Txt_Contraseña.Text,
                 Txt_ConfirmarContraseña.Text
             );
 
-            MessageBox.Show(resultado.sMensaje,
-                            resultado.bExito ? "Éxito" : "Error",
+            MessageBox.Show(gResultado.sMensaje,
+                            gResultado.bExito ? "Éxito" : "Error",
                             MessageBoxButtons.OK,
-                            resultado.bExito ? MessageBoxIcon.Information : MessageBoxIcon.Error);
+                            gResultado.bExito ? MessageBoxIcon.Information : MessageBoxIcon.Error);
 
-            if (resultado.bExito)
+            if (gResultado.bExito)
             {
-                //Registrar en Bitácora - Arón Ricardo Esquit Silva 0901-22-13036
-                ctrlBitacora.RegistrarAccion(Cls_UsuarioConectado.iIdUsuario, 1, "Guardo nuevo usuario", true);
+                
                 LimpiarCampos();
                 ConfiguracionInicial();
+                CargarUsuarios();
+                ConfigurarComboBoxUsuarios();
             }
         }
 
@@ -107,10 +146,35 @@ namespace Capa_Vista_Seguridad
 
         private void Btn_reporte_Click(object sender, EventArgs e)
         {
-            frmReporte_Usuario frm = new frmReporte_Usuario();
-            frm.Show();
+            frmReporte_Usuario gFrm = new frmReporte_Usuario();
+            gFrm.Show();
         }
 
+        private void Btn_Buscar_Click(object sender, EventArgs e)
+        {
+            if (Cbo_Usuarios.SelectedIndex < 0)
+            {
+                MessageBox.Show("Seleccione un usuario de la lista.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            int iIdUsuario = gLstUsuariosIds[Cbo_Usuarios.SelectedIndex];
+            var gUsuario = gClsUsuarioControlador.BuscarUsuarioPorId(iIdUsuario);
+
+            if (gUsuario != null)
+            {
+                Txt_Nombre.Text = gUsuario.sNombreUsuario;
+                Txt_Contraseña.Text = gUsuario.sContrasenaUsuario;
+                Txt_ConfirmarContraseña.Text = gUsuario.sContrasenaUsuario;
+                iIdUsuarioSeleccionado = gUsuario.iPkIdUsuario;
+            }
+            else
+            {
+                MessageBox.Show("No se pudo cargar la información del usuario.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+     
         private void LimpiarCampos()
         {
             Cbo_Empleado.SelectedIndex = -1;
@@ -121,22 +185,22 @@ namespace Capa_Vista_Seguridad
             iIdUsuarioSeleccionado = 0;
         }
 
-        // Panel superior para mover la ventana
-        public const int WM_NCLBUTTONDOWN = 0xA1;
-        public const int HTCAPTION = 0x2;
+  
+        public const int iWM_NCLBUTTONDOWN = 0xA1;
+        public const int iHTCAPTION = 0x2;
 
         [DllImport("user32.dll")]
         public static extern bool ReleaseCapture();
 
         [DllImport("user32.dll")]
-        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+        public static extern int SendMessage(IntPtr hWnd, int iMsg, int iWParam, int iLParam);
 
         private void Pnl_Superior_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
                 ReleaseCapture();
-                SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
+                SendMessage(Handle, iWM_NCLBUTTONDOWN, iHTCAPTION, 0);
             }
         }
 
@@ -145,11 +209,18 @@ namespace Capa_Vista_Seguridad
             this.Close();
         }
 
+        
+        // EVENTOS DE CAMPOS
+        
         private void Txt_Nombre_TextChanged(object sender, EventArgs e) => ValidarCampos();
         private void Txt_Contraseña_TextChanged(object sender, EventArgs e) => ValidarCampos();
         private void Txt_ConfirmarContraseña_TextChanged(object sender, EventArgs e) => ValidarCampos();
         private void Cbo_Empleado_SelectedIndexChanged(object sender, EventArgs e) => ValidarCampos();
+        private void Cbo_Usuarios_SelectedIndexChanged(object sender, EventArgs e) { }
 
+        
+        // VALIDACIÓN VISUAL
+        
         private void ValidarCampos()
         {
             bool bCamposLlenos =
@@ -167,7 +238,7 @@ namespace Capa_Vista_Seguridad
                 ? System.Drawing.Color.LightCoral
                 : System.Drawing.Color.White;
         }
-
-
     }
 }
+
+// Pablo Quiroa 0901-22-2929 12/10/2025

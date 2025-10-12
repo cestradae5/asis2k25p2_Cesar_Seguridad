@@ -42,3 +42,4 @@ namespace Capa_Modelo_Seguridad
     }
 }
 
+// Pablo Quiroa 0901-22-2929 12/10/2025

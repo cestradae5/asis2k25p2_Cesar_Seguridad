@@ -8,32 +8,39 @@ namespace Capa_Controlador_Seguridad
 {
     public class Cls_UsuarioControlador
     {
-        // Variable global para DAO
+        
+        // VARIABLES GLOBALES
+       
         private Cls_UsuarioDAO gDaoUsuario = new Cls_UsuarioDAO();
+        private Cls_BitacoraControlador gCtrlBitacora = new Cls_BitacoraControlador();
 
-        // Obtener todos los usuarios
+      
+        // OBTENER TODOS LOS USUARIOS
+        
         public List<Cls_Usuario> ObtenerTodosLosUsuarios()
         {
             return gDaoUsuario.ObtenerUsuarios();
         }
 
-        // Insertar nuevo usuario
+        
+        // INSERTAR NUEVO USUARIO
+       
         public (bool bExito, string sMensaje) InsertarUsuario(
-            int pFkIdEmpleado,
-            string pNombreUsuario,
-            string pContrasena,
-            string pConfirmarContrasena)
+            int iFkIdEmpleado,
+            string sNombreUsuario,
+            string sContrasena,
+            string sConfirmarContrasena)
         {
             // Validaciones básicas
-            var validar = ValidarCamposUsuario(0, pFkIdEmpleado, pNombreUsuario, pContrasena, pConfirmarContrasena);
-            if (!validar.bExito) return validar;
+            var vValidar = ValidarCamposUsuario(0, iFkIdEmpleado, sNombreUsuario, sContrasena, sConfirmarContrasena);
+            if (!vValidar.bExito) return vValidar;
 
             // Crear objeto usuario
             Cls_Usuario gNuevoUsuario = new Cls_Usuario
             {
-                iFkIdEmpleado = pFkIdEmpleado,
-                sNombreUsuario = pNombreUsuario,
-                sContrasenaUsuario = Cls_SeguridadHashControlador.HashearSHA256(pContrasena),
+                iFkIdEmpleado = iFkIdEmpleado,
+                sNombreUsuario = sNombreUsuario,
+                sContrasenaUsuario = Cls_SeguridadHashControlador.HashearSHA256(sContrasena),
                 iContadorIntentosFallidos = 0,
                 bEstadoUsuario = true,
                 dFechaCreacion = DateTime.Now,
@@ -44,6 +51,15 @@ namespace Capa_Controlador_Seguridad
             try
             {
                 gDaoUsuario.InsertarUsuario(gNuevoUsuario);
+
+                // Registro en bitácora
+                gCtrlBitacora.RegistrarAccion(
+                    Cls_UsuarioConectado.iIdUsuario,  // Usuario logueado
+                    1,                                // Código de acción: insertar
+                    $"Insertó un nuevo usuario: {sNombreUsuario}",
+                    true
+                );
+
                 return (true, "Usuario insertado correctamente.");
             }
             catch (Exception ex)
@@ -52,24 +68,26 @@ namespace Capa_Controlador_Seguridad
             }
         }
 
-        // Actualizar usuario existente
+        
+        // ACTUALIZAR USUARIO EXISTENTE
+        
         public (bool bExito, string sMensaje) ActualizarUsuario(
-            int pIdUsuario,
-            int pFkIdEmpleado,
-            string pNombreUsuario,
-            string pContrasena,
-            string pConfirmarContrasena)
+            int iIdUsuario,
+            int iFkIdEmpleado,
+            string sNombreUsuario,
+            string sContrasena,
+            string sConfirmarContrasena)
         {
             // Validaciones
-            var validar = ValidarCamposUsuario(pIdUsuario, pFkIdEmpleado, pNombreUsuario, pContrasena, pConfirmarContrasena);
-            if (!validar.bExito) return validar;
+            var vValidar = ValidarCamposUsuario(iIdUsuario, iFkIdEmpleado, sNombreUsuario, sContrasena, sConfirmarContrasena);
+            if (!vValidar.bExito) return vValidar;
 
             Cls_Usuario gUsuarioActualizado = new Cls_Usuario
             {
-                iPkIdUsuario = pIdUsuario,
-                iFkIdEmpleado = pFkIdEmpleado,
-                sNombreUsuario = pNombreUsuario,
-                sContrasenaUsuario = Cls_SeguridadHashControlador.HashearSHA256(pContrasena),
+                iPkIdUsuario = iIdUsuario,
+                iFkIdEmpleado = iFkIdEmpleado,
+                sNombreUsuario = sNombreUsuario,
+                sContrasenaUsuario = Cls_SeguridadHashControlador.HashearSHA256(sContrasena),
                 iContadorIntentosFallidos = 0,
                 bEstadoUsuario = true,
                 dFechaCreacion = DateTime.Now,
@@ -80,6 +98,15 @@ namespace Capa_Controlador_Seguridad
             try
             {
                 gDaoUsuario.ActualizarUsuario(gUsuarioActualizado);
+
+                // Registro en bitácora
+                gCtrlBitacora.RegistrarAccion(
+                    Cls_UsuarioConectado.iIdUsuario,
+                    2, // Código de acción: actualizar
+                    $"Actualizó usuario: {sNombreUsuario}",
+                    true
+                );
+
                 return (true, "Usuario actualizado correctamente.");
             }
             catch (Exception ex)
@@ -88,13 +115,28 @@ namespace Capa_Controlador_Seguridad
             }
         }
 
-        // Borrar usuario
-        public bool BorrarUsuario(int pIdUsuario)
+     
+        // BORRAR USUARIO
+        
+        public bool BorrarUsuario(int iIdUsuario)
         {
-            if (pIdUsuario <= 0) return false;
+            if (iIdUsuario <= 0) return false;
             try
             {
-                return gDaoUsuario.BorrarUsuario(pIdUsuario) > 0;
+                bool bExito = gDaoUsuario.BorrarUsuario(iIdUsuario) > 0;
+
+                if (bExito)
+                {
+                    // Registro en bitácora
+                    gCtrlBitacora.RegistrarAccion(
+                        Cls_UsuarioConectado.iIdUsuario,
+                        3, // Código de acción: eliminar
+                        $"Eliminó usuario con ID: {iIdUsuario}",
+                        true
+                    );
+                }
+
+                return bExito;
             }
             catch
             {
@@ -102,45 +144,55 @@ namespace Capa_Controlador_Seguridad
             }
         }
 
-        // Buscar usuario por ID
-        public Cls_Usuario BuscarUsuarioPorId(int pIdUsuario)
+        
+        // BUSCAR USUARIO POR ID
+        
+        public Cls_Usuario BuscarUsuarioPorId(int iIdUsuario)
         {
-            if (pIdUsuario <= 0) return null;
-            return gDaoUsuario.Query(pIdUsuario);
+            if (iIdUsuario <= 0) return null;
+            return gDaoUsuario.Query(iIdUsuario);
         }
 
-        // Validaciones comunes para insertar y actualizar
+       
+        // VALIDACIONES
+        
         private (bool bExito, string sMensaje) ValidarCamposUsuario(
-            int pIdUsuario,
-            int pFkIdEmpleado,
-            string pNombreUsuario,
-            string pContrasena,
-            string pConfirmarContrasena)
+            int iIdUsuario,
+            int iFkIdEmpleado,
+            string sNombreUsuario,
+            string sContrasena,
+            string sConfirmarContrasena)
         {
-            if (pFkIdEmpleado <= 0)
+            if (iFkIdEmpleado <= 0)
                 return (false, "Debe seleccionar un empleado válido.");
 
-            if (string.IsNullOrWhiteSpace(pNombreUsuario))
+            if (string.IsNullOrWhiteSpace(sNombreUsuario))
                 return (false, "El nombre de usuario no puede estar vacío.");
 
-            if (string.IsNullOrWhiteSpace(pContrasena) || string.IsNullOrWhiteSpace(pConfirmarContrasena))
+            if (string.IsNullOrWhiteSpace(sContrasena) || string.IsNullOrWhiteSpace(sConfirmarContrasena))
                 return (false, "La contraseña y su confirmación no pueden estar vacías.");
 
-            if (pContrasena != pConfirmarContrasena)
+            if (sContrasena != sConfirmarContrasena)
                 return (false, "Las contraseñas no coinciden.");
 
-            bool existeNombre = gDaoUsuario.ObtenerUsuarios()
-                .Any(u => u.sNombreUsuario.Equals(pNombreUsuario, StringComparison.OrdinalIgnoreCase) &&
-                          (pIdUsuario == 0 || u.iPkIdUsuario != pIdUsuario));
+            bool bExisteNombre = gDaoUsuario.ObtenerUsuarios()
+                .Any(u => u.sNombreUsuario.Equals(sNombreUsuario, StringComparison.OrdinalIgnoreCase) &&
+                          (iIdUsuario == 0 || u.iPkIdUsuario != iIdUsuario));
 
-            if (existeNombre)
+            if (bExisteNombre)
                 return (false, "Ya existe un usuario con ese nombre.");
 
             return (true, string.Empty);
         }
-        public int ObtenerIdPerfilDeUsuario(int idUsuario)
+
+      
+        // OBTENER ID PERFIL DE USUARIO
+    
+        public int ObtenerIdPerfilDeUsuario(int iIdUsuario)
         {
-            return gDaoUsuario.ObtenerIdPerfilDeUsuario(idUsuario);
+            return gDaoUsuario.ObtenerIdPerfilDeUsuario(iIdUsuario);
         }
     }
 }
+
+// Pablo Quiroa 0901-22-2929 12/10/2025
