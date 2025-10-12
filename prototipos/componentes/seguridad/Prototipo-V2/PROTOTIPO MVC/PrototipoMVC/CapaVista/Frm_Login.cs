@@ -69,9 +69,11 @@ namespace Capa_Vista_Seguridad
                 ctrlBitacora.RegistrarInicioSesion(idUsuario);
 
                 // Abrir Frm_Principal sin pasar parámetros
-                Frm_Principal menu = new Frm_Principal();
-                menu.Show();
                 this.Hide();
+                Frm_Principal menu = new Frm_Principal();
+                menu.ShowDialog();
+                this.Close();
+                
             }
             else
             {
