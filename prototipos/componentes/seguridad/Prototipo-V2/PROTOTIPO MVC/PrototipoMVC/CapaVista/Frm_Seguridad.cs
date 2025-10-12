@@ -13,8 +13,9 @@ namespace Capa_Vista_Seguridad
 {
     public partial class Frm_Seguridad : Form
     {
-        Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador();  //Controlador de Bitacora
+        Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador();
         private Cls_ControladorAsignacionUsuarioAplicacion controladorPermisos = new Cls_ControladorAsignacionUsuarioAplicacion();
+        private Cls_Asignacion_Permiso_PerfilControlador controladorPermisosPerfil = new Cls_Asignacion_Permiso_PerfilControlador();
         private int iIChildFormNumber = 0;
 
         public enum MenuOpciones
@@ -31,27 +32,27 @@ namespace Capa_Vista_Seguridad
 
         private Dictionary<MenuOpciones, ToolStripMenuItem> menuItems;
 
-
-
         public Frm_Seguridad()
         {
             InitializeComponent();
             InicializarMenuItems();
             fun_inicializar_botones_por_defecto();
-            fun_habilitar_botones_por_permisos(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario);
 
-            // Suscribirse al evento FormClosing
+            fun_habilitar_botones_por_permisos_combinados(
+                Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario,
+                Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdPerfil
+            );
+
             this.FormClosing += Frm_Seguridad_FormClosing;
         }
+
         private void Frm_Seguridad_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason == CloseReason.UserClosing)
             {
-                Application.Exit(); // Cierra todo el programa
+                Application.Exit();
             }
-
         }
-
 
         private void InicializarMenuItems()
         {
@@ -85,14 +86,10 @@ namespace Capa_Vista_Seguridad
             }
         }
 
-        public void fun_habilitar_botones_por_permisos(int iIdUsuario)
+        // 0901-20-4620 Ruben Lopez 12/10/25
+        //0901-22-9663 Brandon Hernandez 12/10/25
+        public void fun_habilitar_botones_por_permisos_combinados(int iIdUsuario, int iIdPerfil)
         {
-            // Inicializar todo deshabilitado
-            fun_inicializar_botones_por_defecto();
-
-            // Obtener permisos desde el Controlador
-            DataTable dtPermisos = controladorPermisos.ObtenerPermisosPorUsuario(iIdUsuario);
-
             // Diccionarios de idAplicacion -> submenú
             Dictionary<int, ToolStripMenuItem> mapaCatalogos = new Dictionary<int, ToolStripMenuItem>
             {
@@ -105,7 +102,7 @@ namespace Capa_Vista_Seguridad
 
             Dictionary<int, ToolStripMenuItem> mapaProcesos = new Dictionary<int, ToolStripMenuItem>
             {
-                {306, asignacionDeAplicacionAUsuarioToolStripMenuItem}
+                {309, procesosToolStripMenuItem }
             };
 
             Dictionary<int, ToolStripMenuItem> mapaAsignaciones = new Dictionary<int, ToolStripMenuItem>
@@ -115,43 +112,55 @@ namespace Capa_Vista_Seguridad
                 {308, asignacionPerfilesToolStripMenuItem}
             };
 
-            // Inicializar submenús deshabilitados
+            // 1. DESHABILITA TODOS LOS SUBMENÚS ANTES DE HABILITAR PERMISOS
             foreach (var sub in mapaCatalogos.Values) sub.Enabled = false;
             foreach (var sub in mapaProcesos.Values) sub.Enabled = false;
             foreach (var sub in mapaAsignaciones.Values) sub.Enabled = false;
 
-            // Recorrer permisos
-            foreach (DataRow row in dtPermisos.Rows)
+            // 2. Permisos por perfil (primer filtro)
+            DataTable dtPermisosPerfil = controladorPermisosPerfil.datObtenerPermisosPorPerfil(iIdPerfil);
+            foreach (DataRow row in dtPermisosPerfil.Rows)
             {
                 int idModulo = Convert.ToInt32(row["fk_id_modulo"]);
                 int idAplicacion = Convert.ToInt32(row["fk_id_aplicacion"]);
-
-                // Solo idModulo = 4 y idAplicacion 301-308
-                if (idModulo == 4 && idAplicacion >= 301 && idAplicacion <= 308)
+                if (idModulo == 4 && idAplicacion >= 301 && idAplicacion <= 309)
                 {
                     if (mapaCatalogos.ContainsKey(idAplicacion))
                         mapaCatalogos[idAplicacion].Enabled = true;
-
                     if (mapaProcesos.ContainsKey(idAplicacion))
                         mapaProcesos[idAplicacion].Enabled = true;
-
                     if (mapaAsignaciones.ContainsKey(idAplicacion))
                         mapaAsignaciones[idAplicacion].Enabled = true;
                 }
             }
 
-            // Habilitar menús principales solo si algún submenú está habilitado
-            if (mapaCatalogos.Values.Any(m => m.Enabled)) menuItems[MenuOpciones.Catalogos].Enabled = true;
-            if (mapaProcesos.Values.Any(m => m.Enabled)) menuItems[MenuOpciones.Procesos].Enabled = true;
-            if (mapaAsignaciones.Values.Any(m => m.Enabled)) menuItems[MenuOpciones.Asignaciones].Enabled = true;
+            // 3. Permisos por usuario (segundo filtro - suma, nunca deshabilita)
+            DataTable dtPermisosUsuario = controladorPermisos.ObtenerPermisosPorUsuario(iIdUsuario);
+            foreach (DataRow row in dtPermisosUsuario.Rows)
+            {
+                int idModulo = Convert.ToInt32(row["fk_id_modulo"]);
+                int idAplicacion = Convert.ToInt32(row["fk_id_aplicacion"]);
+                if (idModulo == 4 && idAplicacion >= 301 && idAplicacion <= 309)
+                {
+                    if (mapaCatalogos.ContainsKey(idAplicacion))
+                        mapaCatalogos[idAplicacion].Enabled = true;
+                    if (mapaProcesos.ContainsKey(idAplicacion))
+                        mapaProcesos[idAplicacion].Enabled = true;
+                    if (mapaAsignaciones.ContainsKey(idAplicacion))
+                        mapaAsignaciones[idAplicacion].Enabled = true;
+                }
+            }
+
+            // 4. Habilita menús principales solo si algún submenú está habilitado
+            menuItems[MenuOpciones.Catalogos].Enabled = mapaCatalogos.Values.Any(m => m.Enabled);
+            menuItems[MenuOpciones.Procesos].Enabled = mapaProcesos.Values.Any(m => m.Enabled);
+            menuItems[MenuOpciones.Asignaciones].Enabled = mapaAsignaciones.Values.Any(m => m.Enabled);
 
             // Modulos siempre habilitar si tiene algún permiso del módulo 4
-            if (mapaCatalogos.ContainsKey(304) && mapaCatalogos[304].Enabled)
-                menuItems[MenuOpciones.Modulos].Enabled = true;
+            menuItems[MenuOpciones.Modulos].Enabled = mapaCatalogos.ContainsKey(304) && mapaCatalogos[304].Enabled;
         }
 
-        // NUEVO MÉTODO PARA CERRAR HIJOS
-        //Brandon Alexander Hernandez Salguero  0901-22-9663
+        // --- El resto de tus métodos siguen igual ---
         private void CerrarFormulariosHijos()
         {
             foreach (Form childForm in this.MdiChildren)
@@ -159,10 +168,6 @@ namespace Capa_Vista_Seguridad
                 childForm.Close();
             }
         }
-
-        // MODIFICA TODOS LOS HANDLERS PARA ABRIR HIJOS
-        //Brandon Alexander Hernandez Salguero 0901-22-9663
-
         private void ShowNewForm(object sender, EventArgs e)
         {
             CerrarFormulariosHijos();
@@ -171,7 +176,6 @@ namespace Capa_Vista_Seguridad
             childForm.Text = "Ventana " + iIChildFormNumber++;
             childForm.Show();
         }
-
         private void empleadosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CerrarFormulariosHijos();
@@ -179,7 +183,6 @@ namespace Capa_Vista_Seguridad
             formEmpleado.MdiParent = this;
             formEmpleado.Show();
         }
-
         private void empleadosToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             CerrarFormulariosHijos();
@@ -187,7 +190,6 @@ namespace Capa_Vista_Seguridad
             formEmpleado.MdiParent = this;
             formEmpleado.Show();
         }
-
         private void perfilesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CerrarFormulariosHijos();
@@ -195,7 +197,6 @@ namespace Capa_Vista_Seguridad
             perfiles.MdiParent = this;
             perfiles.Show();
         }
-
         private void perfilesToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             CerrarFormulariosHijos();
@@ -203,7 +204,6 @@ namespace Capa_Vista_Seguridad
             perfiles.MdiParent = this;
             perfiles.Show();
         }
-
         private void modulosDeCatalogoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CerrarFormulariosHijos();
@@ -211,7 +211,6 @@ namespace Capa_Vista_Seguridad
             formModulo.MdiParent = this;
             formModulo.Show();
         }
-
         private void modulosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CerrarFormulariosHijos();
@@ -219,7 +218,6 @@ namespace Capa_Vista_Seguridad
             modulo.MdiParent = this;
             modulo.Show();
         }
-
         private void usuariosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CerrarFormulariosHijos();
@@ -227,7 +225,6 @@ namespace Capa_Vista_Seguridad
             frm.MdiParent = this;
             frm.Show();
         }
-
         private void Btn_Bitacora_Click(object sender, EventArgs e)
         {
             CerrarFormulariosHijos();
@@ -235,7 +232,6 @@ namespace Capa_Vista_Seguridad
             frm.MdiParent = this;
             frm.Show();
         }
-
         private void asignacionDeAplicacionAUsuarioToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CerrarFormulariosHijos();
@@ -243,7 +239,6 @@ namespace Capa_Vista_Seguridad
             asig_app_user.MdiParent = this;
             asig_app_user.Show();
         }
-
         private void asignacionPerfilesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CerrarFormulariosHijos();
@@ -251,30 +246,18 @@ namespace Capa_Vista_Seguridad
             asig_perfil.MdiParent = this;
             asig_perfil.Show();
         }
-
-        // Los formularios que NO son MDI (ShowDialog) NO necesitan cerrar hijos.
         private void Btn_Aplicacion_Click_1(object sender, EventArgs e)
         {
-            // 1. Cierra todos los formularios hijos MDI existentes (incluyendo Frm_Modulo si está abierto)
             CerrarFormulariosHijos();
-
-            // 2. Crea la nueva instancia del formulario
             FrmAplicacion formAplicacion = new FrmAplicacion();
-
-            // 3. Establece el formulario de Seguridad (this) como el padre MDI
             formAplicacion.MdiParent = this;
-
-            // 4. Muestra el formulario como un hijo MDI
             formAplicacion.Show();
         }
-
         private void cambiarContraseñaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Frm_cambiar_contrasena ventana = new Frm_cambiar_contrasena(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario);
             ventana.Show();
         }
-
-        // Los que no abren formularios hijos no requieren cambio:
         private void OpenFile(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -285,7 +268,6 @@ namespace Capa_Vista_Seguridad
                 string FileName = openFileDialog.FileName;
             }
         }
-
         private void SaveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
@@ -296,36 +278,29 @@ namespace Capa_Vista_Seguridad
                 string FileName = saveFileDialog.FileName;
             }
         }
-
         private void ExitToolsStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
         }
-
         private void CutToolStripMenuItem_Click(object sender, EventArgs e) { }
         private void CopyToolStripMenuItem_Click(object sender, EventArgs e) { }
         private void PasteToolStripMenuItem_Click(object sender, EventArgs e) { }
-
         private void CascadeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             LayoutMdi(MdiLayout.Cascade);
         }
-
         private void TileVerticalToolStripMenuItem_Click(object sender, EventArgs e)
         {
             LayoutMdi(MdiLayout.TileVertical);
         }
-
         private void TileHorizontalToolStripMenuItem_Click(object sender, EventArgs e)
         {
             LayoutMdi(MdiLayout.TileHorizontal);
         }
-
         private void ArrangeIconsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             LayoutMdi(MdiLayout.ArrangeIcons);
         }
-
         private void CloseAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
             foreach (Form childForm in MdiChildren)
@@ -333,7 +308,6 @@ namespace Capa_Vista_Seguridad
                 childForm.Close();
             }
         }
-
         private void cerrarSesiónToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Hide();
@@ -341,10 +315,8 @@ namespace Capa_Vista_Seguridad
             ventanaPrincipal.ShowDialog();
             this.Close();
         }
-
         private void btn_aplicacion_Click(object sender, EventArgs e) { }
         private void asignacionesToolStripMenuItem_Click(object sender, EventArgs e) { }
-
         private void asignacionDeAplicacionAPerfilesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CerrarFormulariosHijos();
@@ -352,6 +324,5 @@ namespace Capa_Vista_Seguridad
             asig_app_user.MdiParent = this;
             asig_app_user.Show();
         }
-
     }
 }

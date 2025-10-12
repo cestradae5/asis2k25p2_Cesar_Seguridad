@@ -109,7 +109,8 @@ namespace Capa_Modelo_Seguridad
         /// </summary>
         /// <param name="idUsuario">ID del usuario</param>
         /// <returns>DataTable con los perfiles (ID y nombre) asignados al usuario</returns>
-        public DataTable datObtenerPerfilesPorUsuario(int idUsuario)
+        /// //0901-22-9663 Brandon Hernandez 12/10/2025
+        public DataTable datObtenerPerfilesPorUsuario(int iIdUsuario)
         {
             DataTable dt = new DataTable();
             string query = @"
@@ -122,7 +123,7 @@ namespace Capa_Modelo_Seguridad
             {
                 using (OdbcCommand cmd = new OdbcCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("@Fk_Id_Usuario", idUsuario);
+                    cmd.Parameters.AddWithValue("@Fk_Id_Usuario", iIdUsuario);
                     using (OdbcDataAdapter da = new OdbcDataAdapter(cmd))
                     {
                         da.Fill(dt); // Llena el DataTable con los perfiles asignados al usuario
