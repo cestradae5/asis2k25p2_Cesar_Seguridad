@@ -169,8 +169,6 @@ namespace Capa_Modelo_Seguridad
 
             return filasAfectadas;
         }
-
-        // Dentro de la clase Cls_Asignacion_Permiso_PerfilesDAO
         public DataTable datObtenerAplicacionesPorModulo(int iIdModulo)
         {
             DataTable dt = new DataTable();
@@ -206,16 +204,9 @@ namespace Capa_Modelo_Seguridad
             }
             return dt;
         }
-        // Dentro de la clase Cls_Asignacion_Permiso_PerfilesDAO
         public DataTable datObtenerPermisosPorPerfil(int iIdPerfil)
         {
             DataTable dt = new DataTable();
-
-            // Consulta JOIN para obtener:
-            // 1. Nombre del Perfil (p.Cmp_Puesto_Perfil)
-            // 2. Nombre de la Aplicación (a.Cmp_Nombre_Aplicacion)
-            // 3. Los 5 booleanos de permisos (ppa.*)
-            // 4. Los IDs para columnas ocultas (ppa.*)
             string query = @"
         SELECT 
             p.Cmp_Puesto_Perfil AS nombre_perfil,
@@ -231,15 +222,13 @@ namespace Capa_Modelo_Seguridad
         FROM Tbl_Permiso_Perfil_Aplicacion ppa
         INNER JOIN Tbl_Perfil p ON ppa.Fk_Id_Perfil = p.Pk_Id_Perfil
         INNER JOIN Tbl_Aplicacion a ON ppa.Fk_Id_Aplicacion = a.Pk_Id_Aplicacion
-        WHERE ppa.Fk_Id_Perfil = ?"; // Filtra por el ID de Perfil
-
+        WHERE ppa.Fk_Id_Perfil = ?";
             try
             {
                 using (OdbcConnection conn = conexion.conexion())
                 {
                     using (OdbcCommand cmd = new OdbcCommand(query, conn))
                     {
-                        // Parámetro para el WHERE
                         cmd.Parameters.AddWithValue("?", iIdPerfil);
                         using (OdbcDataAdapter da = new OdbcDataAdapter(cmd))
                         {
@@ -250,8 +239,8 @@ namespace Capa_Modelo_Seguridad
             }
             catch (Exception ex)
             {
+                // Opcional: log o manejo de error
                 Console.WriteLine("Error al obtener permisos por perfil: " + ex.Message);
-                // Si hay un error, el DataTable estará vacío.
             }
             return dt;
         }

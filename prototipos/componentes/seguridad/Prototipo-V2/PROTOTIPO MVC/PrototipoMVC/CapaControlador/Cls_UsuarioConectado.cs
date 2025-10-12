@@ -11,22 +11,23 @@ namespace Capa_Controlador_Seguridad
         //Nombre del usuario logueado
         public static string sNombreUsuario { get; set; }
 
+        //ID del perfil del usuario logueado
+        public static int iIdPerfil { get; set; } // <-- AGREGA ESTA LINEA
+
         //Estado de login: true = conectado, false = desconectado
         public static bool bLoginEstado { get; set; }
 
-      
-
-        public static void IniciarSesion(int idUsuario, string nombreUsuario)
+        public static void IniciarSesion(int idUsuario, string nombreUsuario, int idPerfil)
         {
             iIdUsuario = idUsuario;
             sNombreUsuario = nombreUsuario;
             bLoginEstado = true;
+            iIdPerfil = idPerfil; // <-- AHORA ESTA ASIGNACION FUNCIONA
         }
 
         public static void CerrarSesion()
         {
             bLoginEstado = false;
         }
-
     }
 }

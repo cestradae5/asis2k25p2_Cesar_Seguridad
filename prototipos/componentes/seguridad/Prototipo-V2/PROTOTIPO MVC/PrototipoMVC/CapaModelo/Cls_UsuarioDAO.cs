@@ -150,5 +150,23 @@ namespace Capa_Modelo_Seguridad
             }
             return usr;
         }
+        public int ObtenerIdPerfilDeUsuario(int idUsuario)
+        {
+            int idPerfil = 0;
+            string sql = "SELECT Fk_Id_Perfil FROM Tbl_Usuario_Perfil WHERE Fk_Id_Usuario = ?";
+
+            using (OdbcConnection conn = conexion.conexion())
+            {
+                OdbcCommand cmd = new OdbcCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@Fk_Id_Usuario", idUsuario);
+
+                var result = cmd.ExecuteScalar();
+                if (result != null && result != DBNull.Value)
+                {
+                    idPerfil = Convert.ToInt32(result);
+                }
+            }
+            return idPerfil;
+        }
     }
 }
