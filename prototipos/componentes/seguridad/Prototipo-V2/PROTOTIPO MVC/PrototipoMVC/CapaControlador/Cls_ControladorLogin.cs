@@ -1,4 +1,4 @@
-﻿///Pablo Quiroa 0901-22-2929 
+﻿// Pablo Jose Quiroa Martínez - 0901-22-2929
 using System;
 using System.Data.Odbc;
 using Capa_Modelo_Seguridad;
@@ -7,57 +7,63 @@ namespace Capa_Controlador_Seguridad
 {
     public class Cls_ControladorLogin
     {
-        private Cls_SentenciaLogin sl = new Cls_SentenciaLogin();
+        private Cls_SentenciaLogin gClsSentenciaLogin = new Cls_SentenciaLogin();
 
-       
-     
-      
-        public bool autenticarUsuario(string usuario, string contrasena, out string mensaje, out int idUsuario, out string nombreUsuarioReal)
+        
+        // MÉTODO: Autenticar Usuario
+        
+        public bool autenticarUsuario(
+            string sUsuario,
+            string sContrasena,
+            out string sMensaje,
+            out int iIdUsuario,
+            out string sNombreUsuarioReal)
         {
-            idUsuario = 0;
-            nombreUsuarioReal = "";
-            mensaje = "";
-            OdbcDataReader reader = sl.validarLogin(usuario);
+            iIdUsuario = 0;
+            sNombreUsuarioReal = "";
+            sMensaje = "";
 
-            if (reader != null && reader.Read())
+            OdbcDataReader oReader = gClsSentenciaLogin.fun_ValidarLogin(sUsuario);
+
+            if (oReader != null && oReader.Read())
             {
-                idUsuario = reader.GetInt32(0);
-                nombreUsuarioReal = reader.GetString(1);
-                string contrasenaBD = reader.GetString(2);
-                int intentosFallidos = reader.GetInt32(3);
-                string estado = reader.GetString(4);
+                iIdUsuario = oReader.GetInt32(0);
+                sNombreUsuarioReal = oReader.GetString(1);
+                string sContrasenaBD = oReader.GetString(2);
+                int iIntentosFallidos = oReader.GetInt32(3);
+                string sEstado = oReader.GetString(4);
 
-               
-                if (estado == "Bloqueado")
+                // Validar si el usuario está bloqueado
+                if (sEstado == "Bloqueado")
                 {
-                    mensaje = "El usuario está bloqueado.";
+                    sMensaje = "El usuario está bloqueado.";
                     return false;
                 }
 
-             
-                string hashIngresado = Cls_SeguridadHashControlador.HashearSHA256(contrasena);
+                // Hash de la contraseña ingresada
+                string sHashIngresado = Cls_SeguridadHashControlador.HashearSHA256(sContrasena);
 
-                if (contrasenaBD == hashIngresado)
+                if (sContrasenaBD == sHashIngresado)
                 {
-                   
-                    sl.actualizarIntentos(idUsuario, 0);
-                    mensaje = "Bienvenido " + nombreUsuarioReal;
+                    // Reiniciar intentos fallidos
+                    gClsSentenciaLogin.fun_ActualizarIntentos(iIdUsuario, 0);
+                    sMensaje = "Bienvenido " + sNombreUsuarioReal;
                     return true;
                 }
                 else
                 {
-                    
-                    intentosFallidos++;
-                    sl.actualizarIntentos(idUsuario, intentosFallidos);
+                    // Aumentar intentos fallidos
+                    iIntentosFallidos++;
+                    gClsSentenciaLogin.fun_ActualizarIntentos(iIdUsuario, iIntentosFallidos);
 
-                    if (intentosFallidos >= 3)
+                    if (iIntentosFallidos >= 3)
                     {
-                        sl.bloquearUsuario(idUsuario, "Exceso de intentos incorrectos");
-                        mensaje = "Usuario bloqueado por muchos intentos incorrectos.";
+                        gClsSentenciaLogin.fun_BloquearUsuario(iIdUsuario, "Exceso de intentos incorrectos");
+                        sMensaje = "Usuario bloqueado por múltiples intentos incorrectos.";
                     }
                     else
                     {
-                        mensaje = "Contraseña incorrecta. Intentos: " + intentosFallidos;
+                        sMensaje = $"Contraseña incorrecta. Intentos: {iIntentosFallidos}";
                     }
 
                     return false;
@@ -65,11 +71,11 @@ namespace Capa_Controlador_Seguridad
             }
             else
             {
-                mensaje = "No se encontró el usuario.";
+                sMensaje = "No se encontró el usuario.";
                 return false;
             }
         }
     }
 }
 
-
+// Pablo Jose Quiroa Martínez - 0901-22-2929 12/10/2025

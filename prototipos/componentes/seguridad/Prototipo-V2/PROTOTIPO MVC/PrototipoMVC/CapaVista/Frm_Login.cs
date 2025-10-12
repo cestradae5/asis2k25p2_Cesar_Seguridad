@@ -1,79 +1,87 @@
-﻿using System; //0901-22-2929 Pablo Jose Quiroa Martinez
+﻿// Pablo Jose Quiroa Martínez - 0901-22-2929
+using System;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using Capa_Controlador_Seguridad;
-
 
 namespace Capa_Vista_Seguridad
 {
     public partial class Frm_Login : Form
     {
-        Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador(); // Bitacora
-        Cls_ControladorLogin cn = new Cls_ControladorLogin();
-        Cls_UsuarioControlador usuarioControlador = new Cls_UsuarioControlador();
+        
+        // VARIABLES GLOBALES
+      
+        private Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador(); // Bitácora
+        private Cls_ControladorLogin cn = new Cls_ControladorLogin();
+        private Cls_UsuarioControlador gUsuarioControlador = new Cls_UsuarioControlador();
 
+        
+        // CONSTRUCTOR
+        
         public Frm_Login()
         {
             InitializeComponent();
             txtContrasena.UseSystemPasswordChar = true;
             this.FormClosing += Frm_Login_FormClosing;
         }
+
         private void Frm_Login_FormClosing(object sender, FormClosingEventArgs e)
         {
-            // Si el cierre fue con el botón "X" o cualquier otra forma
+          
             if (e.CloseReason == CloseReason.UserClosing)
             {
                 Application.Exit();
             }
         }
 
-
+        
+        // EVENTOS CHECKBOX
+       
         private void chkMostrarContrasena_CheckedChanged(object sender, EventArgs e)
         {
-            if (chkMostrarContrasena.Checked)
-                txtContrasena.UseSystemPasswordChar = false; // Mostrar
-            else
-                txtContrasena.UseSystemPasswordChar = true;  // Ocultar
+            txtContrasena.UseSystemPasswordChar = !chkMostrarContrasena.Checked;
         }
 
+        
+        // LINK RECUPERAR CONTRASEÑA
+        
         private void lblkRecuperarContrasena_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Frm_RecuperarContrasena ventana = new Frm_RecuperarContrasena();
-            ventana.Show();
+            Frm_RecuperarContrasena frmRecuperar = new Frm_RecuperarContrasena();
+            frmRecuperar.Show();
             this.Hide();
         }
 
+        
+        // BOTÓN INICIAR SESIÓN
+     
         private void btnIniciarSesion_Click(object sender, EventArgs e)
         {
-            string usuario = txtUsuario.Text.Trim();
-            string contrasena = txtContrasena.Text.Trim();
-            string nombreUsuarioReal = "";
+            string sUsuario = txtUsuario.Text.Trim();
+            string sContrasena = txtContrasena.Text.Trim();
+            string sNombreUsuarioReal = "";
 
-            string mensaje;
-            bool loginExitoso = cn.autenticarUsuario(usuario, contrasena, out mensaje, out int idUsuario, out nombreUsuarioReal);
+            string sMensaje;
+            bool bLoginExitoso = cn.autenticarUsuario(sUsuario, sContrasena, out sMensaje, out int iIdUsuario, out sNombreUsuarioReal);
 
-            MessageBox.Show(mensaje);
+            MessageBox.Show(sMensaje);
 
-            if (loginExitoso)
+            if (bLoginExitoso)
             {
+                int iIdPerfil = gUsuarioControlador.ObtenerIdPerfilDeUsuario(iIdUsuario);
 
-                //0901-22-9663 Brandon Hernandez 0901-22-9663
-                int idPerfil = usuarioControlador.ObtenerIdPerfilDeUsuario(idUsuario);
-
-                // Guarda todos los datos de sesión correctamente
-                Cls_UsuarioConectado.IniciarSesion(idUsuario, nombreUsuarioReal, idPerfil);
-                MessageBox.Show("Perfil asignado: " + idPerfil);
-
+                // Guardar sesión
+                Cls_UsuarioConectado.IniciarSesion(iIdUsuario, sNombreUsuarioReal, iIdPerfil);
+                MessageBox.Show("Perfil asignado: " + iIdPerfil);
 
                 // Registrar inicio en bitácora
-                ctrlBitacora.RegistrarInicioSesion(idUsuario);
+                ctrlBitacora.RegistrarInicioSesion(iIdUsuario);
 
-                // Abrir Frm_Principal sin pasar parámetros
+                // Abrir Frm_Principal
                 this.Hide();
-                Frm_Principal menu = new Frm_Principal();
-                menu.ShowDialog();
+                Frm_Principal frmMenu = new Frm_Principal();
+                frmMenu.ShowDialog();
                 this.Close();
-                
             }
             else
             {
@@ -82,13 +90,9 @@ namespace Capa_Vista_Seguridad
             }
         }
 
-
         private void frmLogin_Load(object sender, EventArgs e) { }
 
-
-        // panel superior
-        //0901-20-4620 Rubén Armando López Luch
-
+        
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HTCAPTION = 0x2;
 
@@ -107,10 +111,10 @@ namespace Capa_Vista_Seguridad
         {
             if (e.Button == MouseButtons.Left)
             {
-                ReleaseCapture(); 
-                SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0); 
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
             }
-
         }
     }
 }
+// Pablo Quiroa 0901-22-2929 12/10/2025

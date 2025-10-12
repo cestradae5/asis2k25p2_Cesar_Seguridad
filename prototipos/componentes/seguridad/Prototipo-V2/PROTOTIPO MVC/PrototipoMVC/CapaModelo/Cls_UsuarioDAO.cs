@@ -1,4 +1,4 @@
-﻿// Jose Quiroa Martínez - DAO para Tbl_Usuario
+﻿// Pablo Quiroa 0901-22-2929
 using System;
 using System.Collections.Generic;
 using System.Data.Odbc;
@@ -170,3 +170,5 @@ namespace Capa_Modelo_Seguridad
         }
     }
 }
+
+// Pablo Quiroa 0901-22-2929
