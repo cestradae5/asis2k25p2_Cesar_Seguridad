@@ -15,8 +15,8 @@ namespace Capa_Vista_Componente_Consultas
 {
     public partial class Frm_Consulta_Compleja : Form
     {
-        private const string sDsn = "Prueba1";
-        public const string sDB = "controlempleados";
+        private const string sDsn = "Consultas";
+        public const string sDB = "consultas";
 
         private Controlador oControlador;
         private string sTablaActual = null;
@@ -119,7 +119,7 @@ namespace Capa_Vista_Componente_Consultas
             };
 
 
-            // // ---- Lógica Nelson Jose Godínez Méndez 0901-22-3550 26/09/2025
+            // // ---- Lógica EDITADA DE NUEVO Nelson Jose Godínez Méndez 0901-22-3550 26/09/2025 y 11/10/2025
             Btn_AgregarCond.Click += (s, e) =>
             {
                 if (!Chk_AgregarCondiciones.Checked) return;
@@ -215,7 +215,7 @@ namespace Capa_Vista_Componente_Consultas
 
 
 
-            // ---- Agrupar/Ordenar Bryan Raul Ramirez Lopez 0901-21-8202 26/09/2025
+            // ---- Agrupar/Ordenar Bryan Raul Ramirez Lopez 0901-21-8202 26/09/2025 y 11/10/2025
             Btn_AgregarOrden.Click += (s, e) =>
             {
                 if (Cbo_AgruparOrdenar.SelectedItem == null || Cbo_CampoOrdenar.SelectedItem == null)
@@ -245,7 +245,7 @@ namespace Capa_Vista_Componente_Consultas
 
 
 
-            // ---- Ejecutar  Juan Carlos Sandoval Quej 0901-22-4170 26/09/2025
+            // ---- Ejecutar  Juan Carlos Sandoval Quej 0901-22-4170 26/09/2025 y 11/10/2025
             Btn_Ejecutar.Click += (s, e) =>
             {
                 string sMsg; Control oFoco;
@@ -287,14 +287,14 @@ namespace Capa_Vista_Componente_Consultas
             // ---- Limpiar
             Btn_Limpiar.Click += delegate { LimpiarTodo(); };
 
-            // ---- Consultas guardadas Diego Fernando Saquil Gramajo 0901-22-4103 26/09/2025
+            // ---- Consultas guardadas Diego Fernando Saquil Gramajo 0901-22-4103 26/09/2025 y 11/10/2025
             Btn_AgregarConsulta.Click += (s, e) =>
             {
                 string sMsg; Control oFoco;
                 if (!ValidarParaGuardarEditar(out sMsg, out oFoco))
                 { MostrarError(sMsg, oFoco); return; }
 
-                GuardarConsultaAuto(); // tu lógica actual
+                GuardarConsultaAuto(); 
             };
 
 
@@ -369,7 +369,7 @@ namespace Capa_Vista_Componente_Consultas
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
-                // <<<<<< APLICAR CAMBIOS DE LA UI A LAS LISTAS >>>>>>
+                //  APLICAR CAMBIOS DE LA UI A LAS LISTAS 
                 AplicarEdicionEnListasDesdeUI();
 
                 string sSql = oControlador.ConstruirSql(
@@ -514,7 +514,7 @@ namespace Capa_Vista_Componente_Consultas
             if (_editandoConsulta) _requiereAgregar = true;
         }
 
-        //Ayudas Nelson Jose Godinez Mendez 0901-22-3550 26/09/2025
+        //Ayudas  o HELPERS Nelson Jose Godinez Mendez 0901-22-3550 26/09/2025
         private void CargarColumnas(string tabla)
         {
             Cbo_CampoCond.Items.Clear();
@@ -713,7 +713,7 @@ namespace Capa_Vista_Componente_Consultas
                 PrevisualizarTabla(sTablaActual);
         }
 
-        // ----------------- WHERE building / BETWEEN UI ----------------- Diego Fernando Saquil Gramajo 0901-22-4103
+        // ----------------- WHERE building / BETWEEN UI ----------------- Diego Fernando Saquil Gramajo 0901-22-4103 editado 11/10/2025
         private void AgregarWhere(string pieza, string operador)
         {
             if (lstPartesWhere.Count == 0 || string.IsNullOrEmpty(operador)) lstPartesWhere.Add(pieza);
@@ -776,10 +776,7 @@ namespace Capa_Vista_Componente_Consultas
                 if (Txt_ValorCompMax != null) Txt_ValorCompMax.Clear();
             }
         }
-
-
-        // ----------------- Guardar/Listar consultas Juan Carlos Sandoval Quej 0901-22-4170 26/09/2025
-        // ----------------- Guardar/Listar consultas -----------------
+        // ----------------- Guardar/Listar consultas ------------------
         // CAMBIO Nelson Godínez 0901-22-3550 (10/10/2025)
         // - Se obliga a ingresar un nombre no vacío para guardar.
         // - Si está vacío, se muestra alerta y NO se guarda.
@@ -807,7 +804,7 @@ namespace Capa_Vista_Componente_Consultas
                     "Ingresa el nombre con el que deseas guardar la consulta:"
                 );
 
-                // Si el usuario presiona Cancelar -> abortamos guardado
+                // Si el usuario presiona Cancelar -> se canela el guardado
                 if (inputNombre == null)
                     return;
 
@@ -829,7 +826,7 @@ namespace Capa_Vista_Componente_Consultas
 
             try
             {
-                // Si el nombre ya existe, se desambigua con _1, _2, ...
+                // Si el nombre ya existe, se desambigua con _1, _2
                 var existentes = new HashSet<string>(
                     oControlador.ListarConsultasPlano().Select(kv => kv.Key),
                     StringComparer.OrdinalIgnoreCase);
@@ -865,13 +862,8 @@ namespace Capa_Vista_Componente_Consultas
                 return;
             }
         }
-
-
-        // -----------------------------------------------------------------------------
-        // Método auxiliar: cuadro de entrada simple sin usar Microsoft.VisualBasic
         // Realizado por: Nelson Godínez 0901-22-3550 (10/10/2025)
         // Devuelve el texto ingresado o null si el usuario cancela.
-        // -----------------------------------------------------------------------------
         private static string ShowInputBox(string titulo, string mensaje)
         {
             using (Form form = new Form())
@@ -903,11 +895,6 @@ namespace Capa_Vista_Componente_Consultas
                 return form.ShowDialog() == DialogResult.OK ? textBox.Text : null;
             }
         }
-
-
-
-
-
         private void CargarConsultasGuardadas()
         {
             try
@@ -921,7 +908,7 @@ namespace Capa_Vista_Componente_Consultas
             catch { /* Si algo falla, simplemente lo ignora */ }
         }
 
-        // ----------------- Editar: SQL -> UI Bryan Raul Ramirez Lopez 0901-21-8202 + Nelson Godínez 0901-22-3550
+        // ----------------- Editar: SQL -> UI Bryan Raul Ramirez Lopez 0901-21-8202 + Nelson Godínez 0901-22-3550 editado 11/10/2025
         private void CargarConsultaDesdeSql(string sql)
         {
             _editandoConsulta = true;
@@ -954,7 +941,7 @@ namespace Capa_Vista_Componente_Consultas
                     var c = conds[i];
                     string pieza = BuildPiezaFromCond(c.Campo, c.Operador, c.Valor1, c.Valor2);
                     string con = (i == 0) ? null : (string.IsNullOrEmpty(c.Conector) ? "AND" : c.Conector);
-                    AgregarWhere(pieza, con); // tu método existente que mete conector cuando no es el 1º
+                    AgregarWhere(pieza, con); 
                 }
 
 
@@ -1112,9 +1099,6 @@ namespace Capa_Vista_Componente_Consultas
             Chk_AgregarCondiciones.Checked = true;
             ToggleBetweenControls();
         }
-
-
-
         // ----------------- Utils Diego Fernando Saquil Gramajo 0901-22-4103
         private class ComboItem
         {
@@ -1123,7 +1107,6 @@ namespace Capa_Vista_Componente_Consultas
             public ComboItem(string texto, string valor) { Texto = texto; Valor = valor; }
             public override string ToString() { return Texto; }
         }
-
         private static string Esc(string s)
         {
             return (s ?? string.Empty).Replace("'", "''");
@@ -1231,10 +1214,7 @@ namespace Capa_Vista_Componente_Consultas
             }
             return true;
         }
-
-        /// <summary>
-        /// Valida antes de AGREGAR la condición LÓGICA (= operador fijo '=').
-        /// </summary>
+        // Valida antes de AGREGAR la condición LÓGICA (= operador fijo '=').
         private bool ValidarLogicaParaAgregar(out string sMsg, out Control oFoco)
         {
             sMsg = null; oFoco = null;
@@ -1254,10 +1234,7 @@ namespace Capa_Vista_Componente_Consultas
 
             return true;
         }
-
-        /// <summary>
         /// Valida antes de AGREGAR la COMPARACIÓN (operador elegido).
-        /// </summary>
         private bool ValidarComparacionParaAgregar(out string sMsg, out Control oFoco)
         {
             sMsg = null; oFoco = null;
@@ -1293,10 +1270,7 @@ namespace Capa_Vista_Componente_Consultas
 
             return true;
         }
-
-        /// <summary>
         /// Valida antes de AGREGAR agrupar/ordenar.
-        /// </summary>
         private bool ValidarOrdenParaAgregar(out string sMsg, out Control oFoco)
         {
             sMsg = null; oFoco = null;
@@ -1314,13 +1288,7 @@ namespace Capa_Vista_Componente_Consultas
             }
             return true;
         }
-
-        /// <summary>
         /// Valida el formulario para GUARDAR/EDITAR consulta.
-        /// - Debe haber tabla.
-        /// - Si 'Agregar condiciones' está activo, debe existir al menos una pieza o estar todo completo para poder construirla.
-        /// - Si hay modo GROUP/ORDER elegido, que esté completo.
-        /// </summary>
         private bool ValidarParaGuardarEditar(out string sMsg, out Control oFoco)
         {
             sMsg = null; oFoco = null;
@@ -1399,7 +1367,7 @@ namespace Capa_Vista_Componente_Consultas
             return true;
         }
 
-        // Sincroniza los dos bloques visibles (Lógica y Comparación) con _partesWhere
+        // Sincroniza los dos bloques visibles (Lógica y Comparación) con lstPartesWhere
         private void AplicarEdicionEnListasDesdeUI()
         {
             if (!Chk_AgregarCondiciones.Checked) return;

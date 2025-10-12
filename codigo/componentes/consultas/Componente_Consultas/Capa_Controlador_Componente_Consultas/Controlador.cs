@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -10,56 +9,112 @@ namespace Capa_Controlador_Consultas
 {
     public interface IConsultasRepo
     {
-        List<KeyValuePair<string, string>> Listar();       // nombre -> SQL
+        System.Collections.Generic.List<System.Collections.Generic.KeyValuePair<string, string>> Listar(); // nombre -> SQL
         void Guardar(string sNombre, string sSql);
         bool Eliminar(string sNombre);
     }
-    //Juan Carlos Sandoval Quej 0901-22-4170 22/09/2025
-    public class Controlador
+}
+
+// Juan Carlos Sandoval Quej 0901-22-4170 22/09/2025
+public class Controlador
     {
-        private readonly IConsultasRepo _repo;
-        public Controlador(string sDsn, string sDb, IConsultasRepo repo /*, ...*/)
-        {
-            // ...conexion...
-            _repo = repo;
-        }
         // Referencia al modelo (clase Sentencias) que se encarga de hablar con la base de datos
         private readonly Sentencias _m;
         // Nombre de la base de datos con la que vamos a trabajar
         private readonly string _db;
-        // Caché para guardar las columnas de cada tabla con su nombre y tipo de dato
-        // Esto evita tener que consultar a la base de datos cada vez
-        private readonly Dictionary<string, List<(string Name, string DataType)>> scolsCache =
-        new Dictionary<string, List<(string Name, string DataType)>>(StringComparer.OrdinalIgnoreCase);
 
-        // Constructor: recibe un DSN (nombre de la conexión ODBC) y el nombre de la base de datos
+        // Caché de columnas (nombre y tipo) por tabla
+        private readonly Dictionary<string, List<(string Name, string DataType)>> _colsCache =
+            new Dictionary<string, List<(string Name, string DataType)>>(StringComparer.OrdinalIgnoreCase);
+
+        // Tablas que NO deben mostrarse al usuario en el combo de "Nombre de tabla"
+        private static readonly HashSet<string> _tablasOcultas =
+            new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+            {
+                "consultas_guardadas" // agrega aquí otras que quieras ocultar
+            };
+
+        // Constructor: recibe un DSN (ODBC) y el nombre de la BD
         public Controlador(string dsn, string db)
         {
-            // Si no se pasa nombre de base de datos, lanza un error
             if (db == null) throw new ArgumentNullException(nameof(db));
-            _db = db; // guarda el nombre de la BD
-            _m = new Sentencias(dsn, db); // crea un objeto Sentencias con DSN y BD
+            _db = db;
+            _m = new Sentencias(dsn, db);
         }
 
-        public DataTable EjecutarConsulta(string sql) { return _m.EjecutarConsulta(sql); }
-        public List<string> ObtenerTablas() { return _m.ObtenerTablas(); }
-        public List<string> ObtenerColumnas(string tabla) { return _m.ObtenerColumnas(tabla); }
-        public List<KeyValuePair<string, string>> ListarConsultasPlano() { return _m.ListarConsultasPlano(); }
-        public void GuardarConsulta(string name, string sql) { _m.GuardarConsulta(name, sql); }
-        public bool EliminarConsulta(string name) { return _m.EliminarConsulta(name); }
+        //  EJECUCIÓN Y METADATOS
+
+        public DataTable EjecutarConsulta(string sql)
+        {
+            return _m.EjecutarConsulta(sql);
+        }
+        public DataTable EjecutarConsulta(string sql, string nombreConsultaGuardada)
+        {
+            var dt = _m.EjecutarConsulta(sql);
+            if (!string.IsNullOrWhiteSpace(nombreConsultaGuardada))
+            {
+                try { _m.Db_IncrementarEjecucion(nombreConsultaGuardada); } catch { /* noop */ }
+            }
+            return dt;
+        }
+
+        public List<string> ObtenerTablas()
+        {
+            var tablas = _m.ObtenerTablas() ?? new List<string>();
+            tablas.RemoveAll(t => _tablasOcultas.Contains(t));
+            return tablas;
+        }
+
+        public List<string> ObtenerColumnas(string tabla)
+        {
+            return _m.ObtenerColumnas(tabla);
+        }
 
         public List<(string Name, string DataType)> ObtenerColumnasTipadas(string tabla)
         {
             List<(string, string)> list;
-            if (!scolsCache.TryGetValue(tabla, out list))
+            if (!_colsCache.TryGetValue(tabla, out list))
             {
                 list = _m.ObtenerColumnasTipadas(tabla);
-                scolsCache[tabla] = list;
+                _colsCache[tabla] = list;
             }
             return list;
         }
-        //Bryan Raul Ramirez Lopez 0901-21-8202 22/09/2025
-        // Construcción SQL
+        //  CONSULTAS GUARDADAS (BD)
+
+        /// Devuelve nombre -> SQL (ordenado) desde la tabla consultas_guardadas. 
+        public List<KeyValuePair<string, string>> ListarConsultasPlano()
+        {
+            return _m.Db_ListarConsultasPlano();
+        }
+
+        /// Inserta/actualiza una consulta guardada por nombre. 
+        public void GuardarConsulta(string nombre, string sql)
+        {
+            _m.Db_GuardarConsulta(nombre, sql, null, null);
+        }
+
+        /// Inserta/actualiza con tabla/descripcion opcionales. 
+        public void GuardarConsulta(string nombre, string sql, string tabla, string descripcion)
+        {
+            _m.Db_GuardarConsulta(nombre, sql, tabla, descripcion);
+        }
+
+        /// Elimina por nombre.
+        public bool EliminarConsulta(string nombre)
+        {
+            return _m.Db_EliminarConsulta(nombre);
+        }
+
+        /// Marca ejecución de una consulta guardada (contador/fecha). 
+        public void MarcarEjecucionConsulta(string nombre)
+        {
+            if (!string.IsNullOrWhiteSpace(nombre))
+                _m.Db_IncrementarEjecucion(nombre);
+        }
+        //  CONSTRUCCIÓN / REESCRITURA SQL
+
+        // Bryan Raul Ramirez Lopez 0901-21-8202 22/09/2025
         public string ConstruirSql(string tabla, bool addWhere, IList<string> whereParts, IList<string> groupOrderParts)
         {
             if (string.IsNullOrWhiteSpace(tabla)) return string.Empty;
@@ -121,7 +176,8 @@ namespace Capa_Controlador_Consultas
                                  "SELECT " + sb.ToString() + " FROM",
                                  RegexOptions.IgnoreCase);
         }
-        //Diego Fernando Saquil Gramajo 0901-22-4103 09/22/2025
+
+        // Diego Fernando Saquil Gramajo 0901-22-4103 09/22/2025
         // Parser WHERE -> tuplas
         public IEnumerable<(string Conector, string Campo, string Operador, string Valor1, string Valor2)> ParsearWhere(string sql)
         {
@@ -131,7 +187,6 @@ namespace Capa_Controlador_Consultas
             if (!m.Success) return res;
 
             string expr = m.Groups["expr"].Value;
-
             var tokens = Regex.Split(expr, @"\s+(AND|OR)\s+", RegexOptions.IgnoreCase);
             string con = null;
 
@@ -146,35 +201,42 @@ namespace Capa_Controlador_Consultas
                 }
                 if (t.Length == 0) continue;
 
-                var mb = Regex.Match(t, @"`?(?<col>[^`\s]+)`?\s+BETWEEN\s+(?<v1>[^ ]+)\s+AND\s+(?<v2>[^ ]+)", RegexOptions.IgnoreCase);
+                var mb = Regex.Match(t, @"`?(?<col>[^`\s]+)`?\s+BETWEEN\s+(?<v1>[^ ]+)\s+AND\s+(?<v2>[^ ]+)",
+                                     RegexOptions.IgnoreCase);
                 if (mb.Success)
                 {
                     res.Add((con ?? "", mb.Groups["col"].Value, "BETWEEN",
-                            mb.Groups["v1"].Value, mb.Groups["v2"].Value));
+                             mb.Groups["v1"].Value, mb.Groups["v2"].Value));
                     con = "AND";
                     continue;
                 }
 
-                var mnull = Regex.Match(t, @"`?(?<col>[^`\s]+)`?\s+(IS\s+NOT\s+NULL|IS\s+NULL)", RegexOptions.IgnoreCase);
+                var mnull = Regex.Match(t, @"`?(?<col>[^`\s]+)`?\s+(IS\s+NOT\s+NULL|IS\s+NULL)",
+                                        RegexOptions.IgnoreCase);
                 if (mnull.Success)
                 {
-                    res.Add((con ?? "", mnull.Groups["col"].Value, mnull.Groups[1].Value.ToUpperInvariant(), "", ""));
+                    res.Add((con ?? "", mnull.Groups["col"].Value,
+                             mnull.Groups[1].Value.ToUpperInvariant(), "", ""));
                     con = "AND";
                     continue;
                 }
 
-                var ml = Regex.Match(t, @"`?(?<col>[^`\s]+)`?\s+LIKE\s+(?<v1>.+)$", RegexOptions.IgnoreCase);
+                var ml = Regex.Match(t, @"`?(?<col>[^`\s]+)`?\s+LIKE\s+(?<v1>.+)$",
+                                     RegexOptions.IgnoreCase);
                 if (ml.Success)
                 {
-                    res.Add((con ?? "", ml.Groups["col"].Value, "LIKE", ml.Groups["v1"].Value, ""));
+                    res.Add((con ?? "", ml.Groups["col"].Value, "LIKE",
+                             ml.Groups["v1"].Value, ""));
                     con = "AND";
                     continue;
                 }
 
-                var mop = Regex.Match(t, @"`?(?<col>[^`\s]+)`?\s*(?<op>=|<>|>=|<=|>|<)\s*(?<v1>.+)$", RegexOptions.IgnoreCase);
+                var mop = Regex.Match(t, @"`?(?<col>[^`\s]+)`?\s*(?<op>=|<>|>=|<=|>|<)\s*(?<v1>.+)$",
+                                      RegexOptions.IgnoreCase);
                 if (mop.Success)
                 {
-                    res.Add((con ?? "", mop.Groups["col"].Value, mop.Groups["op"].Value, mop.Groups["v1"].Value, ""));
+                    res.Add((con ?? "", mop.Groups["col"].Value, mop.Groups["op"].Value,
+                             mop.Groups["v1"].Value, ""));
                     con = "AND";
                     continue;
                 }
@@ -183,4 +245,4 @@ namespace Capa_Controlador_Consultas
             return res;
         }
     }
-}
+
