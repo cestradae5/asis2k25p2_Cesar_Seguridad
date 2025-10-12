@@ -336,8 +336,10 @@ namespace Capa_Vista_Seguridad
 
         private void cerrarSesiónToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            this.Hide();
             Frm_Principal ventanaPrincipal = new Frm_Principal();
-            ventanaPrincipal.Show();
+            ventanaPrincipal.ShowDialog();
+            this.Close();
         }
 
         private void btn_aplicacion_Click(object sender, EventArgs e) { }

@@ -33,11 +33,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CapaModelo">
-      <HintPath>..\..\PrototipoMVC\CapaModelo\bin\Debug\CapaModelo.dll</HintPath>
+    <Reference Include="Capa_Controlador_Seguridad, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\PrototipoMVC\CapaControlador\bin\Debug\Capa_Controlador_Seguridad.dll</HintPath>
     </Reference>
-    <Reference Include="CapaVista">
-      <HintPath>..\..\PrototipoMVC\CapaVista\bin\Debug\CapaVista.dll</HintPath>
+    <Reference Include="Capa_Modelo_Seguridad, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\PrototipoMVC\CapaControlador\bin\Debug\Capa_Modelo_Seguridad.dll</HintPath>
     </Reference>
     <Reference Include="Capa_Vista_Seguridad">
       <HintPath>..\..\PrototipoMVC\CapaVista\bin\Debug\Capa_Vista_Seguridad.dll</HintPath>
