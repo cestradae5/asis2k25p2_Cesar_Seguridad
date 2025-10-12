@@ -84,8 +84,8 @@ namespace Capa_Vista_Seguridad
 
             if (Cbo_Modulos.SelectedValue != null && !(Cbo_Modulos.SelectedValue is DataRowView))
             {
-                int idModulo = Convert.ToInt32(Cbo_Modulos.SelectedValue);
-                DataTable dtAplicacionFiltrada = controlador.datObtenerAplicacionesPorModulo(idModulo);
+                int iIdModulo = Convert.ToInt32(Cbo_Modulos.SelectedValue);
+                DataTable dtAplicacionFiltrada = controlador.datObtenerAplicacionesPorModulo(iIdModulo);
 
                 Cbo_aplicaciones.DataSource = dtAplicacionFiltrada;
                 Cbo_aplicaciones.DisplayMember = "Cmp_Nombre_Aplicacion";
@@ -107,39 +107,39 @@ namespace Capa_Vista_Seguridad
                 return;
             }
 
-            string perfilNombre = Cbo_perfiles.Text;
-            string aplicacionNombre = Cbo_aplicaciones.Text;
-            int idPerfil = Convert.ToInt32(Cbo_perfiles.SelectedValue);
-            int idAplicacion = Convert.ToInt32(Cbo_aplicaciones.SelectedValue);
-            int idModulo = Convert.ToInt32(Cbo_Modulos.SelectedValue);
+            string sPerfilNombre = Cbo_perfiles.Text;
+            string sAplicacionNombre = Cbo_aplicaciones.Text;
+            int iIdPerfil = Convert.ToInt32(Cbo_perfiles.SelectedValue);
+            int iIdAplicacion = Convert.ToInt32(Cbo_aplicaciones.SelectedValue);
+            int iIdModulo = Convert.ToInt32(Cbo_Modulos.SelectedValue);
 
             // Verifica si ya existe la fila (evita duplicados)
-            bool existe = false;
+            bool bExiste = false;
             foreach (DataGridViewRow row in Dgv_Permisos.Rows)
             {
                 if (row.IsNewRow) continue;
-                int iperfil = Convert.ToInt32(row.Cells["IdPerfil"].Value);
-                int imodulo = Convert.ToInt32(row.Cells["IdModulo"].Value);
-                int iaplicacion = Convert.ToInt32(row.Cells["IdAplicacion"].Value);
-                if (iperfil == idPerfil && imodulo == idModulo && iaplicacion == idAplicacion)
+                int iPerfil = Convert.ToInt32(row.Cells["IdPerfil"].Value);
+                int iModulo = Convert.ToInt32(row.Cells["IdModulo"].Value);
+                int iAplicacion = Convert.ToInt32(row.Cells["IdAplicacion"].Value);
+                if (iPerfil == iIdPerfil && iModulo == iIdModulo && iAplicacion == iIdAplicacion)
                 {
-                    existe = true;
+                    bExiste = true;
                     break;
                 }
             }
 
-            if (!existe)
+            if (!bExiste)
             {
                 Dgv_Permisos.Rows.Add(
-                    perfilNombre,
-                    aplicacionNombre,
+                    sPerfilNombre,
+                    sAplicacionNombre,
                     false, false, false, false, false, // Permisos iniciales
-                    idPerfil,
-                    idModulo,
-                    idAplicacion
+                    iIdPerfil,
+                    iIdModulo,
+                    iIdAplicacion
                 );
 
-                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, idAplicacion, "Asignación Permisos Perfil - Agregar", true);
+                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, iIdAplicacion, "Asignación Permisos Perfil - Agregar", true);
             }
             else
             {
@@ -155,36 +155,36 @@ namespace Capa_Vista_Seguridad
                 return;
             }
 
-            int insertados = 0;
-            int actualizados = 0;
+            int iInsertados = 0;
+            int iActualizados = 0;
 
             foreach (DataGridViewRow row in Dgv_Permisos.Rows)
             {
                 if (row.IsNewRow) continue;
 
-                int iperfil = Convert.ToInt32(row.Cells["IdPerfil"].Value);
-                int imodulo = Convert.ToInt32(row.Cells["IdModulo"].Value);
-                int iaplicacion = Convert.ToInt32(row.Cells["IdAplicacion"].Value);
-                bool ingresar = Convert.ToBoolean(row.Cells["Ingresar"].Value ?? false);
-                bool consultar = Convert.ToBoolean(row.Cells["Consultar"].Value ?? false);
-                bool modificar = Convert.ToBoolean(row.Cells["Modificar"].Value ?? false);
-                bool eliminar = Convert.ToBoolean(row.Cells["Eliminar"].Value ?? false);
-                bool imprimir = Convert.ToBoolean(row.Cells["Imprimir"].Value ?? false);
+                int iPerfil = Convert.ToInt32(row.Cells["IdPerfil"].Value);
+                int iModulo = Convert.ToInt32(row.Cells["IdModulo"].Value);
+                int iAplicacion = Convert.ToInt32(row.Cells["IdAplicacion"].Value);
+                bool bIngresar = Convert.ToBoolean(row.Cells["Ingresar"].Value ?? false);
+                bool bConsultar = Convert.ToBoolean(row.Cells["Consultar"].Value ?? false);
+                bool bModificar = Convert.ToBoolean(row.Cells["Modificar"].Value ?? false);
+                bool bEliminar = Convert.ToBoolean(row.Cells["Eliminar"].Value ?? false);
+                bool bImprimir = Convert.ToBoolean(row.Cells["Imprimir"].Value ?? false);
 
-                if (controlador.bExistePermisoPerfil(iperfil, imodulo, iaplicacion))
+                if (controlador.bExistePermisoPerfil(iPerfil, iModulo, iAplicacion))
                 {
-                    controlador.iActualizarPermisoPerfilAplicacion(iperfil, imodulo, iaplicacion, ingresar, consultar, modificar, eliminar, imprimir);
-                    actualizados++;
-                    ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, iaplicacion, "Asignación aplicación a perfil - Actualizar", true);
+                    controlador.iActualizarPermisoPerfilAplicacion(iPerfil, iModulo, iAplicacion, bIngresar, bConsultar, bModificar, bEliminar, bImprimir);
+                    iActualizados++;
+                    ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, iAplicacion, "Asignación aplicación a perfil - Actualizar", true);
                 }
                 else
                 {
-                    controlador.iInsertarPermisoPerfilAplicacion(iperfil, imodulo, iaplicacion, ingresar, consultar, modificar, eliminar, imprimir);
-                    insertados++;
-                    ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, iaplicacion, "Asignación aplicación a perfil - Insertar", true);
+                    controlador.iInsertarPermisoPerfilAplicacion(iPerfil, iModulo, iAplicacion, bIngresar, bConsultar, bModificar, bEliminar, bImprimir);
+                    iInsertados++;
+                    ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, iAplicacion, "Asignación aplicación a perfil - Insertar", true);
                 }
             }
-            MessageBox.Show($"Se insertaron {insertados} registros y se actualizaron {actualizados} registros correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show($"Se insertaron {iInsertados} registros y se actualizaron {iActualizados} registros correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
             Dgv_Permisos.Rows.Clear();
         }
 
@@ -192,8 +192,8 @@ namespace Capa_Vista_Seguridad
         {
             if (Dgv_Permisos.CurrentRow != null && !Dgv_Permisos.CurrentRow.IsNewRow)
             {
-                int idaplicacion = Convert.ToInt32(Dgv_Permisos.CurrentRow.Cells["IdAplicacion"].Value);
-                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, idaplicacion, "Asignación Perfil a Usuario - Quitar", true);
+                int iIdaplicacion = Convert.ToInt32(Dgv_Permisos.CurrentRow.Cells["IdAplicacion"].Value);
+                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, iIdaplicacion, "Asignación Perfil a Usuario - Quitar", true);
                 Dgv_Permisos.Rows.Remove(Dgv_Permisos.CurrentRow);
             }
             else
@@ -206,12 +206,12 @@ namespace Capa_Vista_Seguridad
         {
             // Validar que no sea encabezado o fila nueva
             if (e.RowIndex < 0) return;
-            var row = Dgv_Permisos.Rows[e.RowIndex];
+            var vRow = Dgv_Permisos.Rows[e.RowIndex];
 
-            var idPerfil = row.Cells["IdPerfil"].Value?.ToString();
-            var idAplicacion = row.Cells["IdAplicacion"].Value?.ToString();
+            var iIdPerfil = vRow.Cells["IdPerfil"].Value?.ToString();
+            var iIdAplicacion = vRow.Cells["IdAplicacion"].Value?.ToString();
 
-            if (string.IsNullOrWhiteSpace(idPerfil) || string.IsNullOrWhiteSpace(idAplicacion))
+            if (string.IsNullOrWhiteSpace(iIdPerfil) || string.IsNullOrWhiteSpace(iIdAplicacion))
             {
                 MessageBox.Show("No tiene aplicación y perfil seleccionado.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
@@ -221,19 +221,19 @@ namespace Capa_Vista_Seguridad
         {
             if (Dgv_Permisos.Columns[e.ColumnIndex] is DataGridViewCheckBoxColumn)
             {
-                var row = Dgv_Permisos.Rows[e.RowIndex];
+                var vRow = Dgv_Permisos.Rows[e.RowIndex];
 
-                if (row.IsNewRow)
+                if (vRow.IsNewRow)
                 {
                     e.Cancel = true;
                     MessageBox.Show("No tiene aplicación y perfil seleccionado.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                var idPerfil = row.Cells["IdPerfil"].Value?.ToString();
-                var idAplicacion = row.Cells["IdAplicacion"].Value?.ToString();
+                var vIdPerfil = vRow.Cells["IdPerfil"].Value?.ToString();
+                var vIdAplicacion = vRow.Cells["IdAplicacion"].Value?.ToString();
 
-                if (string.IsNullOrWhiteSpace(idPerfil) || string.IsNullOrWhiteSpace(idAplicacion))
+                if (string.IsNullOrWhiteSpace(vIdPerfil) || string.IsNullOrWhiteSpace(vIdAplicacion))
                 {
                     e.Cancel = true;
                     MessageBox.Show("No tiene aplicación y perfil seleccionado.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -271,8 +271,8 @@ namespace Capa_Vista_Seguridad
 
             try
             {
-                int idPerfil = Convert.ToInt32(Cbo_perfiles.SelectedValue);
-                DataTable dtPermisos = controlador.datObtenerPermisosPorPerfil(idPerfil);
+                int iIdPerfil = Convert.ToInt32(Cbo_perfiles.SelectedValue);
+                DataTable dtPermisos = controlador.datObtenerPermisosPorPerfil(iIdPerfil);
 
                 if (dtPermisos.Rows.Count > 0)
                 {
@@ -334,15 +334,15 @@ namespace Capa_Vista_Seguridad
                 bool bIngresar = false, bConsultar = false, bModificar = false, bEliminar = false, bImprimir = false;
 
                 //  Revisar permisos or usuario + aplicación + módulo
-                var permisosUsuario = permisoUsuario.ConsultarPermisos(idUsuario, IidAplicacion, IidModulo);
+                var vPermisosUsuario = permisoUsuario.ConsultarPermisos(idUsuario, IidAplicacion, IidModulo);
 
-                if (permisosUsuario.HasValue)
+                if (vPermisosUsuario.HasValue)
                 {
-                    bIngresar = permisosUsuario.Value.ingresar;
-                    bConsultar = permisosUsuario.Value.consultar;
-                    bModificar = permisosUsuario.Value.modificar;
-                    bEliminar = permisosUsuario.Value.eliminar;
-                    bImprimir = permisosUsuario.Value.imprimir;
+                    bIngresar = vPermisosUsuario.Value.ingresar;
+                    bConsultar = vPermisosUsuario.Value.consultar;
+                    bModificar = vPermisosUsuario.Value.modificar;
+                    bEliminar = vPermisosUsuario.Value.eliminar;
+                    bImprimir = vPermisosUsuario.Value.imprimir;
                 }
 
                 //  revisar ese permiso por perfil + aplicación

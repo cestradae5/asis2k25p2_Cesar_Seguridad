@@ -19,9 +19,9 @@ namespace Capa_Vista_Seguridad
         private Cls_EmpleadoControlador controlador = new Cls_EmpleadoControlador();
         private List<Cls_Empleado> listaEmpleados = new List<Cls_Empleado>();
 
-    //Nuevo agregado Ernesto David Samayoa Jocol 0901-22-3415
-    //Instancia estática única del formulario
-    private static Frm_Empleados instancia = null;
+        //Nuevo agregado Ernesto David Samayoa Jocol 0901-22-3415
+        //Instancia estática única del formulario
+        private static Frm_Empleados instancia = null;
 
         //Método para obtener o crear la instancia
         public static Frm_Empleados fun_ObtenerInstancia()
@@ -110,21 +110,21 @@ namespace Capa_Vista_Seguridad
 
         private void Btn_buscar_empleado_Click(object sender, EventArgs e)
         {
-            string busqueda = Cbo_mostrar_empleado.Text.Trim();
-            if (string.IsNullOrEmpty(busqueda))
+            string sBusqueda = Cbo_mostrar_empleado.Text.Trim();
+            if (string.IsNullOrEmpty(sBusqueda))
             {
                 MessageBox.Show("Ingrese un ID o nombre para buscar");
                 return;
             }
             Cls_Empleado empEncontrado = null;
-            if (int.TryParse(busqueda.Split('-')[0].Trim(), out int id))
+            if (int.TryParse(sBusqueda.Split('-')[0].Trim(), out int id))
             {
                 empEncontrado = listaEmpleados.FirstOrDefault(a => a.iPkIdEmpleado == id);
             }
             if (empEncontrado == null)
             {
                 empEncontrado = listaEmpleados.FirstOrDefault(a =>
-                    a.sNombresEmpleado.Equals(busqueda, StringComparison.OrdinalIgnoreCase));
+                    a.sNombresEmpleado.Equals(sBusqueda, StringComparison.OrdinalIgnoreCase));
             }
             if (empEncontrado != null)
             {
@@ -178,22 +178,29 @@ namespace Capa_Vista_Seguridad
             fun_ConfiguracionInicial();
         }
 
-        private void Btn_eliminar_empleado_Click(object sender, EventArgs e)
-        {
-            if (!int.TryParse(Txt_id_empleado.Text, out int id))
+            private void Btn_eliminar_empleado_Click(object sender, EventArgs e)
             {
-                MessageBox.Show("ID no válido");
-                return;
-            }
-            bool exito = controlador.fun_BorrarEmpleado(id);
-            MessageBox.Show(exito ? "Empleado eliminado" : "Error al eliminar");
-            ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 0, "Eliminar empleado", true);
-            fun_CargarEmpleados();
-            fun_ConfigurarComboBoxEmpleados();
-            fun_LimpiarCampos();
-            fun_ConfiguracionInicial();
-        }
+                if (!int.TryParse(Txt_id_empleado.Text, out int id))
+                {
+                    MessageBox.Show("ID no válido");
+                    return;
+                }
 
+
+                bool bExito = controlador.fun_BorrarEmpleado(id);
+                MessageBox.Show(bExito ? "Empleado eliminado" : "Error al eliminar");
+                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 0, "Eliminar empleado", true);
+                fun_CargarEmpleados();
+                fun_ConfigurarComboBoxEmpleados();
+                fun_LimpiarCampos();
+                fun_ConfiguracionInicial();
+        
+
+
+
+            }
+                   
+        
         private void Btn_cancelar_Click(object sender, EventArgs e)
         {
             fun_LimpiarCampos();
@@ -245,7 +252,7 @@ namespace Capa_Vista_Seguridad
 
 
                 // Crear empleado
-                var emp = new Cls_Empleado
+                var vEmp = new Cls_Empleado
                 {
                     iPkIdEmpleado = idEmpleado,
                     sNombresEmpleado = Txt_nombre_empleado.Text.Trim(),
@@ -261,16 +268,16 @@ namespace Capa_Vista_Seguridad
 
                 // Insertar
                 controlador.fun_InsertarEmpleado(
-                    emp.iPkIdEmpleado,
-                    emp.sNombresEmpleado,
-                    emp.sApellidosEmpleado,
-                    emp.lDpiEmpleado,
-                    emp.lNitEmpleado,
-                    emp.sCorreoEmpleado,
-                    emp.sTelefonoEmpleado,
-                    emp.bGeneroEmpleado,
-                    emp.dFechaNacimientoEmpleado,
-                    emp.dFechaContratacionEmpleado
+                    vEmp.iPkIdEmpleado,
+                    vEmp.sNombresEmpleado,
+                    vEmp.sApellidosEmpleado,
+                    vEmp.lDpiEmpleado,
+                    vEmp.lNitEmpleado,
+                    vEmp.sCorreoEmpleado,
+                    vEmp.sTelefonoEmpleado,
+                    vEmp.bGeneroEmpleado,
+                    vEmp.dFechaNacimientoEmpleado,
+                    vEmp.dFechaContratacionEmpleado
                 );
 
                 MessageBox.Show("Empleado guardado correctamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);

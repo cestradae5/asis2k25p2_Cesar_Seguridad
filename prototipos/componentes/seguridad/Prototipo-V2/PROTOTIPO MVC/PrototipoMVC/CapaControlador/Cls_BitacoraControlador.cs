@@ -24,7 +24,7 @@ namespace Capa_Controlador_Seguridad
 
         public void RegistrarInicioSesion(int iIdUsuario)
         {
-            Cls_UsuarioConectado.IniciarSesion(iIdUsuario, "UsuarioActual", Cls_UsuarioConectado.iIdPerfil);
+            //Cls_UsuarioConectado.IniciarSesion(iIdUsuario, "UsuarioActual", Cls_UsuarioConectado.iIdPerfil);
             ctrlSentencias.RegistrarInicioSesion(iIdUsuario, 0);
         }
 

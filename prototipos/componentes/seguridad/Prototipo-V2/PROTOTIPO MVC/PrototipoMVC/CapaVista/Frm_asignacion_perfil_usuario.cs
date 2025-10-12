@@ -241,15 +241,15 @@ namespace Capa_Vista_Seguridad
                 bool bIngresar = false, bConsultar = false, bModificar = false, bEliminar = false, bImprimir = false;
 
                 //  Revisar permisos or usuario + aplicación + módulo
-                var permisosUsuario = permisoUsuario.ConsultarPermisos(idUsuario, IidAplicacion, IidModulo);
+                var vPermisosUsuario = permisoUsuario.ConsultarPermisos(idUsuario, IidAplicacion, IidModulo);
 
-                if (permisosUsuario.HasValue)
+                if (vPermisosUsuario.HasValue)
                 {
-                    bIngresar = permisosUsuario.Value.ingresar;
-                    bConsultar = permisosUsuario.Value.consultar;
-                    bModificar = permisosUsuario.Value.modificar;
-                    bEliminar = permisosUsuario.Value.eliminar;
-                    bImprimir = permisosUsuario.Value.imprimir;
+                    bIngresar = vPermisosUsuario.Value.ingresar;
+                    bConsultar = vPermisosUsuario.Value.consultar;
+                    bModificar = vPermisosUsuario.Value.modificar;
+                    bEliminar = vPermisosUsuario.Value.eliminar;
+                    bImprimir = vPermisosUsuario.Value.imprimir;
                 }
 
                 //  revisar ese permiso por perfil + aplicación

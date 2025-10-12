@@ -252,25 +252,25 @@ namespace Capa_Vista_Seguridad
                 int idModulo = Convert.ToInt32(row.Cells["IdModulo"].Value);
                 int idAplicacion = Convert.ToInt32(row.Cells["IdAplicacion"].Value);
 
-                bool ingresar = Convert.ToBoolean(row.Cells["Ingresar"].Value ?? false);
-                bool consultar = Convert.ToBoolean(row.Cells["Consultar"].Value ?? false);
-                bool modificar = Convert.ToBoolean(row.Cells["Modificar"].Value ?? false);
-                bool eliminar = Convert.ToBoolean(row.Cells["Eliminar"].Value ?? false);
-                bool imprimir = Convert.ToBoolean(row.Cells["Imprimir"].Value ?? false);
+                bool bIngresar = Convert.ToBoolean(row.Cells["Ingresar"].Value ?? false);
+                bool bConsultar = Convert.ToBoolean(row.Cells["Consultar"].Value ?? false);
+                bool bModificar = Convert.ToBoolean(row.Cells["Modificar"].Value ?? false);
+                bool bEliminar = Convert.ToBoolean(row.Cells["Eliminar"].Value ?? false);
+                bool bImprimir = Convert.ToBoolean(row.Cells["Imprimir"].Value ?? false);
 
                 if (modelo.ExistePermiso(idUsuario, idModulo, idAplicacion))
                 {
                     modelo.ActualizarPermisoUsuarioAplicacion(idUsuario, idModulo, idAplicacion,
-                                                              ingresar, consultar, modificar,
-                                                              eliminar, imprimir);
+                                                              bIngresar, bConsultar, bModificar,
+                                                              bEliminar, bImprimir);
                     actualizados++;
                     bitacora.InsertarBitacora(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, idAplicacion, "Asignación Aplicación a Usuario - Actualizar", true);
                 }
                 else
                 {
                     modelo.InsertarPermisoUsuarioAplicacion(idUsuario, idModulo, idAplicacion,
-                                                            ingresar, consultar, modificar,
-                                                            eliminar, imprimir);
+                                                            bIngresar, bConsultar, bModificar,
+                                                            bEliminar, bImprimir);
                     insertados++;
                     bitacora.InsertarBitacora(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, idAplicacion, "Asignación Aplicación a Usuario - Insertar", true);
                 }
@@ -448,15 +448,15 @@ namespace Capa_Vista_Seguridad
                 bool bIngresar = false, bConsultar = false, bModificar = false, bEliminar = false, bImprimir = false;
 
                 //  Revisar permisos or usuario + aplicación + módulo
-                var permisosUsuario = permisoUsuario.ConsultarPermisos(idUsuario, IidAplicacion, IidModulo);
+                var vPermisosUsuario = permisoUsuario.ConsultarPermisos(idUsuario, IidAplicacion, IidModulo);
 
-                if (permisosUsuario.HasValue)
+                if (vPermisosUsuario.HasValue)
                 {
-                    bIngresar = permisosUsuario.Value.ingresar;
-                    bConsultar = permisosUsuario.Value.consultar;
-                    bModificar = permisosUsuario.Value.modificar;
-                    bEliminar = permisosUsuario.Value.eliminar;
-                    bImprimir = permisosUsuario.Value.imprimir;
+                    bIngresar = vPermisosUsuario.Value.ingresar;
+                    bConsultar = vPermisosUsuario.Value.consultar;
+                    bModificar = vPermisosUsuario.Value.modificar;
+                    bEliminar = vPermisosUsuario.Value.eliminar;
+                    bImprimir = vPermisosUsuario.Value.imprimir;
                 }
 
                 //  revisar ese permiso por perfil + aplicación
