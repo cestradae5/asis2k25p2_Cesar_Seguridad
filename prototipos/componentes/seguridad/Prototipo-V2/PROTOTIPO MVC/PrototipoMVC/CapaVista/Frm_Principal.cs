@@ -31,15 +31,7 @@ namespace Capa_Vista_Seguridad
         }
         private void Frm_principal_FormClosing(object sender, FormClosingEventArgs e)
         {
-            try
-            {
-                // Registrar en bitácora cuando se cierre con la x
-                ctrlBitacora.RegistrarCierreSesion(Cls_UsuarioConectado.iIdUsuario);
-            }
-            catch
-            {
-                // Silenciar cualquier error al cerrar
-            }
+           
 
             // Cierra completamente la aplicación
             Application.Exit();
@@ -112,7 +104,10 @@ namespace Capa_Vista_Seguridad
             // Registrar en bitácora
             ctrlBitacora.RegistrarCierreSesion(Cls_UsuarioConectado.iIdUsuario);
 
-            Application.Exit();
+            this.Hide();
+            Frm_Login formLogin = new Frm_Login();
+            formLogin.ShowDialog();
+            this.Close();
         }
 
         private void CutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -167,9 +162,10 @@ namespace Capa_Vista_Seguridad
 
         private void seguridadToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Frm_Seguridad formSeguridad = new Frm_Seguridad();
-            formSeguridad.Show();
             this.Hide();
+            Frm_Seguridad formSeguridad = new Frm_Seguridad();
+            formSeguridad.ShowDialog();
+            this.Close();
 
         }
 
