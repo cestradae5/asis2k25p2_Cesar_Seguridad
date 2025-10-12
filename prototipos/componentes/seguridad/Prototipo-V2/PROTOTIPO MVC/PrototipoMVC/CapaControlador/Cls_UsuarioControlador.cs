@@ -138,5 +138,9 @@ namespace Capa_Controlador_Seguridad
 
             return (true, string.Empty);
         }
+        public int ObtenerIdPerfilDeUsuario(int idUsuario)
+        {
+            return gDaoUsuario.ObtenerIdPerfilDeUsuario(idUsuario);
+        }
     }
 }

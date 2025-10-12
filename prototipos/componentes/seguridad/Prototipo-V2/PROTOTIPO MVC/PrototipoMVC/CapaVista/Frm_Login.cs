@@ -10,6 +10,7 @@ namespace Capa_Vista_Seguridad
     {
         Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador(); // Bitacora
         Cls_ControladorLogin cn = new Cls_ControladorLogin();
+        Cls_UsuarioControlador usuarioControlador = new Cls_UsuarioControlador();
 
         public Frm_Login()
         {
@@ -55,9 +56,14 @@ namespace Capa_Vista_Seguridad
 
             if (loginExitoso)
             {
-                // Guardar sesión del usuario conectado (nombre real + ID)
-                Cls_UsuarioConectado.iIdUsuario = idUsuario;
-                Cls_UsuarioConectado.sNombreUsuario = nombreUsuarioReal;
+
+                //0901-22-9663 Brandon Hernandez 0901-22-9663
+                int idPerfil = usuarioControlador.ObtenerIdPerfilDeUsuario(idUsuario);
+
+                // Guarda todos los datos de sesión correctamente
+                Cls_UsuarioConectado.IniciarSesion(idUsuario, nombreUsuarioReal, idPerfil);
+                MessageBox.Show("Perfil asignado: " + idPerfil);
+
 
                 // Registrar inicio en bitácora
                 ctrlBitacora.RegistrarInicioSesion(idUsuario);
@@ -73,6 +79,7 @@ namespace Capa_Vista_Seguridad
                 txtContrasena.Focus();
             }
         }
+
 
         private void frmLogin_Load(object sender, EventArgs e) { }
 
