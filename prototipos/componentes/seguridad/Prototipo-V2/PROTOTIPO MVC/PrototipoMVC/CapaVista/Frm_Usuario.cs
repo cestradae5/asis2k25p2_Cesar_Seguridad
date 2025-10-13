@@ -1,10 +1,9 @@
 ﻿// Pablo Quiroa 0901-22-2929
+using Capa_Controlador_Seguridad;
 using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Runtime.InteropServices;
-using Capa_Controlador_Seguridad;
-using Capa_Modelo_Seguridad;
+using System.Windows.Forms;
 
 namespace Capa_Vista_Seguridad
 {
@@ -18,9 +17,10 @@ namespace Capa_Vista_Seguridad
         private List<string> gLstEmpleadosDisplay = new List<string>();
         private List<int> gLstEmpleadosIds = new List<int>();
 
-        private int iIdUsuarioSeleccionado = 0;
+        private int idUsuarioSeleccionado = 0;
 
         // CONSTRUCTOR
+        
         public Frm_Usuario()
         {
             InitializeComponent();
@@ -118,7 +118,7 @@ namespace Capa_Vista_Seguridad
             Txt_Contraseña.Clear();
             Txt_ConfirmarContraseña.Clear();
             Txt_ConfirmarContraseña.BackColor = System.Drawing.Color.White;
-            iIdUsuarioSeleccionado = 0;
+            idUsuarioSeleccionado = 0;
         }
 
         // PERMITIR MOVER EL FORMULARIO

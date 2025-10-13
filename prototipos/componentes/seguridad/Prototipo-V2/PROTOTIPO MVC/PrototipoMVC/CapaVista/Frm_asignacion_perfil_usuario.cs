@@ -60,18 +60,18 @@ namespace Capa_Vista_Seguridad
         {
             if (Cbo_usuario.SelectedIndex != -1 && Cbo_usuario.SelectedValue != null)
             {
-                int idUsuario;
+                int iIdUsuario;
 
                 if (Cbo_usuario.SelectedValue is DataRowView drv)
                 {
-                    idUsuario = Convert.ToInt32(drv["Pk_Id_Usuario"]);
+                    iIdUsuario = Convert.ToInt32(drv["Pk_Id_Usuario"]);
                 }
                 else
                 {
-                    idUsuario = Convert.ToInt32(Cbo_usuario.SelectedValue);
+                    iIdUsuario = Convert.ToInt32(Cbo_usuario.SelectedValue);
                 }
 
-                DataTable dt =controlador.datObtenerPerfilesPorUsuario(idUsuario);
+                DataTable dt =controlador.datObtenerPerfilesPorUsuario(iIdUsuario);
                 Dgv_consulta.DataSource = dt;
             }
             else
@@ -88,12 +88,12 @@ namespace Capa_Vista_Seguridad
                 return;
             }
 
-            int idUsuario = Convert.ToInt32(Cbo_usuarios2.SelectedValue);
-            int idPerfil = Convert.ToInt32(Cbo_perfil.SelectedValue);
+            int iIdUsuario = Convert.ToInt32(Cbo_usuarios2.SelectedValue);
+            int iIdPerfil = Convert.ToInt32(Cbo_perfil.SelectedValue);
 
             // --- NUEVO: Verifica si el usuario ya tiene un perfil ---
 
-            int perfilAsignado = controladorUsuario.ObtenerIdPerfilDeUsuario(idUsuario); // Debe retornar 0 si no tiene perfil
+            int perfilAsignado = controladorUsuario.ObtenerIdPerfilDeUsuario(iIdUsuario); // Debe retornar 0 si no tiene perfil
 
             if (perfilAsignado != 0)
             {
@@ -101,13 +101,13 @@ namespace Capa_Vista_Seguridad
                 return;
             }
 
-            if (asignacionesPendientes.Any(x => x.Fk_Id_Usuario == idUsuario && x.Fk_Id_Perfil == idPerfil))
+            if (asignacionesPendientes.Any(x => x.Fk_Id_Usuario == iIdUsuario && x.Fk_Id_Perfil == iIdPerfil))
             {
                 MessageBox.Show("Esta asignación ya está en la lista.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
-            asignacionesPendientes.Add(new Cls_asignacion_perfil_usuario(idUsuario, idPerfil));
+            asignacionesPendientes.Add(new Cls_asignacion_perfil_usuario(iIdUsuario, iIdPerfil));
             fun_RefrescarAsignacionesPendientes();
 
             // Registrar en Bitácora -Arón Ricardo Esquit Silva  0901-22-13036
@@ -129,7 +129,7 @@ namespace Capa_Vista_Seguridad
 
         private void btn_finalizar_Click(object sender, EventArgs e)
         {
-            int guardados = 0;
+            int iGuardados = 0;
             foreach (var asignacion in asignacionesPendientes)
             {
                 string mensajeError; // Variable para el mensaje de error personalizado
@@ -138,7 +138,7 @@ namespace Capa_Vista_Seguridad
 
                 if (ok)
                 {
-                    guardados++;
+                    iGuardados++;
                 }
                 else
                 {
@@ -147,7 +147,7 @@ namespace Capa_Vista_Seguridad
                 }
             }
 
-            MessageBox.Show($"Se guardaron {guardados} asignaciones correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show($"Se guardaron {iGuardados} asignaciones correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
             asignacionesPendientes.Clear();
             fun_RefrescarAsignacionesPendientes();
 
@@ -172,11 +172,11 @@ namespace Capa_Vista_Seguridad
 
                 if (usuarioRow != null && perfilRow != null)
                 {
-                    int idUsuario = usuarioRow.Field<int>("Pk_Id_Usuario");
-                    int idPerfil = perfilRow.Field<int>("Pk_Id_Perfil");
+                    int iIdUsuario = usuarioRow.Field<int>("Pk_Id_Usuario");
+                    int iIdPerfil = perfilRow.Field<int>("Pk_Id_Perfil");
 
 
-                    asignacionesPendientes.RemoveAll(x => x.Fk_Id_Usuario == idUsuario && x.Fk_Id_Perfil == idPerfil);
+                    asignacionesPendientes.RemoveAll(x => x.Fk_Id_Usuario == iIdUsuario && x.Fk_Id_Perfil == iIdPerfil);
 
 
                     fun_RefrescarAsignacionesPendientes();
