@@ -28,29 +28,26 @@ namespace PruebaEjecucionNavegador
             };
 
             string[] columnas = {
-                    "tbl_usuario",
-                    "Pk_Id_Usuario",
-                    "Fk_Id_Empleado",
-                    "Cmp_Nombre_Usuario",
-                    "Cmp_Contrasena_Usuario",
-                    "Cmp_Intentos_Fallidos_Usuario",
-                    "Cmp_Estado_Usuario",
-                    "Cmp_FechaCreacion_Usuario",
-                    "Cmp_Ultimo_Cambio_Contrasenea",
-                    "Cmp_Pidio_Cambio_Contrasenea"
+                    "tbl_cliente",
+                    "Pk_Id_Cliente",
+                    "Cmp_Nombres_Cliente",
+                    "Cmp_Apellidos_Cliente",
+                    "Cmp_Dni_Cliente",
+                    "Cmp_Fecha_Registro_Cliente",
+                    "Cmp_Estado_Cliente",
+                    "Cmp_Nacionalidad_Cliente"
 
             };
 
             string[] sEtiquetas = {
-                "idusuario",
-                "idempleadp",
-                "nombre",
-                "contrasena",
-                "Intentos_Fallidos",
-                "estado",
-                "fecha_creadcion",
-                "ultimo cambio",
-                "pidio_cambio"
+                "Codigo Cliente",
+                "Nombres",
+                "Apellidos",
+                "DPI",
+                "Fecha de Registro",
+                "Estado del Cliente",
+                "Nacionalidad",
+               
             };
 
 

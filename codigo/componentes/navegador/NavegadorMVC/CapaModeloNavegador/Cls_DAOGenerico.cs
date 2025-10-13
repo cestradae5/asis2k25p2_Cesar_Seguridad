@@ -87,9 +87,27 @@ namespace Capa_Modelo_Navegador
                 }
                 catch (OdbcException ex)
                 {
-                    if (ex.Message.IndexOf("foreign key constraint fails", StringComparison.OrdinalIgnoreCase) >= 0)
+                    string mensaje = ex.Message;
+
+                    if (mensaje.IndexOf("foreign key constraint fails", StringComparison.OrdinalIgnoreCase) >= 0)
                     {
-                        throw new Exception("No se pudo insertar el registro: la llave foránea no existe o está mal referenciada.");
+                        throw new Exception("No se pudo insertar el registro: una llave foránea no existe o está mal referenciada.");
+                    }
+                    else if (mensaje.IndexOf("Duplicate entry", StringComparison.OrdinalIgnoreCase) >= 0)
+                    {
+                        throw new Exception("Ya existe un registro con el mismo código. Verifique el valor de la clave primaria.");
+                    }
+                    else if (mensaje.IndexOf("Data too long for column", StringComparison.OrdinalIgnoreCase) >= 0)
+                    {
+                        throw new Exception("Uno de los campos excede la longitud máxima permitida en la base de datos.");
+                    }
+                    else if (mensaje.IndexOf("Incorrect integer value", StringComparison.OrdinalIgnoreCase) >= 0)
+                    {
+                        throw new Exception("Uno o más campos numéricos contienen valores no válidos. Revise los datos ingresados.");
+                    }
+                    else if (mensaje.IndexOf("cannot be null", StringComparison.OrdinalIgnoreCase) >= 0)
+                    {
+                        throw new Exception("Uno o más campos obligatorios están vacíos. Complete todos los datos requeridos.");
                     }
                     else
                     {
@@ -98,7 +116,6 @@ namespace Capa_Modelo_Navegador
                 }
                 catch (Exception ex)
                 {
-
                     // trans.Rollback(); // revertir en caso que haya error
                     throw new Exception("Error inesperado al insertar datos: " + ex.Message); // lanza la excepción 
                 }
@@ -160,9 +177,9 @@ namespace Capa_Modelo_Navegador
                     }
                 } // la conexion se cierra automáticamente
             }
-            catch (OdbcException ex)
+            catch (OdbcException)
             {
-                throw new Exception("Error al actualizar datos en " + SAlias[0] + ": " + ex.Message, ex);
+                throw new Exception("Error al actualizar datos en " + SAlias[0]);
             }
         }
 
