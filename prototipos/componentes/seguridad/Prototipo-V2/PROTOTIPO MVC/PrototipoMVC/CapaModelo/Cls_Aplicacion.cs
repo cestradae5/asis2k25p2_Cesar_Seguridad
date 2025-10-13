@@ -17,13 +17,13 @@ namespace Capa_Modelo_Seguridad
 
         public Cls_Aplicacion() { }
 
-        public Cls_Aplicacion(int pkIdAplicacion, int? fkIdReporte, string nombreAplicacion, string descripcionAplicacion, bool estadoAplicacion)
+        public Cls_Aplicacion(int sPkIdAplicacion, int? iFkIdReporte, string sNombreAplicacion, string sDescripcionAplicacion, bool bEstadoAplicacion)
         {
-            iPkIdAplicacion = pkIdAplicacion;
-            iFkIdReporte = fkIdReporte;
-            sNombreAplicacion = nombreAplicacion;
-            sDescripcionAplicacion = descripcionAplicacion;
-            bEstadoAplicacion = estadoAplicacion;
+            iPkIdAplicacion = sPkIdAplicacion;
+            this.iFkIdReporte = iFkIdReporte;
+            this.sNombreAplicacion = sNombreAplicacion;
+            this.sDescripcionAplicacion = sDescripcionAplicacion;
+            this.bEstadoAplicacion = bEstadoAplicacion;
         }
     }
 }

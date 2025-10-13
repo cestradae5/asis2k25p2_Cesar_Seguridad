@@ -12,7 +12,7 @@ namespace Capa_Controlador_Seguridad
         
         // MÉTODO: Autenticar Usuario
         
-        public bool autenticarUsuario(
+        public bool bAutenticarUsuario(
             string sUsuario,
             string sContrasena,
             out string sMensaje,
@@ -41,7 +41,7 @@ namespace Capa_Controlador_Seguridad
                 }
 
                 // Hash de la contraseña ingresada
-                string sHashIngresado = Cls_SeguridadHashControlador.HashearSHA256(sContrasena);
+                string sHashIngresado = Cls_Seguridad_Hash_Controlador.HashearSHA256(sContrasena);
 
                 if (sContrasenaBD == sHashIngresado)
                 {

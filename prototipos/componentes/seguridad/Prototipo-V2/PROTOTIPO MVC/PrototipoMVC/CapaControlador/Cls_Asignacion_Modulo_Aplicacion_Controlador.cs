@@ -10,9 +10,9 @@ using System.Data;
 
 namespace Capa_Controlador_Seguridad
 {
-    public class Cls_AsignacionModuloAplicacionControlador
+    public class Cls_Asignacion_Modulo_Aplicacion_Controlador
     {
-        private Cls_AsignacionModuloAplicacionDAO dao = new Cls_AsignacionModuloAplicacionDAO();
+        private Cls_Asignacion_Modulo_AplicacionDAO dao = new Cls_Asignacion_Modulo_AplicacionDAO();
 
         public bool GuardarAsignacion(int iIdModulo, int iIdAplicacion)
         {
@@ -31,10 +31,10 @@ namespace Capa_Controlador_Seguridad
             DataTable dt = dao.ObtenerAsignaciones();
 
             var fila = dt.AsEnumerable()
-                        .FirstOrDefault(r => Convert.ToInt32(r["fk_id_aplicacion"]) == iIdAplicacion);
+                        .FirstOrDefault(r => Convert.ToInt32(r["iFk_id_aplicacion"]) == iIdAplicacion);
 
             if (fila != null)
-                return Convert.ToInt32(fila["fk_id_modulo"]);
+                return Convert.ToInt32(fila["iFk_id_modulo"]);
 
             return null; // no tiene módulo asignado
         }

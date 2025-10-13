@@ -3,7 +3,7 @@ using System.Data.Odbc;
 
 namespace Capa_Modelo_Seguridad
 {
-    public class Cls_PermisoUsuario
+    public class Cls_Permiso_Usuario
     {
         private Cls_Conexion conexion = new Cls_Conexion();
 
@@ -13,7 +13,7 @@ namespace Capa_Modelo_Seguridad
         /// <returns>
         /// Una tupla con los permisos (ingresar, consultar, modificar, eliminar, imprimir) o null si no hay registro.
         /// </returns>
-        public (bool ingresar, bool consultar, bool modificar, bool eliminar, bool imprimir)? ConsultarPermisos(int idUsuario, int idAplicacion, int idModulo)
+        public (bool ingresar, bool consultar, bool modificar, bool eliminar, bool imprimir)? ConsultarPermisos(int iIdUsuario, int iIdAplicacion, int iIdModulo)
         {
             string query = @"
                 SELECT Cmp_Ingresar_Permiso_Aplicacion_Usuario,
@@ -28,9 +28,9 @@ namespace Capa_Modelo_Seguridad
             using (OdbcConnection conn = conexion.conexion())
             using (OdbcCommand cmd = new OdbcCommand(query, conn))
             {
-                cmd.Parameters.AddWithValue("@Fk_Id_Usuario", idUsuario);
-                cmd.Parameters.AddWithValue("@Fk_Id_Aplicacion", idAplicacion);
-                cmd.Parameters.AddWithValue("@Fk_Id_Modulo", idModulo);
+                cmd.Parameters.AddWithValue("@Fk_Id_Usuario", iIdUsuario);
+                cmd.Parameters.AddWithValue("@Fk_Id_Aplicacion", iIdAplicacion);
+                cmd.Parameters.AddWithValue("@Fk_Id_Modulo", iIdModulo);
 
                 using (var reader = cmd.ExecuteReader())
                 {
@@ -52,13 +52,13 @@ namespace Capa_Modelo_Seguridad
         /// <summary>
         /// Obtiene el ID de una aplicación por su nombre.
         /// </summary>
-        public int ObtenerIdAplicacionPorNombre(string nombreAplicacion)
+        public int ObtenerIdAplicacionPorNombre(string sNombreAplicacion)
         {
             string query = "SELECT Pk_Id_Aplicacion FROM Tbl_Aplicacion WHERE Cmp_Nombre_Aplicacion = ?";
             using (OdbcConnection conn = conexion.conexion())
             using (OdbcCommand cmd = new OdbcCommand(query, conn))
             {
-                cmd.Parameters.AddWithValue("@Cmp_Nombre_Aplicacion", nombreAplicacion);
+                cmd.Parameters.AddWithValue("@Cmp_Nombre_Aplicacion", sNombreAplicacion);
                 var result = cmd.ExecuteScalar();
                 return result != null ? Convert.ToInt32(result) : -1;
             }
@@ -67,13 +67,13 @@ namespace Capa_Modelo_Seguridad
         /// <summary>
         /// Obtiene el ID de un módulo por su nombre.
         /// </summary>
-        public int ObtenerIdModuloPorNombre(string nombreModulo)
+        public int ObtenerIdModuloPorNombre(string sNombreModulo)
         {
             string query = "SELECT Pk_Id_Modulo FROM Tbl_Modulo WHERE Cmp_Nombre_Modulo = ?";
             using (OdbcConnection conn = conexion.conexion())
             using (OdbcCommand cmd = new OdbcCommand(query, conn))
             {
-                cmd.Parameters.AddWithValue("@Cmp_Nombre_Modulo", nombreModulo);
+                cmd.Parameters.AddWithValue("@Cmp_Nombre_Modulo", sNombreModulo);
                 var result = cmd.ExecuteScalar();
                 return result != null ? Convert.ToInt32(result) : -1;
             }

@@ -123,7 +123,7 @@ namespace Capa_Vista_Seguridad
 
 
         // permisos 0901-21-1115 Marcos Andres Velásquez Alcántara
-        private Cls_PermisoUsuario permisoUsuario = new Cls_PermisoUsuario();
+        private Cls_Permiso_Usuario permisoUsuario = new Cls_Permiso_Usuario();
 
         private int iModuloId = -1;
         private int iAplicacionId = -1;
@@ -146,7 +146,7 @@ namespace Capa_Vista_Seguridad
 
         private void fun_AplicarPermisosUsuario()
         {
-            int usuarioId = Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario; // Usuario logueado
+            int usuarioId = Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario; // Usuario logueado
             if (iAplicacionId == -1 || iModuloId == -1)
             {
                 permisosActuales = null;

@@ -1,7 +1,7 @@
 ﻿
 namespace Capa_Vista_Seguridad
 {
-    partial class Frm_PermisosPerfiles
+    partial class Frm_Permisos_Perfiles
     {
         /// <summary>
         /// Required designer variable.

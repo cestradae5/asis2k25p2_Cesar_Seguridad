@@ -7,7 +7,7 @@ namespace Capa_Controlador_Seguridad
 {
     public class Cls_BitacoraControlador
     {
-        private readonly Cls_SentenciasBitacora ctrlSentencias = new Cls_SentenciasBitacora();
+        private readonly Cls_Sentencias_Bitacora ctrlSentencias = new Cls_Sentencias_Bitacora();
 
         //Consultas
         public DataTable MostrarBitacora() => ctrlSentencias.Listar();
@@ -31,7 +31,7 @@ namespace Capa_Controlador_Seguridad
         public void RegistrarCierreSesion(int iIdUsuario)
         {
             ctrlSentencias.RegistrarCierreSesion(iIdUsuario, 0);
-            Cls_UsuarioConectado.CerrarSesion();
+            Cls_Usuario_Conectado.CerrarSesion();
         }
 
         //Datos generales de bitácora (para exportar o imprimir desde Vista)

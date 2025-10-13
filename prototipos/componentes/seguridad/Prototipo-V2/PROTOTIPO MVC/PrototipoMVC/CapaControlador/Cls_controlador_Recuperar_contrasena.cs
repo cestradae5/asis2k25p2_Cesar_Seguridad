@@ -14,9 +14,9 @@ namespace Capa_Controlador_Seguridad
         private ClsModeloRecuperarContrasena modelo = new ClsModeloRecuperarContrasena();
 
         // 0901-20-4620 Ruben Armando Lopez Luch
-        public int fun_obtener_IdUsuario(string nombreUsuario)
+        public int fun_obtener_IdUsuario(string sNombreUsuario)
         {
-            return modelo.fun_obtener_IdUsuario(nombreUsuario);
+            return modelo.fun_obtener_IdUsuario(sNombreUsuario);
         }
 
         // 0901-20-4620 Ruben Armando Lopez Luch

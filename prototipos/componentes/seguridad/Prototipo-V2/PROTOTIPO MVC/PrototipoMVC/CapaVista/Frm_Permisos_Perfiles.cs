@@ -12,13 +12,13 @@ using Capa_Modelo_Seguridad;
 
 namespace Capa_Vista_Seguridad
 {
-    public partial class Frm_PermisosPerfiles : Form
+    public partial class Frm_Permisos_Perfiles : Form
     {
         
         Cls_Asignacion_Permiso_PerfilControlador controlador = new Cls_Asignacion_Permiso_PerfilControlador();
         Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador(); // Bitacora
 
-        public Frm_PermisosPerfiles()
+        public Frm_Permisos_Perfiles()
         {
             InitializeComponent();
             Dgv_Permisos.AllowUserToAddRows = false;
@@ -139,7 +139,7 @@ namespace Capa_Vista_Seguridad
                     iIdAplicacion
                 );
 
-                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, iIdAplicacion, "Asignación Permisos Perfil - Agregar", true);
+                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, iIdAplicacion, "Asignación Permisos Perfil - Agregar", true);
             }
             else
             {
@@ -175,13 +175,13 @@ namespace Capa_Vista_Seguridad
                 {
                     controlador.iActualizarPermisoPerfilAplicacion(iPerfil, iModulo, iAplicacion, bIngresar, bConsultar, bModificar, bEliminar, bImprimir);
                     iActualizados++;
-                    ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, iAplicacion, "Asignación aplicación a perfil - Actualizar", true);
+                    ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, iAplicacion, "Asignación aplicación a perfil - Actualizar", true);
                 }
                 else
                 {
                     controlador.iInsertarPermisoPerfilAplicacion(iPerfil, iModulo, iAplicacion, bIngresar, bConsultar, bModificar, bEliminar, bImprimir);
                     iInsertados++;
-                    ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, iAplicacion, "Asignación aplicación a perfil - Insertar", true);
+                    ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, iAplicacion, "Asignación aplicación a perfil - Insertar", true);
                 }
             }
             MessageBox.Show($"Se insertaron {iInsertados} registros y se actualizaron {iActualizados} registros correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -193,7 +193,7 @@ namespace Capa_Vista_Seguridad
             if (Dgv_Permisos.CurrentRow != null && !Dgv_Permisos.CurrentRow.IsNewRow)
             {
                 int iIdaplicacion = Convert.ToInt32(Dgv_Permisos.CurrentRow.Cells["IdAplicacion"].Value);
-                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, iIdaplicacion, "Asignación Perfil a Usuario - Quitar", true);
+                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, iIdaplicacion, "Asignación Perfil a Usuario - Quitar", true);
                 Dgv_Permisos.Rows.Remove(Dgv_Permisos.CurrentRow);
             }
             else
@@ -281,17 +281,17 @@ namespace Capa_Vista_Seguridad
                         Dgv_Permisos.Rows.Add(
                             row["nombre_perfil"].ToString(),
                             row["nombre_aplicacion"].ToString(),
-                            Convert.ToBoolean(row["ingresar_permiso_aplicacion_perfil"]),
-                            Convert.ToBoolean(row["consultar_permiso_aplicacion_perfil"]),
-                            Convert.ToBoolean(row["modificar_permiso_aplicacion_perfil"]),
-                            Convert.ToBoolean(row["eliminar_permiso_aplicacion_perfil"]),
+                            Convert.ToBoolean(row["bIngresar_permiso_aplicacion_perfil"]),
+                            Convert.ToBoolean(row["bConsultar_permiso_aplicacion_perfil"]),
+                            Convert.ToBoolean(row["bModificar_permiso_aplicacion_perfil"]),
+                            Convert.ToBoolean(row["bEliminar_permiso_aplicacion_perfil"]),
                             Convert.ToBoolean(row["imprimir_permiso_aplicacion_perfil"]),
-                            row["fk_id_perfil"],
-                            row["fk_id_modulo"],
-                            row["fk_id_aplicacion"]
+                            row["iFk_id_perfil"],
+                            row["iFk_id_modulo"],
+                            row["iFk_id_aplicacion"]
                         );
                     }
-                    ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 0, "Permisos Perfil - Consulta", true);
+                    ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 0, "Permisos Perfil - Consulta", true);
                     MessageBox.Show($"Permisos cargados correctamente. Se encontraron {dtPermisos.Rows.Count} registros.", "Búsqueda exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
@@ -323,9 +323,9 @@ namespace Capa_Vista_Seguridad
         {
             try
             {
-                int idUsuario = Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario;
+                int idUsuario = Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario;
 
-                Cls_PermisoUsuario permisoUsuario = new Cls_PermisoUsuario();
+                Cls_Permiso_Usuario permisoUsuario = new Cls_Permiso_Usuario();
                 Cls_Asignacion_Permiso_PerfilesDAO perfilDAO = new Cls_Asignacion_Permiso_PerfilesDAO();
 
                 int IidAplicacion = permisoUsuario.ObtenerIdAplicacionPorNombre("Asig aplicacion Perfil");

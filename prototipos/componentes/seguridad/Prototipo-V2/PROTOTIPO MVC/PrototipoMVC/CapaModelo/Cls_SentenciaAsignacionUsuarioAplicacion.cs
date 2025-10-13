@@ -9,7 +9,7 @@ namespace Capa_Modelo_Seguridad
     {
         Cls_Conexion conexion = new Cls_Conexion();
             //consulta para pasar obtener aplicacion y sus permisos  --> Brandon Hernandez 0901-22-9663
-        public DataTable ObtenerPermisosUsuarioAplicacion(int idUsuario, int idAplicacion)
+        public DataTable ObtenerPermisosUsuarioAplicacion(int iIdUsuario, int iIdAplicacion)
         {
             DataTable dt = new DataTable();
             string query = @"SELECT 
@@ -24,8 +24,8 @@ namespace Capa_Modelo_Seguridad
             using (OdbcConnection conn = conexion.conexion())
             using (OdbcCommand cmd = new OdbcCommand(query, conn))
             {
-                cmd.Parameters.AddWithValue("@idUsuario", idUsuario);
-                cmd.Parameters.AddWithValue("@idAplicacion", idAplicacion);
+                cmd.Parameters.AddWithValue("@idUsuario", iIdUsuario);
+                cmd.Parameters.AddWithValue("@idAplicacion", iIdAplicacion);
 
                 using (OdbcDataAdapter adapter = new OdbcDataAdapter(cmd))
                 {
@@ -36,7 +36,7 @@ namespace Capa_Modelo_Seguridad
         }
 
         // Obtener todos los usuarios
-        public DataTable ObtenerUsuarios()
+        public DataTable fun_ObtenerUsuarios()
         {
             DataTable dt = new DataTable();
             string query = "SELECT Pk_Id_Usuario, Cmp_Nombre_Usuario AS nombre_usuario FROM Tbl_Usuario";
@@ -51,7 +51,7 @@ namespace Capa_Modelo_Seguridad
         }
 
         // Obtener todos los módulos
-        public DataTable ObtenerModulos()
+        public DataTable fun_ObtenerModulos()
         {
             DataTable dt = new DataTable();
             string query = "SELECT Pk_Id_Modulo, Cmp_Nombre_Modulo AS nombre_modulo FROM Tbl_Modulo";
@@ -66,7 +66,7 @@ namespace Capa_Modelo_Seguridad
         }
 
         // Pablo Quiroa 0901-22-2929
-        public DataTable ObtenerAplicacionesPorModulo(int idModulo)
+        public DataTable fun_ObtenerAplicacionesPorModulo(int iIdModulo)
         {
             DataTable dt = new DataTable();
             string query = @"
@@ -81,7 +81,7 @@ namespace Capa_Modelo_Seguridad
             using (OdbcConnection conn = conexion.conexion())
             using (OdbcCommand cmd = new OdbcCommand(query, conn))
             {
-                cmd.Parameters.AddWithValue("?", idModulo);
+                cmd.Parameters.AddWithValue("?", iIdModulo);
                 using (OdbcDataAdapter da = new OdbcDataAdapter(cmd))
                 {
                     da.Fill(dt);
@@ -91,7 +91,7 @@ namespace Capa_Modelo_Seguridad
         }
 
         // Obtener permisos por usuario
-        public DataTable ObtenerPermisosPorUsuario(int idUsuario)
+        public DataTable fun_ObtenerPermisosPorUsuario(int iIdUsuario)
         {
             DataTable dt = new DataTable();
             string query = @"SELECT u.Cmp_Nombre_Usuario AS nombre_usuario,
@@ -103,8 +103,8 @@ namespace Capa_Modelo_Seguridad
                                     p.Cmp_Eliminar_Permiso_Aplicacion_Usuario AS eliminar_permiso_aplicacion_usuario,
                                     p.Cmp_Imprimir_Permiso_Aplicacion_Usuario AS imprimir_permiso_aplicacion_usuario,
                                     p.Fk_Id_Usuario AS fk_id_usuario,
-                                    p.Fk_Id_Modulo AS fk_id_modulo,
-                                    p.Fk_Id_Aplicacion AS fk_id_aplicacion
+                                    p.Fk_Id_Modulo AS iFk_id_modulo,
+                                    p.Fk_Id_Aplicacion AS iFk_id_aplicacion
                              FROM Tbl_Permiso_Usuario_Aplicacion p
                              INNER JOIN Tbl_Usuario u ON u.Pk_Id_Usuario = p.Fk_Id_Usuario
                              INNER JOIN Tbl_Aplicacion a ON a.Pk_Id_Aplicacion = p.Fk_Id_Aplicacion
@@ -114,7 +114,7 @@ namespace Capa_Modelo_Seguridad
             using (OdbcConnection conn = conexion.conexion())
             using (OdbcCommand cmd = new OdbcCommand(query, conn))
             {
-                cmd.Parameters.AddWithValue("?", idUsuario);
+                cmd.Parameters.AddWithValue("?", iIdUsuario);
                 using (OdbcDataAdapter da = new OdbcDataAdapter(cmd))
                 {
                     da.Fill(dt);
@@ -124,7 +124,7 @@ namespace Capa_Modelo_Seguridad
         }
 
         // Verificar si existe un permiso
-        public bool ExistePermiso(int idUsuario, int idModulo, int idAplicacion)
+        public bool ExistePermiso(int iIdUsuario, int iIdModulo, int iIdAplicacion)
         {
             string verificar = @"SELECT COUNT(*) 
                                  FROM Tbl_Permiso_Usuario_Aplicacion
@@ -133,9 +133,9 @@ namespace Capa_Modelo_Seguridad
             using (OdbcConnection conn = conexion.conexion())
             using (OdbcCommand cmd = new OdbcCommand(verificar, conn))
             {
-                cmd.Parameters.AddWithValue("?", idUsuario);
-                cmd.Parameters.AddWithValue("?", idModulo);
-                cmd.Parameters.AddWithValue("?", idAplicacion);
+                cmd.Parameters.AddWithValue("?", iIdUsuario);
+                cmd.Parameters.AddWithValue("?", iIdModulo);
+                cmd.Parameters.AddWithValue("?", iIdAplicacion);
 
                 int existe = Convert.ToInt32(cmd.ExecuteScalar());
                 return existe > 0;
@@ -143,9 +143,9 @@ namespace Capa_Modelo_Seguridad
         }
 
         // Insertar permisos de usuario por aplicación
-        public int InsertarPermisoUsuarioAplicacion(int idUsuario, int idModulo, int idAplicacion,
-                                            bool ingresar, bool consultar, bool modificar,
-                                            bool eliminar, bool imprimir)
+        public int InsertarPermisoUsuarioAplicacion(int iIdUsuario, int iIdModulo, int iIdAplicacion,
+                                            bool bIngresar, bool bConsultar, bool bModificar,
+                                            bool bEliminar, bool bImprimir)
         {
             int filasAfectadas = 0;
             string query = @"INSERT INTO Tbl_Permiso_Usuario_Aplicacion
@@ -160,14 +160,14 @@ namespace Capa_Modelo_Seguridad
             using (OdbcConnection conn = conexion.conexion())
             using (OdbcCommand cmdInsertar = new OdbcCommand(query, conn))
             {
-                cmdInsertar.Parameters.AddWithValue("?", idUsuario);
-                cmdInsertar.Parameters.AddWithValue("?", idModulo);
-                cmdInsertar.Parameters.AddWithValue("?", idAplicacion);
-                cmdInsertar.Parameters.AddWithValue("?", ingresar);
-                cmdInsertar.Parameters.AddWithValue("?", consultar);
-                cmdInsertar.Parameters.AddWithValue("?", modificar);
-                cmdInsertar.Parameters.AddWithValue("?", eliminar);
-                cmdInsertar.Parameters.AddWithValue("?", imprimir);
+                cmdInsertar.Parameters.AddWithValue("?", iIdUsuario);
+                cmdInsertar.Parameters.AddWithValue("?", iIdModulo);
+                cmdInsertar.Parameters.AddWithValue("?", iIdAplicacion);
+                cmdInsertar.Parameters.AddWithValue("?", bIngresar);
+                cmdInsertar.Parameters.AddWithValue("?", bConsultar);
+                cmdInsertar.Parameters.AddWithValue("?", bModificar);
+                cmdInsertar.Parameters.AddWithValue("?", bEliminar);
+                cmdInsertar.Parameters.AddWithValue("?", bImprimir);
 
                 filasAfectadas = cmdInsertar.ExecuteNonQuery();
             }
@@ -176,9 +176,9 @@ namespace Capa_Modelo_Seguridad
 
 
         // Actualizar permisos de usuario por aplicación 
-        public int ActualizarPermisoUsuarioAplicacion(int idUsuario, int idModulo, int idAplicacion,
-                                                      bool ingresar, bool consultar, bool modificar,
-                                                      bool eliminar, bool imprimir)
+        public int ActualizarPermisoUsuarioAplicacion(int iIdUsuario, int iIdModulo, int iIdAplicacion,
+                                                      bool bIngresar, bool bConsultar, bool bModificar,
+                                                      bool bEliminar, bool bImprimir)
         {
             int filasAfectadas = 0;
             string query = @"UPDATE Tbl_Permiso_Usuario_Aplicacion
@@ -192,14 +192,14 @@ namespace Capa_Modelo_Seguridad
             using (OdbcConnection conn = conexion.conexion())
             using (OdbcCommand cmd = new OdbcCommand(query, conn))
             {
-                cmd.Parameters.AddWithValue("?", ingresar);
-                cmd.Parameters.AddWithValue("?", consultar);
-                cmd.Parameters.AddWithValue("?", modificar);
-                cmd.Parameters.AddWithValue("?", eliminar);
-                cmd.Parameters.AddWithValue("?", imprimir);
-                cmd.Parameters.AddWithValue("?", idUsuario);
-                cmd.Parameters.AddWithValue("?", idModulo);
-                cmd.Parameters.AddWithValue("?", idAplicacion);
+                cmd.Parameters.AddWithValue("?", bIngresar);
+                cmd.Parameters.AddWithValue("?", bConsultar);
+                cmd.Parameters.AddWithValue("?", bModificar);
+                cmd.Parameters.AddWithValue("?", bEliminar);
+                cmd.Parameters.AddWithValue("?", bImprimir);
+                cmd.Parameters.AddWithValue("?", iIdUsuario);
+                cmd.Parameters.AddWithValue("?", iIdModulo);
+                cmd.Parameters.AddWithValue("?", iIdAplicacion);
 
                 filasAfectadas = cmd.ExecuteNonQuery();
             }

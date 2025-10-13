@@ -76,14 +76,14 @@ namespace Capa_Modelo_Seguridad
         }
 
         public int iInsertarPermisoPerfilAplicacion(
-            int idPerfil,
+            int iIdPerfil,
             int idModulo,
-            int idAplicacion,
-            bool ingresar,
-            bool consultar,
-            bool modificar,
-            bool eliminar,
-            bool imprimir)
+            int iIdAplicacion,
+            bool bIngresar,
+            bool bConsultar,
+            bool bModificar,
+            bool bEliminar,
+            bool bImprimir)
         {
             int filasAfectadas = 0;
 
@@ -101,13 +101,13 @@ namespace Capa_Modelo_Seguridad
                 using (OdbcCommand cmd = new OdbcCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("?", idModulo);
-                    cmd.Parameters.AddWithValue("?", idPerfil);
-                    cmd.Parameters.AddWithValue("?", idAplicacion);
-                    cmd.Parameters.AddWithValue("?", ingresar);
-                    cmd.Parameters.AddWithValue("?", consultar);
-                    cmd.Parameters.AddWithValue("?", modificar);
-                    cmd.Parameters.AddWithValue("?", eliminar);
-                    cmd.Parameters.AddWithValue("?", imprimir);
+                    cmd.Parameters.AddWithValue("?", iIdPerfil);
+                    cmd.Parameters.AddWithValue("?", iIdAplicacion);
+                    cmd.Parameters.AddWithValue("?", bIngresar);
+                    cmd.Parameters.AddWithValue("?", bConsultar);
+                    cmd.Parameters.AddWithValue("?", bModificar);
+                    cmd.Parameters.AddWithValue("?", bEliminar);
+                    cmd.Parameters.AddWithValue("?", bImprimir);
 
                     filasAfectadas = cmd.ExecuteNonQuery();
                 }
@@ -116,7 +116,7 @@ namespace Capa_Modelo_Seguridad
             return filasAfectadas;
         }
 
-        public bool bExistePermisoPerfil(int idPerfil, int idModulo, int idAplicacion)
+        public bool bExistePermisoPerfil(int iIdPerfil, int iIdModulo, int iIdAplicacion)
         {
             using (OdbcConnection conn = conexion.conexion())
             {
@@ -126,9 +126,9 @@ namespace Capa_Modelo_Seguridad
 
                 using (OdbcCommand cmd = new OdbcCommand(verificar, conn))
                 {
-                    cmd.Parameters.AddWithValue("?", idPerfil);
-                    cmd.Parameters.AddWithValue("?", idModulo);
-                    cmd.Parameters.AddWithValue("?", idAplicacion);
+                    cmd.Parameters.AddWithValue("?", iIdPerfil);
+                    cmd.Parameters.AddWithValue("?", iIdModulo);
+                    cmd.Parameters.AddWithValue("?", iIdAplicacion);
 
                     int existe = Convert.ToInt32(cmd.ExecuteScalar());
                     return existe > 0;
@@ -211,14 +211,14 @@ namespace Capa_Modelo_Seguridad
         SELECT 
             p.Cmp_Puesto_Perfil AS nombre_perfil,
             a.Cmp_Nombre_Aplicacion AS nombre_aplicacion,
-            ppa.Cmp_Ingresar_Permisos_Aplicacion_Perfil AS ingresar_permiso_aplicacion_perfil,
-            ppa.Cmp_Consultar_Permisos_Aplicacion_Perfil AS consultar_permiso_aplicacion_perfil,
-            ppa.Cmp_Modificar_Permisos_Aplicacion_Perfil AS modificar_permiso_aplicacion_perfil,
-            ppa.Cmp_Eliminar_Permisos_Aplicacion_Perfil AS eliminar_permiso_aplicacion_perfil,
+            ppa.Cmp_Ingresar_Permisos_Aplicacion_Perfil AS bIngresar_permiso_aplicacion_perfil,
+            ppa.Cmp_Consultar_Permisos_Aplicacion_Perfil AS bConsultar_permiso_aplicacion_perfil,
+            ppa.Cmp_Modificar_Permisos_Aplicacion_Perfil AS bModificar_permiso_aplicacion_perfil,
+            ppa.Cmp_Eliminar_Permisos_Aplicacion_Perfil AS bEliminar_permiso_aplicacion_perfil,
             ppa.Cmp_Imprimir_Permisos_Aplicacion_Perfil AS imprimir_permiso_aplicacion_perfil,
-            ppa.Fk_Id_Perfil AS fk_id_perfil,
-            ppa.Fk_Id_Modulo AS fk_id_modulo,
-            ppa.Fk_Id_Aplicacion AS fk_id_aplicacion
+            ppa.Fk_Id_Perfil AS iFk_id_perfil,
+            ppa.Fk_Id_Modulo AS iFk_id_modulo,
+            ppa.Fk_Id_Aplicacion AS iFk_id_aplicacion
         FROM Tbl_Permiso_Perfil_Aplicacion ppa
         INNER JOIN Tbl_Perfil p ON ppa.Fk_Id_Perfil = p.Pk_Id_Perfil
         INNER JOIN Tbl_Aplicacion a ON ppa.Fk_Id_Aplicacion = a.Pk_Id_Aplicacion
@@ -252,19 +252,19 @@ namespace Capa_Modelo_Seguridad
         {
             DataTable dt = new DataTable();
             string query = @"SELECT 
-                        Cmp_Ingresar_Permisos_Aplicacion_Perfil AS ingresar,
-                        Cmp_Consultar_Permisos_Aplicacion_Perfil AS consultar,
-                        Cmp_Modificar_Permisos_Aplicacion_Perfil AS modificar,
-                        Cmp_Eliminar_Permisos_Aplicacion_Perfil AS eliminar,
-                        Cmp_Imprimir_Permisos_Aplicacion_Perfil AS imprimir
+                        Cmp_Ingresar_Permisos_Aplicacion_Perfil AS bIngresar,
+                        Cmp_Consultar_Permisos_Aplicacion_Perfil AS bConsultar,
+                        Cmp_Modificar_Permisos_Aplicacion_Perfil AS bModificar,
+                        Cmp_Eliminar_Permisos_Aplicacion_Perfil AS bEliminar,
+                        Cmp_Imprimir_Permisos_Aplicacion_Perfil AS bImprimir
                     FROM  Tbl_Permiso_Perfil_Aplicacion
                     WHERE Fk_Id_Perfil = ? AND Fk_Id_Aplicacion = ?";
 
             using (OdbcConnection conn = conexion.conexion())
             using (OdbcCommand cmd = new OdbcCommand(query, conn))
             {
-                cmd.Parameters.AddWithValue("@idPerfil", iIdPerfil);
-                cmd.Parameters.AddWithValue("@idAplicacion", iIdAplicacion);
+                cmd.Parameters.AddWithValue("@iIdPerfil", iIdPerfil);
+                cmd.Parameters.AddWithValue("@iIdAplicacion", iIdAplicacion);
 
                 using (OdbcDataAdapter adapter = new OdbcDataAdapter(cmd))
                 {

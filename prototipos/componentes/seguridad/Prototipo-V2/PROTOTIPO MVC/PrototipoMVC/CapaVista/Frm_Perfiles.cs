@@ -12,7 +12,7 @@ namespace Capa_Vista_Seguridad
     public partial class Frm_Perfiles : Form
     {
         Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador();
-        private Cls_PerfilesControlador controlador = new Cls_PerfilesControlador();
+        private Cls_Perfiles_Controlador controlador = new Cls_Perfiles_Controlador();
         private List<Cls_Perfiles> listaPerfiles = new List<Cls_Perfiles>();
 
         public Frm_Perfiles()
@@ -47,8 +47,8 @@ namespace Capa_Vista_Seguridad
 
             // Fuente de autocompletado
             AutoCompleteStringCollection autoComplete = new AutoCompleteStringCollection();
-            autoComplete.AddRange(listaPerfiles.Select(p => p.Pk_Id_Perfil.ToString()).ToArray());
-            autoComplete.AddRange(listaPerfiles.Select(p => p.Cmp_Puesto_Perfil).ToArray());
+            autoComplete.AddRange(listaPerfiles.Select(p => p.iPk_Id_Perfil.ToString()).ToArray());
+            autoComplete.AddRange(listaPerfiles.Select(p => p.sCmp_Puesto_Perfil).ToArray());
             Cbo_perfiles.AutoCompleteCustomSource = autoComplete;
 
             // Display y Value
@@ -58,8 +58,8 @@ namespace Capa_Vista_Seguridad
             {
                 Cbo_perfiles.Items.Add(new
                 {
-                    Display = $"{perfil.Pk_Id_Perfil} - {perfil.Cmp_Puesto_Perfil}",
-                    Id = perfil.Pk_Id_Perfil
+                    Display = $"{perfil.iPk_Id_Perfil} - {perfil.sCmp_Puesto_Perfil}",
+                    Id = perfil.iPk_Id_Perfil
                 });
             }
         }
@@ -74,12 +74,12 @@ namespace Capa_Vista_Seguridad
 
         private void fun_MostrarPerfil(Cls_Perfiles perfil)
         {
-            Txt_idperfil.Text = perfil.Pk_Id_Perfil.ToString();
-            Txt_puesto.Text = perfil.Cmp_Puesto_Perfil;
-            Txt_descripcion.Text = perfil.Cmp_Descripcion_Perfil;
-            Cbo_tipoperfil.Text = perfil.Cmp_Tipo_Perfil.ToString();
-            Rdb_Habilitado.Checked = perfil.Cmp_Estado_Perfil;
-            Rdb_inhabilitado.Checked = !perfil.Cmp_Estado_Perfil;
+            Txt_idperfil.Text = perfil.iPk_Id_Perfil.ToString();
+            Txt_puesto.Text = perfil.sCmp_Puesto_Perfil;
+            Txt_descripcion.Text = perfil.sCmp_Descripcion_Perfil;
+            Cbo_tipoperfil.Text = perfil.iCmp_Tipo_Perfil.ToString();
+            Rdb_Habilitado.Checked = perfil.bCmp_Estado_Perfil;
+            Rdb_inhabilitado.Checked = !perfil.bCmp_Estado_Perfil;
         }
 
         private void Btn_nuevo_Click(object sender, EventArgs e)
@@ -118,7 +118,7 @@ namespace Capa_Vista_Seguridad
                 if (bExito)
                 {
                     MessageBox.Show("Perfil guardado correctamente");
-                    ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 1, "Guardar perfil", true);
+                    ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, "Guardar perfil", true);
                 }
                 else
                 {
@@ -165,7 +165,7 @@ namespace Capa_Vista_Seguridad
             if (bExito)
             {
                 MessageBox.Show("Perfil modificado correctamente");
-                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 1, "Modificar perfil", true);
+                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, "Modificar perfil", true);
             }
             else
             {
@@ -213,13 +213,13 @@ namespace Capa_Vista_Seguridad
             // Buscar por ID si es numérico
             if (int.TryParse(busqueda.Split('-')[0].Trim(), out int id))
             {
-                perfilEncontrado = listaPerfiles.FirstOrDefault(p => p.Pk_Id_Perfil == id);
+                perfilEncontrado = listaPerfiles.FirstOrDefault(p => p.iPk_Id_Perfil == id);
             }
             // Si no encontró por ID, buscar por nombre
             if (perfilEncontrado == null)
             {
                 perfilEncontrado = listaPerfiles.FirstOrDefault(p =>
-                    p.Cmp_Puesto_Perfil != null && p.Cmp_Puesto_Perfil.Equals(busqueda, StringComparison.OrdinalIgnoreCase));
+                    p.sCmp_Puesto_Perfil != null && p.sCmp_Puesto_Perfil.Equals(busqueda, StringComparison.OrdinalIgnoreCase));
             }
             if (perfilEncontrado != null)
             {
@@ -251,7 +251,7 @@ namespace Capa_Vista_Seguridad
             if (bExito)
             {
                 MessageBox.Show("Perfil eliminado");
-                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 1, "Eliminar perfil", true);
+                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, "Eliminar perfil", true);
             }
             else
             {

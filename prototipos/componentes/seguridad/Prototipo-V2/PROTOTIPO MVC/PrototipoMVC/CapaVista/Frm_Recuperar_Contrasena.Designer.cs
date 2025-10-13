@@ -1,7 +1,7 @@
 ﻿
 namespace Capa_Vista_Seguridad
 {
-    partial class Frm_RecuperarContrasena
+    partial class Frm_Recuperar_Contrasena
     {
         /// <summary>
         /// Required designer variable.

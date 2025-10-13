@@ -28,7 +28,7 @@ namespace Capa_Modelo_Seguridad
         }
 
         // 0901-20-4620 Ruben Armando Lopez Luch
-        public void fun_guardar_token(int iIdUsuario, string sToken, DateTime expiracion)
+        public void fun_guardar_token(int iIdUsuario, string sToken, DateTime dExpiracion)
         {
             using (OdbcConnection conn = cn.conexion())
             {

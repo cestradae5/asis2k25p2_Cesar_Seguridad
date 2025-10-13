@@ -17,7 +17,7 @@ namespace Capa_Vista_Seguridad
         Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador(); // Bitacora
         Cls_asignacion_perfil_usuarioControlador controlador = new Cls_asignacion_perfil_usuarioControlador();
        
-        Cls_UsuarioControlador controladorUsuario = new Cls_UsuarioControlador();
+        Cls_Usuario_Controlador controladorUsuario = new Cls_Usuario_Controlador();
         private List<Cls_asignacion_perfil_usuario> asignacionesPendientes = new List<Cls_asignacion_perfil_usuario>();
 
         // DataTables para lookup de nombres
@@ -111,7 +111,7 @@ namespace Capa_Vista_Seguridad
             fun_RefrescarAsignacionesPendientes();
 
             // Registrar en Bitácora -Arón Ricardo Esquit Silva  0901-22-13036
-            ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 1, "Asignación Perfil a Usuario - Agregar", true);
+            ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, "Asignación Perfil a Usuario - Agregar", true);
         }
 
         private void fun_RefrescarAsignacionesPendientes()
@@ -152,7 +152,7 @@ namespace Capa_Vista_Seguridad
             fun_RefrescarAsignacionesPendientes();
 
             // Registrar en Bitácora (si lo usas)
-            ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 1, "Asignación Perfil a Usuario - Guardar", true);
+            ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, "Asignación Perfil a Usuario - Guardar", true);
         }
 
         private void Btn_eliminar_asignacion_Click_1(object sender, EventArgs e)
@@ -182,7 +182,7 @@ namespace Capa_Vista_Seguridad
                     fun_RefrescarAsignacionesPendientes();
 
                     // Registrar en Bitácora - Arón Ricardo Esquit Silva  0901-22-13036
-                    ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 1, "Asignación Perfil a Usuario - Eliminar", true);
+                    ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, "Asignación Perfil a Usuario - Eliminar", true);
                 }
             }
         }
@@ -230,9 +230,9 @@ namespace Capa_Vista_Seguridad
         {
             try
             {
-                int idUsuario = Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario;
+                int idUsuario = Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario;
 
-                Cls_PermisoUsuario permisoUsuario = new Cls_PermisoUsuario();
+                Cls_Permiso_Usuario permisoUsuario = new Cls_Permiso_Usuario();
                 Cls_Asignacion_Permiso_PerfilesDAO perfilDAO = new Cls_Asignacion_Permiso_PerfilesDAO();
 
                 int IidAplicacion = permisoUsuario.ObtenerIdAplicacionPorNombre("Asig Perfiles");

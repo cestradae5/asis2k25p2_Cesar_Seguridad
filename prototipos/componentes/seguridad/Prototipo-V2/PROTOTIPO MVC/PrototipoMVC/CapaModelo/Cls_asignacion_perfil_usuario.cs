@@ -12,10 +12,10 @@ namespace Capa_Modelo_Seguridad
 
         public Cls_asignacion_perfil_usuario() { }
 
-        public Cls_asignacion_perfil_usuario(int Fk_Id_Usuario, int Fk_Id_Perfil)
+        public Cls_asignacion_perfil_usuario(int iFk_Id_Usuario, int iFk_Id_Perfil)
         {
-            this.Fk_Id_Usuario = Fk_Id_Usuario;
-            this.Fk_Id_Perfil = Fk_Id_Perfil;
+            this.Fk_Id_Usuario = iFk_Id_Usuario;
+            this.Fk_Id_Perfil = iFk_Id_Perfil;
         }
     }
 }

@@ -131,12 +131,12 @@ namespace Capa_Modelo_Seguridad
         // --------------------------
         // Borrar un empleado por ID
         // --------------------------
-        public int fun_BorrarEmpleado(int idEmpleado)
+        public int fun_BorrarEmpleado(int iIdEmpleado)
         {
             using (OdbcConnection conn = conexion.conexion())
             {
                 OdbcCommand cmd = new OdbcCommand(SQL_DELETE, conn);
-                cmd.Parameters.AddWithValue("@Pk_Id_Empleado", idEmpleado);
+                cmd.Parameters.AddWithValue("@Pk_Id_Empleado", iIdEmpleado);
                 return cmd.ExecuteNonQuery();
             }
         }
@@ -144,13 +144,13 @@ namespace Capa_Modelo_Seguridad
         // --------------------------
         // Buscar un empleado por ID
         // --------------------------
-        public Cls_Empleado Query(int idEmpleado)
+        public Cls_Empleado Query(int iIdEmpleado)
         {
             Cls_Empleado emp = null;
             using (OdbcConnection conn = conexion.conexion())
             {
                 OdbcCommand cmd = new OdbcCommand(SQL_QUERY, conn);
-                cmd.Parameters.AddWithValue("@Pk_Id_Empleado", idEmpleado);
+                cmd.Parameters.AddWithValue("@Pk_Id_Empleado", iIdEmpleado);
 
                 OdbcDataReader reader = cmd.ExecuteReader();
                 if (reader.Read())

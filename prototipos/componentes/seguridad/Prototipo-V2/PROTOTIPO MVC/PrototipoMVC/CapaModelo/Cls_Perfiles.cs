@@ -13,21 +13,21 @@ namespace Capa_Modelo_Seguridad
      */
     public class Cls_Perfiles
     {
-        public int Pk_Id_Perfil { get; set; }
-        public string Cmp_Puesto_Perfil { get; set; }
-        public string Cmp_Descripcion_Perfil { get; set; }
-        public bool Cmp_Estado_Perfil { get; set; }
-        public int Cmp_Tipo_Perfil { get; set; }
+        public int iPk_Id_Perfil { get; set; }
+        public string sCmp_Puesto_Perfil { get; set; }
+        public string sCmp_Descripcion_Perfil { get; set; }
+        public bool bCmp_Estado_Perfil { get; set; }
+        public int iCmp_Tipo_Perfil { get; set; }
 
         public Cls_Perfiles() { }
 
-        public Cls_Perfiles(int pkIdPerfil, string cmpPuestoPerfil, string cmpDescripcionPerfil, bool cmpEstadoPerfil, int cmpTipoPerfil)
+        public Cls_Perfiles(int iPkIdPerfil, string sCmpPuestoPerfil, string sCmpDescripcionPerfil, bool bCmpEstadoPerfil, int iCmpTipoPerfil)
         {
-            this.Pk_Id_Perfil = pkIdPerfil;
-            this.Cmp_Puesto_Perfil = cmpPuestoPerfil;
-            this.Cmp_Descripcion_Perfil = cmpDescripcionPerfil;
-            this.Cmp_Estado_Perfil = cmpEstadoPerfil;
-            this.Cmp_Tipo_Perfil = cmpTipoPerfil;
+            this.iPk_Id_Perfil = iPkIdPerfil;
+            this.sCmp_Puesto_Perfil = sCmpPuestoPerfil;
+            this.sCmp_Descripcion_Perfil = sCmpDescripcionPerfil;
+            this.bCmp_Estado_Perfil = bCmpEstadoPerfil;
+            this.iCmp_Tipo_Perfil = iCmpTipoPerfil;
         }
     }
 }

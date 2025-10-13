@@ -17,11 +17,11 @@ namespace Capa_Controlador_Seguridad
             return daoAplicacion.fun_ObtenerAplicaciones();
         }
 
-        public int InsertarAplicacion(int idAplicacion, string sNombre, string sDescripcion, bool bEstado, int? iIdReporte = null)
+        public int InsertarAplicacion(int iIdAplicacion, string sNombre, string sDescripcion, bool bEstado, int? iIdReporte = null)
         {
             Cls_Aplicacion nuevaApp = new Cls_Aplicacion
             {
-                iPkIdAplicacion = idAplicacion,
+                iPkIdAplicacion = iIdAplicacion,
                 sNombreAplicacion = sNombre,
                 sDescripcionAplicacion = sDescripcion,
                 bEstadoAplicacion = bEstado,
@@ -32,11 +32,11 @@ namespace Capa_Controlador_Seguridad
         }
 
         // Actualizar aplicación existente
-        public bool ActualizarAplicacion(int idAplicacion, string sNombre, string sDescripcion, bool bEstado, int? iIdReporte = null)
+        public bool ActualizarAplicacion(int iIdAplicacion, string sNombre, string sDescripcion, bool bEstado, int? iIdReporte = null)
         {
             Cls_Aplicacion appActualizada = new Cls_Aplicacion
             {
-                iPkIdAplicacion = idAplicacion,
+                iPkIdAplicacion = iIdAplicacion,
                 sNombreAplicacion = sNombre,
                 sDescripcionAplicacion = sDescripcion,
                 bEstadoAplicacion = bEstado,

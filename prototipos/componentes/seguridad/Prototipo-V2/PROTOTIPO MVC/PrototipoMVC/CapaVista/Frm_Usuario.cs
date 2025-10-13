@@ -13,7 +13,7 @@ namespace Capa_Vista_Seguridad
         
         // VARIABLES GLOBALES
         
-        private Cls_UsuarioControlador gClsUsuarioControlador = new Cls_UsuarioControlador();
+        private Cls_Usuario_Controlador gClsUsuarioControlador = new Cls_Usuario_Controlador();
         private Cls_EmpleadoControlador gClsEmpleadoControlador = new Cls_EmpleadoControlador();
         private Cls_BitacoraControlador gCtrlBitacora = new Cls_BitacoraControlador(); // se puede mantener aunque ya no lo uses aquí
 

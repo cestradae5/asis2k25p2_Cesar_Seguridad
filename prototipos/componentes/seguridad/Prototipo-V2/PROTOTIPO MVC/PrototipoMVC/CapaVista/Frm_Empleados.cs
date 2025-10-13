@@ -171,36 +171,58 @@ namespace Capa_Vista_Seguridad
                 DateTime.Parse(Txt_fechaContra_empleado.Text)
             );
             MessageBox.Show(exito ? "Empleado modificado correctamente" : "Error al modificar empleado");
-            ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 0, "Modificar empleado", true);
+            ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 0, "Modificar empleado", true);
             fun_CargarEmpleados();
             fun_ConfigurarComboBoxEmpleados();
             fun_LimpiarCampos();
             fun_ConfiguracionInicial();
         }
 
-            private void Btn_eliminar_empleado_Click(object sender, EventArgs e)
+        //Ernesto David Samayoa Jocol 0901-22-3415 fecha:12/10/2025 
+        private void Btn_eliminar_empleado_Click(object sender, EventArgs e)
+        {
+            // Validar que el campo no esté vacío ni sea inválido
+            if (string.IsNullOrWhiteSpace(Txt_id_empleado.Text) || !int.TryParse(Txt_id_empleado.Text, out int id))
             {
-                if (!int.TryParse(Txt_id_empleado.Text, out int id))
-                {
-                    MessageBox.Show("ID no válido");
-                    return;
-                }
-
-
-                bool bExito = controlador.fun_BorrarEmpleado(id);
-                MessageBox.Show(bExito ? "Empleado eliminado" : "Error al eliminar");
-                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 0, "Eliminar empleado", true);
-                fun_CargarEmpleados();
-                fun_ConfigurarComboBoxEmpleados();
-                fun_LimpiarCampos();
-                fun_ConfiguracionInicial();
-        
-
-
-
+                MessageBox.Show("Por favor, ingrese un ID válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
-                   
-        
+
+            // Confirmar si realmente desea eliminar
+            DialogResult respuesta = MessageBox.Show(
+                "¿Está seguro de que desea eliminar este empleado?",
+                "Confirmar eliminación",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning
+            );
+
+            if (respuesta == DialogResult.Yes)
+            {
+                // Ejecutar la eliminación
+                bool exito = controlador.fun_BorrarEmpleado(id);
+
+                if (exito)
+                {
+                    MessageBox.Show("Empleado eliminado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 0, "Eliminar empleado", true);
+
+                    // Refrescar datos
+                    fun_CargarEmpleados();
+                    fun_ConfigurarComboBoxEmpleados();
+                    fun_LimpiarCampos();
+                    fun_ConfiguracionInicial();
+                }
+                else
+                {
+                    MessageBox.Show("Error al eliminar el empleado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Eliminación cancelada por el usuario.", "Cancelado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
         private void Btn_cancelar_Click(object sender, EventArgs e)
         {
             fun_LimpiarCampos();
@@ -281,7 +303,7 @@ namespace Capa_Vista_Seguridad
                 );
 
                 MessageBox.Show("Empleado guardado correctamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 0, "Guardar empleado", true);
+                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 0, "Guardar empleado", true);
 
                 fun_CargarEmpleados();
                 fun_ConfigurarComboBoxEmpleados();

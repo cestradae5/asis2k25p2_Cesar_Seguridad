@@ -13,34 +13,34 @@ namespace Capa_Modelo_Seguridad
 {
     public class Cls_Asignacion_Perrmisos_Perfiles
     {
-        public int fk_id_modulo { get; set; }
-        public int fk_id_perfil { get; set; }
-        public int fk_id_aplicacion { get; set; }
-        public bool ingresar_permiso_aplicacion_perfil { get; set; }
-        public bool consultar_permiso_aplicacion_perfil { get; set; }
-        public bool modificar_permiso_aplicacion_perfil { get; set; }
-        public bool eliminar_permiso_aplicacion_perfil { get; set; }
-        public bool imprimir_permiso_aplicacion_perfil { get; set; }
+        public int iFk_id_modulo { get; set; }
+        public int iFk_id_perfil { get; set; }
+        public int iFk_id_aplicacion { get; set; }
+        public bool bIngresar_permiso_aplicacion_perfil { get; set; }
+        public bool bConsultar_permiso_aplicacion_perfil { get; set; }
+        public bool bModificar_permiso_aplicacion_perfil { get; set; }
+        public bool bEliminar_permiso_aplicacion_perfil { get; set; }
+        public bool bImprimir_permiso_aplicacion_perfil { get; set; }
 
         public Cls_Asignacion_Perrmisos_Perfiles(){}
 
         public Cls_Asignacion_Perrmisos_Perfiles(
-            int fk_id_modulo,
-            int fk_id_perfil,
-            int fk_id_aplicacion,
-            bool ingresar_permiso_aplicacion_perfil,
-            bool consultar_permiso_aplicacion_perfil,
-            bool modificar_permiso_aplicacion_perfil,
-            bool eliminar_permiso_aplicacion_perfil,
-            bool imprimir_permiso_aplicacion_perfil)
+            int iFk_id_modulo,
+            int iFk_id_perfil,
+            int iFk_id_aplicacion,
+            bool bIngresar_permiso_aplicacion_perfil,
+            bool bConsultar_permiso_aplicacion_perfil,
+            bool bModificar_permiso_aplicacion_perfil,
+            bool bEliminar_permiso_aplicacion_perfil,
+            bool bImprimir_permiso_aplicacion_perfil)
         {
-            this.fk_id_modulo = fk_id_modulo;
-            this.fk_id_perfil = fk_id_perfil;
-            this.ingresar_permiso_aplicacion_perfil = ingresar_permiso_aplicacion_perfil;
-            this.consultar_permiso_aplicacion_perfil = consultar_permiso_aplicacion_perfil;
-            this.modificar_permiso_aplicacion_perfil = modificar_permiso_aplicacion_perfil;
-            this.eliminar_permiso_aplicacion_perfil = eliminar_permiso_aplicacion_perfil;
-            this.imprimir_permiso_aplicacion_perfil = imprimir_permiso_aplicacion_perfil;
+            this.iFk_id_modulo = iFk_id_modulo;
+            this.iFk_id_perfil = iFk_id_perfil;
+            this.bIngresar_permiso_aplicacion_perfil = bIngresar_permiso_aplicacion_perfil;
+            this.bConsultar_permiso_aplicacion_perfil = bConsultar_permiso_aplicacion_perfil;
+            this.bModificar_permiso_aplicacion_perfil = bModificar_permiso_aplicacion_perfil;
+            this.bEliminar_permiso_aplicacion_perfil = bEliminar_permiso_aplicacion_perfil;
+            this.bImprimir_permiso_aplicacion_perfil = bImprimir_permiso_aplicacion_perfil;
         }
 
 

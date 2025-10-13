@@ -41,8 +41,8 @@ namespace Capa_Vista_Seguridad
             this.Load += Frm_Seguridad_Load;
 
             fun_habilitar_botones_por_permisos_combinados(
-                Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario,
-                Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdPerfil
+                Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario,
+                Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdPerfil
             );
 
             this.FormClosing += Frm_Seguridad_FormClosing;
@@ -50,13 +50,13 @@ namespace Capa_Vista_Seguridad
         private void Frm_Seguridad_Load(object sender, EventArgs e)
         {
             // Mostrar usuario conectado en StatusStrip
-            toolStripStatusLabel.Text = $"Estado: Conectado | Usuario: {Capa_Controlador_Seguridad.Cls_UsuarioConectado.sNombreUsuario}";
+            toolStripStatusLabel.Text = $"Estado: Conectado | Usuario: {Capa_Controlador_Seguridad.Cls_Usuario_Conectado.sNombreUsuario}";
 
             // El resto de tu código de carga...
             fun_inicializar_botones_por_defecto();
             fun_habilitar_botones_por_permisos_combinados(
-                Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario,
-                Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdPerfil
+                Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario,
+                Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdPerfil
             );
         }
         private void Frm_Seguridad_FormClosing(object sender, FormClosingEventArgs e)
@@ -134,8 +134,8 @@ namespace Capa_Vista_Seguridad
             DataTable dtPermisosPerfil = controladorPermisosPerfil.datObtenerPermisosPorPerfil(iIdPerfil);
             foreach (DataRow row in dtPermisosPerfil.Rows)
             {
-                int idModulo = Convert.ToInt32(row["fk_id_modulo"]);
-                int idAplicacion = Convert.ToInt32(row["fk_id_aplicacion"]);
+                int idModulo = Convert.ToInt32(row["iFk_id_modulo"]);
+                int idAplicacion = Convert.ToInt32(row["iFk_id_aplicacion"]);
                 if (idModulo == 4 && idAplicacion >= 301 && idAplicacion <= 309)
                 {
                     if (mapaCatalogos.ContainsKey(idAplicacion))
@@ -151,8 +151,8 @@ namespace Capa_Vista_Seguridad
             DataTable dtPermisosUsuario = controladorPermisos.ObtenerPermisosPorUsuario(iIdUsuario);
             foreach (DataRow row in dtPermisosUsuario.Rows)
             {
-                int idModulo = Convert.ToInt32(row["fk_id_modulo"]);
-                int idAplicacion = Convert.ToInt32(row["fk_id_aplicacion"]);
+                int idModulo = Convert.ToInt32(row["iFk_id_modulo"]);
+                int idAplicacion = Convert.ToInt32(row["iFk_id_aplicacion"]);
                 if (idModulo == 4 && idAplicacion >= 301 && idAplicacion <= 309)
                 {
                     if (mapaCatalogos.ContainsKey(idAplicacion))
@@ -268,7 +268,7 @@ namespace Capa_Vista_Seguridad
         }
         private void cambiarContraseñaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Frm_cambiar_contrasena ventana = new Frm_cambiar_contrasena(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario);
+            Frm_cambiar_contrasena ventana = new Frm_cambiar_contrasena(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario);
             ventana.Show();
         }
         private void OpenFile(object sender, EventArgs e)
@@ -333,7 +333,7 @@ namespace Capa_Vista_Seguridad
         private void asignacionDeAplicacionAPerfilesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CerrarFormulariosHijos();
-            Frm_PermisosPerfiles asig_app_user = new Frm_PermisosPerfiles();
+            Frm_Permisos_Perfiles asig_app_user = new Frm_Permisos_Perfiles();
             asig_app_user.MdiParent = this;
             asig_app_user.Show();
         }

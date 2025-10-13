@@ -13,7 +13,7 @@ namespace Capa_Modelo_Seguridad
 
         // Método que obtiene los módulos en un formato "Id - Nombre"
         // Para llenar combos o listas en la interfaz
-        public string[] LlenarComboModulos()
+        public string[] fun_LlenarComboModulos()
         {
             List<string> lista = new List<string>();
             string sql = "SELECT Pk_Id_Modulo, Cmp_Nombre_Modulo FROM Tbl_Modulo";
@@ -28,7 +28,7 @@ namespace Capa_Modelo_Seguridad
         }
 
         // Método que obtiene todos los módulos 
-        public DataTable ObtenerModulos()
+        public DataTable Fun_ObtenerModulos()
         {
             string sql = "SELECT Pk_Id_Modulo, Cmp_Nombre_Modulo FROM Tbl_Modulo";
             OdbcCommand cmd = new OdbcCommand(sql, conexion.conexion());
@@ -40,11 +40,11 @@ namespace Capa_Modelo_Seguridad
 
         // Método que busca un módulo por su Id
         // Retorna el primer DataRow encontrado o null si no existe
-        public DataRow BuscarModuloPorId(int Pk_Id_Modulo)
+        public DataRow BuscarModuloPorId(int iPk_Id_Modulo)
         {
             string sql = @"SELECT * FROM Tbl_Modulo WHERE Pk_Id_Modulo = ?";
             OdbcCommand cmd = new OdbcCommand(sql, conexion.conexion());
-            cmd.Parameters.AddWithValue("@Pk_Id_Modulo", Pk_Id_Modulo);
+            cmd.Parameters.AddWithValue("@Pk_Id_Modulo", iPk_Id_Modulo);
             OdbcDataAdapter da = new OdbcDataAdapter(cmd);
             DataTable dt = new DataTable();
             da.Fill(dt);
@@ -53,7 +53,7 @@ namespace Capa_Modelo_Seguridad
 
         // Método para insertar un nuevo módulo
         // Retorna la cantidad de filas afectadas
-        public int InsertarModulo(int Pk_Id_Modulo, string Cmp_Nombre_Modulo, string Cmp_Descripcion_Modulo, byte Cmp_Estado_Modulo)
+        public int InsertarModulo(int iPk_Id_Modulo, string sCmp_Nombre_Modulo, string sCmp_Descripcion_Modulo, byte btCmp_Estado_Modulo)
         {
             string sql = @"INSERT INTO Tbl_Modulo 
                    (Pk_Id_Modulo, Cmp_Nombre_Modulo, Cmp_Descripcion_Modulo, Cmp_Estado_Modulo) 
@@ -61,10 +61,10 @@ namespace Capa_Modelo_Seguridad
             using (OdbcCommand cmd = new OdbcCommand(sql, conexion.conexion()))
             {
                 // Agrega los parámetros y sus valores
-                cmd.Parameters.Add("Pk_Id_Modulo", OdbcType.Int).Value = Pk_Id_Modulo;
-                cmd.Parameters.Add("Cmp_Nombre_Modulo", OdbcType.VarChar, 50).Value = Cmp_Nombre_Modulo;
-                cmd.Parameters.Add("Cmp_Descripcion_Modulo", OdbcType.VarChar, 50).Value = Cmp_Descripcion_Modulo;
-                cmd.Parameters.Add("Cmp_Estado_Modulo", OdbcType.Bit).Value = Cmp_Estado_Modulo == 1; // true si 1, false si 0
+                cmd.Parameters.Add("Pk_Id_Modulo", OdbcType.Int).Value = iPk_Id_Modulo;
+                cmd.Parameters.Add("Cmp_Nombre_Modulo", OdbcType.VarChar, 50).Value = sCmp_Nombre_Modulo;
+                cmd.Parameters.Add("Cmp_Descripcion_Modulo", OdbcType.VarChar, 50).Value = sCmp_Descripcion_Modulo;
+                cmd.Parameters.Add("Cmp_Estado_Modulo", OdbcType.Bit).Value = btCmp_Estado_Modulo == 1; // true si 1, false si 0
 
                 return cmd.ExecuteNonQuery(); // Ejecuta la inserción
             }
@@ -72,17 +72,17 @@ namespace Capa_Modelo_Seguridad
 
         // Método para eliminar un módulo por su Id
         // Retorna la cantidad de filas afectadas
-        public int EliminarModulo(int Pk_Id_Modulo)
+        public int EliminarModulo(int iPk_Id_Modulo)
         {
             string sql = @"DELETE FROM Tbl_Modulo WHERE Pk_Id_Modulo = ?";
             OdbcCommand cmd = new OdbcCommand(sql, conexion.conexion());
-            cmd.Parameters.AddWithValue("@Pk_Id_Modulo", Pk_Id_Modulo);
+            cmd.Parameters.AddWithValue("@Pk_Id_Modulo", iPk_Id_Modulo);
             return cmd.ExecuteNonQuery();
         }
 
         // Método para modificar un módulo existente
         // Retorna la cantidad de filas afectadas
-        public int ModificarModulo(int Pk_Id_Modulo, string Cmp_Nombre_Modulo, string Cmp_Descripcion_Modulo, byte Cmp_Estado_Modulo)
+        public int ModificarModulo(int iPk_Id_Modulo, string sCmp_Nombre_Modulo, string sCmp_Descripcion_Modulo, byte btCmp_Estado_Modulo)
         {
             string sql = @"UPDATE Tbl_Modulo 
                    SET Cmp_Nombre_Modulo=?, Cmp_Descripcion_Modulo=?, Cmp_Estado_Modulo=? 
@@ -90,10 +90,10 @@ namespace Capa_Modelo_Seguridad
             using (OdbcCommand cmd = new OdbcCommand(sql, conexion.conexion()))
             {
 
-                cmd.Parameters.Add("Cmp_Nombre_Modulo", OdbcType.VarChar, 50).Value = Cmp_Nombre_Modulo;
-                cmd.Parameters.Add("Cmp_Descripcion_Modulo", OdbcType.VarChar, 50).Value = Cmp_Descripcion_Modulo;
-                cmd.Parameters.Add("Cmp_Estado_Modulo", OdbcType.Bit).Value = Cmp_Estado_Modulo == 1; // true si 1, false si 0
-                cmd.Parameters.Add("Pk_Id_Modulo", OdbcType.Int).Value = Pk_Id_Modulo;
+                cmd.Parameters.Add("Cmp_Nombre_Modulo", OdbcType.VarChar, 50).Value = sCmp_Nombre_Modulo;
+                cmd.Parameters.Add("Cmp_Descripcion_Modulo", OdbcType.VarChar, 50).Value = sCmp_Descripcion_Modulo;
+                cmd.Parameters.Add("Cmp_Estado_Modulo", OdbcType.Bit).Value = btCmp_Estado_Modulo == 1; // true si 1, false si 0
+                cmd.Parameters.Add("Pk_Id_Modulo", OdbcType.Int).Value = iPk_Id_Modulo;
 
                 return cmd.ExecuteNonQuery(); // Ejecuta la actualización
             }
@@ -101,13 +101,13 @@ namespace Capa_Modelo_Seguridad
 
         // Método que verifica si un módulo está en uso en asignaciones
         // Retorna true si se encuentra al menos una asignación
-        public bool ModuloEnUso(int Fk_Id_Modulo)
+        public bool ModuloEnUso(int iFk_Id_Modulo)
         {
             string sql = @"SELECT COUNT(*) FROM Tbl_Asignacion_Modulo_Aplicacion 
                    WHERE Fk_Id_Modulo = ?";
             using (OdbcCommand cmd = new OdbcCommand(sql, conexion.conexion()))
             {
-                cmd.Parameters.Add("Pk_Id_Modulo", OdbcType.Int).Value = Fk_Id_Modulo;
+                cmd.Parameters.Add("Pk_Id_Modulo", OdbcType.Int).Value = iFk_Id_Modulo;
                 int count = Convert.ToInt32(cmd.ExecuteScalar()); // Obtiene el conteo
                 return count > 0; // true si el módulo está en uso
             }

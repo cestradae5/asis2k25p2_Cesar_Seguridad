@@ -16,7 +16,7 @@ namespace Capa_Vista_Seguridad
     public partial class Frm_Modulo : Form
     {
         Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador(); // Para registrar acciones en la bitácora
-        Cls_ModulosControlador cm = new Cls_ModulosControlador(); // Controlador de módulos
+        Cls_Modulos_Controlador cm = new Cls_Modulos_Controlador(); // Controlador de módulos
 
         private Frm_Reporte_modulos frmReporte = null; // Ventana de reportes
 
@@ -86,7 +86,7 @@ namespace Capa_Vista_Seguridad
             {
                 MessageBox.Show("Guardado correctamente!");
                 fun_CargarComboBox(); // Refresca combo
-                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 1, "Guardar módulo", true); // Registra en bitácora
+                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, "Guardar módulo", true); // Registra en bitácora
                 fun_LimpiarCampos();
                 Txt_id.Enabled = true;
             }
@@ -136,7 +136,7 @@ namespace Capa_Vista_Seguridad
             {
                 MessageBox.Show("Módulo eliminado correctamente.");
                 fun_CargarComboBox();
-                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 1, "Eliminar módulo", true); // Bitácora
+                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, "Eliminar módulo", true); // Bitácora
                 fun_LimpiarCampos();
                 Txt_id.Enabled = true;
             }
