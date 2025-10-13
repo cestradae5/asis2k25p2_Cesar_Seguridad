@@ -38,6 +38,8 @@ namespace Capa_Vista_Seguridad
             InicializarMenuItems();
             fun_inicializar_botones_por_defecto();
 
+            this.Load += Frm_Seguridad_Load;
+
             fun_habilitar_botones_por_permisos_combinados(
                 Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario,
                 Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdPerfil
@@ -45,7 +47,18 @@ namespace Capa_Vista_Seguridad
 
             this.FormClosing += Frm_Seguridad_FormClosing;
         }
+        private void Frm_Seguridad_Load(object sender, EventArgs e)
+        {
+            // Mostrar usuario conectado en StatusStrip
+            toolStripStatusLabel.Text = $"Estado: Conectado | Usuario: {Capa_Controlador_Seguridad.Cls_UsuarioConectado.sNombreUsuario}";
 
+            // El resto de tu código de carga...
+            fun_inicializar_botones_por_defecto();
+            fun_habilitar_botones_por_permisos_combinados(
+                Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario,
+                Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdPerfil
+            );
+        }
         private void Frm_Seguridad_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason == CloseReason.UserClosing)
