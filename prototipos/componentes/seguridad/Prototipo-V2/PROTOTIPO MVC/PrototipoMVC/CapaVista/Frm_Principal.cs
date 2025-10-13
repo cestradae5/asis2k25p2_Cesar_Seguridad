@@ -180,6 +180,10 @@ namespace Capa_Vista_Seguridad
             fun_activar_menus_por_permiso(Cls_Usuario_Conectado.iIdUsuario);
         }
 
+        private void Pic_Cerrar_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 
 }
