@@ -9,7 +9,7 @@ using System.Data;
 
 namespace Capa_Modelo_Seguridad
 {
-    public class Cls_AsignacionModuloAplicacionDAO
+    public class Cls_Asignacion_Modulo_AplicacionDAO
     {
         private Cls_Conexion conexion = new Cls_Conexion();
 
@@ -27,15 +27,15 @@ namespace Capa_Modelo_Seguridad
             INNER JOIN Tbl_Modulo m ON a.Fk_Id_Modulo = m.Pk_Id_Modulo";
 
         // Insertar nueva asignación
-        public int InsertarAsignacion(int idModulo, int idAplicacion)
+        public int InsertarAsignacion(int iIdModulo, int iIdAplicacion)
         {
             using (OdbcConnection conn = conexion.conexion())
             {
                 using (OdbcCommand cmd = new OdbcCommand(SQL_INSERT, conn))
                 {
                     // ODBC usa parámetros en orden
-                    cmd.Parameters.AddWithValue("?", idModulo);
-                    cmd.Parameters.AddWithValue("?", idAplicacion);
+                    cmd.Parameters.AddWithValue("?", iIdModulo);
+                    cmd.Parameters.AddWithValue("?", iIdAplicacion);
 
                     int filas = cmd.ExecuteNonQuery();
                     conexion.desconexion(conn); // cerramos la conexión
@@ -45,14 +45,14 @@ namespace Capa_Modelo_Seguridad
         }
 
         // Verificar si ya existe la asignación
-        public bool ExisteAsignacion(int idModulo, int idAplicacion)
+        public bool ExisteAsignacion(int iIdModulo, int iIdAplicacion)
         {
             using (OdbcConnection conn = conexion.conexion())
             {
                 using (OdbcCommand cmd = new OdbcCommand(SQL_EXISTE, conn))
                 {
-                    cmd.Parameters.AddWithValue("?", idModulo);
-                    cmd.Parameters.AddWithValue("?", idAplicacion);
+                    cmd.Parameters.AddWithValue("?", iIdModulo);
+                    cmd.Parameters.AddWithValue("?", iIdAplicacion);
 
                     int count = Convert.ToInt32(cmd.ExecuteScalar());
                     conexion.desconexion(conn); // cerramos la conexión

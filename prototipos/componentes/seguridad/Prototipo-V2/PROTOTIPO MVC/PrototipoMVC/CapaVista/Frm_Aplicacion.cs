@@ -138,7 +138,7 @@ namespace Capa_Vista_Seguridad
                 MostrarAplicacion(appEncontrada);
 
                 // Obtener módulo asignado
-                Cls_AsignacionModuloAplicacionControlador asignacionCtrl = new Cls_AsignacionModuloAplicacionControlador();
+                Cls_Asignacion_Modulo_Aplicacion_Controlador asignacionCtrl = new Cls_Asignacion_Modulo_Aplicacion_Controlador();
                 int? idModulo = asignacionCtrl.ObtenerModuloPorAplicacion(appEncontrada.iPkIdAplicacion);
 
                 if (idModulo.HasValue)
@@ -185,7 +185,7 @@ namespace Capa_Vista_Seguridad
                 );
 
                 // Registrar el intento fallido en Bitácora
-                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 1, "Fallido Eliminacion: App con relaciones", false);
+                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, "Fallido Eliminacion: App con relaciones", false);
 
                 return; // Detiene la eliminación
             }
@@ -207,13 +207,13 @@ namespace Capa_Vista_Seguridad
                 {
                     MessageBox.Show(" Aplicación eliminada exitosamente.");
                     // Registrar en Bitácora
-                    ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 1, "Eliminar aplicación", true);
+                    ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, "Eliminar aplicación", true);
                 }
                 else
                 {
                     MessageBox.Show("❌ Error al eliminar la aplicación. Puede que no exista o haya un problema de base de datos.");
                     // Registrar en Bitácora de error
-                    ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 1, "Error en el intento de eliminar aplicación", false);
+                    ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, "Error en el intento de eliminar aplicación", false);
                 }
 
                 LimpiarCampos();
@@ -288,7 +288,7 @@ namespace Capa_Vista_Seguridad
 
                 // Registrar en bitácora
                 ctrlBitacora.RegistrarAccion(
-                    Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario,
+                    Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario,
                     1,
                     "Modificar aplicación",
                     true
@@ -383,7 +383,7 @@ namespace Capa_Vista_Seguridad
             int idModulo = Convert.ToInt32(((dynamic)Cbo_id_modulo.SelectedItem).Id);
 
             //  Guardar asignación
-            Cls_AsignacionModuloAplicacionControlador asignacionCtrl = new Cls_AsignacionModuloAplicacionControlador();
+            Cls_Asignacion_Modulo_Aplicacion_Controlador asignacionCtrl = new Cls_Asignacion_Modulo_Aplicacion_Controlador();
             bool asignacionGuardada = asignacionCtrl.GuardarAsignacion(idModulo, idAplicacion);
 
             if (!asignacionGuardada)
@@ -396,7 +396,7 @@ namespace Capa_Vista_Seguridad
             LimpiarCampos();
 
             //  Registrar en bitácora
-            ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, 1, "Guardar aplicación", true);
+            ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, "Guardar aplicación", true);
             RecargarTodo();
         }
 
@@ -425,7 +425,7 @@ namespace Capa_Vista_Seguridad
 
         private void CargarComboModulos()
         {
-            Cls_ModulosControlador controladorModulos = new Cls_ModulosControlador();
+            Cls_Modulos_Controlador controladorModulos = new Cls_Modulos_Controlador();
 
             DataTable dtModulos = controladorModulos.ObtenerModulos(); // Devuelve pk_id_modulo y nombre_modulo
 

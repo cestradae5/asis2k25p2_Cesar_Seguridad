@@ -56,11 +56,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Frm_PermisosPerfiles.cs">
+    <Compile Include="Frm_Permisos_Perfiles.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Frm_PermisosPerfiles.Designer.cs">
-      <DependentUpon>Frm_PermisosPerfiles.cs</DependentUpon>
+    <Compile Include="Frm_Permisos_Perfiles.Designer.cs">
+      <DependentUpon>Frm_Permisos_Perfiles.cs</DependentUpon>
     </Compile>
     <Compile Include="Frm_Reporte_aplicacion.cs">
       <SubType>Form</SubType>
@@ -146,11 +146,11 @@
     <Compile Include="Frm_Principal.Designer.cs">
       <DependentUpon>Frm_Principal.cs</DependentUpon>
     </Compile>
-    <Compile Include="Frm_RecuperarContrasena.cs">
+    <Compile Include="Frm_Recuperar_Contrasena.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Frm_RecuperarContrasena.Designer.cs">
-      <DependentUpon>Frm_RecuperarContrasena.cs</DependentUpon>
+    <Compile Include="Frm_Recuperar_Contrasena.Designer.cs">
+      <DependentUpon>Frm_Recuperar_Contrasena.cs</DependentUpon>
     </Compile>
     <Compile Include="Frm_Salario_Empleados.cs">
       <SubType>Form</SubType>
@@ -238,8 +238,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Frm_PermisosPerfiles.resx">
-      <DependentUpon>Frm_PermisosPerfiles.cs</DependentUpon>
+    <EmbeddedResource Include="Frm_Permisos_Perfiles.resx">
+      <DependentUpon>Frm_Permisos_Perfiles.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Frm_Reporte_aplicacion.resx">
       <DependentUpon>Frm_Reporte_aplicacion.cs</DependentUpon>
@@ -283,8 +283,8 @@
     <EmbeddedResource Include="Frm_Principal.resx">
       <DependentUpon>Frm_Principal.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Frm_RecuperarContrasena.resx">
-      <DependentUpon>Frm_RecuperarContrasena.cs</DependentUpon>
+    <EmbeddedResource Include="Frm_Recuperar_Contrasena.resx">
+      <DependentUpon>Frm_Recuperar_Contrasena.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Frm_Salario_Empleados.resx">
       <DependentUpon>Frm_Salario_Empleados.cs</DependentUpon>

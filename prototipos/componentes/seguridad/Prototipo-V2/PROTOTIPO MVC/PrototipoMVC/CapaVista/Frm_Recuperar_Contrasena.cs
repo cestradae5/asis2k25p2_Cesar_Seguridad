@@ -6,11 +6,11 @@ using Capa_Controlador_Seguridad;
 // 0901-20-4620 Ruben Armando Lopez Luch
 namespace Capa_Vista_Seguridad
 {
-    public partial class Frm_RecuperarContrasena : Form
+    public partial class Frm_Recuperar_Contrasena : Form
     {
         private ClsControladorRecuperarContrasena cls_recuperar = new ClsControladorRecuperarContrasena();
 
-        public Frm_RecuperarContrasena()
+        public Frm_Recuperar_Contrasena()
         {
             InitializeComponent();
 
@@ -106,7 +106,7 @@ namespace Capa_Vista_Seguridad
 
             if (cls_recuperar.fun_validar_token(iIdUsuario, sToken, out int idToken))
             {
-                string sHashNueva = Cls_SeguridadHashControlador.HashearSHA256(sNueva);
+                string sHashNueva = Cls_Seguridad_Hash_Controlador.HashearSHA256(sNueva);
                 if (cls_recuperar.fun_cambiar_contrasena(iIdUsuario, sHashNueva, idToken))
                 {
                     MessageBox.Show("Contraseña actualizada correctamente.");

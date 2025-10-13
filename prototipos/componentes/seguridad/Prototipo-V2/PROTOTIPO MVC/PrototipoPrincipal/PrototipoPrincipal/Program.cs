@@ -37,24 +37,24 @@ namespace PrototipoPrincipal
         //Registrar desconexión cuando la aplicación se cierra normalmente
         private static void OnApplicationExit(object sender, EventArgs e)
         {
-            RegistrarDesconexionSegura();
+            fun_RegistrarDesconexionSegura();
         }
 
         //Registrar desconexión cuando ocurre un error inesperado
         private static void OnThreadException(object sender, ThreadExceptionEventArgs e)
         {
-            RegistrarDesconexionSegura();
+            fun_RegistrarDesconexionSegura();
         }
 
         //Evita duplicar y asegura el cierre
-        private static void RegistrarDesconexionSegura()
+        private static void fun_RegistrarDesconexionSegura()
         {
             try
             {
-                if (!bSesionCerrada && Cls_UsuarioConectado.iIdUsuario != 0)
+                if (!bSesionCerrada && Cls_Usuario_Conectado.iIdUsuario != 0)
                 {
                     var ctrlBitacora = new Cls_BitacoraControlador();
-                    ctrlBitacora.RegistrarCierreSesion(Cls_UsuarioConectado.iIdUsuario);
+                    ctrlBitacora.RegistrarCierreSesion(Cls_Usuario_Conectado.iIdUsuario);
                     bSesionCerrada = true; //Bloquea más registros
                 }
             }

@@ -14,7 +14,7 @@ namespace Capa_Vista_Seguridad
 {
     public partial class Frm_Consultar_Asignacion_Modulo_Aplicacion : Form
     {
-        private Cls_AsignacionModuloAplicacionControlador controlador = new Cls_AsignacionModuloAplicacionControlador();
+        private Cls_Asignacion_Modulo_Aplicacion_Controlador controlador = new Cls_Asignacion_Modulo_Aplicacion_Controlador();
 
         public Frm_Consultar_Asignacion_Modulo_Aplicacion()
         {
@@ -29,9 +29,9 @@ namespace Capa_Vista_Seguridad
             // Cambiar los títulos de las columnas
             if (Dgv_Consulta_Asignacion_Modulo_Aplicacion.Columns.Count > 0)
             {
-                Dgv_Consulta_Asignacion_Modulo_Aplicacion.Columns["fk_id_aplicacion"].HeaderText = "ID Aplicación";
+                Dgv_Consulta_Asignacion_Modulo_Aplicacion.Columns["iFk_id_aplicacion"].HeaderText = "ID Aplicación";
                 Dgv_Consulta_Asignacion_Modulo_Aplicacion.Columns["nombre_aplicacion"].HeaderText = "Nombre Aplicación";
-                Dgv_Consulta_Asignacion_Modulo_Aplicacion.Columns["fk_id_modulo"].HeaderText = "ID Módulo";
+                Dgv_Consulta_Asignacion_Modulo_Aplicacion.Columns["iFk_id_modulo"].HeaderText = "ID Módulo";
                 Dgv_Consulta_Asignacion_Modulo_Aplicacion.Columns["nombre_modulo"].HeaderText = "Nombre Módulo";
             }
 

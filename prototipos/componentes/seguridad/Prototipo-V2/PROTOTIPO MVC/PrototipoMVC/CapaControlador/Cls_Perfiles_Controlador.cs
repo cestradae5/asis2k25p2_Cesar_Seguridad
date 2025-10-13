@@ -4,7 +4,7 @@ using Capa_Modelo_Seguridad;
 //Brandon Hernandez 0901-22-9663
 namespace Capa_Controlador_Seguridad
 {
-    public class Cls_PerfilesControlador
+    public class Cls_Perfiles_Controlador
     {
         private Cls_PerfilesDAO daoPerfil = new Cls_PerfilesDAO();
 
@@ -15,44 +15,44 @@ namespace Capa_Controlador_Seguridad
         }
 
         // Insertar un nuevo perfil
-        public bool bInsertarPerfil(string puesto, string descripcion, bool estado, int tipo)
+        public bool bInsertarPerfil(string sPuesto, string sDescripcion, bool bEstado, int iTipo)
         {
             Cls_Perfiles nuevoPerfil = new Cls_Perfiles
             {
-                Cmp_Puesto_Perfil = puesto,
-                Cmp_Descripcion_Perfil = descripcion,
-                Cmp_Estado_Perfil = estado,
-                Cmp_Tipo_Perfil = tipo
+                sCmp_Puesto_Perfil = sPuesto,
+                sCmp_Descripcion_Perfil = sDescripcion,
+                bCmp_Estado_Perfil = bEstado,
+                iCmp_Tipo_Perfil = iTipo
             };
 
             return daoPerfil.bInsertarPerfil(nuevoPerfil);
         }
 
         // Actualizar un perfil existente
-        public bool bActualizarPerfil(int idPerfil, string puesto, string descripcion, bool estado, int tipo)
+        public bool bActualizarPerfil(int iIdPerfil, string sPuesto, string sDescripcion, bool bEstado, int iTipo)
         {
             Cls_Perfiles perfilActualizado = new Cls_Perfiles
             {
-                Pk_Id_Perfil = idPerfil,
-                Cmp_Puesto_Perfil = puesto,
-                Cmp_Descripcion_Perfil = descripcion,
-                Cmp_Estado_Perfil = estado,
-                Cmp_Tipo_Perfil = tipo
+                iPk_Id_Perfil = iIdPerfil,
+                sCmp_Puesto_Perfil = sPuesto,
+                sCmp_Descripcion_Perfil = sDescripcion,
+                bCmp_Estado_Perfil = bEstado,
+                iCmp_Tipo_Perfil = iTipo
             };
 
             return daoPerfil.bActualizarPerfil(perfilActualizado);
         }
 
         // Eliminar perfil por ID
-        public bool bBorrarPerfil(int idPerfil, out string mensajeError)
+        public bool bBorrarPerfil(int iIdPerfil, out string sMensajeError)
         {
             // Declarar la variable out antes de llamar al método
-            return daoPerfil.bEliminarPerfil(idPerfil, out mensajeError);
+            return daoPerfil.bEliminarPerfil(iIdPerfil, out sMensajeError);
         }
         // Buscar perfil por ID
-        public Cls_Perfiles BuscarPerfilPorId(int idPerfil)
+        public Cls_Perfiles BuscarPerfilPorId(int iIdPerfil)
         {
-            return daoPerfil.ObtenerPerfilPorId(idPerfil);
+            return daoPerfil.ObtenerPerfilPorId(iIdPerfil);
         }
     }
 }

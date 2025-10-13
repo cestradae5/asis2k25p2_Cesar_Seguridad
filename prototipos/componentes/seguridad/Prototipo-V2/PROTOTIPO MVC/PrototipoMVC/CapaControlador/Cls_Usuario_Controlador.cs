@@ -6,7 +6,7 @@ using Capa_Modelo_Seguridad;
 
 namespace Capa_Controlador_Seguridad
 {
-    public class Cls_UsuarioControlador
+    public class Cls_Usuario_Controlador
     {
         
         // VARIABLES GLOBALES
@@ -19,7 +19,7 @@ namespace Capa_Controlador_Seguridad
         
         public List<Cls_Usuario> ObtenerTodosLosUsuarios()
         {
-            return gDaoUsuario.ObtenerUsuarios();
+            return gDaoUsuario.fun_ObtenerUsuarios();
         }
 
         
@@ -40,7 +40,7 @@ namespace Capa_Controlador_Seguridad
             {
                 iFkIdEmpleado = iFkIdEmpleado,
                 sNombreUsuario = sNombreUsuario,
-                sContrasenaUsuario = Cls_SeguridadHashControlador.HashearSHA256(sContrasena),
+                sContrasenaUsuario = Cls_Seguridad_Hash_Controlador.HashearSHA256(sContrasena),
                 iContadorIntentosFallidos = 0,
                 bEstadoUsuario = true,
                 dFechaCreacion = DateTime.Now,
@@ -54,7 +54,7 @@ namespace Capa_Controlador_Seguridad
 
                 // Registro en bitácora
                 gCtrlBitacora.RegistrarAccion(
-                    Cls_UsuarioConectado.iIdUsuario,  // Usuario logueado
+                    Cls_Usuario_Conectado.iIdUsuario,  // Usuario logueado
                     1,                                // Código de acción: insertar
                     $"Insertó un nuevo usuario: {sNombreUsuario}",
                     true
@@ -87,7 +87,7 @@ namespace Capa_Controlador_Seguridad
                 iPkIdUsuario = iIdUsuario,
                 iFkIdEmpleado = iFkIdEmpleado,
                 sNombreUsuario = sNombreUsuario,
-                sContrasenaUsuario = Cls_SeguridadHashControlador.HashearSHA256(sContrasena),
+                sContrasenaUsuario = Cls_Seguridad_Hash_Controlador.HashearSHA256(sContrasena),
                 iContadorIntentosFallidos = 0,
                 bEstadoUsuario = true,
                 dFechaCreacion = DateTime.Now,
@@ -101,7 +101,7 @@ namespace Capa_Controlador_Seguridad
 
                 // Registro en bitácora
                 gCtrlBitacora.RegistrarAccion(
-                    Cls_UsuarioConectado.iIdUsuario,
+                    Cls_Usuario_Conectado.iIdUsuario,
                     2, // Código de acción: actualizar
                     $"Actualizó usuario: {sNombreUsuario}",
                     true
@@ -129,7 +129,7 @@ namespace Capa_Controlador_Seguridad
                 {
                     // Registro en bitácora
                     gCtrlBitacora.RegistrarAccion(
-                        Cls_UsuarioConectado.iIdUsuario,
+                        Cls_Usuario_Conectado.iIdUsuario,
                         3, // Código de acción: eliminar
                         $"Eliminó usuario con ID: {iIdUsuario}",
                         true
@@ -175,7 +175,7 @@ namespace Capa_Controlador_Seguridad
             if (sContrasena != sConfirmarContrasena)
                 return (false, "Las contraseñas no coinciden.");
 
-            bool bExisteNombre = gDaoUsuario.ObtenerUsuarios()
+            bool bExisteNombre = gDaoUsuario.fun_ObtenerUsuarios()
                 .Any(u => u.sNombreUsuario.Equals(sNombreUsuario, StringComparison.OrdinalIgnoreCase) &&
                           (iIdUsuario == 0 || u.iPkIdUsuario != iIdUsuario));
 

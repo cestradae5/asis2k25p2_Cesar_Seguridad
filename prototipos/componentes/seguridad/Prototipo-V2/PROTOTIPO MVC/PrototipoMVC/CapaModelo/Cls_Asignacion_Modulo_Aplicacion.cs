@@ -12,10 +12,10 @@ namespace Capa_Modelo_Seguridad
         public int FkIdModulo { get; set; }
         public int FkIdAplicacion { get; set; }
         public AsignacionModuloAplicacion() { }
-        public AsignacionModuloAplicacion(int fkIdModulo, int fkIdAplicacion)
+        public AsignacionModuloAplicacion(int iFkIdModulo, int iFkIdAplicacion)
         {
-            FkIdModulo = fkIdModulo;
-            FkIdAplicacion = fkIdAplicacion;
+            FkIdModulo = iFkIdModulo;
+            FkIdAplicacion = iFkIdAplicacion;
         }
     }
 }

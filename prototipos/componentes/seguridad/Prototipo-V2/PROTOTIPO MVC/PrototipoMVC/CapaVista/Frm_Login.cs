@@ -13,7 +13,7 @@ namespace Capa_Vista_Seguridad
       
         private Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador(); // Bitácora
         private Cls_ControladorLogin cn = new Cls_ControladorLogin();
-        private Cls_UsuarioControlador gUsuarioControlador = new Cls_UsuarioControlador();
+        private Cls_Usuario_Controlador gUsuarioControlador = new Cls_Usuario_Controlador();
 
         
         // CONSTRUCTOR
@@ -47,7 +47,7 @@ namespace Capa_Vista_Seguridad
         
         private void lblkRecuperarContrasena_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Frm_RecuperarContrasena frmRecuperar = new Frm_RecuperarContrasena();
+            Frm_Recuperar_Contrasena frmRecuperar = new Frm_Recuperar_Contrasena();
             frmRecuperar.Show();
             this.Hide();
         }
@@ -62,7 +62,7 @@ namespace Capa_Vista_Seguridad
             string sNombreUsuarioReal = "";
 
             string sMensaje;
-            bool bLoginExitoso = cn.autenticarUsuario(sUsuario, sContrasena, out sMensaje, out int iIdUsuario, out sNombreUsuarioReal);
+            bool bLoginExitoso = cn.bAutenticarUsuario(sUsuario, sContrasena, out sMensaje, out int iIdUsuario, out sNombreUsuarioReal);
 
             MessageBox.Show(sMensaje);
 
@@ -71,7 +71,7 @@ namespace Capa_Vista_Seguridad
                 int iIdPerfil = gUsuarioControlador.ObtenerIdPerfilDeUsuario(iIdUsuario);
 
                 // Guardar sesión
-                Cls_UsuarioConectado.IniciarSesion(iIdUsuario, sNombreUsuarioReal, iIdPerfil);
+                Cls_Usuario_Conectado.IniciarSesion(iIdUsuario, sNombreUsuarioReal, iIdPerfil);
                 
 
                 // Registrar inicio en bitácora

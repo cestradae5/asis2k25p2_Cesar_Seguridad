@@ -48,11 +48,11 @@ namespace Capa_Modelo_Seguridad
                 {
                     Cls_Perfiles perfil = new Cls_Perfiles()
                     {
-                        Pk_Id_Perfil = reader.GetInt32(0),
-                        Cmp_Puesto_Perfil = reader.IsDBNull(1) ? null : reader.GetString(1),
-                        Cmp_Descripcion_Perfil = reader.IsDBNull(2) ? null : reader.GetString(2),
-                        Cmp_Estado_Perfil = reader.GetBoolean(3),
-                        Cmp_Tipo_Perfil = reader.IsDBNull(4) ? 0 : reader.GetInt32(4)
+                        iPk_Id_Perfil = reader.GetInt32(0),
+                        sCmp_Puesto_Perfil = reader.IsDBNull(1) ? null : reader.GetString(1),
+                        sCmp_Descripcion_Perfil = reader.IsDBNull(2) ? null : reader.GetString(2),
+                        bCmp_Estado_Perfil = reader.GetBoolean(3),
+                        iCmp_Tipo_Perfil = reader.IsDBNull(4) ? 0 : reader.GetInt32(4)
                     };
                     lista.Add(perfil);
                 }
@@ -65,10 +65,10 @@ namespace Capa_Modelo_Seguridad
             using (OdbcConnection conn = conexion.conexion())
             {
                 OdbcCommand cmd = new OdbcCommand(SQL_INSERT, conn);
-                cmd.Parameters.AddWithValue("@Cmp_Puesto_Perfil", perfil.Cmp_Puesto_Perfil);
-                cmd.Parameters.AddWithValue("@Cmp_Descripcion_Perfil", perfil.Cmp_Descripcion_Perfil);
-                cmd.Parameters.AddWithValue("@Cmp_Estado_Perfil", perfil.Cmp_Estado_Perfil);
-                cmd.Parameters.AddWithValue("@Cmp_Tipo_Perfil", perfil.Cmp_Tipo_Perfil);
+                cmd.Parameters.AddWithValue("@Cmp_Puesto_Perfil", perfil.sCmp_Puesto_Perfil);
+                cmd.Parameters.AddWithValue("@Cmp_Descripcion_Perfil", perfil.sCmp_Descripcion_Perfil);
+                cmd.Parameters.AddWithValue("@Cmp_Estado_Perfil", perfil.bCmp_Estado_Perfil);
+                cmd.Parameters.AddWithValue("@Cmp_Tipo_Perfil", perfil.iCmp_Tipo_Perfil);
                 return cmd.ExecuteNonQuery() > 0;
             }
         }
@@ -78,11 +78,11 @@ namespace Capa_Modelo_Seguridad
             using (OdbcConnection conn = conexion.conexion())
             {
                 OdbcCommand cmd = new OdbcCommand(SQL_UPDATE, conn);
-                cmd.Parameters.AddWithValue("@Cmp_Puesto_Perfil", perfil.Cmp_Puesto_Perfil);
-                cmd.Parameters.AddWithValue("@Cmp_Descripcion_Perfil", perfil.Cmp_Descripcion_Perfil);
-                cmd.Parameters.AddWithValue("@Cmp_Estado_Perfil", perfil.Cmp_Estado_Perfil);
-                cmd.Parameters.AddWithValue("@Cmp_Tipo_Perfil", perfil.Cmp_Tipo_Perfil);
-                cmd.Parameters.AddWithValue("@Pk_Id_Perfil", perfil.Pk_Id_Perfil);
+                cmd.Parameters.AddWithValue("@Cmp_Puesto_Perfil", perfil.sCmp_Puesto_Perfil);
+                cmd.Parameters.AddWithValue("@Cmp_Descripcion_Perfil", perfil.sCmp_Descripcion_Perfil);
+                cmd.Parameters.AddWithValue("@Cmp_Estado_Perfil", perfil.bCmp_Estado_Perfil);
+                cmd.Parameters.AddWithValue("@Cmp_Tipo_Perfil", perfil.iCmp_Tipo_Perfil);
+                cmd.Parameters.AddWithValue("@Pk_Id_Perfil", perfil.iPk_Id_Perfil);
                 return cmd.ExecuteNonQuery() > 0;
             }
         }
@@ -114,22 +114,22 @@ namespace Capa_Modelo_Seguridad
             }
         }
 
-        public Cls_Perfiles ObtenerPerfilPorId(int pk_Id_Perfil)
+        public Cls_Perfiles ObtenerPerfilPorId(int iPk_Id_Perfil)
         {
             using (OdbcConnection conn = conexion.conexion())
             {
                 OdbcCommand cmd = new OdbcCommand(SQL_QUERY, conn);
-                cmd.Parameters.AddWithValue("@Pk_Id_Perfil", pk_Id_Perfil);
+                cmd.Parameters.AddWithValue("@Pk_Id_Perfil", iPk_Id_Perfil);
                 OdbcDataReader reader = cmd.ExecuteReader();
                 if (reader.Read())
                 {
                     return new Cls_Perfiles()
                     {
-                        Pk_Id_Perfil = reader.GetInt32(0),
-                        Cmp_Puesto_Perfil = reader.IsDBNull(1) ? null : reader.GetString(1),
-                        Cmp_Descripcion_Perfil = reader.IsDBNull(2) ? null : reader.GetString(2),
-                        Cmp_Estado_Perfil = reader.GetBoolean(3),
-                        Cmp_Tipo_Perfil = reader.IsDBNull(4) ? 0 : reader.GetInt32(4)
+                        iPk_Id_Perfil = reader.GetInt32(0),
+                        sCmp_Puesto_Perfil = reader.IsDBNull(1) ? null : reader.GetString(1),
+                        sCmp_Descripcion_Perfil = reader.IsDBNull(2) ? null : reader.GetString(2),
+                        bCmp_Estado_Perfil = reader.GetBoolean(3),
+                        iCmp_Tipo_Perfil = reader.IsDBNull(4) ? 0 : reader.GetInt32(4)
                     };
                 }
             }

@@ -102,7 +102,7 @@ namespace Capa_Vista_Seguridad
         private void ExitToolsStripMenuItem_Click(object sender, EventArgs e)
         {
             // Registrar en bitácora
-            ctrlBitacora.RegistrarCierreSesion(Cls_UsuarioConectado.iIdUsuario);
+            ctrlBitacora.RegistrarCierreSesion(Cls_Usuario_Conectado.iIdUsuario);
 
             this.Hide();
             Frm_Login formLogin = new Frm_Login();
@@ -174,10 +174,10 @@ namespace Capa_Vista_Seguridad
 
             // Mostrar usuario conectado en StatusStrip usando la clase estática Cls_UsuarioConectado
             // Esto asegura que siempre se muestre el nombre correcto del usuario real
-            toolStripStatusLabel1.Text = $"Estado: Conectado | Usuario: {Cls_UsuarioConectado.sNombreUsuario}";
+            toolStripStatusLabel1.Text = $"Estado: Conectado | Usuario: {Cls_Usuario_Conectado.sNombreUsuario}";
 
             // Activar menús según permisos del usuario
-            fun_activar_menus_por_permiso(Cls_UsuarioConectado.iIdUsuario);
+            fun_activar_menus_por_permiso(Cls_Usuario_Conectado.iIdUsuario);
         }
 
     }

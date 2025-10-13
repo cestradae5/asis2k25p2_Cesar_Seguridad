@@ -22,28 +22,28 @@ namespace Capa_Modelo_Seguridad
         public Cls_Empleado() { }
 
         public Cls_Empleado(
-            int pkIdEmpleado,
-            string nombresEmpleado,
-            string apellidosEmpleado,
-            long dpiEmpleado,
-            long nitEmpleado,
-            string correoEmpleado,
-            string telefonoEmpleado,
-            bool generoEmpleado,
-            DateTime fechaNacimientoEmpleado,
-            DateTime fechaContratacionEmpleado
+            int iPkIdEmpleado,
+            string sNombresEmpleado,
+            string sApellidosEmpleado,
+            long lDpiEmpleado,
+            long lNitEmpleado,
+            string sCorreoEmpleado,
+            string sTelefonoEmpleado,
+            bool bGeneroEmpleado,
+            DateTime dFechaNacimientoEmpleado,
+            DateTime dFechaContratacionEmpleado
         )
         {
-            iPkIdEmpleado = pkIdEmpleado;
-            sNombresEmpleado = nombresEmpleado;
-            sApellidosEmpleado = apellidosEmpleado;
-            lDpiEmpleado = dpiEmpleado;
-            lNitEmpleado = nitEmpleado;
-            sCorreoEmpleado = correoEmpleado;
-            sTelefonoEmpleado = telefonoEmpleado;
-            bGeneroEmpleado = generoEmpleado;
-            dFechaNacimientoEmpleado = fechaNacimientoEmpleado;
-            dFechaContratacionEmpleado = fechaContratacionEmpleado;
+            this.iPkIdEmpleado = iPkIdEmpleado;
+            this.sNombresEmpleado = sNombresEmpleado;
+            this.sApellidosEmpleado = sApellidosEmpleado;
+            this.lDpiEmpleado = lDpiEmpleado;
+            this.lNitEmpleado = lNitEmpleado;
+            this.sCorreoEmpleado = sCorreoEmpleado;
+            this.sTelefonoEmpleado = sTelefonoEmpleado;
+            this.bGeneroEmpleado = bGeneroEmpleado;
+            this.dFechaNacimientoEmpleado = dFechaNacimientoEmpleado;
+            this.dFechaContratacionEmpleado = dFechaContratacionEmpleado;
         }
     }
 }

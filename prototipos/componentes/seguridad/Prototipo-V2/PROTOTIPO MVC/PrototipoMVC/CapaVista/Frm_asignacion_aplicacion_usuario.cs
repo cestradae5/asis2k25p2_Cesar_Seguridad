@@ -13,7 +13,7 @@ namespace Capa_Vista_Seguridad
         Cls_SentenciaAsignacionUsuarioAplicacion modelo = new Cls_SentenciaAsignacionUsuarioAplicacion();
         Cls_AplicacionControlador appControlador = new Cls_AplicacionControlador();
         Cls_ControladorAsignacionUsuarioAplicacion controlador = new Cls_ControladorAsignacionUsuarioAplicacion();
-        Cls_SentenciasBitacora bitacora = new Cls_SentenciasBitacora();
+        Cls_Sentencias_Bitacora bitacora = new Cls_Sentencias_Bitacora();
 
        
 
@@ -216,7 +216,7 @@ namespace Capa_Vista_Seguridad
             {
                 Dgv_Permisos.Rows.Add(usuario, aplicacion, false, false, false, false, false, idUsuario, idModulo, idAplicacion);
                 //Bitacora Aron Ricardo Esquit Silva 0901-22-13036
-                bitacora.InsertarBitacora(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, idAplicacion, "Asignación Aplicación a Usuario - Agregar", true);
+                bitacora.InsertarBitacora(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, idAplicacion, "Asignación Aplicación a Usuario - Agregar", true);
             }
             else
             {
@@ -264,7 +264,7 @@ namespace Capa_Vista_Seguridad
                                                               bIngresar, bConsultar, bModificar,
                                                               bEliminar, bImprimir);
                     actualizados++;
-                    bitacora.InsertarBitacora(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, idAplicacion, "Asignación Aplicación a Usuario - Actualizar", true);
+                    bitacora.InsertarBitacora(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, idAplicacion, "Asignación Aplicación a Usuario - Actualizar", true);
                 }
                 else
                 {
@@ -272,7 +272,7 @@ namespace Capa_Vista_Seguridad
                                                             bIngresar, bConsultar, bModificar,
                                                             bEliminar, bImprimir);
                     insertados++;
-                    bitacora.InsertarBitacora(Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario, idAplicacion, "Asignación Aplicación a Usuario - Insertar", true);
+                    bitacora.InsertarBitacora(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, idAplicacion, "Asignación Aplicación a Usuario - Insertar", true);
                 }
             }
 
@@ -300,7 +300,7 @@ namespace Capa_Vista_Seguridad
 
                     // Registrar en bitácora
                     bitacora.InsertarBitacora(
-                        Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario,
+                        Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario,
                         idAplicacion,
                         "Asignación Aplicación a Usuario - Quitar",
                         true
@@ -408,8 +408,8 @@ namespace Capa_Vista_Seguridad
                         Convert.ToBoolean(row["eliminar_permiso_aplicacion_usuario"]),
                         Convert.ToBoolean(row["imprimir_permiso_aplicacion_usuario"]),
                         row["fk_id_usuario"],
-                        row["fk_id_modulo"],
-                        row["fk_id_aplicacion"]
+                        row["iFk_id_modulo"],
+                        row["iFk_id_aplicacion"]
                     );
                 }
                 MessageBox.Show("Permisos cargados correctamente.");
@@ -437,9 +437,9 @@ namespace Capa_Vista_Seguridad
         {
             try
             {
-                int idUsuario = Capa_Controlador_Seguridad.Cls_UsuarioConectado.iIdUsuario;
+                int idUsuario = Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario;
 
-                Cls_PermisoUsuario permisoUsuario = new Cls_PermisoUsuario();
+                Cls_Permiso_Usuario permisoUsuario = new Cls_Permiso_Usuario();
                 Cls_Asignacion_Permiso_PerfilesDAO perfilDAO = new Cls_Asignacion_Permiso_PerfilesDAO();
 
                 int IidAplicacion = permisoUsuario.ObtenerIdAplicacionPorNombre("Asig Aplicacion Usuario");

@@ -16,16 +16,16 @@ namespace Capa_Controlador_Seguridad
         public bool fun_validar_contrasena(int iIdUsuario, string sContrasenaActual)
         {
 
-            string sHashActual = Cls_SeguridadHashControlador.HashearSHA256(sContrasenaActual);
+            string sHashActual = Cls_Seguridad_Hash_Controlador.HashearSHA256(sContrasenaActual);
             return modelo.fun_validar_contrasena_actual(iIdUsuario, sHashActual);
         }
 
         // 0901-20-4620 Ruben Armando Lopez Luch
-        public bool fun_actualizar_Contrasena(int idUsuario, string nuevaContrasena)
+        public bool fun_actualizar_Contrasena(int iIdUsuario, string sNuevaContrasena)
         {
             
-            string fHashNueva = Cls_SeguridadHashControlador.HashearSHA256(nuevaContrasena);
-            return modelo.fun_cambiar_contrasena(idUsuario, fHashNueva);
+            string fHashNueva = Cls_Seguridad_Hash_Controlador.HashearSHA256(sNuevaContrasena);
+            return modelo.fun_cambiar_contrasena(iIdUsuario, fHashNueva);
         }
     }
 }

@@ -50,18 +50,18 @@
     <Compile Include="Cls_Asignacion_Permiso_PerfilControlador.cs" />
     <Compile Include="Cls_BitacoraControlador.cs" />
     <Compile Include="Cls_AplicacionControlador.cs" />
-    <Compile Include="Cls_AsignacionModuloAplicacionControlador.cs" />
+    <Compile Include="Cls_Asignacion_Modulo_Aplicacion_Controlador.cs" />
     <Compile Include="Cls_controlador_cambio_contrasena.cs" />
-    <Compile Include="Cls_PerfilesControlador.cs" />
-    <Compile Include="Cls_UsuarioConectado.cs" />
-    <Compile Include="Cls_UsuarioControlador.cs" />
+    <Compile Include="Cls_Perfiles_Controlador.cs" />
+    <Compile Include="Cls_Usuario_Conectado.cs" />
+    <Compile Include="Cls_Usuario_Controlador.cs" />
     <Compile Include="Cls_ControladorAsignacionUsuarioAplicacion.cs" />
     <Compile Include="Cls_ControladorLogin.cs" />
-    <Compile Include="Cls_EmpleadosControlador.cs" />
-    <Compile Include="Cls_ModulosControlador.cs" />
-    <Compile Include="Cls_controladorRecuperarContrasena.cs" />
+    <Compile Include="Cls_Empleados_Controlador.cs" />
+    <Compile Include="Cls_Modulos_Controlador.cs" />
+    <Compile Include="Cls_controlador_Recuperar_contrasena.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Cls_SeguridadHashControlador.cs" />
+    <Compile Include="Cls_Seguridad_Hash_Controlador.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

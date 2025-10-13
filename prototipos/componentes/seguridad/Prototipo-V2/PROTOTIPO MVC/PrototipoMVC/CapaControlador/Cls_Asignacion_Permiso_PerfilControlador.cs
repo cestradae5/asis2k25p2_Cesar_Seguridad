@@ -23,9 +23,9 @@ namespace Capa_Controlador_Seguridad
             return DAO.datObtenerAplicaciones();
         }
 
-         public bool bExistePermisoPerfil(int IidPerfil, int IidModulo, int IidAplicacion)
+         public bool bExistePermisoPerfil(int iIdPerfil, int iIdModulo, int iIdAplicacion)
             {
-                return DAO.bExistePermisoPerfil(IidPerfil, IidModulo, IidAplicacion);
+                return DAO.bExistePermisoPerfil(iIdPerfil, iIdModulo, iIdAplicacion);
             }
 
         public int iActualizarPermisoPerfilAplicacion(int iIdPerfil, int iIdModulo, int iIdAplicacion,
@@ -64,9 +64,9 @@ public class Cls_ControladorAsignacionPerfilAplicacion
         {
             Cls_Asignacion_Permiso_PerfilesDAO DAO = new Cls_Asignacion_Permiso_PerfilesDAO();
 
-            public Cls_Asignacion_Perrmisos_Perfiles ObtenerPermisosAplicacionPerfil(int idPerfil, int idAplicacion)
+            public Cls_Asignacion_Perrmisos_Perfiles ObtenerPermisosAplicacionPerfil(int iIdPerfil, int iIdAplicacion)
             {
-                DataTable dt = DAO.ObtenerPermisosPerfilAplicacion(idPerfil, idAplicacion);
+                DataTable dt = DAO.ObtenerPermisosPerfilAplicacion(iIdPerfil, iIdAplicacion);
 
                 if (dt.Rows.Count == 0)
                     return null;
@@ -74,14 +74,14 @@ public class Cls_ControladorAsignacionPerfilAplicacion
                 DataRow row = dt.Rows[0];
                 return new Cls_Asignacion_Perrmisos_Perfiles
                 {
-                    fk_id_modulo = Convert.ToInt32(row["fk_id_modulo"]),
-                    fk_id_perfil = Convert.ToInt32(row["fk_id_perfil"]),
-                    fk_id_aplicacion = Convert.ToInt32(row["fk_id_aplicacion"]),
-                    ingresar_permiso_aplicacion_perfil = Convert.ToBoolean(row["ingresar"]),
-                    consultar_permiso_aplicacion_perfil = Convert.ToBoolean(row["consultar"]),
-                    modificar_permiso_aplicacion_perfil = Convert.ToBoolean(row["modificar"]),
-                    eliminar_permiso_aplicacion_perfil = Convert.ToBoolean(row["eliminar"]),
-                    imprimir_permiso_aplicacion_perfil = Convert.ToBoolean(row["imprimir"])
+                    iFk_id_modulo = Convert.ToInt32(row["iFk_id_modulo"]),
+                    iFk_id_perfil = Convert.ToInt32(row["iFk_id_perfil"]),
+                    iFk_id_aplicacion = Convert.ToInt32(row["iFk_id_aplicacion"]),
+                    bIngresar_permiso_aplicacion_perfil = Convert.ToBoolean(row["ingresar"]),
+                    bConsultar_permiso_aplicacion_perfil = Convert.ToBoolean(row["consultar"]),
+                    bModificar_permiso_aplicacion_perfil = Convert.ToBoolean(row["modificar"]),
+                    bEliminar_permiso_aplicacion_perfil = Convert.ToBoolean(row["eliminar"]),
+                    bImprimir_permiso_aplicacion_perfil = Convert.ToBoolean(row["imprimir"])
                 };
             }
         }

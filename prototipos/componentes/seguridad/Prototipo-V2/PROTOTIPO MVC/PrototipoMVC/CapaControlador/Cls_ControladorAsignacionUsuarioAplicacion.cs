@@ -12,25 +12,25 @@ namespace Capa_Controlador_Seguridad
         // Obtener todos los usuarios
         public DataTable ObtenerUsuarios()
         {
-            return model.ObtenerUsuarios();
+            return model.fun_ObtenerUsuarios();
         }
 
         // Obtener todos los módulos
         public DataTable ObtenerModulos()
         {
-            return model.ObtenerModulos();
+            return model.fun_ObtenerModulos();
         }
 
         // Obtener aplicaciones por módulo
         public DataTable ObtenerAplicacionesPorModulo(int idModulo)
         {
-            return model.ObtenerAplicacionesPorModulo(idModulo);
+            return model.fun_ObtenerAplicacionesPorModulo(idModulo);
         }
 
 
         public DataTable ObtenerPermisosPorUsuario(int idUsuario)
         {
-            return model.ObtenerPermisosPorUsuario(idUsuario);
+            return model.fun_ObtenerPermisosPorUsuario(idUsuario);
         }
 
         public DataTable ObtenerPermisosPorUsuarioYModulo(int idUsuario, int idModulo)
@@ -40,13 +40,13 @@ namespace Capa_Controlador_Seguridad
 
 
         // Insertar permisos de usuario por aplicación
-        public bool InsertarPermisoUsuarioAplicacion(int idUsuario, int idModulo, int idAplicacion,
-                                                     bool ingresar, bool consultar, bool modificar,
-                                                     bool eliminar, bool imprimir)
+        public bool InsertarPermisoUsuarioAplicacion(int iIdUsuario, int iIdModulo, int iIdAplicacion,
+                                                     bool bIngresar, bool bConsultar, bool bModificar,
+                                                     bool bEliminar, bool bImprimir)
         {
-            int filas = model.InsertarPermisoUsuarioAplicacion(idUsuario, idModulo, idAplicacion,
-                                                               ingresar, consultar, modificar,
-                                                               eliminar, imprimir);
+            int filas = model.InsertarPermisoUsuarioAplicacion(iIdUsuario, iIdModulo, iIdAplicacion,
+                                                               bIngresar, bConsultar, bModificar,
+                                                               bEliminar, bImprimir);
             return filas > 0;
         }
 
@@ -62,12 +62,12 @@ namespace Capa_Controlador_Seguridad
 
         // Método para obtener los permisos del usuario y aplicación actualmente conectados -> Brandon Hernandez  0901-22-9663
 
-        public Cls_Permiso_Aplicacion_Usuario ObtenerPermisosAplicacionUsuarioConectado(int idAplicacion)
+        public Cls_Permiso_Aplicacion_Usuario ObtenerPermisosAplicacionUsuarioConectado(int iIdAplicacion)
         {
-            int idUsuario = Cls_UsuarioConectado.iIdUsuario;
+            int iIdUsuario = Cls_Usuario_Conectado.iIdUsuario;
             
 
-            DataTable dt = model.ObtenerPermisosUsuarioAplicacion(idUsuario, idAplicacion);
+            DataTable dt = model.ObtenerPermisosUsuarioAplicacion(iIdUsuario, iIdAplicacion);
 
             if (dt.Rows.Count == 0)
                 return null; // o retorna un objeto con todos los permisos en false
@@ -75,13 +75,13 @@ namespace Capa_Controlador_Seguridad
             DataRow row = dt.Rows[0];
             return new Cls_Permiso_Aplicacion_Usuario
             {
-                Fk_Id_Usuario = idUsuario,
-                FK_Id_Aplicacion = idAplicacion,
-                Cmp_Ingresar_Permiso_Aplicacion_Usuario = Convert.ToBoolean(row["ingresar"]),
-               Cmp_Consultar_Permiso_Aplicacion_Usuario = Convert.ToBoolean(row["consultar"]),
-               Cmp_Modificar_Permiso_Aplicacion_Usuario = Convert.ToBoolean(row["modificar"]),
-                Cmp_Eliminar_Permiso_Aplicacion_Usuario = Convert.ToBoolean(row["eliminar"]),
-                Cmp_Imprimir_Permiso_Aplicacion_Usuario = Convert.ToBoolean(row["imprimir"])
+                Fk_Id_Usuario = iIdUsuario,
+                FK_Id_Aplicacion = iIdAplicacion,
+                Cmp_Ingresar_Permiso_Aplicacion_Usuario = Convert.ToBoolean(row["bIngresar"]),
+               Cmp_Consultar_Permiso_Aplicacion_Usuario = Convert.ToBoolean(row["bConsultar"]),
+               Cmp_Modificar_Permiso_Aplicacion_Usuario = Convert.ToBoolean(row["bModificar"]),
+                Cmp_Eliminar_Permiso_Aplicacion_Usuario = Convert.ToBoolean(row["bEliminar"]),
+                Cmp_Imprimir_Permiso_Aplicacion_Usuario = Convert.ToBoolean(row["bImprimir"])
             };
         }
     }

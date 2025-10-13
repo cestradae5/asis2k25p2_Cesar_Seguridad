@@ -46,7 +46,7 @@ namespace Capa_Modelo_Seguridad
             FROM Tbl_Usuario
             WHERE Pk_Id_Usuario = ?";
 
-        public List<Cls_Usuario> ObtenerUsuarios()
+        public List<Cls_Usuario> fun_ObtenerUsuarios()
         {
             List<Cls_Usuario> lista = new List<Cls_Usuario>();
             using (OdbcConnection conn = conexion.conexion())
@@ -113,23 +113,23 @@ namespace Capa_Modelo_Seguridad
             }
         }
 
-        public int BorrarUsuario(int idUsuario)
+        public int BorrarUsuario(int iIdUsuario)
         {
             using (OdbcConnection conn = conexion.conexion())
             {
                 OdbcCommand cmd = new OdbcCommand(SQL_DELETE, conn);
-                cmd.Parameters.AddWithValue("@Pk_Id_Usuario", idUsuario);
+                cmd.Parameters.AddWithValue("@Pk_Id_Usuario", iIdUsuario);
                 return cmd.ExecuteNonQuery();
             }
         }
 
-        public Cls_Usuario Query(int idUsuario)
+        public Cls_Usuario Query(int iIdUsuario)
         {
             Cls_Usuario usr = null;
             using (OdbcConnection conn = conexion.conexion())
             {
                 OdbcCommand cmd = new OdbcCommand(SQL_QUERY, conn);
-                cmd.Parameters.AddWithValue("@Pk_Id_Usuario", idUsuario);
+                cmd.Parameters.AddWithValue("@Pk_Id_Usuario", iIdUsuario);
 
                 OdbcDataReader reader = cmd.ExecuteReader();
                 if (reader.Read())
@@ -150,7 +150,7 @@ namespace Capa_Modelo_Seguridad
             }
             return usr;
         }
-        public int ObtenerIdPerfilDeUsuario(int idUsuario)
+        public int ObtenerIdPerfilDeUsuario(int iIdUsuario)
         {
             int idPerfil = 0;
             string sql = "SELECT Fk_Id_Perfil FROM Tbl_Usuario_Perfil WHERE Fk_Id_Usuario = ?";
@@ -158,7 +158,7 @@ namespace Capa_Modelo_Seguridad
             using (OdbcConnection conn = conexion.conexion())
             {
                 OdbcCommand cmd = new OdbcCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@Fk_Id_Usuario", idUsuario);
+                cmd.Parameters.AddWithValue("@Fk_Id_Usuario", iIdUsuario);
 
                 var result = cmd.ExecuteScalar();
                 if (result != null && result != DBNull.Value)

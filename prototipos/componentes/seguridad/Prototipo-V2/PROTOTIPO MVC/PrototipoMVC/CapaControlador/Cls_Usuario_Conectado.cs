@@ -3,7 +3,7 @@ using System;
 
 namespace Capa_Controlador_Seguridad
 {
-    public static class Cls_UsuarioConectado
+    public static class Cls_Usuario_Conectado
     {
         //ID del usuario logueado
         public static int iIdUsuario { get; set; }
