@@ -19,9 +19,9 @@ namespace Capa_Vista_Seguridad
         public Frm_Consultar_Asignacion_Modulo_Aplicacion()
         {
             InitializeComponent();
-            CargarAsignaciones();
+            fun_CargarAsignaciones();
         }
-        private void CargarAsignaciones()
+        private void fun_CargarAsignaciones()
         {
             DataTable dt = controlador.ObtenerAsignaciones();
             Dgv_Consulta_Asignacion_Modulo_Aplicacion.DataSource = dt;

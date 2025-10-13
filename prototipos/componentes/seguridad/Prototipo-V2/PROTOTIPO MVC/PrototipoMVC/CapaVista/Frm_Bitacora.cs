@@ -22,8 +22,8 @@ namespace Capa_Vista_Seguridad
         public Frm_Bitacora()
         {
             InitializeComponent();
-            CargarUsuariosEnCombo(); // carga usuarios al abrir
-            OcultarFiltros();        // opcional
+            fun_CargarUsuariosEnCombo(); // carga usuarios al abrir
+            fun_OcultarFiltros();        // opcional
      
             CargarEnGrid(ctrlBitacora.MostrarBitacora()); //Mostrar toda la bitácora al inicio
         }
@@ -38,7 +38,7 @@ namespace Capa_Vista_Seguridad
         }
 
         //Desplegar usuarios
-        private void CargarUsuariosEnCombo()
+        private void fun_CargarUsuariosEnCombo()
         {
             try
             {
@@ -55,7 +55,7 @@ namespace Capa_Vista_Seguridad
         }
 
         //No mostrar las barras hasta presionar los botones
-        private void OcultarFiltros()
+        private void fun_OcultarFiltros()
         {
             Lbl_PrimeraFecha.Visible = false;
             Dtp_PrimeraFecha.Visible = false;
@@ -223,7 +223,7 @@ namespace Capa_Vista_Seguridad
         // Filtros
         private void Btn_BuscarRango_Click(object sender, EventArgs e)
         {
-            OcultarFiltros();
+            fun_OcultarFiltros();
 
             Lbl_PrimeraFecha.Visible = true;
             Dtp_PrimeraFecha.Visible = true;
@@ -236,7 +236,7 @@ namespace Capa_Vista_Seguridad
 
         private void Btn_BuscarFecha_Click(object sender, EventArgs e)
         {
-            OcultarFiltros();
+            fun_OcultarFiltros();
             Lbl_FechaEspecifica.Visible = true;
             Dtp_FechaEspecifica.Visible = true;
             Btn_Imprimir.Visible = true;
@@ -245,7 +245,7 @@ namespace Capa_Vista_Seguridad
 
         private void Btn_BuscarUsuario_Click(object sender, EventArgs e)
         {
-            OcultarFiltros();
+            fun_OcultarFiltros();
             Lbl_Usuario.Visible = true;
             Cbo_Usuario.Visible = true;
             Btn_Imprimir.Visible = true;

@@ -27,28 +27,28 @@ namespace Capa_Vista_Seguridad
         {
             InitializeComponent();
 
-            CargarAplicaciones();
-            ConfigurarComboBox();
-            CargarComboModulos();
+            fun_CargarAplicaciones();
+            fun_ConfigurarComboBox();
+            fun_CargarComboModulos();
         }
 
 
         private void RecargarTodo()
         {
-            LimpiarCampos();
+            fun_LimpiarCampos();
             Cbo_buscar.Items.Clear();
             Cbo_id_modulo.Items.Clear();
-            CargarAplicaciones();
-            ConfigurarComboBox();
-            CargarComboModulos();
+            fun_CargarAplicaciones();
+            fun_ConfigurarComboBox();
+            fun_CargarComboModulos();
             
         }
-        private void CargarAplicaciones()
+        private void fun_CargarAplicaciones()
         {
             listaAplicaciones = controlador.ObtenerTodasLasAplicaciones();
         }
 
-        private void ConfigurarComboBox()
+        private void fun_ConfigurarComboBox()
         {
             // Configurar AutoComplete
             Cbo_buscar.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
@@ -100,9 +100,9 @@ namespace Capa_Vista_Seguridad
 
         private void Btn_buscar_Click(object sender, EventArgs e)
         {
-            string busqueda = Cbo_buscar.Text.Trim();
+            string sBusqueda = Cbo_buscar.Text.Trim();
 
-            if (string.IsNullOrEmpty(busqueda))
+            if (string.IsNullOrEmpty(sBusqueda))
             {
                 MessageBox.Show("Ingrese un ID o nombre para buscar");
                 return;
@@ -110,10 +110,10 @@ namespace Capa_Vista_Seguridad
 
             Cls_Aplicacion appEncontrada = null;
 
-            // id-nombre
-            if (busqueda.Contains("-"))
+            // id-sNombre
+            if (sBusqueda.Contains("-"))
             {
-                string[] partes = busqueda.Split('-');
+                string[] partes = sBusqueda.Split('-');
                 if (int.TryParse(partes[0], out int idParte))
                 {
                     appEncontrada = controlador.BuscarAplicacionPorId(idParte);
@@ -121,7 +121,7 @@ namespace Capa_Vista_Seguridad
             }
 
             // solo ID
-            if (appEncontrada == null && int.TryParse(busqueda, out int id))
+            if (appEncontrada == null && int.TryParse(sBusqueda, out int id))
             {
                 appEncontrada = controlador.BuscarAplicacionPorId(id);
             }
@@ -129,7 +129,7 @@ namespace Capa_Vista_Seguridad
             // solo Nombre
             if (appEncontrada == null)
             {
-                appEncontrada = controlador.BuscarAplicacionPorNombre(busqueda);
+                appEncontrada = controlador.BuscarAplicacionPorNombre(sBusqueda);
             }
 
             // Mostrar resultado y seleccionar módulo asignado
@@ -160,7 +160,7 @@ namespace Capa_Vista_Seguridad
             else
             {
                 MessageBox.Show("Aplicación no encontrada");
-                LimpiarCampos();
+                fun_LimpiarCampos();
             }
         }
 
@@ -216,7 +216,7 @@ namespace Capa_Vista_Seguridad
                     ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, "Error en el intento de eliminar aplicación", false);
                 }
 
-                LimpiarCampos();
+                fun_LimpiarCampos();
                 RecargarTodo();
             }
         }
@@ -315,25 +315,25 @@ namespace Capa_Vista_Seguridad
         private void Btn_guardar_Click(object sender, EventArgs e)
         {
             // Validar que el ID sea numérico
-            if (!int.TryParse(Txt_id_aplicacion.Text, out int idAplicacion))
+            if (!int.TryParse(Txt_id_aplicacion.Text, out int iIdAplicacion))
             {
                 MessageBox.Show("Ingrese un ID válido.");
                 return;
             }
 
-            string nombre = Txt_Nombre_aplicacion.Text.Trim();
-            string descripcion = Txt_descripcion.Text.Trim();
-            bool estado = Rdb_estado_activo.Checked;
+            string sNombre = Txt_Nombre_aplicacion.Text.Trim();
+            string sDescripcion = Txt_descripcion.Text.Trim();
+            bool bEstado = Rdb_estado_activo.Checked;
 
             // Validar campos vacíos
-            if (string.IsNullOrWhiteSpace(nombre))
+            if (string.IsNullOrWhiteSpace(sNombre))
             {
                 MessageBox.Show("Debe ingresar el nombre de la aplicación.");
                 Txt_Nombre_aplicacion.Focus();
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(descripcion))
+            if (string.IsNullOrWhiteSpace(sDescripcion))
             {
                 MessageBox.Show("Debe ingresar la descripción de la aplicación.");
                 Txt_descripcion.Focus();
@@ -342,14 +342,14 @@ namespace Capa_Vista_Seguridad
 
             //  Validar longitud máxima de los textos
             // Puedes ajustar los valores según tu base de datos
-            if (nombre.Length > 50)
+            if (sNombre.Length > 50)
             {
                 MessageBox.Show("Cadena muy larga o se pasó del número de caracteres permitidos en el campo 'Nombre de aplicación' (máx. 50).");
                 Txt_Nombre_aplicacion.Focus();
                 return;
             }
 
-            if (descripcion.Length > 255)
+            if (sDescripcion.Length > 255)
             {
                 MessageBox.Show("Cadena muy larga o se pasó del número de caracteres permitidos en el campo 'Descripción' (máx. 255).");
                 Txt_descripcion.Focus();
@@ -364,14 +364,14 @@ namespace Capa_Vista_Seguridad
             }
 
             // Validar si el ID ya existe
-            if (controlador.BuscarAplicacionPorId(idAplicacion) != null)
+            if (controlador.BuscarAplicacionPorId(iIdAplicacion) != null)
             {
                 MessageBox.Show("El ID ya existe, por favor ingrese otro.");
                 return;
             }
 
             //  Guardar aplicación
-            int resultadoApp = controlador.InsertarAplicacion(idAplicacion, nombre, descripcion, estado, null);
+            int resultadoApp = controlador.InsertarAplicacion(iIdAplicacion, sNombre, sDescripcion, bEstado, null);
 
             if (resultadoApp <= 0)
             {
@@ -384,7 +384,7 @@ namespace Capa_Vista_Seguridad
 
             //  Guardar asignación
             Cls_Asignacion_Modulo_Aplicacion_Controlador asignacionCtrl = new Cls_Asignacion_Modulo_Aplicacion_Controlador();
-            bool asignacionGuardada = asignacionCtrl.GuardarAsignacion(idModulo, idAplicacion);
+            bool asignacionGuardada = asignacionCtrl.GuardarAsignacion(idModulo, iIdAplicacion);
 
             if (!asignacionGuardada)
             {
@@ -393,7 +393,7 @@ namespace Capa_Vista_Seguridad
             }
 
             MessageBox.Show("Aplicación y asignación guardadas correctamente.");
-            LimpiarCampos();
+            fun_LimpiarCampos();
 
             //  Registrar en bitácora
             ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, "Guardar aplicación", true);
@@ -402,7 +402,7 @@ namespace Capa_Vista_Seguridad
 
 
 
-        private void LimpiarCampos()
+        private void fun_LimpiarCampos()
         {
             Txt_id_aplicacion.Clear();
             Txt_Nombre_aplicacion.Clear();
@@ -423,7 +423,7 @@ namespace Capa_Vista_Seguridad
             this.Close();
         }
 
-        private void CargarComboModulos()
+        private void fun_CargarComboModulos()
         {
             Cls_Modulos_Controlador controladorModulos = new Cls_Modulos_Controlador();
 

@@ -31,10 +31,10 @@ namespace Capa_Controlador_Seguridad
             DataTable dt = dao.ObtenerAsignaciones();
 
             var fila = dt.AsEnumerable()
-                        .FirstOrDefault(r => Convert.ToInt32(r["iFk_id_aplicacion"]) == iIdAplicacion);
+                        .FirstOrDefault(r => Convert.ToInt32(r["Fk_id_aplicacion"]) == iIdAplicacion);
 
             if (fila != null)
-                return Convert.ToInt32(fila["iFk_id_modulo"]);
+                return Convert.ToInt32(fila["Fk_id_modulo"]);
 
             return null; // no tiene módulo asignado
         }

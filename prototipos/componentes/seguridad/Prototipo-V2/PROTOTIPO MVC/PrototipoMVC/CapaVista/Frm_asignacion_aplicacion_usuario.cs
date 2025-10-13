@@ -40,8 +40,8 @@ namespace Capa_Vista_Seguridad
             Cbo_Modulos.ValueMember = "pk_id_modulo";
             Cbo_Modulos.SelectedIndex = -1;
 
-            CargarUsuarios(); 
-            CargarModulos();
+            fun_CargarUsuarios(); 
+            fun_CargarModulos();
             
 
             InicializarDataGridView();
@@ -52,7 +52,7 @@ namespace Capa_Vista_Seguridad
 
         //Ruben Armando Lopez Luch
         //0901-20-4620
-        private void CargarUsuarios()
+        private void fun_CargarUsuarios()
         {
             DataTable dtUsuarios = controlador.ObtenerUsuarios();
             Cbo_Usuarios.DataSource = dtUsuarios;
@@ -61,7 +61,7 @@ namespace Capa_Vista_Seguridad
             Cbo_Usuarios.SelectedIndex = -1;
         }
 
-        private void CargarModulos()
+        private void fun_CargarModulos()
         {
             DataTable dtModulos = controlador.ObtenerModulos();
             Cbo_Modulos.DataSource = dtModulos;
@@ -191,13 +191,13 @@ namespace Capa_Vista_Seguridad
                 return;
             }
 
-            string usuario = Cbo_Usuarios.Text;
-            string aplicacion = Cbo_Aplicaciones.Text;
-            int idUsuario = Convert.ToInt32(Cbo_Usuarios.SelectedValue);
-            int idModulo = Convert.ToInt32(Cbo_Modulos.SelectedValue);
-            int idAplicacion = Convert.ToInt32(Cbo_Aplicaciones.SelectedValue);
+            string sUsuario = Cbo_Usuarios.Text;
+            string sAplicacion = Cbo_Aplicaciones.Text;
+            int iIdUsuario = Convert.ToInt32(Cbo_Usuarios.SelectedValue);
+            int iIdModulo = Convert.ToInt32(Cbo_Modulos.SelectedValue);
+            int iIdAplicacion = Convert.ToInt32(Cbo_Aplicaciones.SelectedValue);
 
-            bool existe = false;
+            bool bExiste = false;
             foreach (DataGridViewRow row in Dgv_Permisos.Rows)
             {
                 if (row.IsNewRow) continue;
@@ -205,18 +205,18 @@ namespace Capa_Vista_Seguridad
                 int m = Convert.ToInt32(row.Cells["IdModulo"].Value);
                 int a = Convert.ToInt32(row.Cells["IdAplicacion"].Value);
 
-                if (u == idUsuario && m == idModulo && a == idAplicacion)
+                if (u == iIdUsuario && m == iIdModulo && a == iIdAplicacion)
                 {
-                    existe = true;
+                    bExiste = true;
                     break;
                 }
             }
 
-            if (!existe)
+            if (!bExiste)
             {
-                Dgv_Permisos.Rows.Add(usuario, aplicacion, false, false, false, false, false, idUsuario, idModulo, idAplicacion);
+                Dgv_Permisos.Rows.Add(sUsuario, sAplicacion, false, false, false, false, false, iIdUsuario, iIdModulo, iIdAplicacion);
                 //Bitacora Aron Ricardo Esquit Silva 0901-22-13036
-                bitacora.InsertarBitacora(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, idAplicacion, "Asignación Aplicación a Usuario - Agregar", true);
+                bitacora.InsertarBitacora(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, iIdAplicacion, "Asignación Aplicación a Usuario - Agregar", true);
             }
             else
             {
@@ -232,7 +232,7 @@ namespace Capa_Vista_Seguridad
         private void Btn_finalizar_Click(object sender, EventArgs e)
 
         {
-            // Validacion de usuario y plaicacion antes de insertar datos
+            // Validacion de sUsuario y plaicacion antes de insertar datos
             if (Dgv_Permisos.Rows.Count == 0)
 
 
@@ -241,16 +241,16 @@ namespace Capa_Vista_Seguridad
                 return;
             }
 
-            int insertados = 0;
-            int actualizados = 0;
+            int iInsertados = 0;
+            int iActualizados = 0;
 
             foreach (DataGridViewRow row in Dgv_Permisos.Rows)
             {
                 if (row.IsNewRow) continue;
 
-                int idUsuario = Convert.ToInt32(row.Cells["IdUsuario"].Value);
-                int idModulo = Convert.ToInt32(row.Cells["IdModulo"].Value);
-                int idAplicacion = Convert.ToInt32(row.Cells["IdAplicacion"].Value);
+                int iIdUsuario = Convert.ToInt32(row.Cells["IdUsuario"].Value);
+                int iIdModulo = Convert.ToInt32(row.Cells["IdModulo"].Value);
+                int iIdAplicacion = Convert.ToInt32(row.Cells["IdAplicacion"].Value);
 
                 bool bIngresar = Convert.ToBoolean(row.Cells["Ingresar"].Value ?? false);
                 bool bConsultar = Convert.ToBoolean(row.Cells["Consultar"].Value ?? false);
@@ -258,25 +258,25 @@ namespace Capa_Vista_Seguridad
                 bool bEliminar = Convert.ToBoolean(row.Cells["Eliminar"].Value ?? false);
                 bool bImprimir = Convert.ToBoolean(row.Cells["Imprimir"].Value ?? false);
 
-                if (modelo.ExistePermiso(idUsuario, idModulo, idAplicacion))
+                if (modelo.ExistePermiso(iIdUsuario, iIdModulo, iIdAplicacion))
                 {
-                    modelo.ActualizarPermisoUsuarioAplicacion(idUsuario, idModulo, idAplicacion,
+                    modelo.ActualizarPermisoUsuarioAplicacion(iIdUsuario, iIdModulo, iIdAplicacion,
                                                               bIngresar, bConsultar, bModificar,
                                                               bEliminar, bImprimir);
-                    actualizados++;
-                    bitacora.InsertarBitacora(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, idAplicacion, "Asignación Aplicación a Usuario - Actualizar", true);
+                    iActualizados++;
+                    bitacora.InsertarBitacora(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, iIdAplicacion, "Asignación Aplicación a Usuario - Actualizar", true);
                 }
                 else
                 {
-                    modelo.InsertarPermisoUsuarioAplicacion(idUsuario, idModulo, idAplicacion,
+                    modelo.InsertarPermisoUsuarioAplicacion(iIdUsuario, iIdModulo, iIdAplicacion,
                                                             bIngresar, bConsultar, bModificar,
                                                             bEliminar, bImprimir);
-                    insertados++;
-                    bitacora.InsertarBitacora(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, idAplicacion, "Asignación Aplicación a Usuario - Insertar", true);
+                    iInsertados++;
+                    bitacora.InsertarBitacora(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, iIdAplicacion, "Asignación Aplicación a Usuario - Insertar", true);
                 }
             }
 
-            MessageBox.Show($"Se insertaron {insertados} registros y se actualizaron {actualizados} registros correctamente.");
+            MessageBox.Show($"Se insertaron {iInsertados} registros y se actualizaron {iActualizados} registros correctamente.");
             Dgv_Permisos.Rows.Clear();
         }
 
@@ -293,7 +293,7 @@ namespace Capa_Vista_Seguridad
                     MessageBoxIcon.Question
                 );
 
-                // Si el usuario confirma, eliminar el registro
+                // Si el sUsuario confirma, eliminar el registro
                 if (resultado == DialogResult.Yes)
                 {
                     int idAplicacion = Convert.ToInt32(Dgv_Permisos.CurrentRow.Cells["IdAplicacion"].Value);
@@ -316,7 +316,7 @@ namespace Capa_Vista_Seguridad
                 }
                 else
                 {
-                    // Si el usuario presiona "No"
+                    // Si el sUsuario presiona "No"
                     MessageBox.Show("Operación cancelada.",
                                     "Información",
                                     MessageBoxButtons.OK,
@@ -334,7 +334,7 @@ namespace Capa_Vista_Seguridad
 
 
 
-        // validacion de usuario y aplicacion antes de poder selecionar los permisos
+        // validacion de sUsuario y sAplicacion antes de poder selecionar los permisos
         private void Dgv_Permisos_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         {
             // Verificar si la celda es un checkbox
@@ -346,7 +346,7 @@ namespace Capa_Vista_Seguridad
                 var idUsuario = row.Cells["IdUsuario"].Value?.ToString();
                 var idAplicacion = row.Cells["IdAplicacion"].Value?.ToString();
 
-                // Si no hay usuario o aplicación, cancelar edición
+                // Si no hay sUsuario o aplicación, cancelar edición
                 if (string.IsNullOrWhiteSpace(idUsuario) || string.IsNullOrWhiteSpace(idAplicacion))
                 {
                     e.Cancel = true;
@@ -447,7 +447,7 @@ namespace Capa_Vista_Seguridad
 
                 bool bIngresar = false, bConsultar = false, bModificar = false, bEliminar = false, bImprimir = false;
 
-                //  Revisar permisos or usuario + aplicación + módulo
+                //  Revisar permisos or sUsuario + aplicación + módulo
                 var vPermisosUsuario = permisoUsuario.ConsultarPermisos(idUsuario, IidAplicacion, IidModulo);
 
                 if (vPermisosUsuario.HasValue)
