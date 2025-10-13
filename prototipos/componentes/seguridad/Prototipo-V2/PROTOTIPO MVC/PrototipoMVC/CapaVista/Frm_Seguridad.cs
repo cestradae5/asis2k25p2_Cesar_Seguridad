@@ -337,5 +337,10 @@ namespace Capa_Vista_Seguridad
             asig_app_user.MdiParent = this;
             asig_app_user.Show();
         }
+
+        private void Pic_Cerrar_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

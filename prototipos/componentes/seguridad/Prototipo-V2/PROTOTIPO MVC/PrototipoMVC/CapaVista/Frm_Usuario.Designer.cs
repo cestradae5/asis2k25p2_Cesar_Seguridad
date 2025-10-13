@@ -56,7 +56,7 @@ namespace Capa_Vista_Seguridad
             this.lbl_Crear_Usuario.Location = new System.Drawing.Point(38, 79);
             this.lbl_Crear_Usuario.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbl_Crear_Usuario.Name = "lbl_Crear_Usuario";
-            this.lbl_Crear_Usuario.Size = new System.Drawing.Size(220, 35);
+            this.lbl_Crear_Usuario.Size = new System.Drawing.Size(261, 41);
             this.lbl_Crear_Usuario.TabIndex = 0;
             this.lbl_Crear_Usuario.Text = "Crear Usuario:";
             // 
@@ -67,7 +67,7 @@ namespace Capa_Vista_Seguridad
             this.lbl_Id_Empleado.Location = new System.Drawing.Point(46, 178);
             this.lbl_Id_Empleado.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbl_Id_Empleado.Name = "lbl_Id_Empleado";
-            this.lbl_Id_Empleado.Size = new System.Drawing.Size(113, 20);
+            this.lbl_Id_Empleado.Size = new System.Drawing.Size(135, 22);
             this.lbl_Id_Empleado.TabIndex = 1;
             this.lbl_Id_Empleado.Text = "Id Empleado:";
             // 
@@ -78,7 +78,7 @@ namespace Capa_Vista_Seguridad
             this.lbl_Nombre.Location = new System.Drawing.Point(46, 220);
             this.lbl_Nombre.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbl_Nombre.Name = "lbl_Nombre";
-            this.lbl_Nombre.Size = new System.Drawing.Size(78, 20);
+            this.lbl_Nombre.Size = new System.Drawing.Size(90, 22);
             this.lbl_Nombre.TabIndex = 2;
             this.lbl_Nombre.Text = "Nombre:";
             // 
@@ -89,7 +89,7 @@ namespace Capa_Vista_Seguridad
             this.lbl_Contraseña.Location = new System.Drawing.Point(46, 263);
             this.lbl_Contraseña.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbl_Contraseña.Name = "lbl_Contraseña";
-            this.lbl_Contraseña.Size = new System.Drawing.Size(105, 20);
+            this.lbl_Contraseña.Size = new System.Drawing.Size(120, 22);
             this.lbl_Contraseña.TabIndex = 3;
             this.lbl_Contraseña.Text = "Contraseña:";
             // 
@@ -99,7 +99,7 @@ namespace Capa_Vista_Seguridad
             this.Txt_Nombre.Location = new System.Drawing.Point(167, 220);
             this.Txt_Nombre.Margin = new System.Windows.Forms.Padding(4);
             this.Txt_Nombre.Name = "Txt_Nombre";
-            this.Txt_Nombre.Size = new System.Drawing.Size(309, 27);
+            this.Txt_Nombre.Size = new System.Drawing.Size(309, 31);
             this.Txt_Nombre.TabIndex = 4;
             this.Txt_Nombre.TextChanged += new System.EventHandler(this.Txt_Nombre_TextChanged);
             // 
@@ -109,7 +109,7 @@ namespace Capa_Vista_Seguridad
             this.Txt_Contraseña.Location = new System.Drawing.Point(167, 263);
             this.Txt_Contraseña.Margin = new System.Windows.Forms.Padding(4);
             this.Txt_Contraseña.Name = "Txt_Contraseña";
-            this.Txt_Contraseña.Size = new System.Drawing.Size(309, 27);
+            this.Txt_Contraseña.Size = new System.Drawing.Size(309, 31);
             this.Txt_Contraseña.TabIndex = 5;
             this.Txt_Contraseña.TextChanged += new System.EventHandler(this.Txt_Contraseña_TextChanged);
             // 
@@ -120,7 +120,7 @@ namespace Capa_Vista_Seguridad
             this.Cbo_Empleado.Location = new System.Drawing.Point(167, 178);
             this.Cbo_Empleado.Margin = new System.Windows.Forms.Padding(4);
             this.Cbo_Empleado.Name = "Cbo_Empleado";
-            this.Cbo_Empleado.Size = new System.Drawing.Size(309, 28);
+            this.Cbo_Empleado.Size = new System.Drawing.Size(309, 30);
             this.Cbo_Empleado.TabIndex = 6;
             this.Cbo_Empleado.SelectedIndexChanged += new System.EventHandler(this.Cbo_Empleado_SelectedIndexChanged);
             // 
@@ -182,7 +182,7 @@ namespace Capa_Vista_Seguridad
             // 
             this.Pic_Cerrar.BackColor = System.Drawing.Color.Transparent;
             this.Pic_Cerrar.Dock = System.Windows.Forms.DockStyle.Right;
-            this.Pic_Cerrar.Image = global::Capa_Vista_Seguridad.Properties.Resources.cancel_77947;
+            this.Pic_Cerrar.Image = global::Capa_Vista_Seguridad.Properties.Resources.Cancel_icon_icons_com_73703;
             this.Pic_Cerrar.Location = new System.Drawing.Point(786, 0);
             this.Pic_Cerrar.Margin = new System.Windows.Forms.Padding(4);
             this.Pic_Cerrar.Name = "Pic_Cerrar";
@@ -212,7 +212,7 @@ namespace Capa_Vista_Seguridad
             this.lbl_ConfirmarContraseña.Location = new System.Drawing.Point(46, 306);
             this.lbl_ConfirmarContraseña.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbl_ConfirmarContraseña.Name = "lbl_ConfirmarContraseña";
-            this.lbl_ConfirmarContraseña.Size = new System.Drawing.Size(190, 20);
+            this.lbl_ConfirmarContraseña.Size = new System.Drawing.Size(218, 22);
             this.lbl_ConfirmarContraseña.TabIndex = 97;
             this.lbl_ConfirmarContraseña.Text = "Confirmar Contraseña:";
             // 
@@ -220,7 +220,7 @@ namespace Capa_Vista_Seguridad
             // 
             this.Txt_ConfirmarContraseña.Location = new System.Drawing.Point(243, 306);
             this.Txt_ConfirmarContraseña.Name = "Txt_ConfirmarContraseña";
-            this.Txt_ConfirmarContraseña.Size = new System.Drawing.Size(285, 27);
+            this.Txt_ConfirmarContraseña.Size = new System.Drawing.Size(285, 31);
             this.Txt_ConfirmarContraseña.TabIndex = 98;
             this.Txt_ConfirmarContraseña.TextChanged += new System.EventHandler(this.Txt_ConfirmarContraseña_TextChanged);
             // 
@@ -229,14 +229,14 @@ namespace Capa_Vista_Seguridad
             this.Chk_ConfirmarContraseña.AutoSize = true;
             this.Chk_ConfirmarContraseña.Location = new System.Drawing.Point(548, 316);
             this.Chk_ConfirmarContraseña.Name = "Chk_ConfirmarContraseña";
-            this.Chk_ConfirmarContraseña.Size = new System.Drawing.Size(18, 17);
+            this.Chk_ConfirmarContraseña.Size = new System.Drawing.Size(22, 21);
             this.Chk_ConfirmarContraseña.TabIndex = 99;
             this.Chk_ConfirmarContraseña.UseVisualStyleBackColor = true;
             this.Chk_ConfirmarContraseña.CheckedChanged += new System.EventHandler(this.Chk_ConfirmarContraseña_CheckedChanged);
             // 
             // Frm_Usuario
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 22F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(185)))), ((int)(((byte)(185)))));
             this.ClientSize = new System.Drawing.Size(832, 465);
