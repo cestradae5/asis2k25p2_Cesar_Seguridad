@@ -44,9 +44,7 @@ namespace Capa_Vista_Seguridad
             this.Btn_reporte = new System.Windows.Forms.Button();
             this.lbl_ConfirmarContraseña = new System.Windows.Forms.Label();
             this.Txt_ConfirmarContraseña = new System.Windows.Forms.TextBox();
-            this.lbl_Usuarios = new System.Windows.Forms.Label();
-            this.Cbo_Usuarios = new System.Windows.Forms.ComboBox();
-            this.Btn_Buscar = new System.Windows.Forms.Button();
+            this.Chk_ConfirmarContraseña = new System.Windows.Forms.CheckBox();
             this.Pnl_Superior.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Cerrar)).BeginInit();
             this.SuspendLayout();
@@ -66,7 +64,7 @@ namespace Capa_Vista_Seguridad
             // 
             this.lbl_Id_Empleado.AutoSize = true;
             this.lbl_Id_Empleado.Font = new System.Drawing.Font("Rockwell", 10F);
-            this.lbl_Id_Empleado.Location = new System.Drawing.Point(46, 173);
+            this.lbl_Id_Empleado.Location = new System.Drawing.Point(46, 178);
             this.lbl_Id_Empleado.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbl_Id_Empleado.Name = "lbl_Id_Empleado";
             this.lbl_Id_Empleado.Size = new System.Drawing.Size(113, 20);
@@ -77,7 +75,7 @@ namespace Capa_Vista_Seguridad
             // 
             this.lbl_Nombre.AutoSize = true;
             this.lbl_Nombre.Font = new System.Drawing.Font("Rockwell", 10F);
-            this.lbl_Nombre.Location = new System.Drawing.Point(46, 259);
+            this.lbl_Nombre.Location = new System.Drawing.Point(46, 220);
             this.lbl_Nombre.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbl_Nombre.Name = "lbl_Nombre";
             this.lbl_Nombre.Size = new System.Drawing.Size(78, 20);
@@ -88,7 +86,7 @@ namespace Capa_Vista_Seguridad
             // 
             this.lbl_Contraseña.AutoSize = true;
             this.lbl_Contraseña.Font = new System.Drawing.Font("Rockwell", 10F);
-            this.lbl_Contraseña.Location = new System.Drawing.Point(46, 304);
+            this.lbl_Contraseña.Location = new System.Drawing.Point(46, 263);
             this.lbl_Contraseña.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbl_Contraseña.Name = "lbl_Contraseña";
             this.lbl_Contraseña.Size = new System.Drawing.Size(105, 20);
@@ -98,7 +96,7 @@ namespace Capa_Vista_Seguridad
             // Txt_Nombre
             // 
             this.Txt_Nombre.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(236)))), ((int)(((byte)(238)))));
-            this.Txt_Nombre.Location = new System.Drawing.Point(167, 259);
+            this.Txt_Nombre.Location = new System.Drawing.Point(167, 220);
             this.Txt_Nombre.Margin = new System.Windows.Forms.Padding(4);
             this.Txt_Nombre.Name = "Txt_Nombre";
             this.Txt_Nombre.Size = new System.Drawing.Size(309, 27);
@@ -108,7 +106,7 @@ namespace Capa_Vista_Seguridad
             // Txt_Contraseña
             // 
             this.Txt_Contraseña.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(236)))), ((int)(((byte)(238)))));
-            this.Txt_Contraseña.Location = new System.Drawing.Point(167, 304);
+            this.Txt_Contraseña.Location = new System.Drawing.Point(167, 263);
             this.Txt_Contraseña.Margin = new System.Windows.Forms.Padding(4);
             this.Txt_Contraseña.Name = "Txt_Contraseña";
             this.Txt_Contraseña.Size = new System.Drawing.Size(309, 27);
@@ -119,7 +117,7 @@ namespace Capa_Vista_Seguridad
             // 
             this.Cbo_Empleado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(236)))), ((int)(((byte)(238)))));
             this.Cbo_Empleado.FormattingEnabled = true;
-            this.Cbo_Empleado.Location = new System.Drawing.Point(167, 170);
+            this.Cbo_Empleado.Location = new System.Drawing.Point(167, 178);
             this.Cbo_Empleado.Margin = new System.Windows.Forms.Padding(4);
             this.Cbo_Empleado.Name = "Cbo_Empleado";
             this.Cbo_Empleado.Size = new System.Drawing.Size(309, 28);
@@ -199,7 +197,7 @@ namespace Capa_Vista_Seguridad
             this.Btn_reporte.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_reporte.Font = new System.Drawing.Font("Rockwell", 10F);
             this.Btn_reporte.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_reporte.Location = new System.Drawing.Point(662, 91);
+            this.Btn_reporte.Location = new System.Drawing.Point(662, 147);
             this.Btn_reporte.Margin = new System.Windows.Forms.Padding(4);
             this.Btn_reporte.Name = "Btn_reporte";
             this.Btn_reporte.Size = new System.Drawing.Size(142, 50);
@@ -211,7 +209,7 @@ namespace Capa_Vista_Seguridad
             // lbl_ConfirmarContraseña
             // 
             this.lbl_ConfirmarContraseña.AutoSize = true;
-            this.lbl_ConfirmarContraseña.Location = new System.Drawing.Point(46, 355);
+            this.lbl_ConfirmarContraseña.Location = new System.Drawing.Point(46, 306);
             this.lbl_ConfirmarContraseña.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbl_ConfirmarContraseña.Name = "lbl_ConfirmarContraseña";
             this.lbl_ConfirmarContraseña.Size = new System.Drawing.Size(190, 20);
@@ -220,41 +218,21 @@ namespace Capa_Vista_Seguridad
             // 
             // Txt_ConfirmarContraseña
             // 
-            this.Txt_ConfirmarContraseña.Location = new System.Drawing.Point(243, 355);
+            this.Txt_ConfirmarContraseña.Location = new System.Drawing.Point(243, 306);
             this.Txt_ConfirmarContraseña.Name = "Txt_ConfirmarContraseña";
             this.Txt_ConfirmarContraseña.Size = new System.Drawing.Size(285, 27);
             this.Txt_ConfirmarContraseña.TabIndex = 98;
             this.Txt_ConfirmarContraseña.TextChanged += new System.EventHandler(this.Txt_ConfirmarContraseña_TextChanged);
             // 
-            // lbl_Usuarios
+            // Chk_ConfirmarContraseña
             // 
-            this.lbl_Usuarios.AutoSize = true;
-            this.lbl_Usuarios.Location = new System.Drawing.Point(46, 215);
-            this.lbl_Usuarios.Name = "lbl_Usuarios";
-            this.lbl_Usuarios.Size = new System.Drawing.Size(83, 20);
-            this.lbl_Usuarios.TabIndex = 99;
-            this.lbl_Usuarios.Text = "Usuarios:";
-            // 
-            // Cbo_Usuarios
-            // 
-            this.Cbo_Usuarios.FormattingEnabled = true;
-            this.Cbo_Usuarios.Location = new System.Drawing.Point(167, 215);
-            this.Cbo_Usuarios.Name = "Cbo_Usuarios";
-            this.Cbo_Usuarios.Size = new System.Drawing.Size(309, 28);
-            this.Cbo_Usuarios.TabIndex = 100;
-            this.Cbo_Usuarios.SelectedIndexChanged += new System.EventHandler(this.Cbo_Usuarios_SelectedIndexChanged);
-            // 
-            // Btn_Buscar
-            // 
-            this.Btn_Buscar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
-            this.Btn_Buscar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_Buscar.Location = new System.Drawing.Point(662, 148);
-            this.Btn_Buscar.Name = "Btn_Buscar";
-            this.Btn_Buscar.Size = new System.Drawing.Size(142, 50);
-            this.Btn_Buscar.TabIndex = 101;
-            this.Btn_Buscar.Text = "Buscar";
-            this.Btn_Buscar.UseVisualStyleBackColor = false;
-            this.Btn_Buscar.Click += new System.EventHandler(this.Btn_Buscar_Click);
+            this.Chk_ConfirmarContraseña.AutoSize = true;
+            this.Chk_ConfirmarContraseña.Location = new System.Drawing.Point(548, 316);
+            this.Chk_ConfirmarContraseña.Name = "Chk_ConfirmarContraseña";
+            this.Chk_ConfirmarContraseña.Size = new System.Drawing.Size(18, 17);
+            this.Chk_ConfirmarContraseña.TabIndex = 99;
+            this.Chk_ConfirmarContraseña.UseVisualStyleBackColor = true;
+            this.Chk_ConfirmarContraseña.CheckedChanged += new System.EventHandler(this.Chk_ConfirmarContraseña_CheckedChanged);
             // 
             // Frm_Usuario
             // 
@@ -262,9 +240,7 @@ namespace Capa_Vista_Seguridad
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(185)))), ((int)(((byte)(185)))));
             this.ClientSize = new System.Drawing.Size(832, 465);
-            this.Controls.Add(this.Btn_Buscar);
-            this.Controls.Add(this.Cbo_Usuarios);
-            this.Controls.Add(this.lbl_Usuarios);
+            this.Controls.Add(this.Chk_ConfirmarContraseña);
             this.Controls.Add(this.Txt_ConfirmarContraseña);
             this.Controls.Add(this.lbl_ConfirmarContraseña);
             this.Controls.Add(this.Btn_reporte);
@@ -309,8 +285,6 @@ namespace Capa_Vista_Seguridad
         private System.Windows.Forms.Button Btn_reporte;
         private System.Windows.Forms.Label lbl_ConfirmarContraseña;
         private System.Windows.Forms.TextBox Txt_ConfirmarContraseña;
-        private System.Windows.Forms.Label lbl_Usuarios;
-        private System.Windows.Forms.ComboBox Cbo_Usuarios;
-        private System.Windows.Forms.Button Btn_Buscar;
+        private System.Windows.Forms.CheckBox Chk_ConfirmarContraseña;
     }
 }
