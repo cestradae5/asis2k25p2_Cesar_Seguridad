@@ -16,7 +16,7 @@ namespace Capa_Vista_Seguridad
 {
     public partial class FrmAplicacion : Form
     {
-        Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador(); //Bitacora
+        Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador(); //Bitacora Aron Esquit  0901-22-13036
         private Cls_AplicacionControlador controlador = new Cls_AplicacionControlador();
         private List<Cls_Aplicacion> listaAplicaciones = new List<Cls_Aplicacion>();
 
@@ -206,8 +206,8 @@ namespace Capa_Vista_Seguridad
                 if (exito)
                 {
                     MessageBox.Show(" Aplicación eliminada exitosamente.");
-                    // Registrar en Bitácora
-                    ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, "Eliminar aplicación", true);
+                    //Registrar en bitacora   Aron Esquit 0901-22-13036
+                    ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, $"Eliminó la aplicación: {Txt_Nombre_aplicacion.Text}", true);
                 }
                 else
                 {
@@ -286,13 +286,8 @@ namespace Capa_Vista_Seguridad
             {
                 MessageBox.Show("Aplicación modificada correctamente.");
 
-                // Registrar en bitácora
-                ctrlBitacora.RegistrarAccion(
-                    Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario,
-                    1,
-                    "Modificar aplicación",
-                    true
-                );
+                //Registrar en bitacora   Aron Esquit 0901-22-13036
+                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, $"Modificó la aplicación: {Txt_Nombre_aplicacion.Text}", true);
 
                 RecargarTodo();
             }
@@ -393,10 +388,12 @@ namespace Capa_Vista_Seguridad
             }
 
             MessageBox.Show("Aplicación y asignación guardadas correctamente.");
+
+            //Registrar en bitacora   Aron Esquit 0901-22-13036
+            ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, $"Guardo la aplicación: {Txt_Nombre_aplicacion.Text}", true);
+
             fun_LimpiarCampos();
 
-            //  Registrar en bitácora
-            ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, "Guardar aplicación", true);
             RecargarTodo();
         }
 

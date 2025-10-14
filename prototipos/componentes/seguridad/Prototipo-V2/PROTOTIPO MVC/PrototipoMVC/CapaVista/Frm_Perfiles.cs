@@ -11,7 +11,7 @@ namespace Capa_Vista_Seguridad
 {
     public partial class Frm_Perfiles : Form
     {
-        Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador();
+        Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador();  //Bitacora  Aron Esquit 0901-22-13036
         private Cls_Perfiles_Controlador controlador = new Cls_Perfiles_Controlador();
         private List<Cls_Perfiles> listaPerfiles = new List<Cls_Perfiles>();
 
@@ -118,7 +118,8 @@ namespace Capa_Vista_Seguridad
                 if (bExito)
                 {
                     MessageBox.Show("Perfil guardado correctamente");
-                    ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, "Guardar perfil", true);
+                    //Registrar en bitacora   Aron Esquit 0901-22-13036
+                    ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, $"Guardó el perfil: {Txt_puesto.Text}", true);
                 }
                 else
                 {
@@ -165,7 +166,8 @@ namespace Capa_Vista_Seguridad
             if (bExito)
             {
                 MessageBox.Show("Perfil modificado correctamente");
-                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, "Modificar perfil", true);
+                //Registrar en bitacora   Aron Esquit 0901-22-13036
+                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, $"Modificó el perfil: {Txt_puesto.Text}", true);
             }
             else
             {
@@ -251,7 +253,8 @@ namespace Capa_Vista_Seguridad
             if (bExito)
             {
                 MessageBox.Show("Perfil eliminado");
-                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, "Eliminar perfil", true);
+                //Registrar en bitacora   Aron Esquit 0901-22-13036
+                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, $"Eliminó el perfil: {Txt_puesto.Text}", true);
             }
             else
             {

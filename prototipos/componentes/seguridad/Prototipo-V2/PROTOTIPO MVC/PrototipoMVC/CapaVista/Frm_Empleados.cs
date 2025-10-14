@@ -15,7 +15,7 @@ namespace Capa_Vista_Seguridad
 {
     public partial class Frm_Empleados : Form
     {
-        Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador(); // Bitácora
+        Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador(); // Bitácora Aron Esquit 0901-22-13036
         private Cls_EmpleadoControlador controlador = new Cls_EmpleadoControlador();
         private List<Cls_Empleado> listaEmpleados = new List<Cls_Empleado>();
 
@@ -171,7 +171,8 @@ namespace Capa_Vista_Seguridad
                 DateTime.Parse(Txt_fechaContra_empleado.Text)
             );
             MessageBox.Show(exito ? "Empleado modificado correctamente" : "Error al modificar empleado");
-            ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 0, "Modificar empleado", true);
+            //Registrar en bitacora   Aron Esquit 0901-22-13036
+            ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, $"Modificó empleado/a: {Txt_nombre_empleado.Text}", true);
             fun_CargarEmpleados();
             fun_ConfigurarComboBoxEmpleados();
             fun_LimpiarCampos();
@@ -204,7 +205,8 @@ namespace Capa_Vista_Seguridad
                 if (exito)
                 {
                     MessageBox.Show("Empleado eliminado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 0, "Eliminar empleado", true);
+                    //Registrar en bitacora   Aron Esquit 0901-22-13036
+                    ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, $"Eliminó empleado/a: {Txt_nombre_empleado.Text}", true);
 
                     // Refrescar datos
                     fun_CargarEmpleados();
@@ -303,7 +305,8 @@ namespace Capa_Vista_Seguridad
                 );
 
                 MessageBox.Show("Empleado guardado correctamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 0, "Guardar empleado", true);
+                //Registrar en bitacora   Aron Esquit 0901-22-13036
+                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, $"Guardó empleado/a: {Txt_nombre_empleado.Text}", true);
 
                 fun_CargarEmpleados();
                 fun_ConfigurarComboBoxEmpleados();
