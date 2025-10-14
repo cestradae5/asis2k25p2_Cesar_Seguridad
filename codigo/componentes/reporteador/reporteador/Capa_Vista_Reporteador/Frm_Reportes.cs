@@ -378,5 +378,11 @@ private void Btn_eliminar_Click(object sender, EventArgs e)
         {
             reporteAplicacion(1);
         }
+
+        private void Btn_refrescar_Click(object sender, EventArgs e)
+        {
+            Txt_reportes_ruta.Clear(); // Inicio de código de: Cesar Santizo con carné: 0901-22-5215 en la fecha de: 10/10/2025
+            Txt_Titulo.Clear();        // Fin de código de: Cesar Santizo con carné: 0901-22-5215 en la fecha de: 10/10/2025
+        }
     }
 }
