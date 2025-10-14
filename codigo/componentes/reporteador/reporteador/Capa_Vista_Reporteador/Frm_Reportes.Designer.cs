@@ -40,6 +40,7 @@ namespace Capa_Vista_Reporteador
             this.Btn_ruta_reporte = new System.Windows.Forms.Button();
             this.Txt_Titulo = new System.Windows.Forms.TextBox();
             this.Lbl_Titulo = new System.Windows.Forms.Label();
+            this.Btn_refrescar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.Dgv_reportes)).BeginInit();
             this.SuspendLayout();
             // 
@@ -178,12 +179,26 @@ namespace Capa_Vista_Reporteador
             this.Lbl_Titulo.TabIndex = 10;
             this.Lbl_Titulo.Text = "Título";
             // 
+            // Btn_refrescar
+            // 
+            this.Btn_refrescar.BackColor = System.Drawing.Color.White;
+            this.Btn_refrescar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Btn_refrescar.Image = ((System.Drawing.Image)(resources.GetObject("Btn_refrescar.Image")));
+            this.Btn_refrescar.Location = new System.Drawing.Point(201, 201);
+            this.Btn_refrescar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Btn_refrescar.Name = "Btn_refrescar";
+            this.Btn_refrescar.Size = new System.Drawing.Size(53, 46);
+            this.Btn_refrescar.TabIndex = 11;
+            this.Btn_refrescar.UseVisualStyleBackColor = false;
+            this.Btn_refrescar.Click += new System.EventHandler(this.Btn_refrescar_Click);
+            // 
             // Frm_Reportes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(931, 474);
+            this.Controls.Add(this.Btn_refrescar);
             this.Controls.Add(this.Lbl_Titulo);
             this.Controls.Add(this.Txt_Titulo);
             this.Controls.Add(this.Btn_ruta_reporte);
@@ -219,5 +234,6 @@ namespace Capa_Vista_Reporteador
         private System.Windows.Forms.Button Btn_ruta_reporte;
         private System.Windows.Forms.TextBox Txt_Titulo;
         private System.Windows.Forms.Label Lbl_Titulo;
+        private System.Windows.Forms.Button Btn_refrescar;
     }
 }
