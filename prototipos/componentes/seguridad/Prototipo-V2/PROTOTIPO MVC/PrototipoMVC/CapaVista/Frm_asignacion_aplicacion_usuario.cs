@@ -437,18 +437,22 @@ namespace Capa_Vista_Seguridad
         {
             try
             {
-                int idUsuario = Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario;
+                // Obtener ID del usuario conectado
+                int iIdUsuario = Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario;
 
-                Cls_Permiso_Usuario permisoUsuario = new Cls_Permiso_Usuario();
-                Cls_Asignacion_Permiso_PerfilesDAO perfilDAO = new Cls_Asignacion_Permiso_PerfilesDAO();
+                // Instancias de clases del modelo
+                Cls_Permiso_Usuario clsPermisoUsuario = new Cls_Permiso_Usuario();
+                Cls_Asignacion_Permiso_PerfilesDAO clsAsignacionPermisoPerfilDAO = new Cls_Asignacion_Permiso_PerfilesDAO();
 
-                int IidAplicacion = permisoUsuario.ObtenerIdAplicacionPorNombre("Asig Aplicacion Usuario");
-                int IidModulo = permisoUsuario.ObtenerIdModuloPorNombre("Seguridad");
+                // Obtener IDs según nombres
+                int iIdAplicacion = clsPermisoUsuario.ObtenerIdAplicacionPorNombre("Asig aplicacion Perfil");
+                int iIdModulo = clsPermisoUsuario.ObtenerIdModuloPorNombre("Seguridad");
 
+                // Inicializar permisos en false
                 bool bIngresar = false, bConsultar = false, bModificar = false, bEliminar = false, bImprimir = false;
 
-                //  Revisar permisos or sUsuario + aplicación + módulo
-                var vPermisosUsuario = permisoUsuario.ConsultarPermisos(idUsuario, IidAplicacion, IidModulo);
+                // 1️⃣ Consultar permisos específicos del usuario
+                var vPermisosUsuario = clsPermisoUsuario.ConsultarPermisos(iIdUsuario, iIdAplicacion, iIdModulo);
 
                 if (vPermisosUsuario.HasValue)
                 {
@@ -459,52 +463,50 @@ namespace Capa_Vista_Seguridad
                     bImprimir = vPermisosUsuario.Value.imprimir;
                 }
 
-                //  revisar ese permiso por perfil + aplicación
+                // 2️⃣ Si algún permiso no está activo, verificar permisos por perfil
                 if (!bIngresar || !bConsultar || !bModificar || !bEliminar || !bImprimir)
                 {
-                    DataTable dtPerfiles = perfilDAO.datObtenerPerfiles();
+                    DataTable dtPerfiles = clsAsignacionPermisoPerfilDAO.datObtenerPerfiles();
 
-                    foreach (DataRow perfilRow in dtPerfiles.Rows)
+                    foreach (DataRow rowPerfil in dtPerfiles.Rows)
                     {
-                        int IidPerfil = Convert.ToInt32(perfilRow["Pk_Id_Perfil"]);
-                        DataTable permisosPerfil = perfilDAO.ObtenerPermisosPerfilAplicacion(IidPerfil, IidAplicacion);
+                        int iIdPerfil = Convert.ToInt32(rowPerfil["Pk_Id_Perfil"]);
+                        DataTable dtPermisosPerfil = clsAsignacionPermisoPerfilDAO.ObtenerPermisosPerfilAplicacion(iIdPerfil, iIdAplicacion);
 
-                        if (permisosPerfil.Rows.Count > 0)
+                        if (dtPermisosPerfil.Rows.Count > 0)
                         {
-                            DataRow row = permisosPerfil.Rows[0];
+                            DataRow rowPermiso = dtPermisosPerfil.Rows[0];
 
-                            // Revisar permisos por separado
-                            if (!bIngresar && Convert.ToBoolean(row["ingresar"]))
+                            // Actualizar solo los permisos que estén en false
+                            if (!bIngresar && Convert.ToBoolean(rowPermiso["bIngresar"]))
                                 bIngresar = true;
 
-                            if (!bConsultar && Convert.ToBoolean(row["consultar"]))
+                            if (!bConsultar && Convert.ToBoolean(rowPermiso["bConsultar"]))
                                 bConsultar = true;
 
-                            if (!bModificar && Convert.ToBoolean(row["modificar"]))
+                            if (!bModificar && Convert.ToBoolean(rowPermiso["bModificar"]))
                                 bModificar = true;
 
-                            if (!bEliminar && Convert.ToBoolean(row["eliminar"]))
+                            if (!bEliminar && Convert.ToBoolean(rowPermiso["bEliminar"]))
                                 bEliminar = true;
 
-                            if (!bImprimir && Convert.ToBoolean(row["imprimir"]))
+                            if (!bImprimir && Convert.ToBoolean(rowPermiso["bImprimir"]))
                                 bImprimir = true;
                         }
                     }
                 }
 
-                //   Aplicar permisos a botones
-                Btn_agregar.Enabled = bIngresar || bModificar;
+                // 3️⃣ Aplicar permisos a botones del formulario
+                Btn_agregar.Enabled = bIngresar;
                 Btn_Buscar.Enabled = bConsultar;
-                Btn_finalizar.Enabled = bModificar;
                 Btn_quitar.Enabled = bEliminar || bModificar;
+                Btn_finalizar.Enabled = bModificar || bIngresar;
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error al aplicar permisos: " + ex.Message);
             }
         }
-
-
 
 
 
