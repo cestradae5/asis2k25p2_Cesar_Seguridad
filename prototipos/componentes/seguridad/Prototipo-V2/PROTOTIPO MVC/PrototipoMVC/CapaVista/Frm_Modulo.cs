@@ -86,7 +86,8 @@ namespace Capa_Vista_Seguridad
             {
                 MessageBox.Show("Guardado correctamente!");
                 fun_CargarComboBox(); // Refresca combo
-                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, "Guardar módulo", true); // Registra en bitácora
+                //Registrar en bitacora   Aron Esquit 0901-22-13036
+                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, $"Guardó el módulo: {Txt_nombre.Text}", true);
                 fun_LimpiarCampos();
                 Txt_id.Enabled = true;
             }
@@ -136,7 +137,8 @@ namespace Capa_Vista_Seguridad
             {
                 MessageBox.Show("Módulo eliminado correctamente.");
                 fun_CargarComboBox();
-                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, "Eliminar módulo", true); // Bitácora
+                //Registrar en bitacora   Aron Esquit 0901-22-13036
+                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, $"Eliminó el módulo: {Txt_nombre.Text}", true);
                 fun_LimpiarCampos();
                 Txt_id.Enabled = true;
             }
