@@ -43,7 +43,86 @@ namespace Capa_Vista_Seguridad
             fun_CargarEmpleados();
             fun_ConfigurarComboBoxEmpleados();
             fun_ConfiguracionInicial();
+
+
+            // --- Eventos de validación ---
+            Txt_nombre_empleado.KeyPress += Txt_NombreOApellido_KeyPress;
+            Txt_apellido_empleado.KeyPress += Txt_NombreOApellido_KeyPress;
+            Txt_dpi_empleados.KeyPress += Txt_Dpi_KeyPress;
+            Txt_nit_empleados.KeyPress += Txt_Nit_KeyPress;
+            Txt_telefono_empleado.KeyPress += Txt_Telefono_KeyPress;
+            Txt_correo_empleado.KeyPress += Txt_Correo_KeyPress;
         }
+
+        // ------------------ VALIDACIONES DE ENTRADA ------------------
+        // Ernesto David Samayoa Jocol - 0901-22-3415
+
+        // Solo letras y espacios
+        private void Txt_NombreOApellido_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!(char.IsLetter(e.KeyChar) || char.IsControl(e.KeyChar) || e.KeyChar == ' '))
+            {
+                e.Handled = true; // Bloquea el carácter
+            }
+        }
+
+        // Solo 13 dígitos para DPI
+        private void Txt_Dpi_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+
+            // Limita a 13 dígitos
+            if (char.IsDigit(e.KeyChar) && ((TextBox)sender).Text.Length >= 13)
+            {
+                e.Handled = true;
+            }
+        }
+
+        // Solo 9 dígitos para NIT
+        private void Txt_Nit_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+
+            // Limita a 9 dígitos
+            if (char.IsDigit(e.KeyChar) && ((TextBox)sender).Text.Length >= 9)
+            {
+                e.Handled = true;
+            }
+        }
+
+        // Solo 8 dígitos y guiones para teléfono
+        private void Txt_Telefono_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!(char.IsDigit(e.KeyChar) || char.IsControl(e.KeyChar) || e.KeyChar == '-'))
+            {
+                e.Handled = true;
+            }
+
+            // Limita a 8 dígitos (sin contar guiones)
+            string textoSinGuiones = ((TextBox)sender).Text.Replace("-", "");
+            if (char.IsDigit(e.KeyChar) && textoSinGuiones.Length >= 8)
+            {
+                e.Handled = true;
+            }
+        }
+
+        // Solo letras minúsculas, números, @ y . para correo
+        private void Txt_Correo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!(char.IsLower(e.KeyChar) || char.IsDigit(e.KeyChar) ||
+                  e.KeyChar == '@' || e.KeyChar == '.' || char.IsControl(e.KeyChar)))
+            {
+                e.Handled = true;
+            }
+        }
+
+
 
         private void fun_ConfiguracionInicial()
         {
@@ -179,17 +258,27 @@ namespace Capa_Vista_Seguridad
             fun_ConfiguracionInicial();
         }
 
-        //Ernesto David Samayoa Jocol 0901-22-3415 fecha:12/10/2025 
+        // Ernesto David Samayoa Jocol - 0901-22-3415 - Fecha: 12/10/2025
         private void Btn_eliminar_empleado_Click(object sender, EventArgs e)
         {
-            // Validar que el campo no esté vacío ni sea inválido
+            // 1️ Validar que el campo no esté vacío ni sea inválido
             if (string.IsNullOrWhiteSpace(Txt_id_empleado.Text) || !int.TryParse(Txt_id_empleado.Text, out int id))
             {
                 MessageBox.Show("Por favor, ingrese un ID válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            // Confirmar si realmente desea eliminar
+            // 2️ Verificar si el empleado tiene usuario asociado (ANTES de eliminar)
+            if (controlador.fun_EmpleadoTieneUsuario(id))
+            {
+                MessageBox.Show("No se puede eliminar este empleado porque tiene un usuario asociado. " +
+                                "Elimine primero el usuario.",
+                                "Restricción de integridad",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // 3️ Confirmar si realmente desea eliminar
             DialogResult respuesta = MessageBox.Show(
                 "¿Está seguro de que desea eliminar este empleado?",
                 "Confirmar eliminación",
@@ -199,16 +288,22 @@ namespace Capa_Vista_Seguridad
 
             if (respuesta == DialogResult.Yes)
             {
-                // Ejecutar la eliminación
-                bool exito = controlador.fun_BorrarEmpleado(id);
+                // 4️ Ejecutar la eliminación
+                bool bexito = controlador.fun_BorrarEmpleado(id);
 
-                if (exito)
+                if (bexito)
                 {
                     MessageBox.Show("Empleado eliminado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    //Registrar en bitacora   Aron Esquit 0901-22-13036
-                    ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, $"Eliminó empleado/a: {Txt_nombre_empleado.Text}", true);
 
-                    // Refrescar datos
+                    // 5️⃣ Registrar en bitácora (Aron Esquit 0901-22-13036)
+                    ctrlBitacora.RegistrarAccion(
+                        Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario,
+                        1,
+                        $"Eliminó empleado/a: {Txt_nombre_empleado.Text}",
+                        true
+                    );
+
+                    // 6️⃣ Refrescar datos
                     fun_CargarEmpleados();
                     fun_ConfigurarComboBoxEmpleados();
                     fun_LimpiarCampos();
@@ -224,6 +319,8 @@ namespace Capa_Vista_Seguridad
                 MessageBox.Show("Eliminación cancelada por el usuario.", "Cancelado", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
+
+
 
         private void Btn_cancelar_Click(object sender, EventArgs e)
         {
@@ -320,7 +417,7 @@ namespace Capa_Vista_Seguridad
             fun_ConfiguracionInicial();
         }
 
-        private bool fun_ValidarCampos()
+        /*private bool fun_ValidarCampos()
         {
             if (string.IsNullOrWhiteSpace(Txt_id_empleado.Text) ||
                 string.IsNullOrWhiteSpace(Txt_nombre_empleado.Text) ||
@@ -339,7 +436,62 @@ namespace Capa_Vista_Seguridad
             }
 
             return true;
+        }*/
+
+        private bool fun_ValidarCampos()
+        {
+            // Validar campos vacíos
+            if (string.IsNullOrWhiteSpace(Txt_id_empleado.Text) ||
+                string.IsNullOrWhiteSpace(Txt_nombre_empleado.Text) ||
+                string.IsNullOrWhiteSpace(Txt_apellido_empleado.Text) ||
+                string.IsNullOrWhiteSpace(Txt_dpi_empleados.Text) ||
+                string.IsNullOrWhiteSpace(Txt_nit_empleados.Text) ||
+                string.IsNullOrWhiteSpace(Txt_correo_empleado.Text) ||
+                string.IsNullOrWhiteSpace(Txt_telefono_empleado.Text) ||
+                string.IsNullOrWhiteSpace(Txt_fechaNac_empleado.Text) ||
+                string.IsNullOrWhiteSpace(Txt_fechaContra_empleado.Text) ||
+                (!Rdb_masculino_empleado.Checked && !Rdb_femenino_empleado.Checked))
+            {
+                MessageBox.Show("Debe llenar todos los campos antes de guardar.",
+                    "Campos requeridos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            // Validaciones específicas
+            if (!System.Text.RegularExpressions.Regex.IsMatch(Txt_nombre_empleado.Text, @"^[a-zA-Z\s]+$") ||
+                !System.Text.RegularExpressions.Regex.IsMatch(Txt_apellido_empleado.Text, @"^[a-zA-Z\s]+$"))
+            {
+                MessageBox.Show("El nombre y apellido solo pueden contener letras y espacios.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            if (!System.Text.RegularExpressions.Regex.IsMatch(Txt_dpi_empleados.Text, @"^\d{13}$"))
+            {
+                MessageBox.Show("El DPI debe contener exactamente 13 dígitos numéricos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            if (!System.Text.RegularExpressions.Regex.IsMatch(Txt_nit_empleados.Text, @"^\d{9}$"))
+            {
+                MessageBox.Show("El NIT debe contener exactamente 9 dígitos numéricos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            if (!System.Text.RegularExpressions.Regex.IsMatch(Txt_telefono_empleado.Text, @"^[0-9\-]{8,10}$"))
+            {
+                MessageBox.Show("El teléfono debe contener 8 dígitos y puede incluir guiones.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            if (!System.Text.RegularExpressions.Regex.IsMatch(Txt_correo_empleado.Text, @"^[a-z0-9@.]+$"))
+            {
+                MessageBox.Show("El correo solo puede contener letras minúsculas, números, '@' y '.'.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            return true;
         }
+
 
         private void fun_LimpiarCampos()
         {
