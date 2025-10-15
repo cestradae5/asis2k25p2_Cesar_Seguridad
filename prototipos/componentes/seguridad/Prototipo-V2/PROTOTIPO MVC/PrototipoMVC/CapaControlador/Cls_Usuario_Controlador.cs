@@ -1,5 +1,4 @@
-﻿// Pablo Quiroa 0901-22-2929
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Capa_Modelo_Seguridad;
@@ -8,34 +7,23 @@ namespace Capa_Controlador_Seguridad
 {
     public class Cls_Usuario_Controlador
     {
-        
-        // VARIABLES GLOBALES
-       
         private Cls_UsuarioDAO gDaoUsuario = new Cls_UsuarioDAO();
         private Cls_BitacoraControlador gCtrlBitacora = new Cls_BitacoraControlador();
 
-      
-        // OBTENER TODOS LOS USUARIOS
-        
         public List<Cls_Usuario> ObtenerTodosLosUsuarios()
         {
             return gDaoUsuario.fun_ObtenerUsuarios();
         }
 
-        
-        // INSERTAR NUEVO USUARIO
-       
         public (bool bExito, string sMensaje) InsertarUsuario(
             int iFkIdEmpleado,
             string sNombreUsuario,
             string sContrasena,
             string sConfirmarContrasena)
         {
-            // Validaciones básicas
             var vValidar = ValidarCamposUsuario(0, iFkIdEmpleado, sNombreUsuario, sContrasena, sConfirmarContrasena);
             if (!vValidar.bExito) return vValidar;
 
-            // Crear objeto usuario
             Cls_Usuario gNuevoUsuario = new Cls_Usuario
             {
                 iFkIdEmpleado = iFkIdEmpleado,
@@ -52,10 +40,9 @@ namespace Capa_Controlador_Seguridad
             {
                 gDaoUsuario.InsertarUsuario(gNuevoUsuario);
 
-                // Registro en bitácora
                 gCtrlBitacora.RegistrarAccion(
-                    Cls_Usuario_Conectado.iIdUsuario,  // Usuario logueado
-                    1,                                // Código de acción: insertar
+                    Cls_Usuario_Conectado.iIdUsuario,
+                    1,
                     $"Insertó un nuevo usuario: {sNombreUsuario}",
                     true
                 );
@@ -68,9 +55,6 @@ namespace Capa_Controlador_Seguridad
             }
         }
 
-        
-        // ACTUALIZAR USUARIO EXISTENTE
-        
         public (bool bExito, string sMensaje) ActualizarUsuario(
             int iIdUsuario,
             int iFkIdEmpleado,
@@ -78,7 +62,6 @@ namespace Capa_Controlador_Seguridad
             string sContrasena,
             string sConfirmarContrasena)
         {
-            // Validaciones
             var vValidar = ValidarCamposUsuario(iIdUsuario, iFkIdEmpleado, sNombreUsuario, sContrasena, sConfirmarContrasena);
             if (!vValidar.bExito) return vValidar;
 
@@ -99,10 +82,9 @@ namespace Capa_Controlador_Seguridad
             {
                 gDaoUsuario.ActualizarUsuario(gUsuarioActualizado);
 
-                // Registro en bitácora
                 gCtrlBitacora.RegistrarAccion(
                     Cls_Usuario_Conectado.iIdUsuario,
-                    2, // Código de acción: actualizar
+                    2,
                     $"Actualizó usuario: {sNombreUsuario}",
                     true
                 );
@@ -115,9 +97,6 @@ namespace Capa_Controlador_Seguridad
             }
         }
 
-     
-        // BORRAR USUARIO
-        
         public bool BorrarUsuario(int iIdUsuario)
         {
             if (iIdUsuario <= 0) return false;
@@ -127,10 +106,9 @@ namespace Capa_Controlador_Seguridad
 
                 if (bExito)
                 {
-                    // Registro en bitácora
                     gCtrlBitacora.RegistrarAccion(
                         Cls_Usuario_Conectado.iIdUsuario,
-                        3, // Código de acción: eliminar
+                        3,
                         $"Eliminó usuario con ID: {iIdUsuario}",
                         true
                     );
@@ -144,18 +122,12 @@ namespace Capa_Controlador_Seguridad
             }
         }
 
-        
-        // BUSCAR USUARIO POR ID
-        
         public Cls_Usuario BuscarUsuarioPorId(int iIdUsuario)
         {
             if (iIdUsuario <= 0) return null;
             return gDaoUsuario.Query(iIdUsuario);
         }
 
-       
-        // VALIDACIONES
-        
         private (bool bExito, string sMensaje) ValidarCamposUsuario(
             int iIdUsuario,
             int iFkIdEmpleado,
@@ -185,14 +157,16 @@ namespace Capa_Controlador_Seguridad
             return (true, string.Empty);
         }
 
-      
-        // OBTENER ID PERFIL DE USUARIO
-    
         public int ObtenerIdPerfilDeUsuario(int iIdUsuario)
         {
             return gDaoUsuario.ObtenerIdPerfilDeUsuario(iIdUsuario);
         }
+
+        // NUEVO MÉTODO PARA VALIDACIÓN DESDE LA VISTA
+        public bool PuedeGuardarUsuario(int iFkIdEmpleado, string sNombreUsuario, string sContrasena, string sConfirmarContrasena)
+        {
+            var resultado = ValidarCamposUsuario(0, iFkIdEmpleado, sNombreUsuario, sContrasena, sConfirmarContrasena);
+            return resultado.bExito;
+        }
     }
 }
-
-// Pablo Quiroa 0901-22-2929 12/10/2025

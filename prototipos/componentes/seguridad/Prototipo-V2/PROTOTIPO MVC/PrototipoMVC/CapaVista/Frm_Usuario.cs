@@ -19,7 +19,6 @@ namespace Capa_Vista_Seguridad
         private int idUsuarioSeleccionado = 0;
 
         // CONSTRUCTOR
-        
         public Frm_Usuario()
         {
             InitializeComponent();
@@ -65,12 +64,6 @@ namespace Capa_Vista_Seguridad
         // BOTONES
         private void Btn_Guardar_Click(object sender, EventArgs e)
         {
-            if (Cbo_Empleado.SelectedIndex < 0)
-            {
-                MessageBox.Show("Seleccione un empleado primero.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
             int iFkIdEmpleado = gLstEmpleadosIds[Cbo_Empleado.SelectedIndex];
 
             var gResultado = gClsUsuarioControlador.InsertarUsuario(
@@ -150,7 +143,7 @@ namespace Capa_Vista_Seguridad
         private void Txt_ConfirmarContraseña_TextChanged(object sender, EventArgs e) => ValidarCampos();
         private void Cbo_Empleado_SelectedIndexChanged(object sender, EventArgs e) => ValidarCampos();
 
-        // VALIDACIÓN VISUAL
+        // VALIDACIÓN VISUAL ACTUALIZADA
         private void ValidarCampos()
         {
             bool bCamposLlenos =
@@ -159,16 +152,28 @@ namespace Capa_Vista_Seguridad
                 !string.IsNullOrWhiteSpace(Txt_Contraseña.Text) &&
                 !string.IsNullOrWhiteSpace(Txt_ConfirmarContraseña.Text);
 
-            bool bContrasenasCoinciden = Txt_Contraseña.Text == Txt_ConfirmarContraseña.Text;
+            bool bPuedeGuardar = false;
 
-            Btn_Guardar.Enabled = bCamposLlenos && bContrasenasCoinciden;
+            if (bCamposLlenos)
+            {
+                int iFkIdEmpleado = gLstEmpleadosIds[Cbo_Empleado.SelectedIndex];
+                bPuedeGuardar = gClsUsuarioControlador.PuedeGuardarUsuario(
+                    iFkIdEmpleado,
+                    Txt_Nombre.Text,
+                    Txt_Contraseña.Text,
+                    Txt_ConfirmarContraseña.Text
+                );
+            }
+
+            Btn_Guardar.Enabled = bPuedeGuardar;
 
             Txt_ConfirmarContraseña.BackColor =
-                (!bContrasenasCoinciden && Txt_ConfirmarContraseña.Text.Length > 0)
+                (!bPuedeGuardar && Txt_ConfirmarContraseña.Text.Length > 0)
                 ? System.Drawing.Color.LightCoral
                 : System.Drawing.Color.White;
         }
-        //checkbox para confirmar la contraseña
+
+        // CHECKBOX PARA CONFIRMAR LA CONTRASEÑA
         private void Chk_ConfirmarContraseña_CheckedChanged(object sender, EventArgs e)
         {
             bool bMostrar = Chk_ConfirmarContraseña.Checked;
@@ -178,4 +183,4 @@ namespace Capa_Vista_Seguridad
         }
     }
 }
-//Pablo Quiroa 0901-22-2929 12/10/2025
+// Pablo Quiroa 0901-22-2929 12/10/2025 
