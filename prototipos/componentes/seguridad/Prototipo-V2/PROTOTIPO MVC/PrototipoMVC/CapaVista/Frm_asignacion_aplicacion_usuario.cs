@@ -13,9 +13,8 @@ namespace Capa_Vista_Seguridad
         Cls_SentenciaAsignacionUsuarioAplicacion modelo = new Cls_SentenciaAsignacionUsuarioAplicacion();
         Cls_AplicacionControlador appControlador = new Cls_AplicacionControlador();
         Cls_ControladorAsignacionUsuarioAplicacion controlador = new Cls_ControladorAsignacionUsuarioAplicacion();
-        Cls_Sentencias_Bitacora bitacora = new Cls_Sentencias_Bitacora();
-
-       
+        Cls_Registrar_Permisos_Bitacora registrarBitacora = new Cls_Registrar_Permisos_Bitacora();  //Aron Esquit  0901-22-13036
+        Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador(); // Bitácora Aron Esquit 0901-22-13036
 
         public Frm_asignacion_aplicacion_usuario()
         {
@@ -215,8 +214,6 @@ namespace Capa_Vista_Seguridad
             if (!bExiste)
             {
                 Dgv_Permisos.Rows.Add(sUsuario, sAplicacion, false, false, false, false, false, iIdUsuario, iIdModulo, iIdAplicacion);
-                //Bitacora Aron Ricardo Esquit Silva 0901-22-13036
-                bitacora.InsertarBitacora(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, iIdAplicacion, "Asignación Aplicación a Usuario - Agregar", true);
             }
             else
             {
@@ -258,13 +255,36 @@ namespace Capa_Vista_Seguridad
                 bool bEliminar = Convert.ToBoolean(row.Cells["Eliminar"].Value ?? false);
                 bool bImprimir = Convert.ToBoolean(row.Cells["Imprimir"].Value ?? false);
 
+                // Clase para bitacora
+                // Crear objeto de permisos actuales
+                Cls_Permisos gPermisosActuales = new Cls_Permisos
+                {
+                    bIngresar = bIngresar,
+                    bConsultar = bConsultar,
+                    bModificar = bModificar,
+                    bEliminar = bEliminar,
+                    bImprimir = bImprimir
+                };
+
+                // Registrar cambios en bitácora comparando con los permisos anteriores
+                registrarBitacora.fun_CompararYRegistrar(
+                    Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario,
+                    iIdUsuario,
+                    iIdModulo,
+                    iIdAplicacion,
+                    row.Cells["Usuario"].Value.ToString(),
+                    row.Cells["Aplicacion"].Value.ToString(),
+                    gPermisosActuales
+                );
+
+
+
                 if (modelo.ExistePermiso(iIdUsuario, iIdModulo, iIdAplicacion))
                 {
                     modelo.ActualizarPermisoUsuarioAplicacion(iIdUsuario, iIdModulo, iIdAplicacion,
                                                               bIngresar, bConsultar, bModificar,
                                                               bEliminar, bImprimir);
                     iActualizados++;
-                    bitacora.InsertarBitacora(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, iIdAplicacion, "Asignación Aplicación a Usuario - Actualizar", true);
                 }
                 else
                 {
@@ -272,7 +292,6 @@ namespace Capa_Vista_Seguridad
                                                             bIngresar, bConsultar, bModificar,
                                                             bEliminar, bImprimir);
                     iInsertados++;
-                    bitacora.InsertarBitacora(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, iIdAplicacion, "Asignación Aplicación a Usuario - Insertar", true);
                 }
             }
 
@@ -285,7 +304,6 @@ namespace Capa_Vista_Seguridad
         {
             if (Dgv_Permisos.CurrentRow != null && !Dgv_Permisos.CurrentRow.IsNewRow)
             {
-                // Mostrar mensaje de confirmación
                 DialogResult resultado = MessageBox.Show(
                     "¿Está seguro de quitar el registro seleccionado?",
                     "Confirmar eliminación",
@@ -293,30 +311,28 @@ namespace Capa_Vista_Seguridad
                     MessageBoxIcon.Question
                 );
 
-                // Si el sUsuario confirma, eliminar el registro
                 if (resultado == DialogResult.Yes)
                 {
+                    // Capturar datos antes de eliminar la fila
                     int idAplicacion = Convert.ToInt32(Dgv_Permisos.CurrentRow.Cells["IdAplicacion"].Value);
+                    int idUsuario = Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario;
+                    string sUsuario = Dgv_Permisos.CurrentRow.Cells["Usuario"].Value.ToString();
+                    string sAplicacion = Dgv_Permisos.CurrentRow.Cells["Aplicacion"].Value.ToString();
 
-                    // Registrar en bitácora
-                    bitacora.InsertarBitacora(
-                        Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario,
-                        idAplicacion,
-                        "Asignación Aplicación a Usuario - Quitar",
-                        true
-                    );
-
-                    // Eliminar la fila del DataGridView
+                    // Eliminar la fila
                     Dgv_Permisos.Rows.Remove(Dgv_Permisos.CurrentRow);
 
-                    MessageBox.Show("Se ha quitadocorrectamente.",
+                    // Registrar en bitácora
+                    ctrlBitacora.RegistrarAccion(idUsuario, idAplicacion,
+                        $"Al usuario '{sUsuario}' se le quitarán todos los permisos en la aplicación '{sAplicacion}'", true);
+
+                    MessageBox.Show("Se ha quitado correctamente.",
                                     "Información",
                                     MessageBoxButtons.OK,
                                     MessageBoxIcon.Information);
                 }
                 else
                 {
-                    // Si el sUsuario presiona "No"
                     MessageBox.Show("Operación cancelada.",
                                     "Información",
                                     MessageBoxButtons.OK,

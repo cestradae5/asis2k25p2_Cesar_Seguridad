@@ -11,7 +11,7 @@ namespace Capa_Modelo_Seguridad
         // Nombre del usuario logueado
         public static string sNombreUsuario { get; set; }
 
-        // Estado de login: true = conectado, false = desconectado
+        // Estado de login true = conectado, false = desconectado
         public static bool bLoginEstado { get; set; }
 
         //obtener idaplicacion -- Brandon Alexander Hernandez Salguero

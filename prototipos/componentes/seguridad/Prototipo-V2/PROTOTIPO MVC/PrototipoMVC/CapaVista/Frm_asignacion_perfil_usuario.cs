@@ -110,8 +110,6 @@ namespace Capa_Vista_Seguridad
             asignacionesPendientes.Add(new Cls_asignacion_perfil_usuario(iIdUsuario, iIdPerfil));
             fun_RefrescarAsignacionesPendientes();
 
-            // Registrar en Bitácora -Arón Ricardo Esquit Silva  0901-22-13036
-            ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, "Asignación Perfil a Usuario - Agregar", true);
         }
 
         private void fun_RefrescarAsignacionesPendientes()
@@ -139,6 +137,22 @@ namespace Capa_Vista_Seguridad
                 if (ok)
                 {
                     iGuardados++;
+                    // Obtener nombres desde los DataTables
+                    string nombreUsuario = dtUsuarios.Select($"Pk_Id_Usuario = {asignacion.Fk_Id_Usuario}")
+                        .FirstOrDefault()?["Cmp_Nombre_Usuario"]?.ToString() ?? asignacion.Fk_Id_Usuario.ToString();
+
+                    string nombrePerfil = dtPerfiles.Select($"Pk_Id_Perfil = {asignacion.Fk_Id_Perfil}")
+                        .FirstOrDefault()?["Cmp_Puesto_Perfil"]?.ToString() ?? asignacion.Fk_Id_Perfil.ToString();
+
+                    // Registrar en bitácora
+                    ctrlBitacora.RegistrarAccion(
+                        Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario,
+                        1,
+                        $"Se asignó el perfil '{nombrePerfil}' al usuario '{nombreUsuario}'",
+                        true
+                    );
+
+
                 }
                 else
                 {
@@ -150,9 +164,6 @@ namespace Capa_Vista_Seguridad
             MessageBox.Show($"Se guardaron {iGuardados} asignaciones correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
             asignacionesPendientes.Clear();
             fun_RefrescarAsignacionesPendientes();
-
-            // Registrar en Bitácora (si lo usas)
-            ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, "Asignación Perfil a Usuario - Guardar", true);
         }
 
         private void Btn_eliminar_asignacion_Click_1(object sender, EventArgs e)
@@ -182,7 +193,7 @@ namespace Capa_Vista_Seguridad
                     fun_RefrescarAsignacionesPendientes();
 
                     // Registrar en Bitácora - Arón Ricardo Esquit Silva  0901-22-13036
-                    ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, "Asignación Perfil a Usuario - Eliminar", true);
+                    ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, $"Se eliminó la asignación del perfil '{snombrePerfil}' para el usuario '{snombreUsuario}'", true);
                 }
             }
         }

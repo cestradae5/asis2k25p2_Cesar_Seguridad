@@ -16,7 +16,8 @@ namespace Capa_Vista_Seguridad
     {
         
         Cls_Asignacion_Permiso_PerfilControlador controlador = new Cls_Asignacion_Permiso_PerfilControlador();
-        Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador(); // Bitacora
+        Cls_Registrar_Permisos_Bitacora registrarBitacora = new Cls_Registrar_Permisos_Bitacora();  //Aron Esquit  0901-22-13036
+        Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador();  //Bitacora  Aron Esquit 0901-22-13036
 
         public Frm_Permisos_Perfiles()
         {
@@ -141,7 +142,6 @@ namespace Capa_Vista_Seguridad
                     iIdAplicacion
                 );
 
-                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, iIdAplicacion, "Asignación Permisos Perfil - Agregar", true);
             }
             else
             {
@@ -173,18 +173,46 @@ namespace Capa_Vista_Seguridad
                 bool bEliminar = Convert.ToBoolean(row.Cells["Eliminar"].Value ?? false);
                 bool bImprimir = Convert.ToBoolean(row.Cells["Imprimir"].Value ?? false);
 
+                //Clase de bitacira para los permisos Aron Ricardo Esquit Silva   0901-22-13036
+                //Consultar permisos anteriores antes de modificar
+                Cls_Permisos gPermisosAnteriores = new Cls_Consulta_Asignaciones_Bitacora()
+                    .fun_ConsultarPermisosPerfil(iPerfil, iModulo, iAplicacion);
+
+                // Modificar permisos en la base de datos
                 if (controlador.bExistePermisoPerfil(iPerfil, iModulo, iAplicacion))
                 {
                     controlador.iActualizarPermisoPerfilAplicacion(iPerfil, iModulo, iAplicacion, bIngresar, bConsultar, bModificar, bEliminar, bImprimir);
                     iActualizados++;
-                    ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, iAplicacion, "Asignación aplicación a perfil - Actualizar", true);
                 }
                 else
                 {
                     controlador.iInsertarPermisoPerfilAplicacion(iPerfil, iModulo, iAplicacion, bIngresar, bConsultar, bModificar, bEliminar, bImprimir);
                     iInsertados++;
-                    ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, iAplicacion, "Asignación aplicación a perfil - Insertar", true);
                 }
+
+                // Crear objeto con permisos actuales
+                Cls_Permisos gPermisosActuales = new Cls_Permisos
+                {
+                    bIngresar = bIngresar,
+                    bConsultar = bConsultar,
+                    bModificar = bModificar,
+                    bEliminar = bEliminar,
+                    bImprimir = bImprimir
+                };
+
+                // Registrar en bitácora comparando anterior vs actual
+                registrarBitacora.fun_CompararYRegistrarPerfilManual(
+                    Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario,
+                    iAplicacion,
+                    row.Cells["Perfil"].Value.ToString(),
+                    row.Cells["Aplicacion"].Value.ToString(),
+                    gPermisosAnteriores,
+                    gPermisosActuales
+                );
+
+
+
+
             }
             MessageBox.Show($"Se insertaron {iInsertados} registros y se actualizaron {iActualizados} registros correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
             Dgv_Permisos.Rows.Clear();
@@ -194,9 +222,18 @@ namespace Capa_Vista_Seguridad
         {
             if (Dgv_Permisos.CurrentRow != null && !Dgv_Permisos.CurrentRow.IsNewRow)
             {
-                int iIdaplicacion = Convert.ToInt32(Dgv_Permisos.CurrentRow.Cells["IdAplicacion"].Value);
-                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, iIdaplicacion, "Asignación Perfil a Usuario - Quitar", true);
+                // Capturar datos antes de eliminar la fila
+                int idAplicacion = Convert.ToInt32(Dgv_Permisos.CurrentRow.Cells["IdAplicacion"].Value);
+                int idUsuario = Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario;
+                string sPerfil = Dgv_Permisos.CurrentRow.Cells["Perfil"].Value.ToString();
+                string sAplicacion = Dgv_Permisos.CurrentRow.Cells["Aplicacion"].Value.ToString();
+
+                // Eliminar la fila
                 Dgv_Permisos.Rows.Remove(Dgv_Permisos.CurrentRow);
+
+                // Registrar en bitácora
+                ctrlBitacora.RegistrarAccion(idUsuario, idAplicacion,
+                    $"Al perfil '{sPerfil}' se le quitarán todos los permisos en la aplicación '{sAplicacion}'", true);
             }
             else
             {
@@ -293,7 +330,6 @@ namespace Capa_Vista_Seguridad
                             row["iFk_id_aplicacion"]
                         );
                     }
-                    ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 0, "Permisos Perfil - Consulta", true);
                     MessageBox.Show($"Permisos cargados correctamente. Se encontraron {dtPermisos.Rows.Count} registros.", "Búsqueda exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else

@@ -50,6 +50,7 @@
     <Compile Include="Cls_AplicacionDAO.cs" />
     <Compile Include="Cls_Asignacion_Modulo_Aplicacion.cs" />
     <Compile Include="Cls_Asignacion_Modulo_AplicacionDAO.cs" />
+    <Compile Include="Cls_Consulta_Asignaciones_Bitacora.cs" />
     <Compile Include="Cls_Empleados.cs" />
     <Compile Include="Cls_EmpleadosDAO.cs" />
     <Compile Include="Cls_PerfilesDAO.cs" />

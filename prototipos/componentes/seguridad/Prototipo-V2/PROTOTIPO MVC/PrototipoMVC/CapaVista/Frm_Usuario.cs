@@ -12,7 +12,6 @@ namespace Capa_Vista_Seguridad
         // VARIABLES GLOBALES
         private Cls_Usuario_Controlador gClsUsuarioControlador = new Cls_Usuario_Controlador();
         private Cls_EmpleadoControlador gClsEmpleadoControlador = new Cls_EmpleadoControlador();
-        Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador();  //Bitacora  Aron Esquit 0901-22-13036
 
         private List<string> gLstEmpleadosDisplay = new List<string>();
         private List<int> gLstEmpleadosIds = new List<int>();
@@ -88,8 +87,6 @@ namespace Capa_Vista_Seguridad
 
             if (gResultado.bExito)
             {
-                //Registrar en bitacora   Aron Esquit 0901-22-13036
-                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, $"Guardó el usuario: {Txt_Nombre.Text}", true);
                 LimpiarCampos();
                 ConfiguracionInicial();
             }
