@@ -1,16 +1,10 @@
-﻿//Cesar Armando Estrtada Elias 0901-22-10153
+﻿//Cesar Armando Estrada Elias 0901-22-10153
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using Capa_Controlador_Seguridad;
-using Capa_Modelo_Seguridad;
 
 namespace Capa_Vista_Seguridad
 {
@@ -18,34 +12,44 @@ namespace Capa_Vista_Seguridad
     {
         Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador(); //Bitacora Aron Esquit  0901-22-13036
         private Cls_AplicacionControlador controlador = new Cls_AplicacionControlador();
-        private List<Cls_Aplicacion> listaAplicaciones = new List<Cls_Aplicacion>();
+        private List<dynamic> listaAplicaciones = new List<dynamic>();
 
-
-
-        
         public FrmAplicacion()
         {
             InitializeComponent();
+            CargarDatosIniciales();
+        }
 
+        private void CargarDatosIniciales()
+        {
             fun_CargarAplicaciones();
             fun_ConfigurarComboBox();
             fun_CargarComboModulos();
         }
-
 
         private void RecargarTodo()
         {
             fun_LimpiarCampos();
             Cbo_buscar.Items.Clear();
             Cbo_id_modulo.Items.Clear();
-            fun_CargarAplicaciones();
-            fun_ConfigurarComboBox();
-            fun_CargarComboModulos();
-            
+            CargarDatosIniciales();
         }
+
         private void fun_CargarAplicaciones()
         {
-            listaAplicaciones = controlador.ObtenerTodasLasAplicaciones();
+            var aplicaciones = controlador.ObtenerTodasLasAplicaciones();
+            listaAplicaciones.Clear();
+
+            foreach (var app in aplicaciones)
+            {
+                listaAplicaciones.Add(new
+                {
+                    iPkIdAplicacion = app.iPkIdAplicacion,
+                    sNombreAplicacion = app.sNombreAplicacion,
+                    sDescripcionAplicacion = app.sDescripcionAplicacion,
+                    bEstadoAplicacion = app.bEstadoAplicacion
+                });
+            }
         }
 
         private void fun_ConfigurarComboBox()
@@ -56,8 +60,14 @@ namespace Capa_Vista_Seguridad
 
             // Crear fuente de autocompletado
             AutoCompleteStringCollection autoComplete = new AutoCompleteStringCollection();
-            autoComplete.AddRange(listaAplicaciones.Select(a => a.iPkIdAplicacion.ToString()).ToArray());
-            autoComplete.AddRange(listaAplicaciones.Select(a => a.sNombreAplicacion).ToArray());
+
+            // CORRECCIÓN: Convertir explicitamente a array de strings
+            foreach (var app in listaAplicaciones)
+            {
+                autoComplete.Add(app.iPkIdAplicacion.ToString());
+                autoComplete.Add(app.sNombreAplicacion);
+            }
+
             Cbo_buscar.AutoCompleteCustomSource = autoComplete;
 
             // Configurar display
@@ -75,21 +85,7 @@ namespace Capa_Vista_Seguridad
             }
         }
 
-        //0901-21-1115 Marcos Andres Velasquez Alcánatara -- permisos script
-        //0901-22-9663 Brandon Alexander Hernandez Salguero --  asignacion Modulos y aplicaciones
-
-
-
-
-       
-
-
-
-
-
-
-
-        private void MostrarAplicacion(Cls_Aplicacion app)
+        private void MostrarAplicacion(dynamic app)
         {
             Txt_id_aplicacion.Text = app.iPkIdAplicacion.ToString();
             Txt_Nombre_aplicacion.Text = app.sNombreAplicacion;
@@ -108,7 +104,7 @@ namespace Capa_Vista_Seguridad
                 return;
             }
 
-            Cls_Aplicacion appEncontrada = null;
+            dynamic appEncontrada = null;
 
             // id-sNombre
             if (sBusqueda.Contains("-"))
@@ -116,20 +112,51 @@ namespace Capa_Vista_Seguridad
                 string[] partes = sBusqueda.Split('-');
                 if (int.TryParse(partes[0], out int idParte))
                 {
-                    appEncontrada = controlador.BuscarAplicacionPorId(idParte);
+                    var app = controlador.BuscarAplicacionPorId(idParte);
+                    if (app != null)
+                    {
+                        appEncontrada = new
+                        {
+                            iPkIdAplicacion = app.iPkIdAplicacion,
+                            sNombreAplicacion = app.sNombreAplicacion,
+                            sDescripcionAplicacion = app.sDescripcionAplicacion,
+                            bEstadoAplicacion = app.bEstadoAplicacion
+                        };
+                    }
                 }
             }
 
             // solo ID
-            if (appEncontrada == null && int.TryParse(sBusqueda, out int id))
+            int iId = 0;
+            if (appEncontrada == null && int.TryParse(sBusqueda, out int iID))
             {
-                appEncontrada = controlador.BuscarAplicacionPorId(id);
+                var app = controlador.BuscarAplicacionPorId(iId);
+                if (app != null)
+                {
+                    appEncontrada = new
+                    {
+                        iPkIdAplicacion = app.iPkIdAplicacion,
+                        sNombreAplicacion = app.sNombreAplicacion,
+                        sDescripcionAplicacion = app.sDescripcionAplicacion,
+                        bEstadoAplicacion = app.bEstadoAplicacion
+                    };
+                }
             }
 
             // solo Nombre
             if (appEncontrada == null)
             {
-                appEncontrada = controlador.BuscarAplicacionPorNombre(sBusqueda);
+                var app = controlador.BuscarAplicacionPorNombre(sBusqueda);
+                if (app != null)
+                {
+                    appEncontrada = new
+                    {
+                        iPkIdAplicacion = app.iPkIdAplicacion,
+                        sNombreAplicacion = app.sNombreAplicacion,
+                        sDescripcionAplicacion = app.sDescripcionAplicacion,
+                        bEstadoAplicacion = app.bEstadoAplicacion
+                    };
+                }
             }
 
             // Mostrar resultado y seleccionar módulo asignado
@@ -164,66 +191,9 @@ namespace Capa_Vista_Seguridad
             }
         }
 
-        private void Btn_eliminar_Click(object sender, EventArgs e)
-        {
-            int id;
-            if (!int.TryParse(Txt_id_aplicacion.Text, out id))
-            {
-                MessageBox.Show("Ingrese un ID válido para eliminar.");
-                return;
-            }
-
-            // 1. Verificar si la aplicación tiene relaciones (llaves foráneas)
-            if (controlador.TieneRelaciones(id))
-            {
-                // 1.1 Mostrar el mensaje de error solicitado
-                MessageBox.Show(
-                    "**Imposible Eliminar.** Esta aplicación se encuentra relacionada con uno o más módulos o permisos, lo que afectaría la integridad referencial del sistema. Por favor, inspeccione primero las relaciones (asignaciones) de la aplicación.",
-                    "Error de Integridad de Datos",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning
-                );
-
-                // Registrar el intento fallido en Bitácora
-                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, "Fallido Eliminacion: App con relaciones", false);
-
-                return; // Detiene la eliminación
-            }
-
-            // 2. Preguntar confirmación antes de eliminar (Buena práctica)
-            DialogResult confirmacion = MessageBox.Show(
-                $"¿Está seguro que desea eliminar la aplicación con ID: {id}? Esta acción es permanente.",
-                "Confirmar Eliminación",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question
-            );
-
-            if (confirmacion == DialogResult.Yes)
-            {
-                // 3. Proceder a eliminar
-                bool exito = controlador.BorrarAplicacion(id);
-
-                if (exito)
-                {
-                    MessageBox.Show(" Aplicación eliminada exitosamente.");
-                    //Registrar en bitacora   Aron Esquit 0901-22-13036
-                    ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, $"Eliminó la aplicación: {Txt_Nombre_aplicacion.Text}", true);
-                }
-                else
-                {
-                    MessageBox.Show("❌ Error al eliminar la aplicación. Puede que no exista o haya un problema de base de datos.");
-                    // Registrar en Bitácora de error
-                    ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, "Error en el intento de eliminar aplicación", false);
-                }
-
-                fun_LimpiarCampos();
-                RecargarTodo();
-            }
-        }
-
         private void Btn_modificar_Click(object sender, EventArgs e)
         {
-            //  Validar que el ID sea válido
+            // Validar que el ID sea válido
             if (!int.TryParse(Txt_id_aplicacion.Text, out int id))
             {
                 MessageBox.Show("Ingrese un ID válido para modificar.");
@@ -234,77 +204,24 @@ namespace Capa_Vista_Seguridad
             string descripcion = Txt_descripcion.Text.Trim();
             bool estado = Rdb_estado_activo.Checked;
 
-            //  Validar campos vacíos
-            if (string.IsNullOrWhiteSpace(nombre))
-            {
-                MessageBox.Show("Debe ingresar el nombre de la aplicación.");
-                Txt_Nombre_aplicacion.Focus();
-                return;
-            }
+            // Usar el método del controlador que incluye validaciones
+            var resultado = controlador.ActualizarAplicacion(id, nombre, descripcion, estado, null);
 
-            if (string.IsNullOrWhiteSpace(descripcion))
-            {
-                MessageBox.Show("Debe ingresar la descripción de la aplicación.");
-                Txt_descripcion.Focus();
-                return;
-            }
-
-            //  Validar longitud máxima de texto (ajusta si tu BD usa otros límites)
-            if (nombre.Length > 50)
-            {
-                MessageBox.Show("Cadena muy larga o se pasó del número de caracteres permitidos en el campo 'Nombre de aplicación' (máx. 50).");
-                Txt_Nombre_aplicacion.Focus();
-                return;
-            }
-
-            if (descripcion.Length > 255)
-            {
-                MessageBox.Show("Cadena muy larga o se pasó del número de caracteres permitidos en el campo 'Descripción' (máx. 255).");
-                Txt_descripcion.Focus();
-                return;
-            }
-
-            //  Validar que se haya seleccionado un módulo (opcional, según tu lógica)
-            if (Cbo_id_modulo.SelectedItem == null || string.IsNullOrWhiteSpace(Cbo_id_modulo.Text))
-            {
-                MessageBox.Show("Debe seleccionar un módulo en el ComboBox de módulos.");
-                return;
-            }
-
-            //  Confirmar que el ID exista antes de modificar
-            var appExistente = controlador.BuscarAplicacionPorId(id);
-            if (appExistente == null)
-            {
-                MessageBox.Show("No existe una aplicación con ese ID para modificar.");
-                return;
-            }
-
-            //  Ejecutar la modificación
-            bool exito = controlador.ActualizarAplicacion(id, nombre, descripcion, estado, null);
-
-            if (exito)
+            if (resultado.success)
             {
                 MessageBox.Show("Aplicación modificada correctamente.");
-
-                //Registrar en bitacora   Aron Esquit 0901-22-13036
-                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, $"Modificó la aplicación: {Txt_Nombre_aplicacion.Text}", true);
-
+                ctrlBitacora.RegistrarAccion(Cls_Usuario_Conectado.iIdUsuario, 1, $"Modificó la aplicación: {Txt_Nombre_aplicacion.Text}", true);
                 RecargarTodo();
             }
             else
             {
-                MessageBox.Show("Error al modificar la aplicación. Verifique los datos ingresados.");
+                MessageBox.Show("Error al modificar la aplicación: " + resultado.message);
             }
         }
 
-
         private void Btn_nuevo_Click(object sender, EventArgs e)
         {
-            Txt_id_aplicacion.Clear();
-            Txt_Nombre_aplicacion.Clear();
-            Txt_descripcion.Clear();
-            Rdb_estado_activo.Checked = true;
-            Rdb_inactivo.Checked = false;
+            fun_LimpiarCampos();
         }
 
         private void Btn_guardar_Click(object sender, EventArgs e)
@@ -320,64 +237,19 @@ namespace Capa_Vista_Seguridad
             string sDescripcion = Txt_descripcion.Text.Trim();
             bool bEstado = Rdb_estado_activo.Checked;
 
-            // Validar campos vacíos
-            if (string.IsNullOrWhiteSpace(sNombre))
+            // Usar el método del controlador que incluye validaciones
+            var resultadoApp = controlador.InsertarAplicacion(iIdAplicacion, sNombre, sDescripcion, bEstado, null);
+
+            if (resultadoApp.resultado <= 0)
             {
-                MessageBox.Show("Debe ingresar el nombre de la aplicación.");
-                Txt_Nombre_aplicacion.Focus();
+                MessageBox.Show("Error al guardar la aplicación: " + resultadoApp.mensaje);
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(sDescripcion))
-            {
-                MessageBox.Show("Debe ingresar la descripción de la aplicación.");
-                Txt_descripcion.Focus();
-                return;
-            }
-
-            //  Validar longitud máxima de los textos
-            // Puedes ajustar los valores según tu base de datos
-            if (sNombre.Length > 50)
-            {
-                MessageBox.Show("Cadena muy larga o se pasó del número de caracteres permitidos en el campo 'Nombre de aplicación' (máx. 50).");
-                Txt_Nombre_aplicacion.Focus();
-                return;
-            }
-
-            if (sDescripcion.Length > 255)
-            {
-                MessageBox.Show("Cadena muy larga o se pasó del número de caracteres permitidos en el campo 'Descripción' (máx. 255).");
-                Txt_descripcion.Focus();
-                return;
-            }
-
-            //  Validar que se haya seleccionado un módulo
-            if (Cbo_id_modulo.SelectedItem == null || string.IsNullOrWhiteSpace(Cbo_id_modulo.Text))
-            {
-                MessageBox.Show("Debe seleccionar un módulo en el ComboBox de módulos.");
-                return;
-            }
-
-            // Validar si el ID ya existe
-            if (controlador.BuscarAplicacionPorId(iIdAplicacion) != null)
-            {
-                MessageBox.Show("El ID ya existe, por favor ingrese otro.");
-                return;
-            }
-
-            //  Guardar aplicación
-            int resultadoApp = controlador.InsertarAplicacion(iIdAplicacion, sNombre, sDescripcion, bEstado, null);
-
-            if (resultadoApp <= 0)
-            {
-                MessageBox.Show("Error al guardar la aplicación. Verifique que el ID no exista.");
-                return;
-            }
-
-            //  Obtener ID del módulo seleccionado
+            // Obtener ID del módulo seleccionado
             int idModulo = Convert.ToInt32(((dynamic)Cbo_id_modulo.SelectedItem).Id);
 
-            //  Guardar asignación
+            // Guardar asignación
             Cls_Asignacion_Modulo_Aplicacion_Controlador asignacionCtrl = new Cls_Asignacion_Modulo_Aplicacion_Controlador();
             bool asignacionGuardada = asignacionCtrl.GuardarAsignacion(idModulo, iIdAplicacion);
 
@@ -388,16 +260,9 @@ namespace Capa_Vista_Seguridad
             }
 
             MessageBox.Show("Aplicación y asignación guardadas correctamente.");
-
-            //Registrar en bitacora   Aron Esquit 0901-22-13036
-            ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, $"Guardo la aplicación: {Txt_Nombre_aplicacion.Text}", true);
-
-            fun_LimpiarCampos();
-
+            ctrlBitacora.RegistrarAccion(Cls_Usuario_Conectado.iIdUsuario, 1, $"Guardó la aplicación: {Txt_Nombre_aplicacion.Text}", true);
             RecargarTodo();
         }
-
-
 
         private void fun_LimpiarCampos()
         {
@@ -406,6 +271,7 @@ namespace Capa_Vista_Seguridad
             Txt_descripcion.Clear();
             Rdb_estado_activo.Checked = true;
             Rdb_inactivo.Checked = false;
+            Cbo_id_modulo.SelectedItem = null;
         }
 
         private void Btn_salir_Click(object sender, EventArgs e)
@@ -423,11 +289,11 @@ namespace Capa_Vista_Seguridad
         private void fun_CargarComboModulos()
         {
             Cls_Modulos_Controlador controladorModulos = new Cls_Modulos_Controlador();
-
-            DataTable dtModulos = controladorModulos.ObtenerModulos(); // Devuelve pk_id_modulo y nombre_modulo
+            DataTable dtModulos = controladorModulos.ObtenerModulos();
 
             Cbo_id_modulo.DisplayMember = "Display";
             Cbo_id_modulo.ValueMember = "Id";
+            Cbo_id_modulo.Items.Clear();
 
             foreach (DataRow row in dtModulos.Rows)
             {
@@ -441,7 +307,6 @@ namespace Capa_Vista_Seguridad
 
         // Panel superior
         //0901-20-4620 Ruben Armando Lopez Luch
-
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HTCAPTION = 0x2;
 
@@ -460,8 +325,8 @@ namespace Capa_Vista_Seguridad
         {
             //if (e.Button == MouseButtons.Left)
             //{
-            //    ReleaseCapture(); // Libera el mouse
-            //    SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0); // Simula arrastre
+            //    ReleaseCapture();
+            //    SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
             //}
         }
 
@@ -471,10 +336,5 @@ namespace Capa_Vista_Seguridad
             frm.Show();
             this.Close();
         }
-
-
-       
-
-
     }
 }

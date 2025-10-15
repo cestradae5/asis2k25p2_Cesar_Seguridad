@@ -49,7 +49,6 @@ namespace Capa_Vista_Seguridad
             this.Pnl_Superior = new System.Windows.Forms.Panel();
             this.Pic_Cerrar = new System.Windows.Forms.PictureBox();
             this.Btn_guardar = new System.Windows.Forms.Button();
-            this.Btn_eliminar = new System.Windows.Forms.Button();
             this.Btn_modificar = new System.Windows.Forms.Button();
             this.Btn_nuevo = new System.Windows.Forms.Button();
             this.Btn_reporte = new System.Windows.Forms.Button();
@@ -298,7 +297,7 @@ namespace Capa_Vista_Seguridad
             this.Btn_guardar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
             this.Btn_guardar.Image = global::Capa_Vista_Seguridad.Properties.Resources.savetheapplication_guardar_2958;
             this.Btn_guardar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Btn_guardar.Location = new System.Drawing.Point(963, 258);
+            this.Btn_guardar.Location = new System.Drawing.Point(963, 292);
             this.Btn_guardar.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.Btn_guardar.Name = "Btn_guardar";
             this.Btn_guardar.Size = new System.Drawing.Size(119, 47);
@@ -308,29 +307,13 @@ namespace Capa_Vista_Seguridad
             this.Btn_guardar.UseVisualStyleBackColor = false;
             this.Btn_guardar.Click += new System.EventHandler(this.Btn_guardar_Click);
             // 
-            // Btn_eliminar
-            // 
-            this.Btn_eliminar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
-            this.Btn_eliminar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_eliminar.Image = global::Capa_Vista_Seguridad.Properties.Resources.delete_remove_trash_icon_177304;
-            this.Btn_eliminar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Btn_eliminar.Location = new System.Drawing.Point(963, 398);
-            this.Btn_eliminar.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
-            this.Btn_eliminar.Name = "Btn_eliminar";
-            this.Btn_eliminar.Size = new System.Drawing.Size(119, 47);
-            this.Btn_eliminar.TabIndex = 3;
-            this.Btn_eliminar.Text = "Eliminar";
-            this.Btn_eliminar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Btn_eliminar.UseVisualStyleBackColor = false;
-            this.Btn_eliminar.Click += new System.EventHandler(this.Btn_eliminar_Click);
-            // 
             // Btn_modificar
             // 
             this.Btn_modificar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_modificar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
             this.Btn_modificar.Image = global::Capa_Vista_Seguridad.Properties.Resources.compose_edit_modify_icon_177770;
             this.Btn_modificar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Btn_modificar.Location = new System.Drawing.Point(963, 329);
+            this.Btn_modificar.Location = new System.Drawing.Point(963, 365);
             this.Btn_modificar.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.Btn_modificar.Name = "Btn_modificar";
             this.Btn_modificar.Size = new System.Drawing.Size(119, 47);
@@ -346,7 +329,7 @@ namespace Capa_Vista_Seguridad
             this.Btn_nuevo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
             this.Btn_nuevo.Image = global::Capa_Vista_Seguridad.Properties.Resources.add_insert_new_plus_button_icon_142943;
             this.Btn_nuevo.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Btn_nuevo.Location = new System.Drawing.Point(963, 180);
+            this.Btn_nuevo.Location = new System.Drawing.Point(963, 233);
             this.Btn_nuevo.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.Btn_nuevo.Name = "Btn_nuevo";
             this.Btn_nuevo.Size = new System.Drawing.Size(119, 47);
@@ -362,7 +345,7 @@ namespace Capa_Vista_Seguridad
             this.Btn_reporte.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
             this.Btn_reporte.Image = global::Capa_Vista_Seguridad.Properties.Resources.exportar;
             this.Btn_reporte.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Btn_reporte.Location = new System.Drawing.Point(1108, 398);
+            this.Btn_reporte.Location = new System.Drawing.Point(963, 434);
             this.Btn_reporte.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.Btn_reporte.Name = "Btn_reporte";
             this.Btn_reporte.Size = new System.Drawing.Size(119, 47);
@@ -386,7 +369,6 @@ namespace Capa_Vista_Seguridad
             this.Controls.Add(this.Gbp_datos_aplicacion);
             this.Controls.Add(this.Gpb_buscar_aplicacion);
             this.Controls.Add(this.Btn_salir);
-            this.Controls.Add(this.Btn_eliminar);
             this.Controls.Add(this.Btn_modificar);
             this.Controls.Add(this.Btn_nuevo);
             this.Font = new System.Drawing.Font("Rockwell", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -414,7 +396,6 @@ namespace Capa_Vista_Seguridad
         private System.Windows.Forms.Button Btn_guardar;
         private System.Windows.Forms.Button Btn_nuevo;
         private System.Windows.Forms.Button Btn_modificar;
-        private System.Windows.Forms.Button Btn_eliminar;
         private System.Windows.Forms.Button Btn_salir;
         private System.Windows.Forms.Button Btn_buscar;
         private System.Windows.Forms.ComboBox Cbo_buscar;
