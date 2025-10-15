@@ -32,6 +32,14 @@ namespace Capa_Vista_Seguridad
             Btn_nuevo.Enabled = true;
             Btn_cancelar.Enabled = true;
             Btn_modificar.Enabled = false;
+            //Bloquear campos 
+            //Brandon Alexander Hernandez Salguero 0901-22-9663 15/10/25
+            Txt_puesto.Enabled = false;
+            Txt_descripcion.Enabled = false;
+            Cbo_tipoperfil.Enabled = false;
+            Rdb_Habilitado.Enabled = false;
+            Rdb_inhabilitado.Enabled = false;
+
         }
 
         private void fun_CargarPerfiles()
@@ -77,7 +85,7 @@ namespace Capa_Vista_Seguridad
             Txt_idperfil.Text = perfil.iPk_Id_Perfil.ToString();
             Txt_puesto.Text = perfil.sCmp_Puesto_Perfil;
             Txt_descripcion.Text = perfil.sCmp_Descripcion_Perfil;
-            Cbo_tipoperfil.Text = perfil.iCmp_Tipo_Perfil.ToString();
+            Cbo_tipoperfil.SelectedIndex = perfil.iCmp_Tipo_Perfil;
             Rdb_Habilitado.Checked = perfil.bCmp_Estado_Perfil;
             Rdb_inhabilitado.Checked = !perfil.bCmp_Estado_Perfil;
         }
@@ -89,7 +97,13 @@ namespace Capa_Vista_Seguridad
             Btn_guardar.Enabled = true;
             Btn_modificar.Enabled = false;
             Btn_Eliminar.Enabled = false;
-            Txt_idperfil.Enabled = false;
+            //Brandon Alexander Hernandez Salguero 0901-22-9663 15/10/25
+            Txt_puesto.Enabled = true;
+            Txt_descripcion.Enabled = true;
+            Cbo_tipoperfil.Enabled = true;
+            Rdb_Habilitado.Enabled = true;
+            Rdb_inhabilitado.Enabled = true;
+
         }
 
         private void Btn_guardar_Click(object sender, EventArgs e)
@@ -139,6 +153,13 @@ namespace Capa_Vista_Seguridad
 
         private void Btn_modificar_Click(object sender, EventArgs e)
         {
+            //Brandon Alexander Hernandez Salguero 0901-22-9663 15/10/25
+            Txt_puesto.Enabled = true;
+            Txt_descripcion.Enabled = true;
+            Cbo_tipoperfil.Enabled = true;
+            Rdb_Habilitado.Enabled = true;
+            Rdb_inhabilitado.Enabled = true;
+
             if (!int.TryParse(Txt_idperfil.Text, out int id))
             {
                 MessageBox.Show("Ingrese un ID válido para modificar.");
@@ -231,6 +252,13 @@ namespace Capa_Vista_Seguridad
                 Btn_modificar.Enabled = true;
                 Txt_idperfil.Enabled = false;
                 Btn_Eliminar.Enabled = true;
+                Txt_puesto.Enabled = true;
+                Txt_descripcion.Enabled = true;
+                //Brandon Alexander Hernandez Salguero 0901-22-9663 15/10/25
+                Cbo_tipoperfil.Enabled = true;
+                Rdb_Habilitado.Enabled = true;
+                Rdb_inhabilitado.Enabled = true;
+
             }
             else
             {
