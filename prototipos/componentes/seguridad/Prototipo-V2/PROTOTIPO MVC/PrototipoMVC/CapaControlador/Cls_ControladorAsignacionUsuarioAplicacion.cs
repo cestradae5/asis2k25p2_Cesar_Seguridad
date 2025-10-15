@@ -62,28 +62,7 @@ namespace Capa_Controlador_Seguridad
 
         // Método para obtener los permisos del usuario y aplicación actualmente conectados -> Brandon Hernandez  0901-22-9663
 
-        public Cls_Permiso_Aplicacion_Usuario ObtenerPermisosAplicacionUsuarioConectado(int iIdAplicacion)
-        {
-            int iIdUsuario = Cls_Usuario_Conectado.iIdUsuario;
-            
 
-            DataTable dt = model.ObtenerPermisosUsuarioAplicacion(iIdUsuario, iIdAplicacion);
-
-            if (dt.Rows.Count == 0)
-                return null; // o retorna un objeto con todos los permisos en false
-
-            DataRow row = dt.Rows[0];
-            return new Cls_Permiso_Aplicacion_Usuario
-            {
-                Fk_Id_Usuario = iIdUsuario,
-                FK_Id_Aplicacion = iIdAplicacion,
-                Cmp_Ingresar_Permiso_Aplicacion_Usuario = Convert.ToBoolean(row["bIngresar"]),
-               Cmp_Consultar_Permiso_Aplicacion_Usuario = Convert.ToBoolean(row["bConsultar"]),
-               Cmp_Modificar_Permiso_Aplicacion_Usuario = Convert.ToBoolean(row["bModificar"]),
-                Cmp_Eliminar_Permiso_Aplicacion_Usuario = Convert.ToBoolean(row["bEliminar"]),
-                Cmp_Imprimir_Permiso_Aplicacion_Usuario = Convert.ToBoolean(row["bImprimir"])
-            };
-        }
     }
 }
 
