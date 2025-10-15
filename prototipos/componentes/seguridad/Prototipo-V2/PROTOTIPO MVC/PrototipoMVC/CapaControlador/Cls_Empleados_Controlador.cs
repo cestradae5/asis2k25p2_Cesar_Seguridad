@@ -12,6 +12,12 @@ namespace Capa_Controlador_Seguridad
     {
         private Cls_EmpleadoDAO daoEmpleado = new Cls_EmpleadoDAO();
 
+        //Ernesto David SamayoaJocol 0901-22-3415 Verificar si un empleado tiene usuario asociado nueva funcion
+        public bool fun_EmpleadoTieneUsuario(int iIdEmpleado)
+        {
+            return daoEmpleado.fun_EmpleadoTieneUsuario(iIdEmpleado);
+        }
+
         // Obtener todos los empleados
         public List<Cls_Empleado> fun_ObtenerTodosLosEmpleados()
         {

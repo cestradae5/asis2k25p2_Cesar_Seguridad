@@ -141,6 +141,23 @@ namespace Capa_Modelo_Seguridad
             }
         }
 
+
+        //Nuevo metodo Ernesto Samayoa Jocol 0901-22-3415
+        public bool fun_EmpleadoTieneUsuario(int idEmpleado)
+        {
+            string query = "SELECT COUNT(*) FROM Tbl_Usuario WHERE Fk_Id_Empleado = ?";
+            using (OdbcConnection conn = conexion.conexion())
+            using (OdbcCommand cmd = new OdbcCommand(query, conn))
+            {
+                cmd.Parameters.AddWithValue("@idEmpleado", idEmpleado);
+                int cantidad = Convert.ToInt32(cmd.ExecuteScalar());
+                return cantidad > 0;
+            }
+        }
+
+
+
+
         // --------------------------
         // Buscar un empleado por ID
         // --------------------------
