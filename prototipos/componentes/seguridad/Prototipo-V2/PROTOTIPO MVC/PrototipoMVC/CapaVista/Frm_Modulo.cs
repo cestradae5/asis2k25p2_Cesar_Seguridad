@@ -68,17 +68,25 @@ namespace Capa_Vista_Seguridad
 
             if (dr == null)
             {
-                // Si no existe, lo inserta
-                if (cm.BuscarModulo(Pk_Id_Modulo) != null)
-                {
-                    MessageBox.Show("El Id ingresado ya existe. Use otro.");
-                    return;
-                }
+                // Si no existe - insertar
                 bResultado = cm.InsertarModulo(Pk_Id_Modulo, sCmp_Nombre_Modulo, sCmp_Descripcion_Modulo, btCmp_Estado_Modulo);
             }
             else
             {
-                // Si existe, lo modifica
+                // Si ya existe - advertir al usuario antes de modificar
+                DialogResult respuesta = MessageBox.Show(
+                    "El Id ingresado ya existe. ¿Desea actualizar este módulo?",
+                    "Módulo existente",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                );
+
+                if (respuesta == DialogResult.No)
+                {
+                    return; // Cancela si el usuario no desea modificar
+                }
+
+                // Modifica el registro
                 bResultado = cm.ModificarModulo(Pk_Id_Modulo, sCmp_Nombre_Modulo, sCmp_Descripcion_Modulo, btCmp_Estado_Modulo);
             }
 
@@ -86,8 +94,15 @@ namespace Capa_Vista_Seguridad
             {
                 MessageBox.Show("Guardado correctamente!");
                 fun_CargarComboBox(); // Refresca combo
-                //Registrar en bitacora   Aron Esquit 0901-22-13036
-                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, $"Guardó el módulo: {Txt_nombre.Text}", true);
+
+                //Registrar en bitácora   Arón Esquit 0901-22-13036
+                ctrlBitacora.RegistrarAccion(
+                    Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario,
+                    1,
+                    $"Guardó el módulo: {Txt_nombre.Text}",
+                    true
+                );
+
                 fun_LimpiarCampos();
                 Txt_id.Enabled = true;
             }
@@ -96,6 +111,7 @@ namespace Capa_Vista_Seguridad
                 MessageBox.Show("Error al guardar el módulo.");
             }
         }
+
 
         private void Btn_nuevo_Click(object sender, EventArgs e)
         {

@@ -138,6 +138,8 @@ namespace Capa_Modelo_Seguridad
         //Insert de acciones
         public void InsertarBitacora(int iIdUsuario, int iIdAplicacion, string sAccion, bool bEstadoLogin)
         {
+            sAccion = sAccion.Replace("'", "''");  //  evita errores SQL
+
             string sIdApp = (iIdAplicacion == 0) ? "null" : iIdAplicacion.ToString();
 
             string sSql = $@"
@@ -147,6 +149,7 @@ namespace Capa_Modelo_Seguridad
 
             ctrlBitacoraDao.EjecutarComando(sSql);
         }
+
 
         //Insert de dInicio
         public void RegistrarInicioSesion(int iIdUsuario, int iIdAplicacion = 0)

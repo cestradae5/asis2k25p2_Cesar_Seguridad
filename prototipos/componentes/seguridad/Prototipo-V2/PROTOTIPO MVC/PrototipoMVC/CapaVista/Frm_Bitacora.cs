@@ -1,4 +1,4 @@
-﻿//Registrar en Bitácora - Arón Ricardo Esquit Silva - 0901-22-13036 - 12/09/2025
+﻿//Inicio de código de Arón Ricardo Esquit Silva   0901-22-13036   12/10/2025
 using System;
 using System.Data;
 using System.IO;
@@ -8,24 +8,31 @@ using System.Drawing.Printing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Capa_Controlador_Seguridad;
-using Capa_Modelo_Seguridad;
 
 namespace Capa_Vista_Seguridad
 {
     public partial class Frm_Bitacora : Form
     {
-        // Controlador (puente con la capa modelo)
+        //Controlador
         private readonly Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador();
 
-     
-
+        //Constructor
         public Frm_Bitacora()
         {
             InitializeComponent();
-            fun_CargarUsuariosEnCombo(); // carga usuarios al abrir
-            fun_OcultarFiltros();        // opcional
-     
-            CargarEnGrid(ctrlBitacora.MostrarBitacora()); //Mostrar toda la bitácora al inicio
+
+            // Control de errores de inicialización del formulario    ---   protege la vista en caso de fallos al cargar datos 
+            try
+            {
+                fun_CargarUsuariosEnCombo(); //Carga inicial
+                fun_OcultarFiltros();        //Oculta los filtros al inicio
+                CargarEnGrid(ctrlBitacora.MostrarBitacora()); //Carga completa de bitácora
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error al cargar la Bitácora",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         //Mostrar en pantalla
@@ -35,43 +42,45 @@ namespace Capa_Vista_Seguridad
             Dgv_Bitacora.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             Dgv_Bitacora.ReadOnly = true;
             Dgv_Bitacora.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+            //Ajustar texto dentro de las celdas 
+            Dgv_Bitacora.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+
+            //Ajustar automáticamente la altura de las filas
+            Dgv_Bitacora.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+
+            //Centrar verticalmente el texto
+            Dgv_Bitacora.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+
+            //Ajustar también encabezados
+            Dgv_Bitacora.ColumnHeadersDefaultCellStyle.WrapMode = DataGridViewTriState.True;
         }
 
-        //Desplegar usuarios
+        //Carga de usuarios
         private void fun_CargarUsuariosEnCombo()
         {
-            try
-            {
-                var dt = ctrlBitacora.ObtenerUsuarios(); // id, usuario
-                Cbo_Usuario.DisplayMember = "usuario";
-                Cbo_Usuario.ValueMember = "id";
-                Cbo_Usuario.DataSource = dt;
-                Cbo_Usuario.DropDownStyle = ComboBoxStyle.DropDownList;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("No se pudieron cargar los usuarios: " + ex.Message);
-            }
+            var dt = ctrlBitacora.ObtenerUsuarios();
+            Cbo_Usuario.DisplayMember = "usuario";
+            Cbo_Usuario.ValueMember = "id";
+            Cbo_Usuario.DataSource = dt;
+            Cbo_Usuario.DropDownStyle = ComboBoxStyle.DropDownList;
         }
 
-        //No mostrar las barras hasta presionar los botones
+        //Ocultar filtros
         private void fun_OcultarFiltros()
         {
             Lbl_PrimeraFecha.Visible = false;
             Dtp_PrimeraFecha.Visible = false;
             Lbl_SegundaFecha.Visible = false;
             Dtp_SegundaFecha.Visible = false;
-
             Lbl_FechaEspecifica.Visible = false;
             Dtp_FechaEspecifica.Visible = false;
-
             Lbl_Usuario.Visible = false;
             Cbo_Usuario.Visible = false;
-
             Btn_Imprimir.Visible = false;
         }
 
-        // Botones de barra personalizada
+        //Botones de barra personalizada
         private void Btn_Cerrar_Click(object sender, EventArgs e) => this.Close();
 
         private void Btn_Maximizar_Click(object sender, EventArgs e)
@@ -83,7 +92,7 @@ namespace Capa_Vista_Seguridad
 
         private void Btn_Minimizar_Click(object sender, EventArgs e) => WindowState = FormWindowState.Minimized;
 
-        // Consultar toda la bitácora
+        //Consulta completa
         private void Btn_Consultar_Click(object sender, EventArgs e)
         {
             CargarEnGrid(ctrlBitacora.MostrarBitacora());
@@ -92,90 +101,47 @@ namespace Capa_Vista_Seguridad
         //Exportar
         private void Btn_Exportar_Click(object sender, EventArgs e)
         {
-            try
+            DataTable dt = (DataTable)Dgv_Bitacora.DataSource;
+            if (dt == null || dt.Rows.Count == 0)
             {
-                DataTable dt = (DataTable)Dgv_Bitacora.DataSource;
-                if (dt == null || dt.Rows.Count == 0)
-                {
-                    MessageBox.Show("No hay datos para exportar.", "Exportar", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
-
-                SaveFileDialog sfd = new SaveFileDialog
-                {
-                    Filter = "CSV Files (*.csv)|*.csv",
-                    Title = "Guardar Bitácora como CSV",
-                    FileName = "Bitacora.csv"
-                };
-
-                if (sfd.ShowDialog() == DialogResult.OK)
-                {
-                    ExportarCsv(dt, sfd.FileName);
-                    MessageBox.Show("Bitácora exportada correctamente.",
-                                    "Exportar",
-                                    MessageBoxButtons.OK,
-                                    MessageBoxIcon.Information);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al exportar: " + ex.Message,
-                                "Error",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Error);
-            }
-        }
-
-        private void ExportarCsv(DataTable dt, string ruta)
-        {
-            var sb = new StringBuilder();
-
-            for (int i = 0; i < dt.Columns.Count; i++)
-            {
-                if (i > 0) sb.Append(',');
-                sb.Append(dt.Columns[i].ColumnName);
-            }
-            sb.AppendLine();
-
-            foreach (DataRow row in dt.Rows)
-            {
-                for (int i = 0; i < dt.Columns.Count; i++)
-                {
-                    if (i > 0) sb.Append(',');
-                    sb.Append(row[i]?.ToString().Replace(",", " "));
-                }
-                sb.AppendLine();
+                MessageBox.Show("No hay datos para exportar.", "Exportar",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
             }
 
-            File.WriteAllText(ruta, sb.ToString(), Encoding.UTF8);
+            SaveFileDialog sfd = new SaveFileDialog
+            {
+                Filter = "CSV Files (*.csv)|*.csv",
+                Title = "Guardar Bitácora como CSV",
+                FileName = "Bitacora.csv"
+            };
+
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                ctrlBitacora.ExportarBitacora(dt, sfd.FileName);
+                MessageBox.Show("Bitácora exportada correctamente.",
+                                "Exportar", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         //Imprimir
         private void Btn_Imprimir_Click(object sender, EventArgs e)
         {
-            try
+            DataTable dt = (DataTable)Dgv_Bitacora.DataSource;
+            if (dt == null || dt.Rows.Count == 0)
             {
-                DataTable dt = (DataTable)Dgv_Bitacora.DataSource;
-                if (dt == null || dt.Rows.Count == 0)
-                {
-                    MessageBox.Show("No hay datos para imprimir.", "Imprimir", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
+                MessageBox.Show("No hay datos para imprimir.", "Imprimir",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
 
-                PrintDocument doc = new PrintDocument();
-                doc.PrintPage += (s, ev) => DibujarBitacora(ev, dt);
-                PrintPreviewDialog preview = new PrintPreviewDialog { Document = doc };
-                preview.ShowDialog();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al imprimir: " + ex.Message,
-                                "Error",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Error);
-            }
+            PrintDocument doc = new PrintDocument();
+            doc.PrintPage += (s, ev) => DibujarBitacora(ev, dt);
+            PrintPreviewDialog preview = new PrintPreviewDialog { Document = doc };
+            preview.ShowDialog();
         }
 
+        //Dibujo de impresión
         private void DibujarBitacora(PrintPageEventArgs e, DataTable dt)
         {
             Graphics g = e.Graphics;
@@ -220,20 +186,19 @@ namespace Capa_Vista_Seguridad
         //Salir
         private void Btn_Salir_Click(object sender, EventArgs e) => this.Close();
 
-        // Filtros
+        //Filtros por rango
         private void Btn_BuscarRango_Click(object sender, EventArgs e)
         {
             fun_OcultarFiltros();
-
             Lbl_PrimeraFecha.Visible = true;
             Dtp_PrimeraFecha.Visible = true;
             Lbl_SegundaFecha.Visible = true;
             Dtp_SegundaFecha.Visible = true;
             Btn_Imprimir.Visible = true;
-
             CargarEnGrid(ctrlBitacora.BuscarPorRango(Dtp_PrimeraFecha.Value, Dtp_SegundaFecha.Value));
         }
 
+        //Filtros por fecha específica
         private void Btn_BuscarFecha_Click(object sender, EventArgs e)
         {
             fun_OcultarFiltros();
@@ -243,6 +208,7 @@ namespace Capa_Vista_Seguridad
             CargarEnGrid(ctrlBitacora.BuscarPorFecha(Dtp_FechaEspecifica.Value));
         }
 
+        //Filtros por usuario
         private void Btn_BuscarUsuario_Click(object sender, EventArgs e)
         {
             fun_OcultarFiltros();
@@ -257,7 +223,7 @@ namespace Capa_Vista_Seguridad
             }
         }
 
-        // Eventos de cambio de fecha
+        //Eventos de cambio de fecha
         private void Dtp_FechaEspecifica_ValueChanged(object sender, EventArgs e)
         {
             if (Dtp_FechaEspecifica.Visible)
@@ -283,7 +249,7 @@ namespace Capa_Vista_Seguridad
                 CargarEnGrid(ctrlBitacora.BuscarPorUsuario(idUsuario));
         }
 
-        // Panel superior
+        //Panel superior
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HTCAPTION = 0x2;
 
@@ -301,13 +267,13 @@ namespace Capa_Vista_Seguridad
 
         private void Pic_Cerrar_Click(object sender, EventArgs e) => this.Close();
 
+        //Reporte
         private void button1_Click(object sender, EventArgs e)
         {
             Frm_Reporte_Bitacoras frm = new Frm_Reporte_Bitacoras();
             frm.Show();
         }
-
-        
-      
     }
 }
+
+//Fin del código de Arón Ricardo Esquit Silva   0901-22-13036   14/10/2025
