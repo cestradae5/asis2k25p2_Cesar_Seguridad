@@ -13,11 +13,49 @@ namespace Capa_Vista_Seguridad
         Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador(); //Bitacora Aron Esquit  0901-22-13036
         private Cls_AplicacionControlador controlador = new Cls_AplicacionControlador();
         private List<dynamic> listaAplicaciones = new List<dynamic>();
+        //Brandon Hernandez 0901-22-9663 15/10/2025
+        private bool _canIngresar, _canConsultar, _canModificar, _canEliminar, _canImprimir; 
 
         public FrmAplicacion()
         {
             InitializeComponent();
+            fun_AplicarPermisos();
             CargarDatosIniciales();
+        }
+        //Brandon Hernandez 0901-22-9663 15/10/2025
+        private void fun_AplicarPermisos()
+        {
+            int idUsuario = Cls_Usuario_Conectado.iIdUsuario;
+            var usuarioCtrl = new Cls_Usuario_Controlador();
+            var permisoUsuario = new Capa_Modelo_Seguridad.Cls_Permiso_Usuario();
+
+            int idAplicacion = permisoUsuario.ObtenerIdAplicacionPorNombre("Aplicacion");
+            if (idAplicacion <= 0) idAplicacion = 305; 
+            int idModulo = permisoUsuario.ObtenerIdModuloPorNombre("Seguridad");
+            int idPerfil = usuarioCtrl.ObtenerIdPerfilDeUsuario(idUsuario);
+
+            var permisos = Cls_Aplicacion_Permisos.ObtenerPermisosCombinados(idUsuario, idAplicacion, idModulo, idPerfil);
+
+            _canIngresar = permisos.ingresar;
+            _canConsultar = permisos.consultar;
+            _canModificar = permisos.modificar;
+            _canEliminar = permisos.eliminar;
+            _canImprimir = permisos.imprimir;
+            if (Btn_nuevo != null) Btn_guardar.Enabled = (_canIngresar);
+            if (Btn_guardar != null) Btn_guardar.Enabled = (_canIngresar);
+            if (Btn_modificar != null) Btn_modificar.Enabled = (_canModificar);
+
+            if (Btn_buscar != null) Btn_buscar.Enabled = _canConsultar;
+            if (Cbo_buscar.Enabled != null) Cbo_buscar.Enabled = _canConsultar;
+            if (Btn_reporte != null) Btn_reporte.Enabled = _canImprimir;
+
+            bool puedeEditar = (_canIngresar || _canModificar );
+            Txt_id_aplicacion.Enabled = puedeEditar;
+            Cbo_id_modulo.Enabled = puedeEditar;
+            Txt_Nombre_aplicacion.Enabled = puedeEditar;
+            Txt_descripcion.Enabled = puedeEditar;
+            
+
         }
 
         private void CargarDatosIniciales()

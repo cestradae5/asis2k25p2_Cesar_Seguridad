@@ -14,32 +14,71 @@ namespace Capa_Vista_Seguridad
         Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador();  //Bitacora  Aron Esquit 0901-22-13036
         private Cls_Perfiles_Controlador controlador = new Cls_Perfiles_Controlador();
         private List<Cls_Perfiles> listaPerfiles = new List<Cls_Perfiles>();
+        // Permisos (deben ser campos de la clase para que los métodos puedan usarlos)
+        private bool _canIngresar, _canConsultar, _canModificar, _canEliminar, _canImprimir;
 
         public Frm_Perfiles()
         {
             InitializeComponent();
+            fun_AplicarPermisos();
             fun_CargarPerfiles();
             fun_ConfigurarComboBoxPerfiles();
             fun_ConfigurarComboBoxTipoPerfil();
             fun_Configuracioninicial();
+
+        }
+        private void fun_AplicarPermisos()
+        {
+            int idUsuario = Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario;
+            var usuarioCtrl = new Cls_Usuario_Controlador();
+
+            // Usar la clase de permisos para obtener el id de aplicacion y modulo
+            var permisoUsuario = new Cls_Permiso_Usuario();
+            int idAplicacion = permisoUsuario.ObtenerIdAplicacionPorNombre("Perfiles");
+            if (idAplicacion <= 0) idAplicacion = 303; 
+            int idModulo = permisoUsuario.ObtenerIdModuloPorNombre("Seguridad");
+            int idPerfil = usuarioCtrl.ObtenerIdPerfilDeUsuario(idUsuario);
+
+            var permisos = Cls_Aplicacion_Permisos.ObtenerPermisosCombinados(idUsuario, idAplicacion, idModulo, idPerfil);
+
+            _canIngresar = permisos.ingresar;
+            _canConsultar = permisos.consultar;
+            _canModificar = permisos.modificar;
+            _canEliminar = permisos.eliminar;
+            _canImprimir = permisos.imprimir;
+            if (Btn_nuevo != null) Btn_guardar.Enabled = (_canIngresar);
+            if (Btn_guardar != null) Btn_guardar.Enabled = (_canIngresar);
+            if (Btn_modificar != null) Btn_modificar.Enabled = (_canModificar);
+
+            if (Btn_Eliminar != null) Btn_Eliminar.Enabled = _canEliminar;
+            if (Btn_buscar != null) Btn_buscar.Enabled = _canConsultar;
+            if (Cbo_perfiles != null) Cbo_perfiles.Enabled = _canConsultar;
+            if (Btn_reporte != null) Btn_reporte.Enabled = _canImprimir;
+
+            bool puedeEditar = (_canIngresar || _canModificar);
+            Txt_idperfil.Enabled = puedeEditar;
+            Txt_puesto.Enabled = puedeEditar;
+            Txt_descripcion.Enabled = puedeEditar;
+            Cbo_tipoperfil.Enabled = puedeEditar;
+            Rdb_Habilitado.Enabled = puedeEditar;
+            Rdb_inhabilitado.Enabled = puedeEditar;
         }
 
         private void fun_Configuracioninicial()
         {
-            Btn_guardar.Enabled = false;
-            Txt_idperfil.Enabled = false;
-            Btn_Eliminar.Enabled = false;
-            Btn_nuevo.Enabled = true;
-            Btn_cancelar.Enabled = true;
+            Btn_guardar.Enabled = _canIngresar;
             Btn_modificar.Enabled = false;
-            //Bloquear campos 
-            //Brandon Alexander Hernandez Salguero 0901-22-9663 15/10/25
+            Btn_Eliminar.Enabled = false;
+            Btn_nuevo.Enabled = _canIngresar;
+            Btn_cancelar.Enabled = true;
+            Btn_buscar.Enabled = _canConsultar;
+            Btn_reporte.Enabled = _canImprimir;
+            Txt_idperfil.Enabled = false;
             Txt_puesto.Enabled = false;
             Txt_descripcion.Enabled = false;
             Cbo_tipoperfil.Enabled = false;
             Rdb_Habilitado.Enabled = false;
             Rdb_inhabilitado.Enabled = false;
-
         }
 
         private void fun_CargarPerfiles()
@@ -88,22 +127,40 @@ namespace Capa_Vista_Seguridad
             Cbo_tipoperfil.SelectedIndex = perfil.iCmp_Tipo_Perfil;
             Rdb_Habilitado.Checked = perfil.bCmp_Estado_Perfil;
             Rdb_inhabilitado.Checked = !perfil.bCmp_Estado_Perfil;
+
+            // Al mostrar un perfil, activa botones según permisos y contexto
+            Btn_guardar.Enabled = false;
+            Btn_modificar.Enabled = _canModificar;
+            Btn_Eliminar.Enabled = _canEliminar;
+            Btn_nuevo.Enabled = _canIngresar;
+            Btn_cancelar.Enabled = true;
+            Btn_buscar.Enabled = _canConsultar;
+            Btn_reporte.Enabled = _canImprimir;
+
+            Txt_idperfil.Enabled = false;
+            Txt_puesto.Enabled = _canModificar;
+            Txt_descripcion.Enabled = _canModificar;
+            Cbo_tipoperfil.Enabled = _canModificar;
+            Rdb_Habilitado.Enabled = _canModificar;
+            Rdb_inhabilitado.Enabled = _canModificar;
         }
 
         private void Btn_nuevo_Click(object sender, EventArgs e)
         {
             fun_LimpiarCampos();
+
             Btn_nuevo.Enabled = false;
-            Btn_guardar.Enabled = true;
+            Btn_guardar.Enabled = _canIngresar;
             Btn_modificar.Enabled = false;
             Btn_Eliminar.Enabled = false;
-            //Brandon Alexander Hernandez Salguero 0901-22-9663 15/10/25
+            Btn_cancelar.Enabled = true;
+
+            Txt_idperfil.Enabled = false;
             Txt_puesto.Enabled = true;
             Txt_descripcion.Enabled = true;
             Cbo_tipoperfil.Enabled = true;
             Rdb_Habilitado.Enabled = true;
             Rdb_inhabilitado.Enabled = true;
-
         }
 
         private void Btn_guardar_Click(object sender, EventArgs e)
@@ -159,6 +216,12 @@ namespace Capa_Vista_Seguridad
             Cbo_tipoperfil.Enabled = true;
             Rdb_Habilitado.Enabled = true;
             Rdb_inhabilitado.Enabled = true;
+
+            Btn_guardar.Enabled = false; 
+            Btn_modificar.Enabled = _canModificar;
+            Btn_Eliminar.Enabled = _canEliminar;
+            Btn_nuevo.Enabled = _canIngresar;
+            Btn_cancelar.Enabled = true;
 
             if (!int.TryParse(Txt_idperfil.Text, out int id))
             {
@@ -247,17 +310,19 @@ namespace Capa_Vista_Seguridad
             if (perfilEncontrado != null)
             {
                 fun_MostrarPerfil(perfilEncontrado);
-                Btn_nuevo.Enabled = false;
-                Btn_guardar.Enabled = false;
-                Btn_modificar.Enabled = true;
-                Txt_idperfil.Enabled = false;
-                Btn_Eliminar.Enabled = true;
-                Txt_puesto.Enabled = true;
-                Txt_descripcion.Enabled = true;
+                Btn_nuevo.Enabled = _canIngresar; // solo si puede crear nuevos
+                Btn_guardar.Enabled = false; // guardar solo en modo nuevo
+                Btn_modificar.Enabled = _canModificar;
+                Btn_Eliminar.Enabled = _canEliminar;
+                Btn_cancelar.Enabled = true;
+                Btn_reporte.Enabled = _canImprimir;
                 //Brandon Alexander Hernandez Salguero 0901-22-9663 15/10/25
-                Cbo_tipoperfil.Enabled = true;
-                Rdb_Habilitado.Enabled = true;
-                Rdb_inhabilitado.Enabled = true;
+                Txt_idperfil.Enabled = false;
+                Txt_puesto.Enabled = _canModificar;
+                Txt_descripcion.Enabled = _canModificar;
+                Cbo_tipoperfil.Enabled = _canModificar;
+                Rdb_Habilitado.Enabled = _canModificar;
+                Rdb_inhabilitado.Enabled = _canModificar;
 
             }
             else
