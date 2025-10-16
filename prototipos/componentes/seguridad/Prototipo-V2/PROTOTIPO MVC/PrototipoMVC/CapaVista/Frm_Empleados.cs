@@ -18,8 +18,7 @@ namespace Capa_Vista_Seguridad
         Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador(); // Bitácora Aron Esquit 0901-22-13036
         private Cls_EmpleadoControlador controlador = new Cls_EmpleadoControlador();
         private List<Cls_Empleado> listaEmpleados = new List<Cls_Empleado>();
-        //Brandon Hernandez 0901-22-9663 15/10/2025
-        private bool _canIngresar, _canConsultar, _canModificar, _canEliminar, _canImprimir;
+
         //Nuevo agregado Ernesto David Samayoa Jocol 0901-22-3415
         //Instancia estática única del formulario
         private static Frm_Empleados instancia = null;
@@ -44,7 +43,7 @@ namespace Capa_Vista_Seguridad
             fun_CargarEmpleados();
             fun_ConfigurarComboBoxEmpleados();
             fun_ConfiguracionInicial();
-            fun_AplicarPermisos();
+
 
             // --- Eventos de validación ---
             Txt_nombre_empleado.KeyPress += Txt_NombreOApellido_KeyPress;
@@ -54,68 +53,23 @@ namespace Capa_Vista_Seguridad
             Txt_telefono_empleado.KeyPress += Txt_Telefono_KeyPress;
             Txt_correo_empleado.KeyPress += Txt_Correo_KeyPress;
         }
-        //Brandon Hernandez 0901-22-9663 15/10/2025
-        private void fun_AplicarPermisos()
-        {
-            int idUsuario = Capa_Modelo_Seguridad.Cls_Usuario_Conectado.iIdUsuario;
-            var usuarioCtrl = new Cls_Usuario_Controlador();
-            var permisoUsuario = new Cls_Permiso_Usuario();
 
-            int idAplicacion = permisoUsuario.ObtenerIdAplicacionPorNombre("Empleados");
-            if (idAplicacion <= 0) idAplicacion = 301; // <-- Tu ID en la base
-            int idModulo = permisoUsuario.ObtenerIdModuloPorNombre("Seguridad");
-            int idPerfil = usuarioCtrl.ObtenerIdPerfilDeUsuario(idUsuario);
-
-            var permisos = Cls_Aplicacion_Permisos.ObtenerPermisosCombinados(idUsuario, idAplicacion, idModulo, idPerfil);
-
-            _canIngresar = permisos.ingresar;
-            _canConsultar = permisos.consultar;
-            _canModificar = permisos.modificar;
-            _canEliminar = permisos.eliminar;
-            _canImprimir = permisos.imprimir;
-
-            if (Btn_nuevo_empleado != null) Btn_nuevo_empleado.Enabled = _canIngresar;
-            if (Btn_guardar_empleado != null) Btn_guardar_empleado.Enabled = _canIngresar;
-            if (Btn_modificar_empleado != null) Btn_modificar_empleado.Enabled = _canModificar;
-            if (Btn_eliminar_empleado != null) Btn_eliminar_empleado.Enabled = _canEliminar;
-            if (Btn_buscar_empleado != null) Btn_buscar_empleado.Enabled = _canConsultar;
-            if (Btn_reporte != null) Btn_reporte.Enabled = _canImprimir;
-
-            bool puedeEditar = _canIngresar || _canModificar;
-            Txt_id_empleado.Enabled = puedeEditar;
-            Txt_nombre_empleado.Enabled = puedeEditar;
-            Txt_apellido_empleado.Enabled = puedeEditar;
-            Txt_dpi_empleados.Enabled = puedeEditar;
-            Txt_nit_empleados.Enabled = puedeEditar;
-            Txt_correo_empleado.Enabled = puedeEditar;
-            Txt_telefono_empleado.Enabled = puedeEditar;
-            Txt_fechaNac_empleado.Enabled = puedeEditar;
-            Txt_fechaContra_empleado.Enabled = puedeEditar;
-            Rdb_masculino_empleado.Enabled = puedeEditar;
-            Rdb_femenino_empleado.Enabled = puedeEditar;
-        }
         // ------------------ VALIDACIONES DE ENTRADA ------------------
         // Ernesto David Samayoa Jocol - 0901-22-3415
 
         // Solo letras y espacios
         private void Txt_NombreOApellido_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!(char.IsLetter(e.KeyChar) || char.IsControl(e.KeyChar) || e.KeyChar == ' '))
+            if (!controlador.ValidarNombreOApellido(e.KeyChar))
             {
-                e.Handled = true; // Bloquea el carácter
+                e.Handled = true;
             }
         }
 
         // Solo 13 dígitos para DPI
         private void Txt_Dpi_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
-            {
-                e.Handled = true;
-            }
-
-            // Limita a 13 dígitos
-            if (char.IsDigit(e.KeyChar) && ((TextBox)sender).Text.Length >= 13)
+            if (!controlador.ValidarDpiKeyPress(e.KeyChar, ((TextBox)sender).Text))
             {
                 e.Handled = true;
             }
@@ -124,13 +78,7 @@ namespace Capa_Vista_Seguridad
         // Solo 9 dígitos para NIT
         private void Txt_Nit_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
-            {
-                e.Handled = true;
-            }
-
-            // Limita a 9 dígitos
-            if (char.IsDigit(e.KeyChar) && ((TextBox)sender).Text.Length >= 9)
+            if (!controlador.ValidarNitKeyPress(e.KeyChar, ((TextBox)sender).Text))
             {
                 e.Handled = true;
             }
@@ -139,14 +87,7 @@ namespace Capa_Vista_Seguridad
         // Solo 8 dígitos y guiones para teléfono
         private void Txt_Telefono_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!(char.IsDigit(e.KeyChar) || char.IsControl(e.KeyChar) || e.KeyChar == '-'))
-            {
-                e.Handled = true;
-            }
-
-            // Limita a 8 dígitos (sin contar guiones)
-            string textoSinGuiones = ((TextBox)sender).Text.Replace("-", "");
-            if (char.IsDigit(e.KeyChar) && textoSinGuiones.Length >= 8)
+            if (!controlador.ValidarTelefonoKeyPress(e.KeyChar, ((TextBox)sender).Text))
             {
                 e.Handled = true;
             }
@@ -155,35 +96,20 @@ namespace Capa_Vista_Seguridad
         // Solo letras minúsculas, números, @ y . para correo
         private void Txt_Correo_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!(char.IsLower(e.KeyChar) || char.IsDigit(e.KeyChar) ||
-                  e.KeyChar == '@' || e.KeyChar == '.' || char.IsControl(e.KeyChar)))
+            if (!controlador.ValidarCorreoKeyPress(e.KeyChar))
             {
                 e.Handled = true;
             }
         }
 
-
-
         private void fun_ConfiguracionInicial()
         {
-            if (Btn_nuevo_empleado != null) Btn_nuevo_empleado.Enabled = _canIngresar;
-            if (Btn_guardar_empleado != null) Btn_guardar_empleado.Enabled = false;
-            if (Btn_modificar_empleado != null) Btn_modificar_empleado.Enabled = false;
-            if (Btn_eliminar_empleado != null) Btn_eliminar_empleado.Enabled = false;
-            if (Btn_buscar_empleado != null) Btn_buscar_empleado.Enabled = _canConsultar;
-            if (Btn_reporte != null) Btn_reporte.Enabled = _canImprimir;
-
+            Btn_guardar_empleado.Enabled = false;
+            Btn_modificar_empleado.Enabled = false;
+            Btn_eliminar_empleado.Enabled = false;
+            Btn_nuevo_empleado.Enabled = true;
+            Btn_cancelar.Enabled = true;
             Txt_id_empleado.Enabled = false;
-            Txt_nombre_empleado.Enabled = false;
-            Txt_apellido_empleado.Enabled = false;
-            Txt_dpi_empleados.Enabled = false;
-            Txt_nit_empleados.Enabled = false;
-            Txt_correo_empleado.Enabled = false;
-            Txt_telefono_empleado.Enabled = false;
-            Txt_fechaNac_empleado.Enabled = false;
-            Txt_fechaContra_empleado.Enabled = false;
-            Rdb_masculino_empleado.Enabled = false;
-            Rdb_femenino_empleado.Enabled = false;
         }
 
         private void fun_CargarEmpleados()
@@ -260,25 +186,9 @@ namespace Capa_Vista_Seguridad
             if (empEncontrado != null)
             {
                 fun_MostrarEmpleado(empEncontrado);
-
-                if (Btn_modificar_empleado != null) Btn_modificar_empleado.Enabled = _canModificar;
-                if (Btn_eliminar_empleado != null) Btn_eliminar_empleado.Enabled = _canEliminar;
-                if (Btn_guardar_empleado != null) Btn_guardar_empleado.Enabled = false;
-                if (Btn_nuevo_empleado != null) Btn_nuevo_empleado.Enabled = _canIngresar;
-
-                // Solo deja campos editables si tienes modificar
-                bool puedeEditar = _canModificar;
-                Txt_id_empleado.Enabled = false;
-                Txt_nombre_empleado.Enabled = puedeEditar;
-                Txt_apellido_empleado.Enabled = puedeEditar;
-                Txt_dpi_empleados.Enabled = puedeEditar;
-                Txt_nit_empleados.Enabled = puedeEditar;
-                Txt_correo_empleado.Enabled = puedeEditar;
-                Txt_telefono_empleado.Enabled = puedeEditar;
-                Txt_fechaNac_empleado.Enabled = puedeEditar;
-                Txt_fechaContra_empleado.Enabled = puedeEditar;
-                Rdb_masculino_empleado.Enabled = puedeEditar;
-                Rdb_femenino_empleado.Enabled = puedeEditar;
+                Btn_modificar_empleado.Enabled = true;
+                Btn_eliminar_empleado.Enabled = true;
+                Btn_guardar_empleado.Enabled = false;
             }
             else
             {
@@ -290,21 +200,11 @@ namespace Capa_Vista_Seguridad
 
         private void Btn_nuevo_empleado_Click(object sender, EventArgs e)
         {
-            if (Btn_guardar_empleado != null) Btn_guardar_empleado.Enabled = _canIngresar;
-            if (Btn_modificar_empleado != null) Btn_modificar_empleado.Enabled = false;
-            if (Btn_eliminar_empleado != null) Btn_eliminar_empleado.Enabled = false;
-
+            fun_LimpiarCampos();
+            Btn_guardar_empleado.Enabled = true;
+            Btn_modificar_empleado.Enabled = false;
+            Btn_eliminar_empleado.Enabled = false;
             Txt_id_empleado.Enabled = true;
-            Txt_nombre_empleado.Enabled = true;
-            Txt_apellido_empleado.Enabled = true;
-            Txt_dpi_empleados.Enabled = true;
-            Txt_nit_empleados.Enabled = true;
-            Txt_correo_empleado.Enabled = true;
-            Txt_telefono_empleado.Enabled = true;
-            Txt_fechaNac_empleado.Enabled = true;
-            Txt_fechaContra_empleado.Enabled = true;
-            Rdb_masculino_empleado.Enabled = true;
-            Rdb_femenino_empleado.Enabled = true;
         }
 
         private void Btn_modificar_empleado_Click(object sender, EventArgs e)
@@ -328,6 +228,7 @@ namespace Capa_Vista_Seguridad
                 DateTime.Parse(Txt_fechaContra_empleado.Text)
             );
             MessageBox.Show(exito ? "Empleado modificado correctamente" : "Error al modificar empleado");
+
             //Registrar en bitacora   Aron Esquit 0901-22-13036
             ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, $"Modificó empleado/a: {Txt_nombre_empleado.Text}", true);
             fun_CargarEmpleados();
@@ -336,7 +237,7 @@ namespace Capa_Vista_Seguridad
             fun_ConfiguracionInicial();
         }
 
-        // Ernesto David Samayoa Jocol - 0901-22-3415 - Fecha: 12/10/2025
+        // Ernesto David Samayoa Jocol - 0901-22-3415 - Fecha: 14/10/2025
         private void Btn_eliminar_empleado_Click(object sender, EventArgs e)
         {
             // 1️ Validar que el campo no esté vacío ni sea inválido
@@ -373,7 +274,7 @@ namespace Capa_Vista_Seguridad
                 {
                     MessageBox.Show("Empleado eliminado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    // 5️⃣ Registrar en bitácora (Aron Esquit 0901-22-13036)
+                    // 5️ Registrar en bitácora (Aron Esquit 0901-22-13036)
                     ctrlBitacora.RegistrarAccion(
                         Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario,
                         1,
@@ -381,7 +282,7 @@ namespace Capa_Vista_Seguridad
                         true
                     );
 
-                    // 6️⃣ Refrescar datos
+                    // 6️ Refrescar datos
                     fun_CargarEmpleados();
                     fun_ConfigurarComboBoxEmpleados();
                     fun_LimpiarCampos();
@@ -398,8 +299,6 @@ namespace Capa_Vista_Seguridad
             }
         }
 
-
-
         private void Btn_cancelar_Click(object sender, EventArgs e)
         {
             fun_LimpiarCampos();
@@ -408,31 +307,43 @@ namespace Capa_Vista_Seguridad
 
         private void Btn_guardar_empleado_Click(object sender, EventArgs e)
         {
-            //Validación de campos vacíos
-            if (!fun_ValidarCampos())
+            // Validación de campos usando el controlador
+            string mensajeError;
+            if (!controlador.ValidarCampos(
+                Txt_id_empleado.Text,
+                Txt_nombre_empleado.Text,
+                Txt_apellido_empleado.Text,
+                Txt_dpi_empleados.Text,
+                Txt_nit_empleados.Text,
+                Txt_correo_empleado.Text,
+                Txt_telefono_empleado.Text,
+                Txt_fechaNac_empleado.Text,
+                Txt_fechaContra_empleado.Text,
+                Rdb_masculino_empleado.Checked,
+                Rdb_femenino_empleado.Checked,
+                out mensajeError))
+            {
+                MessageBox.Show(mensajeError, "Campos requeridos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
+            }
 
             try
             {
-                // Validaciones de tipo
                 if (!int.TryParse(Txt_id_empleado.Text, out int idEmpleado))
                 {
                     MessageBox.Show("El ID debe ser un número entero válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-
                 if (!long.TryParse(Txt_dpi_empleados.Text, out long dpi))
                 {
                     MessageBox.Show("El DPI debe ser un número válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-
                 if (!long.TryParse(Txt_nit_empleados.Text, out long nit))
                 {
                     MessageBox.Show("El NIT debe ser un número válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                //Correción de formato de fecha Nacimiento Ernesto David Samayoa Jocol  0901-22-3415
                 if (!DateTime.TryParseExact(Txt_fechaNac_empleado.Text, "dd/MM/yyyy",
                     System.Globalization.CultureInfo.InvariantCulture,
                     System.Globalization.DateTimeStyles.None, out DateTime fechaNac))
@@ -440,7 +351,6 @@ namespace Capa_Vista_Seguridad
                     MessageBox.Show("La fecha de nacimiento debe tener el formato dd/MM/yyyy.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                //Correción de formato de fecha Contratación Ernesto David Samayoa Jocol  0901-22-3415
                 if (!DateTime.TryParseExact(Txt_fechaContra_empleado.Text, "dd/MM/yyyy",
                     System.Globalization.CultureInfo.InvariantCulture,
                     System.Globalization.DateTimeStyles.None, out DateTime fechaContra))
@@ -449,8 +359,6 @@ namespace Capa_Vista_Seguridad
                     return;
                 }
 
-
-                // Crear empleado
                 var vEmp = new Cls_Empleado
                 {
                     iPkIdEmpleado = idEmpleado,
@@ -465,7 +373,6 @@ namespace Capa_Vista_Seguridad
                     dFechaContratacionEmpleado = fechaContra
                 };
 
-                // Insertar
                 controlador.fun_InsertarEmpleado(
                     vEmp.iPkIdEmpleado,
                     vEmp.sNombresEmpleado,
@@ -480,9 +387,7 @@ namespace Capa_Vista_Seguridad
                 );
 
                 MessageBox.Show("Empleado guardado correctamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                //Registrar en bitacora   Aron Esquit 0901-22-13036
                 ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, $"Guardó empleado/a: {Txt_nombre_empleado.Text}", true);
-
                 fun_CargarEmpleados();
                 fun_ConfigurarComboBoxEmpleados();
                 fun_LimpiarCampos();
@@ -491,83 +396,7 @@ namespace Capa_Vista_Seguridad
             {
                 MessageBox.Show("Error al guardar empleado: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
             fun_ConfiguracionInicial();
-        }
-
-        /*private bool fun_ValidarCampos()
-        {
-            if (string.IsNullOrWhiteSpace(Txt_id_empleado.Text) ||
-                string.IsNullOrWhiteSpace(Txt_nombre_empleado.Text) ||
-                string.IsNullOrWhiteSpace(Txt_apellido_empleado.Text) ||
-                string.IsNullOrWhiteSpace(Txt_dpi_empleados.Text) ||
-                string.IsNullOrWhiteSpace(Txt_nit_empleados.Text) ||
-                string.IsNullOrWhiteSpace(Txt_correo_empleado.Text) ||
-                string.IsNullOrWhiteSpace(Txt_telefono_empleado.Text) ||
-                string.IsNullOrWhiteSpace(Txt_fechaNac_empleado.Text) ||
-                string.IsNullOrWhiteSpace(Txt_fechaContra_empleado.Text) ||
-                (!Rdb_masculino_empleado.Checked && !Rdb_femenino_empleado.Checked))
-            {
-                MessageBox.Show("Debe llenar todos los campos antes de guardar.",
-                    "Campos requeridos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
-
-            return true;
-        }*/
-
-        private bool fun_ValidarCampos()
-        {
-            // Validar campos vacíos
-            if (string.IsNullOrWhiteSpace(Txt_id_empleado.Text) ||
-                string.IsNullOrWhiteSpace(Txt_nombre_empleado.Text) ||
-                string.IsNullOrWhiteSpace(Txt_apellido_empleado.Text) ||
-                string.IsNullOrWhiteSpace(Txt_dpi_empleados.Text) ||
-                string.IsNullOrWhiteSpace(Txt_nit_empleados.Text) ||
-                string.IsNullOrWhiteSpace(Txt_correo_empleado.Text) ||
-                string.IsNullOrWhiteSpace(Txt_telefono_empleado.Text) ||
-                string.IsNullOrWhiteSpace(Txt_fechaNac_empleado.Text) ||
-                string.IsNullOrWhiteSpace(Txt_fechaContra_empleado.Text) ||
-                (!Rdb_masculino_empleado.Checked && !Rdb_femenino_empleado.Checked))
-            {
-                MessageBox.Show("Debe llenar todos los campos antes de guardar.",
-                    "Campos requeridos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
-
-            // Validaciones específicas
-            if (!System.Text.RegularExpressions.Regex.IsMatch(Txt_nombre_empleado.Text, @"^[a-zA-Z\s]+$") ||
-                !System.Text.RegularExpressions.Regex.IsMatch(Txt_apellido_empleado.Text, @"^[a-zA-Z\s]+$"))
-            {
-                MessageBox.Show("El nombre y apellido solo pueden contener letras y espacios.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
-
-            if (!System.Text.RegularExpressions.Regex.IsMatch(Txt_dpi_empleados.Text, @"^\d{13}$"))
-            {
-                MessageBox.Show("El DPI debe contener exactamente 13 dígitos numéricos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
-
-            if (!System.Text.RegularExpressions.Regex.IsMatch(Txt_nit_empleados.Text, @"^\d{9}$"))
-            {
-                MessageBox.Show("El NIT debe contener exactamente 9 dígitos numéricos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
-
-            if (!System.Text.RegularExpressions.Regex.IsMatch(Txt_telefono_empleado.Text, @"^[0-9\-]{8,10}$"))
-            {
-                MessageBox.Show("El teléfono debe contener 8 dígitos y puede incluir guiones.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
-
-            if (!System.Text.RegularExpressions.Regex.IsMatch(Txt_correo_empleado.Text, @"^[a-z0-9@.]+$"))
-            {
-                MessageBox.Show("El correo solo puede contener letras minúsculas, números, '@' y '.'.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
-
-            return true;
         }
 
 
