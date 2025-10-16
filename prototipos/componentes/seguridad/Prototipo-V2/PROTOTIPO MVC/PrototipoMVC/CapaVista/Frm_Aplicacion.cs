@@ -73,6 +73,7 @@ namespace Capa_Vista_Seguridad
             Cbo_id_modulo.Items.Clear();
             CargarDatosIniciales();
         }
+
         private void fun_CargarComboReportes()
         {
             DataTable dtReportes = controlador.ObtenerReportes();
@@ -164,75 +165,16 @@ namespace Capa_Vista_Seguridad
         {
             string sBusqueda = Cbo_buscar.Text.Trim();
 
-            if (string.IsNullOrEmpty(sBusqueda))
-            {
-                MessageBox.Show("Ingrese un ID o nombre para buscar");
-                return;
-            }
+            // Llamar al controlador para validar y buscar
+            var resultado = controlador.BuscarAplicacion(sBusqueda);
 
-            dynamic appEncontrada = null;
-
-            // id-sNombre
-            if (sBusqueda.Contains("-"))
+            if (resultado.success)
             {
-                string[] partes = sBusqueda.Split('-');
-                if (int.TryParse(partes[0], out int idParte))
-                {
-                    var app = controlador.BuscarAplicacionPorId(idParte);
-                    if (app != null)
-                    {
-                        appEncontrada = new
-                        {
-                            iPkIdAplicacion = app.iPkIdAplicacion,
-                            sNombreAplicacion = app.sNombreAplicacion,
-                            sDescripcionAplicacion = app.sDescripcionAplicacion,
-                            bEstadoAplicacion = app.bEstadoAplicacion
-                        };
-                    }
-                }
-            }
-
-            // solo ID
-            int iId = 0;
-            if (appEncontrada == null && int.TryParse(sBusqueda, out int iID))
-            {
-                var app = controlador.BuscarAplicacionPorId(iId);
-                if (app != null)
-                {
-                    appEncontrada = new
-                    {
-                        iPkIdAplicacion = app.iPkIdAplicacion,
-                        sNombreAplicacion = app.sNombreAplicacion,
-                        sDescripcionAplicacion = app.sDescripcionAplicacion,
-                        bEstadoAplicacion = app.bEstadoAplicacion
-                    };
-                }
-            }
-
-            // solo Nombre
-            if (appEncontrada == null)
-            {
-                var app = controlador.BuscarAplicacionPorNombre(sBusqueda);
-                if (app != null)
-                {
-                    appEncontrada = new
-                    {
-                        iPkIdAplicacion = app.iPkIdAplicacion,
-                        sNombreAplicacion = app.sNombreAplicacion,
-                        sDescripcionAplicacion = app.sDescripcionAplicacion,
-                        bEstadoAplicacion = app.bEstadoAplicacion
-                    };
-                }
-            }
-
-            // Mostrar resultado y seleccionar módulo asignado
-            if (appEncontrada != null)
-            {
-                MostrarAplicacion(appEncontrada);
+                MostrarAplicacion(resultado.aplicacion);
 
                 // Obtener módulo asignado
                 Cls_Asignacion_Modulo_Aplicacion_Controlador asignacionCtrl = new Cls_Asignacion_Modulo_Aplicacion_Controlador();
-                int? idModulo = asignacionCtrl.ObtenerModuloPorAplicacion(appEncontrada.iPkIdAplicacion);
+                int? idModulo = asignacionCtrl.ObtenerModuloPorAplicacion(resultado.aplicacion.iPkIdAplicacion);
 
                 if (idModulo.HasValue)
                 {
@@ -252,7 +194,7 @@ namespace Capa_Vista_Seguridad
             }
             else
             {
-                MessageBox.Show("Aplicación no encontrada");
+                MessageBox.Show(resultado.message);
                 fun_LimpiarCampos();
             }
         }
@@ -272,29 +214,38 @@ namespace Capa_Vista_Seguridad
 
             // Obtener ID del reporte seleccionado
             int? idReporte = null;
-            try
+            if (Cbo_id_reporte.SelectedItem != null)
             {
-                if (Cbo_id_reporte.SelectedItem != null)
-                {
-                    var selectedReport = Cbo_id_reporte.SelectedItem;
-                    int reportId = (int)selectedReport.GetType().GetProperty("Id").GetValue(selectedReport);
-
-                    // Solo asignar si el reporte no es "Sin reporte" (0)
-                    if (reportId != 0)
-                        idReporte = reportId;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error al obtener el ID del reporte: {ex.Message}");
-                return;
+                var selectedReport = Cbo_id_reporte.SelectedItem;
+                int reportId = (int)selectedReport.GetType().GetProperty("Id").GetValue(selectedReport);
+                if (reportId != 0)
+                    idReporte = reportId;
             }
 
-            // Llamar al método del controlador con idReporte incluido
+            // Llamar al controlador para modificar (la validación está en el controlador)
             var resultado = controlador.ActualizarAplicacion(id, nombre, descripcion, estado, idReporte);
 
             if (resultado.success)
             {
+                // Si hay módulo seleccionado, actualizar la asignación
+                if (Cbo_id_modulo.SelectedItem != null)
+                {
+                    int idModulo = Convert.ToInt32(((dynamic)Cbo_id_modulo.SelectedItem).Id);
+                    Cls_Asignacion_Modulo_Aplicacion_Controlador asignacionCtrl = new Cls_Asignacion_Modulo_Aplicacion_Controlador();
+
+                    // Primero eliminar asignaciones existentes
+                    // (aquí necesitarías agregar un método en el controlador para eliminar asignaciones por aplicación)
+                    // asignacionCtrl.EliminarAsignacionesPorAplicacion(id);
+
+                    // Luego crear nueva asignación
+                    var resultadoAsignacion = asignacionCtrl.GuardarAsignacion(idModulo, id);
+
+                    if (!resultadoAsignacion.success)
+                    {
+                        MessageBox.Show("modificada error en asignación: " + resultadoAsignacion.message);
+                    }
+                }
+
                 MessageBox.Show("Aplicación modificada correctamente.");
                 ctrlBitacora.RegistrarAccion(
                     Cls_Usuario_Conectado.iIdUsuario,
@@ -318,7 +269,7 @@ namespace Capa_Vista_Seguridad
 
         private void Btn_guardar_Click(object sender, EventArgs e)
         {
-            // Validar que el ID sea numérico
+            // Obtener datos de la vista
             if (!int.TryParse(Txt_id_aplicacion.Text, out int iIdAplicacion))
             {
                 MessageBox.Show("Ingrese un ID válido.");
@@ -329,22 +280,16 @@ namespace Capa_Vista_Seguridad
             string sDescripcion = Txt_descripcion.Text.Trim();
             bool bEstado = Rdb_estado_activo.Checked;
 
-            // Validar ComboBoxes
-            if (Cbo_id_modulo.SelectedItem == null)
+            // Obtener módulo
+            int? iIdModulo = null;
+            if (Cbo_id_modulo.SelectedItem != null)
             {
-                MessageBox.Show("Debe seleccionar un módulo.");
-                return;
+                iIdModulo = Convert.ToInt32(((dynamic)Cbo_id_modulo.SelectedItem).Id);
             }
 
-            if (Cbo_id_reporte.SelectedItem == null)
-            {
-                MessageBox.Show("Debe seleccionar un reporte.");
-                return;
-            }
-
-            // Obtener ID del reporte - MÉTODO DIRECTO
+            // Obtener reporte
             int? idReporte = null;
-            try
+            if (Cbo_id_reporte.SelectedItem != null)
             {
                 var selectedReport = Cbo_id_reporte.SelectedItem;
                 int reportId = (int)selectedReport.GetType().GetProperty("Id").GetValue(selectedReport);
@@ -352,16 +297,10 @@ namespace Capa_Vista_Seguridad
                 {
                     idReporte = reportId;
                 }
-                MessageBox.Show($"DEBUG: ID Reporte a guardar: {idReporte}");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error obteniendo ID de reporte: {ex.Message}");
-                return;
             }
 
-            // Llamar al controlador
-            var resultadoApp = controlador.InsertarAplicacion(iIdAplicacion, sNombre, sDescripcion, bEstado, idReporte);
+            // Llamar al controlador para guardar (la validación está en el controlador)
+            var resultadoApp = controlador.InsertarAplicacion(iIdAplicacion, sNombre, sDescripcion, bEstado, idReporte, iIdModulo);
 
             if (resultadoApp.resultado <= 0)
             {
@@ -369,15 +308,17 @@ namespace Capa_Vista_Seguridad
                 return;
             }
 
-            // Resto del código para módulos...
-            int idModulo = Convert.ToInt32(((dynamic)Cbo_id_modulo.SelectedItem).Id);
-            Cls_Asignacion_Modulo_Aplicacion_Controlador asignacionCtrl = new Cls_Asignacion_Modulo_Aplicacion_Controlador();
-            bool asignacionGuardada = asignacionCtrl.GuardarAsignacion(idModulo, iIdAplicacion);
-
-            if (!asignacionGuardada)
+            // Si el controlador no maneja la asignación, llamar al controlador de asignación
+            if (iIdModulo.HasValue)
             {
-                MessageBox.Show("La asignación ya existe o hubo un error al guardar.");
-                return;
+                Cls_Asignacion_Modulo_Aplicacion_Controlador asignacionCtrl = new Cls_Asignacion_Modulo_Aplicacion_Controlador();
+                var resultadoAsignacion = asignacionCtrl.GuardarAsignacion(iIdModulo.Value, iIdAplicacion);
+
+                if (!resultadoAsignacion.success)
+                {
+                    MessageBox.Show("Aplicación guardada pero error en asignación: " + resultadoAsignacion.message);
+                    return;
+                }
             }
 
             MessageBox.Show("Aplicación y asignación guardadas correctamente.");
