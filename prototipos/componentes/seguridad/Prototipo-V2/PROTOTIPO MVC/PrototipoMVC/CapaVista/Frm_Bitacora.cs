@@ -15,13 +15,13 @@ namespace Capa_Vista_Seguridad
     {
         //Controlador
         private readonly Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador();
+        // Variables de permisos
+        private bool _canConsultar, _canImprimir;
 
-        //Constructor
         public Frm_Bitacora()
         {
             InitializeComponent();
 
-            // Control de errores de inicialización del formulario    ---   protege la vista en caso de fallos al cargar datos 
             try
             {
                 fun_CargarUsuariosEnCombo(); //Carga inicial
@@ -33,6 +33,38 @@ namespace Capa_Vista_Seguridad
                 MessageBox.Show(ex.Message, "Error al cargar la Bitácora",
                                 MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
+            fun_AplicarPermisos(); // APLICAR PERMISOS AL FINAL
+        }
+        //Brandon Hernandez 0901-22-9663 15/10/2025
+        private void fun_AplicarPermisos()
+        {
+            int idUsuario = Cls_Usuario_Conectado.iIdUsuario;
+            var usuarioCtrl = new Cls_Usuario_Controlador();
+            var permisoUsuario = new Capa_Modelo_Seguridad.Cls_Permiso_Usuario();
+
+            int idAplicacion = permisoUsuario.ObtenerIdAplicacionPorNombre("Bitacora");
+            if (idAplicacion <= 0) idAplicacion = 309; // Cambia por tu ID real si aplica
+            int idModulo = permisoUsuario.ObtenerIdModuloPorNombre("Seguridad");
+            int idPerfil = usuarioCtrl.ObtenerIdPerfilDeUsuario(idUsuario);
+
+            var permisos = Cls_Aplicacion_Permisos.ObtenerPermisosCombinados(idUsuario, idAplicacion, idModulo, idPerfil);
+
+            _canConsultar = permisos.consultar;
+            _canImprimir = permisos.imprimir;
+
+            // Botones principales
+            if (Btn_Consultar != null) Btn_Consultar.Enabled = _canConsultar;
+            if (Btn_Exportar != null) Btn_Exportar.Enabled = _canImprimir;
+            if (Btn_Imprimir != null) Btn_Imprimir.Enabled = _canImprimir;
+            if (Btn_BuscarRango != null) Btn_BuscarRango.Enabled = _canConsultar;
+            if (Btn_BuscarFecha != null) Btn_BuscarFecha.Enabled = _canConsultar;
+            if (Btn_BuscarUsuario != null) Btn_BuscarUsuario.Enabled = _canConsultar;
+            if (button1 != null) button1.Enabled = _canImprimir; // Botón de reporte
+
+            // Controles de filtro y DataGrid
+            if (Cbo_Usuario != null) Cbo_Usuario.Enabled = _canConsultar;
+            if (Dgv_Bitacora != null) Dgv_Bitacora.Enabled = _canConsultar;
         }
 
         //Mostrar en pantalla
@@ -96,6 +128,7 @@ namespace Capa_Vista_Seguridad
         private void Btn_Consultar_Click(object sender, EventArgs e)
         {
             CargarEnGrid(ctrlBitacora.MostrarBitacora());
+            fun_AplicarPermisos();
         }
 
         //Exportar
@@ -196,6 +229,7 @@ namespace Capa_Vista_Seguridad
             Dtp_SegundaFecha.Visible = true;
             Btn_Imprimir.Visible = true;
             CargarEnGrid(ctrlBitacora.BuscarPorRango(Dtp_PrimeraFecha.Value, Dtp_SegundaFecha.Value));
+            fun_AplicarPermisos();
         }
 
         //Filtros por fecha específica
@@ -206,6 +240,7 @@ namespace Capa_Vista_Seguridad
             Dtp_FechaEspecifica.Visible = true;
             Btn_Imprimir.Visible = true;
             CargarEnGrid(ctrlBitacora.BuscarPorFecha(Dtp_FechaEspecifica.Value));
+            fun_AplicarPermisos();
         }
 
         //Filtros por usuario
@@ -221,25 +256,35 @@ namespace Capa_Vista_Seguridad
             {
                 CargarEnGrid(ctrlBitacora.BuscarPorUsuario(idUsuario));
             }
+            fun_AplicarPermisos();
         }
 
         //Eventos de cambio de fecha
         private void Dtp_FechaEspecifica_ValueChanged(object sender, EventArgs e)
         {
             if (Dtp_FechaEspecifica.Visible)
+            {
                 CargarEnGrid(ctrlBitacora.BuscarPorFecha(Dtp_FechaEspecifica.Value));
+                fun_AplicarPermisos();
+            }
         }
 
         private void Dtp_PrimeraFecha_ValueChanged(object sender, EventArgs e)
         {
             if (Dtp_PrimeraFecha.Visible && Dtp_SegundaFecha.Visible)
+            {
                 CargarEnGrid(ctrlBitacora.BuscarPorRango(Dtp_PrimeraFecha.Value, Dtp_SegundaFecha.Value));
+                fun_AplicarPermisos();
+            }
         }
 
         private void Dtp_SegundaFecha_ValueChanged(object sender, EventArgs e)
         {
             if (Dtp_PrimeraFecha.Visible && Dtp_SegundaFecha.Visible)
+            {
                 CargarEnGrid(ctrlBitacora.BuscarPorRango(Dtp_PrimeraFecha.Value, Dtp_SegundaFecha.Value));
+                fun_AplicarPermisos();
+            }
         }
 
         private void Cbo_Usuario_SelectedIndexChanged(object sender, EventArgs e)
@@ -247,6 +292,7 @@ namespace Capa_Vista_Seguridad
             if (!Cbo_Usuario.Visible || Cbo_Usuario.SelectedValue == null) return;
             if (int.TryParse(Cbo_Usuario.SelectedValue.ToString(), out int idUsuario))
                 CargarEnGrid(ctrlBitacora.BuscarPorUsuario(idUsuario));
+            fun_AplicarPermisos();
         }
 
         //Panel superior
@@ -272,8 +318,7 @@ namespace Capa_Vista_Seguridad
         {
             Frm_Reporte_Bitacoras frm = new Frm_Reporte_Bitacoras();
             frm.Show();
+            fun_AplicarPermisos();
         }
     }
 }
-
-//Fin del código de Arón Ricardo Esquit Silva   0901-22-13036   14/10/2025

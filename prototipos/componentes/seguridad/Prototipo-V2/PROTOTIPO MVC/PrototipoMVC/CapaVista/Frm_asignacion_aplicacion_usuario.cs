@@ -15,13 +15,52 @@ namespace Capa_Vista_Seguridad
         Cls_ControladorAsignacionUsuarioAplicacion controlador = new Cls_ControladorAsignacionUsuarioAplicacion();
         Cls_Registrar_Permisos_Bitacora registrarBitacora = new Cls_Registrar_Permisos_Bitacora();  //Aron Esquit  0901-22-13036
         Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador(); // Bitácora Aron Esquit 0901-22-13036
+        private bool _canIngresar, _canConsultar, _canModificar, _canEliminar, _canImprimir;
+
 
         public Frm_asignacion_aplicacion_usuario()
         {
             InitializeComponent();
+            fun_AplicarPermisos();
             this.Load += frmAsignacion_aplicacion_usuario_Load;
             Cbo_Modulos.SelectedIndexChanged += Cbo_Modulos_SelectedIndexChanged;
+            
         }
+        //Brandon Hernandez 0901-22-9663 15/10/2025
+        private void fun_AplicarPermisos()
+        {
+            int idUsuario = Capa_Modelo_Seguridad.Cls_Usuario_Conectado.iIdUsuario;
+            var usuarioCtrl = new Cls_Usuario_Controlador();
+            var permisoUsuario = new Cls_Permiso_Usuario();
+
+            int idAplicacion = permisoUsuario.ObtenerIdAplicacionPorNombre("Asig Aplicacion Usuario");
+            if (idAplicacion <= 0) idAplicacion = 306; // Usa tu ID real aquí
+            int idModulo = permisoUsuario.ObtenerIdModuloPorNombre("Seguridad");
+            int idPerfil = usuarioCtrl.ObtenerIdPerfilDeUsuario(idUsuario);
+
+            var permisos = Cls_Aplicacion_Permisos.ObtenerPermisosCombinados(idUsuario, idAplicacion, idModulo, idPerfil);
+
+            _canIngresar = permisos.ingresar;
+            _canConsultar = permisos.consultar;
+            _canModificar = permisos.modificar;
+            _canEliminar = permisos.eliminar;
+            _canImprimir = permisos.imprimir;
+
+            // Habilitar/deshabilitar controles según permisos
+            if (Btn_agregar != null) Btn_agregar.Enabled = _canIngresar;
+            if (Btn_finalizar != null) Btn_finalizar.Enabled = _canIngresar || _canModificar;
+            if (Btn_quitar != null) Btn_quitar.Enabled = _canConsultar;
+            if (Btn_Buscar != null) Btn_Buscar.Enabled = _canConsultar;
+            if (Btn_salir != null) Btn_salir.Enabled = true;
+
+            // Combos y DataGridView
+            Cbo_Usuarios.Enabled = _canConsultar || _canIngresar || _canModificar;
+            Cbo_Modulos.Enabled = _canConsultar || _canIngresar || _canModificar;
+            Cbo_Aplicaciones.Enabled = _canConsultar || _canIngresar || _canModificar;
+            Dgv_Permisos.Enabled = _canConsultar || _canIngresar || _canModificar || _canEliminar;
+        }
+
+
 
         private void frmAsignacion_aplicacion_usuario_Load(object sender, EventArgs e)
         {
@@ -442,87 +481,10 @@ namespace Capa_Vista_Seguridad
         }
 
 
-        /* 0901-21-1115 
-    Marcos Velásquez Alcántara
-        
-         Filtros de Permisos 
-         */
 
 
-        private void fun_AplicarPermisos()
-        {
-            try
-            {
-                // Obtener ID del usuario conectado
-                int iIdUsuario = Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario;
+      
 
-                // Instancias de clases del modelo
-                Cls_Permiso_Usuario clsPermisoUsuario = new Cls_Permiso_Usuario();
-                Cls_Asignacion_Permiso_PerfilesDAO clsAsignacionPermisoPerfilDAO = new Cls_Asignacion_Permiso_PerfilesDAO();
-
-                // Obtener IDs según nombres
-                int iIdAplicacion = clsPermisoUsuario.ObtenerIdAplicacionPorNombre("Asig aplicacion Perfil");
-                int iIdModulo = clsPermisoUsuario.ObtenerIdModuloPorNombre("Seguridad");
-
-                // Inicializar permisos en false
-                bool bIngresar = false, bConsultar = false, bModificar = false, bEliminar = false, bImprimir = false;
-
-                // 1️⃣ Consultar permisos específicos del usuario
-                var vPermisosUsuario = clsPermisoUsuario.ConsultarPermisos(iIdUsuario, iIdAplicacion, iIdModulo);
-
-                if (vPermisosUsuario.HasValue)
-                {
-                    bIngresar = vPermisosUsuario.Value.ingresar;
-                    bConsultar = vPermisosUsuario.Value.consultar;
-                    bModificar = vPermisosUsuario.Value.modificar;
-                    bEliminar = vPermisosUsuario.Value.eliminar;
-                    bImprimir = vPermisosUsuario.Value.imprimir;
-                }
-
-                // 2️⃣ Si algún permiso no está activo, verificar permisos por perfil
-                if (!bIngresar || !bConsultar || !bModificar || !bEliminar || !bImprimir)
-                {
-                    DataTable dtPerfiles = clsAsignacionPermisoPerfilDAO.datObtenerPerfiles();
-
-                    foreach (DataRow rowPerfil in dtPerfiles.Rows)
-                    {
-                        int iIdPerfil = Convert.ToInt32(rowPerfil["Pk_Id_Perfil"]);
-                        DataTable dtPermisosPerfil = clsAsignacionPermisoPerfilDAO.ObtenerPermisosPerfilAplicacion(iIdPerfil, iIdAplicacion);
-
-                        if (dtPermisosPerfil.Rows.Count > 0)
-                        {
-                            DataRow rowPermiso = dtPermisosPerfil.Rows[0];
-
-                            // Actualizar solo los permisos que estén en false
-                            if (!bIngresar && Convert.ToBoolean(rowPermiso["bIngresar"]))
-                                bIngresar = true;
-
-                            if (!bConsultar && Convert.ToBoolean(rowPermiso["bConsultar"]))
-                                bConsultar = true;
-
-                            if (!bModificar && Convert.ToBoolean(rowPermiso["bModificar"]))
-                                bModificar = true;
-
-                            if (!bEliminar && Convert.ToBoolean(rowPermiso["bEliminar"]))
-                                bEliminar = true;
-
-                            if (!bImprimir && Convert.ToBoolean(rowPermiso["bImprimir"]))
-                                bImprimir = true;
-                        }
-                    }
-                }
-
-                // 3️⃣ Aplicar permisos a botones del formulario
-                Btn_agregar.Enabled = bIngresar;
-                Btn_Buscar.Enabled = bConsultar;
-                Btn_quitar.Enabled = bEliminar || bModificar;
-                Btn_finalizar.Enabled = bModificar || bIngresar;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al aplicar permisos: " + ex.Message);
-            }
-        }
 
 
 

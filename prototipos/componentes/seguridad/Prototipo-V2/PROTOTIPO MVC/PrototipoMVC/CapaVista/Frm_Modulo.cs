@@ -1,57 +1,83 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 using Capa_Controlador_Seguridad;
-using Capa_Modelo_Seguridad;
 
 namespace Capa_Vista_Seguridad
 {
     public partial class Frm_Modulo : Form
     {
-        Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador(); // Para registrar acciones en la bitácora
-        Cls_Modulos_Controlador cm = new Cls_Modulos_Controlador(); // Controlador de módulos
+        Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador();
+        Cls_Modulos_Controlador cm = new Cls_Modulos_Controlador();
 
-        private Frm_Reporte_modulos frmReporte = null; // Ventana de reportes
+        bool _canIngresar, _canConsultar, _canModificar, _canEliminar, _canImprimir;
+
+        Frm_Reporte_modulos frmReporte = null;
 
         public Frm_Modulo()
         {
             InitializeComponent();
-      
+            this.Load += frmModulo_Load;
         }
+
+        public Frm_Modulo(int idAplicacion) : this() { }
 
         private void frmModulo_Load(object sender, EventArgs e)
         {
-            fun_CargarComboBox(); // Llena el combo de búsqueda al cargar
+            fun_AplicarPermisos();
+            fun_CargarComboBox();
         }
+        //Carlo Sosa 0901-22-1106 15/10/2025
+        //Brandon Hernandez 0901-22-9663 15/10/2025
+        private void fun_AplicarPermisos()
+        {
+            int idUsuario = Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario;
+            var usuarioCtrl = new Cls_Usuario_Controlador();
 
+            // Usa la clase correcta para obtener los IDs
+            var permisoUsuario = new Capa_Modelo_Seguridad.Cls_Permiso_Usuario();
+
+            int idAplicacion = permisoUsuario.ObtenerIdAplicacionPorNombre("Modulos");
+            if (idAplicacion <= 0) idAplicacion = 304;
+            int idModulo = permisoUsuario.ObtenerIdModuloPorNombre("Seguridad");
+            int idPerfil = usuarioCtrl.ObtenerIdPerfilDeUsuario(idUsuario);
+
+            var permisos = Cls_Aplicacion_Permisos.ObtenerPermisosCombinados(idUsuario, idAplicacion, idModulo, idPerfil);
+
+            _canIngresar = permisos.ingresar;
+            _canConsultar = permisos.consultar;
+            _canModificar = permisos.modificar;
+            _canEliminar = permisos.eliminar;
+            _canImprimir = permisos.imprimir;
+
+            if (Btn_guardar != null) Btn_guardar.Enabled = (_canIngresar || _canModificar);
+            if (Btn_eliminar != null) Btn_eliminar.Enabled = _canEliminar;
+            if (Btn_buscar != null) Btn_buscar.Enabled = _canConsultar;
+            if (Btn_reporte != null) Btn_reporte.Enabled = _canImprimir;
+
+            bool puedeEditar = (_canIngresar || _canModificar);
+            Txt_id.Enabled = puedeEditar;
+            Txt_nombre.Enabled = puedeEditar;
+            Txt_descripcion.Enabled = puedeEditar;
+            Rdb_habilitado.Enabled = puedeEditar;
+            Rdb_inabilitado.Enabled = puedeEditar;
+        }
         private void fun_CargarComboBox()
         {
-            // Limpia y vuelve a cargar los módulos en el combo
             Cbo_busqueda.Items.Clear();
             string[] items = cm.ItemsModulos();
-            foreach (var item in items)
-            {
-                Cbo_busqueda.Items.Add(item);
-            }
+            foreach (var item in items) Cbo_busqueda.Items.Add(item);
         }
 
         private void Btn_guardar_Click(object sender, EventArgs e)
         {
-            // Validaciones de campos requeridos
             if (string.IsNullOrEmpty(Txt_id.Text) || string.IsNullOrEmpty(Txt_nombre.Text))
             {
                 MessageBox.Show("Debe ingresar Id y Nombre.");
                 return;
             }
 
-            // Validar que el Id sea numérico
             if (!int.TryParse(Txt_id.Text, out int Pk_Id_Modulo))
             {
                 MessageBox.Show("Id debe ser un número.");
@@ -62,47 +88,27 @@ namespace Capa_Vista_Seguridad
             string sCmp_Descripcion_Modulo = Txt_descripcion.Text;
             byte btCmp_Estado_Modulo = (Rdb_habilitado.Checked) ? (byte)1 : (byte)0;
 
-            // Verifica si el módulo ya existe
             DataRow dr = cm.BuscarModulo(Pk_Id_Modulo);
             bool bResultado = false;
 
             if (dr == null)
             {
-                // Si no existe - insertar
+                if (!_canIngresar) { MessageBox.Show("No tiene permiso para ingresar."); return; }
                 bResultado = cm.InsertarModulo(Pk_Id_Modulo, sCmp_Nombre_Modulo, sCmp_Descripcion_Modulo, btCmp_Estado_Modulo);
             }
             else
             {
-                // Si ya existe - advertir al usuario antes de modificar
-                DialogResult respuesta = MessageBox.Show(
-                    "El Id ingresado ya existe. ¿Desea actualizar este módulo?",
-                    "Módulo existente",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question
-                );
-
-                if (respuesta == DialogResult.No)
-                {
-                    return; // Cancela si el usuario no desea modificar
-                }
-
-                // Modifica el registro
+                if (!_canModificar) { MessageBox.Show("No tiene permiso para modificar."); return; }
+                DialogResult respuesta = MessageBox.Show("El Id ingresado ya existe. ¿Desea actualizar este módulo?", "Módulo existente", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (respuesta == DialogResult.No) return;
                 bResultado = cm.ModificarModulo(Pk_Id_Modulo, sCmp_Nombre_Modulo, sCmp_Descripcion_Modulo, btCmp_Estado_Modulo);
             }
 
             if (bResultado)
             {
                 MessageBox.Show("Guardado correctamente!");
-                fun_CargarComboBox(); // Refresca combo
-
-                //Registrar en bitácora   Arón Esquit 0901-22-13036
-                ctrlBitacora.RegistrarAccion(
-                    Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario,
-                    1,
-                    $"Guardó el módulo: {Txt_nombre.Text}",
-                    true
-                );
-
+                fun_CargarComboBox();
+                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, $"Guardó el módulo: {Txt_nombre.Text}", true);
                 fun_LimpiarCampos();
                 Txt_id.Enabled = true;
             }
@@ -112,10 +118,8 @@ namespace Capa_Vista_Seguridad
             }
         }
 
-
         private void Btn_nuevo_Click(object sender, EventArgs e)
         {
-            // Limpia campos y prepara para un nuevo registro
             Txt_id.Clear();
             Txt_nombre.Clear();
             Txt_descripcion.Clear();
@@ -127,33 +131,27 @@ namespace Capa_Vista_Seguridad
 
         private void Btn_eliminar_Click(object sender, EventArgs e)
         {
-            // Validar campo Id
+            if (!_canEliminar) { MessageBox.Show("No tiene permiso para eliminar."); return; }
             if (string.IsNullOrEmpty(Txt_id.Text))
             {
                 MessageBox.Show("Ingrese el Id del módulo a eliminar.");
                 return;
             }
-
             if (!int.TryParse(Txt_id.Text, out int Pk_Id_Modulo))
             {
                 MessageBox.Show("Id debe ser un número.");
                 return;
             }
-
-            // Verifica si el módulo está en uso
             if (cm.ModuloEnUso(Pk_Id_Modulo))
             {
                 MessageBox.Show("No se puede eliminar el módulo porque está siendo utilizado en una aplicación.");
                 return;
             }
-
-            // Intenta eliminar
             bool bResultado = cm.EliminarModulo(Pk_Id_Modulo);
             if (bResultado)
             {
                 MessageBox.Show("Módulo eliminado correctamente.");
                 fun_CargarComboBox();
-                //Registrar en bitacora   Aron Esquit 0901-22-13036
                 ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, $"Eliminó el módulo: {Txt_nombre.Text}", true);
                 fun_LimpiarCampos();
                 Txt_id.Enabled = true;
@@ -166,21 +164,18 @@ namespace Capa_Vista_Seguridad
 
         private void Btn_buscar_Click(object sender, EventArgs e)
         {
-            // Validar que se haya seleccionado algo
+            if (!_canConsultar) { MessageBox.Show("No tiene permiso para consultar."); return; }
             if (Cbo_busqueda.SelectedItem == null)
             {
                 MessageBox.Show("Seleccione un módulo para buscar.");
                 return;
             }
-
-            // Obtiene el Id desde el item seleccionado
             string sSeleccionado = Cbo_busqueda.SelectedItem.ToString();
             int Pk_Id_Modulo = int.Parse(sSeleccionado.Split('-')[0].Trim());
 
             DataRow dr = cm.BuscarModulo(Pk_Id_Modulo);
             if (dr != null)
             {
-                // Muestra la info en los campos
                 Txt_id.Text = dr["Pk_Id_Modulo"].ToString();
                 Txt_nombre.Text = dr["Cmp_Nombre_Modulo"].ToString();
                 Txt_descripcion.Text = dr["Cmp_Descripcion_Modulo"].ToString();
@@ -200,7 +195,6 @@ namespace Capa_Vista_Seguridad
 
         private void fun_LimpiarCampos()
         {
-            // Resetea todos los campos
             Txt_id.Clear();
             Txt_nombre.Clear();
             Txt_descripcion.Clear();
@@ -209,7 +203,6 @@ namespace Capa_Vista_Seguridad
             Cbo_busqueda.SelectedIndex = -1;
         }
 
-        // Constantes y métodos para mover la ventana arrastrando el panel superior
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HTCAPTION = 0x2;
 
@@ -221,7 +214,7 @@ namespace Capa_Vista_Seguridad
 
         private void Pic_Cerrar_Click(object sender, EventArgs e)
         {
-            this.Close(); // Cierra la ventana
+            this.Close();
         }
 
         private void Pnl_Superior_MouseDown(object sender, MouseEventArgs e)
@@ -235,7 +228,7 @@ namespace Capa_Vista_Seguridad
 
         private void Btn_reporte_Click(object sender, EventArgs e)
         {
-            // Evita abrir múltiples ventanas de reporte
+            if (!_canImprimir) { MessageBox.Show("No tiene permiso para imprimir/reportar."); return; }
             if (frmReporte == null || frmReporte.IsDisposed)
             {
                 frmReporte = new Frm_Reporte_modulos();
@@ -247,7 +240,5 @@ namespace Capa_Vista_Seguridad
                 frmReporte.BringToFront();
             }
         }
-
-      
     }
 }
