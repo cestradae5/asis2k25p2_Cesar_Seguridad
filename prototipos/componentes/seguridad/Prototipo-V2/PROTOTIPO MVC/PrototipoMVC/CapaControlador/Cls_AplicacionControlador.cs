@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Capa_Modelo_Seguridad;
+using System.Data;
+using System.Data.Odbc;
 
 namespace Capa_Controlador_Seguridad
 {
@@ -39,6 +41,7 @@ namespace Capa_Controlador_Seguridad
 
         public (int resultado, string mensaje) InsertarAplicacion(int iIdAplicacion, string sNombre, string sDescripcion, bool bEstado, int? iIdReporte = null)
         {
+            Console.WriteLine($"DEBUG Controlador: IDReporte = {iIdReporte}");
             var validacion = ValidarDatosAplicacion(iIdAplicacion, sNombre, sDescripcion);
             if (!validacion.success)
                 return (0, validacion.message);
@@ -82,7 +85,7 @@ namespace Capa_Controlador_Seguridad
         }
 
         // Método comentado ya que el botón de eliminar no se usará
-        
+
         public (bool success, string message) EliminarAplicacion(int iIdAplicacion)
         {
             if (iIdAplicacion <= 0)
@@ -90,7 +93,7 @@ namespace Capa_Controlador_Seguridad
 
             if (TieneRelaciones(iIdAplicacion))
             {
-                return (false, 
+                return (false,
                     "**Imposible Eliminar.** Esta aplicación se encuentra relacionada con uno o más módulos o permisos, lo que afectaría la integridad referencial del sistema. Por favor, inspeccione primero las relaciones (asignaciones) de la aplicación.");
             }
 
@@ -103,7 +106,7 @@ namespace Capa_Controlador_Seguridad
         {
             return daoAplicacion.pro_BorrarAplicacion(iIdAplicacion) > 0;
         }
-        
+
 
         public Cls_Aplicacion BuscarAplicacionPorId(int iIdAplicacion)
         {
@@ -120,6 +123,33 @@ namespace Capa_Controlador_Seguridad
         public bool TieneRelaciones(int iIdAplicacion)
         {
             return daoAplicacion.fun_VerificarRelaciones(iIdAplicacion);
+        }
+        public DataTable ObtenerReportes()
+        {
+            return daoAplicacion.ObtenerReportes();
+        }
+
+        // También agrega este método de validación si lo necesitas
+        public (bool success, string message) ValidarReporte(int idReporte)
+        {
+            if (idReporte <= 0)
+                return (false, "ID de reporte inválido");
+
+            var reportes = ObtenerReportes();
+            bool existe = false;
+            foreach (DataRow row in reportes.Rows)
+            {
+                if ((int)row["Pk_Id_Reporte"] == idReporte)
+                {
+                    existe = true;
+                    break;
+                }
+            }
+
+            if (!existe)
+                return (false, "El reporte seleccionado no existe");
+
+            return (true, "Válido");
         }
     }
 }

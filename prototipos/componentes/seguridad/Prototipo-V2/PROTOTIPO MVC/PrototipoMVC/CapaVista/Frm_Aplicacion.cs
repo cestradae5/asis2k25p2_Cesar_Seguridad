@@ -25,6 +25,7 @@ namespace Capa_Vista_Seguridad
             fun_CargarAplicaciones();
             fun_ConfigurarComboBox();
             fun_CargarComboModulos();
+            fun_CargarComboReportes();
         }
 
         private void RecargarTodo()
@@ -33,6 +34,33 @@ namespace Capa_Vista_Seguridad
             Cbo_buscar.Items.Clear();
             Cbo_id_modulo.Items.Clear();
             CargarDatosIniciales();
+        }
+        private void fun_CargarComboReportes()
+        {
+            DataTable dtReportes = controlador.ObtenerReportes();
+
+            Cbo_id_reporte.Items.Clear();
+
+            // Agregar opción "Sin reporte" con valor 0
+            Cbo_id_reporte.Items.Add(new { Display = "Sin reporte", Id = 0 });
+
+            foreach (DataRow row in dtReportes.Rows)
+            {
+                int idReporte = Convert.ToInt32(row["Pk_Id_Reporte"]);
+                Cbo_id_reporte.Items.Add(new
+                {
+                    Display = idReporte.ToString(),
+                    Id = idReporte
+                });
+            }
+
+            // Configurar DISPLAY y VALUE members DESPUÉS de agregar items
+            Cbo_id_reporte.DisplayMember = "Display";
+            Cbo_id_reporte.ValueMember = "Id";
+
+            // Seleccionar "Sin reporte" por defecto
+            if (Cbo_id_reporte.Items.Count > 0)
+                Cbo_id_reporte.SelectedIndex = 0;
         }
 
         private void fun_CargarAplicaciones()
@@ -204,13 +232,38 @@ namespace Capa_Vista_Seguridad
             string descripcion = Txt_descripcion.Text.Trim();
             bool estado = Rdb_estado_activo.Checked;
 
-            // Usar el método del controlador que incluye validaciones
-            var resultado = controlador.ActualizarAplicacion(id, nombre, descripcion, estado, null);
+            // Obtener ID del reporte seleccionado
+            int? idReporte = null;
+            try
+            {
+                if (Cbo_id_reporte.SelectedItem != null)
+                {
+                    var selectedReport = Cbo_id_reporte.SelectedItem;
+                    int reportId = (int)selectedReport.GetType().GetProperty("Id").GetValue(selectedReport);
+
+                    // Solo asignar si el reporte no es "Sin reporte" (0)
+                    if (reportId != 0)
+                        idReporte = reportId;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al obtener el ID del reporte: {ex.Message}");
+                return;
+            }
+
+            // Llamar al método del controlador con idReporte incluido
+            var resultado = controlador.ActualizarAplicacion(id, nombre, descripcion, estado, idReporte);
 
             if (resultado.success)
             {
                 MessageBox.Show("Aplicación modificada correctamente.");
-                ctrlBitacora.RegistrarAccion(Cls_Usuario_Conectado.iIdUsuario, 1, $"Modificó la aplicación: {Txt_Nombre_aplicacion.Text}", true);
+                ctrlBitacora.RegistrarAccion(
+                    Cls_Usuario_Conectado.iIdUsuario,
+                    1,
+                    $"Modificó la aplicación: {Txt_Nombre_aplicacion.Text} (Reporte ID: {idReporte?.ToString() ?? "Sin reporte"})",
+                    true
+                );
                 RecargarTodo();
             }
             else
@@ -218,6 +271,7 @@ namespace Capa_Vista_Seguridad
                 MessageBox.Show("Error al modificar la aplicación: " + resultado.message);
             }
         }
+
 
         private void Btn_nuevo_Click(object sender, EventArgs e)
         {
@@ -237,8 +291,39 @@ namespace Capa_Vista_Seguridad
             string sDescripcion = Txt_descripcion.Text.Trim();
             bool bEstado = Rdb_estado_activo.Checked;
 
-            // Usar el método del controlador que incluye validaciones
-            var resultadoApp = controlador.InsertarAplicacion(iIdAplicacion, sNombre, sDescripcion, bEstado, null);
+            // Validar ComboBoxes
+            if (Cbo_id_modulo.SelectedItem == null)
+            {
+                MessageBox.Show("Debe seleccionar un módulo.");
+                return;
+            }
+
+            if (Cbo_id_reporte.SelectedItem == null)
+            {
+                MessageBox.Show("Debe seleccionar un reporte.");
+                return;
+            }
+
+            // Obtener ID del reporte - MÉTODO DIRECTO
+            int? idReporte = null;
+            try
+            {
+                var selectedReport = Cbo_id_reporte.SelectedItem;
+                int reportId = (int)selectedReport.GetType().GetProperty("Id").GetValue(selectedReport);
+                if (reportId != 0)
+                {
+                    idReporte = reportId;
+                }
+                MessageBox.Show($"DEBUG: ID Reporte a guardar: {idReporte}");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error obteniendo ID de reporte: {ex.Message}");
+                return;
+            }
+
+            // Llamar al controlador
+            var resultadoApp = controlador.InsertarAplicacion(iIdAplicacion, sNombre, sDescripcion, bEstado, idReporte);
 
             if (resultadoApp.resultado <= 0)
             {
@@ -246,10 +331,8 @@ namespace Capa_Vista_Seguridad
                 return;
             }
 
-            // Obtener ID del módulo seleccionado
+            // Resto del código para módulos...
             int idModulo = Convert.ToInt32(((dynamic)Cbo_id_modulo.SelectedItem).Id);
-
-            // Guardar asignación
             Cls_Asignacion_Modulo_Aplicacion_Controlador asignacionCtrl = new Cls_Asignacion_Modulo_Aplicacion_Controlador();
             bool asignacionGuardada = asignacionCtrl.GuardarAsignacion(idModulo, iIdAplicacion);
 

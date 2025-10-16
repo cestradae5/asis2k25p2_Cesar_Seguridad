@@ -41,6 +41,8 @@ namespace Capa_Vista_Seguridad
             this.Txt_Nombre_aplicacion = new System.Windows.Forms.TextBox();
             this.Txt_descripcion = new System.Windows.Forms.TextBox();
             this.Gbp_datos_aplicacion = new System.Windows.Forms.GroupBox();
+            this.Cbo_id_reporte = new System.Windows.Forms.ComboBox();
+            this.lbl_id_reporte = new System.Windows.Forms.Label();
             this.Cbo_id_modulo = new System.Windows.Forms.ComboBox();
             this.Gbp_estado_aplicacion = new System.Windows.Forms.GroupBox();
             this.Rdb_inactivo = new System.Windows.Forms.RadioButton();
@@ -140,7 +142,7 @@ namespace Capa_Vista_Seguridad
             // 
             this.Lbl_id_modulo.AutoSize = true;
             this.Lbl_id_modulo.Font = new System.Drawing.Font("Rockwell", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Lbl_id_modulo.Location = new System.Drawing.Point(49, 101);
+            this.Lbl_id_modulo.Location = new System.Drawing.Point(49, 150);
             this.Lbl_id_modulo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.Lbl_id_modulo.Name = "Lbl_id_modulo";
             this.Lbl_id_modulo.Size = new System.Drawing.Size(106, 22);
@@ -151,7 +153,7 @@ namespace Capa_Vista_Seguridad
             // 
             this.Lbl_nombre_aplicacion.AutoSize = true;
             this.Lbl_nombre_aplicacion.Font = new System.Drawing.Font("Rockwell", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Lbl_nombre_aplicacion.Location = new System.Drawing.Point(48, 165);
+            this.Lbl_nombre_aplicacion.Location = new System.Drawing.Point(48, 214);
             this.Lbl_nombre_aplicacion.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.Lbl_nombre_aplicacion.Name = "Lbl_nombre_aplicacion";
             this.Lbl_nombre_aplicacion.Size = new System.Drawing.Size(187, 22);
@@ -162,7 +164,7 @@ namespace Capa_Vista_Seguridad
             // 
             this.Lbl_descripcion.AutoSize = true;
             this.Lbl_descripcion.Font = new System.Drawing.Font("Rockwell", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Lbl_descripcion.Location = new System.Drawing.Point(48, 218);
+            this.Lbl_descripcion.Location = new System.Drawing.Point(48, 267);
             this.Lbl_descripcion.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.Lbl_descripcion.Name = "Lbl_descripcion";
             this.Lbl_descripcion.Size = new System.Drawing.Size(120, 22);
@@ -172,7 +174,7 @@ namespace Capa_Vista_Seguridad
             // Txt_Nombre_aplicacion
             // 
             this.Txt_Nombre_aplicacion.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(236)))), ((int)(((byte)(238)))));
-            this.Txt_Nombre_aplicacion.Location = new System.Drawing.Point(299, 163);
+            this.Txt_Nombre_aplicacion.Location = new System.Drawing.Point(299, 212);
             this.Txt_Nombre_aplicacion.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.Txt_Nombre_aplicacion.Name = "Txt_Nombre_aplicacion";
             this.Txt_Nombre_aplicacion.Size = new System.Drawing.Size(535, 33);
@@ -181,7 +183,7 @@ namespace Capa_Vista_Seguridad
             // Txt_descripcion
             // 
             this.Txt_descripcion.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(236)))), ((int)(((byte)(238)))));
-            this.Txt_descripcion.Location = new System.Drawing.Point(299, 213);
+            this.Txt_descripcion.Location = new System.Drawing.Point(299, 262);
             this.Txt_descripcion.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.Txt_descripcion.Name = "Txt_descripcion";
             this.Txt_descripcion.Size = new System.Drawing.Size(535, 33);
@@ -189,6 +191,8 @@ namespace Capa_Vista_Seguridad
             // 
             // Gbp_datos_aplicacion
             // 
+            this.Gbp_datos_aplicacion.Controls.Add(this.Cbo_id_reporte);
+            this.Gbp_datos_aplicacion.Controls.Add(this.lbl_id_reporte);
             this.Gbp_datos_aplicacion.Controls.Add(this.Cbo_id_modulo);
             this.Gbp_datos_aplicacion.Controls.Add(this.Txt_descripcion);
             this.Gbp_datos_aplicacion.Controls.Add(this.Txt_Nombre_aplicacion);
@@ -202,16 +206,35 @@ namespace Capa_Vista_Seguridad
             this.Gbp_datos_aplicacion.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.Gbp_datos_aplicacion.Name = "Gbp_datos_aplicacion";
             this.Gbp_datos_aplicacion.Padding = new System.Windows.Forms.Padding(4, 2, 4, 2);
-            this.Gbp_datos_aplicacion.Size = new System.Drawing.Size(912, 260);
+            this.Gbp_datos_aplicacion.Size = new System.Drawing.Size(912, 319);
             this.Gbp_datos_aplicacion.TabIndex = 16;
             this.Gbp_datos_aplicacion.TabStop = false;
             this.Gbp_datos_aplicacion.Text = "Datos de aplicacion";
+            // 
+            // Cbo_id_reporte
+            // 
+            this.Cbo_id_reporte.FormattingEnabled = true;
+            this.Cbo_id_reporte.Location = new System.Drawing.Point(299, 91);
+            this.Cbo_id_reporte.Name = "Cbo_id_reporte";
+            this.Cbo_id_reporte.Size = new System.Drawing.Size(534, 33);
+            this.Cbo_id_reporte.TabIndex = 18;
+            // 
+            // lbl_id_reporte
+            // 
+            this.lbl_id_reporte.AutoSize = true;
+            this.lbl_id_reporte.Font = new System.Drawing.Font("Rockwell", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_id_reporte.Location = new System.Drawing.Point(48, 101);
+            this.lbl_id_reporte.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_id_reporte.Name = "lbl_id_reporte";
+            this.lbl_id_reporte.Size = new System.Drawing.Size(108, 22);
+            this.lbl_id_reporte.TabIndex = 17;
+            this.lbl_id_reporte.Text = "ID Reporte";
             // 
             // Cbo_id_modulo
             // 
             this.Cbo_id_modulo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(236)))), ((int)(((byte)(238)))));
             this.Cbo_id_modulo.FormattingEnabled = true;
-            this.Cbo_id_modulo.Location = new System.Drawing.Point(299, 100);
+            this.Cbo_id_modulo.Location = new System.Drawing.Point(299, 149);
             this.Cbo_id_modulo.Name = "Cbo_id_modulo";
             this.Cbo_id_modulo.Size = new System.Drawing.Size(534, 33);
             this.Cbo_id_modulo.TabIndex = 16;
@@ -221,7 +244,7 @@ namespace Capa_Vista_Seguridad
             this.Gbp_estado_aplicacion.Controls.Add(this.Rdb_inactivo);
             this.Gbp_estado_aplicacion.Controls.Add(this.Rdb_estado_activo);
             this.Gbp_estado_aplicacion.Font = new System.Drawing.Font("Rockwell", 11F);
-            this.Gbp_estado_aplicacion.Location = new System.Drawing.Point(270, 499);
+            this.Gbp_estado_aplicacion.Location = new System.Drawing.Point(265, 539);
             this.Gbp_estado_aplicacion.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.Gbp_estado_aplicacion.Name = "Gbp_estado_aplicacion";
             this.Gbp_estado_aplicacion.Padding = new System.Windows.Forms.Padding(4, 2, 4, 2);
@@ -416,5 +439,7 @@ namespace Capa_Vista_Seguridad
         private System.Windows.Forms.Panel Pnl_Superior;
         private System.Windows.Forms.PictureBox Pic_Cerrar;
         private System.Windows.Forms.Button Btn_reporte;
+        private System.Windows.Forms.Label lbl_id_reporte;
+        private System.Windows.Forms.ComboBox Cbo_id_reporte;
     }
 }

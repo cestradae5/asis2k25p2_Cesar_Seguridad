@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Odbc;
+using System.Data;
 
 namespace Capa_Modelo_Seguridad
 {
@@ -73,11 +74,16 @@ namespace Capa_Modelo_Seguridad
             {
                 OdbcCommand cmd = new OdbcCommand(SQL_INSERT, conn);
 
+                // VERIFICA EL ORDEN DE LOS PARÁMETROS
                 cmd.Parameters.AddWithValue("@Pk_Id_Aplicacion", app.iPkIdAplicacion);
-                cmd.Parameters.AddWithValue("@Fk_Id_Reporte_Aplicacion", app.iFkIdReporte.HasValue ? (object)app.iFkIdReporte.Value : DBNull.Value);
+                cmd.Parameters.AddWithValue("@Fk_Id_Reporte_Aplicacion",
+                    app.iFkIdReporte.HasValue ? (object)app.iFkIdReporte.Value : DBNull.Value); // Este es importante
                 cmd.Parameters.AddWithValue("@Cmp_Nombre_Aplicacion", app.sNombreAplicacion);
                 cmd.Parameters.AddWithValue("@Cmp_Descripcion_Aplicacion", app.sDescripcionAplicacion);
                 cmd.Parameters.AddWithValue("@Cmp_Estado_Aplicacion", app.bEstadoAplicacion);
+
+                // Agrega depuración
+                Console.WriteLine($"DEBUG DAO: Insertando aplicación - ID: {app.iPkIdAplicacion}, Reporte: {app.iFkIdReporte}");
 
                 return cmd.ExecuteNonQuery();
             }
@@ -180,6 +186,26 @@ namespace Capa_Modelo_Seguridad
                     return true;
                 }
             }
+        }
+        // ===============================================================
+        // FUNCIÓN: obtenerreportes
+        // Descripción: verifica la tabla de reportes
+        // ===============================================================
+        public DataTable ObtenerReportes()
+        {
+            string SQL_SELECT_REPORTES = @"SELECT Pk_Id_Reporte 
+                                 FROM Tbl_Reportes 
+                                 ORDER BY Pk_Id_Reporte";
+
+            DataTable dt = new DataTable();
+
+            using (OdbcConnection conn = conexion.conexion())
+            {
+                OdbcDataAdapter da = new OdbcDataAdapter(SQL_SELECT_REPORTES, conn);
+                da.Fill(dt);
+            }
+
+            return dt;
         }
     }
 }
