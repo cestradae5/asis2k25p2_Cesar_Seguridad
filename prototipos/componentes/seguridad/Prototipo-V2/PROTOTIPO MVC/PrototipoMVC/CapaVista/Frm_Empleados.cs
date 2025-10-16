@@ -22,7 +22,7 @@ namespace Capa_Vista_Seguridad
         //Nuevo agregado Ernesto David Samayoa Jocol 0901-22-3415
         //Instancia estática única del formulario
         private static Frm_Empleados instancia = null;
-
+        //mover control
         //Método para obtener o crear la instancia
         public static Frm_Empleados fun_ObtenerInstancia()
         {
@@ -154,16 +154,6 @@ namespace Capa_Vista_Seguridad
             Rdb_femenino_empleado.Checked = !emp.bGeneroEmpleado;
         }
 
-        private void Txt_id_empleado_TextChanged(object sender, EventArgs e) { }
-        private void Txt_nombre_empleado_TextChanged(object sender, EventArgs e) { }
-        private void Txt_dpi_empleados_TextChanged(object sender, EventArgs e) { }
-        private void Txt_fechaNac_empleado_TextChanged(object sender, EventArgs e) { }
-        private void Txt_apellido_empleado_TextChanged(object sender, EventArgs e) { }
-        private void Txt_nit_empleados_TextChanged(object sender, EventArgs e) { }
-        private void Txt_fechaContra_empleado_TextChanged(object sender, EventArgs e) { }
-        private void Txt_correo_empleado_TextChanged(object sender, EventArgs e) { }
-        private void Rdb_masculino_empleado_CheckedChanged(object sender, EventArgs e) { }
-        private void Rdb_femenino_empleado_CheckedChanged(object sender, EventArgs e) { }
 
         private void Btn_buscar_empleado_Click(object sender, EventArgs e)
         {

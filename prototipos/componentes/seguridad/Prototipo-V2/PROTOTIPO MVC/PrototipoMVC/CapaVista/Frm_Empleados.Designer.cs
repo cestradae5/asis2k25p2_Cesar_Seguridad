@@ -128,7 +128,7 @@
             this.Txt_correo_empleado.Name = "Txt_correo_empleado";
             this.Txt_correo_empleado.Size = new System.Drawing.Size(267, 29);
             this.Txt_correo_empleado.TabIndex = 16;
-            this.Txt_correo_empleado.TextChanged += new System.EventHandler(this.Txt_correo_empleado_TextChanged);
+     
             // 
             // lbl_correo_empleado
             // 
@@ -147,7 +147,7 @@
             this.Txt_fechaContra_empleado.Name = "Txt_fechaContra_empleado";
             this.Txt_fechaContra_empleado.Size = new System.Drawing.Size(205, 29);
             this.Txt_fechaContra_empleado.TabIndex = 14;
-            this.Txt_fechaContra_empleado.TextChanged += new System.EventHandler(this.Txt_fechaContra_empleado_TextChanged);
+            
             // 
             // label1
             // 
@@ -166,7 +166,7 @@
             this.Txt_fechaNac_empleado.Name = "Txt_fechaNac_empleado";
             this.Txt_fechaNac_empleado.Size = new System.Drawing.Size(205, 29);
             this.Txt_fechaNac_empleado.TabIndex = 12;
-            this.Txt_fechaNac_empleado.TextChanged += new System.EventHandler(this.Txt_fechaNac_empleado_TextChanged);
+            //this.Txt_fechaNac_empleado.TextChanged += new System.EventHandler(this.Txt_fechaNac_empleado_TextChanged);
             // 
             // lbl_fechaNac_empleado
             // 
@@ -193,7 +193,7 @@
             this.Txt_nit_empleados.Name = "Txt_nit_empleados";
             this.Txt_nit_empleados.Size = new System.Drawing.Size(267, 29);
             this.Txt_nit_empleados.TabIndex = 10;
-            this.Txt_nit_empleados.TextChanged += new System.EventHandler(this.Txt_nit_empleados_TextChanged);
+            
             // 
             // lbl_telefono_empl
             // 
@@ -222,7 +222,7 @@
             this.Txt_dpi_empleados.Name = "Txt_dpi_empleados";
             this.Txt_dpi_empleados.Size = new System.Drawing.Size(205, 29);
             this.Txt_dpi_empleados.TabIndex = 8;
-            this.Txt_dpi_empleados.TextChanged += new System.EventHandler(this.Txt_dpi_empleados_TextChanged);
+            
             // 
             // lbl_dpi_empleado
             // 
@@ -241,7 +241,7 @@
             this.Txt_apellido_empleado.Name = "Txt_apellido_empleado";
             this.Txt_apellido_empleado.Size = new System.Drawing.Size(267, 29);
             this.Txt_apellido_empleado.TabIndex = 6;
-            this.Txt_apellido_empleado.TextChanged += new System.EventHandler(this.Txt_apellido_empleado_TextChanged);
+            
             // 
             // lbl_apellido_empleado
             // 
@@ -260,7 +260,7 @@
             this.Txt_nombre_empleado.Name = "Txt_nombre_empleado";
             this.Txt_nombre_empleado.Size = new System.Drawing.Size(205, 29);
             this.Txt_nombre_empleado.TabIndex = 4;
-            this.Txt_nombre_empleado.TextChanged += new System.EventHandler(this.Txt_nombre_empleado_TextChanged);
+       
             // 
             // lbl_nombre_empleados
             // 
@@ -279,7 +279,7 @@
             this.Txt_id_empleado.Name = "Txt_id_empleado";
             this.Txt_id_empleado.Size = new System.Drawing.Size(205, 29);
             this.Txt_id_empleado.TabIndex = 2;
-            this.Txt_id_empleado.TextChanged += new System.EventHandler(this.Txt_id_empleado_TextChanged);
+   
             // 
             // Gpb_genero_empleados
             // 
@@ -303,7 +303,7 @@
             this.Rdb_femenino_empleado.TabStop = true;
             this.Rdb_femenino_empleado.Text = "Femenino";
             this.Rdb_femenino_empleado.UseVisualStyleBackColor = true;
-            this.Rdb_femenino_empleado.CheckedChanged += new System.EventHandler(this.Rdb_femenino_empleado_CheckedChanged);
+
             // 
             // Rdb_masculino_empleado
             // 
@@ -315,7 +315,7 @@
             this.Rdb_masculino_empleado.TabStop = true;
             this.Rdb_masculino_empleado.Text = "Masculino";
             this.Rdb_masculino_empleado.UseVisualStyleBackColor = true;
-            this.Rdb_masculino_empleado.CheckedChanged += new System.EventHandler(this.Rdb_masculino_empleado_CheckedChanged);
+
             // 
             // Gpb_opciones_empleados
             // 
