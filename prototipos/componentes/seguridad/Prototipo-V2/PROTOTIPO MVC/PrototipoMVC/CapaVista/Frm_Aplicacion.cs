@@ -191,6 +191,33 @@ namespace Capa_Vista_Seguridad
                 {
                     Cbo_id_modulo.SelectedItem = null;
                 }
+
+                // Obtener y mostrar el reporte asignado
+                if (resultado.aplicacion.iFkIdReporte.HasValue)
+                {
+                    int idReporte = resultado.aplicacion.iFkIdReporte.Value;
+                    foreach (var item in Cbo_id_reporte.Items)
+                    {
+                        int itemId = (int)item.GetType().GetProperty("Id").GetValue(item);
+                        if (itemId == idReporte)
+                        {
+                            Cbo_id_reporte.SelectedItem = item;
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    // Si no tiene reporte, seleccionar "Sin reporte"
+                    Cbo_id_reporte.SelectedIndex = 0;
+                }
+
+                // NUEVO: Bloquear ID y botón Guardar cuando se encuentra una aplicación
+                Txt_id_aplicacion.Enabled = false;
+                Btn_guardar.Enabled = false;
+
+                // Asegurar que el botón Modificar esté habilitado si tiene permisos
+                Btn_modificar.Enabled = _canModificar;
             }
             else
             {
@@ -233,10 +260,6 @@ namespace Capa_Vista_Seguridad
                     int idModulo = Convert.ToInt32(((dynamic)Cbo_id_modulo.SelectedItem).Id);
                     Cls_Asignacion_Modulo_Aplicacion_Controlador asignacionCtrl = new Cls_Asignacion_Modulo_Aplicacion_Controlador();
 
-                    // Primero eliminar asignaciones existentes
-                    // (aquí necesitarías agregar un método en el controlador para eliminar asignaciones por aplicación)
-                    // asignacionCtrl.EliminarAsignacionesPorAplicacion(id);
-
                     // Luego crear nueva asignación
                     var resultadoAsignacion = asignacionCtrl.GuardarAsignacion(idModulo, id);
 
@@ -247,10 +270,18 @@ namespace Capa_Vista_Seguridad
                 }
 
                 MessageBox.Show("Aplicación modificada correctamente.");
+
+                // MENSAJE ACORTADO PARA BITÁCORA
+                string mensajeBitacora = $"Modificó app: {Txt_Nombre_aplicacion.Text}";
+                if (mensajeBitacora.Length > 80) // Limitar a 80 caracteres
+                {
+                    mensajeBitacora = mensajeBitacora.Substring(0, 80) + "...";
+                }
+
                 ctrlBitacora.RegistrarAccion(
                     Cls_Usuario_Conectado.iIdUsuario,
                     1,
-                    $"Modificó la aplicación: {Txt_Nombre_aplicacion.Text} (Reporte ID: {idReporte?.ToString() ?? "Sin reporte"})",
+                    mensajeBitacora, // Usar mensaje acortado
                     true
                 );
                 RecargarTodo();
@@ -265,6 +296,7 @@ namespace Capa_Vista_Seguridad
         private void Btn_nuevo_Click(object sender, EventArgs e)
         {
             fun_LimpiarCampos();
+            Btn_modificar.Enabled = false;
         }
 
         private void Btn_guardar_Click(object sender, EventArgs e)
@@ -322,7 +354,20 @@ namespace Capa_Vista_Seguridad
             }
 
             MessageBox.Show("Aplicación y asignación guardadas correctamente.");
-            ctrlBitacora.RegistrarAccion(Cls_Usuario_Conectado.iIdUsuario, 1, $"Guardó la aplicación: {Txt_Nombre_aplicacion.Text}", true);
+
+            // ACORTAR MENSAJE PARA BITÁCORA
+            string mensajeBitacora = $"Guardó aplicación: {Txt_Nombre_aplicacion.Text}";
+            if (mensajeBitacora.Length > 80) // Limitar a 80 caracteres
+            {
+                mensajeBitacora = mensajeBitacora.Substring(0, 80) + "...";
+            }
+
+            ctrlBitacora.RegistrarAccion(
+                Cls_Usuario_Conectado.iIdUsuario,
+                1,
+                mensajeBitacora, // Usar mensaje acortado
+                true
+            );
             RecargarTodo();
         }
 
@@ -334,6 +379,13 @@ namespace Capa_Vista_Seguridad
             Rdb_estado_activo.Checked = true;
             Rdb_inactivo.Checked = false;
             Cbo_id_modulo.SelectedItem = null;
+            Cbo_id_reporte.SelectedIndex = 0;
+
+            //Restaurar estado de controles según permisos
+            bool puedeEditar = (_canIngresar || _canModificar);
+            Txt_id_aplicacion.Enabled = _canIngresar; // Solo habilitado para nuevos registros
+            Btn_guardar.Enabled = _canIngresar;
+            Btn_modificar.Enabled = _canModificar;
         }
 
         private void Btn_salir_Click(object sender, EventArgs e)
