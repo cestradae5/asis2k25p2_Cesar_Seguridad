@@ -42,8 +42,10 @@ namespace Capa_Controlador_Seguridad
         {
             Cls_Asignacion_Permiso_PerfilesDAO DAO = new Cls_Asignacion_Permiso_PerfilesDAO();
 
-            public Cls_Asignacion_Perrmisos_Perfiles ObtenerPermisosAplicacionPerfil(int idPerfil, int idAplicacion)
+           
+           public Cls_Asignacion_Perrmisos_Perfiles ObtenerPermisosAplicacionPerfil(int idAplicacion)
             {
+                int idPerfil = Cls_Usuario_Conectado.iIdPerfil;
                 DataTable dt = DAO.ObtenerPermisosPerfilAplicacion(idPerfil, idAplicacion);
 
                 if (dt.Rows.Count == 0)
@@ -56,7 +58,7 @@ namespace Capa_Controlador_Seguridad
                     iFk_id_perfil = Convert.ToInt32(row["fk_id_perfil"]),
                     iFk_id_aplicacion = Convert.ToInt32(row["fk_id_aplicacion"]),
                     bIngresar_permiso_aplicacion_perfil = Convert.ToBoolean(row["ingresar"]),
-                    bConsultar_permiso_aplicacion_perfil= Convert.ToBoolean(row["consultar"]),
+                    bConsultar_permiso_aplicacion_perfil = Convert.ToBoolean(row["consultar"]),
                     bModificar_permiso_aplicacion_perfil = Convert.ToBoolean(row["modificar"]),
                     bEliminar_permiso_aplicacion_perfil = Convert.ToBoolean(row["eliminar"]),
                     bImprimir_permiso_aplicacion_perfil = Convert.ToBoolean(row["imprimir"])
