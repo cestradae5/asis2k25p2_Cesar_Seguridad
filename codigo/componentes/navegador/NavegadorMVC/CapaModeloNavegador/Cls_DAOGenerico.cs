@@ -85,11 +85,39 @@ namespace Capa_Modelo_Navegador
 
                     // trans.Commit(); // realiza commit si sale bien
                 }
-                catch
+                catch (OdbcException ex)
                 {
+                    string mensaje = ex.Message;
 
+                    if (mensaje.IndexOf("foreign key constraint fails", StringComparison.OrdinalIgnoreCase) >= 0)
+                    {
+                        throw new Exception("No se pudo insertar el registro: una llave foránea no existe o está mal referenciada.");
+                    }
+                    else if (mensaje.IndexOf("Duplicate entry", StringComparison.OrdinalIgnoreCase) >= 0)
+                    {
+                        throw new Exception("Ya existe un registro con el mismo código. Verifique el valor de la clave primaria.");
+                    }
+                    else if (mensaje.IndexOf("Data too long for column", StringComparison.OrdinalIgnoreCase) >= 0)
+                    {
+                        throw new Exception("Uno de los campos excede la longitud máxima permitida en la base de datos.");
+                    }
+                    else if (mensaje.IndexOf("Incorrect integer value", StringComparison.OrdinalIgnoreCase) >= 0)
+                    {
+                        throw new Exception("Uno o más campos numéricos contienen valores no válidos. Revise los datos ingresados.");
+                    }
+                    else if (mensaje.IndexOf("cannot be null", StringComparison.OrdinalIgnoreCase) >= 0)
+                    {
+                        throw new Exception("Uno o más campos obligatorios están vacíos. Complete todos los datos requeridos.");
+                    }
+                    else
+                    {
+                        throw new Exception("Error al insertar datos: " + ex.Message);
+                    }
+                }
+                catch (Exception ex)
+                {
                     // trans.Rollback(); // revertir en caso que haya error
-                    throw; // lanza la excepción 
+                    throw new Exception("Error inesperado al insertar datos: " + ex.Message); // lanza la excepción 
                 }
                 // }
             } //la conexión se cierra automáticamente
@@ -149,9 +177,9 @@ namespace Capa_Modelo_Navegador
                     }
                 } // la conexion se cierra automáticamente
             }
-            catch (OdbcException ex)
+            catch (OdbcException)
             {
-                throw new Exception("Error al actualizar datos en " + SAlias[0] + ": " + ex.Message, ex);
+                throw new Exception("Error al actualizar datos en " + SAlias[0]);
             }
         }
 
@@ -235,6 +263,50 @@ namespace Capa_Modelo_Navegador
         }
         //==========================================================================================================
 
+        //
+        //------------------------------Validaciones de Tipo de Columnas  -------------------------------------------------------
+        //============================== Pedro Ibañez =============================================================
+        public Dictionary<string, string> ObtenerTiposDeColumnas(string nombreTabla)
+        {
+            var tipos = new Dictionary<string, string>();
+            Cls_ConexionMYSQL conexion = new Cls_ConexionMYSQL();
+
+            string query = @"
+        SELECT COLUMN_NAME, DATA_TYPE
+        FROM INFORMATION_SCHEMA.COLUMNS
+        WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ?;
+    ";
+
+            using (OdbcConnection conn = conexion.conexion())
+            using (OdbcCommand cmd = new OdbcCommand(query, conn))
+            {
+                cmd.Parameters.AddWithValue("@tabla", nombreTabla);
+
+                try
+                {
+                    conn.Open();
+                    using (OdbcDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string columna = reader["COLUMN_NAME"].ToString();
+                            string tipo = reader["DATA_TYPE"].ToString().ToLower();
+                            tipos[columna] = tipo;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error al obtener tipos de columnas: " + ex.Message);
+                }
+                finally
+                {
+                    conexion.desconexion(conn);
+                }
+            }
+
+            return tipos;
+        }
 
     }
 }

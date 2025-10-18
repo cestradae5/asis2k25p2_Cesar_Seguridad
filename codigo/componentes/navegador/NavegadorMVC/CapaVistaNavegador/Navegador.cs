@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Capa_Controlador_Navegador;
-//using Capa_Vista_Reporteador;
+using Capa_Vista_Reporteador;
 
 namespace Capa_Vista_Navegador
 {
@@ -17,8 +18,11 @@ namespace Capa_Vista_Navegador
         public string[] SAlias { get; set; }
         public int IPkId_Aplicacion { get; set; }
         public string SNombreTabla { get; set; } // Nueva propiedad para el nombre de la tabla
+        public string[] SEtiquetas { get; set; } // Nueva propiedad para las etiquetas
 
         public Cls_ConfiguracionDataGridView configuracionDataGridView;
+
+        public int iContadorModificar = 0; //  Variable global para manejar el modo edicion, KEVIN NATARENO, 11/10/2025
 
         public Navegador()
         {
@@ -26,17 +30,51 @@ namespace Capa_Vista_Navegador
 
             // Los botones se inicializan en su estado inicial, Reportes, ingresar e imprimir
             BotonesEstadoInicial();
+
+            // inicializa el evento Load
+            this.Load += new EventHandler(Navegador_Load);
         }
+
+        // carga los alias y etiquetas al iniciar el navegador
+        private void Navegador_Load(object sender, EventArgs e)
+        {
+            if (SAlias != null && SEtiquetas != null && SAlias.Length > 1)
+            {
+                try
+                {
+                    // Instancia del controlador
+                    Cls_ControladorNavegador controladorNavegador = new Cls_ControladorNavegador();
+
+                    // Genera dinámicamente los labels y combos
+                    controladorNavegador.AsignarAlias(SAlias, this, 20, 80, 3, SEtiquetas);
+                    ctrl.DesactivarTodosComboBoxes(this); // KEVIN NATARENO, 11/10/2025
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error al asignar alias o etiquetas: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
 
         private void Btn_ingresar_Click(object sender, EventArgs e)
         {
+            ctrl.LimpiarCombos(this, SAlias); // KEVIN NATARENO, 11/10/2025
+
             if (SAlias == null || SAlias.Length < 2)
             {
                 MessageBox.Show("No se han definido los alias de la tabla.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            //Parámetros para validar 
+            
+            Btn_ingresar.Enabled = false;
+            BotonesEstadoCRUD();
+            mostrarDatos();
+            ctrl.ActivarTodosComboBoxes(this);
+            
+
+            /*//Parámetros para validar 
             string tabla = SNombreTabla;
             string[] columnas = SAlias;
 
@@ -47,7 +85,9 @@ namespace Capa_Vista_Navegador
                 BotonesEstadoCRUD();
                 mostrarDatos();
                 ctrl.ActivarTodosComboBoxes(this);
+                
             }
+            */
         }
 
         Cls_ControladorNavegador ctrl = new Cls_ControladorNavegador();
@@ -85,6 +125,28 @@ namespace Capa_Vista_Navegador
             Dgv_Datos.DataBindingComplete -= Dgv_Datos_DataBindingComplete;
             Dgv_Datos.DataBindingComplete += Dgv_Datos_DataBindingComplete;
 
+            // cambiar encabezados del datagrid a los de etiqueas Fernando Cahuex 0901-22-14979 11/10/2025
+            try
+            {
+                if (SEtiquetas != null && Dgv_Datos.Columns.Count == SAlias.Length - 1)
+                {
+                    for (int i = 1; i < SAlias.Length; i++) // saltamos el nombre de la tabla
+                    {
+                        string nombreColumna = SAlias[i];
+                        string etiqueta = SEtiquetas.Length >= i ? SEtiquetas[i - 1] : nombreColumna;
+
+                        if (Dgv_Datos.Columns.Contains(nombreColumna))
+                        {
+                            Dgv_Datos.Columns[nombreColumna].HeaderText = etiqueta;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al asignar etiquetas a los encabezados: " + ex.Message);
+            }
+
         }
 
 
@@ -99,7 +161,7 @@ namespace Capa_Vista_Navegador
         public void BotonesEstadoCRUD()
         {
             // ======================= Stevens Cambranes = 20/09/2025 =======================
-            Btn_modificar.Enabled = true;
+            Btn_modificar.Enabled = false;
             Btn_guardar.Enabled = true;
             Btn_cancelar.Enabled = true;
             Btn_eliminar.Enabled = true;
@@ -120,7 +182,7 @@ namespace Capa_Vista_Navegador
             Btn_guardar.Enabled = false;
             Btn_cancelar.Enabled = false;
             Btn_eliminar.Enabled = false;
-            Btn_consultar.Enabled = true;
+            Btn_consultar.Enabled = false;
             Btn_imprimir.Enabled = true;
             Btn_refrescar.Enabled = false;
             Btn_inicio.Enabled = false;
@@ -128,6 +190,48 @@ namespace Capa_Vista_Navegador
             Btn_sig.Enabled = false;
             Btn_fin.Enabled = false;
         }
+
+        //==================== Nuevo método para estado de botones modo edición = KEVIN NATARENO, 11/10/2025======================
+        public void BotonesEstadoEdicion()
+        {
+            Btn_ingresar.Enabled = true;
+            Btn_modificar.Enabled = true;
+           Btn_guardar.Enabled = false;
+           Btn_cancelar.Enabled = true;
+           Btn_eliminar.Enabled = true;
+            Btn_inicio.Enabled = true;
+            Btn_anterior.Enabled = true;
+            Btn_sig.Enabled = true;
+            Btn_fin.Enabled = true;
+
+        }
+        //==================== Nuevo método para estado de botones modo edición = KEVIN NATARENO, 11/10/2025======================
+
+
+
+        // public void BotonesEstadoCRUD(
+        // bool ingresar,
+        // bool modificar,
+        // bool guardar,
+        // bool eliminar,
+        // bool consultar,
+        // bool imprimir)
+        //    {
+        //        Btn_ingresar.Enabled = ingresar;
+        //        Btn_modificar.Enabled = modificar;
+        //        Btn_guardar.Enabled = guardar;
+        //        Btn_eliminar.Enabled = eliminar;
+        //        Btn_consultar.Enabled = consultar;
+        //        Btn_imprimir.Enabled = imprimir;
+        //        Btn_cancelar.Enabled = true;
+        //         Btn_refrescar.Enabled = true;
+        //         Btn_inicio.Enabled = true;
+        //         Btn_anterior.Enabled = true;
+        //          Btn_sig.Enabled = true;
+        //         Btn_fin.Enabled = true;
+        //    }
+
+
 
         private void Btn_cancelar_Click_1(object sender, EventArgs e)
         {
@@ -140,21 +244,46 @@ namespace Capa_Vista_Navegador
         private void Btn_guardar_Click_1(object sender, EventArgs e)
         {
             Cls_ControladorNavegador ctrl = new Cls_ControladorNavegador();
-            ctrl.Insertar_Datos(this, SAlias);
+            //================= SWITCH PARA CAMBIAR ENTRE INSERT Y UPDATE = KEVIN NATARENO, 11/10/2025 =====================
+            switch (iContadorModificar) // Valida el contador de modificar 
+            {
+                case 0: // si es 0 es porque no se presionó el boton de modificar 
+                    
+                    ctrl.Insertar_Datos(this, SAlias);
 
-            // Recarga despues de insertar = Stevens Cambranes
-            mostrarDatos();
-            ctrl.RefrescarCombos(this, SAlias[0], SAlias.Skip(1).ToArray());
+                    // Recarga despues de insertar = Stevens Cambranes
+                    mostrarDatos();
+
+                    break;
+
+                case 1: // si es 1 es porque se seleccionó la opcion de modificar 
+                    // Esta es la lógica que estaba en el botón modificar 
+                    ctrl.Actualizar_Datos(this, SAlias);
+                    mostrarDatos();
+                    ctrl.RefrescarCombos(this, SAlias[0], SAlias.Skip(1).ToArray());
+                    iContadorModificar = 0;
+                    break;
+            }
+            //================= SWITCH PARA CAMBIAR ENTRE INSERT Y UPDATE = KEVIN NATARENO, 11/10/2025 =====================
+
         }
 
         // ======================= Modificar / Update = Stevens Cambranes = 20/09/2025 =======================
         private void Btn_modificar_Click(object sender, EventArgs e)
-        {
-            ctrl.Actualizar_Datos(this, SAlias);
 
-            mostrarDatos();
-            ctrl.RefrescarCombos(this, SAlias[0], SAlias.Skip(1).ToArray());
-            ctrl.LimpiarCombos(this, SAlias);
+        {
+            //================== Cambios logica de modificar = KEVIN NATARENO, 11/10/2025=====================
+            MessageBox.Show("Modo de edición");  
+            Btn_guardar.Enabled = true;         
+            ctrl.ActivarTodosComboBoxes(this);
+            ctrl.BloquearPK(this,SAlias);
+            iContadorModificar = 1;
+            //================== Cambios logica de modificar = KEVIN NATARENO, 11/10/2025=====================
+
+            //ctrl.Actualizar_Datos(this, SAlias);
+            //mostrarDatos();
+            //ctrl.RefrescarCombos(this, SAlias[0], SAlias.Skip(1).ToArray());
+            //ctrl.LimpiarCombos(this, SAlias);
         }
         // ======================= Modificar / Update = Stevens Cambranes = 20/09/2025 =======================
 
@@ -162,12 +291,22 @@ namespace Capa_Vista_Navegador
         private void Dgv_Datos_SelectionChanged(object sender, EventArgs e)
         {
             // ======================= Pedro Ibañez =======================
-            // Modificacion: Se hace la seleccion solo si el usuario hizo clic o usó teclado
+            // Modificación: Se hace la selección solo si el usuario hizo clic o usó teclado
             if (Control.MouseButtons == MouseButtons.None && !Dgv_Datos.Focused) return;
 
             if (Dgv_Datos?.CurrentRow == null || SAlias == null || SAlias.Length < 2) return;
+
+            // Rellenar combos con la información de la fila seleccionada
             ctrl.RellenarCombosDesdeFila(this, SAlias, Dgv_Datos.CurrentRow);
+
+            BotonesEstadoEdicion(); // KEVIN NATARENO 11/10/2025
+
+            // Bloquear (deshabilitar) todos los ComboBox del formulario
+            ctrl.DesactivarTodosComboBoxes(this);
         }
+
+ 
+
         // ======================= Esta funcion es para seleccionar la fila del Dgv y Rellenar los Cbo =======================
 
         // ======================= Eliminar / Delete = Fernando Miranda = 20/09/2025 =======================
@@ -210,10 +349,19 @@ namespace Capa_Vista_Navegador
             // Llamar al componente consultas inteligentes
         }
 
+        // ======================= Pedro Ibañez =======================
+        // Creacion Metodo: crea instancia y llama metodo de reporteador  
         private void Btn_imprimir_Click_1(object sender, EventArgs e)
         {
-           // Reportes rpt = new Reportes();
-            //rpt.reporteAplicacion(IPkId_Aplicacion);
+            try
+            {
+                Frm_Reportes rpt = new Frm_Reportes();
+                rpt.reporteAplicacion(IPkId_Aplicacion);
+            }
+            catch
+            {
+                MessageBox.Show("Ha ocurrido un error conectando a reporteadors");
+            }
         }
         
         private void Btn_refrescar_Click(object sender, EventArgs e)
@@ -221,7 +369,9 @@ namespace Capa_Vista_Navegador
             // ======================= Pedro Ibañez =======================
             // Creacion Metodo: vuelve a cargar los datos en el DataGridView y limpiar comboBoxes
             ctrl.LimpiarCombos(this, SAlias);
-            ctrl.ActivarTodosComboBoxes(this);
+            ctrl.DesactivarTodosComboBoxes(this);
+            BotonesEstadoInicial();
+            iContadorModificar = 0;
             try
             {
                 mostrarDatos(); 
@@ -307,13 +457,23 @@ namespace Capa_Vista_Navegador
 
         private void Btn_ayuda_Click(object sender, EventArgs e)
         {
-
+            // ======================= Btn Ayuda = Stevens Cambranes = 8/10/2025 =======================
+            try
+            {
+                string sRutaAyuda = Path.GetFullPath(Path.Combine(Application.StartupPath, @"..\..\..\..\ManualNavegador\Ayuda_Navegador.chm"));
+                // este archivo se metio directamente en el directorio CapaVistaNavegador y la carpeta tendria que aparecer con los HTML
+                Help.ShowHelp(this, sRutaAyuda, "Manual_De_Usuario_Navegador.html");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al abrir la ayuda: " + ex.Message);
+            }
         }
 
         // ======================= Salir/Exit = Fernando Miranda = 20/09/2025 =======================
         private void Btn_salir_Click_1(object sender, EventArgs e)
         {
-            Application.Exit();
+            this.FindForm()?.Close();
         }
 
         // ======================= Configuracion de data grid view - Fredy Reyes 0901-22-9800 =======================
@@ -361,3 +521,4 @@ namespace Capa_Vista_Navegador
 
     }
 }
+

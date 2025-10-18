@@ -20,25 +20,44 @@ namespace PruebaEjecucionNavegador
             {
                 Ancho = 1100,
                 Alto = 200,
-                ColorFondo = Color.White,
+                PosX = 10,
+                PosY = 300,
+                ColorFondo = Color.AliceBlue,
                 TipoScrollBars = ScrollBars.Both,
                 Nombre = "dgv_empleados"
             };
-            string[] columnas = {
-                        "padre", "id_padre", "nombre", "apellido", "id_hijo"
-                        //"tbl_aplicacion",            
-                        //"Pk_Id_Aplicacion",
-                        //"Fk_Id_Reporte_Aplicacion",
-                        //"Cmp_Nombre_Aplicacion",
-                        //"Cmp_Descripcion_Aplicacion",
-                        //"Cmp_Estado_Aplicacion"
-                    };
-            //int id_aplicacion = 100;
 
-            //navegador1.IPkId_Aplicacion = id_aplicacion;
+            string[] columnas = {
+                    "tbl_cliente",
+                    "Pk_Id_Cliente",
+                    "Cmp_Nombres_Cliente",
+                    "Cmp_Apellidos_Cliente",
+                    "Cmp_Dni_Cliente",
+                    "Cmp_Fecha_Registro_Cliente",
+                    "Cmp_Estado_Cliente",
+                    "Cmp_Nacionalidad_Cliente"
+
+            };
+
+            string[] sEtiquetas = {
+                "Codigo Cliente",
+                "Nombres",
+                "Apellidos",
+                "DPI",
+                "Fecha de Registro",
+                "Estado del Cliente",
+                "Nacionalidad",
+               
+            };
+
+
+
+            int id_aplicacion = 100;
+            navegador1.IPkId_Aplicacion = id_aplicacion;
             navegador1.configurarDataGridView(config);
             navegador1.SNombreTabla = columnas[0];
             navegador1.SAlias = columnas;
+            navegador1.SEtiquetas = sEtiquetas;
             navegador1.mostrarDatos();
         }
 
