@@ -4,7 +4,6 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using Capa_Controlador_Seguridad;
-using Capa_Modelo_Seguridad;
 
 //Brandon Alexander Hernandez Salguero 0901-22-9663
 namespace Capa_Vista_Seguridad
@@ -13,7 +12,7 @@ namespace Capa_Vista_Seguridad
     {
         Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador();  //Bitacora  Aron Esquit 0901-22-13036
         private Cls_Perfiles_Controlador controlador = new Cls_Perfiles_Controlador();
-        private List<Cls_Perfiles> listaPerfiles = new List<Cls_Perfiles>();
+
         // Permisos (deben ser campos de la clase para que los métodos puedan usarlos)
         private bool _canIngresar, _canConsultar, _canModificar, _canEliminar, _canImprimir;
 
@@ -21,21 +20,20 @@ namespace Capa_Vista_Seguridad
         {
             InitializeComponent();
             fun_AplicarPermisos();
-            fun_CargarPerfiles();
             fun_ConfigurarComboBoxPerfiles();
             fun_ConfigurarComboBoxTipoPerfil();
             fun_Configuracioninicial();
-
         }
+
         private void fun_AplicarPermisos()
         {
-            int idUsuario = Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario;
+            int idUsuario = Cls_Usuario_Conectado.iIdUsuario;
             var usuarioCtrl = new Cls_Usuario_Controlador();
 
             // Usar la clase de permisos para obtener el id de aplicacion y modulo
-            var permisoUsuario = new Cls_Permiso_Usuario();
+            var permisoUsuario = new Cls_Permiso_Usuario_Controlador();
             int idAplicacion = permisoUsuario.ObtenerIdAplicacionPorNombre("Perfiles");
-            if (idAplicacion <= 0) idAplicacion = 303; 
+            if (idAplicacion <= 0) idAplicacion = 303;
             int idModulo = permisoUsuario.ObtenerIdModuloPorNombre("Seguridad");
             int idPerfil = usuarioCtrl.ObtenerIdPerfilDeUsuario(idUsuario);
 
@@ -81,21 +79,19 @@ namespace Capa_Vista_Seguridad
             Rdb_inhabilitado.Enabled = false;
         }
 
-        private void fun_CargarPerfiles()
-        {
-            listaPerfiles = controlador.listObtenerTodosLosPerfiles();
-        }
+        // No más listaPerfiles en la vista
 
         private void fun_ConfigurarComboBoxPerfiles()
         {
+            var listaPerfiles = controlador.listObtenerTodosLosPerfiles();
             Cbo_perfiles.Items.Clear();
             Cbo_perfiles.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             Cbo_perfiles.AutoCompleteSource = AutoCompleteSource.CustomSource;
 
             // Fuente de autocompletado
             AutoCompleteStringCollection autoComplete = new AutoCompleteStringCollection();
-            autoComplete.AddRange(listaPerfiles.Select(p => p.iPk_Id_Perfil.ToString()).ToArray());
-            autoComplete.AddRange(listaPerfiles.Select(p => p.sCmp_Puesto_Perfil).ToArray());
+            autoComplete.AddRange(listaPerfiles.Select(p => p.Id.ToString()).ToArray());
+            autoComplete.AddRange(listaPerfiles.Select(p => p.Puesto).ToArray());
             Cbo_perfiles.AutoCompleteCustomSource = autoComplete;
 
             // Display y Value
@@ -105,8 +101,8 @@ namespace Capa_Vista_Seguridad
             {
                 Cbo_perfiles.Items.Add(new
                 {
-                    Display = $"{perfil.iPk_Id_Perfil} - {perfil.sCmp_Puesto_Perfil}",
-                    Id = perfil.iPk_Id_Perfil
+                    Display = $"{perfil.Id} - {perfil.Puesto}",
+                    Id = perfil.Id
                 });
             }
         }
@@ -119,14 +115,14 @@ namespace Capa_Vista_Seguridad
             Cbo_tipoperfil.SelectedIndex = -1;
         }
 
-        private void fun_MostrarPerfil(Cls_Perfiles perfil)
+        private void fun_MostrarPerfil(PerfilDTO perfil)
         {
-            Txt_idperfil.Text = perfil.iPk_Id_Perfil.ToString();
-            Txt_puesto.Text = perfil.sCmp_Puesto_Perfil;
-            Txt_descripcion.Text = perfil.sCmp_Descripcion_Perfil;
-            Cbo_tipoperfil.SelectedIndex = perfil.iCmp_Tipo_Perfil;
-            Rdb_Habilitado.Checked = perfil.bCmp_Estado_Perfil;
-            Rdb_inhabilitado.Checked = !perfil.bCmp_Estado_Perfil;
+            Txt_idperfil.Text = perfil.Id.ToString();
+            Txt_puesto.Text = perfil.Puesto;
+            Txt_descripcion.Text = perfil.Descripcion;
+            Cbo_tipoperfil.SelectedIndex = perfil.Tipo;
+            Rdb_Habilitado.Checked = perfil.Estado;
+            Rdb_inhabilitado.Checked = !perfil.Estado;
 
             // Al mostrar un perfil, activa botones según permisos y contexto
             Btn_guardar.Enabled = false;
@@ -165,103 +161,59 @@ namespace Capa_Vista_Seguridad
 
         private void Btn_guardar_Click(object sender, EventArgs e)
         {
-            try
+            string mensaje;
+            bool bExito = controlador.bInsertarPerfil(
+                Txt_puesto.Text,
+                Txt_descripcion.Text,
+                Rdb_Habilitado.Checked,
+                Cbo_tipoperfil.SelectedIndex,
+                out mensaje
+            );
+
+            if (bExito)
             {
-                if (string.IsNullOrWhiteSpace(Txt_puesto.Text) ||
-                    string.IsNullOrWhiteSpace(Txt_descripcion.Text) ||
-                    string.IsNullOrWhiteSpace(Cbo_tipoperfil.Text))
-                {
-                    MessageBox.Show("Complete todos los campos antes de guardar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                bool bEstado = Rdb_Habilitado.Checked;
-                
-                if (Cbo_tipoperfil.SelectedIndex == -1)
-                {
-                    MessageBox.Show("Seleccione un tipo de perfil válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                int iTipo = Cbo_tipoperfil.SelectedIndex; 
-
-                bool bExito = controlador.bInsertarPerfil(Txt_puesto.Text, Txt_descripcion.Text, bEstado, iTipo);
-
-                if (bExito)
-                {
-                    MessageBox.Show("Perfil guardado correctamente");
-                    //Registrar en bitacora   Aron Esquit 0901-22-13036
-                    ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, $"Guardó el perfil: {Txt_puesto.Text}", true);
-                }
-                else
-                {
-                    MessageBox.Show("Error al guardar perfil");
-                }
-
-                fun_CargarPerfiles();
+                MessageBox.Show("Perfil guardado correctamente");
+                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, $"Guardó el perfil: {Txt_puesto.Text}", true);
                 fun_ConfigurarComboBoxPerfiles();
                 fun_LimpiarCampos();
+                fun_Configuracioninicial();
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show("Error al guardar perfil: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(mensaje, "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-            fun_Configuracioninicial();
         }
 
         private void Btn_modificar_Click(object sender, EventArgs e)
         {
-            //Brandon Alexander Hernandez Salguero 0901-22-9663 15/10/25
-            Txt_puesto.Enabled = true;
-            Txt_descripcion.Enabled = true;
-            Cbo_tipoperfil.Enabled = true;
-            Rdb_Habilitado.Enabled = true;
-            Rdb_inhabilitado.Enabled = true;
-
-            Btn_guardar.Enabled = false; 
-            Btn_modificar.Enabled = _canModificar;
-            Btn_Eliminar.Enabled = _canEliminar;
-            Btn_nuevo.Enabled = _canIngresar;
-            Btn_cancelar.Enabled = true;
-
             if (!int.TryParse(Txt_idperfil.Text, out int id))
             {
                 MessageBox.Show("Ingrese un ID válido para modificar.");
                 return;
             }
-            if (string.IsNullOrWhiteSpace(Txt_puesto.Text) ||
-                string.IsNullOrWhiteSpace(Txt_descripcion.Text) ||
-                Cbo_tipoperfil.SelectedIndex == -1)
-            {
-                MessageBox.Show("Complete todos los campos antes de modificar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
 
-            bool estado = Rdb_Habilitado.Checked;
-
-            if (Cbo_tipoperfil.SelectedIndex == -1)
-            {
-                MessageBox.Show("Seleccione un tipo de perfil válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            int iTipo = Cbo_tipoperfil.SelectedIndex;
-
-            bool bExito = controlador.bActualizarPerfil(id, Txt_puesto.Text, Txt_descripcion.Text, estado, iTipo);
+            string mensaje;
+            bool bExito = controlador.bActualizarPerfil(
+                id,
+                Txt_puesto.Text,
+                Txt_descripcion.Text,
+                Rdb_Habilitado.Checked,
+                Cbo_tipoperfil.SelectedIndex,
+                out mensaje
+            );
 
             if (bExito)
             {
                 MessageBox.Show("Perfil modificado correctamente");
-                //Registrar en bitacora   Aron Esquit 0901-22-13036
                 ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, $"Modificó el perfil: {Txt_puesto.Text}", true);
+                fun_ConfigurarComboBoxPerfiles();
+                fun_LimpiarCampos();
+                fun_Configuracioninicial();
             }
             else
             {
-                MessageBox.Show("Error al modificar perfil");
+                MessageBox.Show(mensaje, "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-
-            fun_CargarPerfiles();
-            fun_ConfigurarComboBoxPerfiles();
-            fun_LimpiarCampos();
-            fun_Configuracioninicial();
         }
 
         private void Btn_cancelar_Click(object sender, EventArgs e)
@@ -294,19 +246,22 @@ namespace Capa_Vista_Seguridad
                 return;
             }
 
-            Cls_Perfiles perfilEncontrado = null;
+            PerfilDTO perfilEncontrado = null;
 
             // Buscar por ID si es numérico
             if (int.TryParse(busqueda.Split('-')[0].Trim(), out int id))
             {
-                perfilEncontrado = listaPerfiles.FirstOrDefault(p => p.iPk_Id_Perfil == id);
+                perfilEncontrado = controlador.BuscarPerfilPorId(id);
             }
             // Si no encontró por ID, buscar por nombre
             if (perfilEncontrado == null)
             {
+                var listaPerfiles = controlador.listObtenerTodosLosPerfiles();
                 perfilEncontrado = listaPerfiles.FirstOrDefault(p =>
-                    p.sCmp_Puesto_Perfil != null && p.sCmp_Puesto_Perfil.Equals(busqueda, StringComparison.OrdinalIgnoreCase));
+                                p.Puesto != null && p.Puesto.Equals(busqueda, StringComparison.OrdinalIgnoreCase));
             }
+
+        
             if (perfilEncontrado != null)
             {
                 fun_MostrarPerfil(perfilEncontrado);
@@ -316,7 +271,6 @@ namespace Capa_Vista_Seguridad
                 Btn_Eliminar.Enabled = _canEliminar;
                 Btn_cancelar.Enabled = true;
                 Btn_reporte.Enabled = _canImprimir;
-                //Brandon Alexander Hernandez Salguero 0901-22-9663 15/10/25
                 Txt_idperfil.Enabled = false;
                 Txt_puesto.Enabled = _canModificar;
                 Txt_descripcion.Enabled = _canModificar;
@@ -346,7 +300,6 @@ namespace Capa_Vista_Seguridad
             if (bExito)
             {
                 MessageBox.Show("Perfil eliminado");
-                //Registrar en bitacora   Aron Esquit 0901-22-13036
                 ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, $"Eliminó el perfil: {Txt_puesto.Text}", true);
             }
             else
@@ -354,8 +307,6 @@ namespace Capa_Vista_Seguridad
                 MessageBox.Show(sMensajeError, "Error al eliminar perfil", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            fun_CargarPerfiles();
-            Cbo_perfiles.Items.Clear();
             fun_ConfigurarComboBoxPerfiles();
             fun_LimpiarCampos();
             fun_Configuracioninicial();
