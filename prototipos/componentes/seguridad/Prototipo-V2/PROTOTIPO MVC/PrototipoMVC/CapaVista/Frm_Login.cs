@@ -8,16 +8,16 @@ namespace Capa_Vista_Seguridad
 {
     public partial class Frm_Login : Form
     {
-        
+
         // VARIABLES GLOBALES
-      
+
         private Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador(); // Bitácora
         private Cls_ControladorLogin cn = new Cls_ControladorLogin();
         private Cls_Usuario_Controlador gUsuarioControlador = new Cls_Usuario_Controlador();
 
-        
+
         // CONSTRUCTOR
-        
+
         public Frm_Login()
         {
             InitializeComponent();
@@ -27,24 +27,24 @@ namespace Capa_Vista_Seguridad
 
         private void Frm_Login_FormClosing(object sender, FormClosingEventArgs e)
         {
-          
+
             if (e.CloseReason == CloseReason.UserClosing)
             {
                 Application.Exit();
             }
         }
 
-        
+
         // EVENTOS CHECKBOX
-       
+
         private void chkMostrarContrasena_CheckedChanged(object sender, EventArgs e)
         {
             txtContrasena.UseSystemPasswordChar = !chkMostrarContrasena.Checked;
         }
 
-        
+
         // LINK RECUPERAR CONTRASEÑA
-        
+
         private void lblkRecuperarContrasena_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Frm_Recuperar_Contrasena frmRecuperar = new Frm_Recuperar_Contrasena();
@@ -52,9 +52,9 @@ namespace Capa_Vista_Seguridad
             this.Hide();
         }
 
-        
+
         // BOTÓN INICIAR SESIÓN
-     
+
         private void btnIniciarSesion_Click(object sender, EventArgs e)
         {
             string sUsuario = txtUsuario.Text.Trim();
@@ -72,7 +72,7 @@ namespace Capa_Vista_Seguridad
 
                 // Guardar sesión
                 Cls_Usuario_Conectado.IniciarSesion(iIdUsuario, sNombreUsuarioReal, iIdPerfil);
-                
+
 
                 // Registrar inicio en bitácora
                 ctrlBitacora.RegistrarInicioSesion(iIdUsuario);
@@ -92,7 +92,7 @@ namespace Capa_Vista_Seguridad
 
         private void frmLogin_Load(object sender, EventArgs e) { }
 
-        
+
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HTCAPTION = 0x2;
 

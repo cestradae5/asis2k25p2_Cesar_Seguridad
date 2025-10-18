@@ -12,7 +12,7 @@ namespace Capa_Controlador_Seguridad
         public static string sNombreUsuario { get; set; }
 
         //ID del perfil del usuario logueado
-        public static int iIdPerfil { get; set; } 
+        public static int iIdPerfil { get; set; }
 
         //Estado de login true = conectado, false = desconectado
         public static bool bLoginEstado { get; set; }
@@ -22,7 +22,7 @@ namespace Capa_Controlador_Seguridad
             iIdUsuario = idUsuario;
             sNombreUsuario = nombreUsuario;
             bLoginEstado = true;
-            iIdPerfil = idPerfil; 
+            iIdPerfil = idPerfil;
         }
 
         public static void CerrarSesion()

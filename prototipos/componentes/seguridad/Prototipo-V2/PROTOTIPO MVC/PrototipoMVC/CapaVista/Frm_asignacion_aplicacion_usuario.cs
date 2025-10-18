@@ -29,12 +29,12 @@ namespace Capa_Vista_Seguridad
         //Brandon Hernandez 0901-22-9663 15/10/2025
         private void fun_AplicarPermisos()
         {
-            int idUsuario = Capa_Modelo_Seguridad.Cls_Usuario_Conectado.iIdUsuario;
+            int idUsuario = Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario;
             var usuarioCtrl = new Cls_Usuario_Controlador();
-            var permisoUsuario = new Cls_Permiso_Usuario();
+            var permisoUsuario = new Cls_Permiso_Usuario_Controlador();
 
             int idAplicacion = permisoUsuario.ObtenerIdAplicacionPorNombre("Asig Aplicacion Usuario");
-            if (idAplicacion <= 0) idAplicacion = 306; // Usa tu ID real aquí
+            if (idAplicacion <= 0) idAplicacion = 306; 
             int idModulo = permisoUsuario.ObtenerIdModuloPorNombre("Seguridad");
             int idPerfil = usuarioCtrl.ObtenerIdPerfilDeUsuario(idUsuario);
 

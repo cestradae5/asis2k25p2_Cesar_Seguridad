@@ -55,6 +55,7 @@
     <Compile Include="Cls_controlador_cambio_contrasena.cs" />
     <Compile Include="Cls_Perfiles_Controlador.cs" />
     <Compile Include="Cls_PermisosControlador.cs" />
+    <Compile Include="Cls_Permisos_Usuario_Controlador.cs" />
     <Compile Include="Cls_Registrar_Permisos_Bitacora.cs" />
     <Compile Include="Cls_Usuario_Conectado.cs" />
     <Compile Include="Cls_Usuario_Controlador.cs" />
