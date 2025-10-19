@@ -13,6 +13,72 @@ namespace Capa_Controlador_Seguridad
     public class Cls_AplicacionControlador
     {
         private Cls_AplicacionDAO daoAplicacion = new Cls_AplicacionDAO();
+        // Método nuevo para obtener aplicaciones como DataTable (para la vista)
+        public DataTable ObtenerAplicacionesDataTable()
+        {
+            var aplicaciones = daoAplicacion.fun_ObtenerAplicaciones();
+            DataTable dt = new DataTable();
+            dt.Columns.Add("iPkIdAplicacion", typeof(int));
+            dt.Columns.Add("sNombreAplicacion", typeof(string));
+            dt.Columns.Add("sDescripcionAplicacion", typeof(string));
+            dt.Columns.Add("bEstadoAplicacion", typeof(bool));
+
+            foreach (var app in aplicaciones)
+            {
+                dt.Rows.Add(app.iPkIdAplicacion, app.sNombreAplicacion,
+                           app.sDescripcionAplicacion, app.bEstadoAplicacion);
+            }
+            return dt;
+        }
+
+        // Método para buscar aplicación que devuelve DataRow (no el modelo directo)
+        public (bool success, DataRow aplicacion, string message) BuscarAplicacion(string criterioBusqueda)
+        {
+            var validacion = ValidarBusqueda(criterioBusqueda);
+            if (!validacion.success)
+                return (false, null, validacion.message);
+
+            Cls_Aplicacion appEncontrada = null;
+
+            if (criterioBusqueda.Contains("-"))
+            {
+                string[] partes = criterioBusqueda.Split('-');
+                if (partes.Length >= 1 && int.TryParse(partes[0].Trim(), out int idFromCombo))
+                {
+                    appEncontrada = BuscarAplicacionPorId(idFromCombo);
+                }
+            }
+
+            if (appEncontrada == null && int.TryParse(criterioBusqueda, out int id))
+            {
+                appEncontrada = BuscarAplicacionPorId(id);
+            }
+
+            if (appEncontrada == null)
+            {
+                appEncontrada = BuscarAplicacionPorNombre(criterioBusqueda.Trim());
+            }
+
+            if (appEncontrada != null)
+            {
+                DataTable dt = new DataTable();
+                dt.Columns.Add("iPkIdAplicacion", typeof(int));
+                dt.Columns.Add("iFkIdReporte", typeof(int));
+                dt.Columns.Add("sNombreAplicacion", typeof(string));
+                dt.Columns.Add("sDescripcionAplicacion", typeof(string));
+                dt.Columns.Add("bEstadoAplicacion", typeof(bool));
+
+                dt.Rows.Add(appEncontrada.iPkIdAplicacion, appEncontrada.iFkIdReporte,
+                           appEncontrada.sNombreAplicacion, appEncontrada.sDescripcionAplicacion,
+                           appEncontrada.bEstadoAplicacion);
+
+                return (true, dt.Rows[0], "Aplicación encontrada");
+            }
+            else
+            {
+                return (false, null, "Aplicación no encontrada");
+            }
+        }
 
         public List<Cls_Aplicacion> ObtenerTodasLasAplicaciones()
         {
@@ -21,12 +87,12 @@ namespace Capa_Controlador_Seguridad
 
         // Método de validación principal que incluye todos los campos
         public (bool success, string message) ValidarDatosCompletosAplicacion(
-            int iIdAplicacion,
-            string sNombre,
-            string sDescripcion,
-            int? iIdModulo = null,
-            int? iIdReporte = null,
-            bool esModificacion = false)
+    int iIdAplicacion,
+    string sNombre,
+    string sDescripcion,
+    int? iIdModulo = null,
+    int? iIdReporte = null,
+    bool esModificacion = false)
         {
             // Validación de ID
             if (iIdAplicacion <= 0)
@@ -46,9 +112,12 @@ namespace Capa_Controlador_Seguridad
             if (sDescripcion.Length > 255)
                 return (false, "La descripción no puede exceder 255 caracteres.");
 
-            // Validación de módulo (para inserción)
+            // Validación de módulo (para inserción) - SOLO EN MODO NUEVO
             if (!esModificacion && (!iIdModulo.HasValue || iIdModulo.Value <= 0))
                 return (false, "Debe seleccionar un módulo válido.");
+
+            // En modo modificación, el módulo NO se valida porque no se puede cambiar
+            // Esto mantiene la regla de negocio en el controlador
 
             // Validación de reporte (si se proporciona)
             if (iIdReporte.HasValue && iIdReporte.Value < 0)
@@ -148,7 +217,7 @@ namespace Capa_Controlador_Seguridad
             if (TieneRelaciones(iIdAplicacion))
             {
                 return (false,
-                    "**Imposible Eliminar.** Esta aplicación se encuentra relacionada con uno o más módulos o permisos, lo que afectaría la integridad referencial del sistema. Por favor, inspeccione primero las relaciones (asignaciones) de la aplicación.");
+                    "*Imposible Eliminar.* Esta aplicación se encuentra relacionada con uno o más módulos o permisos, lo que afectaría la integridad referencial del sistema. Por favor, inspeccione primero las relaciones (asignaciones) de la aplicación.");
             }
 
             bool exito = daoAplicacion.pro_BorrarAplicacion(iIdAplicacion) > 0;
@@ -176,42 +245,6 @@ namespace Capa_Controlador_Seguridad
                                     a.sNombreAplicacion.Trim().Equals(sNombre.Trim(), StringComparison.OrdinalIgnoreCase));
         }
 
-        public (bool success, Cls_Aplicacion aplicacion, string message) BuscarAplicacion(string criterioBusqueda)
-        {
-            var validacion = ValidarBusqueda(criterioBusqueda);
-            if (!validacion.success)
-                return (false, null, validacion.message);
-
-            Cls_Aplicacion appEncontrada = null;
-
-            // Primero intentar buscar por el formato "ID - Nombre" (cuando se selecciona del ComboBox)
-            if (criterioBusqueda.Contains("-"))
-            {
-                string[] partes = criterioBusqueda.Split('-');
-                if (partes.Length >= 1 && int.TryParse(partes[0].Trim(), out int idFromCombo))
-                {
-                    appEncontrada = BuscarAplicacionPorId(idFromCombo);
-                    if (appEncontrada != null)
-                        return (true, appEncontrada, "Aplicación encontrada");
-                }
-            }
-
-            // Si no se encontró, intentar buscar solo por ID numérico
-            if (int.TryParse(criterioBusqueda, out int id))
-            {
-                appEncontrada = BuscarAplicacionPorId(id);
-                if (appEncontrada != null)
-                    return (true, appEncontrada, "Aplicación encontrada");
-            }
-
-            // Finalmente, buscar por nombre
-            appEncontrada = BuscarAplicacionPorNombre(criterioBusqueda.Trim());
-
-            if (appEncontrada != null)
-                return (true, appEncontrada, "Aplicación encontrada");
-            else
-                return (false, null, "Aplicación no encontrada");
-        }
 
         public bool TieneRelaciones(int iIdAplicacion)
         {
