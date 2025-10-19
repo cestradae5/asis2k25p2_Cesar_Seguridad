@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using Capa_Controlador_Seguridad;
 using Capa_Modelo_Seguridad;
-//Ernesto David Samayoa Jocol - 0901-22-3415 --  Formulario Estandarizado
+//Ernesto David Samayoa Jocol - 0901-22-3415 --  Formulario Estandarizado 18/10/2025
 namespace Capa_Vista_Seguridad
 {
     public partial class Frm_Empleados : Form
@@ -18,11 +18,13 @@ namespace Capa_Vista_Seguridad
         Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador(); // Bitácora Aron Esquit 0901-22-13036
         private Cls_EmpleadoControlador controlador = new Cls_EmpleadoControlador();
         private List<Cls_Empleado> listaEmpleados = new List<Cls_Empleado>();
+        //Brandon Hernandez 0901-22-9663 15/10/2025
+        private bool _canIngresar, _canConsultar, _canModificar, _canEliminar, _canImprimir;
 
         //Nuevo agregado Ernesto David Samayoa Jocol 0901-22-3415
         //Instancia estática única del formulario
         private static Frm_Empleados instancia = null;
-        //mover control
+
         //Método para obtener o crear la instancia
         public static Frm_Empleados fun_ObtenerInstancia()
         {
@@ -42,8 +44,8 @@ namespace Capa_Vista_Seguridad
             InitializeComponent();
             fun_CargarEmpleados();
             fun_ConfigurarComboBoxEmpleados();
+            fun_AplicarPermisos();
             fun_ConfiguracionInicial();
-
 
             // --- Eventos de validación ---
             Txt_nombre_empleado.KeyPress += Txt_NombreOApellido_KeyPress;
@@ -52,6 +54,47 @@ namespace Capa_Vista_Seguridad
             Txt_nit_empleados.KeyPress += Txt_Nit_KeyPress;
             Txt_telefono_empleado.KeyPress += Txt_Telefono_KeyPress;
             Txt_correo_empleado.KeyPress += Txt_Correo_KeyPress;
+        }
+
+        //Brandon Hernandez 0901-22-9663 15/10/2025
+        private void fun_AplicarPermisos()
+        {
+            int idUsuario = Capa_Modelo_Seguridad.Cls_Usuario_Conectado.iIdUsuario;
+            var usuarioCtrl = new Cls_Usuario_Controlador();
+            var permisoUsuario = new Cls_Permiso_Usuario();
+
+            int idAplicacion = permisoUsuario.ObtenerIdAplicacionPorNombre("Empleados");
+            if (idAplicacion <= 0) idAplicacion = 301; // <-- Tu ID en la base
+            int idModulo = permisoUsuario.ObtenerIdModuloPorNombre("Seguridad");
+            int idPerfil = usuarioCtrl.ObtenerIdPerfilDeUsuario(idUsuario);
+
+            var permisos = Cls_Aplicacion_Permisos.ObtenerPermisosCombinados(idUsuario, idAplicacion, idModulo, idPerfil);
+
+            _canIngresar = permisos.ingresar;
+            _canConsultar = permisos.consultar;
+            _canModificar = permisos.modificar;
+            _canEliminar = permisos.eliminar;
+            _canImprimir = permisos.imprimir;
+
+            if (Btn_nuevo_empleado != null) Btn_nuevo_empleado.Enabled = _canIngresar;
+            if (Btn_guardar_empleado != null) Btn_guardar_empleado.Enabled = _canIngresar;
+            if (Btn_modificar_empleado != null) Btn_modificar_empleado.Enabled = _canModificar;
+            if (Btn_eliminar_empleado != null) Btn_eliminar_empleado.Enabled = _canEliminar;
+            if (Btn_buscar_empleado != null) Btn_buscar_empleado.Enabled = _canConsultar;
+            if (Btn_reporte != null) Btn_reporte.Enabled = _canImprimir;
+
+            bool puedeEditar = _canIngresar || _canModificar;
+            Txt_id_empleado.Enabled = puedeEditar;
+            Txt_nombre_empleado.Enabled = puedeEditar;
+            Txt_apellido_empleado.Enabled = puedeEditar;
+            Txt_dpi_empleados.Enabled = puedeEditar;
+            Txt_nit_empleados.Enabled = puedeEditar;
+            Txt_correo_empleado.Enabled = puedeEditar;
+            Txt_telefono_empleado.Enabled = puedeEditar;
+            Txt_fechaNac_empleado.Enabled = puedeEditar;
+            Txt_fechaContra_empleado.Enabled = puedeEditar;
+            Rdb_masculino_empleado.Enabled = puedeEditar;
+            Rdb_femenino_empleado.Enabled = puedeEditar;
         }
 
         // ------------------ VALIDACIONES DE ENTRADA ------------------
@@ -102,14 +145,28 @@ namespace Capa_Vista_Seguridad
             }
         }
 
+
+
         private void fun_ConfiguracionInicial()
         {
-            Btn_guardar_empleado.Enabled = false;
-            Btn_modificar_empleado.Enabled = false;
-            Btn_eliminar_empleado.Enabled = false;
-            Btn_nuevo_empleado.Enabled = true;
-            Btn_cancelar.Enabled = true;
+            if (Btn_nuevo_empleado != null) Btn_nuevo_empleado.Enabled = _canIngresar;
+            if (Btn_guardar_empleado != null) Btn_guardar_empleado.Enabled = false;
+            if (Btn_modificar_empleado != null) Btn_modificar_empleado.Enabled = false;
+            if (Btn_eliminar_empleado != null) Btn_eliminar_empleado.Enabled = false;
+            if (Btn_buscar_empleado != null) Btn_buscar_empleado.Enabled = _canConsultar;
+            if (Btn_reporte != null) Btn_reporte.Enabled = _canImprimir;
+
             Txt_id_empleado.Enabled = false;
+            Txt_nombre_empleado.Enabled = false;
+            Txt_apellido_empleado.Enabled = false;
+            Txt_dpi_empleados.Enabled = false;
+            Txt_nit_empleados.Enabled = false;
+            Txt_correo_empleado.Enabled = false;
+            Txt_telefono_empleado.Enabled = false;
+            Txt_fechaNac_empleado.Enabled = false;
+            Txt_fechaContra_empleado.Enabled = false;
+            Rdb_masculino_empleado.Enabled = false;
+            Rdb_femenino_empleado.Enabled = false;
         }
 
         private void fun_CargarEmpleados()
@@ -176,9 +233,25 @@ namespace Capa_Vista_Seguridad
             if (empEncontrado != null)
             {
                 fun_MostrarEmpleado(empEncontrado);
-                Btn_modificar_empleado.Enabled = true;
-                Btn_eliminar_empleado.Enabled = true;
-                Btn_guardar_empleado.Enabled = false;
+
+                if (Btn_modificar_empleado != null) Btn_modificar_empleado.Enabled = _canModificar;
+                if (Btn_eliminar_empleado != null) Btn_eliminar_empleado.Enabled = _canEliminar;
+                if (Btn_guardar_empleado != null) Btn_guardar_empleado.Enabled = false;
+                if (Btn_nuevo_empleado != null) Btn_nuevo_empleado.Enabled = _canIngresar;
+
+                // Solo deja campos editables si tienes modificar
+                bool puedeEditar = _canModificar;
+                Txt_id_empleado.Enabled = false;
+                Txt_nombre_empleado.Enabled = puedeEditar;
+                Txt_apellido_empleado.Enabled = puedeEditar;
+                Txt_dpi_empleados.Enabled = puedeEditar;
+                Txt_nit_empleados.Enabled = puedeEditar;
+                Txt_correo_empleado.Enabled = puedeEditar;
+                Txt_telefono_empleado.Enabled = puedeEditar;
+                Txt_fechaNac_empleado.Enabled = puedeEditar;
+                Txt_fechaContra_empleado.Enabled = puedeEditar;
+                Rdb_masculino_empleado.Enabled = puedeEditar;
+                Rdb_femenino_empleado.Enabled = puedeEditar;
             }
             else
             {
@@ -191,10 +264,21 @@ namespace Capa_Vista_Seguridad
         private void Btn_nuevo_empleado_Click(object sender, EventArgs e)
         {
             fun_LimpiarCampos();
-            Btn_guardar_empleado.Enabled = true;
-            Btn_modificar_empleado.Enabled = false;
-            Btn_eliminar_empleado.Enabled = false;
+            if (Btn_guardar_empleado != null) Btn_guardar_empleado.Enabled = _canIngresar;
+            if (Btn_modificar_empleado != null) Btn_modificar_empleado.Enabled = false;
+            if (Btn_eliminar_empleado != null) Btn_eliminar_empleado.Enabled = false;
+
             Txt_id_empleado.Enabled = true;
+            Txt_nombre_empleado.Enabled = true;
+            Txt_apellido_empleado.Enabled = true;
+            Txt_dpi_empleados.Enabled = true;
+            Txt_nit_empleados.Enabled = true;
+            Txt_correo_empleado.Enabled = true;
+            Txt_telefono_empleado.Enabled = true;
+            Txt_fechaNac_empleado.Enabled = true;
+            Txt_fechaContra_empleado.Enabled = true;
+            Rdb_masculino_empleado.Enabled = true;
+            Rdb_femenino_empleado.Enabled = true;
         }
 
         private void Btn_modificar_empleado_Click(object sender, EventArgs e)
@@ -218,7 +302,6 @@ namespace Capa_Vista_Seguridad
                 DateTime.Parse(Txt_fechaContra_empleado.Text)
             );
             MessageBox.Show(exito ? "Empleado modificado correctamente" : "Error al modificar empleado");
-
             //Registrar en bitacora   Aron Esquit 0901-22-13036
             ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, $"Modificó empleado/a: {Txt_nombre_empleado.Text}", true);
             fun_CargarEmpleados();
@@ -227,7 +310,7 @@ namespace Capa_Vista_Seguridad
             fun_ConfiguracionInicial();
         }
 
-        // Ernesto David Samayoa Jocol - 0901-22-3415 - Fecha: 14/10/2025
+        // Ernesto David Samayoa Jocol - 0901-22-3415 - Fecha: 12/10/2025
         private void Btn_eliminar_empleado_Click(object sender, EventArgs e)
         {
             // 1️ Validar que el campo no esté vacío ni sea inválido
@@ -288,6 +371,8 @@ namespace Capa_Vista_Seguridad
                 MessageBox.Show("Eliminación cancelada por el usuario.", "Cancelado", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
+
+
 
         private void Btn_cancelar_Click(object sender, EventArgs e)
         {
@@ -422,6 +507,7 @@ namespace Capa_Vista_Seguridad
 
         [DllImport("user32.dll")]
         public static extern bool ReleaseCapture();
+
 
         [DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);

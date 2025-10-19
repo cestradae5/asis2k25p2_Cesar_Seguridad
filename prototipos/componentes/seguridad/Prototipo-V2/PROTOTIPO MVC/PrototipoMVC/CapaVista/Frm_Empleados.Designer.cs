@@ -128,7 +128,6 @@
             this.Txt_correo_empleado.Name = "Txt_correo_empleado";
             this.Txt_correo_empleado.Size = new System.Drawing.Size(267, 29);
             this.Txt_correo_empleado.TabIndex = 16;
-     
             // 
             // lbl_correo_empleado
             // 
@@ -147,7 +146,6 @@
             this.Txt_fechaContra_empleado.Name = "Txt_fechaContra_empleado";
             this.Txt_fechaContra_empleado.Size = new System.Drawing.Size(205, 29);
             this.Txt_fechaContra_empleado.TabIndex = 14;
-            
             // 
             // label1
             // 
@@ -166,7 +164,6 @@
             this.Txt_fechaNac_empleado.Name = "Txt_fechaNac_empleado";
             this.Txt_fechaNac_empleado.Size = new System.Drawing.Size(205, 29);
             this.Txt_fechaNac_empleado.TabIndex = 12;
-            //this.Txt_fechaNac_empleado.TextChanged += new System.EventHandler(this.Txt_fechaNac_empleado_TextChanged);
             // 
             // lbl_fechaNac_empleado
             // 
@@ -193,7 +190,6 @@
             this.Txt_nit_empleados.Name = "Txt_nit_empleados";
             this.Txt_nit_empleados.Size = new System.Drawing.Size(267, 29);
             this.Txt_nit_empleados.TabIndex = 10;
-            
             // 
             // lbl_telefono_empl
             // 
@@ -222,7 +218,6 @@
             this.Txt_dpi_empleados.Name = "Txt_dpi_empleados";
             this.Txt_dpi_empleados.Size = new System.Drawing.Size(205, 29);
             this.Txt_dpi_empleados.TabIndex = 8;
-            
             // 
             // lbl_dpi_empleado
             // 
@@ -241,7 +236,6 @@
             this.Txt_apellido_empleado.Name = "Txt_apellido_empleado";
             this.Txt_apellido_empleado.Size = new System.Drawing.Size(267, 29);
             this.Txt_apellido_empleado.TabIndex = 6;
-            
             // 
             // lbl_apellido_empleado
             // 
@@ -260,7 +254,6 @@
             this.Txt_nombre_empleado.Name = "Txt_nombre_empleado";
             this.Txt_nombre_empleado.Size = new System.Drawing.Size(205, 29);
             this.Txt_nombre_empleado.TabIndex = 4;
-       
             // 
             // lbl_nombre_empleados
             // 
@@ -279,7 +272,6 @@
             this.Txt_id_empleado.Name = "Txt_id_empleado";
             this.Txt_id_empleado.Size = new System.Drawing.Size(205, 29);
             this.Txt_id_empleado.TabIndex = 2;
-   
             // 
             // Gpb_genero_empleados
             // 
@@ -303,7 +295,6 @@
             this.Rdb_femenino_empleado.TabStop = true;
             this.Rdb_femenino_empleado.Text = "Femenino";
             this.Rdb_femenino_empleado.UseVisualStyleBackColor = true;
-
             // 
             // Rdb_masculino_empleado
             // 
@@ -315,7 +306,6 @@
             this.Rdb_masculino_empleado.TabStop = true;
             this.Rdb_masculino_empleado.Text = "Masculino";
             this.Rdb_masculino_empleado.UseVisualStyleBackColor = true;
-
             // 
             // Gpb_opciones_empleados
             // 
@@ -523,7 +513,7 @@
             this.Btn_reporte.UseVisualStyleBackColor = false;
             this.Btn_reporte.Click += new System.EventHandler(this.Btn_reporte_Click);
             // 
-            // frmEmpleados
+            // Frm_Empleados
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -537,7 +527,7 @@
             this.Controls.Add(this.Gpb_datos_empleados);
             this.Controls.Add(this.lbl_empleados);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "frmEmpleados";
+            this.Name = "Frm_Empleados";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FrmEmpleados";
             this.Gpb_datos_empleados.ResumeLayout(false);
