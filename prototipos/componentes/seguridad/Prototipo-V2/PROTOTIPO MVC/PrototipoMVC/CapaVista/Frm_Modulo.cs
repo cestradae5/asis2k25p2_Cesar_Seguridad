@@ -32,11 +32,11 @@ namespace Capa_Vista_Seguridad
         //Brandon Hernandez 0901-22-9663 15/10/2025
         private void fun_AplicarPermisos()
         {
-            int idUsuario = Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario;
+            int idUsuario = Cls_Usuario_Conectado.iIdUsuario;
             var usuarioCtrl = new Cls_Usuario_Controlador();
 
             // Usa la clase correcta para obtener los IDs
-            var permisoUsuario = new Capa_Modelo_Seguridad.Cls_Permiso_Usuario();
+            var permisoUsuario = new Cls_Permiso_Usuario_Controlador();
 
             int idAplicacion = permisoUsuario.ObtenerIdAplicacionPorNombre("Modulos");
             if (idAplicacion <= 0) idAplicacion = 304;

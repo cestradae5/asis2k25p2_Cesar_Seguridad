@@ -1,4 +1,4 @@
-﻿//Registrar en Bitácora - Arón Ricardo Esquit Silva - 0901-22-13036 - 6/10/2025
+﻿//Registrar en Bitácora - Brandon Alexander Hernandez Salguero - 6/10/2025
 using System;
 
 namespace Capa_Controlador_Seguridad

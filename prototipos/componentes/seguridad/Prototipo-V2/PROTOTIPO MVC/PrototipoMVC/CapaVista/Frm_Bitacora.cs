@@ -41,7 +41,7 @@ namespace Capa_Vista_Seguridad
         {
             int idUsuario = Cls_Usuario_Conectado.iIdUsuario;
             var usuarioCtrl = new Cls_Usuario_Controlador();
-            var permisoUsuario = new Capa_Modelo_Seguridad.Cls_Permiso_Usuario();
+            var permisoUsuario = new Cls_Permiso_Usuario_Controlador();
 
             int idAplicacion = permisoUsuario.ObtenerIdAplicacionPorNombre("Bitacora");
             if (idAplicacion <= 0) idAplicacion = 309; // Cambia por tu ID real si aplica

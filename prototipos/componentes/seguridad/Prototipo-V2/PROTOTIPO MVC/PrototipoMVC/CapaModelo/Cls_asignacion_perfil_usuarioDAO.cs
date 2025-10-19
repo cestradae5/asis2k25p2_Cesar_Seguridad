@@ -92,7 +92,7 @@ namespace Capa_Modelo_Seguridad
             catch (OdbcException ex)
             {
                 // Si el error es por clave duplicada (ya existe la relación), retorna mensaje personalizado
-                if (ex.Message.Contains("Duplicate entry"))
+                if (ex.Message.Contains("Duplicate entry") || ex.Message.Contains("clave duplicada") || ex.Message.Contains("PRIMARY"))
                 {
                     mensajeError = "Este usuario ya está asignado al Perfil ingresado.";
                 }
@@ -133,7 +133,41 @@ namespace Capa_Modelo_Seguridad
             return dt;
         }
 
+        /// <summary>
+        /// Valida si el usuario ya tiene el perfil asignado en la BD.
+        /// </summary>
+        public bool ExisteAsignacionEnBD(int usuarioId, int perfilId)
+        {
+            string query = @"SELECT COUNT(*) FROM Tbl_Usuario_Perfil WHERE Fk_Id_Usuario = ? AND Fk_Id_Perfil = ?";
+            using (OdbcConnection conn = conexion.conexion())
+            {
+                using (OdbcCommand cmd = new OdbcCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Fk_Id_Usuario", usuarioId);
+                    cmd.Parameters.AddWithValue("@Fk_Id_Perfil", perfilId);
+                    int count = Convert.ToInt32(cmd.ExecuteScalar());
+                    return count > 0;
+                }
+            }
+        }
 
+        /// <summary>
+        /// Valida si el usuario ya tiene algún permiso asignado en la BD.
+        /// (adaptar la tabla/columna según tu modelo real)
+        /// </summary>
+        public bool UsuarioTienePermiso(int usuarioId)
+        {
+            string query = @"SELECT COUNT(*) FROM Tbl_Usuario_Perfil WHERE Fk_Id_Usuario = ?";
+            using (OdbcConnection conn = conexion.conexion())
+            {
+                using (OdbcCommand cmd = new OdbcCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Fk_Id_Usuario", usuarioId);
+                    int count = Convert.ToInt32(cmd.ExecuteScalar());
+                    return count > 0;
+                }
+            }
+        }
 
     }
 }

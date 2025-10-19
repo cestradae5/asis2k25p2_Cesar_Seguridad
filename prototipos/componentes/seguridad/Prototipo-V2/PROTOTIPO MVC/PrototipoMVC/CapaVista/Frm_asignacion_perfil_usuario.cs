@@ -5,7 +5,6 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using Capa_Controlador_Seguridad;
-using Capa_Modelo_Seguridad;
 
 namespace Capa_Vista_Seguridad
 {
@@ -16,24 +15,19 @@ namespace Capa_Vista_Seguridad
     {
         Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador(); // Bitacora
         Cls_asignacion_perfil_usuarioControlador controlador = new Cls_asignacion_perfil_usuarioControlador();
+        private List<AsignacionPerfilUsuarioDTO> asignacionesPendientes = new List<AsignacionPerfilUsuarioDTO>();
+
        
-        Cls_Usuario_Controlador controladorUsuario = new Cls_Usuario_Controlador();
-        private List<Cls_asignacion_perfil_usuario> asignacionesPendientes = new List<Cls_asignacion_perfil_usuario>();
         private bool _canIngresar, _canConsultar, _canModificar, _canEliminar, _canImprimir;
-        // DataTables para lookup de nombres
         private DataTable dtUsuarios;
         private DataTable dtPerfiles;
 
-
-
-  
         public Frm_asignacion_perfil_usuario()
         {
             InitializeComponent();
             fun_AplicarPermisos();
-      
-            
         }
+
         //Brandon Hernandez 0901-22-9663 15/10/2025
         private void fun_AplicarPermisos()
         {
@@ -55,11 +49,10 @@ namespace Capa_Vista_Seguridad
             _canImprimir = permisos.imprimir;
 
             // Habilitar/deshabilitar controles según permisos
-            if (Btn_agregar != null) Btn_agregar.Enabled = _canIngresar;
-            if (btn_finalizar != null) btn_finalizar.Enabled = _canIngresar || _canModificar;
-            if (Btn_eliminar_asignacion != null) Btn_eliminar_asignacion.Enabled = true;
-            if (Btn_eliminar_consulta != null) Btn_eliminar_consulta.Enabled = true;
-
+            Btn_agregar.Enabled = _canIngresar;
+            btn_finalizar.Enabled = _canIngresar || _canModificar;
+            Btn_eliminar_asignacion.Enabled = true;
+            Btn_eliminar_consulta.Enabled = true;
 
             // Combos y DataGridViews
             Cbo_usuario.Enabled = _canConsultar || _canIngresar || _canModificar;
@@ -68,6 +61,7 @@ namespace Capa_Vista_Seguridad
             Dgv_asignaciones.Enabled = _canIngresar || _canModificar || _canEliminar;
             Dgv_consulta.Enabled = _canConsultar;
         }
+
         private void frmasignacion_perfil_usuario_Load(object sender, EventArgs e)
         {
             // Llenar ComboBox Usuarios y guardar DataTable
@@ -82,11 +76,10 @@ namespace Capa_Vista_Seguridad
             Cbo_usuarios2.ValueMember = "Pk_Id_Usuario";
             Cbo_usuarios2.SelectedIndex = -1;
 
-
             dtPerfiles = controlador.datObtenerPerfiles();
             Cbo_perfil.DataSource = dtPerfiles.Copy();
             Cbo_perfil.DisplayMember = "Cmp_Puesto_Perfil";
-            Cbo_perfil.ValueMember = "Pk_id_Perfil";
+            Cbo_perfil.ValueMember = "Pk_Id_Perfil";
             Cbo_perfil.SelectedIndex = -1;
         }
 
@@ -105,7 +98,7 @@ namespace Capa_Vista_Seguridad
                     iIdUsuario = Convert.ToInt32(Cbo_usuario.SelectedValue);
                 }
 
-                DataTable dt =controlador.datObtenerPerfilesPorUsuario(iIdUsuario);
+                DataTable dt = controlador.datObtenerPerfilesPorUsuario(iIdUsuario);
                 Dgv_consulta.DataSource = dt;
             }
             else
@@ -113,37 +106,26 @@ namespace Capa_Vista_Seguridad
                 Dgv_consulta.DataSource = null;
             }
         }
+
         //0901-22-9663 Brandon Hernandez 12/10/2025
         private void Btn_agregar_Click(object sender, EventArgs e)
         {
-            if (Cbo_usuarios2.SelectedIndex == -1 || Cbo_perfil.SelectedIndex == -1)
+            int usuarioId = (Cbo_usuarios2.SelectedIndex != -1 && Cbo_usuarios2.SelectedValue != null)
+                ? Convert.ToInt32(Cbo_usuarios2.SelectedValue)
+                : 0;
+            int perfilId = (Cbo_perfil.SelectedIndex != -1 && Cbo_perfil.SelectedValue != null)
+                ? Convert.ToInt32(Cbo_perfil.SelectedValue)
+                : 0;
+
+            string mensaje;
+            bool ok = controlador.AgregarAsignacionPendiente(usuarioId, perfilId, asignacionesPendientes, out mensaje);
+            if (!ok)
             {
-                MessageBox.Show("Seleccione un usuario y un perfil.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(mensaje, "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            int iIdUsuario = Convert.ToInt32(Cbo_usuarios2.SelectedValue);
-            int iIdPerfil = Convert.ToInt32(Cbo_perfil.SelectedValue);
-
-          
-
-            int perfilAsignado = controladorUsuario.ObtenerIdPerfilDeUsuario(iIdUsuario); // Debe retornar 0 si no tiene perfil
-
-            if (perfilAsignado != 0)
-            {
-                MessageBox.Show($"Este usuario ya está asignado a un perfil {perfilAsignado}.", "Asignación existente", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-
-            if (asignacionesPendientes.Any(x => x.Fk_Id_Usuario == iIdUsuario && x.Fk_Id_Perfil == iIdPerfil))
-            {
-                MessageBox.Show("Esta asignación ya está en la lista.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-
-            asignacionesPendientes.Add(new Cls_asignacion_perfil_usuario(iIdUsuario, iIdPerfil));
             fun_RefrescarAsignacionesPendientes();
-
         }
 
         private void fun_RefrescarAsignacionesPendientes()
@@ -152,8 +134,8 @@ namespace Capa_Vista_Seguridad
             var lista = asignacionesPendientes
                 .Select(x => new
                 {
-                    Usuario = dtUsuarios.Select($"Pk_Id_Usuario = {x.Fk_Id_Usuario}").FirstOrDefault()?["Cmp_Nombre_Usuario"]?.ToString() ?? x.Fk_Id_Usuario.ToString(),
-                    Perfil = dtPerfiles.Select($"Pk_Id_Perfil = {x.Fk_Id_Perfil}").FirstOrDefault()?["Cmp_Puesto_Perfil"]?.ToString() ?? x.Fk_Id_Perfil.ToString()
+                    Usuario = dtUsuarios.Select($"Pk_Id_Usuario = {x.UsuarioId}").FirstOrDefault()?["Cmp_Nombre_Usuario"]?.ToString() ?? x.UsuarioId.ToString(),
+                    Perfil = dtPerfiles.Select($"Pk_Id_Perfil = {x.PerfilId}").FirstOrDefault()?["Cmp_Puesto_Perfil"]?.ToString() ?? x.PerfilId.ToString()
                 }).ToList();
 
             Dgv_asignaciones.DataSource = lista;
@@ -164,33 +146,27 @@ namespace Capa_Vista_Seguridad
             int iGuardados = 0;
             foreach (var asignacion in asignacionesPendientes)
             {
-                string mensajeError; // Variable para el mensaje de error personalizado
-                                     // Llama al controlador, que retorna true si se guardó, false si hubo error (duplicado, etc)
-                bool ok = controlador.bInsertar(asignacion.Fk_Id_Usuario, asignacion.Fk_Id_Perfil, out mensajeError);
+                string mensajeError;
+                bool ok = controlador.GuardarAsignacion(asignacion.UsuarioId, asignacion.PerfilId, out mensajeError);
 
                 if (ok)
                 {
                     iGuardados++;
-                    // Obtener nombres desde los DataTables
-                    string nombreUsuario = dtUsuarios.Select($"Pk_Id_Usuario = {asignacion.Fk_Id_Usuario}")
-                        .FirstOrDefault()?["Cmp_Nombre_Usuario"]?.ToString() ?? asignacion.Fk_Id_Usuario.ToString();
+                    string nombreUsuario = dtUsuarios.Select($"Pk_Id_Usuario = {asignacion.UsuarioId}")
+                        .FirstOrDefault()?["Cmp_Nombre_Usuario"]?.ToString() ?? asignacion.UsuarioId.ToString();
 
-                    string nombrePerfil = dtPerfiles.Select($"Pk_Id_Perfil = {asignacion.Fk_Id_Perfil}")
-                        .FirstOrDefault()?["Cmp_Puesto_Perfil"]?.ToString() ?? asignacion.Fk_Id_Perfil.ToString();
+                    string nombrePerfil = dtPerfiles.Select($"Pk_Id_Perfil = {asignacion.PerfilId}")
+                        .FirstOrDefault()?["Cmp_Puesto_Perfil"]?.ToString() ?? asignacion.PerfilId.ToString();
 
-                    // Registrar en bitácora
                     ctrlBitacora.RegistrarAccion(
                         Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario,
                         1,
                         $"Se asignó el perfil '{nombrePerfil}' al usuario '{nombreUsuario}'",
                         true
                     );
-
-
                 }
                 else
                 {
-                    // Muestra el mensaje personalizado si hubo error (por ejemplo, relación duplicada)
                     MessageBox.Show(mensajeError, "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
@@ -202,13 +178,10 @@ namespace Capa_Vista_Seguridad
 
         private void Btn_eliminar_asignacion_Click_1(object sender, EventArgs e)
         {
-
             if (Dgv_asignaciones.CurrentRow != null)
             {
-
                 string snombreUsuario = Dgv_asignaciones.CurrentRow.Cells["Usuario"].Value.ToString();
                 string snombrePerfil = Dgv_asignaciones.CurrentRow.Cells["Perfil"].Value.ToString();
-
 
                 var usuarioRow = dtUsuarios.AsEnumerable()
                     .FirstOrDefault(r => r.Field<string>("Cmp_Nombre_Usuario") == snombreUsuario);
@@ -220,13 +193,10 @@ namespace Capa_Vista_Seguridad
                     int iIdUsuario = usuarioRow.Field<int>("Pk_Id_Usuario");
                     int iIdPerfil = perfilRow.Field<int>("Pk_Id_Perfil");
 
-
-                    asignacionesPendientes.RemoveAll(x => x.Fk_Id_Usuario == iIdUsuario && x.Fk_Id_Perfil == iIdPerfil);
-
+                    asignacionesPendientes.RemoveAll(x => x.UsuarioId == iIdUsuario && x.PerfilId == iIdPerfil);
 
                     fun_RefrescarAsignacionesPendientes();
 
-                    // Registrar en Bitácora - Arón Ricardo Esquit Silva  0901-22-13036
                     ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, $"Se eliminó la asignación del perfil '{snombrePerfil}' para el usuario '{snombreUsuario}'", true);
                 }
             }
@@ -262,14 +232,5 @@ namespace Capa_Vista_Seguridad
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0); // Simula arrastre
             }
         }
-
-
-
-
-
-
-
-
-
     }
 }
