@@ -14,7 +14,7 @@ namespace Capa_Vista_Seguridad
         private Cls_AplicacionControlador controlador = new Cls_AplicacionControlador();
         private List<dynamic> listaAplicaciones = new List<dynamic>();
         //Brandon Hernandez 0901-22-9663 15/10/2025
-        private bool _canIngresar, _canConsultar, _canModificar, _canEliminar, _canImprimir; 
+        private bool _canIngresar, _canConsultar, _canModificar, _canEliminar, _canImprimir;
 
         public FrmAplicacion()
         {
@@ -30,7 +30,7 @@ namespace Capa_Vista_Seguridad
             var permisoUsuario = new Cls_Permiso_Usuario_Controlador();
 
             int idAplicacion = permisoUsuario.ObtenerIdAplicacionPorNombre("Aplicacion");
-            if (idAplicacion <= 0) idAplicacion = 305; 
+            if (idAplicacion <= 0) idAplicacion = 305;
             int idModulo = permisoUsuario.ObtenerIdModuloPorNombre("Seguridad");
             int idPerfil = usuarioCtrl.ObtenerIdPerfilDeUsuario(idUsuario);
 
@@ -49,12 +49,12 @@ namespace Capa_Vista_Seguridad
             if (Cbo_buscar.Enabled != null) Cbo_buscar.Enabled = _canConsultar;
             if (Btn_reporte != null) Btn_reporte.Enabled = _canImprimir;
 
-            bool puedeEditar = (_canIngresar || _canModificar );
+            bool puedeEditar = (_canIngresar || _canModificar);
             Txt_id_aplicacion.Enabled = puedeEditar;
             Cbo_id_modulo.Enabled = puedeEditar;
             Txt_Nombre_aplicacion.Enabled = puedeEditar;
             Txt_descripcion.Enabled = puedeEditar;
-            
+
 
         }
 
@@ -104,17 +104,17 @@ namespace Capa_Vista_Seguridad
 
         private void fun_CargarAplicaciones()
         {
-            var aplicaciones = controlador.ObtenerTodasLasAplicaciones();
+            DataTable dtAplicaciones = controlador.ObtenerAplicacionesDataTable();
             listaAplicaciones.Clear();
 
-            foreach (var app in aplicaciones)
+            foreach (DataRow row in dtAplicaciones.Rows)
             {
                 listaAplicaciones.Add(new
                 {
-                    iPkIdAplicacion = app.iPkIdAplicacion,
-                    sNombreAplicacion = app.sNombreAplicacion,
-                    sDescripcionAplicacion = app.sDescripcionAplicacion,
-                    bEstadoAplicacion = app.bEstadoAplicacion
+                    iPkIdAplicacion = row["iPkIdAplicacion"],
+                    sNombreAplicacion = row["sNombreAplicacion"].ToString(),
+                    sDescripcionAplicacion = row["sDescripcionAplicacion"].ToString(),
+                    bEstadoAplicacion = Convert.ToBoolean(row["bEstadoAplicacion"])
                 });
             }
         }
@@ -152,20 +152,19 @@ namespace Capa_Vista_Seguridad
             }
         }
 
-        private void MostrarAplicacion(dynamic app)
+        private void MostrarAplicacion(DataRow app)
         {
-            Txt_id_aplicacion.Text = app.iPkIdAplicacion.ToString();
-            Txt_Nombre_aplicacion.Text = app.sNombreAplicacion;
-            Txt_descripcion.Text = app.sDescripcionAplicacion;
-            Rdb_estado_activo.Checked = app.bEstadoAplicacion;
-            Rdb_inactivo.Checked = !app.bEstadoAplicacion;
+            Txt_id_aplicacion.Text = app["iPkIdAplicacion"].ToString();
+            Txt_Nombre_aplicacion.Text = app["sNombreAplicacion"].ToString();
+            Txt_descripcion.Text = app["sDescripcionAplicacion"].ToString();
+            bool estado = Convert.ToBoolean(app["bEstadoAplicacion"]);
+            Rdb_estado_activo.Checked = estado;
+            Rdb_inactivo.Checked = !estado;
         }
 
         private void Btn_buscar_Click(object sender, EventArgs e)
         {
             string sBusqueda = Cbo_buscar.Text.Trim();
-
-            // Llamar al controlador para validar y buscar
             var resultado = controlador.BuscarAplicacion(sBusqueda);
 
             if (resultado.success)
@@ -173,8 +172,9 @@ namespace Capa_Vista_Seguridad
                 MostrarAplicacion(resultado.aplicacion);
 
                 // Obtener módulo asignado
+                int idAplicacion = Convert.ToInt32(resultado.aplicacion["iPkIdAplicacion"]);
                 Cls_Asignacion_Modulo_Aplicacion_Controlador asignacionCtrl = new Cls_Asignacion_Modulo_Aplicacion_Controlador();
-                int? idModulo = asignacionCtrl.ObtenerModuloPorAplicacion(resultado.aplicacion.iPkIdAplicacion);
+                int? idModulo = asignacionCtrl.ObtenerModuloPorAplicacion(idAplicacion);
 
                 if (idModulo.HasValue)
                 {
@@ -193,9 +193,9 @@ namespace Capa_Vista_Seguridad
                 }
 
                 // Obtener y mostrar el reporte asignado
-                if (resultado.aplicacion.iFkIdReporte.HasValue)
+                if (!resultado.aplicacion.IsNull("iFkIdReporte"))
                 {
-                    int idReporte = resultado.aplicacion.iFkIdReporte.Value;
+                    int idReporte = Convert.ToInt32(resultado.aplicacion["iFkIdReporte"]);
                     foreach (var item in Cbo_id_reporte.Items)
                     {
                         int itemId = (int)item.GetType().GetProperty("Id").GetValue(item);
@@ -208,15 +208,13 @@ namespace Capa_Vista_Seguridad
                 }
                 else
                 {
-                    // Si no tiene reporte, seleccionar "Sin reporte"
                     Cbo_id_reporte.SelectedIndex = 0;
                 }
 
-                // NUEVO: Bloquear ID y botón Guardar cuando se encuentra una aplicación
+                // NUEVO: Deshabilitar el ComboBox de módulos en modo modificación
                 Txt_id_aplicacion.Enabled = false;
+                Cbo_id_modulo.Enabled = false; // ← MÓDULO NO EDITABLE EN MODIFICACIÓN
                 Btn_guardar.Enabled = false;
-
-                // Asegurar que el botón Modificar esté habilitado si tiene permisos
                 Btn_modificar.Enabled = _canModificar;
             }
             else
@@ -225,6 +223,7 @@ namespace Capa_Vista_Seguridad
                 fun_LimpiarCampos();
             }
         }
+
 
         private void Btn_modificar_Click(object sender, EventArgs e)
         {
@@ -254,20 +253,8 @@ namespace Capa_Vista_Seguridad
 
             if (resultado.success)
             {
-                // Si hay módulo seleccionado, actualizar la asignación
-                if (Cbo_id_modulo.SelectedItem != null)
-                {
-                    int idModulo = Convert.ToInt32(((dynamic)Cbo_id_modulo.SelectedItem).Id);
-                    Cls_Asignacion_Modulo_Aplicacion_Controlador asignacionCtrl = new Cls_Asignacion_Modulo_Aplicacion_Controlador();
-
-                    // Luego crear nueva asignación
-                    var resultadoAsignacion = asignacionCtrl.GuardarAsignacion(idModulo, id);
-
-                    if (!resultadoAsignacion.success)
-                    {
-                        MessageBox.Show("modificada error en asignación: " + resultadoAsignacion.message);
-                    }
-                }
+                // ELIMINADO: No se permite cambiar el módulo en modificación
+                // El módulo permanece igual al original
 
                 MessageBox.Show("Aplicación modificada correctamente.");
 
@@ -292,11 +279,11 @@ namespace Capa_Vista_Seguridad
             }
         }
 
-
         private void Btn_nuevo_Click(object sender, EventArgs e)
         {
             fun_LimpiarCampos();
             Btn_modificar.Enabled = false;
+            Cbo_id_modulo.Enabled = _canIngresar;
         }
 
         private void Btn_guardar_Click(object sender, EventArgs e)
@@ -384,6 +371,7 @@ namespace Capa_Vista_Seguridad
             //Restaurar estado de controles según permisos
             bool puedeEditar = (_canIngresar || _canModificar);
             Txt_id_aplicacion.Enabled = _canIngresar; // Solo habilitado para nuevos registros
+            Cbo_id_modulo.Enabled = _canIngresar; // ← HABILITADO SOLO EN MODO NUEVO
             Btn_guardar.Enabled = _canIngresar;
             Btn_modificar.Enabled = _canModificar;
         }

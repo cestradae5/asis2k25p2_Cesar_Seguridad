@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Capa_Modelo_Seguridad;
 using System.Data;
+using Capa_Modelo_Seguridad;
 
 namespace Capa_Controlador_Seguridad
 {
@@ -12,9 +8,9 @@ namespace Capa_Controlador_Seguridad
     {
         private Cls_Asignacion_Modulo_AplicacionDAO dao = new Cls_Asignacion_Modulo_AplicacionDAO();
 
-        // Validación para asignación
         public (bool success, string message) ValidarAsignacion(int iIdModulo, int iIdAplicacion)
         {
+            // Validación movida aquí desde la vista
             if (iIdModulo <= 0)
                 return (false, "Debe seleccionar un módulo válido.");
 
@@ -24,12 +20,17 @@ namespace Capa_Controlador_Seguridad
             return (true, "Validación exitosa");
         }
 
+        // Método mejorado con validación completa
         public (bool success, string message) GuardarAsignacion(int iIdModulo, int iIdAplicacion)
         {
-            // Validar la asignación
             var validacion = ValidarAsignacion(iIdModulo, iIdAplicacion);
             if (!validacion.success)
                 return (false, validacion.message);
+
+            // Verificar si la aplicación existe
+            var appCtrl = new Cls_AplicacionControlador();
+            if (appCtrl.BuscarAplicacionPorId(iIdAplicacion) == null)
+                return (false, "La aplicación no existe.");
 
             if (dao.ExisteAsignacion(iIdModulo, iIdAplicacion))
                 return (false, "La asignación ya existe.");
@@ -47,13 +48,15 @@ namespace Capa_Controlador_Seguridad
         {
             DataTable dt = dao.ObtenerAsignaciones();
 
-            var fila = dt.AsEnumerable()
-                        .FirstOrDefault(r => Convert.ToInt32(r["Fk_id_aplicacion"]) == iIdAplicacion);
+            foreach (DataRow row in dt.Rows)
+            {
+                if (Convert.ToInt32(row["Fk_id_aplicacion"]) == iIdAplicacion)
+                {
+                    return Convert.ToInt32(row["Fk_id_modulo"]);
+                }
+            }
 
-            if (fila != null)
-                return Convert.ToInt32(fila["Fk_id_modulo"]);
-
-            return null; // no tiene módulo asignado
+            return null;
         }
     }
 }
