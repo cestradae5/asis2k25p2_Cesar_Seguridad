@@ -8,7 +8,6 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Capa_Controlador_Seguridad;
 
-using ModSeg = Capa_Modelo_Seguridad;
 
 
 //Brandon Alexander Hernandez Salguero - 0901-22-9663
@@ -21,7 +20,9 @@ namespace Capa_Vista_Seguridad
         Cls_Asignacion_Permiso_PerfilControlador controlador = new Cls_Asignacion_Permiso_PerfilControlador();
         Cls_Registrar_Permisos_Bitacora registrarBitacora = new Cls_Registrar_Permisos_Bitacora();  //Aron Esquit  0901-22-13036
         Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador();  //Bitacora  Aron Esquit 0901-22-13036
-                                                                               //Brandon Hernandez 0901-22-9663 15/10/2025
+        Cls_Registrar_Permisos_Bitacora ctrlPermisosBitacora = new Cls_Registrar_Permisos_Bitacora(); //Bitacora  Aron Esquit 0901-22-13036
+
+        //Brandon Hernandez 0901-22-9663 15/10/2025
         private bool _canIngresar, _canConsultar, _canModificar, _canEliminar, _canImprimir;
 
         public Frm_Permisos_Perfiles()
@@ -211,42 +212,22 @@ namespace Capa_Vista_Seguridad
                 bool bEliminar = Convert.ToBoolean(row.Cells["Eliminar"].Value ?? false);
                 bool bImprimir = Convert.ToBoolean(row.Cells["Imprimir"].Value ?? false);
 
-                //Clase de bitacira para los permisos Aron Ricardo Esquit Silva   0901-22-13036
-                //Consultar permisos anteriores antes de modificar
-                Cls_Permisos gPermisosAnteriores = new Cls_Consulta_Asignaciones_Bitacora()
-                    .fun_ConsultarPermisosPerfil(iPerfil, iModulo, iAplicacion);
+                //Clase de bitácora para los permisos - Arón Ricardo Esquit Silva 0901-22-13036
+                // Registrar cambios en bitácora comparando permisos anteriores vs actuales (sin usar el modelo directamente)
 
-                // Modificar permisos en la base de datos
-                if (controlador.bExistePermisoPerfil(iPerfil, iModulo, iAplicacion))
-                {
-                    controlador.iActualizarPermisoPerfilAplicacion(iPerfil, iModulo, iAplicacion, bIngresar, bConsultar, bModificar, bEliminar, bImprimir);
-                    iActualizados++;
-                }
-                else
-                {
-                    controlador.iInsertarPermisoPerfilAplicacion(iPerfil, iModulo, iAplicacion, bIngresar, bConsultar, bModificar, bEliminar, bImprimir);
-                    iInsertados++;
-                }
-
-                // Crear objeto con permisos actuales
-                Cls_Permisos gPermisosActuales = new Cls_Permisos
-                {
-                    bIngresar = bIngresar,
-                    bConsultar = bConsultar,
-                    bModificar = bModificar,
-                    bEliminar = bEliminar,
-                    bImprimir = bImprimir
-                };
-
-                // Registrar en bitácora comparando anterior vs actual
-                registrarBitacora.fun_CompararYRegistrarPerfilManual(
-                    Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario,
-                    iAplicacion,
-                    row.Cells["Perfil"].Value.ToString(),
-                    row.Cells["Aplicacion"].Value.ToString(),
-                    gPermisosAnteriores,
-                    gPermisosActuales
+                registrarBitacora.fun_CompararYRegistrarPerfilManual_Puente(
+                    Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, // usuario que realiza el cambio
+                    iAplicacion,                                                 // ID de la aplicación
+                    row.Cells["Perfil"].Value.ToString(),                        // Nombre del perfil
+                    row.Cells["Aplicacion"].Value.ToString(),                    // Nombre de la aplicación
+                    bIngresar,                                                   // Permiso Ingresar
+                    bConsultar,                                                  // Permiso Consultar
+                    bModificar,                                                  // Permiso Modificar
+                    bEliminar,                                                   // Permiso Eliminar
+                    bImprimir                                                    // Permiso Imprimir
                 );
+
+
 
 
 

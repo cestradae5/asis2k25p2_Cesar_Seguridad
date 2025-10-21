@@ -124,6 +124,60 @@ namespace Capa_Controlador_Seguridad
                                          sNombrePerfil, sNombreAplicacion,
                                          gPermisosAnteriores, gPermisosActuales);
         }
+
+        //Permisos de los perfiles
+
+        // Método puente para que la vista no use el modelo
+        public void fun_CompararYRegistrarPerfilManual_Puente(
+            int iIdUsuarioAccion,
+            int iIdAplicacion,
+            string sNombrePerfil,
+            string sNombreAplicacion,
+            bool bIngresar,
+            bool bConsultar,
+            bool bModificar,
+            bool bEliminar,
+            bool bImprimir)
+        {
+            // Crear los objetos Cls_Permisos dentro del controlador
+            Cls_Permisos gPermisosAnteriores = new Cls_Permisos(); // Permisos por defecto
+            try
+            {
+                // Si tienes ID de perfil o aplicación, podrías usar otra consulta
+                // Aquí lo dejamos vacío o puedes agregar lógica extra si lo deseas
+            }
+            catch (Exception)
+            {
+                // Si no se pueden obtener permisos anteriores, continúa con los nuevos
+            }
+
+            // Crear los permisos actuales con los datos enviados por la vista
+            Cls_Permisos gPermisosActuales = new Cls_Permisos
+            {
+                bIngresar = bIngresar,
+                bConsultar = bConsultar,
+                bModificar = bModificar,
+                bEliminar = bEliminar,
+                bImprimir = bImprimir
+            };
+
+            // Reusar el método existente (ya implementado)
+            fun_CompararYRegistrarPerfilManual(
+                iIdUsuarioAccion,
+                iIdAplicacion,
+                sNombrePerfil,
+                sNombreAplicacion,
+                gPermisosAnteriores,
+                gPermisosActuales
+            );
+        }
+
+
+
+
+
+
+
     }
 }
 
