@@ -9,15 +9,14 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using Capa_Controlador_Seguridad;
-using Capa_Modelo_Seguridad;
-//Ernesto David Samayoa Jocol - 0901-22-3415 --  Formulario Estandarizado 18/10/2025
+//Ernesto David Samayoa Jocol - 0901-22-3415 --  Formulario Estandarizado
 namespace Capa_Vista_Seguridad
 {
     public partial class Frm_Empleados : Form
     {
         Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador(); // Bitácora Aron Esquit 0901-22-13036
         private Cls_EmpleadoControlador controlador = new Cls_EmpleadoControlador();
-        private List<Cls_Empleado> listaEmpleados = new List<Cls_Empleado>();
+        private List<Dictionary<string, object>> listaEmpleados = new List<Dictionary<string, object>>();
         //Brandon Hernandez 0901-22-9663 15/10/2025
         private bool _canIngresar, _canConsultar, _canModificar, _canEliminar, _canImprimir;
 
@@ -59,16 +58,7 @@ namespace Capa_Vista_Seguridad
         //Brandon Hernandez 0901-22-9663 15/10/2025
         private void fun_AplicarPermisos()
         {
-            int idUsuario = Capa_Modelo_Seguridad.Cls_Usuario_Conectado.iIdUsuario;
-            var usuarioCtrl = new Cls_Usuario_Controlador();
-            var permisoUsuario = new Cls_Permiso_Usuario();
-
-            int idAplicacion = permisoUsuario.ObtenerIdAplicacionPorNombre("Empleados");
-            if (idAplicacion <= 0) idAplicacion = 301; // <-- Tu ID en la base
-            int idModulo = permisoUsuario.ObtenerIdModuloPorNombre("Seguridad");
-            int idPerfil = usuarioCtrl.ObtenerIdPerfilDeUsuario(idUsuario);
-
-            var permisos = Cls_Aplicacion_Permisos.ObtenerPermisosCombinados(idUsuario, idAplicacion, idModulo, idPerfil);
+            var permisos = controlador.ObtenerPermisos();
 
             _canIngresar = permisos.ingresar;
             _canConsultar = permisos.consultar;
@@ -171,7 +161,7 @@ namespace Capa_Vista_Seguridad
 
         private void fun_CargarEmpleados()
         {
-            listaEmpleados = controlador.fun_ObtenerTodosLosEmpleados();
+            listaEmpleados = controlador.fun_ObtenerEmpleadosComoDiccionarios();
         }
 
         private void fun_ConfigurarComboBoxEmpleados()
@@ -179,8 +169,8 @@ namespace Capa_Vista_Seguridad
             Cbo_mostrar_empleado.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             Cbo_mostrar_empleado.AutoCompleteSource = AutoCompleteSource.CustomSource;
             AutoCompleteStringCollection autoComplete = new AutoCompleteStringCollection();
-            autoComplete.AddRange(listaEmpleados.Select(a => a.iPkIdEmpleado.ToString()).ToArray());
-            autoComplete.AddRange(listaEmpleados.Select(a => a.sNombresEmpleado).ToArray());
+            autoComplete.AddRange(listaEmpleados.Select(a => a["Id"].ToString()).ToArray());
+            autoComplete.AddRange(listaEmpleados.Select(a => a["Nombre"].ToString()).ToArray());
             Cbo_mostrar_empleado.AutoCompleteCustomSource = autoComplete;
 
             Cbo_mostrar_empleado.DisplayMember = "Display";
@@ -190,27 +180,37 @@ namespace Capa_Vista_Seguridad
             {
                 Cbo_mostrar_empleado.Items.Add(new
                 {
-                    Display = $"{emp.iPkIdEmpleado} - {emp.sNombresEmpleado} {emp.sApellidosEmpleado}",
-                    Id = emp.iPkIdEmpleado
+                    Display = emp["Display"],
+                    Id = emp["Id"]
                 });
             }
         }
 
-        private void fun_MostrarEmpleado(Cls_Empleado emp)
+        private void fun_MostrarEmpleado(Dictionary<string, object> emp)
         {
-            Txt_id_empleado.Text = emp.iPkIdEmpleado.ToString();
-            Txt_nombre_empleado.Text = emp.sNombresEmpleado;
-            Txt_apellido_empleado.Text = emp.sApellidosEmpleado;
-            Txt_dpi_empleados.Text = emp.lDpiEmpleado.ToString();
-            Txt_nit_empleados.Text = emp.lNitEmpleado.ToString();
-            Txt_correo_empleado.Text = emp.sCorreoEmpleado;
-            Txt_telefono_empleado.Text = emp.sTelefonoEmpleado;
-            Txt_fechaNac_empleado.Text = emp.dFechaNacimientoEmpleado.ToString("dd/MM/yyyy");
-            Txt_fechaContra_empleado.Text = emp.dFechaContratacionEmpleado.ToString("dd/MM/yyyy");
-            Rdb_masculino_empleado.Checked = emp.bGeneroEmpleado;
-            Rdb_femenino_empleado.Checked = !emp.bGeneroEmpleado;
+            Txt_id_empleado.Text = emp["Id"].ToString();
+            Txt_nombre_empleado.Text = emp["Nombre"].ToString();
+            Txt_apellido_empleado.Text = emp["Apellido"].ToString();
+            Txt_dpi_empleados.Text = emp["Dpi"].ToString();
+            Txt_nit_empleados.Text = emp["Nit"].ToString();
+            Txt_correo_empleado.Text = emp["Correo"].ToString();
+            Txt_telefono_empleado.Text = emp["Telefono"].ToString();
+            Txt_fechaNac_empleado.Text = ((DateTime)emp["FechaNacimiento"]).ToString("dd/MM/yyyy");
+            Txt_fechaContra_empleado.Text = ((DateTime)emp["FechaContratacion"]).ToString("dd/MM/yyyy");
+            Rdb_masculino_empleado.Checked = (bool)emp["Genero"];
+            Rdb_femenino_empleado.Checked = !(bool)emp["Genero"];
         }
 
+        private void Txt_id_empleado_TextChanged(object sender, EventArgs e) { }
+        private void Txt_nombre_empleado_TextChanged(object sender, EventArgs e) { }
+        private void Txt_dpi_empleados_TextChanged(object sender, EventArgs e) { }
+        private void Txt_fechaNac_empleado_TextChanged(object sender, EventArgs e) { }
+        private void Txt_apellido_empleado_TextChanged(object sender, EventArgs e) { }
+        private void Txt_nit_empleados_TextChanged(object sender, EventArgs e) { }
+        private void Txt_fechaContra_empleado_TextChanged(object sender, EventArgs e) { }
+        private void Txt_correo_empleado_TextChanged(object sender, EventArgs e) { }
+        private void Rdb_masculino_empleado_CheckedChanged(object sender, EventArgs e) { }
+        private void Rdb_femenino_empleado_CheckedChanged(object sender, EventArgs e) { }
 
         private void Btn_buscar_empleado_Click(object sender, EventArgs e)
         {
@@ -220,16 +220,9 @@ namespace Capa_Vista_Seguridad
                 MessageBox.Show("Ingrese un ID o nombre para buscar");
                 return;
             }
-            Cls_Empleado empEncontrado = null;
-            if (int.TryParse(sBusqueda.Split('-')[0].Trim(), out int id))
-            {
-                empEncontrado = listaEmpleados.FirstOrDefault(a => a.iPkIdEmpleado == id);
-            }
-            if (empEncontrado == null)
-            {
-                empEncontrado = listaEmpleados.FirstOrDefault(a =>
-                    a.sNombresEmpleado.Equals(sBusqueda, StringComparison.OrdinalIgnoreCase));
-            }
+
+            var empEncontrado = controlador.fun_BuscarEmpleado(sBusqueda);
+
             if (empEncontrado != null)
             {
                 fun_MostrarEmpleado(empEncontrado);
@@ -303,7 +296,7 @@ namespace Capa_Vista_Seguridad
             );
             MessageBox.Show(exito ? "Empleado modificado correctamente" : "Error al modificar empleado");
             //Registrar en bitacora   Aron Esquit 0901-22-13036
-            ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, $"Modificó empleado/a: {Txt_nombre_empleado.Text}", true);
+            ctrlBitacora.RegistrarAccion(controlador.ObtenerIdUsuarioConectado(), 1, $"Modificó empleado/a: {Txt_nombre_empleado.Text}", true);
             fun_CargarEmpleados();
             fun_ConfigurarComboBoxEmpleados();
             fun_LimpiarCampos();
@@ -347,15 +340,15 @@ namespace Capa_Vista_Seguridad
                 {
                     MessageBox.Show("Empleado eliminado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    // 5️ Registrar en bitácora (Aron Esquit 0901-22-13036)
+                    // 5️⃣ Registrar en bitácora (Aron Esquit 0901-22-13036)
                     ctrlBitacora.RegistrarAccion(
-                        Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario,
+                        controlador.ObtenerIdUsuarioConectado(),
                         1,
                         $"Eliminó empleado/a: {Txt_nombre_empleado.Text}",
                         true
                     );
 
-                    // 6️ Refrescar datos
+                    // 6️⃣ Refrescar datos
                     fun_CargarEmpleados();
                     fun_ConfigurarComboBoxEmpleados();
                     fun_LimpiarCampos();
@@ -434,35 +427,21 @@ namespace Capa_Vista_Seguridad
                     return;
                 }
 
-                var vEmp = new Cls_Empleado
-                {
-                    iPkIdEmpleado = idEmpleado,
-                    sNombresEmpleado = Txt_nombre_empleado.Text.Trim(),
-                    sApellidosEmpleado = Txt_apellido_empleado.Text.Trim(),
-                    lDpiEmpleado = dpi,
-                    lNitEmpleado = nit,
-                    sCorreoEmpleado = Txt_correo_empleado.Text.Trim(),
-                    sTelefonoEmpleado = Txt_telefono_empleado.Text.Trim(),
-                    bGeneroEmpleado = Rdb_masculino_empleado.Checked,
-                    dFechaNacimientoEmpleado = fechaNac,
-                    dFechaContratacionEmpleado = fechaContra
-                };
-
                 controlador.fun_InsertarEmpleado(
-                    vEmp.iPkIdEmpleado,
-                    vEmp.sNombresEmpleado,
-                    vEmp.sApellidosEmpleado,
-                    vEmp.lDpiEmpleado,
-                    vEmp.lNitEmpleado,
-                    vEmp.sCorreoEmpleado,
-                    vEmp.sTelefonoEmpleado,
-                    vEmp.bGeneroEmpleado,
-                    vEmp.dFechaNacimientoEmpleado,
-                    vEmp.dFechaContratacionEmpleado
+                    idEmpleado,
+                    Txt_nombre_empleado.Text.Trim(),
+                    Txt_apellido_empleado.Text.Trim(),
+                    dpi,
+                    nit,
+                    Txt_correo_empleado.Text.Trim(),
+                    Txt_telefono_empleado.Text.Trim(),
+                    Rdb_masculino_empleado.Checked,
+                    fechaNac,
+                    fechaContra
                 );
 
                 MessageBox.Show("Empleado guardado correctamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, $"Guardó empleado/a: {Txt_nombre_empleado.Text}", true);
+                ctrlBitacora.RegistrarAccion(controlador.ObtenerIdUsuarioConectado(), 1, $"Guardó empleado/a: {Txt_nombre_empleado.Text}", true);
                 fun_CargarEmpleados();
                 fun_ConfigurarComboBoxEmpleados();
                 fun_LimpiarCampos();
@@ -473,6 +452,8 @@ namespace Capa_Vista_Seguridad
             }
             fun_ConfiguracionInicial();
         }
+
+        // Eliminado: fun_ValidarCampos ahora está en el controlador
 
 
         private void fun_LimpiarCampos()
@@ -507,7 +488,6 @@ namespace Capa_Vista_Seguridad
 
         [DllImport("user32.dll")]
         public static extern bool ReleaseCapture();
-
 
         [DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
