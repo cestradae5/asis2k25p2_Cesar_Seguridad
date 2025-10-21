@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Capa_Controlador_Seguridad;
-using Capa_Modelo_Seguridad;
 namespace Capa_Vista_Seguridad
 {
     public partial class Frm_Salario_Empleados : Form { 
