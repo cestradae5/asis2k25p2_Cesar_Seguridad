@@ -2,7 +2,6 @@
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using Capa_Controlador_Seguridad;
-using Capa_Modelo_Seguridad;
 
 // 0901-20-4620 Ruben Armando Lopez Luch
 namespace Capa_Vista_Seguridad
@@ -122,59 +121,7 @@ namespace Capa_Vista_Seguridad
         }
 
 
-        // permisos 0901-21-1115 Marcos Andres Velásquez Alcántara
-        private Cls_Permiso_Usuario permisoUsuario = new Cls_Permiso_Usuario();
-
-        private int iModuloId = -1;
-        private int iAplicacionId = -1;
-
-        // Tupla para los permisos actuales
-        private (bool bIngresar, bool bConsultar, bool bModificar, bool bEliminar, bool bImprimir)? permisosActuales = null;
-
-     
-
-
-        private void fun_ConfigurarIdsDinamicamenteYAplicarPermisos()
-        {
-            // Nombres existentes en la base de datos
-            string sNombreModulo = "Seguridad";
-            string sNombreAplicacion = "Administracion";
-            iAplicacionId = permisoUsuario.ObtenerIdAplicacionPorNombre(sNombreAplicacion);
-            iModuloId = permisoUsuario.ObtenerIdModuloPorNombre(sNombreModulo);
-            fun_AplicarPermisosUsuario();
-        }
-
-        private void fun_AplicarPermisosUsuario()
-        {
-            int usuarioId = Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario; // Usuario logueado
-            if (iAplicacionId == -1 || iModuloId == -1)
-            {
-                permisosActuales = null;
-                fun_ActualizarEstadoBotonesSegunPermisos();
-                return;
-            }
-            var permisos = permisoUsuario.ConsultarPermisos(usuarioId, iAplicacionId, iModuloId);
-            permisosActuales = permisos;
-            fun_ActualizarEstadoBotonesSegunPermisos();
-        }
-
-        // Centraliza el habilitado/deshabilitado de botones según permisos y estado de navegación
-        private void fun_ActualizarEstadoBotonesSegunPermisos(bool empleadoCargado = false)
-        {
-            if (!permisosActuales.HasValue)
-            {
-                Btn_Cambiar.Enabled = false;
-                
-
-
-                return;
-            }
-
-            var p = permisosActuales.Value;
-
-            Btn_Cambiar.Enabled = p.bModificar;
-
-        }
+        
 
 
 
