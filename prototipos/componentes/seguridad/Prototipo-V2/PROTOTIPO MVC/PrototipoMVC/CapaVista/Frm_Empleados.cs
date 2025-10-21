@@ -473,8 +473,8 @@ namespace Capa_Vista_Seguridad
 
         private void Btn_salario_empleados_Click(object sender, EventArgs e)
         {
-            Frm_Salario_Empleados formSalarioEmpleado = new Frm_Salario_Empleados();
-            formSalarioEmpleado.Show();
+            //Frm_Salario_Empleados formSalarioEmpleado = new Frm_Salario_Empleados();
+            //formSalarioEmpleado.Show();
         }
 
         private void Btn_salir_empleado_Click(object sender, EventArgs e)

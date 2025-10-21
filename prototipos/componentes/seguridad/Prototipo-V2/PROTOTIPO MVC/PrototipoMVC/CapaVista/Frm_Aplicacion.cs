@@ -383,9 +383,9 @@ namespace Capa_Vista_Seguridad
 
         private void Btn_Consultar_Asignacion_Click(object sender, EventArgs e)
         {
-            Frm_Consultar_Asignacion_Modulo_Aplicacion consulta = new Frm_Consultar_Asignacion_Modulo_Aplicacion();
-            consulta.ShowDialog();
-            this.Close();
+            //Frm_Consultar_Asignacion_Modulo_Aplicacion consulta = new Frm_Consultar_Asignacion_Modulo_Aplicacion();
+            //consulta.ShowDialog();
+            //this.Close();
         }
 
         private void fun_CargarComboModulos()
