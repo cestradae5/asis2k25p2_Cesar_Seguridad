@@ -35,9 +35,6 @@
     <Reference Include="Capa_Controlador_Seguridad">
       <HintPath>..\CapaControlador\bin\Debug\Capa_Controlador_Seguridad.dll</HintPath>
     </Reference>
-    <Reference Include="Capa_Modelo_Seguridad">
-      <HintPath>..\CapaModelo\bin\Debug\Capa_Modelo_Seguridad.dll</HintPath>
-    </Reference>
     <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
     <Reference Include="CrystalDecisions.ReportSource, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
     <Reference Include="CrystalDecisions.Shared, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
@@ -152,12 +149,6 @@
     <Compile Include="Frm_Recuperar_Contrasena.Designer.cs">
       <DependentUpon>Frm_Recuperar_Contrasena.cs</DependentUpon>
     </Compile>
-    <Compile Include="Frm_Salario_Empleados.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Frm_Salario_Empleados.Designer.cs">
-      <DependentUpon>Frm_Salario_Empleados.cs</DependentUpon>
-    </Compile>
     <Compile Include="Frm_Seguridad.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -187,12 +178,6 @@
     </Compile>
     <Compile Include="Frm_cambiar_contrasena.Designer.cs">
       <DependentUpon>Frm_cambiar_contrasena.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Frm_Consultar_Asignacion_Modulo_Aplicacion.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Frm_Consultar_Asignacion_Modulo_Aplicacion.Designer.cs">
-      <DependentUpon>Frm_Consultar_Asignacion_Modulo_Aplicacion.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -286,9 +271,6 @@
     <EmbeddedResource Include="Frm_Recuperar_Contrasena.resx">
       <DependentUpon>Frm_Recuperar_Contrasena.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Frm_Salario_Empleados.resx">
-      <DependentUpon>Frm_Salario_Empleados.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Frm_Seguridad.resx">
       <DependentUpon>Frm_Seguridad.cs</DependentUpon>
     </EmbeddedResource>
@@ -303,9 +285,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Frm_cambiar_contrasena.resx">
       <DependentUpon>Frm_cambiar_contrasena.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Frm_Consultar_Asignacion_Modulo_Aplicacion.resx">
-      <DependentUpon>Frm_Consultar_Asignacion_Modulo_Aplicacion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
