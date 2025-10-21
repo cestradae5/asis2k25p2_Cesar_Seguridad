@@ -7,7 +7,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Capa_Controlador_Seguridad;
-using Capa_Modelo_Seguridad;
+
 using ModSeg = Capa_Modelo_Seguridad;
 
 
@@ -296,10 +296,17 @@ namespace Capa_Vista_Seguridad
 
         private void Dgv_Permisos_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         {
+            string columnName = Dgv_Permisos.Columns[e.ColumnIndex].Name;
+
+            if (columnName == "Perfil" || columnName == "Aplicacion")
+            {
+                e.Cancel = true;
+                return;
+            }
+
             if (Dgv_Permisos.Columns[e.ColumnIndex] is DataGridViewCheckBoxColumn)
             {
                 var vRow = Dgv_Permisos.Rows[e.RowIndex];
-
                 if (vRow.IsNewRow)
                 {
                     e.Cancel = true;
@@ -317,6 +324,7 @@ namespace Capa_Vista_Seguridad
                 }
             }
         }
+
         //Panel Superior Brandon Hernandez 0901-22-96663
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HTCAPTION = 0x2;
