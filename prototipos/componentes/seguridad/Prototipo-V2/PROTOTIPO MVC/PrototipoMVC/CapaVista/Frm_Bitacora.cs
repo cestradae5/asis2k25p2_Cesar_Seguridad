@@ -109,7 +109,7 @@ namespace Capa_Vista_Seguridad
             Dtp_FechaEspecifica.Visible = false;
             Lbl_Usuario.Visible = false;
             Cbo_Usuario.Visible = false;
-            Btn_Imprimir.Visible = false;
+            Btn_Imprimir.Visible = true;
         }
 
         //Botones de barra personalizada

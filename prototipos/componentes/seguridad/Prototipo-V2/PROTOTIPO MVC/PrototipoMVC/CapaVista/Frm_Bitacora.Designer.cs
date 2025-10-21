@@ -48,9 +48,11 @@ namespace Capa_Vista_Seguridad
             this.Btn_BuscarFecha = new System.Windows.Forms.Button();
             this.Btn_Exportar = new System.Windows.Forms.Button();
             this.Btn_Consultar = new System.Windows.Forms.Button();
+            this.Gpb_bitacora = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.Dgv_Bitacora)).BeginInit();
             this.Pnl_Superior.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Cerrar)).BeginInit();
+            this.Gpb_bitacora.SuspendLayout();
             this.SuspendLayout();
             // 
             // Dgv_Bitacora
@@ -73,7 +75,7 @@ namespace Capa_Vista_Seguridad
             this.Lbl_PrimeraFecha.Font = new System.Drawing.Font("Rockwell", 10F);
             this.Lbl_PrimeraFecha.Location = new System.Drawing.Point(1017, 126);
             this.Lbl_PrimeraFecha.Name = "Lbl_PrimeraFecha";
-            this.Lbl_PrimeraFecha.Size = new System.Drawing.Size(123, 20);
+            this.Lbl_PrimeraFecha.Size = new System.Drawing.Size(141, 22);
             this.Lbl_PrimeraFecha.TabIndex = 9;
             this.Lbl_PrimeraFecha.Text = "Primera Fecha";
             this.Lbl_PrimeraFecha.Visible = false;
@@ -84,7 +86,7 @@ namespace Capa_Vista_Seguridad
             this.Lbl_SegundaFecha.Font = new System.Drawing.Font("Rockwell", 10F);
             this.Lbl_SegundaFecha.Location = new System.Drawing.Point(1017, 238);
             this.Lbl_SegundaFecha.Name = "Lbl_SegundaFecha";
-            this.Lbl_SegundaFecha.Size = new System.Drawing.Size(128, 20);
+            this.Lbl_SegundaFecha.Size = new System.Drawing.Size(150, 22);
             this.Lbl_SegundaFecha.TabIndex = 11;
             this.Lbl_SegundaFecha.Text = "Segunda Fecha";
             this.Lbl_SegundaFecha.Visible = false;
@@ -96,7 +98,7 @@ namespace Capa_Vista_Seguridad
             this.Dtp_PrimeraFecha.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.Dtp_PrimeraFecha.Location = new System.Drawing.Point(1020, 158);
             this.Dtp_PrimeraFecha.Name = "Dtp_PrimeraFecha";
-            this.Dtp_PrimeraFecha.Size = new System.Drawing.Size(180, 27);
+            this.Dtp_PrimeraFecha.Size = new System.Drawing.Size(180, 31);
             this.Dtp_PrimeraFecha.TabIndex = 10;
             this.Dtp_PrimeraFecha.Visible = false;
             // 
@@ -107,7 +109,7 @@ namespace Capa_Vista_Seguridad
             this.Dtp_SegundaFecha.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.Dtp_SegundaFecha.Location = new System.Drawing.Point(1020, 270);
             this.Dtp_SegundaFecha.Name = "Dtp_SegundaFecha";
-            this.Dtp_SegundaFecha.Size = new System.Drawing.Size(180, 27);
+            this.Dtp_SegundaFecha.Size = new System.Drawing.Size(180, 31);
             this.Dtp_SegundaFecha.TabIndex = 12;
             this.Dtp_SegundaFecha.Visible = false;
             // 
@@ -117,7 +119,7 @@ namespace Capa_Vista_Seguridad
             this.Lbl_FechaEspecifica.Font = new System.Drawing.Font("Rockwell", 10F);
             this.Lbl_FechaEspecifica.Location = new System.Drawing.Point(479, 123);
             this.Lbl_FechaEspecifica.Name = "Lbl_FechaEspecifica";
-            this.Lbl_FechaEspecifica.Size = new System.Drawing.Size(56, 20);
+            this.Lbl_FechaEspecifica.Size = new System.Drawing.Size(64, 22);
             this.Lbl_FechaEspecifica.TabIndex = 3;
             this.Lbl_FechaEspecifica.Text = "Fecha";
             this.Lbl_FechaEspecifica.Visible = false;
@@ -130,7 +132,7 @@ namespace Capa_Vista_Seguridad
             this.Dtp_FechaEspecifica.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.Dtp_FechaEspecifica.Location = new System.Drawing.Point(411, 156);
             this.Dtp_FechaEspecifica.Name = "Dtp_FechaEspecifica";
-            this.Dtp_FechaEspecifica.Size = new System.Drawing.Size(180, 27);
+            this.Dtp_FechaEspecifica.Size = new System.Drawing.Size(180, 31);
             this.Dtp_FechaEspecifica.TabIndex = 4;
             this.Dtp_FechaEspecifica.Visible = false;
             // 
@@ -140,7 +142,7 @@ namespace Capa_Vista_Seguridad
             this.Lbl_Usuario.Font = new System.Drawing.Font("Rockwell", 10F);
             this.Lbl_Usuario.Location = new System.Drawing.Point(737, 123);
             this.Lbl_Usuario.Name = "Lbl_Usuario";
-            this.Lbl_Usuario.Size = new System.Drawing.Size(70, 20);
+            this.Lbl_Usuario.Size = new System.Drawing.Size(80, 22);
             this.Lbl_Usuario.TabIndex = 6;
             this.Lbl_Usuario.Text = "Usuario";
             // 
@@ -151,7 +153,7 @@ namespace Capa_Vista_Seguridad
             this.Cbo_Usuario.FormattingEnabled = true;
             this.Cbo_Usuario.Location = new System.Drawing.Point(679, 156);
             this.Cbo_Usuario.Name = "Cbo_Usuario";
-            this.Cbo_Usuario.Size = new System.Drawing.Size(200, 25);
+            this.Cbo_Usuario.Size = new System.Drawing.Size(200, 28);
             this.Cbo_Usuario.TabIndex = 7;
             this.Cbo_Usuario.SelectedIndexChanged += new System.EventHandler(this.Cbo_Usuario_SelectedIndexChanged);
             // 
@@ -204,7 +206,7 @@ namespace Capa_Vista_Seguridad
             this.Btn_Imprimir.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
             this.Btn_Imprimir.Image = global::Capa_Vista_Seguridad.Properties.Resources.print_black_printer_tool_symbol_icon_icons_com_54467;
             this.Btn_Imprimir.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Btn_Imprimir.Location = new System.Drawing.Point(1026, 356);
+            this.Btn_Imprimir.Location = new System.Drawing.Point(18, 26);
             this.Btn_Imprimir.Name = "Btn_Imprimir";
             this.Btn_Imprimir.Size = new System.Drawing.Size(114, 61);
             this.Btn_Imprimir.TabIndex = 13;
@@ -309,16 +311,24 @@ namespace Capa_Vista_Seguridad
             this.Btn_Consultar.UseVisualStyleBackColor = false;
             this.Btn_Consultar.Click += new System.EventHandler(this.Btn_Consultar_Click);
             // 
+            // Gpb_bitacora
+            // 
+            this.Gpb_bitacora.Controls.Add(this.Btn_Imprimir);
+            this.Gpb_bitacora.Location = new System.Drawing.Point(1009, 336);
+            this.Gpb_bitacora.Name = "Gpb_bitacora";
+            this.Gpb_bitacora.Size = new System.Drawing.Size(309, 202);
+            this.Gpb_bitacora.TabIndex = 97;
+            this.Gpb_bitacora.TabStop = false;
+            // 
             // Frm_Bitacora
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(185)))), ((int)(((byte)(185)))));
             this.ClientSize = new System.Drawing.Size(1330, 568);
             this.ControlBox = false;
             this.Controls.Add(this.button1);
             this.Controls.Add(this.Pnl_Superior);
-            this.Controls.Add(this.Btn_Imprimir);
             this.Controls.Add(this.Cbo_Usuario);
             this.Controls.Add(this.Lbl_Usuario);
             this.Controls.Add(this.Dtp_FechaEspecifica);
@@ -334,6 +344,7 @@ namespace Capa_Vista_Seguridad
             this.Controls.Add(this.Btn_BuscarFecha);
             this.Controls.Add(this.Btn_Exportar);
             this.Controls.Add(this.Btn_Consultar);
+            this.Controls.Add(this.Gpb_bitacora);
             this.Font = new System.Drawing.Font("Rockwell", 8.25F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MinimizeBox = false;
@@ -344,6 +355,7 @@ namespace Capa_Vista_Seguridad
             ((System.ComponentModel.ISupportInitialize)(this.Dgv_Bitacora)).EndInit();
             this.Pnl_Superior.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Cerrar)).EndInit();
+            this.Gpb_bitacora.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -370,5 +382,6 @@ namespace Capa_Vista_Seguridad
         private System.Windows.Forms.Panel Pnl_Superior;
         private System.Windows.Forms.PictureBox Pic_Cerrar;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.GroupBox Gpb_bitacora;
     }
 }
