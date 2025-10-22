@@ -237,28 +237,48 @@ namespace Capa_Vista_Seguridad
             Dgv_Permisos.Rows.Clear();
         }
 
+
         private void Btn_quitar_Click(object sender, EventArgs e)
         {
-            if (Dgv_Permisos.CurrentRow != null && !Dgv_Permisos.CurrentRow.IsNewRow)
+            // Validar que haya una fila seleccionada
+            if (Dgv_Permisos.CurrentRow == null || Dgv_Permisos.CurrentRow.IsNewRow)
             {
-                // Capturar datos antes de eliminar la fila
+                MessageBox.Show("Seleccione una fila para quitar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Mostrar advertencia de confirmación
+            DialogResult resultado = MessageBox.Show(
+                "¿Está seguro de quitar el registro seleccionado?",
+                "Confirmar eliminación",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question
+            );
+
+            if (resultado == DialogResult.Yes)
+            {
+                // Capturar datos antes de eliminar (opcional)
                 int idAplicacion = Convert.ToInt32(Dgv_Permisos.CurrentRow.Cells["IdAplicacion"].Value);
                 int idUsuario = Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario;
                 string sPerfil = Dgv_Permisos.CurrentRow.Cells["Perfil"].Value.ToString();
                 string sAplicacion = Dgv_Permisos.CurrentRow.Cells["Aplicacion"].Value.ToString();
 
-                // Eliminar la fila
+                // Eliminar la fila del DataGridView
                 Dgv_Permisos.Rows.Remove(Dgv_Permisos.CurrentRow);
 
-                // Registrar en bitácora
-                ctrlBitacora.RegistrarAccion(idUsuario, idAplicacion,
-                    $"Al perfil '{sPerfil}' se le quitarán todos los permisos en la aplicación '{sAplicacion}'", true);
-            }
-            else
-            {
-                MessageBox.Show("Seleccione una fila para quitar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                // Registrar acción en bitácora
+                ctrlBitacora.RegistrarAccion(
+                    idUsuario,
+                    idAplicacion,
+                    $"Se quitaron los permisos del perfil '{sPerfil}' en la aplicación '{sAplicacion}'.",
+                    true
+                );
+
+                // Mostrar confirmación
+                MessageBox.Show("Se ha quitado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
+
 
         private void Dgv_Permisos_CellClick(object sender, DataGridViewCellEventArgs e)
         {
