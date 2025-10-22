@@ -19,6 +19,7 @@ namespace Capa_Vista_Seguridad
         private int idUsuarioSeleccionado = 0;
 
         // CONSTRUCTOR
+        //cambios cesar estrada
         public Frm_Usuario()
         {
             InitializeComponent();
@@ -39,33 +40,44 @@ namespace Capa_Vista_Seguridad
         }
 
         // CARGA DE DATOS
+        //cambios cesar estrada
         private void CargarEmpleados()
         {
-            var lstEmpleados = gClsEmpleadoControlador.fun_ObtenerTodosLosEmpleados();
+            // El Controlador SÍ usa el Modelo, pero la Vista NO
+            var empleadosData = gClsEmpleadoControlador.fun_ObtenerEmpleadosParaComboBox();
             gLstEmpleadosDisplay.Clear();
             gLstEmpleadosIds.Clear();
 
-            foreach (var gEmp in lstEmpleados)
+            foreach (var empData in empleadosData)
             {
-                gLstEmpleadosDisplay.Add($"{gEmp.iPkIdEmpleado} - {gEmp.sNombresEmpleado} {gEmp.sApellidosEmpleado}");
-                gLstEmpleadosIds.Add(gEmp.iPkIdEmpleado);
+                gLstEmpleadosDisplay.Add(empData.Display);
+                gLstEmpleadosIds.Add(empData.Id);
             }
         }
 
+        //cambios cesar estrada
         private void ConfigurarComboBoxEmpleados()
         {
             Cbo_Empleado.Items.Clear();
-            for (int i = 0; i < gLstEmpleadosDisplay.Count; i++)
+            foreach (var display in gLstEmpleadosDisplay)
             {
-                Cbo_Empleado.Items.Add(gLstEmpleadosDisplay[i]);
+                Cbo_Empleado.Items.Add(display);
             }
         }
 
         // BOTONES
+        //cambios cesar estrada
         private void Btn_Guardar_Click(object sender, EventArgs e)
         {
+            if (Cbo_Empleado.SelectedIndex < 0)
+            {
+                MessageBox.Show("Debe seleccionar un empleado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             int iFkIdEmpleado = gLstEmpleadosIds[Cbo_Empleado.SelectedIndex];
 
+            // El Controlador recibe los datos y usa el Modelo internamente
             var gResultado = gClsUsuarioControlador.InsertarUsuario(
                 iFkIdEmpleado,
                 Txt_Nombre.Text,

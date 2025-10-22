@@ -13,6 +13,31 @@ namespace Capa_Controlador_Seguridad
         private Cls_EmpleadoDAO daoEmpleado = new Cls_EmpleadoDAO();
 
         //Ernesto David SamayoaJocol 0901-22-3415 Verificar si un empleado tiene usuario asociado nueva funcion
+        //cambios por cesar estrada
+        public List<EmpleadoComboBoxData> fun_ObtenerEmpleadosParaComboBox()
+        {
+            // Esto SÍ es correcto: el Controlador usa el Modelo
+            var empleados = daoEmpleado.fun_ObtenerEmpleados();
+            var resultado = new List<EmpleadoComboBoxData>();
+
+            foreach (var emp in empleados) // emp es Cls_Empleado (Modelo)
+            {
+                resultado.Add(new EmpleadoComboBoxData
+                {
+                    Id = emp.iPkIdEmpleado,
+                    Display = $"{emp.iPkIdEmpleado} - {emp.sNombresEmpleado} {emp.sApellidosEmpleado}"
+                });
+            }
+
+            return resultado;
+        }
+        // Clase auxiliar para transferencia de datos Vista-Controlador
+        public class EmpleadoComboBoxData
+        {
+            public int Id { get; set; }
+            public string Display { get; set; }
+        }
+
         public bool fun_EmpleadoTieneUsuario(int iIdEmpleado)
         {
             return daoEmpleado.fun_EmpleadoTieneUsuario(iIdEmpleado);
