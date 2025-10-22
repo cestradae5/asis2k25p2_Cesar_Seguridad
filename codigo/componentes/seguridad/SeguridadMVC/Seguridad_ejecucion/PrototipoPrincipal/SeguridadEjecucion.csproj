@@ -35,14 +35,14 @@
   <ItemGroup>
     <Reference Include="Capa_Controlador_Seguridad, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\PrototipoMVC\CapaControlador\bin\Debug\Capa_Controlador_Seguridad.dll</HintPath>
+      <HintPath>..\..\SeguridadMVC\CapaControlador\bin\Debug\Capa_Controlador_Seguridad.dll</HintPath>
     </Reference>
     <Reference Include="Capa_Modelo_Seguridad, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\PrototipoMVC\CapaControlador\bin\Debug\Capa_Modelo_Seguridad.dll</HintPath>
+      <HintPath>..\..\SeguridadMVC\CapaModelo\bin\Debug\Capa_Modelo_Seguridad.dll</HintPath>
     </Reference>
     <Reference Include="Capa_Vista_Seguridad">
-      <HintPath>..\..\PrototipoMVC\CapaVista\bin\Debug\Capa_Vista_Seguridad.dll</HintPath>
+      <HintPath>..\..\SeguridadMVC\CapaVista\bin\Debug\Capa_Vista_Seguridad.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
