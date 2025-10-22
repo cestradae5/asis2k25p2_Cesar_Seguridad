@@ -135,8 +135,6 @@ namespace Capa_Vista_Seguridad
             }
         }
 
-
-
         private void fun_ConfiguracionInicial()
         {
             if (Btn_nuevo_empleado != null) Btn_nuevo_empleado.Enabled = _canIngresar;
@@ -200,17 +198,6 @@ namespace Capa_Vista_Seguridad
             Rdb_masculino_empleado.Checked = (bool)emp["Genero"];
             Rdb_femenino_empleado.Checked = !(bool)emp["Genero"];
         }
-
-        private void Txt_id_empleado_TextChanged(object sender, EventArgs e) { }
-        private void Txt_nombre_empleado_TextChanged(object sender, EventArgs e) { }
-        private void Txt_dpi_empleados_TextChanged(object sender, EventArgs e) { }
-        private void Txt_fechaNac_empleado_TextChanged(object sender, EventArgs e) { }
-        private void Txt_apellido_empleado_TextChanged(object sender, EventArgs e) { }
-        private void Txt_nit_empleados_TextChanged(object sender, EventArgs e) { }
-        private void Txt_fechaContra_empleado_TextChanged(object sender, EventArgs e) { }
-        private void Txt_correo_empleado_TextChanged(object sender, EventArgs e) { }
-        private void Rdb_masculino_empleado_CheckedChanged(object sender, EventArgs e) { }
-        private void Rdb_femenino_empleado_CheckedChanged(object sender, EventArgs e) { }
 
         private void Btn_buscar_empleado_Click(object sender, EventArgs e)
         {
@@ -276,31 +263,88 @@ namespace Capa_Vista_Seguridad
 
         private void Btn_modificar_empleado_Click(object sender, EventArgs e)
         {
-            int id;
-            if (!int.TryParse(Txt_id_empleado.Text, out id))
-            {
-                MessageBox.Show("Ingrese un ID válido para modificar.");
-                return;
-            }
-            bool exito = controlador.fun_ActualizarEmpleado(
-                id,
+            // Validar campos usando el controlador (mismas reglas que al guardar)
+            string mensajeError;
+            if (!controlador.ValidarCampos(
+                Txt_id_empleado.Text,
                 Txt_nombre_empleado.Text,
                 Txt_apellido_empleado.Text,
-                long.Parse(Txt_dpi_empleados.Text),
-                long.Parse(Txt_nit_empleados.Text),
+                Txt_dpi_empleados.Text,
+                Txt_nit_empleados.Text,
                 Txt_correo_empleado.Text,
                 Txt_telefono_empleado.Text,
+                Txt_fechaNac_empleado.Text,
+                Txt_fechaContra_empleado.Text,
                 Rdb_masculino_empleado.Checked,
-                DateTime.Parse(Txt_fechaNac_empleado.Text),
-                DateTime.Parse(Txt_fechaContra_empleado.Text)
-            );
-            MessageBox.Show(exito ? "Empleado modificado correctamente" : "Error al modificar empleado");
-            //Registrar en bitacora   Aron Esquit 0901-22-13036
-            ctrlBitacora.RegistrarAccion(controlador.ObtenerIdUsuarioConectado(), 1, $"Modificó empleado/a: {Txt_nombre_empleado.Text}", true);
-            fun_CargarEmpleados();
-            fun_ConfigurarComboBoxEmpleados();
-            fun_LimpiarCampos();
-            fun_ConfiguracionInicial();
+                Rdb_femenino_empleado.Checked,
+                out mensajeError))
+            {
+                MessageBox.Show(mensajeError, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Validaciones de tipos y formatos
+            if (!int.TryParse(Txt_id_empleado.Text, out int id))
+            {
+                MessageBox.Show("El ID debe ser un número entero válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (!long.TryParse(Txt_dpi_empleados.Text, out long dpi))
+            {
+                MessageBox.Show("El DPI debe ser un número válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (!long.TryParse(Txt_nit_empleados.Text, out long nit))
+            {
+                MessageBox.Show("El NIT debe ser un número válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (!DateTime.TryParseExact(Txt_fechaNac_empleado.Text, "dd/MM/yyyy",
+                System.Globalization.CultureInfo.InvariantCulture,
+                System.Globalization.DateTimeStyles.None, out DateTime fechaNac))
+            {
+                MessageBox.Show("La fecha de nacimiento debe tener el formato dd/MM/yyyy.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (!DateTime.TryParseExact(Txt_fechaContra_empleado.Text, "dd/MM/yyyy",
+                System.Globalization.CultureInfo.InvariantCulture,
+                System.Globalization.DateTimeStyles.None, out DateTime fechaContra))
+            {
+                MessageBox.Show("La fecha de contratación debe tener el formato dd/MM/yyyy.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                bool exito = controlador.fun_ActualizarEmpleado(
+                    id,
+                    Txt_nombre_empleado.Text.Trim(),
+                    Txt_apellido_empleado.Text.Trim(),
+                    dpi,
+                    nit,
+                    Txt_correo_empleado.Text.Trim(),
+                    Txt_telefono_empleado.Text.Trim(),
+                    Rdb_masculino_empleado.Checked,
+                    fechaNac,
+                    fechaContra
+                );
+
+                MessageBox.Show(exito ? "Empleado modificado correctamente" : "Error al modificar empleado");
+                //Registrar en bitacora   Aron Esquit 0901-22-13036
+                ctrlBitacora.RegistrarAccion(controlador.ObtenerIdUsuarioConectado(), 1, $"Modificó empleado/a: {Txt_nombre_empleado.Text}", true);
+                fun_CargarEmpleados();
+                fun_ConfigurarComboBoxEmpleados();
+                fun_LimpiarCampos();
+                fun_ConfiguracionInicial();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al modificar empleado: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         // Ernesto David Samayoa Jocol - 0901-22-3415 - Fecha: 12/10/2025
@@ -340,7 +384,7 @@ namespace Capa_Vista_Seguridad
                 {
                     MessageBox.Show("Empleado eliminado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    // 5️⃣ Registrar en bitácora (Aron Esquit 0901-22-13036)
+                    // 5️ Registrar en bitácora (Aron Esquit 0901-22-13036)
                     ctrlBitacora.RegistrarAccion(
                         controlador.ObtenerIdUsuarioConectado(),
                         1,
@@ -348,7 +392,7 @@ namespace Capa_Vista_Seguridad
                         true
                     );
 
-                    // 6️⃣ Refrescar datos
+                    // 6️ Refrescar datos
                     fun_CargarEmpleados();
                     fun_ConfigurarComboBoxEmpleados();
                     fun_LimpiarCampos();
@@ -364,8 +408,6 @@ namespace Capa_Vista_Seguridad
                 MessageBox.Show("Eliminación cancelada por el usuario.", "Cancelado", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
-
-
 
         private void Btn_cancelar_Click(object sender, EventArgs e)
         {
@@ -453,8 +495,6 @@ namespace Capa_Vista_Seguridad
             fun_ConfiguracionInicial();
         }
 
-        // Eliminado: fun_ValidarCampos ahora está en el controlador
-
 
         private void fun_LimpiarCampos()
         {
@@ -471,11 +511,6 @@ namespace Capa_Vista_Seguridad
             Rdb_femenino_empleado.Checked = false;
         }
 
-        private void Btn_salario_empleados_Click(object sender, EventArgs e)
-        {
-            //Frm_Salario_Empleados formSalarioEmpleado = new Frm_Salario_Empleados();
-            //formSalarioEmpleado.Show();
-        }
 
         private void Btn_salir_empleado_Click(object sender, EventArgs e)
         {

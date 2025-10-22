@@ -69,7 +69,7 @@ namespace Capa_Vista_Seguridad
             this.lbl_Id_Empleado.Name = "lbl_Id_Empleado";
             this.lbl_Id_Empleado.Size = new System.Drawing.Size(135, 22);
             this.lbl_Id_Empleado.TabIndex = 1;
-            this.lbl_Id_Empleado.Text = "Id Empleado:";
+            this.lbl_Id_Empleado.Text = "iId Empleado:";
             // 
             // lbl_Nombre
             // 

@@ -259,7 +259,7 @@ namespace Capa_Vista_Seguridad
                 MessageBox.Show("Aplicación modificada correctamente.");
 
                 // MENSAJE ACORTADO PARA BITÁCORA
-                string mensajeBitacora = $"Modificó app: {Txt_Nombre_aplicacion.Text}";
+                string mensajeBitacora = $"Modificó aplicación: {Txt_Nombre_aplicacion.Text}";
                 if (mensajeBitacora.Length > 80) // Limitar a 80 caracteres
                 {
                     mensajeBitacora = mensajeBitacora.Substring(0, 80) + "...";
