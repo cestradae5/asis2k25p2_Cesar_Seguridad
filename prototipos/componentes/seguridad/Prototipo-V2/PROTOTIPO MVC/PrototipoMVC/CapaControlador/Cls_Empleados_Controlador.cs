@@ -245,11 +245,25 @@ namespace Capa_Controlador_Seguridad
 
         public bool ValidarTelefonoKeyPress(char keyChar, string textoActual)
         {
+            // Permitir control y dígitos siempre
             if (!(char.IsDigit(keyChar) || char.IsControl(keyChar) || keyChar == '-'))
                 return false;
+
+            // Si se intenta escribir un guion, solo permitirlo si es la posición 5 (índice 4)
+            if (keyChar == '-')
+            {
+                // Si ya existe un guion no permitir otro
+                if (textoActual.Contains("-")) return false;
+                // Permitir guion solo si se está escribiendo en la 5ª posición (textoActual length == 4)
+                if (textoActual.Length != 4) return false;
+                return true;
+            }
+
+            // Para dígitos, permitir máximo 8 dígitos (sin contar guion)
             string textoSinGuiones = textoActual.Replace("-", "");
             if (char.IsDigit(keyChar) && textoSinGuiones.Length >= 8)
                 return false;
+
             return true;
         }
 
@@ -303,14 +317,22 @@ namespace Capa_Controlador_Seguridad
                 mensajeError = "El NIT debe contener exactamente 9 dígitos numéricos.";
                 return false;
             }
-            if (!System.Text.RegularExpressions.Regex.IsMatch(telefono, @"^[0-9\-]{8,10}$"))
+            // Validar teléfono: aceptar 8 dígitos seguidos (12345678) o con un guion en medio (1234-5678)
+            if (!System.Text.RegularExpressions.Regex.IsMatch(telefono, @"^(\d{8}|\d{4}-\d{4})$"))
             {
-                mensajeError = "El teléfono debe contener 8 dígitos y puede incluir guiones.";
+                mensajeError = "El teléfono debe tener el formato 12345678 o 1234-5678.";
                 return false;
             }
             if (!System.Text.RegularExpressions.Regex.IsMatch(correo, @"^[a-z0-9@.]+$"))
             {
                 mensajeError = "El correo solo puede contener letras minúsculas, números, '@' y '.'.";
+                return false;
+            }
+            // Verificar dominios permitidos
+            string correoLower = correo?.ToLowerInvariant() ?? string.Empty;
+            if (!(correoLower.EndsWith("@gmail.com") || correoLower.EndsWith("@miumg.edu.gt")))
+            {
+                mensajeError = "El correo debe terminar en @gmail.com o @miumg.edu.gt.";
                 return false;
             }
             return true;
