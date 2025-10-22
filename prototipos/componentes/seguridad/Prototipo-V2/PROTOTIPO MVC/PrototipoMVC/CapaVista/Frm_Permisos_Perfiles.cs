@@ -190,7 +190,8 @@ namespace Capa_Vista_Seguridad
 
         private void Btn_insertar_Click(object sender, EventArgs e)
         {
-            if (Dgv_Permisos.Rows.Count == 0 || (Dgv_Permisos.Rows.Count == 1 && Dgv_Permisos.AllowUserToAddRows && Dgv_Permisos.Rows[0].IsNewRow))
+            if (Dgv_Permisos.Rows.Count == 0 ||
+                (Dgv_Permisos.Rows.Count == 1 && Dgv_Permisos.AllowUserToAddRows && Dgv_Permisos.Rows[0].IsNewRow))
             {
                 MessageBox.Show("Debe agregar al menos un registro de asignación para insertar o actualizar.", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -212,31 +213,48 @@ namespace Capa_Vista_Seguridad
                 bool bEliminar = Convert.ToBoolean(row.Cells["Eliminar"].Value ?? false);
                 bool bImprimir = Convert.ToBoolean(row.Cells["Imprimir"].Value ?? false);
 
-                //Clase de bitácora para los permisos - Arón Ricardo Esquit Silva 0901-22-13036
-                // Registrar cambios en bitácora comparando permisos anteriores vs actuales (sin usar el modelo directamente)
+                // Verificar si ya existe el permiso en la base de datos
+                bool bExiste = controlador.bExistePermisoPerfil(iPerfil, iModulo, iAplicacion);
 
+                if (!bExiste)
+                {
+                    // Insertar nuevo permiso
+                    int filas = controlador.iInsertarPermisoPerfilAplicacion(
+                        iPerfil, iModulo, iAplicacion,
+                        bIngresar, bConsultar, bModificar, bEliminar, bImprimir
+                    );
+                    iInsertados += filas;
+                }
+                else
+                {
+                    // Actualizar permiso existente
+                    int filas = controlador.iActualizarPermisoPerfilAplicacion(
+                        iPerfil, iModulo, iAplicacion,
+                        bIngresar, bConsultar, bModificar, bEliminar, bImprimir
+                    );
+                    iActualizados += filas;
+                }
+
+                // Registrar cambios en bitácora
                 registrarBitacora.fun_CompararYRegistrarPerfilManual_Puente(
-                    Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, // usuario que realiza el cambio
-                    iAplicacion,                                                 // ID de la aplicación
-                    row.Cells["Perfil"].Value.ToString(),                        // Nombre del perfil
-                    row.Cells["Aplicacion"].Value.ToString(),                    // Nombre de la aplicación
-                    bIngresar,                                                   // Permiso Ingresar
-                    bConsultar,                                                  // Permiso Consultar
-                    bModificar,                                                  // Permiso Modificar
-                    bEliminar,                                                   // Permiso Eliminar
-                    bImprimir                                                    // Permiso Imprimir
+                    Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario,
+                    iAplicacion,
+                    row.Cells["Perfil"].Value.ToString(),
+                    row.Cells["Aplicacion"].Value.ToString(),
+                    bIngresar,
+                    bConsultar,
+                    bModificar,
+                    bEliminar,
+                    bImprimir
                 );
-
-
-
-
-
-
             }
-            MessageBox.Show($"Se insertaron {iInsertados} registros y se actualizaron {iActualizados} registros correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            MessageBox.Show($"Se insertaron {iInsertados} registros y se actualizaron {iActualizados} registros correctamente.",
+                "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            // Limpiar DataGridView
             Dgv_Permisos.Rows.Clear();
         }
-
 
         private void Btn_quitar_Click(object sender, EventArgs e)
         {
