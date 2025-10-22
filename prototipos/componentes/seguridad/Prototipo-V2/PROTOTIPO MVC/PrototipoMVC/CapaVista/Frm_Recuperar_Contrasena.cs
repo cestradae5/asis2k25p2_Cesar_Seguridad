@@ -159,10 +159,6 @@ namespace Capa_Vista_Seguridad
         [DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
 
-        private void Pic_Cerrar_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
 
         private void Pnl_Superior_MouseDown(object sender, MouseEventArgs e)
         {
