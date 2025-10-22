@@ -25,7 +25,6 @@ namespace Capa_Vista_Seguridad
             Procesos,
             Reportes,
             Herramientas,
-            Ayuda,
             Asignaciones,
             Modulos
         }
@@ -75,7 +74,6 @@ namespace Capa_Vista_Seguridad
                 { MenuOpciones.Catalogos, catálogosToolStripMenuItem },
                 { MenuOpciones.Procesos, procesosToolStripMenuItem },
                 { MenuOpciones.Herramientas, herramientasToolStripMenuItem },
-                { MenuOpciones.Ayuda, ayudaToolStripMenuItem },
                 { MenuOpciones.Asignaciones, asignacionesToolStripMenuItem },
                 { MenuOpciones.Modulos, modulosToolStripMenuItem }
             };
@@ -89,7 +87,6 @@ namespace Capa_Vista_Seguridad
                 {
                     case MenuOpciones.Archivo:
                     case MenuOpciones.Herramientas:
-                    case MenuOpciones.Ayuda:
                         menuItems[opcion].Enabled = true;
                         break;
                     default:
