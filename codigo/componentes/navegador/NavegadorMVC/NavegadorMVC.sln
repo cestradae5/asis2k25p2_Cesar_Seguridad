@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.36324.18
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Capa_Controlador_Navegador", "CapaControladorNavegador\Capa_Controlador_Navegador.csproj", "{9CCB68D5-F388-46E4-9B59-97734D28BDC2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Capa_Modelo_Navegador", "CapaModeloNavegador\Capa_Modelo_Navegador.csproj", "{44573EC3-7012-4091-81F0-4A5B47C32285}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Capa_Vista_Navegador", "CapaVistaNavegador\Capa_Vista_Navegador.csproj", "{E6A13A61-72FC-4A67-B1AC-6F08C0FD4981}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9CCB68D5-F388-46E4-9B59-97734D28BDC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CCB68D5-F388-46E4-9B59-97734D28BDC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CCB68D5-F388-46E4-9B59-97734D28BDC2}.Debug|x86.ActiveCfg = Debug|x86
+		{9CCB68D5-F388-46E4-9B59-97734D28BDC2}.Debug|x86.Build.0 = Debug|x86
+		{9CCB68D5-F388-46E4-9B59-97734D28BDC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CCB68D5-F388-46E4-9B59-97734D28BDC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CCB68D5-F388-46E4-9B59-97734D28BDC2}.Release|x86.ActiveCfg = Release|x86
+		{9CCB68D5-F388-46E4-9B59-97734D28BDC2}.Release|x86.Build.0 = Release|x86
+		{44573EC3-7012-4091-81F0-4A5B47C32285}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44573EC3-7012-4091-81F0-4A5B47C32285}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44573EC3-7012-4091-81F0-4A5B47C32285}.Debug|x86.ActiveCfg = Debug|x86
+		{44573EC3-7012-4091-81F0-4A5B47C32285}.Debug|x86.Build.0 = Debug|x86
+		{44573EC3-7012-4091-81F0-4A5B47C32285}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44573EC3-7012-4091-81F0-4A5B47C32285}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44573EC3-7012-4091-81F0-4A5B47C32285}.Release|x86.ActiveCfg = Release|x86
+		{44573EC3-7012-4091-81F0-4A5B47C32285}.Release|x86.Build.0 = Release|x86
+		{E6A13A61-72FC-4A67-B1AC-6F08C0FD4981}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6A13A61-72FC-4A67-B1AC-6F08C0FD4981}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6A13A61-72FC-4A67-B1AC-6F08C0FD4981}.Debug|x86.ActiveCfg = Debug|x86
+		{E6A13A61-72FC-4A67-B1AC-6F08C0FD4981}.Debug|x86.Build.0 = Debug|x86
+		{E6A13A61-72FC-4A67-B1AC-6F08C0FD4981}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6A13A61-72FC-4A67-B1AC-6F08C0FD4981}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6A13A61-72FC-4A67-B1AC-6F08C0FD4981}.Release|x86.ActiveCfg = Release|x86
+		{E6A13A61-72FC-4A67-B1AC-6F08C0FD4981}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {02A57D10-301C-456E-BA93-EEB4864875FC}
+	EndGlobalSection
+EndGlobal

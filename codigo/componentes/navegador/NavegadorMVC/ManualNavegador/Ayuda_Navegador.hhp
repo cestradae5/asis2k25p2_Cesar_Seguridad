@@ -1,0 +1,27 @@
+[OPTIONS]
+Compatibility=1.1 or later
+Compiled file=Ayuda_Navegador.chm
+Contents file=Contenido_Navegador.hhc
+Default Window=Manual_Usuario_Navegador
+Default topic=Manual_De_Usuario_Navegador.html
+Display compile progress=No
+Language=0x100a Español (Guatemala)
+
+[WINDOWS]
+Manual_Usuario_Navegador="Manual Principal","Contenido_Navegador.hhc",,"Manual_De_Usuario_Navegador.html","Manual_De_Usuario_Navegador.html","Manual_De_Usuario_Navegador.html",,"Manual_De_Usuario_Navegador.html",,0x2100,,0x0,[500,300,1600,850],,,,,,,0
+
+
+[FILES]
+Manual_De_Usuario_Navegador.html
+Manual_De_Usuario_Navegador_ind.html
+Manual_De_Usuario_Navegador-1.html
+Manual_De_Usuario_Navegador-2.html
+Manual_De_Usuario_Navegador-3.html
+Manual_De_Usuario_Navegador-4.html
+Manual_De_Usuario_Navegador-5.html
+Manual_De_Usuario_Navegador-6.html
+Manual_De_Usuario_Navegador-7.html
+Manual_De_Usuario_Navegador-8.html
+
+[INFOTYPES]
+
