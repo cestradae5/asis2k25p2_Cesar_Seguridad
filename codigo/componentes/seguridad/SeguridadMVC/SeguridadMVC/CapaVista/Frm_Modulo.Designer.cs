@@ -48,6 +48,7 @@ namespace Capa_Vista_Seguridad
             this.Btn_nuevo = new System.Windows.Forms.Button();
             this.Btn_buscar = new System.Windows.Forms.Button();
             this.Btn_reporte = new System.Windows.Forms.Button();
+            this.Btn_Modificar = new System.Windows.Forms.Button();
             this.Pnl_Superior.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Pic_Cerrar)).BeginInit();
             this.SuspendLayout();
@@ -56,21 +57,19 @@ namespace Capa_Vista_Seguridad
             // 
             this.Lbl_id.AutoSize = true;
             this.Lbl_id.Font = new System.Drawing.Font("Rockwell", 10F);
-            this.Lbl_id.Location = new System.Drawing.Point(39, 124);
-            this.Lbl_id.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.Lbl_id.Location = new System.Drawing.Point(29, 101);
             this.Lbl_id.Name = "Lbl_id";
-            this.Lbl_id.Size = new System.Drawing.Size(24, 20);
+            this.Lbl_id.Size = new System.Drawing.Size(21, 17);
             this.Lbl_id.TabIndex = 0;
-            this.Lbl_id.Text = "iId";
+            this.Lbl_id.Text = "Id";
             // 
             // Lbl_nombre
             // 
             this.Lbl_nombre.AutoSize = true;
             this.Lbl_nombre.Font = new System.Drawing.Font("Rockwell", 10F);
-            this.Lbl_nombre.Location = new System.Drawing.Point(292, 124);
-            this.Lbl_nombre.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.Lbl_nombre.Location = new System.Drawing.Point(219, 101);
             this.Lbl_nombre.Name = "Lbl_nombre";
-            this.Lbl_nombre.Size = new System.Drawing.Size(73, 20);
+            this.Lbl_nombre.Size = new System.Drawing.Size(61, 17);
             this.Lbl_nombre.TabIndex = 1;
             this.Lbl_nombre.Text = "Nombre";
             // 
@@ -78,10 +77,9 @@ namespace Capa_Vista_Seguridad
             // 
             this.Lbl_descripcion.AutoSize = true;
             this.Lbl_descripcion.Font = new System.Drawing.Font("Rockwell", 10F);
-            this.Lbl_descripcion.Location = new System.Drawing.Point(292, 233);
-            this.Lbl_descripcion.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.Lbl_descripcion.Location = new System.Drawing.Point(219, 189);
             this.Lbl_descripcion.Name = "Lbl_descripcion";
-            this.Lbl_descripcion.Size = new System.Drawing.Size(104, 20);
+            this.Lbl_descripcion.Size = new System.Drawing.Size(85, 17);
             this.Lbl_descripcion.TabIndex = 2;
             this.Lbl_descripcion.Text = "Descripcion";
             // 
@@ -89,10 +87,9 @@ namespace Capa_Vista_Seguridad
             // 
             this.Lbl_modulo.AutoSize = true;
             this.Lbl_modulo.Font = new System.Drawing.Font("Rockwell", 18F);
-            this.Lbl_modulo.Location = new System.Drawing.Point(325, 60);
-            this.Lbl_modulo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.Lbl_modulo.Location = new System.Drawing.Point(244, 49);
             this.Lbl_modulo.Name = "Lbl_modulo";
-            this.Lbl_modulo.Size = new System.Drawing.Size(134, 35);
+            this.Lbl_modulo.Size = new System.Drawing.Size(108, 27);
             this.Lbl_modulo.TabIndex = 3;
             this.Lbl_modulo.Text = "Modulos";
             // 
@@ -100,10 +97,9 @@ namespace Capa_Vista_Seguridad
             // 
             this.Lbl_estado.AutoSize = true;
             this.Lbl_estado.Font = new System.Drawing.Font("Rockwell", 10F);
-            this.Lbl_estado.Location = new System.Drawing.Point(43, 233);
-            this.Lbl_estado.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.Lbl_estado.Location = new System.Drawing.Point(32, 189);
             this.Lbl_estado.Name = "Lbl_estado";
-            this.Lbl_estado.Size = new System.Drawing.Size(155, 20);
+            this.Lbl_estado.Size = new System.Drawing.Size(129, 17);
             this.Lbl_estado.TabIndex = 4;
             this.Lbl_estado.Text = "Estado del modulo";
             // 
@@ -111,10 +107,9 @@ namespace Capa_Vista_Seguridad
             // 
             this.Rdb_habilitado.AutoSize = true;
             this.Rdb_habilitado.Font = new System.Drawing.Font("Rockwell", 10F);
-            this.Rdb_habilitado.Location = new System.Drawing.Point(47, 272);
-            this.Rdb_habilitado.Margin = new System.Windows.Forms.Padding(4);
+            this.Rdb_habilitado.Location = new System.Drawing.Point(35, 221);
             this.Rdb_habilitado.Name = "Rdb_habilitado";
-            this.Rdb_habilitado.Size = new System.Drawing.Size(110, 24);
+            this.Rdb_habilitado.Size = new System.Drawing.Size(92, 21);
             this.Rdb_habilitado.TabIndex = 5;
             this.Rdb_habilitado.TabStop = true;
             this.Rdb_habilitado.Text = "Habilitado";
@@ -123,28 +118,25 @@ namespace Capa_Vista_Seguridad
             // Txt_id
             // 
             this.Txt_id.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(236)))), ((int)(((byte)(238)))));
-            this.Txt_id.Location = new System.Drawing.Point(43, 150);
-            this.Txt_id.Margin = new System.Windows.Forms.Padding(4);
+            this.Txt_id.Location = new System.Drawing.Point(32, 122);
             this.Txt_id.Name = "Txt_id";
-            this.Txt_id.Size = new System.Drawing.Size(132, 22);
+            this.Txt_id.Size = new System.Drawing.Size(100, 20);
             this.Txt_id.TabIndex = 7;
             // 
             // Txt_nombre
             // 
             this.Txt_nombre.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(236)))), ((int)(((byte)(238)))));
-            this.Txt_nombre.Location = new System.Drawing.Point(296, 150);
-            this.Txt_nombre.Margin = new System.Windows.Forms.Padding(4);
+            this.Txt_nombre.Location = new System.Drawing.Point(222, 122);
             this.Txt_nombre.Name = "Txt_nombre";
-            this.Txt_nombre.Size = new System.Drawing.Size(132, 22);
+            this.Txt_nombre.Size = new System.Drawing.Size(100, 20);
             this.Txt_nombre.TabIndex = 8;
             // 
             // Txt_descripcion
             // 
             this.Txt_descripcion.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(236)))), ((int)(((byte)(238)))));
-            this.Txt_descripcion.Location = new System.Drawing.Point(423, 230);
-            this.Txt_descripcion.Margin = new System.Windows.Forms.Padding(4);
+            this.Txt_descripcion.Location = new System.Drawing.Point(317, 187);
             this.Txt_descripcion.Name = "Txt_descripcion";
-            this.Txt_descripcion.Size = new System.Drawing.Size(233, 22);
+            this.Txt_descripcion.Size = new System.Drawing.Size(176, 20);
             this.Txt_descripcion.TabIndex = 10;
             // 
             // Btn_guardar
@@ -154,10 +146,9 @@ namespace Capa_Vista_Seguridad
             this.Btn_guardar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
             this.Btn_guardar.Image = global::Capa_Vista_Seguridad.Properties.Resources.savetheapplication_guardar_2958;
             this.Btn_guardar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Btn_guardar.Location = new System.Drawing.Point(522, 317);
-            this.Btn_guardar.Margin = new System.Windows.Forms.Padding(4);
+            this.Btn_guardar.Location = new System.Drawing.Point(373, 244);
             this.Btn_guardar.Name = "Btn_guardar";
-            this.Btn_guardar.Size = new System.Drawing.Size(134, 57);
+            this.Btn_guardar.Size = new System.Drawing.Size(100, 46);
             this.Btn_guardar.TabIndex = 11;
             this.Btn_guardar.Text = "Guardar";
             this.Btn_guardar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -171,10 +162,9 @@ namespace Capa_Vista_Seguridad
             this.Btn_eliminar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
             this.Btn_eliminar.Image = global::Capa_Vista_Seguridad.Properties.Resources.delete_remove_trash_icon_177304;
             this.Btn_eliminar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Btn_eliminar.Location = new System.Drawing.Point(704, 317);
-            this.Btn_eliminar.Margin = new System.Windows.Forms.Padding(4);
+            this.Btn_eliminar.Location = new System.Drawing.Point(585, 244);
             this.Btn_eliminar.Name = "Btn_eliminar";
-            this.Btn_eliminar.Size = new System.Drawing.Size(134, 57);
+            this.Btn_eliminar.Size = new System.Drawing.Size(100, 46);
             this.Btn_eliminar.TabIndex = 13;
             this.Btn_eliminar.Text = "Elmininar";
             this.Btn_eliminar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -185,10 +175,9 @@ namespace Capa_Vista_Seguridad
             // 
             this.Lbl_busqueda.AutoSize = true;
             this.Lbl_busqueda.Font = new System.Drawing.Font("Rockwell", 10F);
-            this.Lbl_busqueda.Location = new System.Drawing.Point(539, 123);
-            this.Lbl_busqueda.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.Lbl_busqueda.Location = new System.Drawing.Point(404, 100);
             this.Lbl_busqueda.Name = "Lbl_busqueda";
-            this.Lbl_busqueda.Size = new System.Drawing.Size(86, 20);
+            this.Lbl_busqueda.Size = new System.Drawing.Size(71, 17);
             this.Lbl_busqueda.TabIndex = 14;
             this.Lbl_busqueda.Text = "Busqueda";
             // 
@@ -196,20 +185,18 @@ namespace Capa_Vista_Seguridad
             // 
             this.Cbo_busqueda.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(236)))), ((int)(((byte)(238)))));
             this.Cbo_busqueda.FormattingEnabled = true;
-            this.Cbo_busqueda.Location = new System.Drawing.Point(543, 148);
-            this.Cbo_busqueda.Margin = new System.Windows.Forms.Padding(4);
+            this.Cbo_busqueda.Location = new System.Drawing.Point(407, 120);
             this.Cbo_busqueda.Name = "Cbo_busqueda";
-            this.Cbo_busqueda.Size = new System.Drawing.Size(160, 24);
+            this.Cbo_busqueda.Size = new System.Drawing.Size(121, 21);
             this.Cbo_busqueda.TabIndex = 15;
             // 
             // Rdb_inabilitado
             // 
             this.Rdb_inabilitado.AutoSize = true;
             this.Rdb_inabilitado.Font = new System.Drawing.Font("Rockwell", 10F);
-            this.Rdb_inabilitado.Location = new System.Drawing.Point(45, 300);
-            this.Rdb_inabilitado.Margin = new System.Windows.Forms.Padding(4);
+            this.Rdb_inabilitado.Location = new System.Drawing.Point(34, 244);
             this.Rdb_inabilitado.Name = "Rdb_inabilitado";
-            this.Rdb_inabilitado.Size = new System.Drawing.Size(113, 24);
+            this.Rdb_inabilitado.Size = new System.Drawing.Size(94, 21);
             this.Rdb_inabilitado.TabIndex = 6;
             this.Rdb_inabilitado.TabStop = true;
             this.Rdb_inabilitado.Text = "Inabilitado";
@@ -221,8 +208,9 @@ namespace Capa_Vista_Seguridad
             this.Pnl_Superior.Controls.Add(this.Pic_Cerrar);
             this.Pnl_Superior.Dock = System.Windows.Forms.DockStyle.Top;
             this.Pnl_Superior.Location = new System.Drawing.Point(0, 0);
+            this.Pnl_Superior.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Pnl_Superior.Name = "Pnl_Superior";
-            this.Pnl_Superior.Size = new System.Drawing.Size(1009, 44);
+            this.Pnl_Superior.Size = new System.Drawing.Size(757, 36);
             this.Pnl_Superior.TabIndex = 95;
             this.Pnl_Superior.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Pnl_Superior_MouseDown);
             // 
@@ -231,9 +219,10 @@ namespace Capa_Vista_Seguridad
             this.Pic_Cerrar.BackColor = System.Drawing.Color.Transparent;
             this.Pic_Cerrar.Dock = System.Windows.Forms.DockStyle.Right;
             this.Pic_Cerrar.Image = global::Capa_Vista_Seguridad.Properties.Resources.Cancel_icon_icons_com_73703;
-            this.Pic_Cerrar.Location = new System.Drawing.Point(972, 0);
+            this.Pic_Cerrar.Location = new System.Drawing.Point(729, 0);
+            this.Pic_Cerrar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Pic_Cerrar.Name = "Pic_Cerrar";
-            this.Pic_Cerrar.Size = new System.Drawing.Size(37, 44);
+            this.Pic_Cerrar.Size = new System.Drawing.Size(28, 36);
             this.Pic_Cerrar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.Pic_Cerrar.TabIndex = 0;
             this.Pic_Cerrar.TabStop = false;
@@ -246,10 +235,9 @@ namespace Capa_Vista_Seguridad
             this.Btn_nuevo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
             this.Btn_nuevo.Image = global::Capa_Vista_Seguridad.Properties.Resources.limpiar;
             this.Btn_nuevo.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Btn_nuevo.Location = new System.Drawing.Point(352, 317);
-            this.Btn_nuevo.Margin = new System.Windows.Forms.Padding(4);
+            this.Btn_nuevo.Location = new System.Drawing.Point(267, 244);
             this.Btn_nuevo.Name = "Btn_nuevo";
-            this.Btn_nuevo.Size = new System.Drawing.Size(134, 57);
+            this.Btn_nuevo.Size = new System.Drawing.Size(100, 46);
             this.Btn_nuevo.TabIndex = 12;
             this.Btn_nuevo.Text = "Limpiar";
             this.Btn_nuevo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -263,10 +251,9 @@ namespace Capa_Vista_Seguridad
             this.Btn_buscar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
             this.Btn_buscar.Image = global::Capa_Vista_Seguridad.Properties.Resources.android_search_icon_icons1;
             this.Btn_buscar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Btn_buscar.Location = new System.Drawing.Point(780, 136);
-            this.Btn_buscar.Margin = new System.Windows.Forms.Padding(4);
+            this.Btn_buscar.Location = new System.Drawing.Point(585, 110);
             this.Btn_buscar.Name = "Btn_buscar";
-            this.Btn_buscar.Size = new System.Drawing.Size(134, 57);
+            this.Btn_buscar.Size = new System.Drawing.Size(100, 46);
             this.Btn_buscar.TabIndex = 16;
             this.Btn_buscar.Text = "Buscar";
             this.Btn_buscar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -280,22 +267,37 @@ namespace Capa_Vista_Seguridad
             this.Btn_reporte.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
             this.Btn_reporte.Image = global::Capa_Vista_Seguridad.Properties.Resources.exportar;
             this.Btn_reporte.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Btn_reporte.Location = new System.Drawing.Point(780, 215);
-            this.Btn_reporte.Margin = new System.Windows.Forms.Padding(4);
+            this.Btn_reporte.Location = new System.Drawing.Point(585, 175);
             this.Btn_reporte.Name = "Btn_reporte";
-            this.Btn_reporte.Size = new System.Drawing.Size(134, 57);
+            this.Btn_reporte.Size = new System.Drawing.Size(100, 46);
             this.Btn_reporte.TabIndex = 96;
             this.Btn_reporte.Text = "Reporte";
             this.Btn_reporte.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Btn_reporte.UseVisualStyleBackColor = false;
             this.Btn_reporte.Click += new System.EventHandler(this.Btn_reporte_Click);
             // 
-            // frmModulo
+            // Btn_Modificar
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.Btn_Modificar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
+            this.Btn_Modificar.Font = new System.Drawing.Font("Rockwell", 10F);
+            this.Btn_Modificar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
+            this.Btn_Modificar.Image = global::Capa_Vista_Seguridad.Properties.Resources.savetheapplication_guardar_2958;
+            this.Btn_Modificar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Btn_Modificar.Location = new System.Drawing.Point(479, 244);
+            this.Btn_Modificar.Name = "Btn_Modificar";
+            this.Btn_Modificar.Size = new System.Drawing.Size(100, 46);
+            this.Btn_Modificar.TabIndex = 97;
+            this.Btn_Modificar.Text = "Modificar";
+            this.Btn_Modificar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Btn_Modificar.UseVisualStyleBackColor = false;
+            // 
+            // Frm_Modulo
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(185)))), ((int)(((byte)(185)))));
-            this.ClientSize = new System.Drawing.Size(1009, 411);
+            this.ClientSize = new System.Drawing.Size(757, 334);
+            this.Controls.Add(this.Btn_Modificar);
             this.Controls.Add(this.Btn_reporte);
             this.Controls.Add(this.Pnl_Superior);
             this.Controls.Add(this.Btn_buscar);
@@ -315,8 +317,7 @@ namespace Capa_Vista_Seguridad
             this.Controls.Add(this.Lbl_nombre);
             this.Controls.Add(this.Lbl_id);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4);
-            this.Name = "frmModulo";
+            this.Name = "Frm_Modulo";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmModulo";
             this.Load += new System.EventHandler(this.frmModulo_Load);
@@ -348,5 +349,6 @@ namespace Capa_Vista_Seguridad
         private System.Windows.Forms.PictureBox Pic_Cerrar;
         private System.Windows.Forms.Button Btn_buscar;
         private System.Windows.Forms.Button Btn_reporte;
+        private System.Windows.Forms.Button Btn_Modificar;
     }
 }
