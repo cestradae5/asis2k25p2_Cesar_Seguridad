@@ -374,7 +374,7 @@ namespace Capa_Vista_Seguridad
                 ctrlBitacora.RegistrarAccion(
                     controlador.ObtenerIdUsuarioConectado(),
                     1,
-                    $"Eliminó al empleado con ID: {id}",
+                    $"Eliminó al empleado/a: {Txt_nombre_empleado.Text}",
                     true
                 );
 
