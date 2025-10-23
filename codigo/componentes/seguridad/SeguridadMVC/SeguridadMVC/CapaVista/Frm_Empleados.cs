@@ -329,50 +329,50 @@ namespace Capa_Vista_Seguridad
         // Ernesto David Samayoa Jocol - 0901-22-3415 - Fecha: 12/10/2025
         private void Btn_eliminar_empleado_Click(object sender, EventArgs e)
         {
-            // 1️ Validar que el campo no esté vacío ni sea inválido
+            // 1) Validar ID ingresado (mensaje de error viene del controlador)
             if (!controlador.TryParseId(Txt_id_empleado.Text, out int id, out string mensajeId))
             {
                 MessageBox.Show(mensajeId, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            // 2️ Verificar si el empleado tiene usuario asociado (ANTES de eliminar)
-            if (controlador.fun_EmpleadoTieneUsuario(id))
+            // 2) Validar reglas de negocio en el controlador (p. ej. si tiene usuario asociado)
+            var validacion = controlador.ValidarEliminacionEmpleado(id);
+            if (!validacion.Exito)
             {
-                MessageBox.Show("No se puede eliminar este empleado porque tiene un usuario asociado. " +
-                                "Elimine primero el usuario.",
-                                "Restricción de integridad",
-                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(
+                    validacion.Mensaje,
+                    string.IsNullOrEmpty(validacion.Titulo) ? "Aviso" : validacion.Titulo,
+                    MessageBoxButtons.OK
+                  
+                );
                 return;
             }
 
-            // 3️ Confirmar si realmente desea eliminar
-            DialogResult respuesta = MessageBox.Show(
+            // 3) Confirmación del usuario (UI)
+            var respuesta = MessageBox.Show(
                 "¿Está seguro de que desea eliminar este empleado?",
                 "Confirmar eliminación",
                 MessageBoxButtons.YesNo,
-                MessageBoxIcon.Warning
+                MessageBoxIcon.Question
+            );
+            if (respuesta != DialogResult.Yes) return;
+
+            // 4) Ejecutar eliminación en el controlador
+            var resultado = controlador.TryEliminarEmpleado(id);
+
+            MessageBox.Show(
+                resultado.Mensaje ?? (resultado.Exito ? "Empleado eliminado correctamente." : "Error al eliminar el empleado."),
+                string.IsNullOrEmpty(resultado.Titulo) ? (resultado.Exito ? "Éxito" : "Error") : resultado.Titulo,
+                MessageBoxButtons.OK
+                
             );
 
-            if (respuesta == DialogResult.Yes)
+            if (resultado.Exito)
             {
-                var resultado = controlador.EliminarEmpleado(id, Txt_nombre_empleado.Text);
-
-                MessageBox.Show(resultado.mensaje, resultado.exito ? "Éxito" : "Error", MessageBoxButtons.OK, resultado.exito ? MessageBoxIcon.Information : MessageBoxIcon.Error);
-                if (resultado.exito)
-                {
-                    // Registrar en bitácora (Aron Esquit 0901-22-13036)
-                    ctrlBitacora.RegistrarAccion(controlador.ObtenerIdUsuarioConectado(), 1, $"Eliminó empleado/a: {Txt_nombre_empleado.Text}", true);
-
-                    fun_CargarEmpleados();
-                    fun_ConfigurarComboBoxEmpleados();
-                    fun_LimpiarCampos();
-                    fun_ConfiguracionInicial();
-                }
-            }
-            else
-            {
-                MessageBox.Show("Eliminación cancelada por el usuario.", "Cancelado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // Opcional: acciones posteriores a la eliminación (limpiar campos, refrescar lista, etc.)
+                fun_LimpiarCampos();
+                fun_CargarEmpleados();
             }
         }
 
