@@ -12,6 +12,23 @@ namespace Capa_Controlador_Seguridad
     {
         private Cls_EmpleadoDAO daoEmpleado = new Cls_EmpleadoDAO();
 
+        // --- Nuevo: resultado estándar desde la capa controlador (sin dependencia a WinForms) ---
+        public enum GravidadMensaje { Info, Advertencia, Error }
+
+        public class ResultadoOperacion
+        {
+            public bool Exito { get; set; }
+            public string Mensaje { get; set; }
+            public string Titulo { get; set; }
+            public GravidadMensaje Gravidad { get; set; }
+
+            public static ResultadoOperacion Ok(string mensaje = null) =>
+                new ResultadoOperacion { Exito = true, Mensaje = mensaje };
+
+            public static ResultadoOperacion Fail(string mensaje, string titulo = null, GravidadMensaje g = GravidadMensaje.Advertencia) =>
+                new ResultadoOperacion { Exito = false, Mensaje = mensaje, Titulo = titulo, Gravidad = g };
+        }
+
         //Ernesto David SamayoaJocol 0901-22-3415 Verificar si un empleado tiene usuario asociado nueva funcion
         //cambios por cesar estrada
         public List<EmpleadoComboBoxData> fun_ObtenerEmpleadosParaComboBox()
@@ -19,7 +36,7 @@ namespace Capa_Controlador_Seguridad
             var empleados = daoEmpleado.fun_ObtenerEmpleados();
             var resultado = new List<EmpleadoComboBoxData>();
 
-            foreach (var emp in empleados) 
+            foreach (var emp in empleados)
             {
                 resultado.Add(new EmpleadoComboBoxData
                 {
@@ -40,6 +57,58 @@ namespace Capa_Controlador_Seguridad
         public bool fun_EmpleadoTieneUsuario(int iIdEmpleado)
         {
             return daoEmpleado.fun_EmpleadoTieneUsuario(iIdEmpleado);
+        }
+
+        // --- Nuevo: Validación en controlador antes de eliminar (reglas de negocio y mensajes ubicados aquí) ---
+        public ResultadoOperacion ValidarEliminacionEmpleado(int iIdEmpleado)
+        {
+            if (fun_EmpleadoTieneUsuario(iIdEmpleado))
+            {
+                return ResultadoOperacion.Fail(
+                    "No se puede eliminar este empleado porque tiene un usuario asociado. Elimine primero el usuario.",
+                    "Restricción de integridad",
+                    GravidadMensaje.Advertencia
+                );
+            }
+
+            // Aquí puedes añadir otras validaciones de negocio si hacen falta.
+
+            return ResultadoOperacion.Ok();
+        }
+
+        // --- Nuevo: Intentar eliminar y devolver resultado estructurado ---
+        public ResultadoOperacion TryEliminarEmpleado(int iIdEmpleado)
+        {
+            try
+            {
+                bool ok = fun_BorrarEmpleado(iIdEmpleado);
+                if (ok)
+                {
+                    return ResultadoOperacion.Ok("Empleado eliminado correctamente.");
+                }
+                else
+                {
+                    return ResultadoOperacion.Fail("Error al eliminar el empleado.", "Error", GravidadMensaje.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                return ResultadoOperacion.Fail("Error al eliminar empleado: " + ex.Message, "Error", GravidadMensaje.Error);
+            }
+        }
+
+        // Mantengo la firma original de EliminarEmpleado para compatibilidad con código existente,
+        // pero ahora delega en las nuevas funciones y retorna el tuplo (bool, string).
+        public (bool exito, string mensaje) EliminarEmpleado(int iIdEmpleado, string nombreEmpleado)
+        {
+            var validacion = ValidarEliminacionEmpleado(iIdEmpleado);
+            if (!validacion.Exito)
+            {
+                return (false, validacion.Mensaje);
+            }
+
+            var resultado = TryEliminarEmpleado(iIdEmpleado);
+            return (resultado.Exito, resultado.Mensaje ?? (resultado.Exito ? "Empleado eliminado correctamente." : "Error al eliminar el empleado."));
         }
 
         public (bool exito, string mensaje) InsertarEmpleado(int iIdEmpleado, string sNombres, string sApellidos, long lDpi, long lNit,
@@ -67,31 +136,6 @@ namespace Capa_Controlador_Seguridad
             catch (Exception ex)
             {
                 return (false, "Error al modificar empleado: " + ex.Message);
-            }
-        }
-
-        public (bool exito, string mensaje) EliminarEmpleado(int iIdEmpleado, string nombreEmpleado)
-        {
-            try
-            {
-                if (fun_EmpleadoTieneUsuario(iIdEmpleado))
-                {
-                    return (false, "No se puede eliminar este empleado porque tiene un usuario asociado. Elimine primero el usuario.");
-                }
-
-                bool ok = fun_BorrarEmpleado(iIdEmpleado);
-                if (ok)
-                {
-                    return (true, "Empleado eliminado correctamente.");
-                }
-                else
-                {
-                    return (false, "Error al eliminar el empleado.");
-                }
-            }
-            catch (Exception ex)
-            {
-                return (false, "Error al eliminar empleado: " + ex.Message);
             }
         }
 
