@@ -83,14 +83,14 @@ namespace Capa_Vista_Seguridad
             string sNueva = Txt_nueva_contrasena.Text.Trim();
             string sConfirmar = Txt_confirmar_contrasena.Text.Trim();
 
-            // 🚨 Validación de campos vacíos
+            // Validación de campos vacíos
             if (string.IsNullOrEmpty(sNueva) || string.IsNullOrEmpty(sConfirmar))
             {
                 MessageBox.Show("Debe ingresar la nueva contraseña y confirmarla.");
                 return;
             }
 
-            // 🚨 Validación de coincidencia
+            // Validación de coincidencia
             if (sNueva != sConfirmar)
             {
                 MessageBox.Show("Las contraseñas no coinciden.");
