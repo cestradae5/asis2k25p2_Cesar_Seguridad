@@ -1,0 +1,373 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{349D7BA8-A835-4401-B0B9-CA601B215E63}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Capa_Vista_Seguridad</RootNamespace>
+    <AssemblyName>Capa_Vista_Seguridad</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AxShockwaveFlashObjects, Version=1.0.0.0, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
+    <Reference Include="Capa_Controlador_Seguridad">
+      <HintPath>..\CapaControlador\bin\Debug\Capa_Controlador_Seguridad.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
+    <Reference Include="CrystalDecisions.Windows.Forms, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Frm_Permisos_Perfiles.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Permisos_Perfiles.Designer.cs">
+      <DependentUpon>Frm_Permisos_Perfiles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Reporte_aplicacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Reporte_aplicacion.Designer.cs">
+      <DependentUpon>Frm_Reporte_aplicacion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Reporte_Bitacoras.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Reporte_Bitacoras.Designer.cs">
+      <DependentUpon>Frm_Reporte_Bitacoras.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Reporte_Empleado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Reporte_Empleado.Designer.cs">
+      <DependentUpon>Frm_Reporte_Empleado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Reporte_modulos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Reporte_modulos.Designer.cs">
+      <DependentUpon>Frm_Reporte_modulos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Reporte_perfiles.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Reporte_perfiles.Designer.cs">
+      <DependentUpon>Frm_Reporte_perfiles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Reporte_Usuario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Reporte_Usuario.Designer.cs">
+      <DependentUpon>Frm_Reporte_Usuario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Aplicacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Aplicacion.Designer.cs">
+      <DependentUpon>Frm_Aplicacion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_asignacion_aplicacion_usuario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_asignacion_aplicacion_usuario.designer.cs">
+      <DependentUpon>Frm_asignacion_aplicacion_usuario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_asignacion_perfil_usuario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_asignacion_perfil_usuario.designer.cs">
+      <DependentUpon>Frm_asignacion_perfil_usuario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Empleados.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Empleados.Designer.cs">
+      <DependentUpon>Frm_Empleados.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Login.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Login.Designer.cs">
+      <DependentUpon>Frm_Login.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Modulo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Modulo.Designer.cs">
+      <DependentUpon>Frm_Modulo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Perfiles.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Perfiles.designer.cs">
+      <DependentUpon>Frm_Perfiles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Principal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Principal.Designer.cs">
+      <DependentUpon>Frm_Principal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Recuperar_Contrasena.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Recuperar_Contrasena.Designer.cs">
+      <DependentUpon>Frm_Recuperar_Contrasena.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Seguridad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Seguridad.Designer.cs">
+      <DependentUpon>Frm_Seguridad.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Slash.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Slash.Designer.cs">
+      <DependentUpon>Frm_Slash.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Usuario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Usuario.Designer.cs">
+      <DependentUpon>Frm_Usuario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Bitacora.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Bitacora.Designer.cs">
+      <DependentUpon>Frm_Bitacora.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_cambiar_contrasena.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_cambiar_contrasena.Designer.cs">
+      <DependentUpon>Frm_cambiar_contrasena.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Reporte_aplicacion.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reporte_aplicacion.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reporte_bitacoras.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reporte_bitacoras.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reporte_empleado.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reporte_empleado.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reporte_modulo.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reporte_modulo.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reporte_perfiles.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reporte_perfiles.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reporte_usuario.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reporte_usuario.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Frm_Permisos_Perfiles.resx">
+      <DependentUpon>Frm_Permisos_Perfiles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Reporte_aplicacion.resx">
+      <DependentUpon>Frm_Reporte_aplicacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Reporte_Bitacoras.resx">
+      <DependentUpon>Frm_Reporte_Bitacoras.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Reporte_Empleado.resx">
+      <DependentUpon>Frm_Reporte_Empleado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Reporte_modulos.resx">
+      <DependentUpon>Frm_Reporte_modulos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Reporte_perfiles.resx">
+      <DependentUpon>Frm_Reporte_perfiles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Reporte_Usuario.resx">
+      <DependentUpon>Frm_Reporte_Usuario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Aplicacion.resx">
+      <DependentUpon>Frm_Aplicacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_asignacion_aplicacion_usuario.resx">
+      <DependentUpon>Frm_asignacion_aplicacion_usuario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_asignacion_perfil_usuario.resx">
+      <DependentUpon>Frm_asignacion_perfil_usuario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Empleados.resx">
+      <DependentUpon>Frm_Empleados.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Login.resx">
+      <DependentUpon>Frm_Login.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Modulo.resx">
+      <DependentUpon>Frm_Modulo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Perfiles.resx">
+      <DependentUpon>Frm_Perfiles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Principal.resx">
+      <DependentUpon>Frm_Principal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Recuperar_Contrasena.resx">
+      <DependentUpon>Frm_Recuperar_Contrasena.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Seguridad.resx">
+      <DependentUpon>Frm_Seguridad.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Slash.resx">
+      <DependentUpon>Frm_Slash.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Usuario.resx">
+      <DependentUpon>Frm_Usuario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Bitacora.resx">
+      <DependentUpon>Frm_Bitacora.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_cambiar_contrasena.resx">
+      <DependentUpon>Frm_cambiar_contrasena.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reporte_aplicacion.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>Reporte_aplicacion.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reporte_bitacoras.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>Reporte_bitacoras.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reporte_empleado.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>Reporte_empleado.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reporte_modulo.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>Reporte_modulo.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reporte_perfiles.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>Reporte_perfiles.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reporte_usuario.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>Reporte_usuario.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\usuario.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cancel_77947.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Cancel_icon-icons.com_73703.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\android-search_icon-icons.com_50501.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\exportar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\android-search_icon-icons.com_505011.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\print-black-printer-tool-symbol_icon-icons.com_54467.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sign-emergency-code-sos_61_icon-icons.com_57216.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add_insert_new_plus_button_icon_142943.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\savetheapplication_guardar_2958.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\compose_edit_modify_icon_177770.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\delete_remove_trash_icon_177304.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cancelar_32px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\asignar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dinero.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_direction_left_undo_previous_backward_back_icon_250686.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\limpiar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
