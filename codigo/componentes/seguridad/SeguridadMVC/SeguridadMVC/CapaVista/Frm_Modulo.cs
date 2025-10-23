@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Capa_Controlador_Seguridad;
@@ -9,128 +8,88 @@ namespace Capa_Vista_Seguridad
 {
     public partial class Frm_Modulo : Form
     {
-        Cls_BitacoraControlador ctrlBitacora = new Cls_BitacoraControlador(); // Para registrar acciones en la bitácora
-        Cls_Modulos_Controlador cm = new Cls_Modulos_Controlador(); // Controlador de módulos
-
+        private readonly Cls_Modulos_Controlador cm = new Cls_Modulos_Controlador(); // Controlador de módulos
         private Frm_Reporte_modulos frmReporte = null; // Ventana de reportes
 
         public Frm_Modulo()
         {
             InitializeComponent();
 
-         
             this.Btn_guardar.Click -= Btn_guardar_Click;
             this.Btn_guardar.Click += Btn_guardar_Click;
 
             this.Btn_Modificar.Click -= Btn_Modificar_Click;
             this.Btn_Modificar.Click += Btn_Modificar_Click;
 
-       
+            this.Btn_eliminar.Click -= Btn_eliminar_Click;
+            this.Btn_eliminar.Click += Btn_eliminar_Click;
+
+            this.Btn_buscar.Click -= Btn_buscar_Click;
+            this.Btn_buscar.Click += Btn_buscar_Click;
+
+            this.Btn_nuevo.Click -= Btn_nuevo_Click;
+            this.Btn_nuevo.Click += Btn_nuevo_Click;
+
+            this.Load -= frmModulo_Load;
+            this.Load += frmModulo_Load;
         }
 
         private void frmModulo_Load(object sender, EventArgs e)
         {
-            fun_CargarComboBox(); // Llena el combo de búsqueda al cargar
+            fun_CargarComboBox();
         }
 
         private void fun_CargarComboBox()
         {
             Cbo_busqueda.Items.Clear();
-            string[] items = cm.ItemsModulos();
-            foreach (var item in items) Cbo_busqueda.Items.Add(item);
+            var items = cm.ItemsModulos();
+            if (items != null && items.Length > 0)
+                Cbo_busqueda.Items.AddRange(items);
         }
 
         //boton guardar, guarda la informacion nueva
         private void Btn_guardar_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(Txt_id.Text) || string.IsNullOrEmpty(Txt_nombre.Text) || string.IsNullOrEmpty(Txt_descripcion.Text))
+            var resultado = cm.GuardarModulo(
+                Txt_id.Text,
+                Txt_nombre.Text,
+                Txt_descripcion.Text,
+                Rdb_habilitado.Checked
+            );
+
+            MessageBox.Show(resultado.Message);
+
+            if (resultado.Success)
             {
-                MessageBox.Show("Debe ingresar Id, Nombre y Descripción.");
-                return;
-            }
-            if (!int.TryParse(Txt_id.Text, out int Pk_Id_Modulo))
-            {
-                MessageBox.Show("El Id debe ser un número.");
-                return;
-            }
-
-            string sCmp_Nombre_Modulo = Txt_nombre.Text;
-            string sCmp_Descripcion_Modulo = Txt_descripcion.Text;
-            byte btCmp_Estado_Modulo = (Rdb_habilitado.Checked) ? (byte)1 : (byte)0;
-
-            // funcion para la busqueda de modulos creados
-
-            DataRow dr = cm.BuscarModulo(Pk_Id_Modulo);
-            if (dr != null)
-            {
-                MessageBox.Show("Ya existe un módulo con este Id. Use el botón Modificar para actualizarlo.");
-                return;
-            }
-
-            bool bResultado = cm.InsertarModulo(Pk_Id_Modulo, sCmp_Nombre_Modulo, sCmp_Descripcion_Modulo, btCmp_Estado_Modulo);
-
-            if (bResultado)
-            {
-                MessageBox.Show("Módulo guardado correctamente.");
                 fun_CargarComboBox();
-                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, $"Guardó el módulo: {Txt_nombre.Text}", true);
                 fun_LimpiarCampos();
                 Txt_id.Enabled = true;
-            }
-            else
-            {
-                MessageBox.Show("Error al guardar el módulo.");
             }
         }
 
-     //modificacion de los modulos ya creados
+        //modificacion de los modulos ya creados
         private void Btn_Modificar_Click(object sender, EventArgs e)
         {
-         
-
-            if (string.IsNullOrEmpty(Txt_id.Text) || string.IsNullOrEmpty(Txt_nombre.Text) || string.IsNullOrEmpty(Txt_descripcion.Text))
-            {
-                MessageBox.Show("Debe ingresar Id, Nombre y Descripción.");
-                return;
-            }
-            if (!int.TryParse(Txt_id.Text, out int Pk_Id_Modulo))
-            {
-                MessageBox.Show("El Id debe ser un número.");
-                return;
-            }
-
-            string sCmp_Nombre_Modulo = Txt_nombre.Text;
-            string sCmp_Descripcion_Modulo = Txt_descripcion.Text;
-            byte btCmp_Estado_Modulo = (Rdb_habilitado.Checked) ? (byte)1 : (byte)0;
-
-            DataRow dr = cm.BuscarModulo(Pk_Id_Modulo);
-            if (dr == null)
-            {
-                MessageBox.Show("No existe un módulo con este Id. Use Guardar para crear uno nuevo.");
-                return;
-            }
-
-            DialogResult respuesta = MessageBox.Show(
-                "¿Desea actualizar la información de este módulo?",
-                "Confirmar modificación",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question
+            var resultado = cm.ModificarModulo(
+                Txt_id.Text,
+                Txt_nombre.Text,
+                Txt_descripcion.Text,
+                Rdb_habilitado.Checked
             );
-            if (respuesta == DialogResult.No) return;
 
-            bool bResultado = cm.ModificarModulo(Pk_Id_Modulo, sCmp_Nombre_Modulo, sCmp_Descripcion_Modulo, btCmp_Estado_Modulo);
-
-            if (bResultado)
+            if (!resultado.ConfirmedByUser)
             {
-                MessageBox.Show("Módulo modificado correctamente.");
+                
+                return;
+            }
+
+            MessageBox.Show(resultado.Message);
+
+            if (resultado.Success)
+            {
                 fun_CargarComboBox();
-                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, $"Modificó el módulo: {Txt_nombre.Text}", true);
                 fun_LimpiarCampos();
                 Txt_id.Enabled = true;
-            }
-            else
-            {
-                MessageBox.Show("Error al modificar el módulo.");
             }
         }
 
@@ -148,49 +107,38 @@ namespace Capa_Vista_Seguridad
         //se utiliza para eliminar modulos que no esten siendo utilizados
         private void Btn_eliminar_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(Txt_id.Text)) { MessageBox.Show("Ingrese el Id del módulo a eliminar."); return; }
-            if (!int.TryParse(Txt_id.Text, out int Pk_Id_Modulo)) { MessageBox.Show("El Id debe ser un número."); return; }
-            if (cm.ModuloEnUso(Pk_Id_Modulo)) { MessageBox.Show("No se puede eliminar el módulo porque está siendo utilizado en una aplicación."); return; }
+            var resultado = cm.EliminarModulo(Txt_id.Text, Txt_nombre.Text);
 
-            bool bResultado = cm.EliminarModulo(Pk_Id_Modulo);
-            if (bResultado)
+            MessageBox.Show(resultado.Message);
+
+            if (resultado.Success)
             {
-                MessageBox.Show("Módulo eliminado correctamente.");
                 fun_CargarComboBox();
-                ctrlBitacora.RegistrarAccion(Capa_Controlador_Seguridad.Cls_Usuario_Conectado.iIdUsuario, 1, $"Eliminó el módulo: {Txt_nombre.Text}", true);
-                fun_LimpiarCampos(); Txt_id.Enabled = true;
-            }
-            else
-            {
-                MessageBox.Show("Error al eliminar módulo.");
+                fun_LimpiarCampos();
+                Txt_id.Enabled = true;
             }
         }
 
         private void Btn_buscar_Click(object sender, EventArgs e)
         {
-            if (Cbo_busqueda.SelectedItem == null) { MessageBox.Show("Seleccione un módulo para buscar."); return; }
+            var seleccionado = Cbo_busqueda.SelectedItem?.ToString();
+            var resultado = cm.BuscarModuloDesdeCombo(seleccionado);
 
-            string sSeleccionado = Cbo_busqueda.SelectedItem.ToString();
-            int Pk_Id_Modulo = int.Parse(sSeleccionado.Split('-')[0].Trim());
-
-            DataRow dr = cm.BuscarModulo(Pk_Id_Modulo);
-            if (dr != null)
+            if (!resultado.Success || resultado.Modulo == null)
             {
-                Txt_id.Text = dr["Pk_Id_Modulo"].ToString();
-                Txt_nombre.Text = dr["Cmp_Nombre_Modulo"].ToString();
-                Txt_descripcion.Text = dr["Cmp_Descripcion_Modulo"].ToString();
-
-                bool bEstado = Convert.ToBoolean(dr["Cmp_Estado_Modulo"]);
-                Rdb_habilitado.Checked = bEstado;
-                Rdb_inabilitado.Checked = !bEstado;
-
-                Txt_id.Enabled = false;
-                Cbo_busqueda.SelectedIndex = -1;
+                MessageBox.Show(resultado.Message);
+                return;
             }
-            else
-            {
-                MessageBox.Show("Módulo no encontrado.");
-            }
+
+            Txt_id.Text = resultado.Modulo.Pk_Id_Modulo.ToString();
+            Txt_nombre.Text = resultado.Modulo.Cmp_Nombre_Modulo;
+            Txt_descripcion.Text = resultado.Modulo.Cmp_Descripcion_Modulo;
+
+            Rdb_habilitado.Checked = resultado.Modulo.Cmp_Estado_Modulo == 1;
+            Rdb_inabilitado.Checked = resultado.Modulo.Cmp_Estado_Modulo == 0;
+
+            Txt_id.Enabled = false;
+            Cbo_busqueda.SelectedIndex = -1;
         }
 
         private void fun_LimpiarCampos()
@@ -203,7 +151,7 @@ namespace Capa_Vista_Seguridad
             Cbo_busqueda.SelectedIndex = -1;
         }
 
-        // --- Arrastrar ventana ---
+        //-Arrastrar ventana
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HTCAPTION = 0x2;
 
