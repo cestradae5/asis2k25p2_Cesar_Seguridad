@@ -16,11 +16,10 @@ namespace Capa_Controlador_Seguridad
         //cambios por cesar estrada
         public List<EmpleadoComboBoxData> fun_ObtenerEmpleadosParaComboBox()
         {
-            // Esto SÍ es correcto: el Controlador usa el Modelo
             var empleados = daoEmpleado.fun_ObtenerEmpleados();
             var resultado = new List<EmpleadoComboBoxData>();
 
-            foreach (var emp in empleados) // emp es Cls_Empleado (Modelo)
+            foreach (var emp in empleados) 
             {
                 resultado.Add(new EmpleadoComboBoxData
                 {
@@ -41,6 +40,59 @@ namespace Capa_Controlador_Seguridad
         public bool fun_EmpleadoTieneUsuario(int iIdEmpleado)
         {
             return daoEmpleado.fun_EmpleadoTieneUsuario(iIdEmpleado);
+        }
+
+        public (bool exito, string mensaje) InsertarEmpleado(int iIdEmpleado, string sNombres, string sApellidos, long lDpi, long lNit,
+                                     string sCorreo, string sTelefono, bool bGenero, DateTime dFechaNacimiento, DateTime dFechaContratacion)
+        {
+            try
+            {
+                fun_InsertarEmpleado(iIdEmpleado, sNombres, sApellidos, lDpi, lNit, sCorreo, sTelefono, bGenero, dFechaNacimiento, dFechaContratacion);
+                return (true, "Empleado guardado correctamente");
+            }
+            catch (Exception ex)
+            {
+                return (false, "Error al guardar empleado: " + ex.Message);
+            }
+        }
+
+        public (bool exito, string mensaje) ActualizarEmpleado(int iIdEmpleado, string sNombres, string sApellidos, long lDpi, long lNit,
+                                     string sCorreo, string sTelefono, bool bGenero, DateTime dFechaNacimiento, DateTime dFechaContratacion)
+        {
+            try
+            {
+                bool ok = fun_ActualizarEmpleado(iIdEmpleado, sNombres, sApellidos, lDpi, lNit, sCorreo, sTelefono, bGenero, dFechaNacimiento, dFechaContratacion);
+                return (ok, ok ? "Empleado modificado correctamente" : "Error al modificar empleado");
+            }
+            catch (Exception ex)
+            {
+                return (false, "Error al modificar empleado: " + ex.Message);
+            }
+        }
+
+        public (bool exito, string mensaje) EliminarEmpleado(int iIdEmpleado, string nombreEmpleado)
+        {
+            try
+            {
+                if (fun_EmpleadoTieneUsuario(iIdEmpleado))
+                {
+                    return (false, "No se puede eliminar este empleado porque tiene un usuario asociado. Elimine primero el usuario.");
+                }
+
+                bool ok = fun_BorrarEmpleado(iIdEmpleado);
+                if (ok)
+                {
+                    return (true, "Empleado eliminado correctamente.");
+                }
+                else
+                {
+                    return (false, "Error al eliminar el empleado.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return (false, "Error al eliminar empleado: " + ex.Message);
+            }
         }
 
         // Obtener todos los empleados
@@ -104,7 +156,6 @@ namespace Capa_Controlador_Seguridad
             return daoEmpleado.Query(iIdEmpleado);
         }
 
-        // --- Métodos para evitar que la vista tenga referencia al modelo ---
         public Dictionary<string, object> fun_ObtenerEmpleadoComoDiccionario(int id)
         {
             var emp = daoEmpleado.Query(id);
@@ -179,13 +230,12 @@ namespace Capa_Controlador_Seguridad
             };
         }
 
-        // --- Métodos de validación y lógica de negocio extraídos de la vista ---
         public bool ValidarNombreOApellido(char keyChar)
         {
             return char.IsLetter(keyChar) || char.IsControl(keyChar) || keyChar == ' ';
         }
 
-        // --- Métodos para sistema de permisos (sin exponer el modelo a la vista) ---
+        //Métodos para sistema de permisos 
         public int ObtenerIdUsuarioConectado()
         {
             return Cls_Usuario_Conectado.iIdUsuario;
@@ -223,7 +273,7 @@ namespace Capa_Controlador_Seguridad
             };
         }
 
-        // --- Métodos de validación y lógica de negocio ---
+        // --- Métodos de validación y lógica
 
         public bool ValidarDpiKeyPress(char keyChar, string textoActual)
         {
@@ -333,6 +383,65 @@ namespace Capa_Controlador_Seguridad
             if (!(correoLower.EndsWith("@gmail.com") || correoLower.EndsWith("@miumg.edu.gt")))
             {
                 mensajeError = "El correo debe terminar en @gmail.com o @miumg.edu.gt.";
+                return false;
+            }
+            return true;
+        }
+
+        public bool ValidarYParsearCamposFormato(
+            string idText,
+            string dpiText,
+            string nitText,
+            string fechaNacText,
+            string fechaContraText,
+            out int id,
+            out long dpi,
+            out long nit,
+            out DateTime fechaNac,
+            out DateTime fechaContra,
+            out string mensajeError)
+        {
+            id = 0; dpi = 0; nit = 0; fechaNac = DateTime.MinValue; fechaContra = DateTime.MinValue; mensajeError = string.Empty;
+
+            if (!int.TryParse(idText, out id))
+            {
+                mensajeError = "El ID debe ser un número entero válido.";
+                return false;
+            }
+            if (!long.TryParse(dpiText, out dpi))
+            {
+                mensajeError = "El DPI debe ser un número válido.";
+                return false;
+            }
+            if (!long.TryParse(nitText, out nit))
+            {
+                mensajeError = "El NIT debe ser un número válido.";
+                return false;
+            }
+            if (!DateTime.TryParseExact(fechaNacText, "dd/MM/yyyy",
+                System.Globalization.CultureInfo.InvariantCulture,
+                System.Globalization.DateTimeStyles.None, out fechaNac))
+            {
+                mensajeError = "La fecha de nacimiento debe tener el formato dd/MM/yyyy.";
+                return false;
+            }
+            if (!DateTime.TryParseExact(fechaContraText, "dd/MM/yyyy",
+                System.Globalization.CultureInfo.InvariantCulture,
+                System.Globalization.DateTimeStyles.None, out fechaContra))
+            {
+                mensajeError = "La fecha de contratación debe tener el formato dd/MM/yyyy.";
+                return false;
+            }
+            return true;
+        }
+
+        public bool TryParseId(string idText, out int id, out string mensajeError)
+        {
+            mensajeError = string.Empty;
+            id = 0;
+            if (string.IsNullOrWhiteSpace(idText) || !int.TryParse(idText, out id))
+            {
+                mensajeError = "Por favor, ingrese un ID válido.";
                 return false;
             }
             return true;

@@ -89,7 +89,6 @@ namespace Capa_Vista_Seguridad
 
         // ------------------ VALIDACIONES DE ENTRADA ------------------
         // Ernesto David Samayoa Jocol - 0901-22-3415
-
         // Solo letras y espacios
         private void Txt_NombreOApellido_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -263,7 +262,7 @@ namespace Capa_Vista_Seguridad
 
         private void Btn_modificar_empleado_Click(object sender, EventArgs e)
         {
-            // Validar campos usando el controlador (mismas reglas que al guardar)
+            // Validar campos usando el controlador
             string mensajeError;
             if (!controlador.ValidarCampos(
                 Txt_id_empleado.Text,
@@ -283,67 +282,47 @@ namespace Capa_Vista_Seguridad
                 return;
             }
 
-            // Validaciones de tipos y formatos
-            if (!int.TryParse(Txt_id_empleado.Text, out int id))
+            // Validaciones de tipos y formatos del controlador
+            if (!controlador.ValidarYParsearCamposFormato(
+                Txt_id_empleado.Text,
+                Txt_dpi_empleados.Text,
+                Txt_nit_empleados.Text,
+                Txt_fechaNac_empleado.Text,
+                Txt_fechaContra_empleado.Text,
+                out int id,
+                out long dpi,
+                out long nit,
+                out DateTime fechaNac,
+                out DateTime fechaContra,
+                out string mensajeFormato))
             {
-                MessageBox.Show("El ID debe ser un número entero válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(mensajeFormato, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            if (!long.TryParse(Txt_dpi_empleados.Text, out long dpi))
-            {
-                MessageBox.Show("El DPI debe ser un número válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            var resultado = controlador.ActualizarEmpleado(
+                id,
+                Txt_nombre_empleado.Text.Trim(),
+                Txt_apellido_empleado.Text.Trim(),
+                dpi,
+                nit,
+                Txt_correo_empleado.Text.Trim(),
+                Txt_telefono_empleado.Text.Trim(),
+                Rdb_masculino_empleado.Checked,
+                fechaNac,
+                fechaContra
+            );
 
-            if (!long.TryParse(Txt_nit_empleados.Text, out long nit))
+            MessageBox.Show(resultado.mensaje, resultado.exito ? "Éxito" : "Error", MessageBoxButtons.OK, resultado.exito ? MessageBoxIcon.Information : MessageBoxIcon.Error);
+            if (resultado.exito)
             {
-                MessageBox.Show("El NIT debe ser un número válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            if (!DateTime.TryParseExact(Txt_fechaNac_empleado.Text, "dd/MM/yyyy",
-                System.Globalization.CultureInfo.InvariantCulture,
-                System.Globalization.DateTimeStyles.None, out DateTime fechaNac))
-            {
-                MessageBox.Show("La fecha de nacimiento debe tener el formato dd/MM/yyyy.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            if (!DateTime.TryParseExact(Txt_fechaContra_empleado.Text, "dd/MM/yyyy",
-                System.Globalization.CultureInfo.InvariantCulture,
-                System.Globalization.DateTimeStyles.None, out DateTime fechaContra))
-            {
-                MessageBox.Show("La fecha de contratación debe tener el formato dd/MM/yyyy.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            try
-            {
-                bool exito = controlador.fun_ActualizarEmpleado(
-                    id,
-                    Txt_nombre_empleado.Text.Trim(),
-                    Txt_apellido_empleado.Text.Trim(),
-                    dpi,
-                    nit,
-                    Txt_correo_empleado.Text.Trim(),
-                    Txt_telefono_empleado.Text.Trim(),
-                    Rdb_masculino_empleado.Checked,
-                    fechaNac,
-                    fechaContra
-                );
-
-                MessageBox.Show(exito ? "Empleado modificado correctamente" : "Error al modificar empleado");
-                //Registrar en bitacora   Aron Esquit 0901-22-13036
+                // Registrar en bitácora (Aron Esquit 0901-22-13036)
                 ctrlBitacora.RegistrarAccion(controlador.ObtenerIdUsuarioConectado(), 1, $"Modificó empleado/a: {Txt_nombre_empleado.Text}", true);
+
                 fun_CargarEmpleados();
                 fun_ConfigurarComboBoxEmpleados();
                 fun_LimpiarCampos();
                 fun_ConfiguracionInicial();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al modificar empleado: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -351,9 +330,9 @@ namespace Capa_Vista_Seguridad
         private void Btn_eliminar_empleado_Click(object sender, EventArgs e)
         {
             // 1️ Validar que el campo no esté vacío ni sea inválido
-            if (string.IsNullOrWhiteSpace(Txt_id_empleado.Text) || !int.TryParse(Txt_id_empleado.Text, out int id))
+            if (!controlador.TryParseId(Txt_id_empleado.Text, out int id, out string mensajeId))
             {
-                MessageBox.Show("Por favor, ingrese un ID válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(mensajeId, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -377,30 +356,18 @@ namespace Capa_Vista_Seguridad
 
             if (respuesta == DialogResult.Yes)
             {
-                // 4️ Ejecutar la eliminación
-                bool bexito = controlador.fun_BorrarEmpleado(id);
+                var resultado = controlador.EliminarEmpleado(id, Txt_nombre_empleado.Text);
 
-                if (bexito)
+                MessageBox.Show(resultado.mensaje, resultado.exito ? "Éxito" : "Error", MessageBoxButtons.OK, resultado.exito ? MessageBoxIcon.Information : MessageBoxIcon.Error);
+                if (resultado.exito)
                 {
-                    MessageBox.Show("Empleado eliminado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    // Registrar en bitácora (Aron Esquit 0901-22-13036)
+                    ctrlBitacora.RegistrarAccion(controlador.ObtenerIdUsuarioConectado(), 1, $"Eliminó empleado/a: {Txt_nombre_empleado.Text}", true);
 
-                    // 5️ Registrar en bitácora (Aron Esquit 0901-22-13036)
-                    ctrlBitacora.RegistrarAccion(
-                        controlador.ObtenerIdUsuarioConectado(),
-                        1,
-                        $"Eliminó empleado/a: {Txt_nombre_empleado.Text}",
-                        true
-                    );
-
-                    // 6️ Refrescar datos
                     fun_CargarEmpleados();
                     fun_ConfigurarComboBoxEmpleados();
                     fun_LimpiarCampos();
                     fun_ConfiguracionInicial();
-                }
-                else
-                {
-                    MessageBox.Show("Error al eliminar el empleado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
@@ -437,60 +404,46 @@ namespace Capa_Vista_Seguridad
                 return;
             }
 
-            try
+            // Validación y parseo delegados al controlador antes de insertar
+            if (!controlador.ValidarYParsearCamposFormato(
+                Txt_id_empleado.Text,
+                Txt_dpi_empleados.Text,
+                Txt_nit_empleados.Text,
+                Txt_fechaNac_empleado.Text,
+                Txt_fechaContra_empleado.Text,
+                out int idEmpleado,
+                out long dpi,
+                out long nit,
+                out DateTime fechaNac,
+                out DateTime fechaContra,
+                out string mensajeFormatoGuardar))
             {
-                if (!int.TryParse(Txt_id_empleado.Text, out int idEmpleado))
-                {
-                    MessageBox.Show("El ID debe ser un número entero válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                if (!long.TryParse(Txt_dpi_empleados.Text, out long dpi))
-                {
-                    MessageBox.Show("El DPI debe ser un número válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                if (!long.TryParse(Txt_nit_empleados.Text, out long nit))
-                {
-                    MessageBox.Show("El NIT debe ser un número válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                if (!DateTime.TryParseExact(Txt_fechaNac_empleado.Text, "dd/MM/yyyy",
-                    System.Globalization.CultureInfo.InvariantCulture,
-                    System.Globalization.DateTimeStyles.None, out DateTime fechaNac))
-                {
-                    MessageBox.Show("La fecha de nacimiento debe tener el formato dd/MM/yyyy.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                if (!DateTime.TryParseExact(Txt_fechaContra_empleado.Text, "dd/MM/yyyy",
-                    System.Globalization.CultureInfo.InvariantCulture,
-                    System.Globalization.DateTimeStyles.None, out DateTime fechaContra))
-                {
-                    MessageBox.Show("La fecha de contratación debe tener el formato dd/MM/yyyy.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
+                MessageBox.Show(mensajeFormatoGuardar, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
-                controlador.fun_InsertarEmpleado(
-                    idEmpleado,
-                    Txt_nombre_empleado.Text.Trim(),
-                    Txt_apellido_empleado.Text.Trim(),
-                    dpi,
-                    nit,
-                    Txt_correo_empleado.Text.Trim(),
-                    Txt_telefono_empleado.Text.Trim(),
-                    Rdb_masculino_empleado.Checked,
-                    fechaNac,
-                    fechaContra
-                );
+            var resultado = controlador.InsertarEmpleado(
+                idEmpleado,
+                Txt_nombre_empleado.Text.Trim(),
+                Txt_apellido_empleado.Text.Trim(),
+                dpi,
+                nit,
+                Txt_correo_empleado.Text.Trim(),
+                Txt_telefono_empleado.Text.Trim(),
+                Rdb_masculino_empleado.Checked,
+                fechaNac,
+                fechaContra
+            );
 
-                MessageBox.Show("Empleado guardado correctamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(resultado.mensaje, resultado.exito ? "Éxito" : "Error", MessageBoxButtons.OK, resultado.exito ? MessageBoxIcon.Information : MessageBoxIcon.Error);
+            if (resultado.exito)
+            {
+                // Registrar en bitácora (Aron Esquit 0901-22-13036)
                 ctrlBitacora.RegistrarAccion(controlador.ObtenerIdUsuarioConectado(), 1, $"Guardó empleado/a: {Txt_nombre_empleado.Text}", true);
+
                 fun_CargarEmpleados();
                 fun_ConfigurarComboBoxEmpleados();
                 fun_LimpiarCampos();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al guardar empleado: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             fun_ConfiguracionInicial();
         }
@@ -539,7 +492,6 @@ namespace Capa_Vista_Seguridad
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
             }
         }
-
         private void Btn_reporte_Click(object sender, EventArgs e)
         {
             Frm_Reporte_Empleado frm = new Frm_Reporte_Empleado();
