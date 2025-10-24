@@ -208,7 +208,7 @@ namespace Capa_Vista_Seguridad
             this.Pnl_Superior.Controls.Add(this.Pic_Cerrar);
             this.Pnl_Superior.Dock = System.Windows.Forms.DockStyle.Top;
             this.Pnl_Superior.Location = new System.Drawing.Point(0, 0);
-            this.Pnl_Superior.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Pnl_Superior.Margin = new System.Windows.Forms.Padding(2);
             this.Pnl_Superior.Name = "Pnl_Superior";
             this.Pnl_Superior.Size = new System.Drawing.Size(757, 36);
             this.Pnl_Superior.TabIndex = 95;
@@ -220,7 +220,7 @@ namespace Capa_Vista_Seguridad
             this.Pic_Cerrar.Dock = System.Windows.Forms.DockStyle.Right;
             this.Pic_Cerrar.Image = global::Capa_Vista_Seguridad.Properties.Resources.Cancel_icon_icons_com_73703;
             this.Pic_Cerrar.Location = new System.Drawing.Point(729, 0);
-            this.Pic_Cerrar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Pic_Cerrar.Margin = new System.Windows.Forms.Padding(2);
             this.Pic_Cerrar.Name = "Pic_Cerrar";
             this.Pic_Cerrar.Size = new System.Drawing.Size(28, 36);
             this.Pic_Cerrar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -281,7 +281,7 @@ namespace Capa_Vista_Seguridad
             this.Btn_Modificar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
             this.Btn_Modificar.Font = new System.Drawing.Font("Rockwell", 10F);
             this.Btn_Modificar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(214)))), ((int)(((byte)(221)))));
-            this.Btn_Modificar.Image = global::Capa_Vista_Seguridad.Properties.Resources.savetheapplication_guardar_2958;
+            this.Btn_Modificar.Image = global::Capa_Vista_Seguridad.Properties.Resources.compose_edit_modify_icon_177770;
             this.Btn_Modificar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Btn_Modificar.Location = new System.Drawing.Point(479, 244);
             this.Btn_Modificar.Name = "Btn_Modificar";
