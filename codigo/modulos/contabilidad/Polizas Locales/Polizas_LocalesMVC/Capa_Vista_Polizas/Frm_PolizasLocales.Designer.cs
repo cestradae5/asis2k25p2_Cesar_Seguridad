@@ -173,7 +173,6 @@
             // 
             // Btn_Imprimir
             // 
-            this.Btn_Imprimir.Enabled = false;
             this.Btn_Imprimir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Btn_Imprimir.Font = new System.Drawing.Font("Rockwell", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Btn_Imprimir.Image = global::Capa_Vista_Polizas.Properties.Resources.icono_imprimir;

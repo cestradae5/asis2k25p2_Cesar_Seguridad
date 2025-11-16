@@ -57,6 +57,7 @@ namespace Capa_Vista_Polizas
             Btn_Ingresar.Enabled = true;
             Btn_Editar.Enabled = true;
             Btn_Borrar.Enabled = true;
+            Btn_Imprimir.Enabled = true;
             Btn_Refrescar.Enabled = true;
             Btn_Salir.Enabled = true;
         }
@@ -144,7 +145,8 @@ namespace Capa_Vista_Polizas
 
         private void Btn_Cancelar_Click(object sender, EventArgs e)
         {
-
+            Frm_Reporte frm_Reporte = new Frm_Reporte();
+            frm_Reporte.ShowDialog();
         }
 
         //doble click para ver detalle de poliza

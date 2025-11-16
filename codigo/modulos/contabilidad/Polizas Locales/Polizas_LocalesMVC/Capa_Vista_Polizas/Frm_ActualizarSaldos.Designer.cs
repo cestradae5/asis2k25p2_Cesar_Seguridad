@@ -94,9 +94,9 @@
             this.Lbl_Actualizacion.Font = new System.Drawing.Font("Rockwell", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Lbl_Actualizacion.Location = new System.Drawing.Point(140, 54);
             this.Lbl_Actualizacion.Name = "Lbl_Actualizacion";
-            this.Lbl_Actualizacion.Size = new System.Drawing.Size(525, 38);
+            this.Lbl_Actualizacion.Size = new System.Drawing.Size(483, 38);
             this.Lbl_Actualizacion.TabIndex = 3;
-            this.Lbl_Actualizacion.Text = "Actualización de Saldos Contables";
+            this.Lbl_Actualizacion.Text = "Actualización de Saldos Polizas";
             // 
             // Btn_Aceptar
             // 

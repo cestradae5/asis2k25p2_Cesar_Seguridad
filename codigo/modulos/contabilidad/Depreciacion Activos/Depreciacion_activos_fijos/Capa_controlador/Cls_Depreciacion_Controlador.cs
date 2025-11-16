@@ -79,10 +79,10 @@ namespace Capa_controlador
         }
 
         public bool GuardarNuevoActivo(
-            string nombre, string descripcion, string grupo,
-            DateTime fechaAdquisicion, decimal valorAdquisicion,
-            decimal valorResidual, int vidaUtil, string cuentaActivo,
-            string cuentaDepreciacion, string cuentaGasto, bool estadoActivo)
+    string nombre, string descripcion, string grupo,
+    DateTime fechaAdquisicion, decimal valorAdquisicion,
+    decimal valorResidual, int vidaUtil, string cuentaActivo,
+    string cuentaDepreciacion, string cuentaGasto, bool estadoActivo)
         {
             try
             {
