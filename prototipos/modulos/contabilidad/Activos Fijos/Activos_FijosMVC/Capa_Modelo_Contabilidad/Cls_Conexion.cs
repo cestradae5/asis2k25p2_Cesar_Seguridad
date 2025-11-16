@@ -1,17 +1,21 @@
 ﻿using System;
 using System.Data.Odbc;
 
+// ================================================
+// Clase de Conexión ODBC para el módulo contable
+// Autor: [Tu Nombre]
+// Fecha: 27/10/2025
+// ================================================
 
-//Inicio de codigo de coexion con la bd  Carlo Sosa 0901-22-1106  04/09/2025
-
-namespace Capa_Modelo_Seguridad
+namespace Capa_Modelo_Contabilidad
 {
     public class Cls_Conexion
     {
         // Devuelve la cadena de conexión ODBC
         public string ObtenerCadenaConexion()
         {
-            return "Dsn=Prueba";
+            // Aquí debe estar configurado tu DSN de ODBC (Administrador ODBC de Windows)
+            return "Dsn=conta";
         }
 
         // Abre y retorna una nueva conexión ODBC
@@ -22,14 +26,14 @@ namespace Capa_Modelo_Seguridad
             {
                 conn.Open();
             }
-            catch (OdbcException)
+            catch (OdbcException ex)
             {
-                Console.WriteLine("No Conectó");
+                Console.WriteLine("No conectó con la base de datos: " + ex.Message);
             }
             return conn;
         }
 
-        // Alternativo: método estándar para abrir conexión (sin try/catch interno)
+        // Alternativo: abre sin capturar errores
         public OdbcConnection AbrirConexion()
         {
             OdbcConnection conn = new OdbcConnection(ObtenerCadenaConexion());
@@ -37,16 +41,16 @@ namespace Capa_Modelo_Seguridad
             return conn;
         }
 
-        // Cierra la conexión recibida
+        // Cierra la conexión ODBC
         public void desconexion(OdbcConnection conn)
         {
             try
             {
                 conn.Close();
             }
-            catch (OdbcException)
+            catch (OdbcException ex)
             {
-                Console.WriteLine("No se pudo cerrar la conexión");
+                Console.WriteLine("Error al cerrar la conexión: " + ex.Message);
             }
         }
     }
